@@ -1,3 +1,18 @@
+/*******************************************************************
+				______        __  
+			   /  __  \__  __/ /_ ___  ____  ____
+			  /  / /  / / / / __/ __ / __  `/ __ `
+			 /  /_/  / /_/ / /_/ /  / /_/ // /_/ /
+			 \______/\____/\__/_/   \____/ \____/
+
+	<copyright owner="Sasá Rafalsky" company="Rafalsky Industries">
+		Copyright (c) 2017 Outhroo. All rights reserved.
+	</copyright>
+
+*******************************************************************/
+
+
+
 # OutrooSSR
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.1.
@@ -26,18 +41,19 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-##·####################################
-##·####################################
 
-# Complete Steps from Angular Universal
+
+# ADDITIONAL CODE
+
+### Complete Steps from Angular Universal
 [Angular Universal](https://angular.io/guide/universal)
 
-# Install Packages
+### Install Packages
 `sudo npm i ts-md5 moment cropperjs ng-recaptcha angular2-useful-swiper`
 `sudo npm i --save @angular/material @angular/cdk @angular/animations hammerjs`
 
-# Add to polyfills.ts
+### Add to polyfills.ts
 (window as any).global = window;
 
-# Device Detector
+### Device Detector
 `sudo npm i ngx-device-detector --save`
