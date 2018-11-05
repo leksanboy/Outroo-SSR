@@ -82,6 +82,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 // Hummer for gesture
 import 'hammerjs';
 
-// Get window / window = global (in node)
+// Get window from browser / window = global (in NodeJS)
 (window as any).global = window;
 
