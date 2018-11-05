@@ -1,0 +1,203 @@
+<div class="innerBodyUser">
+	<div class="innerBodyContent">
+		<div class="pageSettings">
+			<div class="content">
+				<mat-tab-group mat-stretch-tabs>
+		 			<mat-tab label="{{translations.editProfile}}">
+		 				<div class="avatarBackground">
+			 				<div class="background">
+								<div class="image" [matMenuTriggerFor]="backgroundOneOptions">
+									<img [src]="sessionData.current.backgroundUrl" *ngIf="sessionData.current.background"/>
+
+									<div class="layer">
+										<div class="text">
+											<i label="image"></i>
+											{{translations.changeBackground}}
+										</div>
+									</div>
+								</div>
+								<input type="file" hidden (change)="openAvatar('background', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #backgroundFile>
+
+								<mat-menu #backgroundOneOptions="matMenu" [overlapTrigger]="false" xPosition="before">
+									<button mat-menu-item (click)="backgroundFile.click()">{{translations.uploadPhoto}}</button>
+									<button mat-menu-item (click)="openAvatar('background', 'remove', $event)">{{translations.removePhoto}}</button>
+									<button mat-menu-item>{{translations.cancel}}</button>
+								</mat-menu>
+
+								<div class="avatar">
+									<div class="image" [matMenuTriggerFor]="avatarOptions">
+										<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+
+										<div class="layer">
+											<i label="image" class="big"></i>
+										</div>
+									</div>
+									<input type="file" hidden (change)="openAvatar('avatar', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
+
+									<mat-menu #avatarOptions="matMenu" [overlapTrigger]="false">
+										<button mat-menu-item (click)="avatarFile.click()">{{translations.uploadPhoto}}</button>
+										<button mat-menu-item (click)="openAvatar('avatar', 'remove', $event)">{{translations.removePhoto}}</button>
+										<button mat-menu-item>{{translations.cancel}}</button>
+									</mat-menu>
+								</div>
+							</div>
+						</div>
+
+						<div class="form">
+							<form [formGroup]="actionFormPersonalData" (ngSubmit)="submitPersonal()">
+								<div class="theme">
+									<mat-slide-toggle formControlName="theme">{{translations.darkTheme}}</mat-slide-toggle>
+								</div>
+
+								<div class="theme">
+									<mat-slide-toggle formControlName="private">{{translations.privateAccount}}</mat-slide-toggle>
+								</div>
+
+								<mat-form-field>
+									<input matInput placeholder="{{translations.username}}" #Username maxlength="100" formControlName="username">
+									<div class="validators">
+										<div class="done" *ngIf="validatorUsername == 'done'">
+											<i label="validator-check"></i>
+										</div>
+										<div class="bad" *ngIf="validatorUsername == 'bad'">
+											<i label="validator-clear"></i>
+										</div>
+										<div class="load" *ngIf="validatorUsername == 'load'">
+											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+										</div>
+									</div>
+									<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
+								</mat-form-field>
+
+								<mat-form-field>
+									<input matInput placeholder="{{translations.name}}" #Name maxlength="100" formControlName="name">
+									<mat-hint align="end">{{Name.value.length}}/100</mat-hint>
+								</mat-form-field>
+
+								<mat-form-field>
+									<mat-select placeholder="{{translations.language}}" formControlName="language">
+										<mat-option *ngFor="let x of sessionData.current.languages" [value]="x.id">{{x.caption}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+								<div class="richAbout">
+									<div class="highlights" [innerHTML]="sessionData.current.about"></div>
+									<div class="origin" contenteditable="plaintext-only" [innerHTML]="sessionData.current.aboutOriginal" (input)="aboutEdit('writingChanges', $event.target.innerText)"></div>
+								</div>
+
+								<div class="buttons">
+									<button mat-raised-button type="submit" [disabled]="!actionFormPersonalData.valid">
+										<mat-progress-spinner mode="indeterminate" *ngIf="savePersonalDataLoading"></mat-progress-spinner>
+										{{translations.submit}}
+									</button>
+								</div>
+							</form>
+						</div>
+		 			</mat-tab>
+		 			
+		 			<mat-tab label="{{translations.changePassword}}">
+						<div class="form">
+							<form [formGroup]="actionFormPasswordData" (ngSubmit)="submitPassword()">
+								<mat-form-field>
+									<input matInput type="password" placeholder="{{translations.oldPassword}}" #OldPassword maxlength="100" formControlName="oldPassword">
+									<div class="validators">
+										<div class="bad" *ngIf="validatorOldPassword == 'bad'">
+											<i label="validator-clear"></i>
+										</div>
+									</div>
+									<mat-hint align="end">{{OldPassword.value.length}}/100</mat-hint>
+								</mat-form-field>
+
+								<mat-form-field>
+									<input matInput type="password" placeholder="{{translations.newPassword}}" #NewPassword maxlength="100" formControlName="newPassword">
+									<div class="validators">
+										<div class="done" *ngIf="validatorNewPassword == 'done'">
+											<i label="validator-check"></i>
+										</div>
+										<div class="bad" *ngIf="validatorNewPassword == 'bad'">
+											<i label="validator-clear"></i>
+										</div>
+										<div class="load" *ngIf="validatorNewPassword == 'load'">
+											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+										</div>
+									</div>
+									<mat-hint align="end">{{NewPassword.value.length}}/100</mat-hint>
+								</mat-form-field>
+
+								<mat-form-field>
+									<input matInput type="password" placeholder="{{translations.confirmNewPassword}}" #ConfirmPassword maxlength="100" formControlName="confirmPassword">
+									<div class="validators">
+										<div class="done" *ngIf="validatorNewPassword == 'done'">
+											<i label="validator-check"></i>
+										</div>
+										<div class="bad" *ngIf="validatorNewPassword == 'bad'">
+											<i label="validator-cleaar"></i>
+										</div>
+										<div class="load" *ngIf="validatorNewPassword == 'load'">
+											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+										</div>
+									</div>
+									<mat-hint align="end">{{ConfirmPassword.value.length}}/100</mat-hint>
+								</mat-form-field>
+
+								<div class="buttons">
+									<button mat-raised-button type="submit" [disabled]="!actionFormPasswordData.valid">
+										<mat-progress-spinner mode="indeterminate" *ngIf="savePasswordDataLoading"></mat-progress-spinner>
+										{{translations.submit}}
+									</button>
+								</div>
+							</form>
+						</div>
+		 			</mat-tab>
+
+		 			<mat-tab label="{{translations.accounts}}">
+		 				<ul>
+							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
+								<div class="avatar" (click)="setCurrentUser(x)">
+									<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
+								</div>
+								<div class="text" (click)="setCurrentUser(x)">
+									<span class="name">{{x.name}}</span>
+									<br>
+									<span class="username">@{{x.username}}</span>
+								</div>
+								<div class="actions">
+									<button mat-button class="border" [matMenuTriggerFor]="signOut">
+										{{translations.logOut}}
+									</button>
+									<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
+										<div class="text">
+											{{x.name}}
+											<br>
+											{{translations.leaveSite}}
+										</div>
+										<div class="buttons">
+											<button mat-menu-item>{{translations.no}}</button>
+											<button mat-menu-item (click)="closeSession(x)">{{translations.yes}}</button>
+										</div>
+									</mat-menu>
+								</div>
+							</li>
+
+							<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+								<div class="add">
+									<i label="add"></i>
+								</div>
+								<div class="text">
+									<span class="name">{{translations.addAccount}}</span>
+									<br>
+									<span class="username">{{translations.setAnotherAccount}}</span>
+								</div>
+								<div class="actions">
+									<button mat-button class="border">
+										{{translations.add}}
+									</button>
+								</div>
+							</li>
+					    </ul>
+		 			</mat-tab>
+		 		</mat-tab-group>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,95 @@
+<div class="dialogBox">
+	<div mat-dialog-title class="header">
+		<div class="back">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="text">
+			{{translations.playlist}}
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyAudios">
+		<div class="head">
+			<div class="left">
+				<div class="image" [style.background-image]="data.current.color">
+					<div class="img" [ngStyle]="{'background-image': 'url(' + data.path + 'covers/' + data.current.image + ')'}"></div>
+				</div>
+			</div>
+
+			<div class="right">
+				<div class="title" [style.color]="data.current.color">
+					{{data.current.title}}
+					<i label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
+				</div>
+				
+				<a class="username" *ngIf="data.current.user" routerLink="/{{data.current.user.username}}">
+					@{{data.current.user.username}}
+					<i *ngIf="data.current.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+				</a>
+				
+				<div class="button">
+					<button mat-button class="border" (click)="playTrack('play')">
+						{{data.playing ? translations.pause : translations.play}}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="content">
+			<ul class="tracks" *ngIf="data.list.length > 0">
+				<li *ngFor="let x of data.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+					<div class="inner" *ngIf="!x.contentTypeAd">
+						<div class="image">
+							<button mat-icon-button (click)="playItem(data.list, x, i, 'default')">
+								<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
+								<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
+								<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+							</button>
+						</div>
+						<div class="text" (click)="playItem(data.list, x, i, 'default')">
+							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+							</div>
+							<div class="duration">{{x.duration}}</div>
+						</div>
+						<div class="actions">
+							<span *ngIf="userData.id == sessionData.current.id">
+								<button mat-icon-button [matMenuTriggerFor]="options">
+									<i label="more"></i>
+								</button>
+							</span>
+							<span *ngIf="userData.id != sessionData.current.id">
+								<button mat-icon-button [matMenuTriggerFor]="options">
+									<i label="check" *ngIf="x.addRemoveUser"></i>
+									<i label="more" *ngIf="!x.addRemoveUser"></i>
+								</button>
+							</span>
+							<mat-menu #options="matMenu">
+								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? 'Add' : 'Remove'}}</button>
+								<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? 'Add' : 'Remove'}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
+								<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
+							</mat-menu>
+							<mat-menu #menuPlaylists="matMenu">
+								<button mat-menu-item *ngFor="let p of sessionData.current.playlists" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
+							</mat-menu>
+						</div>
+					</div>
+
+					<div class="ad" *ngIf="x.contentTypeAd">
+						<div class="box" [innerHtml]="x.content"></div>
+						<div class="disableAdBlock" *ngIf="hideAd">{{translations.disableAdBlock}}</div>
+					</div>
+				</li>
+			</ul>
+
+			<div class="loadingData" *ngIf="data.loadingData">
+				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+			</div>
+			<div class="noData" *ngIf="data.noData">{{translations.noData}}</div>
+		</div>
+	</div>
+</div>

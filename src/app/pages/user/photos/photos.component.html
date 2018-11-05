@@ -1,0 +1,108 @@
+<div class="innerBodyUser">
+	<div class="innerBodyContent">
+		<div class="pagePhotos">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations.photos}}</div>
+				</div>
+
+				<div class="uploadFilesBox" *ngIf="userData.id == sessionData.current.id">
+					<div class="button">
+						<button mat-raised-button (click)="uploadFile.click()" [disabled]="!dataFiles.actions">
+							<div class="left" [ngClass]="{'warning': dataFiles.list.length > 9}">
+								<i label="cloud"></i>
+							</div>
+							<div class="right">
+								<div class="top">
+									{{translations.chooseFiles}} {{dataFiles.list.length}}/9
+								</div>
+								<div class="bottom">
+									{{translations.maxSizePerFilePhotos}}
+								</div>
+							</div>
+						</button>
+
+						<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf">
+					</div>
+
+					<ul class="photosFiles" *ngIf="dataFiles.list.length > 0">
+						<li *ngFor="let x of dataFiles.list; let i = index;">
+							<div class="image" [ngClass]="{'unknown': x.category=='unknown'}">
+								<div *ngIf="x.category=='image'" class="img" [ngStyle]="{'background-image': 'url(' + x.thumbnail + ')'}"></div>
+								<div *ngIf="x.category=='video'" class="vid"><video [src]="x.thumbnail"></video></div>
+
+								<div class="category">
+									<i label="videocam" *ngIf="x.category=='video'"></i>
+									<i label="error-outline" matTooltip="{{translations.invalidFile}}" *ngIf="x.category=='unknown'"></i>
+									<div class="size" matTooltip="{{translations.fileSizeToBig}}" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
+								</div>
+
+								<div class="status">
+									<button mat-icon-button (click)="uploadFiles(3, i)" *ngIf="x.status=='clear'">
+										<i label="clear"></i>
+									</button>
+									<div class="progress" *ngIf="x.status=='progress'">
+										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
+										<div class="value">{{x.progress ? x.progress : 1}}%</div>
+									</div>
+									<button mat-icon-button matTooltip="{{translations.errorOnUpload}}" *ngIf="x.status=='error'">
+										<i label="cloud-off"></i>
+									</button>
+									<button mat-icon-button *ngIf="x.status=='completed'">
+										<i label="check"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul>
+
+					<div class="buttons" *ngIf="dataFiles.list.length > 0">
+						<div class="group" *ngIf="dataFiles.actions">
+							<button mat-raised-button (click)="uploadFiles(2, $event)">
+								{{translations.cancel}}
+							</button>
+							<button mat-raised-button [disabled]="dataFiles.list.length > 9 || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
+								{{translations.upload}}
+							</button>
+						</div>
+
+						<button *ngIf="dataFiles.reload" mat-raised-button (click)="uploadFiles(5, $event)">
+							<i label="autorenew"></i>
+							{{translations.refresh}}
+						</button>
+					</div>
+				</div>
+
+				<ul *ngIf="dataDefault.list" [ngClass]="{noPadding: userData.id != sessionData.current.id}">
+					<li mat-ripple *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{'remove': x.addRemoveSession}">
+						<a class="image" (click)="show(x, i)">
+							<div class="img" [ngStyle]="{'background-image': 'url(' + (x.mimetype.indexOf('image') !== -1 ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
+							<div class="type">
+								<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+								<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+							</div>
+						</a>
+					</li>
+				</ul>
+
+				<div class="loadingData" *ngIf="dataDefault.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
+
+				<div class="noData" *ngIf="dataDefault.noData">
+					{{translations.noData}}
+				</div>
+				
+				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
+					<button mat-fab (click)="default('more', null)" *ngIf="!dataDefault.loadingMoreData">
+						<i label="add"></i>
+					</button>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

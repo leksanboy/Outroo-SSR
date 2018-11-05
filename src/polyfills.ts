@@ -45,7 +45,7 @@
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
 /** IE10 and IE11 requires the following for the Reflect API. */
-// import 'core-js/es6/reflect';
+import 'core-js/es6/reflect';
 
 /**
  * Web Animations `@angular/platform-browser/animations`
@@ -78,3 +78,10 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// Hummer for gesture
+import 'hammerjs';
+
+// Get window / window = global (in node)
+(window as any).global = window;
+

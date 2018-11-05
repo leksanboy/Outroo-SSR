@@ -1,0 +1,102 @@
+<div class="innerBodyWeb">
+	<div class="header">
+		<div class="back" routerLink="/">
+			<button mat-icon-button>
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="center">
+			<div class="logo" routerLink="/"></div>
+		</div>
+	</div>
+
+	<div class="innerBodyContent">
+		<div class="container" *ngIf="pageStatus == 'default'">
+			<div class="title">
+				Sign up
+			</div>
+
+			<div class="form">
+				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+					<mat-form-field>
+						<input type="text" matInput placeholder="Username" #Username maxlength="100" formControlName="username">
+						<div class="validators">
+							<div class="done" *ngIf="validatorUsername == 'done'">
+								<i label="validator-check"></i>
+							</div>
+							<div class="bad" *ngIf="validatorUsername == 'bad'">
+								<i label="validator-clear"></i>
+							</div>
+							<div class="load" *ngIf="validatorUsername == 'load'">
+								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+							</div>
+						</div>
+						<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput placeholder="Name" #Name maxlength="100" formControlName="name">
+						<mat-hint align="end">{{Name.value.length}}/100</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input type="email" matInput placeholder="Email" #Email maxlength="100" formControlName="email">
+						<div class="validators">
+							<div class="done" *ngIf="validatorEmail == 'done'">
+								<i label="validator-check"></i>
+							</div>
+							<div class="bad" *ngIf="validatorEmail == 'bad'">
+								<i label="validator-clear"></i>
+							</div>
+							<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
+						</div>
+						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="Password" #Password maxlength="100" formControlName="password">
+						<button mat-button matSuffix mat-icon-button type="button" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword">
+							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+						</button>
+						<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
+					</mat-form-field>
+
+					<div class="terms">
+
+						By signing up, you agree with the stipulations of our <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
+					</div>
+
+					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{environment.reCaptcha}}"></re-captcha>
+
+					<div class="buttons">
+						<button mat-raised-button type="submit">
+							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+							Submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="container" *ngIf="pageStatus == 'completed'">
+			<div class="title">
+				Welcome!
+			</div>
+
+			<div class="text">
+				We've sent an email to <b>{{emailAccount}}</b>.
+				<br>
+				Thanks for creating an account. Follow other people,
+				search an amazing songs and share your photos and videos with the rest of comunity.
+				<br>
+				<br>
+				In short, you will receive a confirmation email to activate your account.
+				<br>
+				<button mat-raised-button type="button" (click)="signin()">
+					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
+					View my account
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,61 @@
+<div class="dialogBox scrollable">
+	<div mat-dialog-title class="header">
+		<div class="back">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="text">
+			{{translations.audios}} 
+			{{data.arrayAddedItems.length}}/10
+		</div>
+		<div class="actions">
+			<button mat-raised-button type="submit" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1" (click)="submit($event)">
+				{{translations.ok}}
+			</button>
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyCreatePublication">
+		<div class="audios">
+			<ul class="tracks" *ngIf="data.list.length > 0">
+				<li *ngFor="let x of data.list" [ngClass]="{default: !x.image}" (click)="toggleItem(x)">
+					<div class="inner">
+						<div class="image">
+							<button mat-icon-button>
+								<img *ngIf="x.image" [src]="environment.pathAudios + 'thumbnails/' + x.image"/>
+								<i label="play"></i>
+							</button>
+						</div>
+						
+						<div class="text">
+							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+							</div>
+							<div class="duration">{{x.duration}}</div>
+						</div>
+
+						<div class="status">
+							<button mat-icon-button [ngClass]="{'selected': x.selected}">
+								<i label="add" *ngIf="!x.selected"></i>
+								<i label="check" *ngIf="x.selected"></i>
+							</button>
+						</div>
+					</div>
+				</li>
+		    </ul>
+
+		    <div class="loadingData" *ngIf="loadingData">
+		    	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+		    </div>
+		    <div class="noData" *ngIf="noData">{{translations.noData}}</div>
+		    <div class="loadMore" *ngIf="loadMoreData">
+		    	<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
+		    		<i label="add"></i>
+		    	</button>
+		    	<mat-progress-spinner mode="indeterminate" *ngIf="loadingMoreData"></mat-progress-spinner>
+		    </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<div class="dialogBox">
+	<div mat-dialog-title class="header">
+		<div class="back">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="text">
+			{{translations.avatar}}
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyAvatar">
+		<div class="container">
+			<img [src]="userData.avatar ? userData.avatarUrl : environment.avatar"/>
+		</div>
+	</div>
+</div>

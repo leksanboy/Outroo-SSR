@@ -1,0 +1,17 @@
+<div class="sessionsPanelMobile">
+	<ul>
+		<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}" (click)="setCurrentUser(x)">
+			<div class="avatar">
+				<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
+			</div>
+			<div class="text">
+				<span class="name">{{x.name}}</span>
+				<br>
+				<span class="username">@{{x.username}}</span>
+			</div>
+			<div class="actions">
+				<i label="check-circle"></i>
+			</div>
+		</li>
+	</ul>
+</div>

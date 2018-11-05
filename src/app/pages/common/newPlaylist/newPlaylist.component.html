@@ -1,0 +1,87 @@
+<div class="dialogBox">
+	<div mat-dialog-title class="header">
+		<div class="back">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="text">
+			{{data.type == 'create' ? translations.createPlaylist : translations.editPlaylist}}
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyCreatePlaylist">
+		<form [formGroup]="actionForm">
+			<div class="imageCover">
+				<img [src]="data.newImage" *ngIf="data.newImage" #imageSrc>
+
+				<div class="default" *ngIf="!data.newImage">
+					<span *ngIf="data.type == 'create'">
+						<div class="text">{{translations.addCoverToPlaylist}}</div>
+						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
+						<div class="actions">
+							<button mat-raised-button type="button" (click)="uploadFile.click()">
+								<i label="file-upload"></i>
+								{{translations.upload}}
+							</button>
+						</div>
+					</span>
+
+					<span *ngIf="data.type == 'edit'">
+						<div class="image" *ngIf="data.current.image">
+							<div class="img" [ngStyle]="{'background-image': 'url(' + data.current.path + 'covers/' + data.current.image + ')'}"></div>
+						</div>
+						<div class="text">{{translations.addCoverToPlaylist}}</div>
+						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
+						<div class="actions">
+							<button mat-raised-button type="button" (click)="uploadFile.click()">
+								<i label="file-upload"></i>
+								{{translations.upload}}
+							</button>
+							<button mat-raised-button type="button" (click)="removeCover()">
+								{{translations.removeCover}}
+							</button>
+						</div>
+					</span>
+				</div>
+			</div>
+
+			<div class="panel" *ngIf="data.newImage">
+		        <button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
+		        	<i label="zoom-in"></i>
+		        </button>
+		        <button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
+		        	<i label="zoom-out"></i>
+		        </button>
+		        <button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
+		        	<i label="rotate-left"></i>
+		        </button>
+		        <button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
+		        	<i label="rotate-right"></i>
+		        </button>
+		        <button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
+		        	<i label="swap-horiz"></i>
+		        </button>
+		        <button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
+		        	<i label="swap-vert"></i>
+		        </button>
+		    </div>
+
+		    <div class="box">
+		    	<mat-form-field>
+		    		<input matInput placeholder="Title" #Title maxlength="1000" formControlName="title">
+		    	</mat-form-field>
+		    </div>
+		</form>
+	</div>
+
+	<div mat-dialog-actions class="buttons">
+		<button mat-raised-button type="button" (click)="close()">
+			{{translations.cancel}}
+		</button>
+		<button mat-raised-button type="submit" (click)="save()">
+			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+			{{translations.save}}
+		</button>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+<div class="dialogBox scrollable">
+	<div mat-dialog-title class="header">
+		<div class="back">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="text">
+			{{translations.photos}} {{data.arrayAddedItems.length}}/10
+		</div>
+		<div class="actions">
+			<button mat-raised-button type="submit" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1" (click)="submit($event)">
+				{{translations.ok}}
+			</button>
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyCreatePublication">
+		<div class="photos">
+			<ul *ngIf="data.list.length > 0">
+				<li mat-ripple *ngFor="let x of data.list; let i=index;" (click)="toggleItem(x)">
+					<div class="image">
+						<div class="img" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
+
+						<div class="category">
+							<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+							<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+						</div>
+
+						<div class="status">
+							<button mat-icon-button [ngClass]="{'selected': x.selected}">
+								<i label="add" *ngIf="!x.selected"></i>
+								<i label="check" *ngIf="x.selected"></i>
+							</button>
+						</div>
+					</div>
+				</li>
+		    </ul>
+
+		    <div class="loadingData" *ngIf="loadingData">
+		    	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+		    </div>
+		    <div class="noData" *ngIf="noData">{{translations.noData}}</div>
+		    <div class="loadMore" *ngIf="loadMoreData">
+		    	<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
+		    		<i label="add"></i>
+		    	</button>
+		    	<mat-progress-spinner mode="indeterminate" *ngIf="loadingMoreData"></mat-progress-spinner>
+		    </div>
+		</div>
+	</div>
+</div>

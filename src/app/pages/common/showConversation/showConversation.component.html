@@ -1,0 +1,478 @@
+<div class="dialogBox">
+	<span *ngIf="data.comeFrom == 'new'">
+		<div mat-dialog-title class="header">
+			<div class="back">
+				<button mat-icon-button (click)="close()">
+					<i label="back"></i>
+				</button>
+			</div>
+			<div class="text">
+				{{translations.newMessage}}
+			</div>
+			<div class="actions">
+				<button mat-raised-button type="submit" [disabled]="data.users.length == 0" (click)="initNewChat()">
+					{{translations.next}}
+				</button>
+			</div>
+		</div>
+
+		<div mat-dialog-content class="bodyChat">
+			<div class="container">
+				<div class="searchBox">
+					<div class="box">
+						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
+							<div class="inner">
+								<i label="search-magnifying-glass"></i>
+
+								<div class="chips">
+									<mat-chip-list matPrefix>
+										<mat-chip *ngFor="let x of data.users" (click)="addUserToNewChat('user', x)">
+											<div class="avatar">
+												<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+											</div>
+											<span class="name">{{x.user.username}}</span>
+											<i label="clear"></i>
+										</mat-chip>
+
+										<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+									</mat-chip-list>
+								</div>
+
+								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
+									<i label="search-clear"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="container">
+					<span *ngIf="data.active == 'default'">
+						<ul class="usersList" *ngIf="dataUsers.list.length > 0">
+							<li mat-ripple *ngFor="let x of dataUsers.list" (click)="addUserToNewChat('user', x)">
+								<div class="avatar">
+									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								</div>
+								<div class="text">
+									<span class="username">
+										{{x.user.username}}
+										<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+									</span>
+									<br>
+									<span class="name">{{x.user.name}}</span>
+								</div>
+								<div class="actions">
+									<i label="check-circle" *ngIf="x.added"></i>
+									<i label="uncheck-circle" *ngIf="!x.added"></i>
+								</div>
+							</li>
+						</ul>
+
+						<div class="loadingData" *ngIf="dataUsers.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+						</div>
+						<div class="noData" *ngIf="dataUsers.noData">{{translations.noData}}</div>
+					</span>
+
+					<span *ngIf="data.active == 'search'">
+						<ul class="usersList" *ngIf="dataSearch.list.length > 0">
+							<li *ngFor="let x of dataSearch.list" (click)="addUserToNewChat('user', x)">
+								<div class="avatar">
+									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								</div>
+								<div class="text">
+									<span class="username">{{x.user.username}}</span>
+									<br>
+									<span class="name">{{x.user.name}}</span>
+								</div>
+								<div class="actions">
+									<i label="check-circle" *ngIf="x.added"></i>
+									<i label="uncheck-circle" *ngIf="!x.added"></i>
+								</div>
+							</li>
+						</ul>
+
+						<div class="loadingData" *ngIf="dataSearch.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+						</div>
+						<div class="noData" *ngIf="dataSearch.noData">{{translations.noSearchResults}}</div>
+						<div class="loadMore" *ngIf="dataSearch.loadMoreData">
+							<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
+								<i label="add"></i>
+							</button>
+							<mat-progress-spinner mode="indeterminate" *ngIf="dataSearch.loadingMoreData"></mat-progress-spinner>
+						</div>
+					</span>
+				</div>
+			</div>
+		</div>
+	</span>
+
+	<span *ngIf="!showUsers && data.comeFrom == 'conversation'">
+		<div mat-dialog-title class="header">
+			<div class="back">
+				<button mat-icon-button (click)="close()">
+					<i label="back"></i>
+				</button>
+			</div>
+			<div class="text">
+				<span class="username" *ngFor="let u of data.users.excluded | slice: 0:3; let isLast = last;">
+					{{u.user.username}}{{isLast ? '' : ', '}}
+				</span>
+			</div>
+			<div class="actions">
+				<button mat-icon-button class="info" (click)="showUsers=!showUsers">
+					<i label="info"></i>
+				</button>
+			</div>
+		</div>
+
+		<div mat-dialog-content class="bodyChat" #conversationContainer>
+			<div class="container">
+				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
+					<button mat-fab (click)="default('more', null, null)" *ngIf="!dataDefault.loadingMoreData">
+						<i label="add"></i>
+					</button>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+				</div>
+				
+				<ul class="conversationList" *ngIf="dataDefault.list.length > 0">
+					<li *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id, 'publication': x.type == 'publication', 'remove': x.addRemoveSession}" [@showFromBottomAnimation]>
+						<div class="box">
+							<div class="top" *ngIf="!((i > 0) && (x.user.id == dataDefault.list[i-1].user.id))">
+								<a class="avatar" routerLink="/{{x.user.username}}">
+									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								</a>
+								<div class="name">
+									<span class="username">{{x.user.username}}</span>
+								</div>
+							</div>
+
+							<div class="bottom">
+								<div class="innerContent">
+									<div class="text" *ngIf="x.type == 'text'">
+										<div class="content" [innerHtml]="x.content | safeHtml"></div>
+
+										<div class="actions">
+											<button mat-icon-button [matMenuTriggerFor]="options">
+												<i label="more"></i>
+											</button>
+											
+											<mat-menu #options="matMenu">
+												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+											</mat-menu>
+										</div>
+									</div>
+
+									<div class="text" *ngIf="x.type == 'publication' && !x.publication">
+										<div class="content">
+											{{translations.publicationNotAvailable}}
+											<br>
+											<span class="subcontent">
+												{{translations.publicationNotAvailableText}}
+											</span>
+										</div>
+
+										<div class="actions">
+											<button mat-icon-button [matMenuTriggerFor]="options">
+												<i label="more"></i>
+											</button>
+											
+											<mat-menu #options="matMenu">
+												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+											</mat-menu>
+										</div>
+									</div>
+
+									<div class="post" *ngIf="x.type == 'publication' && x.publication">
+										<div class="user">
+											<div class="avatar">
+												<img [src]="x.publication.user.avatar ? x.publication.user.avatarUrl : environment.avatar"/>
+											</div>
+											<div class="name">
+												{{x.publication.user.username}}
+											</div>
+											
+											<div class="actions">
+												<button mat-icon-button [matMenuTriggerFor]="options">
+													<i label="more"></i>
+												</button>
+												
+												<mat-menu #options="matMenu">
+													<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
+													<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+												</mat-menu>
+											</div>
+										</div>
+										
+										<span (click)="showShared(x)">
+											<div class="urlVideo" *ngIf="x.publication.urlVideo">
+												<div class="embedResponsive">
+													<div class="image" *ngIf="!x.publication.urlVideo.showVideo">
+														<div class="img" [ngStyle]="{'background-image': 'url(' + x.publication.urlVideo.thumbnail + ')'}"></div>
+														<div class="play">
+															<i label="play"></i>
+														</div>
+														<div class="type">
+															{{x.publication.urlVideo.type}}
+														</div>
+													</div>
+													<span [innerHtml]="x.publication.urlVideo.iframe | safeHtml" *ngIf="x.publication.urlVideo.showVideo"></span>
+												</div>
+											</div>
+
+											<div class="urlVideo" *ngIf="x.publication.photos">
+												<div class="embedResponsive">
+													<div class="image">
+														<div class="img" [ngStyle]="{'background-image': 'url(' + environment.pathPhotos + x.publication.photos[0].name + ')'}"></div>
+													</div>
+												</div>
+											</div>
+
+											<div class="textContainer" *ngIf="x.publication.content" [innerHTML]="x.publication.content | truncate:[200] | safeHtml"></div>
+
+											<div class="audios" *ngIf="x.publication.audios && !x.publication.content">
+												<ul>
+													<li *ngFor="let a of x.publication.audios">
+														<div class="inner">
+															<div class="image">
+																<button mat-icon-button>
+																	<i label="play"></i>
+																	<img *ngIf="a.image" [src]="environment.pathAudios + 'thumbnails/' + a.image"/>
+																</button>
+															</div>
+															<div class="text">
+																<div class="titleArtist" title="{{a.original_title ? a.original_title : a.title}}">
+																	<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
+																	<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>
+																</div>
+																<div class="duration">{{a.duration}}</div>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</span>
+									</div>
+								</div>
+
+								<div class="date">{{x.date | dateTime}}</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<div class="loadingData" *ngIf="dataDefault.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
+				<div class="noData" *ngIf="dataDefault.noData && !dataDefault.loadingData">
+					{{translations.writeSomething}}
+				</div>
+			</div>
+		</div>
+
+		<div mat-dialog-actions class="buttons newChatComment">
+			<div class="new">
+				<div class="avatar">
+					<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+				</div>
+				<div class="richComment">
+					<div class="highlights" [innerHTML]="data.current.newCommentData.transformed"></div>
+					<div class="origin" contenteditable="plaintext-only" [textContent]="data.current.newCommentData.onBackground" (input)="newComment('writingChanges', $event.target.innerText, data.current)" (keyup)="newComment('keyCode', $event, data.current)" (keydown)="newComment('keyCode', $event, data.current)" (mouseup)="newComment('keyCode', $event, data.current)"></div>
+				</div>
+				<div class="actions">
+					<button mat-icon-button type="submit" (click)="newComment('create', $event, data.current)">
+						<i label="send"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</span>
+
+	<span *ngIf="showUsers">
+		<div mat-dialog-title class="header">
+			<div class="back">
+				<button mat-icon-button (click)="showUsers=!showUsers">
+					<i label="back"></i>
+				</button>
+			</div>
+			<div class="text">
+				{{translations.details}}
+			</div>
+		</div>
+
+		<div mat-dialog-content class="bodyChat">
+			<div class="container">
+				<ul class="usersList">
+					<li *ngFor="let x of data.users.all; let i=index;">
+						<a class="avatar" routerLink="/{{x.user.username}}">
+							<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+						</a>
+						<div class="text">
+							<a class="username" routerLink="/{{x.user.username}}">
+								{{x.user.username}}
+								<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+							</a>
+							<br>
+							<span class="name">{{x.user.name}}</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</span>
+
+	<span *ngIf="data.comeFrom == 'share'">
+		<div mat-dialog-title class="header">
+			<div class="back">
+				<button mat-icon-button (click)="close()">
+					<i label="back"></i>
+				</button>
+			</div>
+			<div class="text">
+				{{translations.share}}
+			</div>
+			<div class="actions">
+				<button mat-raised-button type="submit" [disabled]="data.users.length == 0" (click)="sendShared()">
+					{{data.users.length > 1 ? translations.sendSepareted : translations.send}}
+				</button>
+			</div>
+		</div>
+
+		<div mat-dialog-content class="bodyChat">
+			<div class="container">
+				<div class="searchBox">
+					<div class="box">
+						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
+							<div class="inner">
+								<i label="search-magnifying-glass"></i>
+
+								<div class="chips">
+									<mat-chip-list matPrefix>
+										<mat-chip *ngFor="let x of data.users" (click)="addUserToNewChat(x.type, x)">
+											<span *ngIf="x.type == 'user'">
+												<div class="avatar">
+													<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+												</div>
+
+												<span class="name">{{x.user.username}}</span>
+											</span>
+											
+											<span *ngIf="x.type == 'chat'">
+												<div class="avatar" *ngFor="let u of x.users.excluded | slice: 0:1">
+													<img [src]="u.user.avatar ? u.user.avatarUrl : environment.avatar"/>
+												</div>
+												
+												<span class="name" *ngFor="let u of x.users.excluded | slice: 0:3; let isLast = last;">
+													{{u.user.username}}{{isLast ? '' : ', '}}
+												</span>
+											</span>
+
+											<i label="clear"></i>
+										</mat-chip>
+
+										<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+									</mat-chip-list>
+								</div>
+
+								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
+									<i label="search-clear"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="container">
+					<span *ngIf="data.active == 'default'">
+						<ul class="usersList" *ngIf="dataChats.list.length > 0">
+							<li mat-ripple *ngFor="let x of dataChats.list" (click)="addUserToNewChat('chat', x)">
+								<div class="avatarsGroup" [ngClass]="{'group': x.users.excluded.length > 1}">
+									<div class="avatar" *ngFor="let u of x.users.excluded | slice: 0:2">
+										<img [src]="u.user.avatar ? u.user.avatarUrl : environment.avatar"/>
+									</div>
+								</div>
+								<div class="text">
+									<span class="username" *ngFor="let u of x.users.excluded | slice: 0:3; let isLast = last;">
+										{{u.user.username}}{{isLast ? '' : ', '}}
+									</span>
+									<br>
+									<span class="name">
+										<span *ngIf="x.last.type == 'text'">
+											<span [innerHtml]="x.last.content | safeHtml"></span>
+										</span>
+										<span *ngIf="x.last.type == 'publication'">
+											<i label="reply"></i>
+											{{translations.sharedPublicationWithYou}}
+										</span>
+									</span>
+								</div>
+								<div class="actions">
+									<i label="check-circle" *ngIf="x.added"></i>
+									<i label="uncheck-circle" *ngIf="!x.added"></i>
+								</div>
+							</li>
+						</ul>
+						
+						<ul class="usersList" *ngIf="dataUsers.list.length > 0">
+							<li *ngFor="let x of dataUsers.list" (click)="addUserToNewChat('user', x)">
+								<div class="avatar">
+									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								</div>
+								<div class="text">
+									<span class="username">
+										{{x.user.username}}
+										<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+									</span>
+									<br>
+									<span class="name">{{x.user.name}}</span>
+								</div>
+								<div class="actions">
+									<i label="check-circle" *ngIf="x.added"></i>
+									<i label="uncheck-circle" *ngIf="!x.added"></i>
+								</div>
+							</li>
+						</ul>
+
+						<div class="loadingData" *ngIf="dataUsers.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+						</div>
+						<div class="noData" *ngIf="dataUsers.noData">{{translations.noData}}</div>
+					</span>
+
+					<span *ngIf="data.active == 'search'">
+						<ul class="usersList" *ngIf="dataSearch.list.length > 0">
+							<li *ngFor="let x of dataSearch.list" (click)="addUserToNewChat('user', x)">
+								<div class="avatar">
+									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								</div>
+								<div class="text">
+									<span class="username">{{x.user.username}}</span>
+									<br>
+									<span class="name">{{x.about.trim() ? x.about : x.user.name}}</span>
+								</div>
+								<div class="actions">
+									<i label="check-circle" *ngIf="x.added"></i>
+									<i label="uncheck-circle" *ngIf="!x.added"></i>
+								</div>
+							</li>
+						</ul>
+
+						<div class="loadingData" *ngIf="dataSearch.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+						</div>
+						<div class="noData" *ngIf="dataSearch.noData">{{translations.noSearchResults}}</div>
+						<div class="loadMore" *ngIf="dataSearch.loadMoreData">
+							<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
+								<i label="add"></i>
+							</button>
+							<mat-progress-spinner mode="indeterminate" *ngIf="dataSearch.loadingMoreData"></mat-progress-spinner>
+						</div>
+					</span>
+				</div>
+			</div>
+		</div>
+	</span>
+</div>

@@ -1,0 +1,48 @@
+<div class="innerBodyWeb">
+	<div class="header">
+		<div class="center">
+			<div class="logo" routerLink="/"></div>
+		</div>
+	</div>
+
+	<div class="innerBodyContent">
+		<div class="container" *ngIf="pageStatus == 'default'">
+			<div class="title">
+				Verify account
+			</div>
+
+			<div class="text">
+				<div class="loading">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+					Verifying your account...
+				</div>
+			</div>
+		</div>
+
+		<div class="container" *ngIf="pageStatus == 'completed'">
+			<div class="title">
+				Congratulations
+			</div>
+
+			<div class="text">
+				The account has been verified successfully,
+				<b>@{{userData.username}}</b> now you can access and enjoy your account.
+				<br>
+				<button mat-raised-button type="button" (click)="submit()">
+					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
+					View my account
+				</button>
+			</div>
+		</div>
+
+		<div class="container" *ngIf="pageStatus == 'error'">
+			<div class="title">
+				Error
+			</div>
+
+			<div class="text">
+				This url is not available or has expired.
+			</div>
+		</div>
+	</div>
+</div>

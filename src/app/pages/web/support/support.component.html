@@ -1,0 +1,65 @@
+<div class="innerBodyWeb">
+	<div class="header">
+		<div class="back" routerLink="/">
+			<button mat-icon-button>
+				<i label="back"></i>
+			</button>
+		</div>
+		<div class="center">
+			<div class="logo" routerLink="/"></div>
+		</div>
+	</div>
+
+	<div class="innerBodyContent">
+		<div class="container" *ngIf="pageStatus == 'default'">
+			<div class="title">
+				Support
+			</div>
+
+			<div class="text">
+				We can help you with your questions.
+				<br>
+				If need to send a report of spam or similar things, we will take the appropriate measures.
+				<br>
+				Complete the form and send your question, we answer you as soon as posible.
+			</div>
+
+			<div class="form">
+				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+					<mat-form-field>
+						<input type="email" matInput placeholder="Email" #Email maxlength="100" formControlName="email">
+						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field class="textarea">
+						<textarea matInput matTextareaAutosize placeholder="Type here" #Content maxlength="1000" formControlName="content"></textarea>
+						<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
+					</mat-form-field>
+
+					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{environment.reCaptcha}}"></re-captcha>
+
+					<div class="buttons">
+						<button mat-raised-button type="submit">
+							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+							Submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="container" *ngIf="pageStatus == 'completed'">
+			<div class="title">
+				Check your email
+			</div>
+
+			<div class="text">
+				We've sent an email to <b>{{email}}</b>.
+				<br>
+				<br>
+				If you don't see the email, check other places it might be,
+				like your junk, spam, social, or other folders.
+			</div>
+		</div>
+	</div>
+</div>
