@@ -402,9 +402,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			item.bookmark.checked = !item.bookmark.checked;
 
 			if (item.bookmark.checked)
-				this.alertService.success(this.translations.hasBeenAddedSuccessfully);
-			else
-				this.alertService.success(this.translations.hasBeenRemoved);
+				this.alertService.success(this.translations.addedToSaved);
 
 			// data
 			let data = {

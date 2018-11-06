@@ -12,41 +12,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Material
 import {
-	MatAutocompleteModule,
-	MatBadgeModule,
 	MatBottomSheetModule,
 	MatButtonModule,
 	MatButtonToggleModule,
-	MatCardModule,
 	MatCheckboxModule,
-	MatChipsModule,
-	MatDatepickerModule,
 	MatDialogModule,
-	MatDividerModule,
-	MatExpansionModule,
-	MatGridListModule,
-	MatIconModule,
 	MatInputModule,
-	MatListModule,
 	MatMenuModule,
-	MatNativeDateModule,
-	MatPaginatorModule,
-	MatProgressBarModule,
 	MatProgressSpinnerModule,
-	MatRadioModule,
 	MatRippleModule,
 	MatSelectModule,
-	MatSidenavModule,
 	MatSliderModule,
 	MatSlideToggleModule,
-	MatSnackBarModule,
-	MatSortModule,
-	MatStepperModule,
-	MatTableModule,
-	MatTabsModule,
-	MatToolbarModule,
-	MatTooltipModule,
-	MatTreeModule
+	MatTooltipModule
 } from '@angular/material';
 
 // Pipe
@@ -83,6 +61,7 @@ import { ShowPhotoModule } from './pages/common/showPhoto/showPhoto.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
 import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
 import { ShowSessionPanelMobileModule } from './pages/common/showSessionPanelMobile/showSessionPanelMobile.module';
+import { ShowMobilePlayerModule } from './pages/common/showMobilePlayer/showMobilePlayer.module';
 
 // App
 import { AppRoutingModule } from './app-routing.module';
@@ -144,7 +123,8 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 		ShowPhotoModule,
 		ShowPlaylistModule,
 		ShowPublicationModule,
-		ShowSessionPanelMobileModule
+		ShowSessionPanelMobileModule,
+		ShowMobilePlayerModule
 	],
 	exports: [
 		MatBottomSheetModule,

@@ -26,6 +26,7 @@ import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showL
 import { ShowPhotoComponent } from '../../../../app/pages/common/showPhoto/showPhoto.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 import { ShowSessionPanelMobileComponent } from '../../../../app/pages/common/showSessionPanelMobile/showSessionPanelMobile.component';
+import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobilePlayer/showMobilePlayer.component';
 
 import { TimeagoPipe } from '../../pipes/timeago.pipe';
 
@@ -995,6 +996,25 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.playerMobileService.show(data);
 	}
 
+	// Show Player on Mobile
+	showMobilePlayer(type){
+		// Config
+		let config = {
+			data: {
+				sessionData: this.sessionData,
+				playerData: this.audioPlayerData,
+				translations: this.translations,
+				audio: this.audio
+			}
+		}
+
+		// Set sheet
+		let bottomSheetRef = this.bottomSheet.open(ShowMobilePlayerComponent, config);
+
+		// Dismiss and return value
+		bottomSheetRef.afterDismissed().subscribe(val => {});
+	}
+
 	// Show playlist web
 	showPlaylistWeb(){
 		this.showUserBox = false;
@@ -1026,7 +1046,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 		// Dismiss and return value
 		bottomSheetRef.afterDismissed().subscribe(val => {
-			// no dismiss actions
+			// no actions
 		});
 	}
 

@@ -121,12 +121,12 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	markUnmark(item){
 		if (this.sessionData.current.id) {
 			item.bookmark.checked = !item.bookmark.checked;
+
+			// Se usa en la pantalla de bookmarks para saber los que ya estaban dentro
 			item.marked = item.bookmark.checked ? false : true;
 
 			if (item.bookmark.checked)
-				this.alertService.success(this.translations.hasBeenAddedSuccessfully);
-			else
-				this.alertService.success(this.translations.hasBeenRemoved);
+				this.alertService.success(this.translations.addedToSaved);
 
 			// data
 			let data = {

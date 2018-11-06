@@ -17,7 +17,7 @@ export class ShowSessionPanelMobileComponent {
 		private bottomSheetRef: MatBottomSheetRef<ShowSessionPanelMobileComponent>,
 		private sessionService: SessionService
 	) {
-		this.sessionData = data.sessionData;
+		this.sessionData = this.data.sessionData;
 	}
 
 	// Set user

@@ -418,7 +418,8 @@
 				</button>
 			</li>
 			<li>
-				<button mat-icon-button (click)="showPlayerMobile('toggle')" (press)="showPlayerMobile('toggle')">
+				<!-- <button mat-icon-button (click)="showPlayerMobile('toggle')" (press)="showPlayerMobile('toggle')"> -->
+				<button mat-icon-button (click)="showMobilePlayer('toggle')" (press)="showMobilePlayer('toggle')">
 					<div class='miniEqualizer' [ngClass]="{'active' : audioPlayerData.playing}" *ngIf="!audioPlayerData.loadingToPlay">
 						<div class='bar'></div>
 						<div class='bar'></div>
