@@ -1,26 +1,6 @@
-// 	constructor(
-// 		private ref: ChangeDetectorRef
-// 	) {
-// 		this.timerInt = setInterval(() => {
-// 			this.numberOfTicks++;
-// 			// the following is required, otherwise the view will not be updated
-// 			this.ref.markForCheck();
-// 			console.log("ref::", this.ref);
-// 			console.log("numberOfTicks::", this.numberOfTicks);
-// 		}, 1000);
-// 	}
-
-// 	ngOnDestroy() {
-// 		clearInterval(this.timerInt)
-// 	}
-// }
-
 import { DOCUMENT } from '@angular/platform-browser';
-import { Component, Inject, OnInit, OnDestroy, AfterViewInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { coerceCssPixelValue } from '@angular/cdk/coercion';
-import { ViewportRuler } from '@angular/cdk/scrolling';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
@@ -33,19 +13,7 @@ declare var global: any;
 
 @Component({
 	selector: 'app-showMobilePlayer',
-	templateUrl: './showMobilePlayer.component.html',
-	animations: [
-		trigger('showFromBottomAnimation',[
-			transition(':enter', [
-				style({transform: 'translateY(100%)', 'opacity': 1}),
-				animate('200ms', style({'transform': 'translateY(0)', '-webkit-transform': 'translateY(0)', 'opacity': 1}))
-			]),
-			transition(':leave', [
-				style({transform: 'translateY(0)', 'opacity': 1}),
-				animate('400ms', style({'transform': 'translateY(100%)', '-webkit-transform': 'translateY(100%)', 'opacity': 1}))
-			])
-		])
-	]
+	templateUrl: './showMobilePlayer.component.html'
 })
 export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 	public environment: any = environment;
@@ -64,7 +32,6 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 		@Inject(DOCUMENT) private document: Document,
 		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
 		private bottomSheetRef: MatBottomSheetRef<ShowMobilePlayerComponent>,
-		private viewportRuler: ViewportRuler,
 		private alertService: AlertService,
 		private audioDataService: AudioDataService,
 		private playerService: PlayerService,

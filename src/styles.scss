@@ -7126,11 +7126,11 @@ body{
 			padding: 0 0 36px 0;
 		}
 
-		.audioPlayerMobile{
-			.box{
-				.player{
-					padding: 0 0 36px 0;
-				}
+		.mobilePlayer{
+			padding: 0 0 36px 0;
+
+			.box .player{
+				padding: 0 0 36px 0;
 			}
 		}
 	}
@@ -8528,303 +8528,308 @@ body{
 			}
 		}
 
+		/*TODO: Añadir padding.bottom en iphone x*/
 		.mobilePlayer{
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $blackColor;
 			color: $whiteColor;
+			position: relative;
 			min-height: 360px;
 			width: 100%;
-			float: left;
 
-			/*.box{
+			.box{
+				position: relative;
 				width: 100%;
-				float: left;
-			}*/
 
-			.player{
-				background: linear-gradient(0, transparentize($blackColor, .05) 60%, transparentize($blackColor, .05) 75%, transparentize($blackColor, .15) 90%, transparent);
-				position: fixed;
-				width: 100%;
-				z-index: 9;
-				bottom: 0;
-
-				.top{
-					box-sizing: border-box;
-					padding: 12px 24px 0;
-					margin: 0 0 -12px;
+				.player{
+					background: linear-gradient(0, transparentize($blackColor, .05) 60%, transparentize($blackColor, .05) 75%, transparentize($blackColor, .15) 90%, transparent);
+					position: fixed;
 					width: 100%;
-					float: left;
+					z-index: 99;
+					bottom: 0;
 
-					.panel{
-						justify-content: space-between;
-						display: flex;
-						width: 100%;
-
-						.text{
-							box-sizing: border-box;
-							padding: 12px 36px 0;
-							text-align: center;
-							color: $whiteColor;
-							width: 100%;
-							float: left;
-
-							.title{
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								font-weight: bold;
-								overflow: hidden;
-								transition: .15s;
-								padding: 0 0 4px;
-								font-size: 24px;
-							}
-
-							.artist{
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								overflow: hidden;
-								font-size: 18px;
-							}
-						}
-
-						.add{
-							margin: 32px 18px 0 0;
-							position: absolute;
-							right: 0;
-
-							button{
-								position: relative;
-								background: none;
-								box-shadow: none;
-								height: 24px;
-								float: left;
-								width: 24px;
-								padding: 0;
-								z-index: 9;
-								margin: 0;
-
-								i{
-									background-color: $whiteColor;
-								}
-							}
-						}
-					}
-
-					.progress{
+					.top{
 						box-sizing: border-box;
+						padding: 12px 24px 0;
+						position: relative;
+						margin: 0 0 -12px;
 						width: 100%;
 						float: left;
 
-						mat-slider{
-							height: 36px;
+						.panel{
+							justify-content: space-between;
+							display: flex;
 							width: 100%;
-							padding: 0;
-							margin: 0;
 
-							.mat-slider-wrapper{
-								top: 18px;
+							.text{
+								box-sizing: border-box;
+								padding: 12px 36px 0;
+								text-align: center;
+								color: $whiteColor;
+								width: 100%;
+								float: left;
+
+								.title{
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									font-weight: bold;
+									overflow: hidden;
+									transition: .15s;
+									padding: 0 0 4px;
+									font-size: 24px;
+								}
+
+								.artist{
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									overflow: hidden;
+									font-size: 18px;
+								}
+							}
+
+							.add{
+								margin: 32px 18px 0 0;
+								position: absolute;
 								right: 0;
-								left: 0;
 
-								.mat-slider-track-wrapper{
-									.mat-slider-track-background{
-										background-color: transparentize($whiteColor, .85);
-									}
+								button{
+									position: relative;
+									background: none;
+									box-shadow: none;
+									height: 24px;
+									float: left;
+									width: 24px;
+									padding: 0;
+									z-index: 9;
+									margin: 0;
 
-									.mat-slider-track-fill{
+									i{
 										background-color: $whiteColor;
 									}
 								}
+							}
+						}
 
-								.mat-slider-thumb-container{
-									.mat-slider-thumb{
-										background-color: $whiteColor;
-										border: none;
-										height: 12px;
-										bottom: -6px;
-										right: -6px;
-										width: 12px;
+						.progress{
+							box-sizing: border-box;
+							width: 100%;
+							float: left;
 
-										&:active{
-											transform: scale(2);
+							mat-slider{
+								height: 36px;
+								width: 100%;
+								padding: 0;
+								margin: 0;
+
+								.mat-slider-wrapper{
+									top: 18px;
+									right: 0;
+									left: 0;
+
+									.mat-slider-track-wrapper{
+										.mat-slider-track-background{
+											background-color: transparentize($whiteColor, .85);
+										}
+
+										.mat-slider-track-fill{
+											background-color: $whiteColor;
+										}
+									}
+
+									.mat-slider-thumb-container{
+										.mat-slider-thumb{
+											background-color: $whiteColor;
+											border: none;
+											height: 12px;
+											bottom: -6px;
+											right: -6px;
+											width: 12px;
+
+											&:active{
+												transform: scale(2);
+											}
 										}
 									}
 								}
 							}
 						}
-					}
 
-					.duration{
-						color: transparentize($whiteColor, .5);
-						margin: -6px 0 0;
-						font-size: 12px;
-						display: flex;
-						float: left;
-						width: 100%;
-
-						.current,
-						.total{
-							text-align: left;
+						.duration{
+							color: transparentize($whiteColor, .5);
+							margin: -6px 0 0;
+							font-size: 12px;
+							display: flex;
+							float: left;
 							width: 100%;
-						}
 
-						.total{
-							text-align: right;
-						}
-					}
-				}
-
-				.bottom{
-					justify-content: center;
-					padding: 18px 0 12px;
-					align-items: center;
-					display: flex;
-					width: 100%;
-					float: left;
-
-					button{
-						border-radius: 50% !important;
-						background: none;
-						box-shadow: none;
-
-						i{
-							background-color: $whiteColor;
-							mask-image: $spriteAudios;
-							mask-repeat: no-repeat;
-							display: block;
-						}
-
-						&.mat-accent{
-							color: #09f;
-						}
-
-						&.playPause{
-							transition: .2s;
-							margin: 0 12px;
-							height: 76px;
-							width: 76px;
-
-							&:active{
-								transform: scale(.8);
+							.current,
+							.total{
+								text-align: left;
+								width: 100%;
 							}
 
+							.total{
+								text-align: right;
+							}
+						}
+					}
+
+					.bottom{
+						justify-content: center;
+						padding: 18px 0 12px;
+						align-items: center;
+						position: relative;
+						display: flex;
+						width: 100%;
+						float: left;
+
+						button{
+							border-radius: 50% !important;
+							background: none;
+							box-shadow: none;
+
 							i{
-								mask-size: 48px 144px;
-								margin: 14px;
+								background-color: $whiteColor;
+								mask-image: $spriteAudios;
+								mask-repeat: no-repeat;
+								display: block;
+							}
+
+							&.mat-accent{
+								color: #09f;
+							}
+
+							&.playPause{
+								transition: .2s;
+								margin: 0 12px;
+								height: 76px;
+								width: 76px;
+
+								&:active{
+									transform: scale(.8);
+								}
+
+								i{
+									mask-size: 48px 144px;
+									margin: 14px;
+									height: 48px;
+									width: 48px;
+
+									&.play{
+										mask-position: 0 0;
+									}
+
+									&.pause{
+										mask-position: 0 -48px;
+									}
+								}
+							}
+
+							&.prev,
+							&.next{
+								margin: 4px 6px 4px 24px;
 								height: 48px;
 								width: 48px;
 
-								&.play{
-									mask-position: 0 0;
+								i{
+									mask-position: 0 -96px;
+									mask-size: 48px 144px;
+									margin: 12px;
+									height: 24px;
+									width: 24px;
+								}
+							}
+
+							&.next{
+								margin: 4px 24px 4px 6px;
+
+								i{
+									mask-position: -24px -96px;
+								}
+							}
+
+							&.shuffle,
+							&.repeat{
+								margin: 4px 0;
+								height: 24px;
+								width: 24px;
+
+								i{
+									mask-position: 0 -100px;
+									mask-size: 40px 120px;
+									height: 20px;
+									width: 20px;
+									margin: 2px;
 								}
 
-								&.pause{
-									mask-position: 0 -48px;
+								&.active{
+									i{
+										background: $blueColor;
+									}
+								}
+							}
+
+							&.repeat{
+								i{
+									mask-position: -20px -100px;
+								}
+							}
+
+							&.disabled{
+								pointer-events: none;
+								
+								i{
+									background-color: $greyColor !important;
+									opacity: .5;
 								}
 							}
 						}
+					}
 
-						&.prev,
-						&.next{
-							margin: 4px 6px 4px 24px;
+					.close{
+						justify-content: center;
+						align-items: center;
+						display: flex;
+						width: 100%;
+						float: left;
+						padding: 0;
+
+						button{
+							border-radius: 50% !important;
+							background: none;
+							box-shadow: none;
 							height: 48px;
 							width: 48px;
 
 							i{
-								mask-position: 0 -96px;
-								mask-size: 48px 144px;
-								margin: 12px;
-								height: 24px;
-								width: 24px;
-							}
-						}
-
-						&.next{
-							margin: 4px 24px 4px 6px;
-
-							i{
-								mask-position: -24px -96px;
-							}
-						}
-
-						&.shuffle,
-						&.repeat{
-							margin: 4px 0;
-							height: 24px;
-							width: 24px;
-
-							i{
-								mask-position: 0 -100px;
-								mask-size: 40px 120px;
-								height: 20px;
-								width: 20px;
-								margin: 2px;
-							}
-
-							&.active{
-								i{
-									background: $blueColor;
-								}
-							}
-						}
-
-						&.repeat{
-							i{
-								mask-position: -20px -100px;
-							}
-						}
-
-						&.disabled{
-							pointer-events: none;
-							
-							i{
-								background-color: $greyColor !important;
-								opacity: .5;
+								background-color: $greyColor;
 							}
 						}
 					}
 				}
 
-				.close{
-					justify-content: center;
-					align-items: center;
-					display: flex;
-					width: 100%;
-					float: left;
-					padding: 0;
-
-					button{
-						border-radius: 50% !important;
-						background: none;
-						box-shadow: none;
-						height: 48px;
-						width: 48px;
-
-						i{
-							background-color: $greyColor;
-						}
-					}
-				}
-			}
-
-			.data{
-				-webkit-overflow-scrolling: touch;
-				display: inline-block;
-				padding: 12px 0 260px;
-				overflow-x: hidden;
-				overflow-y: auto;
-				width: 100%;
-				margin: 0;
-
-				ul{
+				.data{
+					-webkit-overflow-scrolling: touch;
+					display: inline-block;
 					position: relative;
-					display: block;
+					overflow-x: hidden;
+					overflow-y: auto;
+					max-height: 75vh;
 					width: 100%;
-					z-index: 1;
 					padding: 0;
 					margin: 0;
 
-					li{
-						color: $whiteColor;
+					ul{
+						padding: 12px 0 260px;
+						position: relative;
+						display: block;
+						width: 100%;
+						z-index: 1;
+						margin: 0;
+
+						li{
+							color: $whiteColor;
+						}
 					}
 				}
 			}
