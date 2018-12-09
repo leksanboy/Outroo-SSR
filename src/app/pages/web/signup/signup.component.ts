@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
 		ga('set', 'page', urlGa);
 		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Sign Up | Create an account');
 
 		// forgot password form

@@ -25,7 +25,7 @@ const routes: Routes = [
 	declarations: [
 		ShowAvatarComponent
 	],
-	exports : [
+	exports: [
 		ShowAvatarComponent
 	]
 })

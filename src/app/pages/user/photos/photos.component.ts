@@ -62,14 +62,14 @@ export class PhotosComponent implements OnInit, OnDestroy {
 		}
 
 		// Set component data
-        this.activeRouter = this.router.events
-	        .subscribe(event => {
+		this.activeRouter = this.router.events
+			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
 					this.window.scrollTo(0, 0);
 
-			    	// Get url data
-			    	let urlData: any = this.activatedRoute.snapshot;
+					// Get url data
+					let urlData: any = this.activatedRoute.snapshot;
 
 					// Get user data
 					this.siteUserData(urlData.params.id);
@@ -78,9 +78,9 @@ export class PhotosComponent implements OnInit, OnDestroy {
 					this.default('default', urlData.params.id);
 
 					// Open one photo on open photo and reloaded page
-			    	if (urlData.params.name)
+					if (urlData.params.name)
 						this.showOne(urlData.params.name);
-			  	}
+				}
 			});
 
 		// Get language
@@ -125,12 +125,12 @@ export class PhotosComponent implements OnInit, OnDestroy {
 				this.userData = res;
 
 				// Set document title
-				this.titleService.setTitle(res.name + ' - Photos');
+				this.titleService.setTitle(res.name + ' - ' + this.translations.photos);
 
 				// Set Google analytics
 				let urlGa =  '[' + res.id + ']/' + id + '/photos';
-		    	ga('set', 'page', urlGa);
-		    	ga('send', 'pageview');
+				ga('set', 'page', urlGa);
+				ga('send', 'pageview');
 			});
 	}
 

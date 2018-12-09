@@ -71,10 +71,6 @@ import { AppComponent } from './app.component';
 import { AlertService } from './core/services/alert/alert.service';
 import { AlertComponent } from './core/services/alert/alert.component';
 
-// Audio player mobile
-import { PlayerMobileService } from './core/services/playerMobile/playerMobile.service';
-import { PlayerMobileComponent } from './core/services/playerMobile/playerMobile.component';
-
 // Active ssession
 import { ActiveSessionComponent } from './core/services/activeSession/activeSession.component';
 
@@ -82,7 +78,6 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 	declarations: [
 		AppComponent,
 		AlertComponent,
-		PlayerMobileComponent,
 		ActiveSessionComponent
 	],
 	imports: [
@@ -142,7 +137,6 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 	],
 	providers: [
 		AlertService,
-		PlayerMobileService,
 		AudioDataService,
 		BookmarksDataService,
 		ChatDataService,
@@ -163,10 +157,10 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 })
 export class AppModule {
 	constructor(
-	    @Inject(PLATFORM_ID) private platformId: Object,
-	    @Inject(APP_ID) private appId: string
+		@Inject(PLATFORM_ID) private platformId: Object,
+		@Inject(APP_ID) private appId: string
 	) {
-    	const platform = isPlatformBrowser(platformId) ? 'in the browser' : 'on the server';
-    	console.log(`Running ${platform} with appId=${appId}`);
+		const platform = isPlatformBrowser(platformId) ? 'in the browser' : 'on the server';
+		// console.log(`Running ${platform} with appId=${appId}`);
 	}
 }

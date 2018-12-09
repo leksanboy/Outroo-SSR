@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
-	MatButtonModule, 
+	MatButtonModule,
 	MatButtonToggleModule,
-	MatDialogModule, 
-	MatProgressSpinnerModule, 
+	MatDialogModule,
+	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule,
 	MatInputModule
@@ -38,7 +38,7 @@ const routes: Routes = [
 	declarations: [
 		NewSessionComponent
 	],
-	exports : [
+	exports: [
 		NewSessionComponent
 	]
 })

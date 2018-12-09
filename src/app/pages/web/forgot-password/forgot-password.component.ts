@@ -40,10 +40,10 @@ export class ForgotPasswordComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'forgot-password';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Forgot password | Recover account access');
 
 		// forgot password form

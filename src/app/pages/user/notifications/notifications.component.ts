@@ -77,9 +77,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 					ga('set', 'page', urlGa);
 					ga('send', 'pageview');
 
-					// Set Document title
-					this.titleService.setTitle('Notifications');
-
 					// Load defaultNotifications
 					this.defaultNotifications('default', this.sessionData.current.id);
 
@@ -145,6 +142,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+
+				// Set Document title
+				this.titleService.setTitle(this.translations.notifications);
 			});
 	}
 

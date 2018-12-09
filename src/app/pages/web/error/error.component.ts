@@ -17,10 +17,10 @@ export class ErrorComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'error';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Error');
 	}
 }

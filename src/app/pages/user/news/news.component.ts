@@ -81,25 +81,22 @@ export class NewsComponent implements OnInit, OnDestroy {
 					this.window.scrollTo(0, 0);
 
 					// Get url data
-			    	let urlData: any = this.activatedRoute.snapshot;
+					let urlData: any = this.activatedRoute.snapshot;
 
 					// Set Google analytics
 					let urlGa =  '[' + this.sessionData.current.id + ']/news';
 					ga('set', 'page', urlGa);
 					ga('send', 'pageview');
 
-					// Set Document title
-					this.titleService.setTitle('News');
-
 					// Load default
 					this.default('default', this.sessionData.current.id);
 
 					// Redirected hashtag
-			    	if (urlData.params.name) {
-			    		this.data.newSearchCaption = urlData.params.name;
-			    		this.data.selectedIndex = 2;
-			    		this.search('default');
-			    	}
+					if (urlData.params.name) {
+						this.data.newSearchCaption = urlData.params.name;
+						this.data.selectedIndex = 2;
+						this.search('default');
+					}
 				}
 			});
 
@@ -196,6 +193,9 @@ export class NewsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+
+				// Set Document title
+				this.titleService.setTitle(this.translations.news);
 			});
 	}
 

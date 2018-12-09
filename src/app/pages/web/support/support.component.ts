@@ -40,10 +40,10 @@ export class SupportComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'support';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Support');
 
 		// Form

@@ -19,6 +19,8 @@ export class UserDataService {
 
 	// Translations
 	getTranslations(lang) {
+		console.log('lang', lang);
+		
 		let language;
 		switch (lang) {
 			case '1': // English
@@ -42,8 +44,8 @@ export class UserDataService {
 		}
 
 		return this.http.get(environment.url + 'assets/langs/' + language + '.json')
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -59,9 +61,9 @@ export class UserDataService {
 
 		// Call api
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				this.setSessionData('login', res.json());
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -73,13 +75,13 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
 	logout() {
-		this.window.localStorage.removeItem('userData_Outhroo');
+		this.window.localStorage.removeItem('userData_' + environment.authHash);
 	}
 
 	setSessionData(type, data) {
@@ -90,10 +92,10 @@ export class UserDataService {
 				sessions : []
 			};
 
-			storageLoginData.sessions.push(data);
-			this.window.localStorage.setItem('userData_Outhroo', JSON.stringify(storageLoginData));
+			console.log('Session:', storageLoginData);
 
-			this.getSessionData();
+			storageLoginData.sessions.push(data);
+			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageLoginData));
 		} else if (type == 'update') {
 			let oldData = this.getSessionData();
 			let storageUpdateData: any = {
@@ -110,11 +112,11 @@ export class UserDataService {
 					storageUpdateData.sessions.push(oldData.sessions[i]);
 				}
 
-			this.window.localStorage.setItem('userData_Outhroo', JSON.stringify(storageUpdateData));
+			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageUpdateData));
 			
 			return this.getSessionData();
 		} else if (type == 'data') {
-			this.window.localStorage.setItem('userData_Outhroo', JSON.stringify(data));
+			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(data));
 
 			return this.getSessionData();
 		}
@@ -122,7 +124,7 @@ export class UserDataService {
 
 	getSessionData() {
 		if (this.window.localStorage) {
-			let data = this.window.localStorage.getItem('userData_Outhroo');
+			let data = this.window.localStorage.getItem('userData_' + environment.authHash);
 			
 			return JSON.parse(data);
 		}
@@ -134,8 +136,8 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -145,7 +147,7 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -158,7 +160,7 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -171,7 +173,7 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -184,7 +186,7 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -194,8 +196,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -207,7 +209,7 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -220,7 +222,7 @@ export class UserDataService {
 		};
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return this.setSessionData('update', res.json());
 			}));
 	}
@@ -232,8 +234,8 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -243,8 +245,8 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -253,8 +255,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -263,8 +265,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -274,8 +276,8 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -284,8 +286,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -294,8 +296,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -304,8 +306,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -318,8 +320,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -328,8 +330,8 @@ export class UserDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -340,8 +342,8 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 }

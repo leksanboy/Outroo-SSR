@@ -18,10 +18,10 @@ export class HeadersService {
 	) {}
 
 	getHeaders() {
-		let userData: any = JSON.parse(this.window.localStorage.getItem('userData_Outhroo'));
+		let userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + environment.authHash));
 		let id = userData ? userData.current.id : 0;
 		let auth = userData ? userData.current.authorization : 'pWtcN';
-		let authorization = id + 'xQ3s1RVrSR' + auth;
+		let authorization = id + environment.authHash + auth;
 		
 		// VAlidate authorization
 		let authorizationValidator = this.clicksPerSecond() ? authorization : null;
@@ -39,9 +39,9 @@ export class HeadersService {
 
 	clicksPerSecond() {
 		if(this.numberOfClicks.length < this.limitedClicksPerSecond) {
-		   this.numberOfClicks.push(new Date().getTime());
+			this.numberOfClicks.push(new Date().getTime());
 
-		   return true;
+			return true;
 		} else {
 			let diff = this.numberOfClicks[this.numberOfClicks.length -1] - this.numberOfClicks[0];
 			

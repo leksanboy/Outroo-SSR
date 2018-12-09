@@ -22,8 +22,8 @@ export class ChatDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -36,7 +36,7 @@ export class ChatDataService {
 
 		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -46,7 +46,7 @@ export class ChatDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -56,7 +56,7 @@ export class ChatDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -66,7 +66,7 @@ export class ChatDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -76,7 +76,7 @@ export class ChatDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 }

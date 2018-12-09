@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
 	public sessionData: any = [];
 	public translations: any = [];
 	public activeSessionStatus: boolean;
+	public errorMessage: boolean;
+	public errorMessageContent: string;
 
 	constructor(
 		private titleService: Title,
@@ -42,17 +44,17 @@ export class HomeComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'signin';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
+
+		// Set page title
+		this.titleService.setTitle('Outroo');
 
 		// login form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required]],
 			password: ['', [Validators.required]]
 		});
-
-		// Set page title
-		this.titleService.setTitle('Outhroo');
 
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -64,16 +66,20 @@ export class HomeComponent implements OnInit {
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+
+				// Set page title
+				this.titleService.setTitle(this.environment.name);
 			});
 	}
 
 	// Submit
-	submit(event:Event) {
+	submit(event: Event) {
 		this.submitLoading = true;
+		this.errorMessage = false;
 
 		if (this.actionForm.get('email').value.trim().length > 0 &&
 			this.actionForm.get('password').value.trim().length > 0
@@ -85,16 +91,14 @@ export class HomeComponent implements OnInit {
 					},
 					error => {
 						this.submitLoading = false;
-
-						// show error message
-						this.alertService.error(this.translations.emailOrPasswordIncorrect);
+						this.errorMessage = true;
+						this.errorMessageContent = this.translations.emailOrPasswordIncorrect;
 					}
 				);
 		} else {
 			this.submitLoading = false;
-
-			// show error message
-			this.alertService.error(this.translations.completeAllFields);
+			this.errorMessage = true;
+			this.errorMessageContent = this.translations.completeAllFields;
 		}
 	}
 }

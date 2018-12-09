@@ -5,7 +5,7 @@
 	// Email Register "Welcome"
 	function emailWelcome($name, $email, $hash){
 		$urlWeb = 'https://outhroo.com/';
-		$nameWeb = 'Outhroo';
+		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
 										<div id="main">
@@ -96,7 +96,7 @@
 		$mail->setFrom('noreply.outhroo@gmail.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
-		$mail->Subject = 'Welcome to Outhroo, '.$name.'! Please confirm your email.';
+		$mail->Subject = 'Welcome to Outroo, '.$name.'! Please confirm your email.';
 		$mail->IsHTML(true);
 		$mail->Body = $messageContent;
 		$mail->Send();
@@ -105,7 +105,7 @@
 	// Email new login
 	function emailNewLogin($name, $email, $hash, $device, $location, $date){
 		$urlWeb = 'https://outhroo.com/';
-		$nameWeb = 'Outhroo';
+		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
 										<div id="main">
@@ -221,7 +221,7 @@
 	// Email forgot password
 	function emailForgotPassword($name, $email, $hash){
 		$urlWeb = 'https://outhroo.com/';
-		$nameWeb = 'Outhroo';
+		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
 										<div id="main">
@@ -330,7 +330,7 @@
 	// Email reset password
 	function emailResetPassword($name, $email, $hash){
 		$urlWeb = 'https://outhroo.com/';
-		$nameWeb = 'Outhroo';
+		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
 										<div id="main">
@@ -427,7 +427,7 @@
 	// Email support question
 	function emailSupportQuestion($email, $content){
 		$urlWeb = 'https://outhroo.com/';
-		$nameWeb = 'Outhroo';
+		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
 										<div id="main">

@@ -24,7 +24,7 @@ export class UserResolver implements Resolve<any> {
 			params = params.replace('&', '?');
 
 		return this.http.get(url + params)
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				// User response
 				let userData = res.json();
 
@@ -42,7 +42,7 @@ export class UserResolver implements Resolve<any> {
 				// Call metaService
 				this.metaService.setData(metaData);
 
-				return res.json() 
+				return res.json();
 			}));
 	}
 }

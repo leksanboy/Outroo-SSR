@@ -22,7 +22,7 @@ export class PhotoDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -32,7 +32,7 @@ export class PhotoDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -42,7 +42,7 @@ export class PhotoDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -52,7 +52,7 @@ export class PhotoDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -62,7 +62,7 @@ export class PhotoDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -75,7 +75,7 @@ export class PhotoDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -85,7 +85,7 @@ export class PhotoDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
@@ -99,8 +99,8 @@ export class PhotoDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -111,8 +111,8 @@ export class PhotoDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -123,8 +123,8 @@ export class PhotoDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 }

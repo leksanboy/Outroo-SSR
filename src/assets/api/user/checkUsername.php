@@ -1,5 +1,8 @@
 <?php include "../db.php";
-	$inUse = array("outhroo", "sasa", "vitaliy", "oleksandr", "rafalsky", "rafalskyy", "audios", "followers", "following", "main", "notifications", "photos", "settings", "error", "forgot-password", "reset-password", "confirm-email", "signin", "login", "signup", "user", "web", "core", "pages", "assets", "environments", "ssl-https", "about", "support", "help", "blog", "press", "api", "developer", "jobs", "privacy", "terms");
+	$inUse = array("outhroo", "outroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy", 
+					"user", "audios", "bookmarks", "saved", "followers", "following", "home", "main", "news", "notifications", "photos", "settings",
+					"web", "about", "confirm-email", "error", "forgot-password", "logout", "privacy", "terms", "reset-password", "signin", "login", "signup", "support", "help", "blog", "press", "developer", "jobs",
+					"core", "pages", "assets", "environments", "ssl-https", "api");
 	$username = strtolower($_GET['username']);
 	$status = null;
 

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { 
-	MatButtonModule, 
+	MatButtonModule,
 	MatButtonToggleModule,
-	MatDialogModule, 
+	MatDialogModule,
 	MatMenuModule,
-	MatProgressSpinnerModule, 
+	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule,
 	MatSliderModule
@@ -41,7 +41,7 @@ const routes: Routes = [
 	declarations: [
 		ShowMobilePlayerComponent
 	],
-	exports : [
+	exports: [
 		ShowMobilePlayerComponent
 	]
 })

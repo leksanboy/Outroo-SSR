@@ -2008,121 +2008,195 @@ body{
 
 	/*Home page*/
 	.pageHomeBox{
-		margin: 104px auto 0;
-		max-width: 840px;
-		height: 600px;
+		position: absolute;
+		height: 100%;
 		width: 100%;
+		left: 0;
+		top: 0;
 
 		.left{
+			background-color: $redColor;
+			justify-content: center;
+			align-items: center;
 			position: relative;
-			width: 500px;
+			overflow: auto;
+			display: flex;
 			height: 100%;
 			float: left;
+			width: 50%;
 
-			.image{
-				background-image: url('assets/images/home_background.png');
-				background-repeat: no-repeat;
-				background-size:contain;
-				display: inline-block;
-				position: absolute;
-				max-width: 500px;
-				margin: auto;
-				bottom: 0;
-				right: 0;
-				left: 0;
-				top: 0;
+			.text{
+				box-sizing: border-box;
+				text-align: center;
+				color: $whiteColor;
+				font-weight: bold;
+				line-height: 64px;
+				margin: -48px 0 0;
+				padding: 0 48px;
+				font-size: 64px;
+				width: 100%;
+			}
+
+			.footer{
+				color: transparentize($whiteColor, .5);
+			    justify-content: center;
+			    position: absolute;
+				line-height: 24px;
+			    font-size: 13px;
+			    margin: 36px 0;
+			    display: flex;
+			    width: 100%;
+			    bottom: 0;
+
+			    .copyright{
+					padding: 0 6px;
+					float: left;
+				}
+
+				.divider{
+					background-color: transparentize($whiteColor, .5);
+					margin: 0 6px;
+					height: 28px;
+					float: left;
+					width: 1px;
+				}
+
+				ul{
+					float: left;
+					padding: 0;
+					margin: 0;
+
+					li{
+						display: inline-block;
+						font-weight: bold;
+						list-style: none;
+						padding: 0 6px;
+
+						a{
+							color: $whiteColor;
+
+							&:hover{
+								text-decoration: underline;
+								color: $whiteColor !important;
+							}
+						}
+					}
+				}
 			}
 		}
 
 		.right{
-			box-sizing: border-box;
-			width: 340px;
+			background-color: $whiteColor;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			overflow: auto;
+			display: flex;
+			height: 100%;
 			float: left;
+			width: 50%;
 
-			.title{
-				padding: 84px 0 12px;
-				text-align: center;
-				font-weight: bold;
+			.inner{
+				width: 360px;
 
 				.logo{
-					mask-size: 48px calc(48px * 15);
-					background-color: $blackColor;
-					mask-image: $spriteImages;
-					mask-repeat: no-repeat;
-					display: inline-block;
-					mask-position: 0 0;
-					height: 48px;
-					width: 48px;
-				}
-			}
-
-			.form{
-				box-sizing: border-box;
-				padding: 0 18px;
-				width: 100%;
-				float: left;
-				margin: 0;
-
-				.buttons{
+					padding: 48px 0 36px;
 					text-align: center;
-					margin: 24px 0 0;
+
+					.image{
+						mask-size: 48px calc(48px * 15);
+						background-color: $blackColor;
+						mask-image: $spriteImages;
+						mask-repeat: no-repeat;
+						display: inline-block;
+						mask-position: 0 0;
+						height: 48px;
+						width: 48px;
+					}
+				}
+
+				.form{
+					box-sizing: border-box;
+					padding: 0 18px;
 					width: 100%;
 					float: left;
+					margin: 0;
 
-					button{
-						background: $blueColor;
-						color: $whiteColor;
-
-						mat-progress-spinner{
-							height: 16px !important;
-							width: 16px !important;
-							margin: 10px 6px 0 0;
-							float: left;
-
-							svg {
-								height: 16px !important;
-								width: 16px !important;
-
-								circle{
-									stroke: $whiteColor !important;
-								}
-							}
-						}
-					}
-
-					.forgot{
-						margin: 24px auto 0;
-						width: 100%;
-						float: left;
-
-						a{
-							border-radius: 5px;
-							line-height: 18px;
-							color: $greyColor;
-							padding: 9px;
-							height: 18px;
-
-							&:hover{
-								background-color: transparentize($blueColor, .85);
-							}
-						}
-					}
-
-					.create{
-						border: 1px solid transparentize($greyColor, .75);
+					.error{
+						background-color: transparentize($redColor, .84);
+						border: 1px solid $redColor;
 						box-sizing: border-box;
 						text-align: center;
 						border-radius: 5px;
-						padding: 24px 12px;
+						font-weight: bold;
+						color: $redColor;
+						font-size: 14px;
+						padding: 12px;
+						width: 100%;
+						float: left;
+					}
+
+					.buttons{
+						text-align: center;
 						margin: 24px 0 0;
 						width: 100%;
 						float: left;
 
-						a{
-							color: $blueColor;
+						button{
+							background: $blueColor;
+							color: $whiteColor;
 
-							&:hover{
-								text-decoration: underline;
+							mat-progress-spinner{
+								height: 16px !important;
+								width: 16px !important;
+								margin: 10px 6px 0 0;
+								float: left;
+
+								svg {
+									height: 16px !important;
+									width: 16px !important;
+
+									circle{
+										stroke: $whiteColor !important;
+									}
+								}
+							}
+						}
+
+						.forgot{
+							margin: 24px auto 0;
+							width: 100%;
+							float: left;
+
+							a{
+								border-radius: 5px;
+								line-height: 18px;
+								color: $greyColor;
+								padding: 9px;
+								height: 18px;
+
+								&:hover{
+									background-color: transparentize($blueColor, .85);
+								}
+							}
+						}
+
+						.create{
+							border: 1px solid transparentize($greyColor, .75);
+							box-sizing: border-box;
+							text-align: center;
+							border-radius: 5px;
+							padding: 24px 12px;
+							margin: 24px 0 0;
+							width: 100%;
+							float: left;
+
+							a{
+								color: $blueColor;
+
+								&:hover{
+									text-decoration: underline;
+								}
 							}
 						}
 					}
@@ -2146,36 +2220,6 @@ body{
 			mask-position: 0 0;
 			height: 48px;
 			width: 48px;
-		}
-	}
-
-	/*Footer*/
-	.footer{
-		text-align: center;
-	    font-weight: bold;
-		line-height: 24px;
-	    font-size: 13px;
-	    margin: 36px 0;
-	    width: 100%;
-	    float: left;
-
-		.pages{
-			ul{
-				float: left;
-				width: 100%;
-				padding: 0;
-				margin: 0;
-
-				li{
-					display: inline-block;
-					list-style: none;
-					padding: 0 6px;
-				}
-			}
-		}
-
-		.copyright{
-			color: $greyColor;
 		}
 	}
 
@@ -4216,6 +4260,7 @@ body{
 					display: inline-block;
 					mask-position: 0 0;
 					margin: 16px 0 0;
+					cursor: pointer;
 					height: 24px;
 					width: 24px;
 				}
@@ -7544,18 +7589,11 @@ body{
 		}
 
 		.pageHomeBox{
-			margin: 24px auto;
-			max-width: 100%;
-			height: 100%;
-			width: 100%;
-			float: left;
-
 			.left{
 				display: none;
 			}
 
 			.right{
-				border: none;
 				width: 100%;
 			}
 		}
@@ -8528,7 +8566,6 @@ body{
 			}
 		}
 
-		/*TODO: Añadir padding.bottom en iphone x*/
 		.mobilePlayer{
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $blackColor;

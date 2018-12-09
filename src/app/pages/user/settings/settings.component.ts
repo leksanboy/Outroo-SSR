@@ -73,9 +73,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					ga('set', 'page', urlGa);
 					ga('send', 'pageview');
 
-					// Set Document title
-					this.titleService.setTitle('Settings');
-
 					// Set froms
 					this.setForms(this.sessionData.current);
 				}
@@ -103,6 +100,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+
+				// Set Document title
+				this.titleService.setTitle(this.translations.settings);
 
 				// Data personal about
 				this.aboutEdit('writingChanges', this.sessionData.current.aboutOriginal);

@@ -86,9 +86,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 					ga('set', 'page', urlGa);
 					ga('send', 'pageview');
 
-					// Set Document title
-					this.titleService.setTitle('Home');
-
 					// Load default
 					this.default('default', this.sessionData.current.id, this.sessionData.current.id);
 				}
@@ -164,22 +161,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+
+				// Set Document title
+				this.titleService.setTitle(this.translations.home);
 			});
 	}
 
 	// Play video
-    playVideo(item, player){
-    	player = document.getElementById(player);
-    	player.load();
-    	player.play();
-    	item.playButton = true;
+	playVideo(item, player){
+		player = document.getElementById(player);
+		player.load();
+		player.play();
+		item.playButton = true;
 
-    	player.addEventListener('ended', myHandler, false);
+		player.addEventListener('ended', myHandler, false);
 
-    	function myHandler(e) {
-    		item.playButton = false;
-	    }
-    }
+		function myHandler(e) {
+			item.playButton = false;
+		}
+	}
 
 	// Default
 	default(type, user, session) {
@@ -321,7 +321,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	// Play item song
 	playItem(data, item, key, type) {
 		if (!this.sessionData.current.id) {
-		    this.alertService.success(this.translations.createAnAccountToListenSong);
+			this.alertService.success(this.translations.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
 				item.playing = !item.playing;

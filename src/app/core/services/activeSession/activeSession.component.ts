@@ -1,7 +1,6 @@
-import { DOCUMENT } from '@angular/platform-browser';
 import { Component, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { Location, PlatformLocation } from '@angular/common';
+import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
@@ -13,7 +12,6 @@ import { PhotoDataService } from '../user/photoData.service';
 import { PlayerService } from '../player/player.service';
 import { PublicationsDataService } from '../user/publicationsData.service';
 import { SessionService } from '../session/session.service';
-import { PlayerMobileService } from '../playerMobile/playerMobile.service';
 import { UserDataService } from '../user/userData.service';
 
 import { NewPublicationComponent } from '../../../../app/pages/common/newPublication/newPublication.component';
@@ -79,7 +77,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private photoDataService: PhotoDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private playerMobileService: PlayerMobileService,
 		private bottomSheet: MatBottomSheet
 	) {
 		// Get session data
@@ -98,10 +95,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 				value: 75
 			},
 			current: {
-				title: "Loading...",
-				time: "0:00",
-				duration: "0:00",
-				image: "",
+				title: 'Loading...',
+				time: '0:00',
+				duration: '0:00',
+				image: '',
 				key: 0,
 				progress: 0,
 				initialized: false,
@@ -117,10 +114,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
 
 		// iPhone X
-		if (this.window)
-			if (this.window.screen)
-				if (this.window.screen.height == 812 || this.window.screen.height == 2436)
+		if (this.window) {
+			if (this.window.screen) {
+				if (this.window.screen.height === 812 || this.window.screen.height === 2436) {
 					this.document.body.classList.add('iphoneXClass');
+				}
+			}
+		}
 
 		// Return home if no access
 		if (!this.sessionData) {
@@ -128,20 +128,19 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionData.current = [];
 			this.deniedAccessOnlySession = true;
 
-			if (this.router.url == '/settings' || this.router.url == '/notifications' || this.router.url == '/news' || this.router.url == '/home') {
+			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
 				this.userDataService.noSessionData();
-				console.log("No tengo session y no puedo acceder a settings, notifications, news, home");
+				console.log('No tengo session y no puedo acceder a settings, notifications, news, home');
 			} else {
-				console.log("No tengo session pero puedo ver ciertas paginas :::> [", this.router.url, ']')
+				console.log('No tengo session pero puedo ver ciertas paginas :::> [', this.router.url, ']');
 			}
 		} else {
-			// console.log("Session existe: ", this.router.url);
-
 			// Add dark theme
-			if (this.sessionData.current.theme)
+			if (this.sessionData.current.theme) {
 				this.document.body.classList.add('darkTheme');
-			else
+			} else {
 				this.document.body.classList.remove('darkTheme');
+			}
 
 			// Set list information
 			this.sessionData.current.listInformation = null;
@@ -184,12 +183,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get play/pause track
 			this.playerService.getPlayTrack()
 				.subscribe(data => {
-					if (data.buttonType == 'next')
+					if (data.buttonType === 'next') {
 						this.playItem('next', data.key);
-					else if (data.buttonType == 'prev')
+					} else if (data.buttonType === 'prev') {
 						this.playItem('prev', data.key);
-					else
+					} else {
 						this.playItem('item', data.key);
+					}
 				});
 
 			// Get session data
@@ -222,12 +222,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get session add account
 			this.sessionService.getDataAddAccount()
 				.subscribe(data => {
-					if (data.type == 'create')
+					if (data.type === 'create') {
 						this.openNewSession();
-					else if (data.type == 'set')
+					} else if (data.type === 'set') {
 						this.setCurrentUser(data.data);
-					else if (data.type == 'close')
+					} else if (data.type === 'close') {
 						this.closeSession(data.data);
+					}
 				});
 
 			// Get session data theme
@@ -303,7 +304,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	ngAfterViewInit() {
 		this.audio = this.audioPlayerHtml.nativeElement;
 
-		let self = this;
+		const self = this;
 		if (self.audio) {
 			// Check if can play
 			self.audio.addEventListener('canplay', function() {
@@ -320,20 +321,22 @@ export class ActiveSessionComponent implements AfterViewInit {
 			self.audio.addEventListener('playing', function() {
 				self.playItem('playing', self.audioPlayerData.current.key);
 
-				if ('mediaSession' in navigator)
+				if ('mediaSession' in navigator) {
 					self.updateMetadata();
+				}
 			});
 
 			// Progress bar and timing
 			self.audio.addEventListener('timeupdate', function() {
-				let countDown = Math.round(self.audio.duration - self.audio.currentTime);
+				const countDown = Math.round(self.audio.duration - self.audio.currentTime);
 				self.audioPlayerData.current.time = self.formatTime(self.audio.currentTime);
 
-				let durationCountDown = self.formatTime(countDown);
-				self.audioPlayerData.current.duration = parseInt(durationCountDown.split(':')[1]) == 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
-				self.audioPlayerData.list[self.audioPlayerData.current.key].countdown = parseInt(durationCountDown.split(':')[1]) == 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
+				const durationCountDown = self.formatTime(countDown);
+				const radix = 10; // Hexadecimal
+				self.audioPlayerData.current.duration = parseInt(durationCountDown.split(':')[1], radix) === 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
+				self.audioPlayerData.list[self.audioPlayerData.current.key].countdown = parseInt(durationCountDown.split(':')[1], radix) === 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
 
-				let progress = ((self.audio.currentTime / self.audio.duration) * 1000);
+				const progress = ((self.audio.currentTime / self.audio.duration) * 1000);
 				self.audioPlayerData.current.progress = progress;
 			});
 
@@ -344,15 +347,17 @@ export class ActiveSessionComponent implements AfterViewInit {
 				if (self.audioPlayerData.repeat) {
 					key = self.audioPlayerData.current.key;
 				} else {
-					if (self.audioPlayerData.shuffle)
+					if (self.audioPlayerData.shuffle) {
 						key = Math.floor(Math.random() * self.audioPlayerData.list.length) + 0;
-					else
-						key = (self.audioPlayerData.list.length == self.audioPlayerData.current.key+1) ? 0 : self.audioPlayerData.current.key+1;
+					} else {
+						key = (self.audioPlayerData.list.length === self.audioPlayerData.current.key + 1) ? 0 : self.audioPlayerData.current.key + 1;
+					}
 				}
 
 				// Check if is ad item
-				if (self.audioPlayerData.list[key].contentTypeAd)
+				if (self.audioPlayerData.list[key].contentTypeAd) {
 					key = key + 1;
+				}
 
 				self.playItem('item', key);
 			});
@@ -380,7 +385,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -388,36 +393,36 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Scroll to top
-	scrollTop(){
+	scrollTop() {
 		this.window.scrollTo(0, 0);
 	}
 
 	// Update session data
-	updateSessionDataFromSettings(data){
+	updateSessionDataFromSettings(data) {
 		this.sessionData = data;
 	}
 
 	// Default audios
 	defaultAudios(user) {
-		let data = {
+		const data = {
 			user: user,
 			type: 'default',
 			rows: 0,
 			cuantity: environment.cuantity
-		}
+		};
 
 		this.audioDataService.default(data)
 			.subscribe(res => {
-				if (!res || res.length == 0) {
+				if (!res || res.length === 0) {
 					this.audioPlayerData.noData = true;
-					this.audioPlayerData.current.title = "Upload or search some songs";
+					this.audioPlayerData.current.title = 'Upload or search some songs';
 				} else {
 					this.audioPlayerData.noData = false;
 					this.audioPlayerData.list = res;
 					this.audioPlayerData.current.original_title = res[0].original_title ? res[0].original_title : res[0].title;
 					this.audioPlayerData.current.original_artist = res[0].original_artist ? res[0].original_artist : res[0].title;
 					this.audioPlayerData.current.duration = res[0].duration;
-					this.audioPlayerData.current.image = res[0].image ? (this.audioPlayerData.path + "thumbnails/" + res[0].image) : '';
+					this.audioPlayerData.current.image = res[0].image ? (this.audioPlayerData.path + 'thumbnails/' + res[0].image) : '';
 
 					this.audioPlayerData.item = res[0];
 					this.audioPlayerData.key = 0;
@@ -431,14 +436,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Pending notifications
-	pendingNotifications(){
+	pendingNotifications() {
 		this.notificationsDataService.pending(this.sessionData.current.id)
 			.subscribe(res => {
 				this.sessionData.current.countPendingNotifications = res;
 
 				// Get data to notifications box
-				if (res > 0)
+				if (res > 0) {
 					this.defaultNotifications(this.sessionData.current.id);
+				}
 			});
 	}
 
@@ -451,23 +457,23 @@ export class ActiveSessionComponent implements AfterViewInit {
 			loadMoreData: false,
 			loadingMoreData: false,
 			noMore: false
-		}
+		};
 
-		let data = {
+		const data = {
 			user: user,
 			type: 'box',
 			rows: this.dataNotifications.rows,
-			cuantity: environment.cuantity/3
-		}
+			cuantity: environment.cuantity / 3
+		};
 
 		this.notificationsDataService.default(data)
 			.subscribe(res => {
 				this.dataNotifications.loadingData = false;
 
-				if (!res || res.length == 0) {
+				if (!res || res.length === 0) {
 					this.dataNotifications.noMore = true;
 				} else {
-					for (let i in res){
+					for (let i in res) {
 						setTimeout(() => {
 							res[i].status = 1;
 						}, 1800);
@@ -482,7 +488,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Show notifications web
-	showNotificationsBoxWeb(){
+	showNotificationsBoxWeb() {
 		this.showNotificationsBox = !this.showNotificationsBox;
 
 		// Count to '0'
@@ -491,11 +497,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Show photo from url if is one
 	showNotification(item) {
-		if (item.url == 'photos') {
-			if (item.urlType == 'list') {
+		if (item.url === 'photos') {
+			if (item.urlType === 'list') {
 				this.location.go(this.router.url + '#photo');
 
-				let config = {
+				const config = {
 					disableClose: false,
 					data: {
 						comeFrom: 'photos',
@@ -509,21 +515,21 @@ export class ActiveSessionComponent implements AfterViewInit {
 				};
 
 				// Open dialog
-				let dialogRef = this.dialog.open(ShowPhotoComponent, config);
+				const dialogRef = this.dialog.open(ShowPhotoComponent, config);
 				dialogRef.afterClosed().subscribe((result: any) => {
 					this.location.go(this.router.url);
 				});
 			} else { // single
-				let data = {
+				const data = {
 					name: item.contentData.name,
 					session: this.sessionData.current.id
-				}
+				};
 
 				this.photoDataService.getDataByName(data)
 					.subscribe((res: any) => {
 						this.location.go(this.router.url + '#photo');
 
-						let config = {
+						const config = {
 							disableClose: false,
 							data: {
 								comeFrom: 'notifications',
@@ -537,24 +543,24 @@ export class ActiveSessionComponent implements AfterViewInit {
 						};
 
 						// Open dialog
-						let dialogRef = this.dialog.open(ShowPhotoComponent, config);
+						const dialogRef = this.dialog.open(ShowPhotoComponent, config);
 						dialogRef.afterClosed().subscribe((result: any) => {
 							this.location.go(this.router.url);
 						});
 					});
 
 			}
-		} else if (item.url == 'publications') {
-			let data = {
+		} else if (item.url === 'publications') {
+			const data = {
 				name: item.contentData.name,
 				session: this.sessionData.current.id
-			}
+			};
 
 			this.publicationsDataService.getDataByName(data)
 				.subscribe((res: any) => {
 					this.location.go(this.router.url + '#publication');
 
-					let config = {
+					const config = {
 						disableClose: false,
 						data: {
 							comeFrom: 'notifications',
@@ -566,7 +572,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					};
 
 					// Open dialog
-					let dialogRef = this.dialog.open(ShowPublicationComponent, config);
+					const dialogRef = this.dialog.open(ShowPublicationComponent, config);
 					dialogRef.afterClosed().subscribe((result: any) => {
 						this.location.go(this.router.url);
 					});
@@ -578,7 +584,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	showAvatar(data) {
 		this.location.go(this.router.url + '#avatar');
 
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				translations: this.translations,
@@ -587,7 +593,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		};
 
 		// Open dialog
-		let dialogRef = this.dialog.open(ShowAvatarComponent, config);
+		const dialogRef = this.dialog.open(ShowAvatarComponent, config);
 		dialogRef.afterClosed().subscribe((result: any) => {
 			this.location.go(this.router.url);
 		});
@@ -595,10 +601,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// New publication
 	newPublication(data) {
-		if (data.type == 'new') {
+		if (data.type === 'new') {
 			this.location.go(this.router.url + '#publication');
 
-			let config = {
+			const config = {
 				disableClose: false,
 				data: {
 					translations: this.translations,
@@ -606,45 +612,42 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 			};
 
-			console.log("NewPublicationComponent config:", config);
-
 			// Open dialog
-			let dialogRef = this.dialog.open(NewPublicationComponent, config);
+			const dialogRef = this.dialog.open(NewPublicationComponent, config);
 			dialogRef.afterClosed().subscribe((result: any) => {
 				this.location.go(this.router.url);
 
-				if (result)
+				if (result) {
 					this.sessionService.setDataNewPublication(result);
+				}
 			});
 		}
 	}
 
 	// Listener click on href
-	clickElementRef(event){
-		if (event.target.className == 'mention') {
-			let user = event.target.innerText.substring(1);
+	clickElementRef(event) {
+		if (event.target.className === 'mention') {
+			const user = event.target.innerText.substring(1);
 			this.router.navigate([user]);
-		} else if (event.target.className == 'hashtag') {
-
+		} else if (event.target.className === 'hashtag') {
 			// Close all dialogs
 			this.dialog.closeAll();
 
 			// Data
-			let hash = 'news/'+ event.target.innerText.substring(1);
+			const hash = 'news/' + event.target.innerText.substring(1);
 			this.router.navigate([hash]);
-		} else if (event.target.className == 'url') {
+		} else if (event.target.className === 'url') {
 			this.window.open(event.target.innerText, '_blank');
 		}
 	}
 
 	// Player buttons
 	playItem(type, key) {
-		switch(type){
+		switch (type) {
 			case('item'):
-				console.log("playItem", this.audio);
-
-				if (this.audioPlayerData.current.key == key && this.audioPlayerData.current.user == this.audioPlayerData.user && this.audioPlayerData.current.type == this.audioPlayerData.type) { // Play/pause current
-					if (this.audioPlayerData.playing == false) {
+				// Play/pause current
+				if (this.audioPlayerData.current.key === key && this.audioPlayerData.current.user === this.audioPlayerData.user && this.audioPlayerData.current.type === this.audioPlayerData.type) {
+					if (this.audioPlayerData.playing === false) {
 						this.audioPlayerData.item.playing = true;
 						this.audioPlayerData.list[key].playing = true;
 						this.audioPlayerData.playing = true;
@@ -664,8 +667,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.playItem('stop', null);
 					this.audioPlayerData.current.initialized = true;
 
-					for (let i in this.audioPlayerData.list)
+					for (let i in this.audioPlayerData.list) {
 						this.audioPlayerData.list[i].playing = false;
+					}
 
 					this.audioPlayerData.list[key].playing = true;
 					this.audioPlayerData.loadingToPlay = true;
@@ -677,7 +681,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.original_artist = this.audioPlayerData.list[key].original_artist ? this.audioPlayerData.list[key].original_artist : this.audioPlayerData.list[key].title;
 					this.audioPlayerData.current.original_title = this.audioPlayerData.list[key].original_title ? this.audioPlayerData.list[key].original_title : this.audioPlayerData.list[key].title;
 					this.audioPlayerData.current.duration = this.audioPlayerData.list[key].duration;
-					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.audioPlayerData.path + "thumbnails/" + this.audioPlayerData.list[key].image) : '';
+					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.audioPlayerData.path + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
 					this.audio.src = this.audioPlayerData.path + this.audioPlayerData.list[key].name;
 					this.audio.load();
 					this.getColorFromAudioCover(this.audioPlayerData.current.image);
@@ -720,32 +724,36 @@ export class ActiveSessionComponent implements AfterViewInit {
 			case('prev'):
 				let prevKey;
 
-				if (this.audioPlayerData.shuffle)
+				if (this.audioPlayerData.shuffle) {
 					prevKey = Math.floor(Math.random() * this.audioPlayerData.list.length) + 0;
-				else
-					prevKey = (this.audioPlayerData.current.key == 0) ? (this.audioPlayerData.list.length - 1) : (this.audioPlayerData.current.key - 1);
+				} else {
+					prevKey = (this.audioPlayerData.current.key === 0) ? (this.audioPlayerData.list.length - 1) : (this.audioPlayerData.current.key - 1);
+				}
 
 				// Check if is ad item
-				if (this.audioPlayerData.list[prevKey].contentTypeAd)
+				if (this.audioPlayerData.list[prevKey].contentTypeAd) {
 					prevKey = prevKey - 1;
+				}
 
 				this.playItem('item', prevKey);
 			break;
 			case('next'):
 				let nextKey;
 
-				if (this.audioPlayerData.shuffle)
+				if (this.audioPlayerData.shuffle) {
 					nextKey = Math.floor(Math.random() * this.audioPlayerData.list.length) + 0;
-				else
-					nextKey = (this.audioPlayerData.current.key == this.audioPlayerData.list.length - 1) ? 0 : (this.audioPlayerData.current.key + 1);
+				} else {
+					nextKey = (this.audioPlayerData.current.key === this.audioPlayerData.list.length - 1) ? 0 : (this.audioPlayerData.current.key + 1);
+				}
 
 				// Check if is ad item
 				if (this.audioPlayerData.list[nextKey].contentTypeAd) {
 					// Check if last element of the list is ad
-					if (this.audioPlayerData.list[this.audioPlayerData.list.length - 1].contentTypeAd)
+					if (this.audioPlayerData.list[this.audioPlayerData.list.length - 1].contentTypeAd) {
 						nextKey = 0;
-					else
+					} else {
 						nextKey = nextKey + 1;
+					}
 				}
 
 				this.playItem('item', nextKey);
@@ -764,17 +772,17 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Replays +1
-	updateReplays(id, user){
-		let data = {
+	updateReplays(id, user) {
+		const data = {
 			id: id,
 			user: user
-		}
+		};
 
 		this.audioDataService.updateReplays(data).subscribe();
 	}
 
 	// Audio player on background screen
-	updateMetadata(){
+	updateMetadata() {
 		navigator.mediaSession.metadata = new MediaMetadata({
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
@@ -787,38 +795,40 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Time format
-	formatTime(time){
-		let duration = time,
+	formatTime(time) {
+		const duration = time,
 			hours = Math.floor(duration / 3600),
 			minutes = Math.floor((duration % 3600) / 60),
 			seconds = Math.floor(duration % 60),
 			result = [];
 
-		if (hours)
-			result.push(hours)
+		if (hours) {
+			result.push(hours);
+		}
 
-		result.push(((hours ? "0" : "") + (minutes ? minutes : 0)).substr(-2));
-		result.push(("0" + (seconds ? seconds : 0)).substr(-2));
+		result.push(((hours ? '0' : '') + (minutes ? minutes : 0)).substr(-2));
+		result.push(('0' + (seconds ? seconds : 0)).substr(-2));
 
-		return result.join(":");
+		return result.join(':');
 	}
 
 	// Progress bar
-	progressBar(event){
-		let time = ((event.value / 1000) * this.audio.duration);
+	progressBar(event) {
+		const time = ((event.value / 1000) * this.audio.duration);
 		this.audio.currentTime = time;
 	}
 
 	// Volume bar
-	volumeBar(type, event){
-		if (type == 'progress') {
+	volumeBar(type, event) {
+		if (type === 'progress') {
 			this.audioPlayerData.volume.mute = (event.value === 0) ? true : false;
 			this.audio.volume = event.value / 100;
 			this.audioPlayerData.volume.value = event.value;
-		} else if (type == 'save') {
-			if (event.value > 1)
+		} else if (type === 'save') {
+			if (event.value > 1) {
 				this.audioPlayerData.volume.beforeMuteValue = event.value;
-		} else if (type == 'mute') {
+			}
+		} else if (type === 'mute') {
 			this.audioPlayerData.volume.mute = !this.audioPlayerData.volume.mute;
 			this.audioPlayerData.volume.value = this.audioPlayerData.volume.mute ? 0 : this.audioPlayerData.volume.beforeMuteValue;
 			this.audio.volume = this.audioPlayerData.volume.mute ? 0 : (this.audioPlayerData.volume.beforeMuteValue / 100);
@@ -826,8 +836,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Equalizer
-	initEqualizer(){
-		let self = this;
+	initEqualizer() {
+		const self = this;
 
 		if ('AudioContext' in self.window) {
 			let canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height, gradient;
@@ -843,7 +853,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			source.connect(analyser);
 			analyser.connect(context.destination);
 
-			let frameLooper = function(){
+			const frameLooper = function() {
 				// self.window.webkitRequestAnimationFrame(frameLooper);
 				self.window.requestAnimationFrame(frameLooper);
 				fbc_array = new Uint8Array(analyser.frequencyBinCount);
@@ -851,60 +861,60 @@ export class ActiveSessionComponent implements AfterViewInit {
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				ctx.fillStyle = gradient; // Color of the bars
 				bars = 100;
-				
+
 				for (let i = 0; i < bars; i++) {
 					bar_x = i * 3;
 					bar_width = 2;
 					bar_height = -(fbc_array[i] / 2);
 					ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
 				}
-			}
+			};
 
 			frameLooper();
 		}
 	}
 
 	// Item audios options
-	itemAudiosOptions(type, item, playlist){
-		switch(type){
-			case("addRemoveSession"):
+	itemAudiosOptions(type, item, playlist) {
+		switch (type) {
+			case('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataARS = {
+				const dataARS = {
 					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'session',
 					id: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
 							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
-						
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.anErrorHasOcurred);
 					});
 			break;
-			case("addRemoveUser"):
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataARO = {
+				const dataARO = {
 					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.song
-				}
+				};
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
 						item.insertedId = res.json();
 
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
 							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
 
 						this.alertService.success(song + text);
@@ -912,44 +922,45 @@ export class ActiveSessionComponent implements AfterViewInit {
 						this.alertService.error(this.translations.anErrorHasOcurred);
 					});
 			break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					session: this.sessionData.current.id,
 					translations: this.translations,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
 							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.anErrorHasOcurred);
 					});
 			break;
-			case("createPlaylist"):
+			case('createPlaylist'):
 				this.location.go(this.router.url + '#NewPlaylist');
 
-				let config = {
+				const config = {
 					disableClose: false,
 					data: {
 						type: 'create',
 						sessionData: this.sessionData,
 						translations: this.translations
 					}
-				}
+				};
 
-				let dialogRef = this.dialog.open(NewPlaylistComponent, config);
+				const dialogRef = this.dialog.open(NewPlaylistComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
-					if (res){
+					if (res) {
 						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 						this.sessionService.setDataPlaylists(this.sessionData);
@@ -957,7 +968,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					}
 				});
 			break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 			break;
@@ -965,104 +976,91 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Get color
-	getColorFromAudioCover(image){
-		let self = this;
+	getColorFromAudioCover(image) {
+		const self = this;
 
-		if(image){
-			var img = document.createElement('img');
+		if (image) {
+			const img = document.createElement('img');
 				img.setAttribute('src', image);
-			var vibrant = new Vibrant(img);
-			var swatches = vibrant.swatches();
+			const vibrant = new Vibrant(img);
+			const swatches = vibrant.swatches();
 
-			for (var swatch in swatches)
-				if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-					if (swatch == 'Vibrant')
+			for (let swatch in swatches) {
+				if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
+					if (swatch === 'Vibrant') {
 						self.audioPlayerData.current.color = swatches[swatch].getHex();
+					}
+				}
+			}
 		} else {
 			self.audioPlayerData.current.color = null;
 		}
 	}
 
 	// Show Player on Mobile
-	showPlayerMobile(type){
-		let data = {
-			sessionData: this.sessionData,
-			translations: this.translations,
-			audio: this.audio,
-			data: this.audioPlayerData
-		}
-
-		// Show palyer
-		this.playerMobileService.show(data);
-	}
-
-	// Show Player on Mobile
-	showMobilePlayer(type){
-		// Config
-		let config = {
+	showMobilePlayer(type) {
+		const config = {
 			data: {
 				sessionData: this.sessionData,
 				playerData: this.audioPlayerData,
 				translations: this.translations,
 				audio: this.audio
 			}
-		}
+		};
 
 		// Set sheet
-		let bottomSheetRef = this.bottomSheet.open(ShowMobilePlayerComponent, config);
-
-		// Dismiss and return value
-		bottomSheetRef.afterDismissed().subscribe(val => {});
+		const bottomSheetRef = this.bottomSheet.open(ShowMobilePlayerComponent, config);
+		bottomSheetRef.afterDismissed().subscribe(val => {
+			// no actions
+		});
 	}
 
 	// Show playlist web
-	showPlaylistWeb(){
+	showPlaylistWeb() {
 		this.showUserBox = false;
 		this.showPlaylist = !this.showPlaylist;
 	}
 
 	// Show userBox web
-	showUserBoxWeb(){
+	showUserBoxWeb() {
 		this.showUserBox = !this.showUserBox;
-		this.showCloseSession = false; 
-		this.showChangeSession = false; 
+		this.showCloseSession = false;
+		this.showChangeSession = false;
 		this.showChangeLanguage = false;
 		this.showPlaylist = false;
 	}
 
 	// Show panel from bottom on mobile
-	showSessionPanelFromBottom(){
+	showSessionPanelFromBottom() {
 		this.showPlayer = false;
 
 		// Config
-		let config = {
+		const config = {
 			data: {
 				sessionData: this.sessionData
 			}
-		}
+		};
 
 		// Set sheet
-		let bottomSheetRef = this.bottomSheet.open(ShowSessionPanelMobileComponent, config);
-
-		// Dismiss and return value
+		const bottomSheetRef = this.bottomSheet.open(ShowSessionPanelMobileComponent, config);
 		bottomSheetRef.afterDismissed().subscribe(val => {
 			// no actions
 		});
 	}
 
 	// Add another session
-	openNewSession(){
+	openNewSession() {
 		this.location.go(this.router.url + '#AddAccount');
 
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations
 			}
-		}
+		};
 
-		let dialogRef = this.dialog.open(NewSessionComponent, config);
+		const dialogRef = this.dialog.open(NewSessionComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {
 			this.location.go(this.router.url);
 
@@ -1074,13 +1072,14 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Set session
-	setCurrentUser(data){
-		if (this.sessionData.current.id != data.id) {
+	setCurrentUser(data) {
+		if (this.sessionData.current.id !== data.id) {
 			// Dark/White theme
-			if (data.theme)
+			if (data.theme) {
 				this.document.body.classList.add('darkTheme');
-			else
+			} else {
 				this.document.body.classList.remove('darkTheme');
+			}
 
 			// Get translations
 			this.getTranslations(data.language);
@@ -1117,16 +1116,18 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Close session
-	closeSession(data){
-		if (this.sessionData.sessions.length == 1) {
+	closeSession(data) {
+		if (this.sessionData.sessions.length === 1) {
 			this.document.body.classList.remove('darkTheme');
 			this.userDataService.logout();
 			this.playItem('stop', null);
 			this.router.navigate(['logout']);
 		} else {
-			for (var i in this.sessionData.sessions)
-				if (this.sessionData.sessions[i].id == data.id)
+			for (let i in this.sessionData.sessions) {
+				if (this.sessionData.sessions[i].id === data.id) {
 					this.sessionData.sessions.splice(i, 1);
+				}
+			}
 
 			// Set different account and check if is not set and deleted
 			this.setCurrentUser(this.sessionData.sessions[0]);
@@ -1134,18 +1135,19 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Dark theme
-	changeTheme(){
+	changeTheme() {
 		this.sessionData.current.theme = !this.sessionData.current.theme;
 
-		if (this.sessionData.current.theme)
+		if (this.sessionData.current.theme) {
 			this.document.body.classList.add('darkTheme');
-		else
+		} else {
 			this.document.body.classList.remove('darkTheme');
+		}
 
-		let data = {
+		const data = {
 			id: this.sessionData.current.id,
 			theme: this.sessionData.current.theme
-		}
+		};
 
 		this.userDataService.updateTheme(data)
 			.subscribe(res => {
@@ -1153,10 +1155,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.sessionData = this.userDataService.getSessionData();
 					this.sessionService.setDataTheme(this.sessionData);
 
-					if (this.sessionData.current.theme)
+					if (this.sessionData.current.theme) {
 						this.alertService.success(this.translations.darkThemeEnabled);
-					else
+					} else {
 						this.alertService.success(this.translations.darkThemeDisabled);
+					}
 				}, 1000);
 			}, error => {
 				this.alertService.error(this.translations.anErrorHasOcurred);
@@ -1164,12 +1167,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Change language
-	changeLanguage(lang){
-		if (this.sessionData.current.language != lang.id) {
-			let data = {
+	changeLanguage(lang) {
+		if (this.sessionData.current.language !== lang.id) {
+			const data = {
 				id: this.sessionData.current.id,
 				language: lang.id
-			}
+			};
 
 			this.userDataService.updateLanguage(data)
 				.subscribe(res => {
@@ -1185,7 +1188,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.sessionService.setDataLanguage(this.sessionData);
 
 					// Set translations
-					this.getTranslations(this.sessionData.current.language)
+					this.getTranslations(this.sessionData.current.language);
 
 					// Set moment
 					this.momentService.setData(this.sessionData.current.language);
@@ -1199,62 +1202,59 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Report inapropiate content
-	openReport(data){
+	openReport(data) {
 		this.location.go(this.router.url + '#report');
 
-		// if (data.type == 'publication') {
-		// } else if (data.type == 'publicationComment') {
-		// } else if (data.type == 'photo') {
-		// } else if (data.type == 'photoComment') {
-		// } else if (data.type == 'audio') {
-		// } else if (data.type == 'audioPlaylist') {
-		// } else if (data.type == 'chat') {
+		// if (data.type === 'publication') {
+		// } else if (data.type === 'publicationComment') {
+		// } else if (data.type === 'photo') {
+		// } else if (data.type === 'photoComment') {
+		// } else if (data.type === 'audio') {
+		// } else if (data.type === 'audioPlaylist') {
+		// } else if (data.type === 'chat') {
 		// }
 
-		console.log("openReport:", data);
-
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations,
 				item: data
 			}
-		}
+		};
 
-		let dialogRef = this.dialog.open(NewReportComponent, config);
+		const dialogRef = this.dialog.open(NewReportComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {
 			this.location.go(this.router.url);
 		});
 	}
 
 	// Likers
-	openLikes(data){
+	openLikes(data) {
 		this.location.go(this.router.url + '#likers');
 
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations,
 				item: data
 			}
-		}
+		};
 
-		let dialogRef = this.dialog.open(ShowLikesComponent, config);
+		const dialogRef = this.dialog.open(ShowLikesComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {
 			this.location.go(this.router.url);
 		});
 	}
 
 	// Conversation
-	openConversation(data){
-		/* Open conversation if is closed because on the other hand we set on dataList new conversation 
-		or last inserted comment on one conversation */
+	openConversation(data) {
+		// Open conversation if is closed because on the other hand we set on dataList new conversation or last inserted comment on one conversation
 		if (!data.close) {
 			this.location.go(this.router.url + '#' + data.comeFrom);
 
-			let config = {
+			const config = {
 				disableClose: false,
 				data: {
 					sessionData: this.sessionData,
@@ -1262,14 +1262,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 					item: data,
 					comeFrom: data.comeFrom
 				}
-			}
+			};
 
-			let dialogRef = this.dialog.open(ShowConversationComponent, config);
+			const dialogRef = this.dialog.open(ShowConversationComponent, config);
 			dialogRef.afterClosed().subscribe((res: any) => {
 				// Check if is new chat with content or last insered comment
-				if (res.close)
+				if (res.close) {
 					this.sessionService.setDataShowConversation(res);
-				
+				}
+
 				// Set url
 				this.location.go(this.router.url);
 			});
@@ -1277,20 +1278,22 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Copy to clipboard
-	copyToClipboard(data){
-		let el = this.document.createElement('textarea');		// Create a <textarea> element
-		let randId = Math.floor(Math.random() * 6) + 1;			// Random id
+	copyToClipboard(data) {
+		const el = this.document.createElement('textarea');		// Create a <textarea> element
+		const randId = Math.floor(Math.random() * 6) + 1;			// Random id
 		el.value = data;										// Set its value to the string that you want copied
 		el.setAttribute('readonly', '');						// Make it readonly to be tamper-proof
 		el.setAttribute('id', randId.toString());
-		el.style.position = 'absolute';                 
+		el.style.position = 'absolute';
 		el.style.left = '-9999px';								// Move outside the screen to make it invisible
 		this.document.body.appendChild(el);						// Append the <textarea> element to the document
+
 		// Check if there is any content selected previously / Store selection if found / Mark as false to know no selection existed before
-		let selected = this.document.getSelection().rangeCount > 0 ? this.document.getSelection().getRangeAt(0) : false;
+		const selected = this.document.getSelection().rangeCount > 0 ? this.document.getSelection().getRangeAt(0) : false;
 		el.select();											// Select the <textarea> content
 		this.document.execCommand('copy');						// Copy - only works as a result of a user action (e.g. click events)
 		this.document.body.removeChild(el);						// Remove the <textarea> element
+
 		if (selected) {											// If a selection existed before copying
 			this.document.getSelection().removeAllRanges();		// Unselect everything on the HTML document
 			this.document.getSelection().addRange(selected);	// Restore the original selection

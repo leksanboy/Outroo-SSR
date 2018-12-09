@@ -10,57 +10,57 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 declare var ga: Function;
 
 @Component({
-    selector: 'app-confirm-email',
-    templateUrl: './confirm-email.component.html'
+	selector: 'app-confirm-email',
+	templateUrl: './confirm-email.component.html'
 })
 
 export class ConfirmEmailComponent implements OnInit {
 	public actionForm: FormGroup;
-    public submitLoading: boolean;
-    public userData: any;
-    public pageStatus: string = 'default';
-    public translations: any = [];
+	public submitLoading: boolean;
+	public userData: any;
+	public pageStatus: string = 'default';
+	public translations: any = [];
 
 	constructor(
 		private titleService: Title,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
-        private alertService: AlertService,
+		private alertService: AlertService,
 		private userDataService: UserDataService
 	) {
 		// Get translations
 		this.getTranslations(1);
 
-        // Get url data
-        let urlData: any = this.activatedRoute.snapshot;
-        let data = {
-            code: urlData.params.code
-        }
+		// Get url data
+		let urlData: any = this.activatedRoute.snapshot;
+		let data = {
+			code: urlData.params.code
+		}
 
-        this.userDataService.confirmEmail(data)
+		this.userDataService.confirmEmail(data)
 			.subscribe(
 				res => {
-                    setTimeout(() => {
-                        this.userData = res;
-                        this.pageStatus = 'completed';
-                    }, 600);
+					setTimeout(() => {
+						this.userData = res;
+						this.pageStatus = 'completed';
+					}, 600);
 				},
 				error => {
-                    setTimeout(() => {
-                        this.pageStatus = 'error';
-                    }, 600);
+					setTimeout(() => {
+						this.pageStatus = 'error';
+					}, 600);
 				}
 			);
-    }
+	}
 
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'confirm-email';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Confirm email');
 
 		// Get translations
@@ -76,7 +76,7 @@ export class ConfirmEmailComponent implements OnInit {
 	}
 
 	// Submit
-    submit() {
+	submit() {
 		this.submitLoading = true;
 
 		if (this.userData.email.length > 0 && this.userData.password.length > 0) {

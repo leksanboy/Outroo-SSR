@@ -478,24 +478,24 @@ export class NewPublicationComponent implements OnInit {
 
 	// Set caret position
 	setSelectionRange() {
-	    let el = this.publicationData.eventTarget;
+		let el = this.publicationData.eventTarget;
 
-	    // Check the diference between positions this.publicationData.lastTypedWord.word & this.publicationData.lastTypedWord.searched
-	    let a = this.publicationData.lastTypedWord.word.length;
-	    let b = this.publicationData.lastTypedWord.searched.length;
-	    let c = b - a;
+		// Check the diference between positions this.publicationData.lastTypedWord.word & this.publicationData.lastTypedWord.searched
+		let a = this.publicationData.lastTypedWord.word.length;
+		let b = this.publicationData.lastTypedWord.searched.length;
+		let c = b - a;
 
-	    // TODO: Check if is last word on content then add space
+		// TODO: Check if is last word on content then add space
 
-	    let range = document.createRange();
-	    range.setStart(el.childNodes[0], this.publicationData.lastTypedWord.position + c);
-	    range.collapse(true);
-	    
-	    let sel = this.window.getSelection();
-	    sel.removeAllRanges();
-	    sel.addRange(range);
-	    
-	    el.focus();
+		let range = document.createRange();
+		range.setStart(el.childNodes[0], this.publicationData.lastTypedWord.position + c);
+		range.collapse(true);
+		
+		let sel = this.window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
+		
+		el.focus();
 	}
 
 	// Add mention from mentions serch list

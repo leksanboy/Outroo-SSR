@@ -12,7 +12,7 @@
 // 	private listening: boolean;
 // 	private globalClick: any;
 
-// 	@Output('clickOutside') clickOutside:EventEmitter<Object>; 
+// 	@Output('clickOutside') clickOutside:EventEmitter<Object>;
 
 // 	constructor(
 // 		private _elRef: ElementRef
@@ -31,7 +31,7 @@
 // 				this.onGlobalClick(event);
 // 			});
 // 	}
-  
+
 // 	ngOnDestroy() {
 // 		this.globalClick.unsubscribe();
 // 	}

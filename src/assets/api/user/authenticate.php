@@ -27,6 +27,7 @@
 		$result['theme'] = $result['theme'] ? true : false;
 		$result['official'] = $result['official'] ? true : false;
 		$result['private'] = $result['private'] ? true : false;
+		$result['playlists'] = getPlaylists($result['id']);
 		$result['countFollowing'] = countUserFollowing($result['id']);
 		$result['countFollowers'] = countUserFollowers($result['id']);
 		$result['countPhotos'] = countUserPhotos($result['id']);

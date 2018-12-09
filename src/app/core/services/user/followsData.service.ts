@@ -24,8 +24,8 @@ export class FollowsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -38,8 +38,8 @@ export class FollowsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -54,7 +54,7 @@ export class FollowsDataService {
 
 		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -63,8 +63,8 @@ export class FollowsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -75,8 +75,8 @@ export class FollowsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 }

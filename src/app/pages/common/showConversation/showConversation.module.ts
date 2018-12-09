@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
-	MatButtonModule, 
-	MatButtonToggleModule, 
+	MatButtonModule,
+	MatButtonToggleModule,
 	MatDialogModule,
-	MatProgressSpinnerModule, 
+	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule,
 	MatInputModule,
@@ -45,7 +45,7 @@ const routes: Routes = [
 	declarations: [
 		ShowConversationComponent
 	],
-	exports : [
+	exports: [
 		ShowConversationComponent
 	]
 })

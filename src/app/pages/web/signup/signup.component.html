@@ -55,14 +55,13 @@
 
 					<mat-form-field>
 						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="Password" #Password maxlength="100" formControlName="password">
-						<button mat-button matSuffix mat-icon-button type="button" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword">
+						<button mat-button matSuffix mat-icon-button type="button" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword" tabindex="-1">
 							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
 						<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
 					</mat-form-field>
 
 					<div class="terms">
-
 						By signing up, you agree with the stipulations of our <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
 					</div>
 

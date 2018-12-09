@@ -17,10 +17,10 @@ export class PrivacyComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'privacy';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Privacy');
 	}
 }

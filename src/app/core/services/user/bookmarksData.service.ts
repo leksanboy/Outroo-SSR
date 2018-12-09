@@ -23,7 +23,7 @@ export class BookmarksDataService {
 
 		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -33,7 +33,7 @@ export class BookmarksDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 }

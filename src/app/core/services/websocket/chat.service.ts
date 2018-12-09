@@ -10,12 +10,12 @@ export class ChatsocketService {
 	) {}
 
 	// watchProduct(productId: number): Observable<any> {
- //    	let openSubscriber = Subscriber.create(
- //        	() => this.webSocket.send({productId: productId}));
+	// 	let openSubscriber = Subscriber.create(
+	// 		() => this.webSocket.send({productId: productId}));
 
- //    	return this.webSocket.createObservableSocket('wss://outhroo.com/assets/api/socket_test.php?productId=1', openSubscriber)
- //        	.map(message => {
- //        		// JSON.parse(message);
- //        	});
+	// 	return this.webSocket.createObservableSocket('wss://outhroo.com/assets/api/socket_test.php?productId=1', openSubscriber)
+	// 		.map(message => {
+	// 			// JSON.parse(message);
+	// 		});
 	// }
 }

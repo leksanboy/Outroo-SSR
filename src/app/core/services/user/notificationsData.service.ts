@@ -24,17 +24,17 @@ export class NotificationsDataService {
 
 		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
-	generateNotification(data: any){
+	generateNotification(data: any) {
 		let url = environment.url + 'assets/api/notifications/notificate.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -44,8 +44,8 @@ export class NotificationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -54,8 +54,8 @@ export class NotificationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 }

@@ -45,15 +45,15 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<ShowPublicationComponent>,
-    	private _fb: FormBuilder,
+		private _fb: FormBuilder,
 		private location: Location,
-    	private renderer: Renderer,
-    	private elementRef: ElementRef,
-    	private alertService: AlertService,
-    	private playerService: PlayerService,
-    	private sessionService: SessionService,
-    	private audioDataService: AudioDataService,
-    	private bookmarksDataService: BookmarksDataService,
+		private renderer: Renderer,
+		private elementRef: ElementRef,
+		private alertService: AlertService,
+		private playerService: PlayerService,
+		private sessionService: SessionService,
+		private audioDataService: AudioDataService,
+		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService
@@ -72,17 +72,17 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 		if (this.data.item) {
 			// Check if exists
-    		this.notExists = false;
+			this.notExists = false;
 
-	    	// Update replays
-	    	this.updateReplays(this.data.current.id, this.sessionData.current.id);
+			// Update replays
+			this.updateReplays(this.data.current.id, this.sessionData.current.id);
 
-	    	// Load comments
-	    	this.defaultComments('default', this.data.current);
-    	} else {
-    		// Check if exists
-    		this.notExists = true;
-    	}
+			// Load comments
+			this.defaultComments('default', this.data.current);
+		} else {
+			// Check if exists
+			this.notExists = true;
+		}
 	}
 
 	ngOnInit() {
@@ -94,20 +94,20 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	// Play video
-    playVideo(item, player){
-    	player = document.getElementById(player);
-    	player.load();
-    	player.play();
-    	item.playButton = true;
+	playVideo(item, player){
+		player = document.getElementById(player);
+		player.load();
+		player.play();
+		item.playButton = true;
 
-    	player.addEventListener('ended', myHandler, false);
+		player.addEventListener('ended', myHandler, false);
 
-    	function myHandler(e) {
-    		item.playButton = false;
-	    }
-    }
+		function myHandler(e) {
+			item.playButton = false;
+		}
+	}
 
-    // Replays +1
+	// Replays +1
 	updateReplays(id, user) {
 		let data = {
 			id: id,

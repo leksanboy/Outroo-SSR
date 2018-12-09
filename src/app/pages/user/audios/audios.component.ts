@@ -217,7 +217,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.userData = res;
 
 				// Set document title
-				this.titleService.setTitle(this.userData.name + ' - Audios');
+				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios);
 
 				// Set Google analytics
 				let urlGa =  '[' + res.id + ']/' + id + '/audios';

@@ -1,15 +1,41 @@
 <div class="pageHomeBox" *ngIf="activeSessionStatus">
 	<div class="left">
-		<div class="image"></div>
+		<div class="text">
+			Be the one.
+		</div>
+
+		<div class="footer" *ngIf="activeSessionStatus">
+			<div class="copyright">
+				{{environment.copyright}}
+			</div>
+
+			<div class="divider"></div>
+			
+			<ul>
+				<li>
+					<a routerLink="/about">About</a>
+				</li>
+				<li>
+					<a routerLink="/privacy">Privacy</a>
+				</li>
+				<li>
+					<a routerLink="/support">Support</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="right">
-		<div class="content">
-			<div class="title">
-				<div class="logo"></div>
+		<div class="inner">
+			<div class="logo">
+				<div class="image"></div>
 			</div>
 
 			<div class="form">
+				<div class="error" *ngIf="errorMessage">
+					{{errorMessageContent}}
+				</div>
+
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event)">
 					<mat-form-field>
 						<input autofocus type="email" matInput placeholder="Email" #Email maxlength="100"  formControlName="email">
@@ -17,7 +43,7 @@
 
 					<mat-form-field>
 						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="Password" #Password maxlength="100"  formControlName="password">
-						<button mat-button matSuffix mat-icon-button type="button" class="noLength" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword">
+						<button mat-button matSuffix mat-icon-button type="button" class="noLength" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword" tabindex="-1">
 							<i [ngClass]="{'show': showPassword}" label="visibility"></i>
 						</button>
 					</mat-form-field>
@@ -44,24 +70,5 @@
 				</form>
 			</div>
 		</div>
-	</div>
-</div>
-
-<div class="footer" *ngIf="activeSessionStatus">
-	<div class="pages">
-		<ul>
-			<li>
-				<a routerLink="/about">About</a>
-			</li>
-			<li>
-				<a routerLink="/privacy">Privacy</a>
-			</li>
-			<li>
-				<a routerLink="/support">Support</a>
-			</li>
-		</ul>
-	</div>
-	<div class="copyright">
-		{{environment.copyright}}
 	</div>
 </div>

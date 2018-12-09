@@ -7,7 +7,7 @@ import { ReversePipe } from './reverse.pipe';
 import { TruncatePipe } from './truncate.pipe';
 
 @NgModule({
-	declarations: [ 
+	declarations: [
 		TimeagoPipe,
 		SafeHtmlPipe,
 		DateTimePipe,
@@ -22,4 +22,4 @@ import { TruncatePipe } from './truncate.pipe';
 		TruncatePipe
 	]
 })
-export class PipesModule {}
+export class PipesModule { }

@@ -7,15 +7,15 @@ import { Observable } from 'rxjs';
 declare var ga: Function;
 
 @Component({
-    selector: 'app-logout',
-    templateUrl: './logout.component.html'
+	selector: 'app-logout',
+	templateUrl: './logout.component.html'
 })
 
 export class LogoutComponent implements OnInit {
 	public actionForm: FormGroup;
-    public submitLoading: boolean;
-    public userData: any;
-    public translations: any = [];
+	public submitLoading: boolean;
+	public userData: any;
+	public translations: any = [];
 
 	constructor(
 		private titleService: Title,
@@ -27,10 +27,10 @@ export class LogoutComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'logout';
-    	ga('set', 'page', urlGa);
-    	ga('send', 'pageview');
+		ga('set', 'page', urlGa);
+		ga('send', 'pageview');
 
-    	// Set page title
+		// Set page title
 		this.titleService.setTitle('Log out');
 	}
 }

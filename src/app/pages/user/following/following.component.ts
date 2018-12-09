@@ -140,7 +140,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
 				this.userData = res;
 
 				// Set Document title
-				this.titleService.setTitle(this.userData.name + ' - Following');
+				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.following);
 
 				// Data
 				let data = {

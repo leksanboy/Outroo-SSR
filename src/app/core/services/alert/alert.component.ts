@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core'
+import { Component, OnInit} from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 
 import { Alert } from './alert.model';
@@ -8,7 +8,7 @@ import { AlertService } from './alert.service';
 	selector: 'alert',
 	templateUrl: 'alert.component.html',
 	animations: [
-		trigger('showFromTopAnimation',[
+		trigger('showFromTopAnimation', [
 			transition(':enter', [
 				style({transform: 'translateY(-100%)'}),
 				animate('200ms', style({'transform': 'translateY(0)', '-webkit-transform': 'translateY(0)'}))
@@ -21,7 +21,7 @@ import { AlertService } from './alert.service';
 	]
 })
 
-export class AlertComponent {
+export class AlertComponent implements OnInit {
 	public alerts: Alert[] = [];
 
 	constructor(
@@ -31,8 +31,9 @@ export class AlertComponent {
 	ngOnInit() {
 		this.alertService.getData()
 			.subscribe((alert: Alert) => {
-				if (!alert){
+				if (!alert) {
 					this.alerts = [];
+
 					return;
 				}
 

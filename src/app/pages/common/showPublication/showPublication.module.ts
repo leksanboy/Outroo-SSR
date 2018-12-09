@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { 
-	MatButtonModule, 
-	MatButtonToggleModule, 
+import {
+	MatButtonModule,
+	MatButtonToggleModule,
 	MatDialogModule,
-	MatProgressSpinnerModule, 
+	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule,
 	MatMenuModule
@@ -41,7 +41,7 @@ const routes: Routes = [
 	declarations: [
 		ShowPublicationComponent
 	],
-	exports : [
+	exports: [
 		ShowPublicationComponent
 	]
 })

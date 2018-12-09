@@ -24,12 +24,12 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
-	search(data: any){
+	search(data: any) {
 		let url = environment.url + 'assets/api/publications/search.php';
 		let params = 	'&session=' + data.session +
 						'&caption=' + data.caption +
@@ -38,12 +38,12 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
-	searchTop(data: any){
+	searchTop(data: any) {
 		let url = environment.url + 'assets/api/publications/searchTop.php';
 		let params = 	'&session=' + data.session +
 						'&caption=' + data.caption +
@@ -52,8 +52,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -66,8 +66,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -76,8 +76,8 @@ export class PublicationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -86,8 +86,8 @@ export class PublicationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -96,8 +96,8 @@ export class PublicationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -111,7 +111,7 @@ export class PublicationsDataService {
 
 		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -120,8 +120,8 @@ export class PublicationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -131,7 +131,7 @@ export class PublicationsDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => { 
-				return res.json() 
+				return res.json();
 			}));
 	}
 
@@ -143,8 +143,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -155,8 +155,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -165,8 +165,8 @@ export class PublicationsDataService {
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -177,8 +177,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 
@@ -189,8 +189,8 @@ export class PublicationsDataService {
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json() 
+			.pipe(map((res: Response) => {
+				return res.json();
 			}));
 	}
 }

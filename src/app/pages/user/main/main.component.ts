@@ -10,7 +10,6 @@ import { AlertService } from '../../../../app/core/services/alert/alert.service'
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
-import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
@@ -62,7 +61,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		private location: Location,
 		private renderer: Renderer,
 		private elementRef: ElementRef,
-		private metaService: MetaService,
 		private alertService: AlertService,
 		private playerService: PlayerService,
 		private activatedRoute: ActivatedRoute,
@@ -284,18 +282,18 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Play video
-    playVideo(item, player){
-    	player = document.getElementById(player);
-    	player.load();
-    	player.play();
-    	item.playButton = true;
+	playVideo(item, player){
+		player = document.getElementById(player);
+		player.load();
+		player.play();
+		item.playButton = true;
 
-    	player.addEventListener('ended', myHandler, false);
+		player.addEventListener('ended', myHandler, false);
 
-    	function myHandler(e) {
-    		item.playButton = false;
-	    }
-    }
+		function myHandler(e) {
+			item.playButton = false;
+		}
+	}
 
 	// Default
 	default(type, user, session) {
@@ -423,7 +421,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Play item song
 	playItem(data, item, key, type) {
 		if (!this.sessionData.current.id) {
-		    this.alertService.success(this.translations.createAnAccountToListenSong);
+			this.alertService.success(this.translations.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
 				item.playing = !item.playing;
