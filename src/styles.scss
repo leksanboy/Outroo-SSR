@@ -2027,14 +2027,38 @@ body{
 
 			.text{
 				box-sizing: border-box;
-				text-align: center;
 				color: $whiteColor;
 				font-weight: bold;
-				line-height: 64px;
+				line-height: 56px;
 				margin: -48px 0 0;
-				padding: 0 48px;
-				font-size: 64px;
-				width: 100%;
+				text-align: left;
+				padding: 0 24px;
+				font-size: 56px;
+				/*text-align: center;*/
+				/*width: 100%;*/
+
+				.counter{
+					text-transform: uppercase;
+					display: initial;
+
+					* + * {
+						margin-top: 0;
+					}
+					
+					.digit-con {
+						display: inline-block;
+						vertical-align: top;
+						overflow: hidden;
+						height: 56px;
+
+						span {
+							position: relative;
+							text-align: center;
+							display: block;
+							top: 0;
+						}
+					}
+				}
 			}
 
 			.footer{
