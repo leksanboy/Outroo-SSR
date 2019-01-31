@@ -4,7 +4,7 @@
 
 	// Email Register "Welcome"
 	function emailWelcome($name, $email, $hash){
-		$urlWeb = 'https://outhroo.com/';
+		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
@@ -104,7 +104,7 @@
 
 	// Email new login
 	function emailNewLogin($name, $email, $hash, $device, $location, $date){
-		$urlWeb = 'https://outhroo.com/';
+		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
@@ -220,7 +220,7 @@
 
 	// Email forgot password
 	function emailForgotPassword($name, $email, $hash){
-		$urlWeb = 'https://outhroo.com/';
+		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
@@ -329,7 +329,7 @@
 
 	// Email reset password
 	function emailResetPassword($name, $email, $hash){
-		$urlWeb = 'https://outhroo.com/';
+		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
@@ -426,7 +426,7 @@
 
 	// Email support question
 	function emailSupportQuestion($email, $content){
-		$urlWeb = 'https://outhroo.com/';
+		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
 									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">

@@ -6,7 +6,7 @@
 // Common
 export const environment = {
 	production: false,
-	url: 'https://outhroo.com/',
+	url: './',
 	name: 'Outroo',
 	copyright: '© ' + new Date().getFullYear() + ' Outroo',
 	cuantity: 30,
@@ -16,6 +16,6 @@ export const environment = {
 	pathVideos: './assets/media/videos/',
 	pathAudios: './assets/media/audios/',
 	language: 1,
-	reCaptcha: '6LdjARYUAAAAAPDX4mmmCFvaWpqpaPpbbIk6gg2r',
+	reCaptcha: '6Lc8UokUAAAAAFvc4FVu2WttNqdg1rep7UMx4pJG',
 	authHash: 'xQ3s1RVrSR'
 };

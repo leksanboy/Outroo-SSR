@@ -150,9 +150,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
 		// Get new publication
 		this.activeNewPublication = this.sessionService.getDataNewPublication()
-				.subscribe(data => {
-					this.newPublication('result', data);
-				});
+			.subscribe(data => {
+				this.newPublication('result', data);
+			});
 
 		// Close all dialogs
 		this.dialog.closeAll();
@@ -268,7 +268,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 			this.sessionService.setDataNewPublication(data);
 		} else if (type == 'result') {
-			this.dataDefault.list.unshift(result);
+			// this.dataDefault.list.unshift(result);
 			this.dataDefault.noData = false;
 		}
 	}

@@ -48,9 +48,7 @@
 								<ul class="audiosFiles" *ngIf="dataFiles.list.length > 0">
 									<li *ngFor="let x of dataFiles.list; let i = index;">
 										<div class="text">
-											<mat-form-field>
-												<input matInput value="{{x.title}}" [disabled]="x.category=='unknown'" placeholder="Title" autofocus>
-											</mat-form-field>
+											{{x.title}}
 										</div>
 
 										<div class="status">

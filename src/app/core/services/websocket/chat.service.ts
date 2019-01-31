@@ -13,7 +13,7 @@ export class ChatsocketService {
 	// 	let openSubscriber = Subscriber.create(
 	// 		() => this.webSocket.send({productId: productId}));
 
-	// 	return this.webSocket.createObservableSocket('wss://outhroo.com/assets/api/socket_test.php?productId=1', openSubscriber)
+	// 	return this.webSocket.createObservableSocket('wss://outroo.com/assets/api/socket_test.php?productId=1', openSubscriber)
 	// 		.map(message => {
 	// 			// JSON.parse(message);
 	// 		});

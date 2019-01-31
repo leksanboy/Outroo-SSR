@@ -252,6 +252,7 @@ body{
 		&[label="add"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: 0 -552px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -259,6 +260,7 @@ body{
 		&[label="check"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: 0 -528px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -266,6 +268,7 @@ body{
 		&[label="check-circle"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: 0 -432px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -273,6 +276,7 @@ body{
 		&[label="uncheck-circle"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -432px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -280,6 +284,7 @@ body{
 		&[label="info"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: 0 -456px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -287,6 +292,7 @@ body{
 		&[label="clear"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -528px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -295,6 +301,7 @@ body{
 			background-color: $whiteColor !important;
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -168px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -303,6 +310,7 @@ body{
 			background-color: $whiteColor !important;
 			mask-size: 48px calc(48px * 15);
 			mask-position: 0 -168px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -311,6 +319,7 @@ body{
 			background-color: $whiteColor !important;
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -168px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -318,6 +327,7 @@ body{
 		&[label="cloud-off"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -552px;
+			min-width: 24px;
 			margin: 12px;
 			height: 24px;
 			width: 24px;
@@ -326,6 +336,7 @@ body{
 		&[label="cloud-upload"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -72px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -333,6 +344,7 @@ body{
 		&[label="error-outline"]{
 			mask-size: 48px calc(48px * 15);
 			mask-position: -24px -456px;
+			min-width: 24px;
 			height: 24px;
 			width: 24px;
 		}
@@ -1638,31 +1650,36 @@ body{
 		}
 
 		ul.audiosFiles{
-			padding: 12px 0 0 !important;
+			padding: 12px 18px 0 !important;
+			box-sizing: border-box;
 			width: 100%;
 			float: left;
 			margin: 0;
 
 			li{
-				line-height: 40px;
+				background-color: $fontBlackColor;
+				box-sizing: border-box;
+				border-radius: 5px;
+				line-height: 42px;
 				list-style: none;
-				padding: 4px 0;
+				margin: 4px 0;
 				display: flex;
 				float: left;
 				width: 100%;
-				margin: 0;
 
 				.text{
+					padding: 9px 12px;
+					line-height: 24px;
 					text-align: left;
-					padding: 0 12px;
-					display: grid;
-					width: 100%;
 					float: left;
+					width: 100%;
 				}
 
 				.status{
+					justify-content: center;
 					box-sizing: border-box;
-					margin: 18px 18px 0 0;
+					align-items: center;
+					margin: 3px 4px 0 0;
 					display: flex;
 					height: 36px;
 
@@ -1670,7 +1687,14 @@ body{
 						height: 36px;
 						width: 36px;
 						float: left;
-						margin: 0;
+
+						span{
+							justify-content: center;
+							align-items: center;
+							display: flex;
+							height: 36px;
+							width: 36px;
+						}
 					}
 
 					.icon{
@@ -1678,15 +1702,13 @@ body{
 						box-sizing: border-box;
 						border-radius: 50%;
 						height: 36px;
-						float: left;
 						width: 36px;
-						margin: 6px;
+						float: left;
 					}
 
 					.size{
 						background-color: $redColor;
 						box-shadow: $shadowBox2;
-						margin: 12px 6px 0 0;
 						white-space: nowrap;
 						border-radius: 5px;
 						color: $whiteColor;
@@ -1696,6 +1718,7 @@ body{
 						padding: 0 3px;
 						height: 18px;
 						float: left;
+						margin: 0;
 					}
 
 					.progress{
@@ -1884,7 +1907,7 @@ body{
 
 		.buttons{
 			box-sizing: border-box;
-			padding: 12px 6px 0;
+			padding: 12px 12px 0;
 			display: flex;
 			float: left;
 			width: 100%;
@@ -1896,31 +1919,13 @@ body{
 			}
 
 			button{
-				background: $whiteColor;
-				color: $fontBlackColor;
+				background: $redColor;
+				color: $whiteColor;
 				margin: 0 6px;
 				width: 100%;
 
 				&:last-child{
 					background: $blueColor;
-					color: $whiteColor;
-				}
-
-				mat-progress-spinner{
-					height: 16px !important;
-					width: 16px !important;
-					margin: 10px 6px 0 0;
-					float: left;
-
-					svg {
-						filter: drop-shadow($shadowText1);
-						height: 16px !important;
-						width: 16px !important;
-
-						circle{
-							stroke: $whiteColor !important;
-						}
-					}
 				}
 			}
 		}
@@ -7559,7 +7564,7 @@ body{
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
 				color: $fontBlackColor;
-				margin: 0 24px 102px;
+				margin: 0 24px 76px;
 				border-radius: 5px;
 				position: fixed;
 				width: 320px;

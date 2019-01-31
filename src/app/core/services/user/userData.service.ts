@@ -87,7 +87,7 @@ export class UserDataService {
 	setSessionData(type, data) {
 		if (type == 'login') {
 			let storageLoginData: any = {
-				name: 'Outhroo',
+				name: 'O',
 				current: data,
 				sessions : []
 			};
@@ -99,7 +99,7 @@ export class UserDataService {
 		} else if (type == 'update') {
 			let oldData = this.getSessionData();
 			let storageUpdateData: any = {
-				name: 'Outhroo',
+				name: 'O',
 				current: data,
 				sessions: []
 			};
@@ -312,7 +312,7 @@ export class UserDataService {
 	}
 
 	noSessionData(){
-		this.window.location.href = 'https://outhroo.com/';
+		this.window.location.href = '/';
 	}
 
 	supportQuestion(data) {

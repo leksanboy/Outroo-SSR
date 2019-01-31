@@ -45,6 +45,6 @@ export class AboutComponent implements OnInit {
 	}
 
 	downloadAssetPack(){
-		this.window.location.href = 'https://outhroo.com/assets/images/Asset_pack.zip';
+		this.window.location.href = './assets/images/Asset_pack.zip';
 	}
 }
