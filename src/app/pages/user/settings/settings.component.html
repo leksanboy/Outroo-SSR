@@ -81,8 +81,11 @@
 								</mat-form-field>
 
 								<div class="richAbout">
-									<div class="highlights" [innerHTML]="sessionData.current.about"></div>
-									<div class="origin" contenteditable="plaintext-only" [innerHTML]="sessionData.current.aboutOriginal" (input)="aboutEdit('writingChanges', $event.target.innerText)"></div>
+									<div class="label">{{translations.aboutMe}}</div>
+									<div class="inner">
+										<div class="highlights" [innerHTML]="sessionData.current.about"></div>
+										<div class="origin" contenteditable="plaintext-only" [innerHTML]="sessionData.current.aboutOriginal" (input)="aboutEdit('writingChanges', $event.target.innerText)"></div>
+									</div>
 								</div>
 
 								<div class="buttons">

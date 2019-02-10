@@ -1071,7 +1071,6 @@ body{
 			.text{
 				box-sizing: border-box;
 				padding: 18px 18px 6px;
-				color: $fontBlackColor;
 				text-align: center;
 				line-height: 24px;
 				font-weight: bold;
@@ -1084,6 +1083,7 @@ body{
 				width: 100%;
 
 				button{
+					text-transform: uppercase;
 					text-align: center;
 					color: $blueColor;
 				}
@@ -1630,8 +1630,9 @@ body{
 						float: left;
 
 						.top{
+							text-transform: uppercase;
 							line-height: 15px;
-							font-size: 15px;
+							font-size: 13px;
 
 							&.warning{
 								color: $redColor;
@@ -5361,40 +5362,9 @@ body{
 
 				.panel{
 					position: relative;
+					padding: 80px 0 0;
 					overflow: hidden;
 					width: 100%;
-
-					.background{
-						position: relative;
-						max-height: 304px;
-						overflow: hidden;
-						height: 50vw;
-						width: 100%;
-						float: left;
-
-						.image{
-							background-repeat: no-repeat;
-							background-position: center;
-							transform: translate(0);
-							box-sizing: border-box;
-							background-size: cover;
-							display: inline-block;
-							height: 100%;
-							width: 100%;
-						}
-
-						.shadow{
-							background: linear-gradient(to bottom, transparent, transparentize($blackColor, .5));
-							position: absolute;
-							height: 150px;
-							width: 100%;
-							bottom: 0;
-						}
-
-						&.imageColor{
-							background-color: $whiteColor;
-						}
-					}
 
 					.dataBox{
 						max-width: $pageMaxWidth;
@@ -5409,126 +5379,188 @@ body{
 							width: 100%;
 							float: left;
 
-							.avatar{
-								box-shadow: $shadowBox2;
-								box-sizing: border-box;
-								border-radius: 50%;
-								overflow: hidden;
-								cursor: pointer;
-								min-width: 56px;
-								height: 56px;
-								width: 56px;
-								float: left;
+							.left{
+								width: 100px;
 
-								img{
-									height: 100%;
-									width: 100%;
-								}
-							}
-
-							.text{
-								text-shadow: $shadowText2;
-								color: $whiteColor;
-								position: relative;
-								font-weight: bold;
-								width: 100%;
-								float: left;
-
-								.name{
-									padding: 7px 32px 0 12px;
-									text-overflow: ellipsis;
+								.avatar{
+									box-shadow: $shadowBox2;
 									box-sizing: border-box;
-									white-space: nowrap;
-									position: absolute;
-									line-height: 24px;
+									border-radius: 50%;
+									min-width: 100px;
 									overflow: hidden;
-									font-size: 20px;
-									max-width: 100%;
-									height: 32px;
+									cursor: pointer;
+									height: 100px;
+									width: 100px;
+									float: left;
 
-									i{
-										mask-size: 36px calc(36px * 15);
-										background-color: $whiteColor;
-										mask-image: $spriteImages;
-										mask-position: 0 -72px;
-										mask-repeat: no-repeat;
-										margin: 0 10px 4px 0;
-										position: absolute;
-										height: 18px;
-										width: 18px;
-										float: left;
-										bottom: 0;
-										right: 0;
+									img{
+										height: 100%;
+										width: 100%;
 									}
 								}
-								
-								.username{
-									text-overflow: ellipsis;
-									box-sizing: border-box;
-									white-space: nowrap;
-									position: absolute;
-									line-height: 24px;
-									overflow: hidden;
-									margin: 27px 0 0;
-									font-size: 15px;
-									padding: 0 12px;
-									width: 100%;
-								}
 							}
 
-							.settings{
-								float: left;
+							.right{
+								width: calc(100% - 100px);
 
-								button{
-									background-color: $whiteColor;
-									box-shadow: $shadowBox2;
-									text-transform: inherit;
-									color: $fontBlackColor;
-									line-height: 30px;
-									margin: 13px 0 0;
-									padding: 0 8px;
-									min-width: 0;
-									float: right;
-									height: 30px;
+								.top{
+									padding: 4px 0 4px 24px;
+									box-sizing: border-box;
+									display: flex;
+									width: 100%;
+									float: left;
 
-									span{
-										display: flex;
+									.text{
+										text-shadow: $shadowText2;
+										color: $whiteColor;
+										position: relative;
+										font-weight: bold;
+										min-height: 44px;
+										width: 100%;
+										float: left;
 
-										i{
-											mask-size: 36px calc(36px * 15);
-											background-color: $blackColor;
-											mask-position: -18px -72px;
-											mask-image: $spriteImages;
-											mask-repeat: no-repeat;
-											margin: 6px 4px 0 0;
-											min-width: 18px;
-											height: 18px;
-											width: 18px;
-											float: left;
+										.name{
+											box-sizing: border-box;
+											align-items: center;
+											line-height: 24px;
+											font-size: 18px;
+											display: flex;
+											width: 100%;
+											padding: 0;
+
+											i{
+												mask-size: 36px calc(36px * 15);
+												background-color: $whiteColor;
+												mask-image: $spriteImages;
+												mask-position: 0 -72px;
+												mask-repeat: no-repeat;
+												margin: 0 0 0 6px;
+												min-width: 18px;
+												height: 18px;
+												width: 18px;
+												float: left;
+											}
+										}
+										
+										.username{
+											text-overflow: ellipsis;
+											box-sizing: border-box;
+											white-space: nowrap;
+											line-height: 18px;
+											font-size: 15px;
+											width: 100%;
+											padding: 0;
 										}
 									}
 
-									&.active{
-										background-color: $blueColor;
-										border-color: $blueColor;
-										color: $whiteColor;
+									.settings{
+										float: left;
 
-										span i{
+										button{
 											background-color: $whiteColor;
+											text-transform: uppercase;
+											box-shadow: $shadowBox2;
+											color: $fontBlackColor;
+											line-height: 30px;
+											margin: 4px 0 0;
+											padding: 0 8px;
+											min-width: 0;
+											float: right;
+											height: 30px;
+
+											span{
+												display: flex;
+
+												i{
+													mask-size: 36px calc(36px * 15);
+													background-color: $blackColor;
+													mask-position: -18px -72px;
+													mask-image: $spriteImages;
+													mask-repeat: no-repeat;
+													margin: 6px 4px 0 0;
+													min-width: 18px;
+													height: 18px;
+													width: 18px;
+													float: left;
+												}
+											}
+
+											&.active{
+												background-color: $blueColor;
+												border-color: $blueColor;
+												color: $whiteColor;
+
+												span i{
+													background-color: $whiteColor;
+												}
+											}
+										}
+									}
+								}
+
+								.bottom{
+									box-sizing: border-box;
+									padding: 12px 18px 0;
+									width: 100%;
+									float: left;
+
+									ul{
+										text-transform: lowercase;
+										box-sizing: border-box;
+										max-width: 100%;
+										display: flex;
+										float: left;
+										padding: 0;
+										margin: 0;
+
+										li{
+											box-sizing: border-box;
+											text-align: center;
+											list-style: none;
+											padding: 0 6px;
+											float: left;
+											width: 100%;
+											margin: 0;
+
+											button{
+												text-transform: uppercase;
+												font-size: 12px;
+												min-width: 0;
+												height: 100%;
+												width: 100%;
+												padding: 0;
+												margin: 0;
+
+												.text{
+													flex-direction: column;
+													text-align: center;
+													line-height: 20px;
+													font-size: 16px;
+													display: flex;
+													height: 36px;
+
+													.name{
+														text-transform: lowercase;
+														color: currentColor;
+														line-height: 12px;
+														font-size: 11px;
+														opacity: 0.5;
+														width: 100%;
+													}
+												}
+											}
+
+											&:last-child{
+												border-right: none;
+											}
 										}
 									}
 								}
 							}
 
 							&.blackColors{
-								.text{
+								.right{
 									color: $blackColor;
-
-									.name{
-										i{
-											background-color: $blackColor;
-										}
-									}
 								}
 							}
 						}
@@ -5536,62 +5568,11 @@ body{
 						.about{
 							box-sizing: border-box;
 							word-break: break-word;
-							padding: 9px 18px 0;
+							padding: 6px 18px 12px;
 							text-align: left;
 							font-size: 14px;
 							float: left;
 							width: 100%;
-						}
-
-						ul.media{
-							text-transform: lowercase;
-							box-sizing: border-box;
-							display: flex;
-							padding: 6px;
-							float: left;
-							width: 100%;
-							margin: 0;
-
-							li{
-								box-sizing: border-box;
-								text-align: center;
-								list-style: none;
-								float: left;
-								width: 100%;
-								padding: 0;
-								margin: 0;
-
-								button{
-									text-transform: uppercase;
-									font-size: 12px;
-									min-width: 0;
-									height: 100%;
-									width: 100%;
-									padding: 0;
-									margin: 0;
-
-									.text{
-										flex-direction: column;
-										text-align: center;
-										line-height: 24px;
-										font-size: 18px;
-										display: flex;
-										height: 40px;
-
-										.name{
-											text-transform: lowercase;
-											line-height: 12px;
-											color: $greyColor;
-											font-size: 11px;
-											width: 100%;
-										}
-									}
-								}
-
-								&:last-child{
-									border-right: none;
-								}
-							}
 						}
 
 						.actions{
@@ -6407,7 +6388,7 @@ body{
 									}
 
 									button{
-										text-transform: inherit;
+										text-transform: uppercase;
 										margin: 8px 0 0 6px;
 										line-height: 24px;
 										padding: 0 12px;
@@ -6733,34 +6714,48 @@ body{
 							width: 100%;
 							float: left;
 
-							.highlights{
-								box-sizing: border-box;
-								display: inline-block;
-								word-wrap: break-word;
-								white-space: pre-wrap;
-								pointer-events: none;
-								padding: 30px 0 4px;
-								position: absolute;
-								color: transparent;
-								overflow: hidden;
-								min-height: 24px;
+							.label{
+								margin: 12px 0 6px 0;
+								color: $greyColor;
+								font-size: 12px;
 								width: 100%;
-
-								.placeholder{
-									color: $greyColor;
-								}
+								float: left;
 							}
 
-							.origin{
-								box-sizing: border-box;
-								display: inline-block;
-								word-wrap: break-word;
-								white-space: pre-wrap;
-								padding: 30px 0 4px;
-								min-height: 24px;
-								overflow: hidden;
-								outline: none;
+							.inner{
+								position: relative;
 								width: 100%;
+								float: left;
+
+								.highlights{
+									box-sizing: border-box;
+									display: inline-block;
+									word-wrap: break-word;
+									white-space: pre-wrap;
+									pointer-events: none;
+									position: absolute;
+									color: transparent;
+									overflow: hidden;
+									padding: 0 0 4px;
+									min-height: 24px;
+									width: 100%;
+
+									.placeholder{
+										color: transparentize($greyColor, .5);
+									}
+								}
+
+								.origin{
+									box-sizing: border-box;
+									display: inline-block;
+									word-wrap: break-word;
+									white-space: pre-wrap;
+									padding: 0 0 4px;
+									min-height: 24px;
+									overflow: hidden;
+									outline: none;
+									width: 100%;
+								}
 							}
 						}
 
@@ -6897,7 +6892,7 @@ body{
 								height: 48px;
 
 								button{
-									text-transform: inherit;
+									text-transform: uppercase;
 									padding: 0 12px;
 									margin: 5px 0;
 									min-width: 0;
@@ -6925,6 +6920,19 @@ body{
 			&.border{
 				border: 1px solid $whiteColor;
 				color: $whiteColor;
+			}
+		}
+
+		/*Mat menu*/
+		.mat-menu-panel{
+			background: #212121;
+
+			button{
+				color: $whiteColor;
+				
+				&.mat-menu-item-submenu-trigger::after {
+					color: $whiteColor;
+				}
 			}
 		}
 
@@ -7183,6 +7191,15 @@ body{
 					}
 				}
 			}
+
+			.playlistBox{
+				background-color: $modalDialogColor;
+				color: $whiteColor;
+
+				&:after{
+					border: 8px solid $modalDialogColor;
+				}
+			}
 		}
 	}
 
@@ -7213,18 +7230,18 @@ body{
 /*DESKTOP*/
 @media (min-width: 761px){
 	/*Default scroll*/
-	::-webkit-scrollbar-track{
-		border-radius: 3px;
-		background: #ccc;
-	}
-	::-webkit-scrollbar-thumb{
-		border-radius: 3px;
-		background: #999;
-	}
-	::-webkit-scrollbar{
-		height: 8px;
-		width: 8px;
-	}
+	// ::-webkit-scrollbar-track{
+	// 	border-radius: 3px;
+	// 	background: #ccc;
+	// }
+	// ::-webkit-scrollbar-thumb{
+	// 	border-radius: 3px;
+	// 	background: #999;
+	// }
+	// ::-webkit-scrollbar{
+	// 	height: 8px;
+	// 	width: 8px;
+	// }
 
 	mat-dialog-container{
 		.dialogBox{

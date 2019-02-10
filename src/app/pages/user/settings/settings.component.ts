@@ -388,7 +388,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			event = event.trim();
 
 			if (event.length == 0)
-				this.sessionData.current.about = '<div class="placeholder">' + this.translations.aboutMe + '</div>';
+				this.sessionData.current.about = '<div class="placeholder">' + this.translations.aboutMeDescription + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : '',
