@@ -39,16 +39,12 @@
 
 										<!-- Mine Requests -->
 										<span *ngIf="x.type != 'startFollowingPrivate'">
-											<button mat-button class="border" *ngIf="sessionData.current.id != 'x.receiver' && x.statusFollowing == 'pending'" [matMenuTriggerFor]="cancelRequest">
+											<button mat-button class="pending" *ngIf="sessionData.current.id != 'x.receiver' && x.statusFollowing == 'pending'" [matMenuTriggerFor]="cancelRequest">
 												{{translations.pending}}
 											</button>
 
-											<button mat-button class="border" *ngIf="x.statusFollowing == 'unfollow'" (click)="followUnfollow('follow', x)">
+											<button mat-button class="active" *ngIf="x.statusFollowing == 'unfollow'" (click)="followUnfollow('follow', x)">
 												{{translations.follow}}
-											</button>
-
-											<button mat-button class="active" *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
-												{{translations.following}}
 											</button>
 
 											<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
@@ -60,6 +56,11 @@
 													<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
 												</div>
 											</mat-menu>
+
+											<button mat-button *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
+												{{translations.following}}
+											</button>
+
 											<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 												<div class="text">
 													{{translations.stopFollowing}}

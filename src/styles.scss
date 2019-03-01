@@ -34,7 +34,8 @@ $iconWidth: 1px;
 $spriteAudios: url('assets/images/sprite_audios.png');
 $spriteImages: url('assets/images/sprite_images.png');
 
-/*Booleans*/
+/*Colors*/
+$primaryColor: linear-gradient(to right, #FFD200, #F7971E);;
 $backgroundBlackColor: #050505;
 $backgroundWhiteColor: #fff;
 $headerWhiteColor: #fafafa;
@@ -47,6 +48,7 @@ $greyColor: #9E9E9E;
 $blueColor: #0C98F5;
 $redColor: #E53935;
 $officialColor: #0099ff;
+$mobileBottomBox: #212121;
 
 /*Shadows*/
 $shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02), 0 -4px 5px 0 rgba(0, 0, 0, .01), 0 -1px 10px -2px rgba(0, 0, 0, .006);
@@ -546,16 +548,6 @@ body{
 			min-width: 24px;
 			height: 24px;
 			width: 24px;
-
-			&.big{
-				mask-size: 72px calc(72px * 15);
-				background-color: $whiteColor;
-				mask-position: 0 -972px;
-				min-width: 36px;
-				margin: 30px;
-				height: 36px;
-				width: 36px;
-			}
 		}
 
 		&[label="photo-camera"]{
@@ -657,6 +649,53 @@ body{
 			width: 14px;
 			/*bottom: 0;
 			right: 0;*/
+		}
+	}
+
+	/*span transparent formating default on body*/
+	span{
+		background: transparent !important;
+	}
+
+	/*Contenteditable placeholder*/
+	[contenteditable=true]:empty:before{
+		color: $greyColor;
+	}
+
+	/*Genric inputs*/
+	input,
+	textarea{
+		font-size: 15px;
+		resize: none;
+
+		&[disabled]{
+			color: $greyColor !important;
+		}
+	}
+
+	/*Generic buttons*/
+	button{
+		border-radius: 5px !important;
+		text-transform: uppercase;
+
+		&[disabled]{
+			cursor: not-allowed !important;
+			opacity: .5 !important;
+		}
+
+		&.border{
+			border: 1px solid $fontBlackColor;
+			color: $fontBlackColor;
+		}
+
+		&.mat-fab,
+		&.mat-mini-fab{
+			line-height: 0 !important;
+			display: block !important;
+
+			.mat-button-wrapper {
+				padding: 0 !important;
+			}
 		}
 	}
 
@@ -762,13 +801,14 @@ body{
 				}
 
 				.actions{
-					box-sizing: border-box;
-					margin: 1px 0;
+					// box-sizing: border-box;
+					// margin: 1px 0;
 
 					button{
-						i{
-							background-color: $greyColor;
-						}
+						border-radius: 50% !important;
+						// i{
+						// 	background-color: $greyColor;
+						// }
 					}
 				}
 			}
@@ -822,53 +862,6 @@ body{
 	.url{
 		color: $blueColor !important;
 		cursor: pointer;
-	}
-
-	/*span transparent formating default on body*/
-	span{
-		background: transparent !important;
-	}
-
-	/*Contenteditable placeholder*/
-	[contenteditable=true]:empty:before{
-		color: $greyColor;
-	}
-
-	/*Genric inputs*/
-	input,
-	textarea{
-		font-size: 15px;
-		resize: none;
-
-		&[disabled]{
-			color: $greyColor !important;
-		}
-	}
-
-	/*Generic buttons*/
-	button{
-		border-radius: 5px !important;
-		text-transform: uppercase;
-
-		&[disabled]{
-			cursor: not-allowed !important;
-			opacity: .5 !important;
-		}
-
-		&.border{
-			border: 1px solid $fontBlackColor;
-			color: $fontBlackColor;
-		}
-
-		&.mat-fab,
-		&.mat-mini-fab{
-			line-height: 0 !important;
-			display: block !important;
-
-			.mat-button-wrapper {
-				padding: 0 !important;
-			}
-		}
 	}
 
 	/*reCaptcha*/
@@ -2021,7 +2014,7 @@ body{
 		top: 0;
 
 		.left{
-			background-color: $redColor;
+			background: $primaryColor;
 			justify-content: center;
 			align-items: center;
 			position: relative;
@@ -2033,7 +2026,7 @@ body{
 
 			.text{
 				box-sizing: border-box;
-				color: $whiteColor;
+				color: $blackColor;
 				font-weight: bold;
 				line-height: 56px;
 				margin: -48px 0 0;
@@ -2068,8 +2061,8 @@ body{
 			}
 
 			.footer{
-				color: transparentize($whiteColor, .5);
 			    justify-content: center;
+				color: $whiteColor;
 			    position: absolute;
 				line-height: 24px;
 			    font-size: 13px;
@@ -2116,9 +2109,11 @@ body{
 		}
 
 		.right{
-			background-color: $whiteColor;
+			// background-color: $whiteColor;
+			background-color: $blackColor;
 			justify-content: center;
 			align-items: center;
+			color: $whiteColor;
 			position: relative;
 			overflow: auto;
 			display: flex;
@@ -2130,12 +2125,12 @@ body{
 				width: 360px;
 
 				.logo{
-					padding: 48px 0 36px;
 					text-align: center;
+					padding: 0 0 36px;
 
 					.image{
 						mask-size: 48px calc(48px * 15);
-						background-color: $blackColor;
+						background-color: $whiteColor;
 						mask-image: $spriteImages;
 						mask-repeat: no-repeat;
 						display: inline-block;
@@ -2159,6 +2154,7 @@ body{
 						text-align: center;
 						border-radius: 5px;
 						font-weight: bold;
+						margin: 0 0 12px;
 						color: $redColor;
 						font-size: 14px;
 						padding: 12px;
@@ -2202,6 +2198,7 @@ body{
 								border-radius: 5px;
 								line-height: 18px;
 								color: $greyColor;
+								font-weight: bold;
 								padding: 9px;
 								height: 18px;
 
@@ -2212,21 +2209,29 @@ body{
 						}
 
 						.create{
-							border: 1px solid transparentize($greyColor, .75);
+							// border: 1px solid transparentize($greyColor, .75);
+							background: $primaryColor;
 							box-sizing: border-box;
+							border-radius: 10px;
 							text-align: center;
-							border-radius: 5px;
+							color: $whiteColor;
 							padding: 24px 12px;
 							margin: 24px 0 0;
 							width: 100%;
 							float: left;
 
 							a{
-								color: $blueColor;
+								color: $whiteColor;
+								font-weight: bold;
 
 								&:hover{
+									color: $whiteColor !important;
 									text-decoration: underline;
 								}
+							}
+
+							&:hover a{
+								text-decoration: underline;
 							}
 						}
 					}
@@ -2476,7 +2481,7 @@ body{
 					white-space: nowrap;
 					text-align: center;
 					overflow: hidden;
-					max-width: 200px;
+					max-width: 280px;
 					font-size: 18px;
 					margin: auto;
 					float: left;
@@ -4027,7 +4032,7 @@ body{
 
 			/*common buttons*/
 			.buttons{
-				justify-content: center;
+				justify-content: flex-end;
 				box-sizing: border-box;
 				align-items: center;
 				padding: 0 18px;
@@ -4037,9 +4042,12 @@ body{
 				width: 100%;
 
 				button{
-					background: $whiteColor;
-					color: $fontBlackColor;
-					margin: 10px 4px;
+					background: transparent;
+					color: currentColor;
+					box-shadow: none;
+					// margin: 10px 4px;
+					// background: $whiteColor;
+					// color: $fontBlackColor;
 
 					mat-progress-spinner{
 						height: 16px !important;
@@ -4057,10 +4065,10 @@ body{
 						}
 					}
 
-					&:last-child{
-						background: $blueColor;
-						color: $whiteColor;
-					}
+					// &:last-child{
+					// 	background: $blueColor;
+					// 	color: $whiteColor;
+					// }
 				}
 
 				&.newChatComment{
@@ -4956,9 +4964,9 @@ body{
 											}
 
 											&.active{
-												background-color: $blueColor;
-												border-color: $blueColor;
+												background-color: $fontBlackColor;
 												color: $whiteColor;
+												border: none;
 											}
 										}
 
@@ -5372,8 +5380,8 @@ body{
 
 						.user{
 							box-sizing: border-box;
+							padding: 12px 18px 6px;
 							position: relative;
-							padding: 12px 18px;
 							margin: -80px 0 0;
 							display: flex;
 							width: 100%;
@@ -5411,8 +5419,6 @@ body{
 									float: left;
 
 									.text{
-										text-shadow: $shadowText2;
-										color: $whiteColor;
 										position: relative;
 										font-weight: bold;
 										min-height: 44px;
@@ -5420,36 +5426,42 @@ body{
 										float: left;
 
 										.name{
-											box-sizing: border-box;
-											align-items: center;
-											line-height: 24px;
-											font-size: 18px;
-											display: flex;
+											text-shadow: $shadowText1;
 											width: 100%;
-											padding: 0;
+											float: left;
 
-											i{
-												mask-size: 36px calc(36px * 15);
-												background-color: $whiteColor;
-												mask-image: $spriteImages;
-												mask-position: 0 -72px;
-												mask-repeat: no-repeat;
-												margin: 0 0 0 6px;
-												min-width: 18px;
-												height: 18px;
-												width: 18px;
+											.fullname{
+												word-wrap: break-word;
+												font-weight: bold;
+												line-height: 24px;
+												font-size: 20px;
 												float: left;
+											}
+
+											.official{
+												position: relative;
+
+												i{
+													mask-size: 36px calc(36px * 15);
+													background-color: currentColor;
+													mask-image: $spriteImages;
+													mask-position: 0 -72px;
+													mask-repeat: no-repeat;
+													margin: 2px 4px 0;
+													min-width: 18px;
+													height: 18px;
+													width: 18px;
+													float: left;
+												}
 											}
 										}
 										
 										.username{
-											text-overflow: ellipsis;
-											box-sizing: border-box;
-											white-space: nowrap;
+											color: $blueColor;
 											line-height: 18px;
 											font-size: 15px;
+											float: left;
 											width: 100%;
-											padding: 0;
 										}
 									}
 
@@ -5457,10 +5469,9 @@ body{
 										float: left;
 
 										button{
-											background-color: $whiteColor;
+											border: 1px solid currentColor;
+											background-color: transparent;
 											text-transform: uppercase;
-											box-shadow: $shadowBox2;
-											color: $fontBlackColor;
 											line-height: 30px;
 											margin: 4px 0 0;
 											padding: 0 8px;
@@ -5473,15 +5484,15 @@ body{
 
 												i{
 													mask-size: 36px calc(36px * 15);
-													background-color: $blackColor;
+													background-color: currentColor;
 													mask-position: -18px -72px;
 													mask-image: $spriteImages;
 													mask-repeat: no-repeat;
-													margin: 6px 4px 0 0;
 													min-width: 18px;
 													height: 18px;
 													width: 18px;
 													float: left;
+													margin: 0;
 												}
 											}
 
@@ -5500,79 +5511,81 @@ body{
 
 								.bottom{
 									box-sizing: border-box;
-									padding: 12px 18px 0;
-									width: 100%;
+									word-break: break-word;
+									padding: 0 0 0 24px;
+									line-height: 18px;
+									text-align: left;
+									font-size: 14px;
 									float: left;
+									width: 100%;
 
-									ul{
-										text-transform: lowercase;
-										box-sizing: border-box;
-										max-width: 100%;
-										display: flex;
-										float: left;
-										padding: 0;
-										margin: 0;
-
-										li{
-											box-sizing: border-box;
-											text-align: center;
-											list-style: none;
-											padding: 0 6px;
-											float: left;
-											width: 100%;
-											margin: 0;
-
-											button{
-												text-transform: uppercase;
-												font-size: 12px;
-												min-width: 0;
-												height: 100%;
-												width: 100%;
-												padding: 0;
-												margin: 0;
-
-												.text{
-													flex-direction: column;
-													text-align: center;
-													line-height: 20px;
-													font-size: 16px;
-													display: flex;
-													height: 36px;
-
-													.name{
-														text-transform: lowercase;
-														color: currentColor;
-														line-height: 12px;
-														font-size: 11px;
-														opacity: 0.5;
-														width: 100%;
-													}
-												}
-											}
-
-											&:last-child{
-												border-right: none;
-											}
-										}
+									a:hover{
+										text-decoration: underline;
 									}
-								}
-							}
-
-							&.blackColors{
-								.right{
-									color: $blackColor;
 								}
 							}
 						}
 
-						.about{
+						.social{
 							box-sizing: border-box;
-							word-break: break-word;
-							padding: 6px 18px 12px;
-							text-align: left;
-							font-size: 14px;
-							float: left;
+							padding: 12px 18px;
 							width: 100%;
+							float: left;
+
+							ul{
+								box-sizing: border-box;
+								display: flex;
+								width: 100%;
+								float: left;
+								padding: 0;
+								margin: 0;
+
+								li{
+									box-sizing: border-box;
+									border-radius: 3px;
+									text-align: center;
+									list-style: none;
+									float: left;
+									width: 100%;
+									padding: 0;
+									margin: 0;
+
+									button{
+										font-size: 12px;
+										min-width: 0;
+										height: 100%;
+										width: 100%;
+										padding: 0;
+										margin: 0;
+
+										.text{
+											flex-direction: column;
+											text-align: center;
+											line-height: 20px;
+											font-size: 16px;
+											display: flex;
+											height: 36px;
+
+											.name{
+												max-width: calc(100% - 12px);
+												text-transform: lowercase;
+												text-overflow: ellipsis;
+												color: currentColor;
+												line-height: 12px;
+												overflow: hidden;
+												font-size: 11px;
+												margin: 0 auto;
+												width: 100%;
+												opacity: .5;
+											}
+										}
+									}
+
+									&:last-child{
+										border-right: none;
+									}
+								}
+							}
 						}
 
 						.actions{
@@ -6079,17 +6092,31 @@ body{
 								height: 48px;
 
 								button{
-									text-transform: inherit;
-									line-height: 32px;
-									padding: 0 12px;
-									margin: 7px 0;
+									background-color: $fontBlackColor;
+									text-transform: uppercase;
+									margin: 10px 0 0 6px;
+									color: $whiteColor;
+									line-height: 24px;
+									font-weight: bold;
+									font-size: 11px;
+									padding: 0 8px;
+									height: 28px;
 									min-width: 0;
-									height: 32px;
+
+									&:first-child{
+										margin-left: 0;
+									}
 
 									&.active{
 										background-color: $blueColor;
 										border-color: $blueColor;
 										color: $whiteColor;
+									}
+
+									&.pending{
+										background-color: transparent;
+										border-color: currentColor;
+										color: currentColor;
 									}
 								}
 							}
@@ -6380,29 +6407,40 @@ body{
 								}
 
 								.operations{
+									padding: 2px 0 0;
 									display: flex;
 									height: 48px;
 
 									span{
 										display: inherit;
-									}
 
-									button{
-										text-transform: uppercase;
-										margin: 8px 0 0 6px;
-										line-height: 24px;
-										padding: 0 12px;
-										height: 32px;
-										min-width: 0;
-
-										&:first-child{
-											margin: 8px 0 0;
-										}
-
-										&.active{
-											background-color: $blueColor;
-											border-color: $blueColor;
+										button{
+											background-color: $fontBlackColor;
+											text-transform: uppercase;
+											margin: 6px 0 0 6px;
 											color: $whiteColor;
+											line-height: 24px;
+											font-weight: bold;
+											font-size: 11px;
+											padding: 0 8px;
+											height: 28px;
+											min-width: 0;
+
+											&:first-child{
+												margin-left: 0;
+											}
+
+											&.active{
+												background-color: $blueColor;
+												border-color: $blueColor;
+												color: $whiteColor;
+											}
+
+											&.pending{
+												background-color: transparent;
+												border-color: currentColor;
+												color: currentColor;
+											}
 										}
 									}
 
@@ -6428,14 +6466,8 @@ body{
 									}
 
 									.actions{
-										margin: 0 6px 0 0;
-										float: right;
-
 										button{
 											border-radius: 50% !important;
-											height: 36px !important;
-											width: 36px !important;
-											margin: 4px 0 0;
 										}
 									}
 								}
@@ -6548,14 +6580,10 @@ body{
 							}
 
 							.actions{
-								margin: 0 2px 0 0;
-								float: right;
+								padding: 2px 0 0;
 
 								button{
 									border-radius: 50% !important;
-									height: 36px !important;
-									width: 36px !important;
-									margin: 4px 0 0;
 								}
 							}
 
@@ -6588,30 +6616,23 @@ body{
 
 					.avatarBackground{
 						box-sizing: border-box;
-						padding: 0 18px;
+						padding: 24px 18px 6px;
 						width: 100%;
 						margin: 0;
 
-						.background{
-							background-color: $greyColor;
-							border-radius: 5px;
+						.avatar{
 							position: relative;
-							text-align: center;
-							width: 100%;
+							margin: 0 auto;
+							height: 120px;
+							width: 120px;
 
 							.image{
 								box-shadow: $shadowBox2;
-								border-radius: 5px;
-								max-height: 178px;
+								border-radius: 50%;
 								overflow: hidden;
 								margin: 0 auto;
-								height: 33.3vw;
+								height: 100%;
 								width: 100%;
-
-								&:hover .layer{
-									background: transparentize($blueColor, .5);
-									cursor: pointer;
-								}
 
 								img{
 									height: 100%;
@@ -6620,59 +6641,28 @@ body{
 
 								.layer{
 									position: absolute;
+									border-radius: 50%;
 									height: 100%;
 									width: 100%;
 									top: 0;
 
-									.text{
-										color: $whiteColor;
+									i{
+										mask-size: 72px calc(72px * 15);
+										background-color: $whiteColor;
+										mask-position: -36px -864px;
 										position: absolute;
-										margin: 0 0 12px 0;
-										line-height: 24px;
-										width: 100%;
-										bottom: 0;
-
-										i{
-											background-color: $whiteColor;
-											margin: -2px 0 0 -32px;
-											position: absolute;
-										}
+										min-width: 36px;
+										margin: -18px;
+										height: 36px;
+										width: 36px;
+										left: 50%;
+										top: 50%;
 									}
 								}
-							}
 
-							.avatar{
-								margin: -48px 0 0 -48px;
-								position: absolute;
-								left: 50%;
-								top: 50%;
-
-								.image{
-									box-shadow: $shadowBox2;
-									border-radius: 50%;
-									overflow: hidden;
-									margin: 0 auto;
-									height: 96px;
-									width: 96px;
-
-									&:hover .layer{
-										background: transparentize($blueColor, .5);
-										cursor: pointer;
-									}
-
-									img{
-										height: 100%;
-										width: 100%;
-									}
-
-									.layer{
-										position: absolute;
-										border-radius: 50%;
-										line-height: 96px;
-										height: 100%;
-										width: 100%;
-										top: 0;
-									}
+								&:hover .layer{
+									background: transparentize($blueColor, .5);
+									cursor: pointer;
 								}
 							}
 						}
@@ -6925,7 +6915,7 @@ body{
 
 		/*Mat menu*/
 		.mat-menu-panel{
-			background: #212121;
+			background: $mobileBottomBox;
 
 			button{
 				color: $whiteColor;
@@ -7035,19 +7025,6 @@ body{
 				}
 			}
 
-			.pageUser{
-				.panel{
-					.dataBox{
-						.actions{
-							button{
-								background: $whiteColor;
-								color: $fontBlackColor;
-							}
-						}
-					}
-				}
-			}
-
 			.pageNews{
 				.content ul.people li .inner .avatar.tag{
 					background-color: $whiteColor;
@@ -7079,8 +7056,11 @@ body{
 
 			.pageNotifications{
 				.content{
-					ul.notifications li .inner .operations .actions button i {
-						background-color: $whiteColor;
+					ul.notifications li .inner .operations span{
+						button{
+							background-color: $whiteColor;
+							color: $fontBlackColor;
+						}
 					}
 
 					ul.chat li .avatarsGroup.group .avatar{
@@ -7771,6 +7751,7 @@ body{
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $headerWhiteColor;
 			box-shadow: $shadowBoxBottom;
+			user-select: none;
 			position: fixed;
 			display: flex;
 			height: 48px;
@@ -8453,10 +8434,19 @@ body{
 
 		.sessionsPanelMobile{
 			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $blackColor;
+			background-color: $mobileBottomBox;
+			border-radius: 15px 15px 0 0;
 			color: $whiteColor;
 			width: 100%;
 			float: left;
+
+			.grabber{
+				background-color: transparentize($whiteColor, .25);
+				border-radius: 5px;
+				margin: 12px auto;
+				width: 36px;
+				height: 5px;
+			}
 
 			ul{
 				padding: 24px 0;
@@ -8614,18 +8604,27 @@ body{
 
 		.mobilePlayer{
 			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $blackColor;
+			background-color: $mobileBottomBox;
+			border-radius: 15px 15px 0 0;
 			color: $whiteColor;
 			position: relative;
 			min-height: 360px;
 			width: 100%;
+
+			.grabber{
+				background-color: transparentize($whiteColor, .25);
+				border-radius: 5px;
+				margin: 12px auto;
+				width: 36px;
+				height: 5px;
+			}
 
 			.box{
 				position: relative;
 				width: 100%;
 
 				.player{
-					background: linear-gradient(0, transparentize($blackColor, .05) 60%, transparentize($blackColor, .05) 75%, transparentize($blackColor, .15) 90%, transparent);
+					background: linear-gradient(0, #111 50%, transparentize(#111, .1) 75%, transparent 100%);
 					position: fixed;
 					width: 100%;
 					z-index: 99;
@@ -8659,7 +8658,7 @@ body{
 									overflow: hidden;
 									transition: .15s;
 									padding: 0 0 4px;
-									font-size: 24px;
+									font-size: 26px;
 								}
 
 								.artist{
@@ -8897,7 +8896,7 @@ body{
 					position: relative;
 					overflow-x: hidden;
 					overflow-y: auto;
-					max-height: 75vh;
+					max-height: 70vh;
 					width: 100%;
 					padding: 0;
 					margin: 0;

@@ -30,4 +30,8 @@ export class ShowSessionPanelMobileComponent {
 		this.sessionService.setDataAddAccount(current);
 		this.bottomSheetRef.dismiss();
 	}
+
+	close() {
+		this.bottomSheetRef.dismiss();	
+	}
 }

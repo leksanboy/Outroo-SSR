@@ -3,7 +3,7 @@
 		<div class="pageUser" *ngIf="userExists">
 			<div class="panel">
 				<div class="dataBox">
-					<div class="user" [ngClass]="{blackColors: !sessionData.current.theme}">
+					<div class="user">
 						<div class="left">
 							<div class="avatar" (click)="showAvatar()">
 								<img [src]="userData.avatar ? userData.avatarUrl : environment.avatar"/>
@@ -14,8 +14,8 @@
 							<div class="top">
 								<div class="text">
 									<div class="name">
-										{{userData.name}}
-										<i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<div class="fullname">{{userData.name}}</div>
+										<span class="official"><i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i></span>
 									</div>
 									<div class="username">@{{userData.username}}</div>
 								</div>
@@ -23,60 +23,60 @@
 								<div class="settings" *ngIf="userData.id == sessionData.current.id">
 									<button mat-button type="button" routerLink="/settings">
 										<i label="settings"></i>
-										{{translations.settings}}
+										<!-- {{translations.settings}} -->
 									</button>
 								</div>
 							</div>
 
-							<div class="bottom">
-								<ul *ngIf="((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
-									<li routerLink="/{{userData.username}}/photos">
-										<button mat-button>
-											<div class="text">
-												{{userData.countPhotos}}
-												<div class="name">{{translations.photos}}</div>
-											</div>
-										</button>
-									</li>
-									<li routerLink="/{{userData.username}}/audios">
-										<button mat-button>
-											<div class="text">
-												{{userData.countAudios}}
-												<div class="name">{{translations.songs}}</div>
-											</div>
-										</button>
-									</li>
-									<li routerLink="/{{userData.username}}/following">
-										<button mat-button>
-											<div class="text">
-												{{userData.countFollowing}}
-												<div class="name">{{translations.following}}</div>
-											</div>
-										</button>
-									</li>
-									<li routerLink="/{{userData.username}}/followers">
-										<button mat-button>
-											<div class="text">
-												{{userData.countFollowers}}
-												<div class="name">{{translations.followers}}</div>
-											</div>
-										</button>
-									</li>
-									<li routerLink="/saved" *ngIf="sessionData.current.id == userData.id">
-										<button mat-button>
-											<div class="text">
-												{{userData.countBookmarks}}
-												<div class="name">{{translations.bookmarks}}</div>
-											</div>
-										</button>
-									</li>
-								</ul>
+							<div class="bottom" *ngIf="userData.about">
+								<span [innerHtml]="userData.about | safeHtml"></span>
 							</div>
 						</div>
 					</div>
 
-					<div class="about" *ngIf="userData.about">
-						<span [innerHtml]="userData.about | safeHtml"></span>
+					<div class="social">
+						<ul *ngIf="((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
+							<li routerLink="/{{userData.username}}/photos">
+								<button mat-button>
+									<div class="text">
+										{{userData.countPhotos}}
+										<div class="name">{{translations.photos}}</div>
+									</div>
+								</button>
+							</li>
+							<li routerLink="/{{userData.username}}/audios">
+								<button mat-button>
+									<div class="text">
+										{{userData.countAudios}}
+										<div class="name">{{translations.songs}}</div>
+									</div>
+								</button>
+							</li>
+							<li routerLink="/{{userData.username}}/following">
+								<button mat-button>
+									<div class="text">
+										{{userData.countFollowing}}
+										<div class="name">{{translations.following}}</div>
+									</div>
+								</button>
+							</li>
+							<li routerLink="/{{userData.username}}/followers">
+								<button mat-button>
+									<div class="text">
+										{{userData.countFollowers}}
+										<div class="name">{{translations.followers}}</div>
+									</div>
+								</button>
+							</li>
+							<li routerLink="/saved" *ngIf="sessionData.current.id == userData.id">
+								<button mat-button>
+									<div class="text">
+										{{userData.countBookmarks}}
+										<div class="name">{{translations.bookmarks}}</div>
+									</div>
+								</button>
+							</li>
+						</ul>
 					</div>
 
 					<div class="uploadFilesBox" *ngIf="userData.id == sessionData.current.id">

@@ -6,7 +6,7 @@
 // Common
 export const environment = {
 	production: false,
-	url: './',
+	url: 'https://outroo.com/',
 	name: 'Outroo',
 	copyright: '© ' + new Date().getFullYear() + ' Outroo',
 	cuantity: 30,

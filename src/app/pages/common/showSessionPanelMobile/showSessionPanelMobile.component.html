@@ -1,4 +1,6 @@
 <div class="sessionsPanelMobile">
+	<div class="grabber" (click)="close()"></div>
+
 	<ul>
 		<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}" (click)="setCurrentUser(x)">
 			<div class="avatar">

@@ -75,7 +75,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Refresh data on sheet / progresbar ant duration
-	detectChanges(){
+	detectChanges() {
 		if (this.activeDetectChanges)
 			this.ref.detectChanges();
 	}
@@ -113,7 +113,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Time format
-	formatTime(time){
+	formatTime(time) {
 		let duration = time,
 			hours = Math.floor(duration / 3600),
 			minutes = Math.floor((duration % 3600) / 60),
@@ -130,7 +130,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Item options: add/remove, share, search, report
-	itemAudiosOptions(type, item, playlist){
+	itemAudiosOptions(type, item, playlist) {
 		switch(type){
 			case("addRemoveSession"):
 				item.addRemoveSession = !item.addRemoveSession;
@@ -208,13 +208,13 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Progress bar
-	progressBar(event){
+	progressBar(event) {
 		let time = ((event.value / 1000) * this.audio.duration);
 		this.audio.currentTime = time;
 	}
 
 	// Close sheet
-	close(){
+	close() {
 		this.bottomSheetRef.dismiss();
 	}
 }

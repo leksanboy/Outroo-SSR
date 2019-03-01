@@ -33,8 +33,8 @@ export class UserResolver implements Resolve<any> {
 				let metaData = {
 					page: userData.name,
 					title: userData.name,
-					description: userData.about ? userData.about : 'DESC',
-					keywords: userData.about ? userData.about : 'KEY',
+					description: userData.about ? userData.about : this.environment.name,
+					keywords: userData.about ? userData.about : this.environment.name,
 					url: this.environment.url + userData.username,
 					image: this.environment.url + (userData.avatar ? userData.avatarUrl : this.environment.avatar)
 				}

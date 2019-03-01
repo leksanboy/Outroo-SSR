@@ -360,27 +360,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		if (type == 'writingChanges') {
 			let str = event;
 			this.sessionData.current.aboutWriting = event;
-			
-			// new line
-			str = str.replace(/\n/g, '<br>');
 
-			// hashtag
-			str = str.replace(/(#)\w+/g, function(value){
-				return '<span class="hashtag">' + value + '</span>';
-			});
+			if (str) {
+				// new line
+				str = str.replace(/\n/g, '<br>');
 
-			// mention
-			str = str.replace(/(@)\w+/g, function(value){
-				return '<span class="mention">' + value + '</span>';
-			});
+				// hashtag
+				str = str.replace(/(#)\w+/g, function(value){
+					return '<span class="hashtag">' + value + '</span>';
+				});
 
-			// url
-			str = str.replace(this.urlRegex, function(value){
-				return '<span class="url">' + value + '</span>';
-			});
+				// mention
+				str = str.replace(/(@)\w+/g, function(value){
+					return '<span class="mention">' + value + '</span>';
+				});
 
-			// writing content
-			this.sessionData.current.about = str;
+				// url
+				str = str.replace(this.urlRegex, function(value){
+					return '<span class="url">' + value + '</span>';
+				});
+
+				// writing content
+				this.sessionData.current.about = str;
+			}
 
 			//check empty contenteditable
 			this.aboutEdit('checkPlaceholder', event);

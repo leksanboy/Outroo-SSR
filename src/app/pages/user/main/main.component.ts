@@ -260,15 +260,16 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// New publication
-	newPublication(type, result){
-		if (type == 'new') {
-			let data = {
+	newPublication(type, data){
+		if (type === 'new') {
+			let opt = {
 				type: 'new'
-			}
+			};
 
-			this.sessionService.setDataNewPublication(data);
-		} else if (type == 'result') {
-			// this.dataDefault.list.unshift(result);
+			this.sessionService.setDataNewPublication(opt);
+		} else if (type === 'result') {
+			console.log("CREATED:", data);
+			// this.dataDefault.list.unshift(data);
 			this.dataDefault.noData = false;
 		}
 	}

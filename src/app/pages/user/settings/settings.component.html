@@ -5,7 +5,7 @@
 				<mat-tab-group mat-stretch-tabs>
 		 			<mat-tab label="{{translations.editProfile}}">
 		 				<div class="avatarBackground">
-			 				<div class="background">
+			 				<!-- <div class="background">
 								<div class="image" [matMenuTriggerFor]="backgroundOneOptions">
 									<img [src]="sessionData.current.backgroundUrl" *ngIf="sessionData.current.background"/>
 
@@ -40,6 +40,23 @@
 										<button mat-menu-item>{{translations.cancel}}</button>
 									</mat-menu>
 								</div>
+							</div> -->
+
+							<div class="avatar">
+								<div class="image" [matMenuTriggerFor]="avatarOptions">
+									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+
+									<div class="layer">
+										<i label="photo-camera"></i>
+									</div>
+								</div>
+								<input type="file" hidden (change)="openAvatar('avatar', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
+
+								<mat-menu #avatarOptions="matMenu" [overlapTrigger]="false">
+									<button mat-menu-item (click)="avatarFile.click()">{{translations.uploadPhoto}}</button>
+									<button mat-menu-item (click)="openAvatar('avatar', 'remove', $event)">{{translations.removePhoto}}</button>
+									<button mat-menu-item>{{translations.cancel}}</button>
+								</mat-menu>
 							</div>
 						</div>
 
