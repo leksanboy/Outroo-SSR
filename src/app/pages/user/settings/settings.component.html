@@ -182,9 +182,7 @@
 									<span class="username">@{{x.username}}</span>
 								</div>
 								<div class="actions">
-									<button mat-button class="border" [matMenuTriggerFor]="signOut">
-										{{translations.logOut}}
-									</button>
+									<button mat-button [matMenuTriggerFor]="signOut">{{translations.logOut}}</button>
 									<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
 											{{x.name}}
@@ -209,9 +207,7 @@
 									<span class="username">{{translations.setAnotherAccount}}</span>
 								</div>
 								<div class="actions">
-									<button mat-button class="border">
-										{{translations.add}}
-									</button>
+									<button mat-button>{{translations.add}}</button>
 								</div>
 							</li>
 					    </ul>

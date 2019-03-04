@@ -198,5 +198,6 @@
 	"noChannel": "No channel",
 	"bookmarks": "Saved",
 	"reportDescription": "Describe what the problem is",
-	"addedToSaved": "Added to Saved"
+	"addedToSaved": "Added to Saved",
+	"back": "Back"
 }

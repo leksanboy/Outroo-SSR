@@ -68,9 +68,9 @@
 								</button>
 							</span>
 							<mat-menu #options="matMenu">
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
 								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? 'Add' : 'Remove'}}</button>
 								<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? 'Add' : 'Remove'}}</button>
-								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
 								<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 							</mat-menu>
 							<mat-menu #menuPlaylists="matMenu">

@@ -6,8 +6,10 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.following}}</div>
+					<div class="text">{{translations.back}}</div>
 				</div>
+
+				<div class="pageTitle">{{translations.following}}</div>
 
 				<span *ngIf="!deniedAccessOnlySession">
 					<div class="searchBox" *ngIf="((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">

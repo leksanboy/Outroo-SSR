@@ -21,11 +21,11 @@
 									<button mat-icon-button [matMenuTriggerFor]="options">
 										<i label="more"></i>
 									</button>
-									
+
 									<mat-menu #options="matMenu">
-										<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x.user.id == sessionData.current.id">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-										<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x.user.id == sessionData.current.id">{{x.disabledComments ? translations.disableComments : translations.enableComments}}</button>
 										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
+										<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x.user.id == sessionData.current.id">{{x.disabledComments ? translations.disableComments : translations.enableComments}}</button>
+										<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x.user.id == sessionData.current.id">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
 										<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
 									</mat-menu>
 									
@@ -146,8 +146,8 @@
 														<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
 													</button>
 													<mat-menu #appMenu="matMenu">
-														<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations.add : translations.remove}}</button>
 														<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+														<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations.add : translations.remove}}</button>
 														<button mat-menu-item (click)="itemAudiosOptions('report', a, null)">{{translations.report}}</button>
 													</mat-menu>
 													<mat-menu #menuPlaylists="matMenu">

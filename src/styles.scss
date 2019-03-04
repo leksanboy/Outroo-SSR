@@ -48,7 +48,7 @@ $greyColor: #9E9E9E;
 $blueColor: #0C98F5;
 $redColor: #E53935;
 $officialColor: #0099ff;
-$mobileBottomBox: #212121;
+$mobileBottomBox: #111;
 
 /*Shadows*/
 $shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02), 0 -4px 5px 0 rgba(0, 0, 0, .01), 0 -1px 10px -2px rgba(0, 0, 0, .006);
@@ -4190,9 +4190,9 @@ body{
 						width: 50%;
 
 						button{
-							background: $blueColor;
+							background: transparent;
 							color: $whiteColor;
-							margin: 0 0 0 12px;
+							margin: 0 0 0 8px;
 
 							&[disabled]{
 								background-color: $greyColor;
@@ -4523,18 +4523,6 @@ body{
 							max-width: 100%;
 						}
 					}
-				}
-
-				&.privacy{
-					/*.subtitle{
-						text-transform: uppercase;
-						font-weight: bold;
-						text-align: left;
-						font-size: 18px;
-						padding: 12px 0;
-						width: 100%;
-						float: left;
-					}*/
 				}
 			}
 		}
@@ -5344,16 +5332,16 @@ body{
 			z-index: 8;
 			top: 0;
 
-			/*Back page panel on the top*/
 			.back{
-				line-height: 56px;
+				align-items: center;
+				display: flex;
 				height: 56px;
 				width: 100%;
 				float: left;
 
 				button{
 					border-radius: 50% !important;
-					margin: 8px;
+					margin: 0 8px;
 					float: left;
 				}
 
@@ -5361,6 +5349,17 @@ body{
 					font-size: 18px;
 					float: left;
 				}
+			}
+
+			.pageTitle{
+				text-overflow: ellipsis;
+				padding: 12px 18px 18px;
+				box-sizing: border-box;
+				font-weight: bold;
+				overflow: hidden;
+				font-size: 32px;
+				float: left;
+				width: 100%;
 			}
 
 			/*User*/
@@ -6882,9 +6881,15 @@ body{
 								height: 48px;
 
 								button{
+									border: 1px solid currentColor;
 									text-transform: uppercase;
-									padding: 0 12px;
-									margin: 5px 0;
+									margin: 10px 0 0 6px;
+									color: currentColor;
+									line-height: 24px;
+									font-weight: bold;
+									font-size: 11px;
+									padding: 0 8px;
+									height: 28px;
 									min-width: 0;
 								}
 							}
@@ -6915,7 +6920,7 @@ body{
 
 		/*Mat menu*/
 		.mat-menu-panel{
-			background: $mobileBottomBox;
+			background: #333;
 
 			button{
 				color: $whiteColor;
@@ -7056,16 +7061,30 @@ body{
 
 			.pageNotifications{
 				.content{
-					ul.notifications li .inner .operations span{
-						button{
-							background-color: $whiteColor;
-							color: $fontBlackColor;
-						}
+					ul.notifications li .inner .operations span button{
+						background-color: $whiteColor;
+						color: $fontBlackColor;
 					}
 
 					ul.chat li .avatarsGroup.group .avatar{
 						border-color: $blackColor;
 					}
+				}
+			}
+
+			.pageFollowing{
+				.content{
+					ul li .actions button{
+						background-color: $whiteColor;
+						color: $fontBlackColor;
+					}
+				}
+			}
+
+			.pageUser{
+				.panel .dataBox .actions button{
+					background-color: $whiteColor;
+					color: $fontBlackColor;
 				}
 			}
 		}
@@ -7179,6 +7198,28 @@ body{
 				&:after{
 					border: 8px solid $modalDialogColor;
 				}
+			}
+		}
+
+		.sessionsPanelMobile{
+			background-color: $mobileBottomBox;
+			color: $whiteColor;
+
+			.grabber{
+				background-color: transparentize($whiteColor, .25);
+			}
+		}
+
+		.mobilePlayer{
+			background-color: $mobileBottomBox;
+			color: $whiteColor;
+
+			.grabber{
+				background-color: transparentize($whiteColor, .25);
+			}
+
+			.box .player{
+				background: linear-gradient(0, $mobileBottomBox 50%, $mobileBottomBox 75%, transparent 100%);
 			}
 		}
 	}
@@ -7595,8 +7636,6 @@ body{
 /*MOBILE*/
 @media (max-width: 760px){
 	body{
-		/*font-size: 16px;*/
-
 		.alertBox{
 			margin: 0;
 			top: 0;
@@ -8433,23 +8472,23 @@ body{
 		}
 
 		.sessionsPanelMobile{
-			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $mobileBottomBox;
+			border-top: 1px solid transparentize($greyColor, .5);
+			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
-			color: $whiteColor;
+			color: $fontBlackColor;
 			width: 100%;
 			float: left;
 
 			.grabber{
-				background-color: transparentize($whiteColor, .25);
-				border-radius: 5px;
+				background-color: transparentize($blackColor, .25);
+				border-radius: 4px;
 				margin: 12px auto;
 				width: 36px;
-				height: 5px;
+				height: 4px;
 			}
 
 			ul{
-				padding: 24px 0;
+				padding: 12px 0;
 				float: left;
 				width: 100%;
 				margin: 0;
@@ -8477,7 +8516,6 @@ body{
 						width: 40px;
 
 						img{
-							background-color: $fontBlackColor;
 							border-radius: 50%;
 							height: 100%;
 							width: 100%;
@@ -8556,6 +8594,10 @@ body{
 				overflow: scroll;
 				height: 100%;
 
+				// .pageTitle{
+				// 	font-size: 32px;
+				// }
+
 				.pagePhotos{
 					.content{
 						ul{
@@ -8603,20 +8645,20 @@ body{
 		}
 
 		.mobilePlayer{
-			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $mobileBottomBox;
+			border-top: 1px solid transparentize($greyColor, .5);
+			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
-			color: $whiteColor;
+			color: $fontBlackColor;
 			position: relative;
 			min-height: 360px;
 			width: 100%;
 
 			.grabber{
-				background-color: transparentize($whiteColor, .25);
-				border-radius: 5px;
+				background-color: transparentize($blackColor, .25);
+				border-radius: 4px;
 				margin: 12px auto;
 				width: 36px;
-				height: 5px;
+				height: 4px;
 			}
 
 			.box{
@@ -8624,7 +8666,7 @@ body{
 				width: 100%;
 
 				.player{
-					background: linear-gradient(0, #111 50%, transparentize(#111, .1) 75%, transparent 100%);
+					background: linear-gradient(0, $whiteColor 50%, $whiteColor 75%, transparentize($whiteColor, 1) 100%);
 					position: fixed;
 					width: 100%;
 					z-index: 99;
@@ -8647,7 +8689,6 @@ body{
 								box-sizing: border-box;
 								padding: 12px 36px 0;
 								text-align: center;
-								color: $whiteColor;
 								width: 100%;
 								float: left;
 
@@ -8675,6 +8716,7 @@ body{
 								right: 0;
 
 								button{
+									color: currentColor;
 									position: relative;
 									background: none;
 									box-shadow: none;
@@ -8686,7 +8728,7 @@ body{
 									margin: 0;
 
 									i{
-										background-color: $whiteColor;
+										background-color: currentColor;
 									}
 								}
 							}
@@ -8710,17 +8752,17 @@ body{
 
 									.mat-slider-track-wrapper{
 										.mat-slider-track-background{
-											background-color: transparentize($whiteColor, .85);
+											background-color: transparentize($greyColor, .5);
 										}
 
 										.mat-slider-track-fill{
-											background-color: $whiteColor;
+											background-color: currentColor;
 										}
 									}
 
 									.mat-slider-thumb-container{
 										.mat-slider-thumb{
-											background-color: $whiteColor;
+											background-color: currentColor;
 											border: none;
 											height: 12px;
 											bottom: -6px;
@@ -8737,7 +8779,7 @@ body{
 						}
 
 						.duration{
-							color: transparentize($whiteColor, .5);
+							color: currentColor;
 							margin: -6px 0 0;
 							font-size: 12px;
 							display: flex;
@@ -8771,14 +8813,14 @@ body{
 							box-shadow: none;
 
 							i{
-								background-color: $whiteColor;
+								background-color: currentColor;
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
 							}
 
 							&.mat-accent{
-								color: #09f;
+								color: currentColor;
 							}
 
 							&.playPause{
@@ -8908,10 +8950,6 @@ body{
 						width: 100%;
 						z-index: 1;
 						margin: 0;
-
-						li{
-							color: $whiteColor;
-						}
 					}
 				}
 			}

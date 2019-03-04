@@ -31,8 +31,8 @@
 							<i label="more"></i>
 						</button>
 						<mat-menu #options="matMenu">
-							<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
 							<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations.disableComments : translations.enableComments}}</button>
+							<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
 							<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations.report}}</button>
 							<button mat-menu-item (click)="itemOptions('close', null)">{{translations.close}}</button>
 						</mat-menu>
@@ -82,8 +82,8 @@
 									<i label="more"></i>
 								</button>
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
 									<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations.disableComments : translations.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
 									<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations.report}}</button>
 									<button mat-menu-item (click)="itemOptions('close', null)">{{translations.close}}</button>
 								</mat-menu>
