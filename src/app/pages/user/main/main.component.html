@@ -14,8 +14,11 @@
 							<div class="top">
 								<div class="text">
 									<div class="name">
-										<div class="fullname">{{userData.name}}</div>
-										<span class="official"><i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i></span>
+										{{userData.name}}
+										<i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<!-- <div class="fullname"> -->
+										<!-- </div> -->
+										<!-- <span class="official"><i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i></span> -->
 									</div>
 									<div class="username">@{{userData.username}}</div>
 								</div>

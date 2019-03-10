@@ -617,8 +617,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 			dialogRef.afterClosed().subscribe((result: any) => {
 				this.location.go(this.router.url);
 
+				console.log("setDataNewPublication:", result);
+
 				if (result) {
-					this.sessionService.setDataNewPublication(result);
+					let res = {
+						type: 'result',
+						data: result
+					}
+
+					this.sessionService.setDataNewPublication(res);
 				}
 			});
 		}
@@ -1250,7 +1257,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Conversation
 	openConversation(data) {
-		// Open conversation if is closed because on the other hand we set on dataList new conversation or last inserted comment on one conversation
+		// Open conversation if is closed because on the other hand we set on dataList new conversation 
+		// or last inserted comment on one conversation
 		if (!data.close) {
 			this.location.go(this.router.url + '#' + data.comeFrom);
 
@@ -1280,7 +1288,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Copy to clipboard
 	copyToClipboard(data) {
 		const el = this.document.createElement('textarea');		// Create a <textarea> element
-		const randId = Math.floor(Math.random() * 6) + 1;			// Random id
+		const randId = Math.floor(Math.random() * 6) + 1;		// Random id
 		el.value = data;										// Set its value to the string that you want copied
 		el.setAttribute('readonly', '');						// Make it readonly to be tamper-proof
 		el.setAttribute('id', randId.toString());

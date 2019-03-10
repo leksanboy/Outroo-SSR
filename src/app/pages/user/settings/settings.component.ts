@@ -101,11 +101,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(data => {
 				this.translations = data;
 
-				// Set Document title
+				// Set page title
 				this.titleService.setTitle(this.translations.settings);
-
-				// Data personal about
-				this.aboutEdit('writingChanges', this.sessionData.current.aboutOriginal);
 			});
 	}
 
@@ -393,8 +390,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				this.sessionData.current.about = '<div class="placeholder">' + this.translations.aboutMeDescription + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
-				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : '',
-				original: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : ''
+				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal,
+				original: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal
 			}
 
 			// new line
@@ -424,19 +421,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.savePersonalDataLoading = true;
 		
 		let dataAbout = this.aboutEdit('transformBeforeSend', null),
-			data = {
-				id: this.sessionData.current.id,
-				username: this.actionFormPersonalData.get('username').value,
-				name: this.actionFormPersonalData.get('name').value.trim(),
-				language: this.actionFormPersonalData.get('language').value,
-				about: dataAbout.content,
-				aboutOriginal: dataAbout.original
-			};
+		data = {
+			id: this.sessionData.current.id,
+			username: this.actionFormPersonalData.get('username').value,
+			name: this.actionFormPersonalData.get('name').value.trim(),
+			language: this.actionFormPersonalData.get('language').value,
+			about: dataAbout.content,
+			aboutOriginal: dataAbout.original
+		};
 
 		this.userDataService.updateData(data)
 			.subscribe(res => {
 				setTimeout(() => {
-					// Set data
 					this.savePersonalDataLoading = false;
 					this.sessionData = this.userDataService.getSessionData();
 					this.sessionService.setData(this.sessionData);

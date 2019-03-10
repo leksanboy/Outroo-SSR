@@ -42,7 +42,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		spaceBetween: 0
 	};
 	public activeRouter: any;
-	public activeSession: any;
+	// public activeSession: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
 	public activeNewPublication: any;
@@ -99,35 +99,41 @@ export class MainComponent implements OnInit, OnDestroy {
 					// Get translations
 					this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
 
-					// Get user data
-					this.siteUserData(this.userData.username);
+					// Check if page is mine to set mine page data
+					if (event.url.substr(1) === this.userData.username) {
+						this.siteUserData(this.userData.username);
+						this.default('default', this.userData.username, this.sessionData.current.id);
+					} else {
+						this.siteUserData(this.sessionData.current.username);
+						this.default('default', this.sessionData.current.username, this.sessionData.current.id);
+					}
 
-					// Load default
-					this.default('default', this.userData.username, this.sessionData.current.id);
 				}
 			});
 
 		// Multiples sessions: select one from sessions list and refresh session data
-		this.activeSession = this.sessionService.getData()
-			.subscribe(data => {
-				// Set session data
-				this.sessionData = data;
+		// this.activeSession = this.sessionService.getData()
+		// 	.subscribe(data => {
+		// 		// Set session data
+		// 		this.sessionData = data;
 
-				// Go top of page on change user
-				this.window.scrollTo(0, 0);
+		// 		// Go top of page on change user
+		// 		this.window.scrollTo(0, 0);
 
-				// Change url whitout reloading
-				this.location.go('/' + this.sessionData.current.username);
+		// 		// Change url whitout reloading
+		// 		this.location.go('/' + this.sessionData.current.username);
+
+		// 		// INFO: Then automatically call "activeRouter"
 				
-				// Get translations
-				this.getTranslations(this.sessionData.current.language);
+		// 		// // Get translations
+		// 		// this.getTranslations(this.sessionData.current.language);
 
-				// Get user data
-				this.siteUserData(this.sessionData.current.username);
+		// 		// // Get user data
+		// 		// this.siteUserData(this.sessionData.current.username);
 
-				// Load default
-				this.default('default', this.sessionData.current.username, this.sessionData.current.id);
-			});
+		// 		// // Load default
+		// 		// this.default('default', this.sessionData.current.username, this.sessionData.current.id);
+		// 	});
 
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
@@ -151,7 +157,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		// Get new publication
 		this.activeNewPublication = this.sessionService.getDataNewPublication()
 			.subscribe(data => {
-				this.newPublication('result', data);
+				this.newPublication('result', data.data);
 			});
 
 		// Close all dialogs
@@ -178,11 +184,28 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		// not in use
+
+		// // Run page on reload page
+		// if (!this.activeRouterExists) {
+		// 	// Get url data
+		// 	let urlData: any = this.activatedRoute.snapshot.params.id;
+
+		// 	// Set visual data page if session equals user
+		// 	if (this.sessionData.current)
+		// 		if (urlData == this.sessionData.current.username)
+		// 			this.userData = this.sessionData.current;
+
+		// 	// Get user data
+		// 	this.siteUserData(urlData);
+
+		// 	// Load default
+		// 	this.default('default', urlData, this.sessionData.current.id);
+		// }
 	}
 
 	ngOnDestroy() {
 		this.activeRouter.unsubscribe();
-		this.activeSession.unsubscribe();
+		// this.activeSession.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
@@ -263,14 +286,20 @@ export class MainComponent implements OnInit, OnDestroy {
 	newPublication(type, data){
 		if (type === 'new') {
 			let opt = {
-				type: 'new'
+				type: 'new',
+				data: null
 			};
 
 			this.sessionService.setDataNewPublication(opt);
 		} else if (type === 'result') {
-			console.log("CREATED:", data);
-			// this.dataDefault.list.unshift(data);
-			this.dataDefault.noData = false;
+			if (data) {
+				this.alertService.publishing(this.translations.publishing);
+
+				setTimeout(() => {
+					this.dataDefault.list.unshift(data);
+					this.dataDefault.noData = false;
+				}, 3000);
+			}
 		}
 	}
 

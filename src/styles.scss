@@ -47,6 +47,7 @@ $whiteColor: #FFFFFF;
 $greyColor: #9E9E9E;
 $blueColor: #0C98F5;
 $redColor: #E53935;
+$greenColor: #8bc34a;
 $officialColor: #0099ff;
 $mobileBottomBox: #111;
 
@@ -1170,6 +1171,10 @@ body{
 
 			&.warning{
 				background-color: transparentize($yellowColor, .1);
+			}
+
+			&.publishing{
+				background-color: transparentize($greenColor , .1);
 			}
 
 			.text{
@@ -4702,24 +4707,19 @@ body{
 						}
 
 						.text{
-							text-overflow: ellipsis;
 							box-sizing: border-box;
+							word-break: break-word;
 							padding: 4px 0 0 12px;
-							white-space: nowrap;
-							overflow: hidden;
-							height: 40px;
 							width: 100%;
 
 							.name{
-								padding: 0 0 6px 0;
-								line-height: 15px;
-								font-size: 15px;
+								width: 100%;
 							}
 
 							.username{
-								line-height: 13px;
 								color: $greyColor;
 								font-size: 13px;
+								width: 100%;
 							}
 						}
 
@@ -4854,6 +4854,7 @@ body{
 					background-color: $whiteColor;
 					box-shadow: $shadowBox2;
 					margin: 56px 76px 0 0;
+					color: currentColor;
 					position: fixed;
 					width: 420px;
 					right: 0;
@@ -4911,7 +4912,6 @@ body{
 
 											.username{
 												word-break: break-all;
-												color: $blackColor;
 												font-weight: bold;
 											}
 
@@ -4938,24 +4938,16 @@ body{
 										}
 
 										button{
-											border: 1px solid $fontBlackColor;
-											text-transform: inherit;
-											color: $fontBlackColor;
+											border: 1px solid currentColor;
+											text-transform: uppercase;
 											margin: 10px 0 0 6px;
+											color: currentColor;
+											font-weight: bold;
 											line-height: 24px;
-											padding: 0 12px;
-											height: 32px;
+											font-size: 11px;
+											padding: 0 8px;
+											height: 28px;
 											min-width: 0;
-
-											&:first-child{
-												margin: 5px 0;
-											}
-
-											&.active{
-												background-color: $fontBlackColor;
-												color: $whiteColor;
-												border: none;
-											}
 										}
 
 										.image{
@@ -4996,10 +4988,9 @@ body{
 						}
 
 						.forward{
-							border-top: 1px solid transparentize($fontBlackColor, .75);
+							border-top: 1px solid transparentize($greyColor, .5);
 							text-overflow: ellipsis;
 							box-sizing: border-box;
-							color: $fontBlackColor;
 							display: inline-block;
 							white-space: nowrap;
 							padding: 0 0 0 24px;
@@ -5045,7 +5036,7 @@ body{
 					top: 0;
 
 					.top{
-						border-bottom: 1px solid transparentize($fontBlackColor, .75);
+						border-bottom: 1px solid transparentize($greyColor, .5);
 						display: flex;
 						width: 100%;
 
@@ -5056,7 +5047,7 @@ body{
 							float: left;
 
 							img{
-								background-color: $fontBlackColor;
+								background-color: currentColor;
 								height: 100%;
 								width: 100%;
 							}
@@ -5082,21 +5073,21 @@ body{
 								font-weight: bold;
 								overflow: hidden;
 								text-align: left;
+								font-size: 18px;
 								width: 100%;
 
 								i{
 									background-color: $officialColor;
-									mask-size: 28px calc(28px * 15);
+									mask-size: 32px calc(32px * 15);
 									mask-image: $spriteImages;
-									mask-position: 0 -56px;
+									mask-position: 0 -64px;
 									mask-repeat: no-repeat;
 									display: inline-block;
-									margin: 0 0 -2px 0;
+									margin: 0 0 2px 6px;
 									position: absolute;
-									height: 14px;
-									width: 14px;
-									bottom: 6px;
-									right: 0;
+									height: 16px;
+									width: 16px;
+									bottom: 0;
 								}
 							}
 
@@ -5111,7 +5102,6 @@ body{
 						width: 100%;
 
 						.outerBox{
-							color: $fontBlackColor;
 							width: 100%;
 							float: left;
 
@@ -5150,11 +5140,11 @@ body{
 
 									&.mat-checked:not(.mat-disabled){
 										.mat-slide-toggle-bar {
-											background-color: transparentize($fontBlackColor, .5);
+											background-color: $greyColor;
 										}
 
 										.mat-slide-toggle-thumb{
-											background-color: $fontBlackColor;
+											background-color: currentColor;
 										}
 									}
 
@@ -5181,10 +5171,9 @@ body{
 							width: 100%;
 
 							.back{
-								border-bottom: 1px solid transparentize($fontBlackColor, .75);
+								border-bottom: 1px solid transparentize($greyColor, .5);
 								text-overflow: ellipsis;
 								box-sizing: border-box;
-								color: $fontBlackColor;
 								display: inline-block;
 								white-space: nowrap;
 								padding: 0 24px 0 0;
@@ -5202,10 +5191,9 @@ body{
 							}
 
 							.forward{
-								border-top: 1px solid transparentize($fontBlackColor, .75);
+								border-top: 1px solid transparentize($greyColor, .5);
 								text-overflow: ellipsis;
 								box-sizing: border-box;
-								color: $fontBlackColor;
 								display: inline-block;
 								white-space: nowrap;
 								padding: 0 0 0 24px;
@@ -5243,7 +5231,7 @@ body{
 										width: 28px;
 
 										img{
-											background-color: $fontBlackColor;
+											background-color: currentColor;
 											border-radius: 50%;
 											height: 100%;
 											width: 100%;
@@ -5251,7 +5239,7 @@ body{
 									}
 
 									.add{
-										background-color: $fontBlackColor;
+										background-color: currentColor;
 										border-radius: 50%;
 										display: inherit;
 										min-width: 28px;
@@ -5283,6 +5271,11 @@ body{
 											color: $blueColor;
 										}
 									}
+
+									&:hover{
+										background: transparentize($greyColor, .9);
+										cursor: pointer;
+									}
 								}
 							}
 
@@ -5313,6 +5306,11 @@ body{
 										box-sizing: border-box;
 										padding: 0 0 0 12px;
 										width: 100%;
+									}
+
+									&:hover{
+										background: transparentize($greyColor, .9);
+										cursor: pointer;
 									}
 								}
 							}
@@ -5418,46 +5416,43 @@ body{
 									float: left;
 
 									.text{
+										width: calc(100% - 36px);
 										position: relative;
 										font-weight: bold;
 										min-height: 44px;
-										width: 100%;
 										float: left;
 
 										.name{
 											text-shadow: $shadowText1;
+											text-overflow: ellipsis;
+											box-sizing: border-box;
+											display: inline-block;
+											word-wrap: break-word;
+											padding: 0 12px 2px 0;
+											position: relative;
+											font-weight: bold;
+											text-align: left;
+											font-size: 20px;
 											width: 100%;
-											float: left;
 
-											.fullname{
-												word-wrap: break-word;
-												font-weight: bold;
-												line-height: 24px;
-												font-size: 20px;
-												float: left;
-											}
-
-											.official{
-												position: relative;
-
-												i{
-													mask-size: 36px calc(36px * 15);
-													background-color: currentColor;
-													mask-image: $spriteImages;
-													mask-position: 0 -72px;
-													mask-repeat: no-repeat;
-													margin: 2px 4px 0;
-													min-width: 18px;
-													height: 18px;
-													width: 18px;
-													float: left;
-												}
+											i{
+												background-color: $officialColor;
+												mask-size: 32px calc(32px * 15);
+												mask-image: $spriteImages;
+												mask-position: 0 -64px;
+												mask-repeat: no-repeat;
+												display: inline-block;
+												margin: 0 0 4px 6px;
+												position: absolute;
+												height: 16px;
+												width: 16px;
+												bottom: 0;
 											}
 										}
 										
 										.username{
+											padding: 0 0 4px 0;
 											color: $blueColor;
-											line-height: 18px;
 											font-size: 15px;
 											float: left;
 											width: 100%;
@@ -5465,6 +5460,7 @@ body{
 									}
 
 									.settings{
+										width: 36px;
 										float: left;
 
 										button{
@@ -6931,6 +6927,37 @@ body{
 			}
 		}
 
+		/*Notifications box*/
+		.notificationsBox{
+			.box{
+				background-color: #333 !important;
+			}
+		}
+
+		/*Close session box*/
+		.closeSessionBox{
+			.text{
+				color: $whiteColor;
+			}
+		}
+
+		/*User box*/
+		.userBox{
+			.box{
+				background-color: #333 !important;
+
+				.bottom{
+					.innerBox{
+						.switchAccounts{
+							.item .add i{
+								background-color: #333 !important;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		/*Serch*/
 		.searchBox{
 			.box{
@@ -6940,11 +6967,6 @@ body{
 					}
 				}
 			}
-		}
-
-		/*User box*/
-		.userBox{
-			color: $fontBlackColor;
 		}
 
 		/*Tabs*/
@@ -7192,11 +7214,11 @@ body{
 			}
 
 			.playlistBox{
-				background-color: $modalDialogColor;
+				background-color: #333;
 				color: $whiteColor;
 
 				&:after{
-					border: 8px solid $modalDialogColor;
+					border: 8px solid #333;
 				}
 			}
 		}

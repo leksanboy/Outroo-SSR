@@ -32,6 +32,10 @@ export class AlertService {
 		this.subject.next(<Alert>{ type: type, message: message });
 	}
 
+	clear() {
+		this.subject.next();
+	}
+
 	success(message: string, keepAfterRouteChange = false) {
 		this.create('success', message, keepAfterRouteChange);
 	}
@@ -44,7 +48,7 @@ export class AlertService {
 		this.create('warning', message, keepAfterRouteChange);
 	}
 
-	clear() {
-		this.subject.next();
+	publishing(message: string, keepAfterRouteChange = false) {
+		this.create('publishing', message, keepAfterRouteChange);
 	}
 }

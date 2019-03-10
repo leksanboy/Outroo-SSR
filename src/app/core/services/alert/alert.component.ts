@@ -33,7 +33,6 @@ export class AlertComponent implements OnInit {
 			.subscribe((alert: Alert) => {
 				if (!alert) {
 					this.alerts = [];
-
 					return;
 				}
 

@@ -199,5 +199,6 @@
 	"bookmarks": "Guardado",
 	"reportDescription": "Describa cual es el problema",
 	"addedToSaved": "Añadido a Guardado",
-	"back": "Atras"
+	"back": "Atras",
+	"publishing": "Publicando..."
 }

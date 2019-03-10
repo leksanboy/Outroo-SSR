@@ -14,11 +14,9 @@ export class LoginValidationResolver implements Resolve<any> {
 	resolve(): Observable<any> {
 		// Get session data
 		let sessionData = this.userDataService.getSessionData();
-		// console.log('LoginValidationService', sessionData);
 
 		// Return result
 		let result: any = sessionData ? false : true;
-		// console.log('LoginValidationService-result', result);
 
 		return result;
 	}

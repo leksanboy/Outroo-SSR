@@ -106,7 +106,7 @@
 								</div>
 
 								<div class="buttons">
-									<button mat-raised-button type="submit" [disabled]="!actionFormPersonalData.valid">
+									<button mat-raised-button type="submit" [disabled]="!actionFormPersonalData.valid || savePersonalDataLoading">
 										<mat-progress-spinner mode="indeterminate" *ngIf="savePersonalDataLoading"></mat-progress-spinner>
 										{{translations.submit}}
 									</button>
@@ -161,7 +161,7 @@
 								</mat-form-field>
 
 								<div class="buttons">
-									<button mat-raised-button type="submit" [disabled]="!actionFormPasswordData.valid">
+									<button mat-raised-button type="submit" [disabled]="!actionFormPasswordData.valid || savePersonalDataLoading">
 										<mat-progress-spinner mode="indeterminate" *ngIf="savePasswordDataLoading"></mat-progress-spinner>
 										{{translations.submit}}
 									</button>
@@ -205,9 +205,6 @@
 									<span class="name">{{translations.addAccount}}</span>
 									<br>
 									<span class="username">{{translations.setAnotherAccount}}</span>
-								</div>
-								<div class="actions">
-									<button mat-button>{{translations.add}}</button>
 								</div>
 							</li>
 					    </ul>

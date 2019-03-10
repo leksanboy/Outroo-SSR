@@ -199,5 +199,6 @@
 	"bookmarks": "Saved",
 	"reportDescription": "Describe what the problem is",
 	"addedToSaved": "Added to Saved",
-	"back": "Back"
+	"back": "Back",
+	"publishing": "Publishing..."
 }
