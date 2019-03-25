@@ -7,7 +7,12 @@ import { WebsocketService } from './websocket.service';
 export class ChatsocketService {
 	constructor(
 		private webSocket: WebsocketService
-	) {}
+	) {
+		// let ws = new WebSocket('wss://ltughuckuc.execute-api.eu-west-1.amazonaws.com/beta');
+		// ws.onmessage = (ev: any) => {
+		// 	// log.(ev)
+		// };
+	}
 
 	// watchProduct(productId: number): Observable<any> {
 	// 	let openSubscriber = Subscriber.create(

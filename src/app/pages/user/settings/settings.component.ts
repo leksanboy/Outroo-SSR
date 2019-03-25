@@ -100,8 +100,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-
-				// Set page title
 				this.titleService.setTitle(this.translations.settings);
 			});
 	}

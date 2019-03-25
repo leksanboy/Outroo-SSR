@@ -1,48 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
+import { UserDataService } from '../user/userData.service';
 import { MetaService } from '../seo/meta.service';
 
 @Injectable()
 export class UserResolver implements Resolve<any> {
 	public environment: any = environment;
+	private subjectUserData = new Subject();
 
 	constructor(
-		private http: Http,
+		private http: HttpClient,
+		private userDataService: UserDataService,
 		private metaService: MetaService,
 	) {}
 
-	resolve(route: ActivatedRouteSnapshot): Observable<any> {
-		let url = this.environment.url + 'assets/api/user/getUser.php';
+	resolve(route: ActivatedRouteSnapshot): Promise<any> {
 		let id = route.params['id'];
-		let params = '&id=' + id;
-			params = params.replace('&', '?');
 
-		return this.http.get(url + params)
-			.pipe(map((res: Response) => {
-				// User response
-				let userData = res.json();
+		let metaData = {
+			page: 'RESOLVED',
+			title: 'RESOLVED',
+			description: 'RESOLVED',
+			keywords: 'RESOLVED',
+			url: 'https://outroo.com/sasa',
+			image: 'https://google.com/image'
+		};
+		this.metaService.setData(metaData);
 
-				// Meta data
-				let title = userData.name;
-				let metaData = {
-					page: userData.name,
-					title: userData.name,
-					description: userData.about ? userData.about : this.environment.name,
-					keywords: userData.about ? userData.about : this.environment.name,
-					url: this.environment.url + userData.username,
-					image: this.environment.url + (userData.avatar ? userData.avatarUrl : this.environment.avatar)
-				}
+		this.userDataService.setUserMetaData(id);
 
-				// Call metaService
-				this.metaService.setData(metaData);
-
-				return res.json();
-			}));
+		return this.userDataService.getUserMetaData(id);
 	}
 }

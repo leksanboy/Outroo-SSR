@@ -63,6 +63,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private userDataService: UserDataService
 	) {
+		console.log("WEB Home rRendeder");
+
 		// User data from routing resolve
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
 

@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 
 declare var ga: Function;
 
@@ -31,9 +32,11 @@ export class SupportComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		private userDataService: UserDataService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private metaService: MetaService
 	) {
-		// Get translations
+		this.setMetaData();
+
 		this.getTranslations(1);
 	}
 
@@ -54,6 +57,19 @@ export class SupportComponent implements OnInit {
 
 		// destroy session & reset login
 		this.userDataService.logout();
+	}
+
+	setMetaData() {
+		let metaData = {
+			page: 'Support',
+			title: 'Support',
+			description: 'We can help you with anything.',
+			keywords: 'We can help you with anything.',
+			url: this.environment.url + 'about',
+			image: this.environment.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
 	}
 
 	// Get translations

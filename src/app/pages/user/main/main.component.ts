@@ -42,7 +42,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		spaceBetween: 0
 	};
 	public activeRouter: any;
-	// public activeSession: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
 	public activeNewPublication: any;
@@ -74,6 +73,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	) {
 		// User data from routing resolve
 		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
+		console.log("userData:", this.userData);
 
 		// Set component data
 		this.activeRouter = this.router.events
@@ -110,30 +110,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				}
 			});
-
-		// Multiples sessions: select one from sessions list and refresh session data
-		// this.activeSession = this.sessionService.getData()
-		// 	.subscribe(data => {
-		// 		// Set session data
-		// 		this.sessionData = data;
-
-		// 		// Go top of page on change user
-		// 		this.window.scrollTo(0, 0);
-
-		// 		// Change url whitout reloading
-		// 		this.location.go('/' + this.sessionData.current.username);
-
-		// 		// INFO: Then automatically call "activeRouter"
-				
-		// 		// // Get translations
-		// 		// this.getTranslations(this.sessionData.current.language);
-
-		// 		// // Get user data
-		// 		// this.siteUserData(this.sessionData.current.username);
-
-		// 		// // Load default
-		// 		// this.default('default', this.sessionData.current.username, this.sessionData.current.id);
-		// 	});
 
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
@@ -184,28 +160,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		// not in use
-
-		// // Run page on reload page
-		// if (!this.activeRouterExists) {
-		// 	// Get url data
-		// 	let urlData: any = this.activatedRoute.snapshot.params.id;
-
-		// 	// Set visual data page if session equals user
-		// 	if (this.sessionData.current)
-		// 		if (urlData == this.sessionData.current.username)
-		// 			this.userData = this.sessionData.current;
-
-		// 	// Get user data
-		// 	this.siteUserData(urlData);
-
-		// 	// Load default
-		// 	this.default('default', urlData, this.sessionData.current.id);
-		// }
 	}
 
 	ngOnDestroy() {
 		this.activeRouter.unsubscribe();
-		// this.activeSession.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();

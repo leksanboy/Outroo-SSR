@@ -142,8 +142,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-
-				// Set Document title
 				this.titleService.setTitle(this.translations.notifications);
 			});
 	}

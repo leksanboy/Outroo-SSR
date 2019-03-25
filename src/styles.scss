@@ -1725,8 +1725,8 @@ body{
 						color: currentColor;
 						border-radius: 50%;
 						position: relative;
-    					height: 36px;
-    					width: 36px;
+						height: 36px;
+						width: 36px;
 						float: left;
 
 						mat-progress-spinner{
@@ -1869,9 +1869,9 @@ body{
 						background-color: transparentize($fontBlackColor, .75);
 						border-radius: 50%;
 						position: relative;
-    					height: 36px;
-    					width: 36px;
-    					margin: 6px;
+						height: 36px;
+						width: 36px;
+						margin: 6px;
 
 						mat-progress-spinner{
 							height: 36px !important;
@@ -2038,8 +2038,6 @@ body{
 				text-align: left;
 				padding: 0 24px;
 				font-size: 56px;
-				/*text-align: center;*/
-				/*width: 100%;*/
 
 				.counter{
 					text-transform: uppercase;
@@ -2066,17 +2064,17 @@ body{
 			}
 
 			.footer{
-			    justify-content: center;
+				justify-content: center;
 				color: $whiteColor;
-			    position: absolute;
+				position: absolute;
 				line-height: 24px;
-			    font-size: 13px;
-			    margin: 36px 0;
-			    display: flex;
-			    width: 100%;
-			    bottom: 0;
+				font-size: 13px;
+				margin: 36px 0;
+				display: flex;
+				width: 100%;
+				bottom: 0;
 
-			    .copyright{
+				.copyright{
 					padding: 0 6px;
 					float: left;
 				}
@@ -2114,7 +2112,6 @@ body{
 		}
 
 		.right{
-			// background-color: $whiteColor;
 			background-color: $blackColor;
 			justify-content: center;
 			align-items: center;
@@ -2239,6 +2236,47 @@ body{
 								text-decoration: underline;
 							}
 						}
+					}
+				}
+
+				.footer{
+					color: $whiteColor;
+					text-align: center;
+					font-weight: bold;
+					line-height: 24px;
+					margin: 48px 0 0;
+					font-size: 13px;
+					display: none;
+					width: 100%;
+					float: left;
+
+					ul{
+						width: 100%;
+						float: left;
+						padding: 0;
+						margin: 0;
+
+						li{
+							display: inline-block;
+							list-style: none;
+							padding: 0 6px;
+
+							a{
+								color: $whiteColor;
+
+								&:hover{
+									text-decoration: underline;
+									color: $whiteColor !important;
+								}
+							}
+						}
+					}
+
+					.copyright{
+						color: transparentize($whiteColor, .5);
+						padding: 0 6px;
+						width: 100%;
+						float: left;
 					}
 				}
 			}
@@ -2759,9 +2797,9 @@ body{
 									background-color: transparentize($fontBlackColor, .75);
 									border-radius: 50%;
 									position: relative;
-			    					height: 36px;
-			    					width: 36px;
-			    					margin: 6px;
+									height: 36px;
+									width: 36px;
+									margin: 6px;
 
 									mat-progress-spinner{
 										height: 36px !important;
@@ -2960,17 +2998,17 @@ body{
 								position: relative;
 								padding-top: 65vh;
 								overflow: hidden;
-							    display: block;
+								display: block;
 								width: 100vh;
 								margin: 0;
 
-							    .image{
-							    	position: absolute;
-							    	height: 100%;
-							    	width: 100%;
-							    	top: 0;
+								.image{
+									position: absolute;
+									height: 100%;
+									width: 100%;
+									top: 0;
 
-							    	.img{
+									.img{
 										background-position: center 50%;
 										background-repeat: no-repeat;
 										transform: translate(0px);
@@ -3800,17 +3838,17 @@ body{
 													padding-top: 56.25%;
 													position: relative;
 													overflow: hidden;
-												    display: block;
+													display: block;
 													width: 100%;
 													margin: 0;
 
-												    .image{
-												    	position: absolute;
-												    	height: 100%;
-												    	width: 100%;
-												    	top: 0;
+													.image{
+														position: absolute;
+														height: 100%;
+														width: 100%;
+														top: 0;
 
-												    	.img{
+														.img{
 															background-position: center 50%;
 															background-repeat: no-repeat;
 															transform: translate(0px);
@@ -4343,10 +4381,10 @@ body{
 					text-transform: uppercase;
 					padding: 24px 0 48px;
 					font-weight: bold;
-				    text-align: left;
-				    font-size: 28px;
-				    width: 100%;
-				    float: left;
+					text-align: left;
+					font-size: 28px;
+					width: 100%;
+					float: left;
 				}
 
 				.subtitle{
@@ -4516,12 +4554,12 @@ body{
 					.image{
 						border: 1px solid transparentize($greyColor, .75);
 						box-sizing: border-box;
-					    border-radius: 5px;
+						border-radius: 5px;
 						text-align: center;
-					    overflow: hidden;
+						overflow: hidden;
 						padding: 64px;
-					    float: left;
-					    width: 100%;
+						float: left;
+						width: 100%;
 
 						img{
 							border-radius: 5px;
@@ -4559,22 +4597,6 @@ body{
 				float: left;
 				width: 100%;
 				z-index: 9;
-
-				.headerEffect{
-					position: absolute;
-					overflow: hidden;
-					height: 100%;
-					width: 100%;
-					z-index: -1;
-
-					#headerEffect{
-						animation: scale 15s infinite alternate;
-						position: absolute;
-						width: 100%;
-						left: 0;
-						top: 0;
-					}
-				}
 
 				button{
 					color: $fontBlackColor;
@@ -4645,7 +4667,7 @@ body{
 							font-weight: bold;
 							line-height: 32px;
 							min-width: 36px;
-						    padding: 0 12px;
+							padding: 0 12px;
 							margin: 0 12px;
 							height: 32px;
 						}
@@ -5702,17 +5724,17 @@ body{
 										padding-top: 56.25%;
 										position: relative;
 										overflow: hidden;
-									    display: block;
+										display: block;
 										width: 100%;
 										margin: 0;
 
-									    .image{
-									    	position: absolute;
-									    	height: 100%;
-									    	width: 100%;
-									    	top: 0;
+										.image{
+											position: absolute;
+											height: 100%;
+											width: 100%;
+											top: 0;
 
-									    	.img{
+											.img{
 												background-position: center 50%;
 												background-repeat: no-repeat;
 												transform: translate(0px);
@@ -5831,10 +5853,6 @@ body{
 							}
 						}
 					}
-				}
-
-				.noData{
-					font-weight: bold;
 				}
 			}
 
@@ -6261,19 +6279,19 @@ body{
 								.title{
 									text-overflow: ellipsis;
 									box-sizing: border-box;
-								    white-space: nowrap;
-									padding: 0 0 0 4px;
+									white-space: nowrap;
+									padding: 0 0 0 2px;
 									line-height: 40px;
-								    overflow: hidden;
-								    cursor: pointer;
+									overflow: hidden;
+									cursor: pointer;
 									width: 100%;
 								}
 
 								.actions{
+									margin: 0 -18px 0 0;
 									display: flex;
 									height: 40px;
 									float: left;
-									margin: 0;
 								}
 							}
 
@@ -7666,12 +7684,12 @@ body{
 				text-align: center;
 				border-radius: 0;
 				padding: 18px;
-    			width: 100%;
-    			margin: 0;
+				width: 100%;
+				margin: 0;
 
-    			button{
-    				display: none !important;
-    			}
+				button{
+					display: none !important;
+				}
 			}
 		}
 
@@ -7682,6 +7700,12 @@ body{
 
 			.right{
 				width: 100%;
+
+				.inner{
+					.footer{
+						display: block;
+					}
+				}
 			}
 		}
 
@@ -7720,6 +7744,7 @@ body{
 
 				.bodyPhotos,
 				.bodyPublications{
+					padding: 0 0 24px;
 					display: block;
 
 					.container{
@@ -8715,6 +8740,7 @@ body{
 								float: left;
 
 								.title{
+									text-shadow: $shadowText1;
 									text-overflow: ellipsis;
 									white-space: nowrap;
 									font-weight: bold;

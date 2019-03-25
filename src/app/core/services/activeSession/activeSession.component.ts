@@ -617,8 +617,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			dialogRef.afterClosed().subscribe((result: any) => {
 				this.location.go(this.router.url);
 
-				console.log("setDataNewPublication:", result);
-
 				if (result) {
 					let res = {
 						type: 'result',
@@ -1184,7 +1182,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.userDataService.updateLanguage(data)
 				.subscribe(res => {
 					// Get translations
-					this.getTranslations(lang.id);
+					// this.getTranslations(lang.id);
 
 					// Close user box
 					this.showChangeLanguage = false;

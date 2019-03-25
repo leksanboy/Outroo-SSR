@@ -1,12 +1,17 @@
 import { Injectable, } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { HttpClient, HttpHeaders }from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { HeadersService } from '../headers/headers.service';
+import { MetaService } from '../seo/meta.service';
 
 declare var global: any;
+
+import { TransferState, makeStateKey } from '@angular/platform-browser';
+const NODE_KEY = makeStateKey('meta-resolver');
 
 @Injectable()
 export class UserDataService {
@@ -14,7 +19,10 @@ export class UserDataService {
 
 	constructor(
 		private http: Http,
-		private headersService: HeadersService
+		private httpClient: HttpClient,
+		private headersService: HeadersService,
+		private metaService: MetaService,
+		public state: TransferState
 	) { }
 
 	// Translations
@@ -92,8 +100,6 @@ export class UserDataService {
 				sessions : []
 			};
 
-			console.log('Session:', storageLoginData);
-
 			storageLoginData.sessions.push(data);
 			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageLoginData));
 		} else if (type == 'update') {
@@ -139,6 +145,52 @@ export class UserDataService {
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
+	}
+
+	async getUserMetaData(id): Promise<any> {
+		let url = environment.url + 'assets/api/user/getUser.php';
+		let params = 	'&id=' + id;
+		params = params.replace('&', '?');
+
+		return await new Promise(resolve => {
+			this.http.get(url + params)
+				.subscribe(data => {
+					let res = data.json();
+					console.log("getUserMetaData", res);
+					resolve(res)
+				});
+		});
+	}
+
+	setUserMetaData(id) {
+		let url = environment.url + 'assets/api/user/getUser.php';
+		let params = 	'&id=' + id;
+		params = params.replace('&', '?');
+
+		// let resNode = this.state.get(NODE_KEY, null as any);
+
+		// if (!resNode) {
+		// 	this.http.get(url + params)
+		// 		.subscribe(data => {
+		// 			let user = data.json();
+		// 			console.log("USER setUserMetaData:", user);
+
+		// 			let title = user.name;
+		// 			let metaData = {
+		// 				page: user.name,
+		// 				title: user.name,
+		// 				description: user.about,
+		// 				keywords: user.about,
+		// 				url: (environment.url + user.username),
+		// 				image: (environment.url + user.avatar)
+		// 			};
+		// 			this.metaService.setData(metaData);
+
+		// 			this.state.set(NODE_KEY, data as any);
+		// 		});
+		// }
+
+		return this.httpClient.get(url + params);
 	}
 
 	// Updates

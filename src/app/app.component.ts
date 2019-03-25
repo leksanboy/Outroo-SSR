@@ -6,7 +6,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 	templateUrl: './app.component.html'
 })
 export class AppComponent implements OnDestroy {
-	public playerMobileStatus: boolean;
 	public activeSessionStatus: boolean;
 	public activeRouter: any;
 
@@ -28,7 +27,8 @@ export class AppComponent implements OnDestroy {
 						event.url === '/reset-password' ||
 						event.url === '/signin' ||
 						event.url === '/signup' ||
-						event.url === '/support') {
+						event.url === '/support') 
+					{
 						this.activeSessionStatus = false;
 					} else {
 						this.activeSessionStatus = true;

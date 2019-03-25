@@ -69,7 +69,7 @@
 													</tr>
 													<tr>
 														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
-															© '.$nameWeb.' '.date("Y").'
+															© '.date("Y").' '.$nameWeb.'
 														</td>
 													</tr>
 												</tbody>
@@ -185,7 +185,7 @@
 													</tr>
 													<tr>
 														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
-															© '.$nameWeb.' '.date("Y").'
+															© '.date("Y").' '.$nameWeb.'
 														</td>
 													</tr>
 												</tbody>
@@ -294,7 +294,7 @@
 													</tr>
 													<tr>
 														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
-															© '.$nameWeb.' '.date("Y").'
+															© '.date("Y").' '.$nameWeb.'
 														</td>
 													</tr>
 												</tbody>
@@ -391,7 +391,7 @@
 													</tr>
 													<tr>
 														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
-															© '.$nameWeb.' '.date("Y").'
+															© '.date("Y").' '.$nameWeb.'
 														</td>
 													</tr>
 												</tbody>
@@ -508,7 +508,7 @@
 													</tr>
 													<tr>
 														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
-															© '.$nameWeb.' '.date("Y").'
+															© '.date("Y").' '.$nameWeb.'
 														</td>
 													</tr>
 												</tbody>

@@ -2,10 +2,6 @@
 	<div class="header">
 		<span *ngIf="!deniedAccessOnlySession">
 			<div class="head">
-				<div class="headerEffect">
-					<canvas id="headerEffect"></canvas>
-				</div>
-
 				<div class="left">
 					<button mat-mini-fab (click)="navMenu=!navMenu">
 						<i label="menu"></i>
@@ -377,10 +373,6 @@
 
 		<span *ngIf="deniedAccessOnlySession">
 			<div class="head">
-				<div class="headerEffect">
-					<!-- <canvas id="headerEffect"></canvas> -->
-				</div>
-
 				<div class="center">
 					<div class="logo" routerLink="/"></div>
 				</div>

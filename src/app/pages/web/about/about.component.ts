@@ -18,20 +18,9 @@ export class AboutComponent implements OnInit {
 
 	constructor(
 		private titleService: Title,
-		private metaService: MetaService,
+		private metaService: MetaService
 	) {
-		// Meta data
-		let metaData = {
-			page: 'About',
-			title: 'About',
-			description: 'abous us, all good.',
-			keywords: 'abous us, all good.',
-			url: this.environment.url + 'about',
-			image: this.environment.url + 'assets/images/image_color.png'
-		}
-
-		// Call metaService
-		this.metaService.setData(metaData);
+		this.setMetaData();
 	}
 
 	ngOnInit() {
@@ -42,6 +31,19 @@ export class AboutComponent implements OnInit {
 
 		// Set page title
 		this.titleService.setTitle('About us');
+	}
+
+	setMetaData() {
+		let metaData = {
+			page: 'About us',
+			title: 'About us',
+			description: 'Outroo is the best.',
+			keywords: 'Outroo is the best.',
+			url: this.environment.url + 'about',
+			image: this.environment.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
 	}
 
 	downloadAssetPack(){
