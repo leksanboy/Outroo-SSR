@@ -13,6 +13,7 @@ import { PhotoDataService } from './user/photoData.service';
 import { PublicationsDataService } from './user/publicationsData.service';
 import { SessionService } from './session/session.service';
 import { UserDataService } from './user/userData.service';
+import { SsrService } from './ssr.service';
 
 @NgModule({
 	providers: [
@@ -28,7 +29,8 @@ import { UserDataService } from './user/userData.service';
 		PhotoDataService,
 		PublicationsDataService,
 		SessionService,
-		UserDataService
+		UserDataService,
+		SsrService
 	]
 })
 export class ServicesModule { }

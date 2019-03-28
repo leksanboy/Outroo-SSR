@@ -12,6 +12,7 @@ import { PhotoDataService } from '../../../../app/core/services/user/photoData.s
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { ShowPhotoComponent } from '../../../../app/pages/common/showPhoto/showPhoto.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
@@ -50,7 +51,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private photoDataService: PhotoDataService,
 		private bookmarksDataService: BookmarksDataService,
-		private publicationsDataService: PublicationsDataService
+		private publicationsDataService: PublicationsDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -72,7 +74,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get url data
 					let urlData: any = this.activatedRoute.snapshot.params.id;

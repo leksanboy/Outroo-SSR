@@ -13,6 +13,7 @@ import { FollowsDataService } from '../../../../app/core/services/user/followsDa
 import { ChatDataService } from '../../../../app/core/services/user/chatData.service';
 import { PhotoDataService } from '../../../../app/core/services/user/photoData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
@@ -53,7 +54,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		private photoDataService: PhotoDataService,
 		private followsDataService: FollowsDataService,
 		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService
+		private notificationsDataService: NotificationsDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -70,7 +72,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Set Google analytics
 					let urlGa =  '[' + this.sessionData.current.id + ']/notifications';

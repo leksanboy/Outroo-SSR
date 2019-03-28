@@ -9,6 +9,7 @@ import { AlertService } from '../../../../app/core/services/alert/alert.service'
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { PhotoDataService } from '../../../../app/core/services/user/photoData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 declare var global: any;
@@ -45,7 +46,8 @@ export class PhotosComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private photoDataService: PhotoDataService
+		private photoDataService: PhotoDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -66,7 +68,9 @@ export class PhotosComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get url data
 					let urlData: any = this.activatedRoute.snapshot;

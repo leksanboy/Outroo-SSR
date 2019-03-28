@@ -12,7 +12,8 @@
 		"build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
 		"serve:ssr": "node dist/server.js",
 		"build:client-and-server-bundles": "ng build --prod && ng run angular.io-example:server",
-		"webpack:server": "webpack --config webpack.server.config.js --progress --colors"
+		"webpack:server": "webpack --config webpack.server.config.js --progress --colors",
+		"dev": "npm run build:ssr && npm run serve:ssr"
 	},
 	"keywords": [],
 	"author": "",

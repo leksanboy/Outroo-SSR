@@ -1,12 +1,13 @@
 import { Injectable, } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { HttpClient, HttpHeaders }from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { HeadersService } from '../headers/headers.service';
 import { MetaService } from '../seo/meta.service';
+import { SsrService } from '../ssr.service';
 
 declare var global: any;
 
@@ -22,13 +23,14 @@ export class UserDataService {
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
 		private metaService: MetaService,
-		public state: TransferState
-	) { }
+		public state: TransferState,
+		private ssrService: SsrService
+	) {}
 
 	// Translations
 	getTranslations(lang) {
 		console.log('lang', lang);
-		
+
 		let language;
 		switch (lang) {
 			case '1': // English
@@ -89,7 +91,7 @@ export class UserDataService {
 	}
 
 	logout() {
-		this.window.localStorage.removeItem('userData_' + environment.authHash);
+		if (this.ssrService.isBrowser) this.window.localStorage.removeItem('userData_' + environment.authHash);
 	}
 
 	setSessionData(type, data) {
@@ -101,7 +103,7 @@ export class UserDataService {
 			};
 
 			storageLoginData.sessions.push(data);
-			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageLoginData));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageLoginData));
 		} else if (type == 'update') {
 			let oldData = this.getSessionData();
 			let storageUpdateData: any = {
@@ -118,18 +120,18 @@ export class UserDataService {
 					storageUpdateData.sessions.push(oldData.sessions[i]);
 				}
 
-			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageUpdateData));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageUpdateData));
 			
 			return this.getSessionData();
 		} else if (type == 'data') {
-			this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(data));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(data));
 
 			return this.getSessionData();
 		}
 	}
 
 	getSessionData() {
-		if (this.window.localStorage) {
+		if (this.ssrService.isBrowser && this.window.localStorage) {
 			let data = this.window.localStorage.getItem('userData_' + environment.authHash);
 			
 			return JSON.parse(data);
@@ -363,8 +365,8 @@ export class UserDataService {
 			}));
 	}
 
-	noSessionData(){
-		this.window.location.href = '/';
+	noSessionData() {
+		if (this.ssrService.isBrowser) this.window.location.href = '/';
 	}
 
 	supportQuestion(data) {

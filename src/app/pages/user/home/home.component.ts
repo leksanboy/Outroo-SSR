@@ -12,6 +12,7 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -62,7 +63,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private audioDataService: AudioDataService,
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService
+		private notificationsDataService: NotificationsDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -79,7 +81,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Set Google analytics
 					let urlGa =  '[' + this.sessionData.current.id + ']/home';

@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
@@ -49,7 +50,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
-		private userDataService: UserDataService
+		private userDataService: UserDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -66,7 +68,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Set Google analytics
 					let urlGa =  '[' + this.sessionData.current.id + ']/settings';
