@@ -12,6 +12,7 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
@@ -71,7 +72,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private audioDataService: AudioDataService
+		private audioDataService: AudioDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -92,7 +94,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get url data
 					let urlData: any = this.activatedRoute.snapshot.params.id;

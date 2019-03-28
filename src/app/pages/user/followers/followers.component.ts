@@ -11,6 +11,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 declare var global: any;
@@ -45,7 +46,8 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private followsDataService: FollowsDataService,
-		private notificationsDataService: NotificationsDataService
+		private notificationsDataService: NotificationsDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -67,7 +69,9 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get url data
 					let urlData: any = this.activatedRoute.snapshot.params.id;

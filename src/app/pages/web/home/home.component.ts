@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -61,7 +62,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
-		private userDataService: UserDataService
+		private userDataService: UserDataService,
+		private ssrService: SsrService
 	) {
 		console.log("WEB Home rRendeder");
 
@@ -75,8 +77,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'signin';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
+
+		if (this.ssrService.isBrowser) {
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		};
 
 		// Set page title
 		this.titleService.setTitle('Outroo');
@@ -95,18 +100,21 @@ export class HomeComponent implements OnInit, OnDestroy {
 			if (this.sessionData.current)
 				this.router.navigate([this.sessionData.current.username]);
 
-		// Counter phrases
-		const self = this;
+		
+		if (this.ssrService.isBrowser) {
+			// Counter phrases
+			const self = this;
 
-		this.activeTextEffect = setTimeout(function() {
-			const rand = Math.floor(Math.random() * self.listOfPhrases.length);
-			self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
-		}, 100);
-
-		this.activeTextEffect = setInterval(function() {
-			const rand = Math.floor(Math.random() * self.listOfPhrases.length);
-			self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
-		}, 13000);
+			this.activeTextEffect = setTimeout(function() {
+				const rand = Math.floor(Math.random() * self.listOfPhrases.length);
+				self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
+			}, 100);
+	
+			this.activeTextEffect = setInterval(function() {
+				const rand = Math.floor(Math.random() * self.listOfPhrases.length);
+				self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
+			}, 13000);
+		};
 	}
 
 	ngOnDestroy() {

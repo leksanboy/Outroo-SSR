@@ -15,6 +15,7 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -69,7 +70,8 @@ export class MainComponent implements OnInit, OnDestroy {
 		private followsDataService: FollowsDataService,
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService
+		private notificationsDataService: NotificationsDataService,
+		private ssrService: SsrService
 	) {
 		// User data from routing resolve
 		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
@@ -83,7 +85,9 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.activeRouterExists = true;
 
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get session data
 					this.sessionData = this.userDataService.getSessionData();

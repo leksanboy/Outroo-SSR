@@ -13,6 +13,7 @@ import { PlayerService } from '../player/player.service';
 import { PublicationsDataService } from '../user/publicationsData.service';
 import { SessionService } from '../session/session.service';
 import { UserDataService } from '../user/userData.service';
+import { SsrService } from '../ssr.service';
 
 import { NewPublicationComponent } from '../../../../app/pages/common/newPublication/newPublication.component';
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
@@ -77,7 +78,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private photoDataService: PhotoDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private bottomSheet: MatBottomSheet
+		private bottomSheet: MatBottomSheet,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -114,7 +116,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
 
 		// iPhone X
-		if (this.window) {
+		if (this.ssrService.isBrowser && this.window) {
 			if (this.window.screen) {
 				if (this.window.screen.height === 812 || this.window.screen.height === 2436) {
 					this.document.body.classList.add('iphoneXClass');
@@ -302,6 +304,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Audios player - document ready -> audio addEventListener
 	ngAfterViewInit() {
+		if (!this.ssrService.isBrowser) { return; }
 		this.audio = this.audioPlayerHtml.nativeElement;
 
 		const self = this;
@@ -788,6 +791,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Audio player on background screen
 	updateMetadata() {
+		if (!this.ssrService.isBrowser) { return; }
 		navigator.mediaSession.metadata = new MediaMetadata({
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
@@ -1113,7 +1117,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.router.navigate([data.username]);
 
 			// AutoScroll top
-			this.scrollTop();
+			if (this.ssrService.isBrowser) {
+				this.scrollTop();
+			}
 
 			// Alert message
 			this.alertService.success(this.translations.accountChangedTo + ' @' + data.username);

@@ -12,6 +12,7 @@ import { FollowsDataService } from '../../../../app/core/services/user/followsDa
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 
@@ -62,6 +63,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private publicationsDataService: PublicationsDataService,
 		private followsDataService: FollowsDataService,
+		private ssrService: SsrService
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
@@ -78,7 +80,9 @@ export class NewsComponent implements OnInit, OnDestroy {
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Get url data
 					let urlData: any = this.activatedRoute.snapshot;
@@ -630,7 +634,9 @@ export class NewsComponent implements OnInit, OnDestroy {
 	// Set hashtag
 	setHashtag(type, item){
 		if (type == 'set') {
-			this.window.scrollTo(0, 0);
+			if (this.ssrService.isBrowser) {
+				this.window.scrollTo(0, 0);
+			}
 			this.data.active = 'hashtag';
 			this.data.selectedHashtag = item.caption;
 			this.setHashtag('default', item);
