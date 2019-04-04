@@ -154,7 +154,6 @@ export class SignupComponent implements OnInit {
 	// Submit
 	submit(ev: Event) {
 		this.submitLoading = true;
-		this.recaptcha = true;
 
 		if (this.actionForm.get('name').value.trim().length > 0 &&
 			this.actionForm.get('username').value.trim().length > 0 &&

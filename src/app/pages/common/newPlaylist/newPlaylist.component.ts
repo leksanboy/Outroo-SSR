@@ -80,7 +80,7 @@ export class NewPlaylistComponent implements OnInit {
 				this.imageLoad();
 			}, 100);
 		} else {
-			this.alertService.error(this.translations.fileIsNotImage);
+			this.alertService.error(this.translations.selectedFileIsNotImage);
 		}
 	}
 

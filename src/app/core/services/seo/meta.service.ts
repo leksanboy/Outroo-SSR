@@ -33,6 +33,7 @@ export class MetaService {
 		this.meta.updateTag({ property: 'og:image', 		content: data.image 										});
 		this.meta.updateTag({ property: 'og:url', 			content: data.url 											});
 
-		console.log("META_SET:", data);
+		// Canonical url
+		this.meta.updateTag({ rel: 'canonical', 			href: data.url 												});
 	}
 }

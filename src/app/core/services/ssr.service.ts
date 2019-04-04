@@ -8,5 +8,4 @@ export class SsrService {
 	constructor(@Inject(PLATFORM_ID) private platformId: Object) {
 		this.isBrowser = isPlatformBrowser(platformId);
     };
-
 };

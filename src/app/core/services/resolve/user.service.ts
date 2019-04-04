@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 import { UserDataService } from '../user/userData.service';
-import { MetaService } from '../seo/meta.service';
+// import { MetaService } from '../seo/meta.service';
 
 @Injectable()
 export class UserResolver implements Resolve<any> {
@@ -17,7 +17,7 @@ export class UserResolver implements Resolve<any> {
 	constructor(
 		private http: HttpClient,
 		private userDataService: UserDataService,
-		private metaService: MetaService,
+		// private metaService: MetaService,
 	) {}
 
 	resolve(route: ActivatedRouteSnapshot): Promise<any> {
@@ -33,7 +33,7 @@ export class UserResolver implements Resolve<any> {
 		// };
 		// this.metaService.setData(metaData);
 
-		this.userDataService.setUserMetaData(id);
+		// this.userDataService.setUserMetaData(id);
 
 		return this.userDataService.getUserMetaData(id);
 	}

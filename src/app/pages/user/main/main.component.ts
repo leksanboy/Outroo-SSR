@@ -15,6 +15,7 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
@@ -71,11 +72,23 @@ export class MainComponent implements OnInit, OnDestroy {
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private ssrService: SsrService
+		private metaService: MetaService,
+		private ssrService: SsrService,
+
 	) {
 		// User data from routing resolve
 		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 		console.log("userData:", this.userData);
+
+		let metaData = {
+			page: this.userData.name,
+			title: this.userData.name,
+			description: this.userData.aboutOriginal,
+			keywords: this.userData.aboutOriginal,
+			url: this.environment.url + this.userData.username,
+			image: this.environment.url + this.userData.avatarUrl
+		};
+		this.metaService.setData(metaData);
 
 		// Set component data
 		this.activeRouter = this.router.events
