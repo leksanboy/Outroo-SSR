@@ -1,8 +1,9 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -12,34 +13,44 @@ declare var ga: Function;
 })
 
 export class PrivacyComponent implements OnInit {
-	public environment: any = environment;
+	public env: any = environment;
+	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
-		private metaService: MetaService
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
 	) {
-		this.setMetaData();
+		// Get translations
+		this.getTranslations(null);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'privacy';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Privacy');
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'privacy';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
 	}
 
-	setMetaData() {
+	getTranslations(lang){
+		this.userDataService.getTranslations(lang)
+			.subscribe(data => {
+				this.translations = data;
+				this.setMetaData(data);
+			});
+	}
+
+	setMetaData(data) {
 		let metaData = {
-			page: 'Privacy',
-			title: 'Privacy',
-			description: 'Terms conditions and privacy policy.',
-			keywords: 'Terms conditions and privacy policy.',
-			url: this.environment.url + 'about',
-			image: this.environment.url + 'assets/images/image_color.png'
-		};
+			page: data.privacy.title,
+			title: data.privacy.title,
+			description: data.privacy.description,
+			keywords: data.privacy.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
 
 		this.metaService.setData(metaData);
 	}

@@ -193,11 +193,57 @@
 	"createPlaylist": "Create playlist",
 	"editPlaylist": "Edit playlist",
 	"songs": "Songs",
+	"song": "Song",
 	"untitled": "Untitled",
 	"noChannel": "No channel",
 	"bookmarks": "Saved",
 	"reportDescription": "Describe what the problem is",
 	"addedToSaved": "Added to Saved",
 	"back": "Back",
-	"publishing": "Publishing..."
+	"publishing": "Publishing...",
+	"openInNewTab": "Open in a new tab",
+	"about":{
+		"title": "About us",
+		"description": "Outroo is the best."
+	},
+	"confirmEmail":{
+		"title": "Confirm email",
+		"description": "Confirm your email to access the site."
+	},
+	"error":{
+		"title": "Error",
+		"description": "An error has ocurred."
+	},
+	"forgotPassword":{
+		"title": "Forgot password | Recover account access",
+		"description": "If you forgot your password acceess here and enter your email."
+	},
+	"logOut":{
+		"title": "Log out",
+		"description": "See you soon."
+	},
+	"privacy":{
+		"title": "Privacy",
+		"description": "Terms conditions and privacy policy of the site."
+	},
+	"resetPassword":{
+		"title": "Reset password",
+		"description": "Enter your new passord."
+	},
+	"signIn":{
+		"title": "Sign In | Login",
+		"description": "Enter your email and password to access."
+	},
+	"signUp":{
+		"title": "Sign Up | Create an account",
+		"description": "Create an account to be part of our family."
+	},
+	"support":{
+		"title": "Support",
+		"description": "We can help you with anything."
+	},
+	"home":{
+		"title": "Outroo",
+		"description": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates."
+	}
 }

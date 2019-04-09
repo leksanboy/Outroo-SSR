@@ -19,5 +19,3 @@ npm run build:ssr && npm run serve:ssr
 `sudo su`
 `npm i ts-md5 moment cropperjs ng-recaptcha angular2-useful-swiper ngx-device-detector`
 `npm i --save @angular/material @angular/cdk @angular/animations @angular/http hammerjs`
-
-

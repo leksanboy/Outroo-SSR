@@ -36,7 +36,7 @@
 						<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
 					</mat-form-field>
 
-					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{environment.reCaptcha}}"></re-captcha>
+					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
 
 					<div class="buttons">
 						<button mat-raised-button type="submit">

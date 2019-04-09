@@ -164,29 +164,46 @@
 											</div>
 											<div class="duration">{{x.duration}}</div>
 										</div>
+										
 										<div class="actions" *ngIf="sessionData.current.id">
 											<span *ngIf="userData.id == sessionData.current.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i label="more"></i>
 												</button>
 											</span>
+											
 											<span *ngIf="userData.id != sessionData.current.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i label="check" *ngIf="x.addRemoveUser"></i>
 													<i label="more" *ngIf="!x.addRemoveUser"></i>
 												</button>
 											</span>
+											
 											<mat-menu #appMenu="matMenu">
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 												<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null); x.addRemoveSession=!x.addRemoveSession;" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
 												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
 											</mat-menu>
+
 											<mat-menu #menuPlaylists="matMenu">
 												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
+											</mat-menu>
+
+											<mat-menu #menuShareSocial="matMenu">
+												<button mat-menu-item (click)="shareOn('message', x)">
+													{{translations.sendMessage}}
+												</button>
+												<button mat-menu-item (click)="shareOn('newTab', x)">
+													{{translations.openInNewTab}}
+												</button>
+												<button mat-menu-item (click)="shareOn('copyLink', x)">
+													{{translations.copyLink}}
+												</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -227,6 +244,7 @@
 												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
+
 										<div class="text" (click)="playItem(dataAround.list, x, i, 'around')">
 											<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 												<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -234,21 +252,37 @@
 											</div>
 											<div class="duration">{{x.duration}}</div>
 										</div>
+										
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
 												<i label="check" *ngIf="x.addRemoveUser"></i>
 												<i label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
+
 											<mat-menu #appMenu="matMenu">
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
 											</mat-menu>
+
 											<mat-menu #menuPlaylists="matMenu">
 												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
+											</mat-menu>
+
+											<mat-menu #menuShareSocial="matMenu">
+												<button mat-menu-item (click)="shareOn('message', x)">
+													{{translations.sendMessage}}
+												</button>
+												<button mat-menu-item (click)="shareOn('newTab', x)">
+													{{translations.openInNewTab}}
+												</button>
+												<button mat-menu-item (click)="shareOn('copyLink', x)">
+													{{translations.copyLink}}
+												</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -314,6 +348,7 @@
 												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
+										
 										<div class="text" (click)="playItem(dataTop.list, x, i, 'top')">
 											<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 												<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -321,21 +356,37 @@
 											</div>
 											<div class="duration">{{x.duration}}</div>
 										</div>
+										
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
 												<i label="check" *ngIf="x.addRemoveUser"></i>
 												<i label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
+											
 											<mat-menu #appMenu="matMenu">
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
 											</mat-menu>
+											
 											<mat-menu #menuPlaylists="matMenu">
 												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
+											</mat-menu>
+
+											<mat-menu #menuShareSocial="matMenu">
+												<button mat-menu-item (click)="shareOn('message', x)">
+													{{translations.sendMessage}}
+												</button>
+												<button mat-menu-item (click)="shareOn('newTab', x)">
+													{{translations.openInNewTab}}
+												</button>
+												<button mat-menu-item (click)="shareOn('copyLink', x)">
+													{{translations.copyLink}}
+												</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -376,6 +427,7 @@
 												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
+										
 										<div class="text" (click)="playItem(dataFresh.list, x, i, 'fresh')">
 											<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 												<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -383,21 +435,37 @@
 											</div>
 											<div class="duration">{{x.duration}}</div>
 										</div>
+										
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
 												<i label="check" *ngIf="x.addRemoveUser"></i>
 												<i label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
+											
 											<mat-menu #appMenu="matMenu">
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
 											</mat-menu>
+											
 											<mat-menu #menuPlaylists="matMenu">
 												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
+											</mat-menu>
+
+											<mat-menu #menuShareSocial="matMenu">
+												<button mat-menu-item (click)="shareOn('message', x)">
+													{{translations.sendMessage}}
+												</button>
+												<button mat-menu-item (click)="shareOn('newTab', x)">
+													{{translations.openInNewTab}}
+												</button>
+												<button mat-menu-item (click)="shareOn('copyLink', x)">
+													{{translations.copyLink}}
+												</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -440,6 +508,7 @@
 										<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
 									</button>
 								</div>
+								
 								<div class="text" (click)="playItem(dataSearch.list, x, i, 'search')">
 									<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 										<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -447,21 +516,37 @@
 									</div>
 									<div class="duration">{{x.duration}}</div>
 								</div>
+								
 								<div class="actions" *ngIf="sessionData.current.id">
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
 										<i label="check" *ngIf="x.addRemoveUser"></i>
 										<i label="more" *ngIf="!x.addRemoveUser"></i>
 									</button>
+									
 									<mat-menu #appMenu="matMenu">
 										<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
 										<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
 										<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
 									</mat-menu>
+									
 									<mat-menu #menuPlaylists="matMenu">
 										<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
 										<span *ngFor="let p of sessionData.current.playlists">
 											<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 										</span>
+									</mat-menu>
+
+									<mat-menu #menuShareSocial="matMenu">
+										<button mat-menu-item (click)="shareOn('message', x)">
+											{{translations.sendMessage}}
+										</button>
+										<button mat-menu-item (click)="shareOn('newTab', x)">
+											{{translations.openInNewTab}}
+										</button>
+										<button mat-menu-item (click)="shareOn('copyLink', x)">
+											{{translations.copyLink}}
+										</button>
 									</mat-menu>
 								</div>
 							</div>

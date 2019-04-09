@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,7 +5,9 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -16,8 +17,9 @@ declare var ga: Function;
 })
 
 export class ResetPasswordComponent implements OnInit {
+	public env: any = environment;
+	public translations: any = [];
 	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	public environment: any = environment;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public signinLoading: boolean;
@@ -26,18 +28,18 @@ export class ResetPasswordComponent implements OnInit {
 	public userData: any = [];
 	public pageStatus: string = 'default';
 	public recaptcha: boolean;
-	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
-		private activatedRoute: ActivatedRoute,
 		private router: Router,
+		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
-		private userDataService: UserDataService
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
 	) {
 		// Get translations
-		this.getTranslations(1);
+		this.getTranslations(null);
 
 		// Get url data
 		let urlData: any = this.activatedRoute.snapshot;
@@ -60,12 +62,11 @@ export class ResetPasswordComponent implements OnInit {
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'reset-password';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Reset password');
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'reset-password';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
 
 		// login form
 		this.actionForm = this._fb.group({
@@ -75,20 +76,31 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	// Get translations
 	getTranslations(lang){
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.setMetaData(data);
 			});
 	}
 
-	// Verify recaptcha
+	setMetaData(data) {
+		let metaData = {
+			page: data.resetPassword.title,
+			title: data.resetPassword.title,
+			description: data.resetPassword.description,
+			keywords: data.resetPassword.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
+	}
+
 	verifyReCaptcha(data){
 		this.recaptcha = data ? true : false;
 	}
 
-	// Submit
 	submit(ev: Event) {
 		this.submitLoading = true;
 
@@ -131,7 +143,6 @@ export class ResetPasswordComponent implements OnInit {
 		}
 	}
 
-	// Sign in
 	signin(ev: Event) {
 		this.signinLoading = true;
 

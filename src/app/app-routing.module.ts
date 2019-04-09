@@ -22,11 +22,38 @@ const routes: Routes = [
 		path: 'forgot-password',
 		loadChildren: './pages/web/forgot-password/forgot-password.module#ForgotPasswordModule'
 	}, {
+		path: 'home',
+		loadChildren: './pages/user/home/home.module#HomeModule'
+	}, {
+		path: 'logout',
+		loadChildren: './pages/web/logout/logout.module#LogoutModule'
+	}, {
+		path: 'news',
+		loadChildren: './pages/user/news/news.module#NewsModule'
+	}, {
+		path: 'news/:name',
+		loadChildren: './pages/user/news/news.module#NewsModule'
+	}, {
+		path: 'notifications',
+		loadChildren: './pages/user/notifications/notifications.module#NotificationsModule'
+	// }, {
+	// 	path: 'p/:name',
+	// 	loadChildren: './pages/user/post/post.module#PostModule'
+	}, {
 		path: 'privacy',
 		loadChildren: './pages/web/privacy/privacy.module#PrivacyModule'
 	}, {
 		path: 'reset-password/:code',
 		loadChildren: './pages/web/reset-password/reset-password.module#ResetPasswordModule'
+	}, {
+		path: 's/:name',
+		loadChildren: './pages/user/song/song.module#SongModule'
+	}, {
+		path: 'saved',
+		loadChildren: './pages/user/bookmarks/bookmarks.module#BookmarksModule'
+	}, {
+		path: 'settings',
+		loadChildren: './pages/user/settings/settings.module#SettingsModule'
 	}, {
 		path: 'signin',
 		loadChildren: './pages/web/signin/signin.module#SigninModule'
@@ -36,27 +63,6 @@ const routes: Routes = [
 	}, {
 		path: 'support',
 		loadChildren: './pages/web/support/support.module#SupportModule'
-	}, {
-		path: 'logout',
-		loadChildren: './pages/web/logout/logout.module#LogoutModule'
-	}, {
-		path: 'home',
-		loadChildren: './pages/user/home/home.module#HomeModule'
-	}, {
-		path: 'saved',
-		loadChildren: './pages/user/bookmarks/bookmarks.module#BookmarksModule'
-	}, {
-		path: 'notifications',
-		loadChildren: './pages/user/notifications/notifications.module#NotificationsModule'
-	}, {
-		path: 'settings',
-		loadChildren: './pages/user/settings/settings.module#SettingsModule'
-	}, {
-		path: 'news',
-		loadChildren: './pages/user/news/news.module#NewsModule'
-	}, {
-		path: 'news/:name',
-		loadChildren: './pages/user/news/news.module#NewsModule'
 	}, {
 		path: ':id',
 		loadChildren: './pages/user/main/main.module#MainModule',

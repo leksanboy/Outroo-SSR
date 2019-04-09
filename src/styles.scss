@@ -857,6 +857,110 @@ body{
 		}
 	}
 
+	.song{
+		border: none !important;
+		display: flex;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+
+		.inner{
+			padding: 2px 0 2px 18px;
+			box-sizing: border-box;
+			align-items: center;
+			flex-direction: row;
+			position: relative;
+			margin: 0 0 4px;
+			display: flex;
+			width: 100%;
+
+			&:hover{
+				background-color: transparentize($greyColor, .9);
+			}
+
+			.image{
+				width: 42px;
+
+				button{
+					overflow: hidden;
+					height: 42px;
+					width: 42px;
+					margin: 0;
+
+					img{
+						position: absolute;
+						height: 100%;
+						width: 100%;
+						left: 0;
+						top: 0;
+					}
+
+					.mat-button-ripple-round{
+						border-radius: 0;
+					}
+
+					i{
+						background-color: $whiteColor;
+						position: relative;
+						z-index: 1;
+					}
+				}
+			}
+
+			.text{
+				justify-content: space-between;
+				box-sizing: border-box;
+				line-height: 42px;
+				overflow: hidden;
+				display: flex;
+				width: 100%;
+
+				.duration,
+				.titleArtist{
+					flex-direction: column;
+					box-sizing: border-box;
+					padding: 0 0 0 12px;
+					text-align: left;
+					overflow: hidden;
+					max-width: 80%;
+					display: flex;
+
+					.title{
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						line-height: 15px;
+						overflow: hidden;
+						padding: 4px 0;
+					}
+
+					.artist{
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						color: $greyColor;
+						line-height: 13px;
+						overflow: hidden;
+						font-size: 13px;
+					}
+				}
+
+				.duration{
+					padding: 0 6px 0 0;
+					color: $greyColor;
+					text-align: right;
+					font-size: 14px;
+					max-width: 75px;
+					width: 75px;
+				}
+			}
+
+			.actions{
+				button{
+					border-radius: 50% !important;
+				}
+			}
+		}
+	}
+
 	/*#, @, url*/
 	.hashtag,
 	.mention,
@@ -1065,10 +1169,10 @@ body{
 			.text{
 				box-sizing: border-box;
 				padding: 18px 18px 6px;
+				font-weight: normal;
 				text-align: center;
 				line-height: 24px;
-				font-weight: bold;
-				font-size: 18px;
+				font-size: 15px;
 				width: 100%;
 			}
 
@@ -1079,7 +1183,7 @@ body{
 				button{
 					text-transform: uppercase;
 					text-align: center;
-					color: $blueColor;
+					font-weight: bold;
 				}
 			}
 		}
@@ -1122,8 +1226,7 @@ body{
 			padding: 18px 18px 6px;
 			color: $fontBlackColor;
 			text-align: center;
-			line-height: 24px;
-			font-weight: bold;
+			line-height: 15px;
 			font-size: 18px;
 			width: 100%;
 		}
@@ -1133,9 +1236,9 @@ body{
 			width: 100%;
 
 			button{
-				text-transform: inherit;
+				text-transform: uppercase;
 				text-align: center;
-				color: $blueColor;
+				font-weight: bold;
 			}
 		}
 	}
@@ -1571,11 +1674,6 @@ body{
 			display: block;
 			float: left;
 		}
-	}
-
-	/*Song*/
-	.audioItem{
-		/*TODO*/
 	}
 
 	/*Upload files*/
@@ -4703,6 +4801,7 @@ body{
 				.inner{
 					margin: 56px 0 0;
 					position: fixed;
+					padding: 8px;
 					height: 100%;
 					width: 240px;
 					left: 0;
@@ -4710,8 +4809,9 @@ body{
 
 					.user{
 						box-sizing: border-box;
-						padding: 12px 16px;
+						border-radius: 5px;
 						display: flex;
+						padding: 8px;
 						width: 100%;
 						float: left;
 
@@ -4759,12 +4859,14 @@ body{
 
 					.item{
 						box-sizing: border-box;
+						border-radius: 5px;
 						line-height: 48px;
-						padding: 0 8px;
+						// padding: 0 8px;
 						display: flex;
 						height: 48px;
 						width: 100%;
 						float: left;
+						padding: 0;
 
 						i{
 							margin: 12px;
@@ -4849,10 +4951,6 @@ body{
 							}
 						}
 					}
-
-					&:hover{
-						background: transparentize($greyColor, .75);
-					}
 				}
 			}
 
@@ -4886,7 +4984,7 @@ body{
 						width: 100%;
 						float: left;
 
-						ul.notifications{
+						ul{
 							max-height: 360px;
 							overflow-y: auto;
 							float: left;
@@ -5559,7 +5657,7 @@ body{
 
 								li{
 									box-sizing: border-box;
-									border-radius: 3px;
+									border-radius: 5px;
 									text-align: center;
 									list-style: none;
 									float: left;
@@ -5569,31 +5667,64 @@ body{
 
 									button{
 										font-size: 12px;
+										padding: 4px 0;
 										min-width: 0;
 										height: 100%;
 										width: 100%;
-										padding: 0;
 										margin: 0;
 
 										.text{
 											flex-direction: column;
 											text-align: center;
 											line-height: 20px;
-											font-size: 16px;
+											font-weight: bold;
+											font-size: 18px;
 											display: flex;
 											height: 36px;
 
-											.name{
-												max-width: calc(100% - 12px);
-												text-transform: lowercase;
-												text-overflow: ellipsis;
-												color: currentColor;
-												line-height: 12px;
-												overflow: hidden;
-												font-size: 11px;
+											.inner{
+												width: calc(100% - 12px);
+												justify-content: center;
+												align-items: center;
 												margin: 0 auto;
-												width: 100%;
+												display: flex;
 												opacity: .5;
+
+												i{
+													mask-size: 24px calc(24px * 15);
+													min-width: 12px;
+													height: 12px;
+													width: 12px;
+													margin: 0;
+
+													&[label="photo-camera"]{
+														mask-position: -12px -288px;
+													}
+
+													&[label="music"]{
+														mask-position: 0 -288px;
+													}
+
+													&[label="person"]{
+														mask-position: 0 -252px;
+													}
+
+													&[label="group"]{
+														mask-position: -12px -252px;
+													}
+
+													&[label="bookmark"]{
+														mask-position: -12px -72px;
+													}
+												}
+
+												.name{
+													text-transform: uppercase;
+													text-overflow: ellipsis;
+													color: currentColor;
+													overflow: hidden;
+													font-size: 10px;
+												}
 											}
 										}
 									}
@@ -5614,12 +5745,15 @@ body{
 
 							button{
 								background-color: $fontBlackColor;
-								text-transform: inherit;
+								text-transform: uppercase;
 								color: $whiteColor;
+								line-height: 26px;
+								font-weight: bold;
+								font-size: 13px;
 								padding: 0 8px;
 								margin: 0 6px;
+								height: 32px;
 								width: 100%;
-								float: left;
 
 								&.active{
 									background-color: $blueColor;
@@ -6357,9 +6491,9 @@ body{
 					margin: 0;
 
 					ul.notifications{
+						padding: 6px 0;
 						float: left;
 						width: 100%;
-						padding: 0;
 						margin: 0;
 
 						li{
@@ -6501,119 +6635,119 @@ body{
 						}
 					}
 
-					ul.chat{
-						float: left;
-						width: 100%;
-						padding: 0;
-						margin: 0;
+					// ul.chat{
+					// 	float: left;
+					// 	width: 100%;
+					// 	padding: 0;
+					// 	margin: 0;
 
-						li{
-							padding: 4px 0 4px 18px;
-							box-sizing: border-box;
-							position: relative;
-							list-style: none;
-							transition: .15s;
-							margin: 0 0 4px;
-							cursor: pointer;
-							display: flex;
-							float: left;
-							width: 100%;
+					// 	li{
+					// 		padding: 4px 0 4px 18px;
+					// 		box-sizing: border-box;
+					// 		position: relative;
+					// 		list-style: none;
+					// 		transition: .15s;
+					// 		margin: 0 0 4px;
+					// 		cursor: pointer;
+					// 		display: flex;
+					// 		float: left;
+					// 		width: 100%;
 
-							.avatar{
-								box-sizing: border-box;
-								border-radius: 50%;
-								overflow: hidden;
-								min-width: 40px;
-								margin: 4px 0;
-								height: 40px;
-								width: 40px;
+					// 		.avatar{
+					// 			box-sizing: border-box;
+					// 			border-radius: 50%;
+					// 			overflow: hidden;
+					// 			min-width: 40px;
+					// 			margin: 4px 0;
+					// 			height: 40px;
+					// 			width: 40px;
 
-								img{
-									height: 100%;
-									width: 100%;
-								}
-							}
+					// 			img{
+					// 				height: 100%;
+					// 				width: 100%;
+					// 			}
+					// 		}
 
-							.avatarsGroup{
-								min-width: 40px;
-								margin: 4px 0;
-								height: 40px;
-								width: 40px;
+					// 		.avatarsGroup{
+					// 			min-width: 40px;
+					// 			margin: 4px 0;
+					// 			height: 40px;
+					// 			width: 40px;
 
-								&.group{
-									.avatar{
-										border: 2px solid $whiteColor;
-										margin: 2px 0 0 6px;
-										position: absolute;
-										min-width: 36px;
-										height: 36px;
-										width: 36px;
-										z-index: 2;
+					// 			&.group{
+					// 				.avatar{
+					// 					border: 2px solid $whiteColor;
+					// 					margin: 2px 0 0 6px;
+					// 					position: absolute;
+					// 					min-width: 36px;
+					// 					height: 36px;
+					// 					width: 36px;
+					// 					z-index: 2;
 
-										&:last-child{
-											min-width: 32px;
-											margin: 4px 0;
-											border: none;
-											height: 32px;
-											width: 32px;
-											z-index: 1;
-										}
+					// 					&:last-child{
+					// 						min-width: 32px;
+					// 						margin: 4px 0;
+					// 						border: none;
+					// 						height: 32px;
+					// 						width: 32px;
+					// 						z-index: 1;
+					// 					}
 
-										&:hover{
-											color: inherit;
-										}
-									}
-								}
-							}
+					// 					&:hover{
+					// 						color: inherit;
+					// 					}
+					// 				}
+					// 			}
+					// 		}
 
-							.text{
-								box-sizing: border-box;
-								padding: 6px 12px 0;
-								width: 100%;
+					// 		.text{
+					// 			box-sizing: border-box;
+					// 			padding: 6px 12px 0;
+					// 			width: 100%;
 
-								.name{
-									display: block;
+					// 			.name{
+					// 				display: block;
 
-									.username{
-										word-break: break-all;
-									}
+					// 				.username{
+					// 					word-break: break-all;
+					// 				}
 
-									.date{
-										color: $greyColor;
-										font-size: 13px;
-									}
-								}
+					// 				.date{
+					// 					color: $greyColor;
+					// 					font-size: 13px;
+					// 				}
+					// 			}
 
-								.container{
-									word-break: break-word;
-									color: $greyColor;
-									padding: 2px 0 0;
-									font-size: 14px;
-								}
-							}
+					// 			.container{
+					// 				word-break: break-word;
+					// 				color: $greyColor;
+					// 				padding: 2px 0 0;
+					// 				font-size: 14px;
+					// 			}
+					// 		}
 
-							.actions{
-								padding: 2px 0 0;
+					// 		.actions{
+					// 			padding: 2px 0 0;
 
-								button{
-									border-radius: 50% !important;
-								}
-							}
+					// 			button{
+					// 				border-radius: 50% !important;
+					// 			}
+					// 		}
 
-							&:hover{
-								background-color: transparentize($greyColor, .9);
-							}
+					// 		&:hover{
+					// 			background-color: transparentize($greyColor, .9);
+					// 		}
 
-							&.active{
-								background-color: transparentize($blueColor, .75);
-							}
+					// 		&.active{
+					// 			background-color: transparentize($blueColor, .75);
+					// 		}
 
-							&.remove{
-								filter: grayscale(100%);
-								opacity: .5;
-							}
-						}
-					}
+					// 		&.remove{
+					// 			filter: grayscale(100%);
+					// 			opacity: .5;
+					// 		}
+					// 	}
+					// }
 				}
 			}
 
@@ -6629,7 +6763,7 @@ body{
 
 					.avatarBackground{
 						box-sizing: border-box;
-						padding: 24px 18px 6px;
+						padding: 12px 18px 6px;
 						width: 100%;
 						margin: 0;
 
@@ -7860,7 +7994,7 @@ body{
 					width: 100%;
 
 					button{
-						color: $greyColor;
+						color: currentColor;
 						border-radius: 0;
 						height: 48px;
 						width: 100%;
@@ -7970,7 +8104,7 @@ body{
 						}
 
 						.miniEqualizer{
-							border: $iconWidth solid $greyColor;
+							border: $iconWidth solid currentColor;
 							box-sizing: border-box;
 							align-items: center;
 							border-radius: 8px;
@@ -7986,7 +8120,7 @@ body{
 							top: 0;
 
 							.bar{
-								background-color: $greyColor;
+								background-color: currentColor;
 								border-radius: 1px;
 								min-height: 2px;
 								margin: 0 0.5px;

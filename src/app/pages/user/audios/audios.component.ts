@@ -200,7 +200,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd(){
-		let ad = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5692822538817681" data-ad-slot="1635841852" data-ad-format="auto"></ins>';
+		let ad = this.environment.ad;
+
 		let a = {
 			contentTypeAd: true,
 			content: ad
@@ -981,6 +982,24 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			case("report"):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
+				break;
+		}
+	}
+
+	// Share on social media
+	shareOn(type, item){
+		switch (type) {
+			case "message":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTab":
+				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.router.navigate([url]);
+				break;
+			case "copyLink":
+				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
 	}

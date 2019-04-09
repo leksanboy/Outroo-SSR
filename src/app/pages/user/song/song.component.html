@@ -1,0 +1,78 @@
+<div class="innerBodyUser">
+	<div class="innerBodyContent">
+		<div class="pageAudios">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations.back}}</div>
+				</div>
+
+				<div class="pageTitle">{{translations.song}}</div>
+
+				<div class="song">
+					<div mat-ripple class="inner">
+						<div class="image">
+							<button mat-icon-button (click)="playItem(dataSong.data, dataSong.data, 0, 'default')">
+								<i label="play" *ngIf="!dataSong.data.playing || !(audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
+								<i label="pause" *ngIf="dataSong.data.playing && (audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
+								<img *ngIf="dataSong.data.image" [src]="data.path + 'thumbnails/' + dataSong.data.image"/>
+							</button>
+						</div>
+						
+						<div class="text" (click)="playItem(dataSong.data, dataSong.data, 0, 'default')">
+							<div class="titleArtist" title="{{dataSong.data.original_title ? dataSong.data.original_title : dataSong.data.title}}">
+								<div class="title">{{dataSong.data.original_title ? dataSong.data.original_title : dataSong.data.title}}</div>
+								<div class="artist">{{dataSong.data.original_artist ? dataSong.data.original_artist : dataSong.data.title}}</div>
+							</div>
+							<div class="duration">{{dataSong.data.duration}}</div>
+						</div>
+						
+						<div class="actions" *ngIf="sessionData.current.id">
+							<button mat-icon-button [matMenuTriggerFor]="appMenu">
+								<i label="check" *ngIf="dataSong.data.addRemoveUser"></i>
+								<i label="more" *ngIf="!dataSong.data.addRemoveUser"></i>
+							</button>
+							
+							<mat-menu #appMenu="matMenu">
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
+								<button mat-menu-item (click)="itemOptions('report', dataSong.data, null)">{{translations.report}}</button>
+								<button mat-menu-item (click)="itemOptions('addRemoveUser', dataSong.data, null); dataSong.data.addRemoveUser=!dataSong.data.addRemoveUser;">{{!dataSong.data.addRemoveUser ? translations.add : translations.remove}}</button>
+							</mat-menu>
+							
+							<mat-menu #menuPlaylists="matMenu">
+								<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+								<span *ngFor="let p of sessionData.current.playlists">
+									<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', dataSong.data, p)">{{p.title}}</button>
+								</span>
+							</mat-menu>
+
+							<mat-menu #menuShareSocial="matMenu">
+								<button mat-menu-item (click)="shareOn('message', dataSong.data)">
+									{{translations.sendMessage}}
+								</button>
+								<button mat-menu-item (click)="shareOn('copyLink', dataSong.data)">
+									{{translations.copyLink}}
+								</button>
+							</mat-menu>
+						</div>
+					</div>
+				</div>
+
+				<div class="stats">
+					Chart icon - 123 Replays | 32 added
+				</div>
+
+				<div class="loadingData" *ngIf="dataSong.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
+
+				<div class="noData" *ngIf="dataSong.noData">
+					{{translations.noData}}
+				</div> 
+			</div>
+		</div>
+	</div>
+</div>

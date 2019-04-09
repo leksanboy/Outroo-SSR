@@ -178,7 +178,8 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd(){
-		let ad = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5692822538817681" data-ad-slot="1635841852" data-ad-format="auto"></ins>';
+		let ad = this.environment.ad;
+
 		let a = {
 			contentTypeAd: true,
 			content: ad

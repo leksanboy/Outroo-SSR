@@ -136,7 +136,7 @@
 	"twitter": "Twitter",
 	"whatsapp": "WhatsApp",
 	"facebook": "Facebook",
-	"copyLink": "Copiar enlace",
+	"copyLink": "Copiar URL",
 	"password": "Contraseña",
 	"accountChangedTo": "Cuenta cambiada a",
 	"addContentBeforeSubmitPublication": "Añade algo de contenido, fotos, musica, videos de YouTube/Vimeo antes de crear la publicación",
@@ -193,11 +193,57 @@
 	"createPlaylist": "Crear lista de reproducción",
 	"editPlaylist": "Editar lista de reproducción",
 	"songs": "Canciones",
+	"song": "Canción",
 	"untitled": "Sin título",
 	"noChannel": "Sin canal",
 	"bookmarks": "Guardado",
 	"reportDescription": "Describa cual es el problema",
 	"addedToSaved": "Añadido a Guardado",
 	"back": "Atras",
-	"publishing": "Publicando..."
+	"publishing": "Publicando...",
+	"openInNewTab": "Abrir en nueva pestaña",
+	"about":{
+		"title": "Sobre nosotros",
+		"description": "Outroo es la mejor web de musica."
+	},
+	"confirmEmail":{
+		"title": "Confirmar email",
+		"description": "Confirma tu email para acceder a la web."
+	},
+	"error":{
+		"title": "Error",
+		"description": "Ha ocurrido un error."
+	},
+	"forgotPassword":{
+		"title": "He olvidado mi contraseña | Recuperar acceso a la cuenta",
+		"description": "Si ha olvidado su contraseña intoduzca aqui su correo electrónico."
+	},
+	"logOut":{
+		"title": "Salir",
+		"description": "Le veremos pronto."
+	},
+	"privacy":{
+		"title": "Política de privacidad",
+		"description": "Terminos y condiciones"
+	},
+	"resetPassword":{
+		"title": "Resetear contraseña",
+		"description": "Intoduzca su nueva contraseña."
+	},
+	"signIn":{
+		"title": "Iniciar sesión",
+		"description": "Intoduzca su email y contraseña para acceder."
+	},
+	"signUp":{
+		"title": "Registrarse | Crea cuenta",
+		"description": "Cree una cuenta para formar parte de nuestra familia."
+	},
+	"support":{
+		"title": "Soporte",
+		"description": "Podemos ayudarte con cualquier cosa."
+	},
+	"home":{
+		"title": "Outroo",
+		"description": "Conéctate con nuevos amigos y escucha la mejor música. Comparte increíbles canciones, fotos, gifs y videos, envía mensajes y recibe actualizaciones."
+	}
 }

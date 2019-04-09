@@ -29,10 +29,9 @@ export class UserDataService {
 
 	// Translations
 	getTranslations(lang) {
-		console.log('lang', lang);
-
 		let language;
-		switch (lang) {
+
+		switch (lang || 1) {
 			case '1': // English
 				language = 'en_US';
 				break;
@@ -158,41 +157,9 @@ export class UserDataService {
 			this.http.get(url + params)
 				.subscribe(data => {
 					let res = data.json();
-					console.log("getUserMetaData", res);
 					resolve(res)
 				});
 		});
-	}
-
-	setUserMetaData(id) {
-		let url = environment.url + 'assets/api/user/getUser.php';
-		let params = 	'&id=' + id;
-		params = params.replace('&', '?');
-
-		// let resNode = this.state.get(NODE_KEY, null as any);
-
-		// if (!resNode) {
-		// 	this.http.get(url + params)
-		// 		.subscribe(data => {
-		// 			let user = data.json();
-		// 			console.log("USER setUserMetaData:", user);
-
-		// 			let title = user.name;
-		// 			let metaData = {
-		// 				page: user.name,
-		// 				title: user.name,
-		// 				description: user.about,
-		// 				keywords: user.about,
-		// 				url: (environment.url + user.username),
-		// 				image: (environment.url + user.avatar)
-		// 			};
-		// 			this.metaService.setData(metaData);
-
-		// 			this.state.set(NODE_KEY, data as any);
-		// 		});
-		// }
-
-		return this.httpClient.get(url + params);
 	}
 
 	// Updates

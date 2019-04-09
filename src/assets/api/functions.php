@@ -651,10 +651,16 @@
 		global $conn;
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 
+		// Insert file
 		$sql = "INSERT INTO z_audios (user, name, mimetype, title, original_title, original_artist, genre, image, duration, ip_address)
 				VALUES ($user, '$name', '$mimetype', '$title', '$original_title', '$original_artist', '$genre', '$image', '$duration', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
+
+		// Insert to user
+		$sqlFav = "INSERT INTO z_audios_favorites (user, song, ip_address)
+					VALUES ($user, $insertedId, '$ipAddress')";
+		$resultFav = $conn->query($sqlFav);
 
 		return $insertedId;
 	}
@@ -664,10 +670,16 @@
 		global $conn;
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 
+		// Insert file
 		$sql = "INSERT INTO z_photos (user, name, mimetype, duration, ip_address)
 				VALUES ($user, '$name', '$mimetype', '$duration', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
+
+		// Insert to user
+		$sqlFav = "INSERT INTO z_photos_favorites (user, photo, ip_address)
+					VALUES ($user, $insertedId, '$ipAddress')";
+		$resultFav = $conn->query($sqlFav);
 
 		return $insertedId;
 	}

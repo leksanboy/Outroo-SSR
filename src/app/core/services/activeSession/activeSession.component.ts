@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
+import { DOCUMENT } from "@angular/platform-browser";
+import { Location, PlatformLocation } from '@angular/common';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
@@ -132,9 +133,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
 				this.userDataService.noSessionData();
-				console.log('No tengo session y no puedo acceder a settings, notifications, news, home');
+				// console.log('No tengo session y no puedo acceder a settings, notifications, news, home');
 			} else {
-				console.log('No tengo session pero puedo ver ciertas paginas :::> [', this.router.url, ']');
+				// console.log('No tengo session pero puedo ver ciertas paginas :::> [', this.router.url, ']');
 			}
 		} else {
 			// Add dark theme
@@ -1291,25 +1292,39 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Copy to clipboard
 	copyToClipboard(data) {
-		const el = this.document.createElement('textarea');		// Create a <textarea> element
-		const randId = Math.floor(Math.random() * 6) + 1;		// Random id
-		el.value = data;										// Set its value to the string that you want copied
-		el.setAttribute('readonly', '');						// Make it readonly to be tamper-proof
-		el.setAttribute('id', randId.toString());
-		el.style.position = 'absolute';
-		el.style.left = '-9999px';								// Move outside the screen to make it invisible
-		this.document.body.appendChild(el);						// Append the <textarea> element to the document
+		console.log('copyToClipboard', data);
 
-		// Check if there is any content selected previously / Store selection if found / Mark as false to know no selection existed before
-		const selected = this.document.getSelection().rangeCount > 0 ? this.document.getSelection().getRangeAt(0) : false;
-		el.select();											// Select the <textarea> content
-		this.document.execCommand('copy');						// Copy - only works as a result of a user action (e.g. click events)
-		this.document.body.removeChild(el);						// Remove the <textarea> element
+		// const el = this.document.createElement('textarea');		// Create a <textarea> element
+		// const randId = Math.floor(Math.random() * 6) + 1;		// Random id
+		// el.value = data;										// Set its value to the string that you want copied
+		// el.setAttribute('readonly', '');						// Make it readonly to be tamper-proof
+		// el.setAttribute('id', randId.toString());
+		// el.style.position = 'absolute';
+		// el.style.left = '-9999px';								// Move outside the screen to make it invisible
+		// this.document.body.appendChild(el);						// Append the <textarea> element to the document
 
-		if (selected) {											// If a selection existed before copying
-			this.document.getSelection().removeAllRanges();		// Unselect everything on the HTML document
-			this.document.getSelection().addRange(selected);	// Restore the original selection
-		}
+		// // Check if there is any content selected previously / Store selection if found / Mark as false to know no selection existed before
+		// const selected = this.document.getSelection().rangeCount > 0 ? this.document.getSelection().getRangeAt(0) : false;
+		// el.select();											// Select the <textarea> content
+		// this.document.execCommand('copy');						// Copy - only works as a result of a user action (e.g. click events)
+		// this.document.body.removeChild(el);						// Remove the <textarea> element
+
+		// if (selected) {											// If a selection existed before copying
+		// 	this.document.getSelection().removeAllRanges();		// Unselect everything on the HTML document
+		// 	this.document.getSelection().addRange(selected);	// Restore the original selection
+		// }
+
+		let selBox = this.document.createElement('textarea');
+		selBox.style.position = 'fixed';
+		selBox.style.opacity = '0';
+		selBox.style.left = '0';
+		selBox.style.top = '0';
+		selBox.value = data;
+		this.document.body.appendChild(selBox);
+		selBox.focus();
+		selBox.select();
+		this.document.execCommand('copy');
+		this.document.body.removeChild(selBox);
 
 		this.alertService.success(this.translations.copied);
 	}

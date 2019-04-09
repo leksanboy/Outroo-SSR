@@ -176,22 +176,22 @@
 			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="upload files">
 				<i label="cloud-upload"></i>
 			</button>
-			<button mat-mini-fab type="button" [matMenuTriggerFor]="addUrlVideo" matTooltip="add youtube and vimeo videos">
+			<!-- <button mat-mini-fab type="button" [matMenuTriggerFor]="addUrlVideo" matTooltip="add youtube and vimeo videos">
 				<i label="video"></i>
-			</button>
+			</button> -->
 			
 			<!-- Upload files -->
 			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf, audio/mpeg, audio/mp4">
 
 			<!-- Add video from url -->
-			<mat-menu #addUrlVideo="matMenu" [overlapTrigger]="false" yPosition="above" class="urlVideo">
+			<!-- <mat-menu #addUrlVideo="matMenu" [overlapTrigger]="false" yPosition="above" class="urlVideo">
 				<div class="box">
-					<!-- <input type="text" placeholder="YouTube or Vimeo URL" [(ngModel)]="data.urlVideo.url" (click)="$event.stopPropagation()"> -->
+					<input type="text" placeholder="YouTube or Vimeo URL" [(ngModel)]="data.urlVideo.url" (click)="$event.stopPropagation()">
 					<button mat-menu-item (click)="urlVideoInformation(1, data.urlVideo.url)">
 						{{translations.ok}}
 					</button>
 				</div>
-			</mat-menu>
+			</mat-menu> -->
 		</div>
 
 		<div class="actions">

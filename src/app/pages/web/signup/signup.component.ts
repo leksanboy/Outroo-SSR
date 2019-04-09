@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,7 +5,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -16,8 +17,9 @@ declare var ga: Function;
 })
 
 export class SignupComponent implements OnInit {
+	public env: any = environment;
+	public translations: any = [];
 	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	public environment: any = environment;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public signinLoading: boolean;
@@ -27,28 +29,27 @@ export class SignupComponent implements OnInit {
 	public validatorEmail: string;
 	public emailAccount: string;
 	public recaptcha: boolean;
-	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private alertService: AlertService,
-		private userDataService: UserDataService
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
 	) {
 		// Get translations
-		this.getTranslations(1);
+		this.getTranslations(null);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'signup';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Sign Up | Create an account');
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'signup';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
 
 		// forgot password form
 		this.actionForm = this._fb.group({
@@ -138,20 +139,31 @@ export class SignupComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
-	// Get translations
 	getTranslations(lang){
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.setMetaData(data);
 			});
 	}
 
-	// Verify recaptcha
+	setMetaData(data) {
+		let metaData = {
+			page: data.signUp.title,
+			title: data.signUp.title,
+			description: data.signUp.description,
+			keywords: data.signUp.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
+	}
+
 	verifyReCaptcha(data){
 		this.recaptcha = data ? true : false;
 	}
 
-	// Submit
 	submit(ev: Event) {
 		this.submitLoading = true;
 

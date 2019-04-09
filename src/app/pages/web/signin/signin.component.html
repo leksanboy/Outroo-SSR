@@ -31,7 +31,7 @@
 						<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
 					</mat-form-field>
 
-					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{environment.reCaptcha}}"></re-captcha>
+					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
 
 					<div class="buttons">
 						<button mat-raised-button type="submit">

@@ -23,18 +23,6 @@ export class UserResolver implements Resolve<any> {
 	resolve(route: ActivatedRouteSnapshot): Promise<any> {
 		let id = route.params['id'];
 
-		// let metaData = {
-		// 	page: 'RESOLVED',
-		// 	title: 'RESOLVED',
-		// 	description: 'RESOLVED',
-		// 	keywords: 'RESOLVED',
-		// 	url: 'https://outroo.com/sasa',
-		// 	image: 'https://google.com/image'
-		// };
-		// this.metaService.setData(metaData);
-
-		// this.userDataService.setUserMetaData(id);
-
 		return this.userDataService.getUserMetaData(id);
 	}
 }

@@ -32,7 +32,6 @@ export class AppComponent implements OnDestroy {
 				if (event instanceof NavigationEnd) {
 					// this.activeSessionStatus = true;
 					// let u = URLS.indexOf(event.url) !== -1;
-					// console.log('u', u);
 					// this.activeSessionStatus = URLS.indexOf(event.url) !== -1;
 
 					if (event.url === '/' ||
@@ -52,9 +51,9 @@ export class AppComponent implements OnDestroy {
 						this.activeSessionStatus = true;
 					}
 					
-					if (!this.ssrService.isBrowser) {
-						console.log(`>>> NavigationEnd`);
-					}
+					// if (!this.ssrService.isBrowser) {
+					// 	console.log(`>>> NavigationEnd`);
+					// }
 				}
 			});
 	}

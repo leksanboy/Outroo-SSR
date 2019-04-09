@@ -136,7 +136,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 			
 			// Get default conversation
 			this.defaultConversation('default', data.item.id);
-		} else if (this.data.comeFrom == 'share'){
+		} else if (this.data.comeFrom == 'sharePublication'){
 			this.data.active = 'default';
 
 			// Search
@@ -158,6 +158,28 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 
 			// Get default chats
 			this.defaultChats();
+		} else if (this.data.comeFrom == 'shareSong'){
+			this.data.active = 'default';
+
+			// Search
+			this.actionFormSearch = this._fb.group({
+				caption: ['']
+			});
+
+			// Search/Reset
+			this.actionFormSearch.controls["caption"].valueChanges
+				.pipe(
+					debounceTime(400),
+					distinctUntilChanged())
+				.subscribe(val => {
+					(val.length > 0) ? this.search('default') : this.search('clear');
+				});
+
+			// Get default following users list
+			this.defaultUsers();
+
+			// Get default chats
+			// this.defaultChats();
 		}
 	}
 

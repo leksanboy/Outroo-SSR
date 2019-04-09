@@ -40,7 +40,7 @@ import { PipesModule } from './core/pipes/pipes.module';
 // Services
 import { ServicesModule } from './core/services/services.module';
 
-// Common Folder Modules
+// Common Modules
 import { NewAvatarModule } from './pages/common/newAvatar/newAvatar.module';
 import { NewPlaylistModule } from './pages/common/newPlaylist/newPlaylist.module';
 import { NewPublicationModule } from './pages/common/newPublication/newPublication.module';

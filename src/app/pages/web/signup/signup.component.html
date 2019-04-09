@@ -65,7 +65,7 @@
 						By signing up, you agree with the stipulations of our <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
 					</div>
 
-					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{environment.reCaptcha}}"></re-captcha>
+					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
 
 					<div class="buttons">
 						<button mat-raised-button type="submit">

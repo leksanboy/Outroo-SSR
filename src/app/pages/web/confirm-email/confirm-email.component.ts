@@ -1,11 +1,13 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -15,22 +17,24 @@ declare var ga: Function;
 })
 
 export class ConfirmEmailComponent implements OnInit {
+	public env: any = environment;
+	public translations: any = [];
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public userData: any;
 	public pageStatus: string = 'default';
-	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
-		private activatedRoute: ActivatedRoute,
 		private router: Router,
+		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
-		private userDataService: UserDataService
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
 	) {
 		// Get translations
-		this.getTranslations(1);
+		this.getTranslations(null);
 
 		// Get url data
 		let urlData: any = this.activatedRoute.snapshot;
@@ -56,26 +60,34 @@ export class ConfirmEmailComponent implements OnInit {
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'confirm-email';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Confirm email');
-
-		// Get translations
-		this.getTranslations(1);
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'confirm-email';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
 	}
 
-	// Get translations
 	getTranslations(lang){
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.setMetaData(data);
 			});
 	}
 
-	// Submit
+	setMetaData(data) {
+		let metaData = {
+			page: data.confirmEmail.title,
+			title: data.confirmEmail.title,
+			description: data.confirmEmail.description,
+			keywords: data.confirmEmail.description,
+			url: this.env.url + 'confirm-email',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
+	}
+
 	submit() {
 		this.submitLoading = true;
 

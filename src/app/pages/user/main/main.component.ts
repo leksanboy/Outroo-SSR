@@ -78,7 +78,6 @@ export class MainComponent implements OnInit, OnDestroy {
 	) {
 		// User data from routing resolve
 		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
-		console.log("userData:", this.userData);
 
 		let metaData = {
 			page: this.userData.name,
@@ -408,15 +407,11 @@ export class MainComponent implements OnInit, OnDestroy {
 	shareOn(type, item){
 		switch (type) {
 			case "message":
-				// If content text not exists then set YouTube/Vimeo title
-				if (item.urlVideo && !item.content_original)
-					item.content_original = item.urlVideo.title;
-
-				item.comeFrom = 'share';
+				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowConversation(item);
 				break;
 			case "copyLink":
-				let urlExtension = item.user.name + ' ' + this.environment.url + 'showPublication?n=' + item.name;
+				let urlExtension = this.environment.url + 'p/' + item.name;
 				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
 				break;

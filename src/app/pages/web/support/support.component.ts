@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,8 +5,9 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -17,37 +17,35 @@ declare var ga: Function;
 })
 
 export class SupportComponent implements OnInit {
+	public env: any = environment;
+	public translations: any = [];
 	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	public environment: any = environment;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public pageStatus: string = 'default';
 	public email: string;
 	public recaptcha: boolean;
-	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
-		private activatedRoute: ActivatedRoute,
 		private router: Router,
-		private userDataService: UserDataService,
+		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
-		private metaService: MetaService
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
 	) {
-		this.setMetaData();
-
-		this.getTranslations(1);
+		// Get translations
+		this.getTranslations(null);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'support';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Support');
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'support';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
 
 		// Form
 		this.actionForm = this._fb.group({
@@ -59,33 +57,31 @@ export class SupportComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
-	setMetaData() {
+	getTranslations(lang){
+		this.userDataService.getTranslations(lang)
+			.subscribe(data => {
+				this.translations = data;
+				this.setMetaData(data);
+			});
+	}
+
+	setMetaData(data) {
 		let metaData = {
-			page: 'Support',
-			title: 'Support',
-			description: 'We can help you with anything.',
-			keywords: 'We can help you with anything.',
-			url: this.environment.url + 'about',
-			image: this.environment.url + 'assets/images/image_color.png'
+			page: data.support.title,
+			title: data.support.title,
+			description: data.support.description,
+			keywords: data.support.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
 		}
 
 		this.metaService.setData(metaData);
 	}
 
-	// Get translations
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-			});
-	}
-
-	// Verify recaptcha
 	verifyReCaptcha(data){
 		this.recaptcha = data ? true : false;
 	}
 
-	// Submit
 	submit(ev: Event) {
 		this.submitLoading = true;
 		this.email = this.actionForm.get('email').value;

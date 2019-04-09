@@ -1,8 +1,12 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
 
 declare var ga: Function;
 
@@ -12,25 +16,51 @@ declare var ga: Function;
 })
 
 export class LogoutComponent implements OnInit {
+	public env: any = environment;
+	public translations: any = [];
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public userData: any;
-	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
+		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private router: Router
-	) { }
+		private metaService: MetaService,
+		private userDataService: UserDataService,
+		private ssrService: SsrService,
+	) {
+		// Get translations
+		this.getTranslations(null);
+	}
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'logout';
-		ga('set', 'page', urlGa);
-		ga('send', 'pageview');
+		if (this.ssrService.isBrowser) {
+			let urlGa = 'logout';
+			ga('set', 'page', urlGa);
+			ga('send', 'pageview');
+		}
+	}
 
-		// Set page title
-		this.titleService.setTitle('Log out');
+	getTranslations(lang){
+		this.userDataService.getTranslations(lang)
+			.subscribe(data => {
+				this.translations = data;
+				this.setMetaData(data);
+			});
+	}
+
+	setMetaData(data) {
+		let metaData = {
+			page: data.logOut.title,
+			title: data.logOut.title,
+			description: data.logOut.description,
+			keywords: data.logOut.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
 	}
 }

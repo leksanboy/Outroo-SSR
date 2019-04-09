@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
@@ -17,7 +17,15 @@ declare var ga: Function;
 })
 export class HomeComponent implements OnInit, OnDestroy {
 	@ViewChild('textCounterEffect') textCounterEffect: ElementRef;
-	
+	public env: any = environment;
+	public translations: any = [];
+	public actionForm: FormGroup;
+	public submitLoading: boolean;
+	public showPassword: boolean;
+	public sessionData: any = [];
+	public activeSessionStatus: boolean;
+	public errorMessage: boolean;
+	public errorMessageContent: string;
 	public activeTextEffect: any;
 	public listOfPhrases: any = [
 		'be the one',
@@ -45,46 +53,31 @@ export class HomeComponent implements OnInit, OnDestroy {
 		'don\'t ¬tell ¬people ¬your ¬dreams, ¬show them',
 		'enjoy ¬the little ¬things'
 	];
-	public environment: any = environment;
-	public actionForm: FormGroup;
-	public submitLoading: boolean;
-	public showPassword: boolean;
-	public sessionData: any = [];
-	public translations: any = [];
-	public activeSessionStatus: boolean;
-	public errorMessage: boolean;
-	public errorMessageContent: string;
 
 	constructor(
-		private titleService: Title,
 		private _fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
+		private metaService: MetaService,
 		private userDataService: UserDataService,
-		private ssrService: SsrService
+		private ssrService: SsrService,
 	) {
-		console.log("WEB Home rRendeder");
+		// Get translations
+		this.getTranslations(null);
 
 		// User data from routing resolve
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
-
-		// Get translations
-		this.getTranslations(1);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
-		let urlGa = 'signin';
-
 		if (this.ssrService.isBrowser) {
+			let urlGa = 'home';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		};
-
-		// Set page title
-		this.titleService.setTitle('Outroo');
 
 		// login form
 		this.actionForm = this._fb.group({
@@ -123,15 +116,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Get translations
-	getTranslations(lang) {
+	getTranslations(lang){
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-
-				// Set page title
-				this.titleService.setTitle(this.environment.name);
+				this.setMetaData(data);
 			});
+	}
+
+	setMetaData(data) {
+		let metaData = {
+			page: data.home.title,
+			title: data.home.title,
+			description: data.home.description,
+			keywords: data.home.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		}
+
+		this.metaService.setData(metaData);
 	}
 
 	counter(element, value) {
@@ -248,7 +251,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Submit
 	submit(event: Event) {
 		this.submitLoading = true;
 		this.errorMessage = false;

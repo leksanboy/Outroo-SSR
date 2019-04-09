@@ -146,7 +146,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd(){
-		let ad = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5692822538817681" data-ad-slot="1635841852" data-ad-format="auto"></ins>';
+		let ad = this.environment.ad;
+
 		let a = {
 			contentTypeAd: true,
 			content: ad
@@ -305,15 +306,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 	shareOn(type, item){
 		switch (type) {
 			case "message":
-				// If content text not exists then set YouTube/Vimeo title
-				if (item.urlVideo && !item.content_original)
-					item.content_original = item.urlVideo.title;
-				
-				item.comeFrom = 'share';
+				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowConversation(item);
 				break;
 			case "copyLink":
-				let urlExtension = item.user.name + ' ' + this.environment.url + 'showPublication?n=' + item.name;
+				let urlExtension = this.environment.url + 'p/' + item.name;
 				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
 				break;

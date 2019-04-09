@@ -16,9 +16,6 @@
 									<div class="name">
 										{{userData.name}}
 										<i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i>
-										<!-- <div class="fullname"> -->
-										<!-- </div> -->
-										<!-- <span class="official"><i *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i></span> -->
 									</div>
 									<div class="username">@{{userData.username}}</div>
 								</div>
@@ -26,7 +23,6 @@
 								<div class="settings" *ngIf="userData.id == sessionData.current.id">
 									<button mat-button type="button" routerLink="/settings">
 										<i label="settings"></i>
-										<!-- {{translations.settings}} -->
 									</button>
 								</div>
 							</div>
@@ -43,7 +39,12 @@
 								<button mat-button>
 									<div class="text">
 										{{userData.countPhotos}}
-										<div class="name">{{translations.photos}}</div>
+										<div class="inner">
+											<i label="photo-camera"></i>
+											<div class="name">
+												{{translations.photos}}
+											</div>
+										</div>
 									</div>
 								</button>
 							</li>
@@ -51,7 +52,12 @@
 								<button mat-button>
 									<div class="text">
 										{{userData.countAudios}}
-										<div class="name">{{translations.songs}}</div>
+										<div class="inner">
+											<i label="music"></i>
+											<div class="name">
+												{{translations.songs}}
+											</div>
+										</div>
 									</div>
 								</button>
 							</li>
@@ -59,7 +65,12 @@
 								<button mat-button>
 									<div class="text">
 										{{userData.countFollowing}}
-										<div class="name">{{translations.following}}</div>
+										<div class="inner">
+											<i label="person"></i>
+											<div class="name">
+												{{translations.following}}
+											</div>
+										</div>
 									</div>
 								</button>
 							</li>
@@ -67,7 +78,12 @@
 								<button mat-button>
 									<div class="text">
 										{{userData.countFollowers}}
-										<div class="name">{{translations.followers}}</div>
+										<div class="inner">
+											<i label="group"></i>
+											<div class="name">
+												{{translations.followers}}
+											</div>
+										</div>
 									</div>
 								</button>
 							</li>
@@ -75,7 +91,12 @@
 								<button mat-button>
 									<div class="text">
 										{{userData.countBookmarks}}
-										<div class="name">{{translations.bookmarks}}</div>
+										<div class="inner">
+											<i label="bookmark"></i>
+											<div class="name">
+												{{translations.bookmarks}}
+											</div>
+										</div>
 									</div>
 								</button>
 							</li>

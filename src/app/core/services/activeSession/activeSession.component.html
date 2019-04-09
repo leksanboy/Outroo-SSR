@@ -31,7 +31,7 @@
 
 				<div class="box">
 					<div class="innerBox">
-						<ul class="notifications" *ngIf="dataNotifications.list">
+						<ul *ngIf="dataNotifications.list">
 							<li mat-ripple *ngFor="let x of dataNotifications.list" [ngClass]="{'active': x.status == 0}">
 								<a class="avatar" routerLink="/{{x.user.username}}">
 									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
@@ -217,8 +217,6 @@
 									
 									<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 										<div class="text">
-											{{x.name}}
-											<br>
 											{{translations.leaveSite}}
 										</div>
 										<div class="buttons">
@@ -264,8 +262,6 @@
 
 							<div class="closeSessionBox">
 								<div class="text">
-									{{sessionData.current.name}}
-									<br>
 									{{translations.leaveSite}}
 								</div>
 								<div class="buttons">
@@ -284,7 +280,7 @@
 
 			<div class="menuBox">
 				<div class="inner" *ngIf="!navMenu">
-					<div class="user" (click)="showChangeSessionOnMenu=!showChangeSessionOnMenu">
+					<div mat-ripple class="user" (click)="showChangeSessionOnMenu=!showChangeSessionOnMenu">
 						<div class="avatar" mat-list-avatar>
 							<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
 						</div>
@@ -303,7 +299,7 @@
 					</div>
 
 					<span *ngIf="showChangeSessionOnMenu">
-						<div class="item userMini" *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
+						<div mat-ripple class="item userMini" *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x)">
 								<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
 							</div>
@@ -311,8 +307,6 @@
 							<i label="exit" [matMenuTriggerFor]="signOut"></i>
 							<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 								<div class="text">
-									{{x.name}}
-									<br>
 									{{translations.leaveSite}}
 								</div>
 								<div class="buttons">
@@ -322,7 +316,7 @@
 							</mat-menu>
 						</div>
 
-						<div class="item userMini" *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+						<div mat-ripple class="item userMini" *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
 							<div class="add" mat-list-avatar>
 								<i label="add"></i>
 							</div>
@@ -331,38 +325,38 @@
 					</span>
 
 					<span *ngIf="!showChangeSessionOnMenu">
-						<div class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 							<i label="person"></i>
 							<div class="text">{{translations.mine}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
 							<i label="home"></i>
 							<div class="text">{{translations.home}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
 							<i label="search"></i>
 							<div class="text">{{translations.news}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/photos" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/photos" routerLinkActive="selected">
 							<i label="photo-camera"></i>
 							<div class="text">{{translations.photos}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/audios" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/audios" routerLinkActive="selected">
 							<i label="music"></i>
 							<div class="text">{{translations.audios}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
 							<i label="bookmark"></i>
 							<div class="text">{{translations.bookmarks}}</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
 							<i label="notifications"></i>
 							<div class="text">{{translations.notifications}}</div>
 							<div class="pending" *ngIf="sessionData.current.countPendingNotifications">
 								{{sessionData.current.countPendingNotifications}}
 							</div>
 						</div>
-						<div class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
 							<i label="settings"></i>
 							<div class="text">{{translations.settings}}</div>
 						</div>

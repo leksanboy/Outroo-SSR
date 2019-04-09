@@ -276,7 +276,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				sender: this.sessionData.current.id
 			}
 
-			this.followsDataService.followUnfollow(data);
+			this.followsDataService.followUnfollow(data).subscribe();
 		} else if (type == 'unfollow') { 
 			// Stop following
 			item.statusFollowing = 'unfollow';
