@@ -26,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
 	public showPassword: boolean;
 	public showConfirmPassword: boolean;
 	public userData: any = [];
-	public pageStatus: string = 'default';
+	public pageStatus = 'default';
 	public recaptcha: boolean;
 
 	constructor(

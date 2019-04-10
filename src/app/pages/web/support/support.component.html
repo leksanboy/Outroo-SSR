@@ -13,26 +13,27 @@
 	<div class="innerBodyContent">
 		<div class="container" *ngIf="pageStatus == 'default'">
 			<div class="title">
-				Support
+				{{translations?.support?.title}}
 			</div>
 
 			<div class="text">
-				We can help you with your questions.
+				{{translations?.support?.defaultText?.one}}
 				<br>
-				If need to send a report of spam or similar things, we will take the appropriate measures.
 				<br>
-				Complete the form and send your question, we answer you as soon as posible.
+				{{translations?.support?.defaultText?.two}}
+				<br>
+				{{translations?.support?.defaultText?.three}}
 			</div>
 
 			<div class="form">
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
 					<mat-form-field>
-						<input type="email" matInput placeholder="Email" #Email maxlength="100" formControlName="email">
+						<input type="email" matInput placeholder="{{translations?.support?.email}}" #Email maxlength="100" formControlName="email">
 						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
 					</mat-form-field>
 
 					<mat-form-field class="textarea">
-						<textarea matInput matTextareaAutosize placeholder="Type here" #Content maxlength="1000" formControlName="content"></textarea>
+						<textarea matInput matTextareaAutosize placeholder="{{translations?.support?.typeHere}}" #Content maxlength="1000" formControlName="content"></textarea>
 						<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
 					</mat-form-field>
 
@@ -41,7 +42,7 @@
 					<div class="buttons">
 						<button mat-raised-button type="submit">
 							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-							Submit
+							{{translations?.common?.submit}}
 						</button>
 					</div>
 				</form>
@@ -50,15 +51,14 @@
 
 		<div class="container" *ngIf="pageStatus == 'completed'">
 			<div class="title">
-				Check your email
+				{{translations?.support?.confirmText?.one}}
 			</div>
 
 			<div class="text">
-				We've sent an email to <b>{{email}}</b>.
+				{{translations?.support?.confirmText?.two}} <b>{{email}}</b>.
 				<br>
 				<br>
-				If you don't see the email, check other places it might be,
-				like your junk, spam, social, or other folders.
+				{{translations?.support?.confirmText?.three}}
 			</div>
 		</div>
 	</div>

@@ -17,26 +17,24 @@
 			</div>
 
 			<div class="subtitle">
-				Company
+				{{translations?.about?.companyText?.one}}
 			</div>
 
 			<div class="text">
-				<!-- Sasá Rafalsky, <a routerLink="/sasa">@sasa</a> (CEO, co-founder). -->
-				<!-- <br> -->
-				Outroo is a community where people can share their publications with their friends.
-				You can do an amazing publications with songs, photos and videos.
+				{{translations?.about?.companyText?.two}}
+				{{translations?.about?.companyText?.three}}
 			</div>
 			
 			<div class="subtitle">
-				Brand
+				{{translations?.about?.brandText?.one}}
 			</div>
 			
 			<div class="text">
-				Easy way for you to use our brand.
+				{{translations?.about?.brandText?.two}}
 				<br>
-				Download Asset Pack.
+				{{translations?.about?.brandText?.three}}
 				<button mat-raised-button type="button" (click)="downloadAssetPack()">
-					Download
+					{{translations?.about?.brandText?.four}}
 				</button>
 			</div>
 

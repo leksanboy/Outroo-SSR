@@ -8,40 +8,40 @@
 	<div class="innerBodyContent">
 		<div class="container" *ngIf="pageStatus == 'default'">
 			<div class="title">
-				Verify account
+				{{translations?.confirmEmail?.defaultText?.one}}
 			</div>
 
 			<div class="text">
 				<div class="loading">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-					Verifying your account...
+					{{translations?.confirmEmail?.defaultText?.two}}
 				</div>
 			</div>
 		</div>
 
 		<div class="container" *ngIf="pageStatus == 'completed'">
 			<div class="title">
-				Congratulations
+				{{translations?.confirmEmail?.confirmText?.one}}
 			</div>
 
 			<div class="text">
-				The account has been verified successfully,
-				<b>@{{userData.username}}</b> now you can access and enjoy your account.
+				{{translations?.confirmEmail?.confirmText?.two}}
+				<b>@{{userData.username}}</b> {{translations?.confirmEmail?.confirmText?.three}}
 				<br>
 				<button mat-raised-button type="button" (click)="submit()">
 					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
-					View my account
+					{{translations?.confirmEmail?.confirmText?.four}}
 				</button>
 			</div>
 		</div>
 
 		<div class="container" *ngIf="pageStatus == 'error'">
 			<div class="title">
-				Error
+				{{translations?.confirmEmail?.errorText?.one}}
 			</div>
 
 			<div class="text">
-				This url is not available or has expired.
+				{{translations?.confirmEmail?.errorText?.two}}
 			</div>
 		</div>
 	</div>

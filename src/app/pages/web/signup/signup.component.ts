@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public signinLoading: boolean;
-	public pageStatus: string = 'default';
+	public pageStatus = 'default';
 	public showPassword: boolean;
 	public validatorUsername: string;
 	public validatorEmail: string;

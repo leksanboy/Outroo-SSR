@@ -22,7 +22,7 @@ export class ConfirmEmailComponent implements OnInit {
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public userData: any;
-	public pageStatus: string = 'default';
+	public pageStatus = 'default';
 
 	constructor(
 		private _fb: FormBuilder,

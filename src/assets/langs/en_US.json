@@ -202,25 +202,62 @@
 	"back": "Back",
 	"publishing": "Publishing...",
 	"openInNewTab": "Open in a new tab",
+	
 	"about":{
 		"title": "About us",
-		"description": "Outroo is the best."
+		"description": "Outroo is the best.",
+		"companyText": {
+			"one": "Company",
+			"two": "Outroo is a community where people can share their publications with their friends.",
+			"three": "You can do an amazing publications with songs, photos and videos."
+		},
+		"brandText": {
+			"one": "Brand",
+			"two": "Easy way for you to use our brand.",
+			"three": "Download Asset Pack.",
+			"four": "Download"
+		}
 	},
 	"confirmEmail":{
 		"title": "Confirm email",
-		"description": "Confirm your email to access the site."
+		"description": "Confirm your email to access the site.",
+		"defaultText": {
+			"one": "Verify account",
+			"two": "Verifying your account..."
+		},
+		"confirmText": {
+			"one": "Congratulations",
+			"two": "The account has been verified successfully,",
+			"three": "now you can access and enjoy your account.",
+			"four": "View my account"
+		},
+		"errorText": {
+			"one": "Error",
+			"two": "This url is not available or has expired."
+		}
 	},
 	"error":{
-		"title": "Error",
-		"description": "An error has ocurred."
+		"title": "Error 404",
+		"description": "An error has ocurred, Page not found, Try to write the correct url direction."
 	},
 	"forgotPassword":{
 		"title": "Forgot password | Recover account access",
-		"description": "If you forgot your password acceess here and enter your email."
+		"description": "If you forgot your password acceess here and enter your email.",
+		"email": "Email",
+		"confirmText": {
+			"one": "Check your email",
+			"two": "We've sent an email to",
+			"three": "Click the link in the email to reset your password.",
+			"four": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+		}
 	},
 	"logOut":{
 		"title": "Log out",
-		"description": "See you soon."
+		"description": "See you soon.",
+		"text": {
+			"one": "See you soon. Don't forget to tell your friends about this incredible site.",
+			"two": "Go login"
+		}
 	},
 	"privacy":{
 		"title": "Privacy",
@@ -228,22 +265,75 @@
 	},
 	"resetPassword":{
 		"title": "Reset password",
-		"description": "Enter your new passord."
+		"description": "Enter your new passord.",
+		"newPassword": "New password",
+		"confirmNewPassword": "Confirm new password",
+		"confirmText": {
+			"one": "Congratulations",
+			"two": "The password has been updated successfully,",
+			"three": "now you can use your new password",
+			"four": "We have sent a copy to",
+			"five": "View my account"
+		},
+		"errorText": {
+			"one": "Error",
+			"two": "This url is not available or has expired."
+		}
 	},
 	"signIn":{
 		"title": "Sign In | Login",
-		"description": "Enter your email and password to access."
+		"description": "Enter your email and password to access.",
+		"email": "Email",
+		"password": "Password"
 	},
 	"signUp":{
 		"title": "Sign Up | Create an account",
-		"description": "Create an account to be part of our family."
+		"description": "Create an account to be part of our family.",
+		"username": "Username",
+		"name": "Name",
+		"email": "Email",
+		"password": "Password",
+		"username": "Username",
+		"privacyText": {
+			"one": "By signing up, you agree with the stipulations of our",
+			"two": "Privacy Policy"
+		},
+		"confirmText": {
+			"one": "Welcome!",
+			"two": "We've sent an email to",
+			"three": "Thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.",
+			"four": "In short, you will receive a confirmation email to activate your account.",
+			"five": "View my account"
+		}
 	},
 	"support":{
 		"title": "Support",
-		"description": "We can help you with anything."
+		"description": "We can help you with anything.",
+		"email": "Email",
+		"typeHere": "Type here, describe the problem",
+		"defaultText": {
+			"one": "We can help you with your questions.",
+			"two": "If need to send a report of spam or similar things, we will take the appropriate measures.",
+			"three": "Complete the form and send your question, we answer you as soon as posible."
+		},
+		"confirmText": {
+			"one": "Check your email",
+			"two": "We've sent an email to",
+			"three": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+		}
 	},
 	"home":{
 		"title": "Outroo",
-		"description": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates."
+		"description": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates.",
+		"dontHaveAnAccount": "Don't have an account?"
+	},
+	"common": {
+		"submit": "Submit",
+		"yes": "Yes",
+		"no": "No",
+		"back": "Back",
+		"signIn": "Sign in",
+		"signUp": "Sign up",
+		"forgotPassword": "Forgot password?"
 	}
 }

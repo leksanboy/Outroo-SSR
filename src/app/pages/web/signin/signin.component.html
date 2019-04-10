@@ -13,18 +13,18 @@
 	<div class="innerBodyContent">
 		<div class="container">
 			<div class="title">
-				Sign in
+				{{translations?.signIn?.title}}
 			</div>
 
 			<div class="form">
 				<form autocomplete="off" novalidate [formGroup]="actionForm" (ngSubmit)="submit($event);">
 					<mat-form-field>
-						<input type="email" matInput placeholder="Email" #Email maxlength="100" formControlName="email">
+						<input type="email" matInput placeholder="{{translations?.signIn?.email}}" #Email maxlength="100" formControlName="email">
 						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
 					</mat-form-field>
 
 					<mat-form-field>
-						<input type="password" matInput placeholder="Password" #Password maxlength="100" formControlName="password">
+						<input type="password" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100" formControlName="password">
 						<button mat-button matSuffix mat-icon-button type="button" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword" tabindex="-1">
 							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
@@ -36,11 +36,11 @@
 					<div class="buttons">
 						<button mat-raised-button type="submit">
 							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-							Sign in
+							{{translations?.common?.signIn}}
 						</button>
 						<br>
 						<button mat-button class="forgot" type="button" routerLink="/forgot-password">
-							Forgot password?
+							{{translations?.common?.forgotPassword}}
 						</button>
 					</div>
 				</form>

@@ -13,13 +13,13 @@
 	<div class="innerBodyContent">
 		<div class="container" *ngIf="pageStatus == 'default'">
 			<div class="title">
-				Sign up
+				{{translations?.signUp?.title}}
 			</div>
 
 			<div class="form">
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
 					<mat-form-field>
-						<input type="text" matInput placeholder="Username" #Username maxlength="100" formControlName="username">
+						<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
 						<div class="validators">
 							<div class="done" *ngIf="validatorUsername == 'done'">
 								<i label="validator-check"></i>
@@ -35,12 +35,12 @@
 					</mat-form-field>
 
 					<mat-form-field>
-						<input matInput placeholder="Name" #Name maxlength="100" formControlName="name">
+						<input matInput placeholder="{{translations?.signUp?.name}}" #Name maxlength="100" formControlName="name">
 						<mat-hint align="end">{{Name.value.length}}/100</mat-hint>
 					</mat-form-field>
 
 					<mat-form-field>
-						<input type="email" matInput placeholder="Email" #Email maxlength="100" formControlName="email">
+						<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
 						<div class="validators">
 							<div class="done" *ngIf="validatorEmail == 'done'">
 								<i label="validator-check"></i>
@@ -54,7 +54,7 @@
 					</mat-form-field>
 
 					<mat-form-field>
-						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="Password" #Password maxlength="100" formControlName="password">
+						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signUp?.password}}" #Password maxlength="100" formControlName="password">
 						<button mat-button matSuffix mat-icon-button type="button" *ngIf="Password.value.length > 0" (click)="showPassword=!showPassword" tabindex="-1">
 							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
@@ -62,7 +62,7 @@
 					</mat-form-field>
 
 					<div class="terms">
-						By signing up, you agree with the stipulations of our <a routerLink="/privacy" target="_blank">Privacy Policy</a>.
+						{{translations?.signUp?.privacyText?.one}} <a routerLink="/privacy" target="_blank">{{translations?.signUp?.privacyText?.two}}</a>.
 					</div>
 
 					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
@@ -70,7 +70,7 @@
 					<div class="buttons">
 						<button mat-raised-button type="submit">
 							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-							Submit
+							{{translations?.common?.submit}}
 						</button>
 					</div>
 				</form>
@@ -79,21 +79,20 @@
 
 		<div class="container" *ngIf="pageStatus == 'completed'">
 			<div class="title">
-				Welcome!
+				{{translations?.signUp?.confirmText?.one}}
 			</div>
 
 			<div class="text">
-				We've sent an email to <b>{{emailAccount}}</b>.
+				{{translations?.signUp?.confirmText?.two}} <b>{{emailAccount}}</b>.
 				<br>
-				Thanks for creating an account. Follow other people,
-				search an amazing songs and share your photos and videos with the rest of comunity.
+				{{translations?.signUp?.confirmText?.three}}
 				<br>
 				<br>
-				In short, you will receive a confirmation email to activate your account.
+				{{translations?.signUp?.confirmText?.four}}
 				<br>
 				<button mat-raised-button type="button" (click)="signin()">
 					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
-					View my account
+					{{translations?.signUp?.confirmText?.five}}
 				</button>
 			</div>
 		</div>

@@ -22,7 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
 	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
-	public pageStatus: string = 'default';
+	public pageStatus = 'default';
 	public email: string;
 	public recaptcha: boolean;
 
