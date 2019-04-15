@@ -99,7 +99,7 @@ export class ShowPlaylistComponent implements OnInit {
 				this.playerService.setData(this.audioPlayerData);
 			}
 		} else {
-			this.alertService.warning(this.translations.addSongsToPlaylist);
+			this.alertService.warning(this.translations.addToPlaylist);
 		}
 	}
 
@@ -121,10 +121,10 @@ export class ShowPlaylistComponent implements OnInit {
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case("addRemoveUser"):
@@ -142,10 +142,10 @@ export class ShowPlaylistComponent implements OnInit {
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case("playlist"):
@@ -165,7 +165,7 @@ export class ShowPlaylistComponent implements OnInit {
 							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case("report"):

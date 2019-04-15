@@ -76,23 +76,26 @@ export class MainComponent implements OnInit, OnDestroy {
 		private ssrService: SsrService,
 
 	) {
-		// User data from routing resolve
-		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
-
-		let metaData = {
-			page: this.userData.name,
-			title: this.userData.name,
-			description: this.userData.aboutOriginal,
-			keywords: this.userData.aboutOriginal,
-			url: this.environment.url + this.userData.username,
-			image: this.environment.url + this.userData.avatarUrl
-		};
-		this.metaService.setData(metaData);
-
 		// Set component data
 		this.activeRouter = this.router.events
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
+					// User data from routing resolve
+					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
+
+					let metaData = {
+						page: this.userData.name,
+						title: this.userData.name,
+						description: this.userData.aboutOriginal,
+						keywords: this.userData.aboutOriginal,
+						url: this.environment.url + this.userData.username,
+						image: this.environment.url + this.userData.avatarUrl
+					};
+					this.metaService.setData(metaData);
+
+					// Close all dialogs
+					this.dialog.closeAll();
+
 					// Run page on routing
 					this.activeRouterExists = true;
 
@@ -115,15 +118,9 @@ export class MainComponent implements OnInit, OnDestroy {
 					// Get translations
 					this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
 
-					// Check if page is mine to set mine page data
-					if (event.url.substr(1) === this.userData.username) {
-						this.siteUserData(this.userData.username);
-						this.default('default', this.userData.username, this.sessionData.current.id);
-					} else {
-						this.siteUserData(this.sessionData.current.username);
-						this.default('default', this.sessionData.current.username, this.sessionData.current.id);
-					}
-
+					// Set user page
+					this.siteUserData(this.userData.username);
+					this.default('default', this.userData.username, this.sessionData.current.id);
 				}
 			});
 
@@ -151,9 +148,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			.subscribe(data => {
 				this.newPublication('result', data.data);
 			});
-
-		// Close all dialogs
-		this.dialog.closeAll();
 
 		// Click on a href
 		this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
@@ -267,7 +261,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			this.sessionService.setDataNewPublication(opt);
 		} else if (type === 'result') {
 			if (data) {
-				this.alertService.publishing(this.translations.publishing);
+				this.alertService.publishing(this.translations.main.publishing);
 
 				setTimeout(() => {
 					this.dataDefault.list.unshift(data);
@@ -336,7 +330,7 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -366,7 +360,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -421,7 +415,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Play item song
 	playItem(data, item, key, type) {
 		if (!this.sessionData.current.id) {
-			this.alertService.success(this.translations.createAnAccountToListenSong);
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
 				item.playing = !item.playing;
@@ -475,10 +469,10 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case("createPlaylist"):
@@ -502,7 +496,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			item.bookmark.checked = !item.bookmark.checked;
 
 			if (item.bookmark.checked)
-				this.alertService.success(this.translations.addedToSaved);
+				this.alertService.success(this.translations.bookmarks.addedTo);
 
 			// data
 			let data = {
@@ -517,7 +511,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					if (res)
 						item.bookmark.id = res;
 				}, error => {
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -606,7 +600,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					}
 				}, error => {
 					item.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !item.loadingMoreData) {
 			item.loadingMoreData = true;
@@ -631,7 +625,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					item.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -699,7 +693,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			}
 		} else if (type == 'checkPlaceholder') {
 			if (item.newCommentData.original.length == 0)
-				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.whatsHappening.one + '</div>';
+				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
@@ -730,7 +724,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			return newData;
 		} else if (type == 'create') {
 			if (item.newCommentData.original.trim().length == 0) {
-				this.alertService.warning(this.translations.commentIsTooShort);
+				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
 				let formatedData = this.newComment('transformBeforeSend', null, item);
 				let dataCreate = {
@@ -751,7 +745,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 						this.newComment('clear', null, item);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			}
 		}
@@ -799,7 +793,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		} else {
-			this.alertService.error(this.translations.tryToUseAnotherBrowser);
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
 		}
 
 		return caretOffset;

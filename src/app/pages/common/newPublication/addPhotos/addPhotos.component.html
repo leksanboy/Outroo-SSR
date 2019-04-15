@@ -6,11 +6,12 @@
 			</button>
 		</div>
 		<div class="text">
-			{{translations.photos}} {{data.arrayAddedItems.length}}/10
+			{{translations?.photos?.title}} 
+			{{data.arrayAddedItems.length}}/10
 		</div>
 		<div class="actions">
 			<button mat-raised-button type="submit" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1" (click)="submit($event)">
-				{{translations.ok}}
+				{{translations?.common?.ok}}
 			</button>
 		</div>
 	</div>
@@ -18,29 +19,70 @@
 	<div mat-dialog-content class="bodyCreatePublication">
 		<div class="photos">
 			<ul *ngIf="data.list.length > 0">
-				<li mat-ripple *ngFor="let x of data.list; let i=index;" (click)="toggleItem(x)">
-					<div class="image">
-						<div class="img" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
-
-						<div class="category">
-							<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
-							<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
-						</div>
-
-						<div class="status">
-							<button mat-icon-button [ngClass]="{'selected': x.selected}">
-								<i label="add" *ngIf="!x.selected"></i>
-								<i label="check" *ngIf="x.selected"></i>
-							</button>
+				<li mat-ripple class="upload" (click)="uploadFile.click()">
+					<div class="inner">
+						<div class="label">
+							<i label="cloud-upload"></i>
+							<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf">
+							<br>
+							<div class="title">{{translations?.photos?.chooseFiles}}</div>
+							<div class="subtitle">{{translations?.photos?.maxSizePerFile}}</div>
 						</div>
 					</div>
+				</li>
+
+				<li mat-ripple *ngFor="let x of data.list; let i=index;" (click)="toggleItem(x)">
+					<span *ngIf="!x.uploaded">
+						<div class="image">
+							<div class="img" *ngIf="!x.uploaded" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
+
+							<div class="category">
+								<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+								<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+							</div>
+
+							<div class="status">
+								<button mat-icon-button>
+									<i label="add" *ngIf="!x.selected"></i>
+									<i label="check" *ngIf="x.selected"></i>
+								</button>
+							</div>
+						</div>
+					</span>
+
+					<span *ngIf="x.uploaded">
+						<div class="image">
+							<div class="img" [ngStyle]="{'background-image': 'url(' + x.thumbnail + ')'}"></div>
+
+							<div class="category">
+								<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
+								<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+								<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+								<i label="cloud-upload"></i>
+							</div>
+
+							<div class="status">
+								<div class="progress" *ngIf="x.status=='progress'">
+									<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
+									<div class="value">{{x.progress}}%</div>
+								</div>
+								<button mat-icon-button *ngIf="x.status=='error'">
+									<i label="cloud-off"></i>
+								</button>
+								<button mat-icon-button *ngIf="x.status=='completed'">
+									<i label="add" *ngIf="!x.selected"></i>
+									<i label="check" *ngIf="x.selected"></i>
+								</button>
+							</div>
+						</div>
+					</span>
 				</li>
 		    </ul>
 
 		    <div class="loadingData" *ngIf="loadingData">
 		    	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 		    </div>
-		    <div class="noData" *ngIf="noData">{{translations.noData}}</div>
+		    <div class="noData" *ngIf="noData">{{translations?.audios?.noData}}</div>
 		    <div class="loadMore" *ngIf="loadMoreData">
 		    	<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
 		    		<i label="add"></i>

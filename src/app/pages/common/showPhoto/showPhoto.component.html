@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{data.comeFrom == 'photos' ? translations.photos : translations.notifications}}
+			{{data.comeFrom == 'photos' ? translations?.photos?.title : translations?.notifications?.title}}
 		</div>
 	</div>
 
@@ -21,7 +21,7 @@
 						<a class="name" routerLink="/{{userData.username}}">
 							<span class="username">
 								{{userData.username}}
-								<i label="official" *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i>
+								<i label="official" *ngIf="userData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</span>
 							<span class="date">{{data.current.date | timeago}}</span>
 						</a>
@@ -31,10 +31,11 @@
 							<i label="more"></i>
 						</button>
 						<mat-menu #options="matMenu">
-							<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations.disableComments : translations.enableComments}}</button>
-							<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
-							<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations.report}}</button>
-							<button mat-menu-item (click)="itemOptions('close', null)">{{translations.close}}</button>
+							<button mat-menu-item (click)="itemOptions('close', null)">{{translations?.common?.close}}</button>
+							<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+							<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations?.common?.report}}</button>
+							<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
+							<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 						</mat-menu>
 					</div>
 				</div>
@@ -72,7 +73,7 @@
 								<a class="name" routerLink="/{{userData.username}}">
 									<span class="username">
 										{{userData.username}}
-										<i label="official" *ngIf="userData.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i label="official" *ngIf="userData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</span>
 									<span class="date">{{data.current.date | timeago}}</span>
 								</a>
@@ -82,10 +83,11 @@
 									<i label="more"></i>
 								</button>
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations.disableComments : translations.enableComments}}</button>
-									<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations.restore : translations.remove}}</button>
-									<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations.report}}</button>
-									<button mat-menu-item (click)="itemOptions('close', null)">{{translations.close}}</button>
+									<button mat-menu-item (click)="itemOptions('close', null)">{{translations?.common?.close}}</button>
+									<button mat-menu-item (click)="itemOptions('disableComments', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('report', data.current)">{{translations?.common?.report}}</button>
+									<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
+									<button mat-menu-item (click)="itemOptions('remove', data.current)" *ngIf="userData.id == sessionData.current.id">{{data.current.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 							</div>
 						</div>
@@ -108,7 +110,7 @@
 								<span *ngFor="let l of data.current.likers; let isLast = last">
 									{{l.username}}{{isLast ? '' : ', '}}
 								</span>
-								{{data.current.countLikes <= 2 ? translations.likedThis : translations.andMoreLikedThis}}
+								{{data.current.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
 							</a>
 						</div>
 					</div>
@@ -117,7 +119,7 @@
 						<div class="comments" *ngIf="data.current.disabledComments">
 							<div class="countComments">
 								{{data.current.countComments}} 
-								{{translations.comments}}
+								{{translations?.common?.comments}}
 							</div>
 
 							<div class="new" *ngIf="sessionData.current.id">
@@ -149,8 +151,8 @@
 													<i label="more"></i>
 												</button>
 												<mat-menu #optionsComments="matMenu">
-													<button mat-menu-item (click)="commentsOptions('addRemove', data.current, c)" *ngIf="c.user.id == sessionData.current.id">{{c.addRemove ? translations.restore : translations.remove}}</button>
-													<button mat-menu-item (click)="commentsOptions('report', data.current, c)">{{translations.report}}</button>
+													<button mat-menu-item (click)="commentsOptions('report', data.current, c)">{{translations?.common?.report}}</button>
+													<button mat-menu-item (click)="commentsOptions('addRemove', data.current, c)" *ngIf="c.user.id == sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 												</mat-menu>
 											</div>
 										</div>
@@ -165,7 +167,7 @@
 								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 							</div>
 							<div class="noData" *ngIf="data.current.noData">
-								{{translations.noComments}}
+								{{translations?.common?.noComments}}
 							</div>
 							<div class="loadMore" *ngIf="data.current.loadMoreData">
 								<button mat-fab (click)="defaultComments('more', data.current)" *ngIf="!data.current.loadingMoreData">
@@ -176,7 +178,7 @@
 						</div>
 
 						<div class="noData" *ngIf="!data.current.disabledComments">
-							{{translations.commentsDisabled}}
+							{{translations?.common?.commentsDisabled}}
 						</div>
 					</div>
 				</div>
@@ -185,7 +187,7 @@
 
 		<div class="container" *ngIf="notExists">
 			<div class="noData">
-				{{translations.photoNotExists}}
+				{{translations?.common?.photoNotExists}}
 			</div>
 		</div>
 	</div>

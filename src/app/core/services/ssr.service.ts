@@ -5,7 +5,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class SsrService {
 	public isBrowser: boolean;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object
+	) {
 		this.isBrowser = isPlatformBrowser(platformId);
     };
 };

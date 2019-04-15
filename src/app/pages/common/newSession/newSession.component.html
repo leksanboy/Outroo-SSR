@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{translations.addAccount}}
+			{{translations?.common?.addAccount}}
 		</div>
 	</div>
 
@@ -14,11 +14,11 @@
 		<div class="form">
 			<form [formGroup]="actionForm">
 				<mat-form-field>
-					<input matInput type="email" placeholder="{{translations.email}}" maxlength="100" formControlName="email">
+					<input matInput type="email" placeholder="{{translations?.settings?.email}}" maxlength="100" formControlName="email">
 				</mat-form-field>
 
 				<mat-form-field>
-					<input matInput type="password" placeholder="{{translations.password}}" maxlength="100" formControlName="password">
+					<input matInput type="password" placeholder="{{translations?.settings?.password}}" maxlength="100" formControlName="password">
 				</mat-form-field>
 			</form>
 		</div>
@@ -26,11 +26,11 @@
 
 	<div mat-dialog-actions class="buttons">
 		<button mat-raised-button type="button" (click)="close()">
-			{{translations.cancel}}
+			{{translations?.common?.cancel}}
 		</button>
 		<button mat-raised-button type="submit" (click)="submit($event)">
 			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-			{{translations.signIn}}
+			{{translations?.common?.signIn}}
 		</button>
 	</div>
 </div>

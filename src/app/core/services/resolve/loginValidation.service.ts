@@ -12,10 +12,7 @@ export class LoginValidationResolver implements Resolve<any> {
 	) { }
 
 	resolve(): Observable<any> {
-		// Get session data
 		let sessionData = this.userDataService.getSessionData();
-
-		// Return result
 		let result: any = sessionData ? false : true;
 
 		return result;

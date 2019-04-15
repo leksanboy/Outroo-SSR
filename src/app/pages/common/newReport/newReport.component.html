@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{translations.report}}
+			{{translations?.common?.report}}
 		</div>
 	</div>
 
@@ -14,7 +14,7 @@
 		<div class="form">
 			<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
 				<mat-form-field class="textarea">
-					<textarea matInput matTextareaAutosize placeholder="{{translations.reportDescription}}" #Question maxlength="1000" formControlName="content"></textarea>
+					<textarea matInput matTextareaAutosize placeholder="{{translations?.common?.reportDescription}}" #Question maxlength="1000" formControlName="content"></textarea>
 					<mat-hint align="end">{{Question.value.length}}/1000</mat-hint>
 				</mat-form-field>
 			</form>
@@ -23,11 +23,11 @@
 
 	<div mat-dialog-actions class="buttons">
 		<button mat-raised-button type="button" (click)="close()">
-			{{translations.cancel}}
+			{{translations?.common?.cancel}}
 		</button>
 		<button mat-raised-button type="submit" (click)="submit($event)">
 			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-			{{translations.submit}}
+			{{translations?.common?.submit}}
 		</button>
 	</div>
 </div>

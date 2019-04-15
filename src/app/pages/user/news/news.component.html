@@ -7,7 +7,7 @@
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
 								<i label="search-magnifying-glass"></i>
-								<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+								<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
 									<i label="search-clear"></i>
 								</button>
@@ -42,7 +42,7 @@
 							<div class="adContent" *ngIf="line.contentTypeAd">
 								<div class="box" [innerHtml]="line.content | safeHtml"></div>
 								<div class="disableAdBlock" *ngIf="hideAd">
-									{{translations.disableAdBlock}}
+									{{translations?.common?.disableAdBlock}}
 								</div>
 							</div>
 						</div>
@@ -53,7 +53,7 @@
 					</div>
 					
 					<div class="noData" *ngIf="dataDefault.noData">
-						{{translations.noData}}
+						{{translations?.news?.noData}}
 					</div>
 					
 					<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -66,7 +66,7 @@
 
 				<span *ngIf="data.active == 'search'">
 					<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
-						<mat-tab label="{{translations.top}}">
+						<mat-tab label="{{translations?.news?.top}}">
 							<ul class="people" *ngIf="dataTop.list">
 								<li *ngFor="let x of dataTop.list; let i=index;">
 									<div class="inner" *ngIf="x.type == 'user'">
@@ -76,7 +76,7 @@
 										<a class="text" routerLink="/{{x.user.username}}">
 											<span class="username">
 												{{x.user.username}}
-												<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+												<i *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 											</span>
 											<br>
 											<span class="name">{{x.user.name}}</span>
@@ -103,11 +103,11 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTop.noData">
-								{{translations.noSearchResults}}
+								{{translations?.common?.noSearchResults}}
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.people}}">
+						<mat-tab label="{{translations?.news?.people}}">
 							<ul class="people" *ngIf="dataPeople.list">
 								<li *ngFor="let x of dataPeople.list; let i=index;">
 									<div class="inner">
@@ -117,7 +117,7 @@
 										<a class="text" routerLink="/{{x.user.username}}">
 											<span class="username">
 												{{x.user.username}}
-												<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+												<i *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 											</span>
 											<br>
 											<span class="name">{{x.user.name}}</span>
@@ -131,7 +131,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPeople.noData">
-								{{translations.noSearchResults}}
+								{{translations?.news?.noSearchResults}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
@@ -142,7 +142,7 @@
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.posts}}">
+						<mat-tab label="{{translations?.news?.posts}}">
 							<div class="line" *ngFor="let line of dataPosts.list" [ngClass]="{'ad': line.contentTypeAd}">
 								<ul class="publications" *ngIf="!line.contentTypeAd">
 									<li mat-ripple *ngFor="let x of line">
@@ -160,7 +160,7 @@
 								<div class="adContent" *ngIf="line.contentTypeAd">
 									<div class="box" [innerHtml]="line.content | safeHtml"></div>
 									<div class="disableAdBlock" *ngIf="hideAd">
-										{{translations.disableAdBlock}}
+										{{translations?.common?.disableAdBlock}}
 									</div>
 								</div>
 							</div>
@@ -170,7 +170,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPosts.noData">
-								{{translations.noSearchResults}}
+								{{translations?.news?.noSearchResults}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPosts.loadMoreData">
@@ -181,7 +181,7 @@
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.tag}}">
+						<mat-tab label="{{translations?.news?.tag}}">
 							<ul class="people" *ngIf="dataTop.list">
 								<li *ngFor="let x of dataTag.list; let i=index;">
 									<div class="inner" (click)="setHashtag('set', x)">
@@ -204,7 +204,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTag.noData">
-								{{translations.noSearchResults}}
+								{{translations?.news?.noSearchResults}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataTag.loadMoreData">
@@ -242,7 +242,7 @@
 						<div class="adContent" *ngIf="line.contentTypeAd">
 							<div class="box" [innerHtml]="line.content | safeHtml"></div>
 							<div class="disableAdBlock" *ngIf="hideAd">
-								{{translations.disableAdBlock}}
+								{{translations?.common?.disableAdBlock}}
 							</div>
 						</div>
 					</div>
@@ -252,7 +252,7 @@
 					</div>
 
 					<div class="noData" *ngIf="dataHashtag.noData">
-						{{translations.noSearchResults}}
+						{{translations?.news?.noSearchResults}}
 					</div>
 					
 					<div class="loadMore" *ngIf="dataHashtag.loadMoreData">

@@ -6,17 +6,17 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.back}}</div>
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
 
-				<div class="pageTitle">{{translations.audios}}</div>
+				<div class="pageTitle">{{translations?.audios?.title}}</div>
 
 				<div class="searchBox">
 					<div class="box">
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
 								<i label="search-magnifying-glass"></i>
-								<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+								<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
 									<i label="search-clear"></i>
 								</button>
@@ -27,7 +27,7 @@
 
 				<span *ngIf="data.active == 'default'">
 					<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
-						<mat-tab label="{{translations.songs}}">
+						<mat-tab label="{{translations?.audios?.songs}}">
 							<div class="uploadFilesBox" *ngIf="userData.id == sessionData.current.id">
 								<div class="button">
 									<button mat-raised-button (click)="uploadFile.click()" [disabled]="!dataFiles.actions">
@@ -36,10 +36,10 @@
 										</div>
 										<div class="right">
 											<div class="top">
-												{{translations.chooseFiles}} {{dataFiles.list.length}}/9
+												{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/9
 											</div>
 											<div class="bottom">
-												{{translations.maxSizePerFileAudios}}
+												{{translations?.audios?.maxSizePerFile}}
 											</div>
 										</div>
 									</button>
@@ -54,23 +54,23 @@
 										</div>
 
 										<div class="status">
-											<div class="size" matTooltip="{{translations.fileSizeToBig}}" *ngIf="x.sizeBig">
+											<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
 												{{x.sizeBig}}
 											</div>
-											<button mat-icon-button matTooltip="{{translations.invalidFile}}" *ngIf="x.category=='unknown'">
+											<button mat-icon-button matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category=='unknown'">
 												<i label="error-outline"></i>
 											</button>
 											<div class="progress" *ngIf="x.status=='progress'">
 												<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
 												<div class="value">{{x.progress ? x.progress : 1}}%</div>
 											</div>
-											<button mat-icon-button matTooltip="{{translations.errorOnUpload}}" *ngIf="x.status=='error'">
+											<button mat-icon-button matTooltip="{{translations?.common?.errorOnUpload}}" *ngIf="x.status=='error'">
 												<i label="cloud-off"></i>
 											</button>
 											<button mat-icon-button *ngIf="x.status=='completed'">
 												<i label="check"></i>
 											</button>
-											<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations.remove}}" *ngIf="x.status=='clear'">
+											<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations?.common?.remove}}" *ngIf="x.status=='clear'">
 												<i label="clear"></i>
 											</button>
 										</div>
@@ -80,16 +80,16 @@
 								<div class="buttons" *ngIf="dataFiles.list.length > 0">
 									<div class="group" *ngIf="dataFiles.actions">
 										<button mat-raised-button (click)="uploadFiles(2, $event)">
-											{{translations.cancel}}
+											{{translations?.common?.cancel}}
 										</button>
 										<button mat-raised-button [disabled]="dataFiles.list.length > 9 || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
-											{{translations.upload}}
+											{{translations?.common?.upload}}
 										</button>
 									</div>
 
 									<button *ngIf="dataFiles.reload" mat-raised-button (click)="uploadFiles(5, $event)">
 										<i label="autorenew"></i>
-										{{translations.refresh}}
+										{{translations?.common?.refresh}}
 									</button>
 								</div>
 							</div>
@@ -104,7 +104,7 @@
 
 									<div class="panel">
 										<div class="title" (click)="createPlaylist()">
-											{{translations.createPlaylist}}
+											{{translations?.common?.createPlaylist}}
 										</div>
 									</div>
 								</div>
@@ -136,11 +136,12 @@
 												</button>
 											</span>
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptionsPlaylist('edit', x, i)" *ngIf="userData.id == sessionData.current.id">{{translations.edit}}</button>
-												<button mat-menu-item (click)="itemOptionsPlaylist('publicPrivate', x, i)" *ngIf="userData.id == sessionData.current.id">{{!x.private ? translations.doPrivate : translations.doPublic}}</button>
-												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveSession', x, i)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveUser', x, i)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
-												<button mat-menu-item (click)="itemOptionsPlaylist('report', x, i)">{{translations.report}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveUser', x, i)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('edit', x, i)" *ngIf="userData.id == sessionData.current.id">{{translations?.common?.edit}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('publicPrivate', x, i)" *ngIf="userData.id == sessionData.current.id">{{!x.private ? translations?.common?.doPrivate : translations?.common?.doPublic}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('report', x, i)">{{translations?.common?.report}}</button>
+												<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
+												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveSession', x, i)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -180,15 +181,16 @@
 											</span>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
-												<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null); x.addRemoveSession=!x.addRemoveSession;" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
+												<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
+												<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null); x.addRemoveSession=!x.addRemoveSession;" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 
 											<mat-menu #menuPlaylists="matMenu">
-												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+												<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
@@ -196,13 +198,13 @@
 
 											<mat-menu #menuShareSocial="matMenu">
 												<button mat-menu-item (click)="shareOn('message', x)">
-													{{translations.sendMessage}}
+													{{translations?.common?.sendMessage}}
 												</button>
 												<button mat-menu-item (click)="shareOn('newTab', x)">
-													{{translations.openInNewTab}}
+													{{translations?.common?.openInNewTab}}
 												</button>
 												<button mat-menu-item (click)="shareOn('copyLink', x)">
-													{{translations.copyLink}}
+													{{translations?.common?.copyLink}}
 												</button>
 											</mat-menu>
 										</div>
@@ -211,7 +213,7 @@
 									<div class="ad" *ngIf="x.contentTypeAd">
 										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 										<div class="disableAdBlock" *ngIf="hideAd">
-											{{translations.disableAdBlock}}
+											{{translations?.common?.disableAdBlock}}
 										</div>
 									</div>
 								</li>
@@ -222,7 +224,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								{{translations.noData}}
+								{{translations?.audios?.noData}}
 							</div>
 
 							<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -233,7 +235,7 @@
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.aroundYou}}">
+						<mat-tab label="{{translations?.audios?.aroundYou}}">
 							<ul class="tracks" *ngIf="dataAround.list">
 								<li *ngFor="let x of dataAround.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'around', default: !x.image}">
 									<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
@@ -260,14 +262,14 @@
 											</button>
 
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 											</mat-menu>
 
 											<mat-menu #menuPlaylists="matMenu">
-												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+												<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
@@ -275,13 +277,13 @@
 
 											<mat-menu #menuShareSocial="matMenu">
 												<button mat-menu-item (click)="shareOn('message', x)">
-													{{translations.sendMessage}}
+													{{translations?.common?.sendMessage}}
 												</button>
 												<button mat-menu-item (click)="shareOn('newTab', x)">
-													{{translations.openInNewTab}}
+													{{translations?.common?.openInNewTab}}
 												</button>
 												<button mat-menu-item (click)="shareOn('copyLink', x)">
-													{{translations.copyLink}}
+													{{translations?.common?.copyLink}}
 												</button>
 											</mat-menu>
 										</div>
@@ -290,7 +292,7 @@
 									<div class="ad" *ngIf="x.contentTypeAd">
 										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 										<div class="disableAdBlock" *ngIf="hideAd">
-											{{translations.disableAdBlock}}
+											{{translations?.common?.disableAdBlock}}
 										</div>
 									</div>
 								</li>
@@ -301,7 +303,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataAround.noData">
-								{{translations.noData}}
+								{{translations?.audios?.noData}}
 							</div>
 
 							<div class="loadMore" *ngIf="dataAround.loadMoreData">
@@ -312,7 +314,7 @@
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.top}}">
+						<mat-tab label="{{translations?.audios?.top}}">
 							<div class="playlists" *ngIf="dataTop.playlists && dataTop.list">
 								<div class="box" *ngFor="let x of dataTop.playlists; let i=index;">
 									<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
@@ -330,8 +332,8 @@
 												<i label="more" *ngIf="!x.addRemoveUserTop"></i>
 											</button>
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptionsPlaylist('report', x, i)">{{translations.report}}</button>
-												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveUserTop', x, i)">{{!x.addRemoveUserTop ? translations.add : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('report', x, i)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemOptionsPlaylist('addRemoveUserTop', x, i)">{{!x.addRemoveUserTop ? translations?.common?.add : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -364,14 +366,14 @@
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 											</mat-menu>
 											
 											<mat-menu #menuPlaylists="matMenu">
-												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+												<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
@@ -379,13 +381,13 @@
 
 											<mat-menu #menuShareSocial="matMenu">
 												<button mat-menu-item (click)="shareOn('message', x)">
-													{{translations.sendMessage}}
+													{{translations?.common?.sendMessage}}
 												</button>
 												<button mat-menu-item (click)="shareOn('newTab', x)">
-													{{translations.openInNewTab}}
+													{{translations?.common?.openInNewTab}}
 												</button>
 												<button mat-menu-item (click)="shareOn('copyLink', x)">
-													{{translations.copyLink}}
+													{{translations?.common?.copyLink}}
 												</button>
 											</mat-menu>
 										</div>
@@ -394,7 +396,7 @@
 									<div class="ad" *ngIf="x.contentTypeAd">
 										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 										<div class="disableAdBlock" *ngIf="hideAd">
-											{{translations.disableAdBlock}}
+											{{translations?.common?.disableAdBlock}}
 										</div>
 									</div>
 								</li>
@@ -405,7 +407,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTop.noData">
-								{{translations.noData}}
+								{{translations?.audios?.noData}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataTop.loadMoreData">
@@ -416,7 +418,7 @@
 							</div>
 						</mat-tab>
 
-						<mat-tab label="{{translations.fresh}}">
+						<mat-tab label="{{translations?.audios?.fresh}}">
 							<ul class="tracks" *ngIf="dataFresh.list">
 								<li *ngFor="let x of dataFresh.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh', default: !x.image}">
 									<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
@@ -443,14 +445,14 @@
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 											</mat-menu>
 											
 											<mat-menu #menuPlaylists="matMenu">
-												<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+												<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
 													<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 												</span>
@@ -458,13 +460,13 @@
 
 											<mat-menu #menuShareSocial="matMenu">
 												<button mat-menu-item (click)="shareOn('message', x)">
-													{{translations.sendMessage}}
+													{{translations?.common?.sendMessage}}
 												</button>
 												<button mat-menu-item (click)="shareOn('newTab', x)">
-													{{translations.openInNewTab}}
+													{{translations?.common?.openInNewTab}}
 												</button>
 												<button mat-menu-item (click)="shareOn('copyLink', x)">
-													{{translations.copyLink}}
+													{{translations?.common?.copyLink}}
 												</button>
 											</mat-menu>
 										</div>
@@ -473,7 +475,7 @@
 									<div class="ad" *ngIf="x.contentTypeAd">
 										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 										<div class="disableAdBlock" *ngIf="hideAd">
-											{{translations.disableAdBlock}}
+											{{translations?.common?.disableAdBlock}}
 										</div>
 									</div>
 								</li>
@@ -484,7 +486,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataFresh.noData">
-								{{translations.noData}}
+								{{translations?.audios?.noData}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataFresh.loadMoreData">
@@ -524,14 +526,14 @@
 									</button>
 									
 									<mat-menu #appMenu="matMenu">
-										<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-										<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
-										<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
+										<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+										<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+										<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 									</mat-menu>
 									
 									<mat-menu #menuPlaylists="matMenu">
-										<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+										<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 										<span *ngFor="let p of sessionData.current.playlists">
 											<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 										</span>
@@ -539,13 +541,13 @@
 
 									<mat-menu #menuShareSocial="matMenu">
 										<button mat-menu-item (click)="shareOn('message', x)">
-											{{translations.sendMessage}}
+											{{translations?.common?.sendMessage}}
 										</button>
 										<button mat-menu-item (click)="shareOn('newTab', x)">
-											{{translations.openInNewTab}}
+											{{translations?.common?.openInNewTab}}
 										</button>
 										<button mat-menu-item (click)="shareOn('copyLink', x)">
-											{{translations.copyLink}}
+											{{translations?.common?.copyLink}}
 										</button>
 									</mat-menu>
 								</div>
@@ -554,7 +556,7 @@
 							<div class="ad" *ngIf="x.contentTypeAd">
 								<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 								<div class="disableAdBlock" *ngIf="hideAd">
-									{{translations.disableAdBlock}}
+									{{translations?.common?.disableAdBlock}}
 								</div>
 							</div>
 						</li>
@@ -565,7 +567,7 @@
 					</div>
 
 					<div class="noData" *ngIf="dataSearch.noData">
-						{{translations.noSearchResults}}
+						{{translations?.common?.noSearchResults}}
 					</div>
 					
 					<div class="loadMore" *ngIf="dataSearch.loadMoreData">

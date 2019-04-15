@@ -1092,12 +1092,16 @@ body{
 
 		.validators{
 			box-sizing: border-box;
-			margin: -16px 44px 0;
+			margin: -15px 42px 0;
 			position: absolute;
 			height: 16px;
 			width: 16px;
 			padding: 0;
 			right: 0;
+
+			&.withButton{
+				margin: -15px 6px 0;
+			}
 
 			.load{
 				margin: 3px 2px 0;
@@ -1154,9 +1158,14 @@ body{
 		
 		.mat-menu-content{
 			button{
+				border-radius: 0 !important;
 				text-transform: inherit;
 				line-height: 40px;
 				height: 40px;
+			}
+
+			mat-divider{
+				border-top-color: transparentize($greyColor, .5);
 			}
 		}
 
@@ -1224,7 +1233,7 @@ body{
 		.text{
 			box-sizing: border-box;
 			padding: 18px 18px 6px;
-			color: $fontBlackColor;
+			color: currentColor;
 			text-align: center;
 			line-height: 15px;
 			font-size: 18px;
@@ -1237,6 +1246,7 @@ body{
 
 			button{
 				text-transform: uppercase;
+				color: currentColor;
 				text-align: center;
 				font-weight: bold;
 			}
@@ -2927,6 +2937,38 @@ body{
 									}
 								}
 							}
+
+							&.upload{
+								cursor: pointer;
+
+								.inner{
+									border: 1px solid $whiteColor;
+									justify-content: center;
+									box-sizing: border-box;
+									align-items: center;
+									border-radius: 5px;
+									display: flex;
+									height: 100%;
+									width: 100%;
+
+									.label{
+										text-align: center;
+										padding: 0 12px;
+										width: 100%;
+
+										.title{
+											text-transform: uppercase;
+											font-size: 13px;
+										}
+
+										.subtitle{
+											color: $greyColor;
+											padding: 2px 0 0;
+											font-size: 10px;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -2934,6 +2976,93 @@ body{
 				.audios{
 					width: 100%;
 					float: left;
+
+					ul{
+						li{
+							.inner{
+								.status{
+									justify-content: center;
+									box-sizing: border-box;
+									align-items: center;
+									margin: 3px 4px 0 0;
+									display: flex;
+									height: 36px;
+
+									.progress{
+										background-color: transparentize($greyColor, .75);
+										color: currentColor;
+										border-radius: 50%;
+										position: relative;
+										margin: 0 0 0 8px;
+										height: 36px;
+										width: 36px;
+										float: left;
+
+										mat-progress-spinner{
+											height: 36px !important;
+											width: 36px !important;
+
+											svg {
+												filter: drop-shadow($shadowText1);
+												height: 36px !important;
+												width: 36px !important;
+
+												circle{
+													stroke: currentColor !important;
+													stroke-width: 5px !important;
+												}
+											}
+										}
+
+										.value{
+											text-shadow: $shadowText1;
+											color: currentColor;
+											position: absolute;
+											text-align: center;
+											line-height: 36px;
+											font-size: 10px;
+											width: 100%;
+											top: 0;
+										}
+									}
+								}
+							}
+
+							&.upload{
+								padding: 12px 18px 6px;
+								cursor: pointer;
+
+								.inner{
+									border: 1px solid $whiteColor;
+									justify-content: center;
+									box-sizing: border-box;
+									align-items: center;
+									border-radius: 5px;
+									padding: 4px 0 6px;
+									display: flex;
+									height: 100%;
+									width: 100%;
+
+									.label{
+										text-align: center;
+										padding: 0 12px;
+										width: 100%;
+
+										.title{
+											text-transform: uppercase;
+											font-size: 13px;
+										}
+
+										.subtitle{
+											color: $greyColor;
+											padding: 2px 0 0;
+											font-size: 10px;
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 
 				.filesBox{
@@ -3402,8 +3531,9 @@ body{
 			/*cropper*/
 			.bodyCropper{
 				width: $modalWidth;
-				padding: 0 0 24px;
-				max-height: 500px;
+				min-height: 360px;
+				max-height: 600px;
+				padding: 0;
 
 				.image{
 					background-color: $whiteColor;
@@ -3420,26 +3550,6 @@ body{
 
 					.cropper-container{
 						margin: 0 auto;
-					}
-				}
-
-				.panel{
-					justify-content: center;
-					align-items: center;
-					margin: 6px auto;
-					max-width: 360px;
-					display: flex;
-					width: 100%;
-
-					button{
-						color: $whiteColor;
-						border-radius: 0;
-						background: none;
-						box-shadow: none;
-						min-width: 0;
-						width: 100%;
-						padding: 0;
-						margin: 0;
 					}
 				}
 			}
@@ -4173,7 +4283,7 @@ body{
 
 			/*common buttons*/
 			.buttons{
-				justify-content: flex-end;
+				justify-content: center;
 				box-sizing: border-box;
 				align-items: center;
 				padding: 0 18px;
@@ -4183,12 +4293,11 @@ body{
 				width: 100%;
 
 				button{
-					background: transparent;
+					background: transparentize($whiteColor, .9);
 					color: currentColor;
+					margin: 0 0 0 8px;
 					box-shadow: none;
-					// margin: 10px 4px;
-					// background: $whiteColor;
-					// color: $fontBlackColor;
+					padding: 0 12px;
 
 					mat-progress-spinner{
 						height: 16px !important;
@@ -4364,6 +4473,38 @@ body{
 						.mobile{
 							display: none;
 						}
+					}
+				}
+
+				&.newCropper{
+					height: inherit;
+
+					.panel{
+						justify-content: center;
+						align-items: center;
+						margin: 6px auto;
+						max-width: 360px;
+						display: flex;
+						width: 100%;
+
+						button{
+							color: $whiteColor;
+							border-radius: 0;
+							background: none;
+							box-shadow: none;
+							min-width: 0;
+							width: 100%;
+							padding: 0;
+							margin: 0;
+						}
+					}
+
+					.actions{
+						justify-content: center;
+						align-items: center;
+						display: flex;
+						height: 56px;
+						width: 100%;
 					}
 				}
 			}
@@ -5497,7 +5638,7 @@ body{
 
 						.user{
 							box-sizing: border-box;
-							padding: 12px 18px 6px;
+							padding: 32px 18px 6px;
 							position: relative;
 							margin: -80px 0 0;
 							display: flex;
@@ -7083,13 +7224,6 @@ body{
 		.notificationsBox{
 			.box{
 				background-color: #333 !important;
-			}
-		}
-
-		/*Close session box*/
-		.closeSessionBox{
-			.text{
-				color: $whiteColor;
 			}
 		}
 

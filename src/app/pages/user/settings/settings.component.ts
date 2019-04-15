@@ -34,6 +34,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public actionFormPasswordData: any;
 	public savePersonalDataLoading: boolean;
 	public savePasswordDataLoading: boolean;
+	public showPassword: boolean;
 	public validatorUsername: string;
 	public validatorOldPassword: string;
 	public validatorNewPassword: string;
@@ -104,7 +105,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-				this.titleService.setTitle(this.translations.settings);
+				this.titleService.setTitle(this.translations.settings.title);
 			});
 	}
 
@@ -128,10 +129,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(val => {
 				if (val) {
 					this.document.body.classList.add('darkTheme');
-					this.alertService.success(this.translations.darkThemeEnabled);
+					this.alertService.success(this.translations.common.darkThemeEnabled);
 				} else {
 					this.document.body.classList.remove('darkTheme');
-					this.alertService.success(this.translations.darkThemeDisabled);
+					this.alertService.success(this.translations.common.darkThemeDisabled);
 				}
 
 				let data = {
@@ -146,7 +147,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							this.sessionService.setDataTheme(this.sessionData);
 						}, 1000);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			});
 
@@ -154,9 +155,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.actionFormPersonalData.get('private').valueChanges
 			.subscribe(val => {
 				if (val)
-					this.alertService.success(this.translations.privateAccountEnabled);
+					this.alertService.success(this.translations.common.privateEnabled);
 				else
-					this.alertService.success(this.translations.privateAccountDisabled);
+					this.alertService.success(this.translations.common.privateDisabled);
 							
 				let data = {
 					id: this.sessionData.current.id,
@@ -170,7 +171,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							this.sessionService.setData(this.sessionData);
 						}, 1000);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			});
 
@@ -270,7 +271,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	openAvatar(type, action, event) {
 		switch (type) {
 			case "avatar":
-				if (action == 'upload') {
+				if (action === 'upload') {
 					let file = event.target.files[0];
 
 					if (/^image\/\w+$/.test(file.type)) {
@@ -294,19 +295,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							if (res) {
 								this.sessionData = res;
 								this.sessionService.setData(this.sessionData);
-								this.alertService.success(this.translations.avatarChanged);
+								this.alertService.success(this.translations.common.savedSuccessfully);
 							}
 						});
 					} else {
-						this.alertService.error(this.translations.selectedFileIsNotImage);
+						this.alertService.error(this.translations.common.invalidFile);
 					}
-				} else if (type == 'remove') {
+				} else if (action === 'remove') {
 					this.sessionData.current.newAvatar = '';
 					this.userDataService.updateAvatar(this.sessionData.current)
 						.subscribe(res => {
 							this.sessionData = res;
 							this.sessionService.setData(this.sessionData);
-							this.alertService.success(this.translations.avatarRemoved);
+							this.alertService.success(this.translations.common.savedSuccessfully);
 						});
 				}
 				break;
@@ -335,19 +336,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							if (res) {
 								this.sessionData = res;
 								this.sessionService.setData(this.sessionData);
-								this.alertService.success(this.translations.backgroundChanged);
+								this.alertService.success(this.translations.common.savedSuccessfully);
 							}
 						});
 					} else {
-						this.alertService.error(this.translations.selectedFileIsNotImage);
+						this.alertService.error(this.translations.common.invalidFile);
 					}
-				} else if (type == 'remove') {
+				} else if (action == 'remove') {
 					this.sessionData.current.newBackground = '';
 					this.userDataService.updateBackground(this.sessionData.current)
 						.subscribe(res => {
 							this.sessionData = this.userDataService.getSessionData();
 							this.sessionService.setData(this.sessionData);
-							this.alertService.success(this.translations.backgroundRemoved);
+							this.alertService.success(this.translations.common.savedSuccessfully);
 						});
 				}
 				break;
@@ -389,7 +390,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			event = event.trim();
 
 			if (event.length == 0)
-				this.sessionData.current.about = '<div class="placeholder">' + this.translations.aboutMeDescription + '</div>';
+				this.sessionData.current.about = '<div class="placeholder">' + this.translations.settings.aboutPlaceholder + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal,
@@ -445,12 +446,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							this.translations = data;
 
 							// Alert Message
-							this.alertService.success(data.profileSaved);
+							this.alertService.success(this.translations.common.savedSuccessfully);
 						});
 				}, 1000);
 			}, error => {
 				this.savePersonalDataLoading = false;
-				this.alertService.error(this.translations.anErrorHasOcurred);
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
 
@@ -473,18 +474,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					setTimeout(() => {
 						this.validatorOldPassword = 'done';
 						this.savePasswordDataLoading = false;
-						this.alertService.success(this.translations.passwordChanged);
+						this.alertService.success(this.translations.common.savedSuccessfully);
 					}, 1000);
 				}, error => {
 					this.validatorOldPassword = 'bad';
 					this.savePasswordDataLoading = false;
-					this.alertService.error(this.translations.oldPasswordIncorrect);
+					this.alertService.error(this.translations.settings.oldPasswordIncorrect);
 				});
 		} else {
 			this.savePasswordDataLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.completeAllFields);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 
 	}

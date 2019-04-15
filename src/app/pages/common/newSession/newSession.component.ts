@@ -56,14 +56,14 @@ export class NewSessionComponent implements OnInit {
 						this.saveLoading = false;
 					}, error => {
 						this.saveLoading = false;
-						this.alertService.error(this.translations.emailOrPasswordIncorrect);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			} else {
-				this.alertService.error(this.translations.emailAlreadySigned);
+				this.alertService.error(this.translations.common.accountInUse);
 			}
 		} else {
 			// show error message
-			this.alertService.error(this.translations.completeAllFields);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 

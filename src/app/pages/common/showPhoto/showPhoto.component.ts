@@ -260,7 +260,7 @@ export class ShowPhotoComponent implements OnInit {
 					}
 				}, error => {
 					item.loadingData = false;
-					this.alertService.success(this.translations.anErrorHasOcurred);
+					this.alertService.success(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more') {
 			item.loadingMoreData = true;
@@ -284,7 +284,7 @@ export class ShowPhotoComponent implements OnInit {
 					}, 600);
 				}, error => {
 					item.loadingData = false;
-					this.alertService.success(this.translations.anErrorHasOcurred);
+					this.alertService.success(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -352,7 +352,7 @@ export class ShowPhotoComponent implements OnInit {
 			}
 		} else if (type == 'checkPlaceholder') {
 			if (item.newCommentData.original.length == 0)
-				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.whatsHappening.one + '</div>';
+				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
@@ -383,7 +383,7 @@ export class ShowPhotoComponent implements OnInit {
 			return newData;
 		} else if (type == 'create') {
 			if (item.newCommentData.original.trim().length == 0) {
-				this.alertService.success(this.translations.commentIsTooShort);
+				this.alertService.success(this.translations.common.isTooShort);
 			} else {
 				let formatedData = this.newComment('transformBeforeSend', null, item);
 				let dataCreate = {
@@ -404,7 +404,7 @@ export class ShowPhotoComponent implements OnInit {
 
 						this.newComment('clear', null, item);
 					}, error => {
-						this.alertService.success(this.translations.anErrorHasOcurred);
+						this.alertService.success(this.translations.common.anErrorHasOcurred);
 					});
 			}
 		}
@@ -453,7 +453,7 @@ export class ShowPhotoComponent implements OnInit {
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		} else {
-			this.alertService.error(this.translations.tryToUseAnotherBrowser);
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
 		}
 
 		return caretOffset;

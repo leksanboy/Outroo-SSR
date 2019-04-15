@@ -198,7 +198,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-				this.titleService.setTitle(this.translations.news);
+				this.titleService.setTitle(this.translations.news.title);
 			});
 	}
 
@@ -324,7 +324,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -359,7 +359,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -394,7 +394,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataTop.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -437,7 +437,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataPeople.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataPeople.noMore && !this.dataPeople.loadingMoreData) {
 			this.dataPeople.loadingMoreData = true;
@@ -466,7 +466,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataPeople.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -517,7 +517,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataPosts.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataPosts.noMore && !this.dataPosts.loadingMoreData) {
 			this.dataPosts.loadingMoreData = true;
@@ -552,7 +552,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataPosts.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -598,7 +598,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataTag.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataTag.noMore && !this.dataTag.loadingMoreData) {
 			this.dataTag.loadingMoreData = true;
@@ -627,7 +627,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataTag.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -687,7 +687,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataHashtag.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataHashtag.noMore && !this.dataHashtag.loadingMoreData) {
 			this.dataHashtag.loadingMoreData = true;
@@ -722,7 +722,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataHashtag.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}

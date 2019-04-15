@@ -45,14 +45,14 @@
 										</div>
 										
 										<div class="container">
-											<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations.startFollowingYou}}</span>
-											<span *ngIf="x.type == 'acceptRequest'">{{translations.acceptFollowingRequest}}</span>
+											<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations?.notifications?.startFollowingYou}}</span>
+											<span *ngIf="x.type == 'acceptRequest'">{{translations?.notifications?.acceptFollowingRequest}}</span>
 										</div>
 									</div>
 
 									<div class="operations">
 										<button mat-button (click)="showNotificationsBoxWeb()" routerLink="/{{x.user.username}}">
-											{{translations.visit}}
+											{{translations?.common?.visit}}
 										</button>
 									</div>
 								</div>
@@ -66,18 +66,18 @@
 
 										<div class="container" (click)="showNotification(x)">
 											<span *ngIf="x.type == 'comment'">
-												{{translations.commentedYourPhoto}}
+												{{translations?.notifications?.commentedYourPhoto}}
 												<br>
 												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment"></span>
 											</span>
 											
-											<span *ngIf="x.type == 'like'">{{translations.likedYourPhoto}}</span>
+											<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPhoto}}</span>
 
-											<span *ngIf="x.type == 'mention'">{{translations.mentionOnPhoto}}</span>
+											<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPhoto}}</span>
 
-											<span *ngIf="x.type == 'mentionComment'">{{translations.mentionOnCommentOnPhoto}}</span>
+											<span *ngIf="x.type == 'mentionComment'">{{translations?.notifications?.mentionOnCommentOnPhoto}}</span>
 
-											<span *ngIf="x.type == 'share'">{{translations.sharePhoto}}</span>
+											<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPhoto}}</span>
 										</div>
 									</div>
 
@@ -97,18 +97,18 @@
 
 										<div class="container" (click)="showNotification(x)">
 											<span *ngIf="x.type == 'comment'">
-												{{translations.commentedYourPublication}}
+												{{translations?.notifications?.commentedYourPublication}}
 												<br>
 												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment"></span>
 											</span>
 											
-											<span *ngIf="x.type == 'like'">{{translations.likedYourPublication}}</span>
+											<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPublication}}</span>
 
-											<span *ngIf="x.type == 'mention'">{{translations.mentionOnPublication}}</span>
+											<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPublication}}</span>
 
-											<span *ngIf="x.type == 'mentionComment'">{{translations.mentionOnCommentOnPublication}}</span>
+											<span *ngIf="x.type == 'mentionComment'">{{translations?.notifications?.mentionOnCommentOnPublication}}</span>
 
-											<span *ngIf="x.type == 'share'">{{translations.sharePublication}}</span>
+											<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharePublication}}</span>
 
 											<span *ngIf="!x.contentData.media">
 												<br>
@@ -131,11 +131,11 @@
 						</div>
 
 						<div class="noData" *ngIf="!dataNotifications.list && !dataNotifications.loadingData">
-							{{translations.noData}}
+							{{translations?.notifications?.noData}}
 						</div>
 						
 						<div class="forward" (click)="showNotificationsBoxWeb()" routerLink="/notifications">
-							{{translations.goToNotifications}}
+							{{translations?.notifications?.goToNotifications}}
 							<button mat-icon-button>
 								<i label="forward"></i>
 							</button>
@@ -155,7 +155,7 @@
 						<div class="data">
 							<div class="name">
 								{{sessionData.current.name}}
-								<i *ngIf="sessionData.current.official" matTooltip="{{translations.verifiedAccount}}"></i>
+								<i *ngIf="sessionData.current.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</div>
 							<div class="user">
 								@{{sessionData.current.username}}
@@ -167,35 +167,35 @@
 						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
 							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/{{sessionData.current.username}}">
 								<i label="person"></i>
-								<div class="text">{{translations.myAccount}}</div>
+								<div class="text">{{translations?.common?.myAccount}}</div>
 							</div>
 
 							<div class="item" mat-ripple (click)="showChangeSession=!showChangeSession">
 								<i label="group"></i>
-								<div class="text">{{translations.changeAccount}}</div>
+								<div class="text">{{translations?.common?.changeAccount}}</div>
 								<i label="keyboard-arrow-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="showChangeLanguage=!showChangeLanguage">
 								<i label="language"></i>
-								<div class="text">{{translations.changeLanguage}}</div>
+								<div class="text">{{translations?.common?.changeLanguage}}</div>
 								<i label="keyboard-arrow-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="changeTheme()">
 								<i label="moon"></i>
-								<div class="text">{{translations.darkTheme}}</div>
+								<div class="text">{{translations?.common?.darkTheme}}</div>
 								<mat-slide-toggle [checked]="sessionData.current.theme"></mat-slide-toggle>
 							</div>
 
 							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/settings">
 								<i label="settings"></i>
-								<div class="text">{{translations.settings}}</div>
+								<div class="text">{{translations?.settings?.title}}</div>
 							</div>
 
 							<div class="item" mat-ripple (click)="showCloseSession=!showCloseSession">
 								<i label="exit"></i>
-								<div class="text">{{translations.logOut}}</div>
+								<div class="text">{{translations?.common?.logOut}}</div>
 							</div>
 						</div>
 
@@ -204,7 +204,7 @@
 								<button mat-icon-button>
 									<i label="back"></i>
 								</button>
-								{{translations.changeAccount}}
+								{{translations?.common?.changeAccount}}
 							</div>
 
 							<div class="switchAccounts">
@@ -217,11 +217,11 @@
 									
 									<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 										<div class="text">
-											{{translations.leaveSite}}
+											{{translations?.common?.leaveSite}}
 										</div>
 										<div class="buttons">
-											<button mat-menu-item>{{translations.no}}</button>
-											<button mat-menu-item (click)="closeSession(x)">{{translations.yes}}</button>
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
 								</div>
@@ -230,7 +230,7 @@
 									<div class="add" mat-list-avatar>
 										<i label="add"></i>
 									</div>
-									<div class="text">{{translations.addAccount}}</div>
+									<div class="text">{{translations?.common?.addAccount}}</div>
 								</div>
 							</div>
 						</div>
@@ -240,7 +240,7 @@
 								<button mat-icon-button>
 									<i label="back"></i>
 								</button>
-								{{translations.changeLanguage}}
+								{{translations?.common?.changeLanguage}}
 							</div>
 
 							<div class="changeLanguages">
@@ -257,19 +257,19 @@
 								<button mat-icon-button>
 									<i label="back"></i>
 								</button>
-								{{translations.logOut}}
+								{{translations?.common?.logOut}}
 							</div>
 
 							<div class="closeSessionBox">
 								<div class="text">
-									{{translations.leaveSite}}
+									{{translations?.common?.leaveSite}}
 								</div>
 								<div class="buttons">
 									<button mat-menu-item (click)="showCloseSession=false">
-										{{translations.no}}
+										{{translations?.common?.no}}
 									</button>
 									<button mat-menu-item (click)="showCloseSession=false; closeSession(sessionData.current);">
-										{{translations.yes}}
+										{{translations?.common?.yes}}
 									</button>
 								</div>
 							</div>
@@ -307,11 +307,11 @@
 							<i label="exit" [matMenuTriggerFor]="signOut"></i>
 							<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 								<div class="text">
-									{{translations.leaveSite}}
+									{{translations?.common?.leaveSite}}
 								</div>
 								<div class="buttons">
-									<button mat-menu-item>{{translations.no}}</button>
-									<button mat-menu-item (click)="closeSession(x)">{{translations.yes}}</button>
+									<button mat-menu-item>{{translations?.common?.no}}</button>
+									<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
 								</div>
 							</mat-menu>
 						</div>
@@ -320,45 +320,45 @@
 							<div class="add" mat-list-avatar>
 								<i label="add"></i>
 							</div>
-							<div class="text">{{translations.addAccount}}</div>
+							<div class="text">{{translations?.common?.addAccount}}</div>
 						</div>
 					</span>
 
 					<span *ngIf="!showChangeSessionOnMenu">
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 							<i label="person"></i>
-							<div class="text">{{translations.mine}}</div>
+							<div class="text">{{translations?.main?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
 							<i label="home"></i>
-							<div class="text">{{translations.home}}</div>
+							<div class="text">{{translations?.feed?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
 							<i label="search"></i>
-							<div class="text">{{translations.news}}</div>
+							<div class="text">{{translations?.news?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/photos" routerLinkActive="selected">
 							<i label="photo-camera"></i>
-							<div class="text">{{translations.photos}}</div>
+							<div class="text">{{translations?.photos?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/audios" routerLinkActive="selected">
 							<i label="music"></i>
-							<div class="text">{{translations.audios}}</div>
+							<div class="text">{{translations?.audios?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
 							<i label="bookmark"></i>
-							<div class="text">{{translations.bookmarks}}</div>
+							<div class="text">{{translations?.bookmarks?.title}}</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
 							<i label="notifications"></i>
-							<div class="text">{{translations.notifications}}</div>
+							<div class="text">{{translations?.notifications?.title}}</div>
 							<div class="pending" *ngIf="sessionData.current.countPendingNotifications">
 								{{sessionData.current.countPendingNotifications}}
 							</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
 							<i label="settings"></i>
-							<div class="text">{{translations.settings}}</div>
+							<div class="text">{{translations?.settings?.title}}</div>
 						</div>
 					</span>
 				</div>
@@ -374,11 +374,11 @@
 				<div class="right">
 					<div class="signingPanel">
 						<a mat-button href="/signup">
-							{{translations.signUp}}
+							{{translations?.common?.signUp}}
 						</a>
 						|
 						<a mat-button href="/signin">
-							{{translations.signIn}}
+							{{translations?.common?.signIn}}
 						</a>
 					</div>
 				</div>
@@ -546,13 +546,14 @@
 									</button>
 								</span>
 								<mat-menu #appMenu="matMenu">
-									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-									<button mat-menu-item (click)="itemAudiosOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations.add : translations.remove}}</button>
-									<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
-									<button mat-menu-item (click)="itemAudiosOptions('report', x, null)">{{translations.report}}</button>
+									<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+									<button mat-menu-item (click)="itemAudiosOptions('report', x, null)">{{translations?.common?.report}}</button>
+									<mat-divider *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'"></mat-divider>
+									<button mat-menu-item (click)="itemAudiosOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 								</mat-menu>
 								<mat-menu #menuPlaylists="matMenu">
-									<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations.createPlaylist}}</button>
+									<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 									<span *ngFor="let p of sessionData.current.playlists">
 										<button mat-menu-item *ngIf="!p.removed" (click)="itemAudiosOptions('playlist', x, p)">{{p.title}}</button>
 									</span>
@@ -563,7 +564,7 @@
 			    </ul>
 
 			    <div class="noData" *ngIf="audioPlayerData.noData">
-			    	{{translations.noData}}
+			    	{{translations?.audios?.noData}}
 			    </div>
 			</div>
 		</div>
@@ -579,7 +580,7 @@
 		<div class="inner">
 			<div class="panel">
 				<div class="title">
-					{{translations.registerOnSite}}
+					{{translations?.main?.registerText?.one}}
 				</div>
 				<button mat-icon-button class="close" (click)="signingBox=!signingBox">
 					<i label="close"></i>
@@ -588,14 +589,14 @@
 
 			<div class="box">
 				<div class="text">
-					{{translations.registerOnText}}
+					{{translations?.main?.registerText?.two}}
 				</div>
 				<div class="buttons">
 					<button mat-button type="button" routerLink="/signup">
-						{{translations.signUp}}
+						{{translations?.common?.signUp}}
 					</button>
 					<button mat-button type="button" routerLink="/signin">
-						{{translations.signIn}}
+						{{translations?.common?.signIn}}
 					</button>
 				</div>
 			</div>

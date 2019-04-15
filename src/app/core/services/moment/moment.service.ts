@@ -8,7 +8,7 @@ export class MomentService {
 
 	setData(data: any) {
 		// Set by default if not exists
-		data = data ? data : 1;
+		data = data || 1;
 
 		if (data == 1) {
 			// English
@@ -52,6 +52,28 @@ export class MomentService {
 					MM: '%d\M',
 					y: '%d\Y',
 					yy: '%d\Y'
+				}
+			});
+		} else if (data == 3) {
+			// Russian
+			moment.locale('ru');
+
+			moment.updateLocale('ru', {
+				relativeTime : {
+					future: 'через %s',
+					past: '%s',
+					s: '%d\с',
+					ss: '%d\с',
+					m: '%d\м',
+					mm: '%d\м',
+					h: '%d\ч',
+					hh: '%d\ч',
+					d: '%d\Д',
+					dd: '%d\Д',
+					M: '%d\М',
+					MM: '%d\М',
+					y: '%d\Г',
+					yy: '%d\Г'
 				}
 			});
 		}

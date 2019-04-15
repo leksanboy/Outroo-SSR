@@ -51,16 +51,16 @@ export class NewReportComponent implements OnInit {
 				.subscribe(res => {
 					this.dialogRef.close(res);
 					this.saveLoading = false;
-					this.alertService.success(this.translations.sentSuccessfully);
+					this.alertService.success(this.translations.common.sentSuccessfully);
 				}, error => {
 					this.saveLoading = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else {
 			this.saveLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.completeAllFields);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 

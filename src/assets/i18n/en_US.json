@@ -1,0 +1,324 @@
+{
+	"audios": {
+		"title": "Songs",
+		"noData": "No songs",
+		"songs": "Songs",
+		"aroundYou": "Around me",
+		"top": "Top",
+		"fresh": "Fresh",
+		"chooseFiles": "Choose songs",
+		"maxSizePerFile": "Audio files · Max size per file 20 Mb",
+		"play": "Play",
+		"pause": "Pause",
+		"playlist": "Playlist",
+		"removeCover": "Remove cover",
+		"addCoverToPlaylist": "Add cover to playlist (can be empty)",
+		"createPlaylist": "Create playlist",
+		"uploadOrSearch": "Upload or search some songs"
+	},
+	"bookmarks": {
+		"title": "Bookmarks",
+		"noData": "No bookmarks",
+		"addedTo": "Added to Bookmarks"
+	},
+	"followers": {
+		"title": "Followers",
+		"noData": "No followers"
+	},
+	"following": {
+		"title": "Following",
+		"noData": "No following"
+	},
+	"main": {
+		"title": "Profile",
+		"noData": "No publications",
+		"newPublication": "Create new publication",
+		"newPublicationSubtitle": "Songs / Gif / Photos / Videos",
+		"registerText": {
+			"one": "Register on Outroo",
+			"two": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates."
+		},
+		"whatsHappening": {
+			"one": "What is happening?",
+			"two": "@mention your friends and add #hashtags"
+		},
+		"addSomeContent": "Add something",
+		"publishing": "Publishing"
+	},
+	"news": {
+		"title": "News",
+		"top": "Top",
+		"people": "People",
+		"tag": "Hashtags",
+		"fresh": "Fresh",
+		"posts": "Posts",
+		"noData": "No news"
+	},
+	"feed": {
+		"title": "Home"
+	},
+	"notifications": {
+		"title": "Notifications",
+		"startFollowingYou": "Starts following you",
+		"acceptFollowingRequest": "Accepted your request",
+		"stopFollowing": "Stop following",
+		"accept": "Accept",
+		"decline": "Decline",
+		"noData": "No notifications",
+		"commentedYourPublication": "Commented your publication",
+		"likedYourPublication": "Liked your publication",
+		"mentionOnPublication": "Mention you on publication",
+		"mentionOnCommentOnPublication": "Mention you on comment on publication",
+		"sharedPublication": "Shared a publication with you",
+		"likedYourPhoto": "Liked your photo",
+		"commentedYourPhoto": "Commented your photo",
+		"mentionOnPhoto": "Mention you on photo",
+		"mentionOnCommentOnPhoto": "Mention you on comment on photo",
+		"sharedPhoto": "Shared a photo",
+		"goToNotifications": "Go to Notifications"
+	},
+	"photos": {
+		"title": "Photos",
+		"noData": "No photos",
+		"chooseFiles": "Choose photos",
+		"maxSizePerFile": "Photos & Videos · Max size per file 20 Mb"
+	},
+	"post": {
+		"title": "Publication",
+		"stats": "Stats",
+		"noData": "The publication does not exist or has been removed."
+	},
+	"settings": {
+		"title": "Settings",
+		"username": "Username",
+		"name": "Name",
+		"language": "Language",
+		"uploadPhoto": "Upload photo",
+		"removePhoto": "Remove photo",
+		"about": "Biography",
+		"aboutPlaceholder": "Biography description",
+		"oldPassword": "Old password",
+		"newPassword": "New password",
+		"confirmNewPassword": "Confirm new password",
+		"editProfile": "Edit profile",
+		"changePassword": "Change password",
+		"accounts": "Accounts",
+		"avatar": "Avatar",
+		"changeAvatar": "Change avatar",
+		"email": "Email",
+		"password": "Password",
+		"oldPasswordIncorrect": "Old password is incorrect"
+	},
+	"song": {
+		"title": "Song",
+		"stats": "Stats",
+		"noData": "The song does not exist or has been removed."
+	},
+	"about":{
+		"title": "About us",
+		"description": "Outroo is the best.",
+		"companyText": {
+			"one": "Company",
+			"two": "Outroo is a community where people can share their publications with their friends.",
+			"three": "You can do an amazing publications with songs, photos and videos."
+		},
+		"brandText": {
+			"one": "Brand",
+			"two": "Easy way for you to use our brand.",
+			"three": "Download Asset Pack.",
+			"four": "Download"
+		}
+	},
+	"confirmEmail":{
+		"title": "Confirm email",
+		"description": "Confirm your email to access the site.",
+		"defaultText": {
+			"one": "Verify account",
+			"two": "Verifying your account..."
+		},
+		"confirmText": {
+			"one": "Congratulations",
+			"two": "The account has been verified successfully,",
+			"three": "now you can access and enjoy your account.",
+			"four": "Go to mine profile"
+		},
+		"errorText": {
+			"one": "Error",
+			"two": "This url is not available or has expired."
+		}
+	},
+	"error":{
+		"title": "Error 404",
+		"description": "An error has occurred, Page not found, Try to write the correct url direction."
+	},
+	"forgotPassword":{
+		"title": "Forgot password | Recover account access",
+		"description": "If you forgot your password acceess here and enter your email.",
+		"email": "Email",
+		"confirmText": {
+			"one": "Check your email",
+			"two": "We've sent an email to",
+			"three": "Click the link in the email to reset your password.",
+			"four": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+		}
+	},
+	"logOut":{
+		"title": "Log out",
+		"description": "See you soon.",
+		"text": {
+			"one": "See you soon.",
+			"two": "Go login"
+		}
+	},
+	"privacy":{
+		"title": "Privacy",
+		"description": "Terms conditions and privacy policy of the site."
+	},
+	"resetPassword":{
+		"title": "Reset password",
+		"description": "Enter your new passord.",
+		"newPassword": "New password",
+		"confirmNewPassword": "Confirm new password",
+		"confirmText": {
+			"one": "Congratulations",
+			"two": "The password has been updated successfully,",
+			"three": "now you can use your new password",
+			"four": "We have sent a copy to",
+			"five": "Go to mine profile"
+		},
+		"errorText": {
+			"one": "Error",
+			"two": "This url is not available or has expired."
+		}
+	},
+	"signIn":{
+		"title": "Sign In | Login",
+		"description": "Enter your email and password to access.",
+		"email": "Email",
+		"password": "Password"
+	},
+	"signUp":{
+		"title": "Sign Up | Create an account",
+		"description": "Create an account to be part of our family.",
+		"username": "Username",
+		"name": "Name",
+		"email": "Email",
+		"password": "Password",
+		"privacyText": {
+			"one": "By signing up, you agree with the stipulations of our",
+			"two": "Policy privacy"
+		},
+		"confirmText": {
+			"one": "Welcome!",
+			"two": "We've sent an email to",
+			"three": "Thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.",
+			"four": "In short, you will receive a confirmation email to activate your account.",
+			"five": "Go to mine profile"
+		}
+	},
+	"support":{
+		"title": "Support",
+		"description": "We can help you with anything.",
+		"email": "Email",
+		"typeHere": "Type here, describe the problem",
+		"defaultText": {
+			"one": "We can help you with your questions.",
+			"two": "If need to send a report of spam or similar things, we will take the appropriate measures.",
+			"three": "Complete the form and send your question, we answer you as soon as posible."
+		},
+		"confirmText": {
+			"one": "Check your email",
+			"two": "We've sent an email to",
+			"three": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+		}
+	},
+	"home":{
+		"title": "Outroo",
+		"description": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates.",
+		"dontHaveAnAccount": "Don't have an account?"
+	},
+	"common": {
+		"submit": "Submit",
+		"close": "Close",
+		"yes": "Yes",
+		"no": "No",
+		"back": "Back",
+		"signIn": "Sign in",
+		"signUp": "Sign up",
+		"forgotPassword": "Forgot password?",
+		"sendMessage": "Send message",
+		"copyLink": "Copy link",
+		"createPlaylist": "Create playlist",
+		"ok": "OK",
+		"add": "Add",
+		"remove": "Remove",
+		"report": "Report",
+		"reportDescription": "Describe what the problem is.",
+		"share": "Share",
+		"edit": "Edit",
+		"addToPlaylist": "Add to playlist",
+		"cancel": "Cancel",
+		"darkTheme": "Dark theme",
+		"refresh": "Refresh",
+		"upload": "Upload",
+		"errorOnUpload": "Error on upload",
+		"invalidFile": "Invalid file",
+		"fileSizeToBig": "File size is to big",
+		"verifiedAccount": "Verified account",
+		"restore": "Restore",
+		"search": "Search",
+		"noSearchResults": "No search results",
+		"disableComments": "Disable comments",
+		"enableComments": "Enable comments",
+		"likedThis": "liked this",
+		"andMoreLikedThis": "and more liked this",
+		"comments": "Comments",
+		"noComments": "No comments",
+		"commentsDisabled": "Comments are disabled",
+		"disableAdBlock": "Disable AdBlock on this page",
+		"privateAccount": "Private account",
+		"createAnAccountToSeeContent": "Create an account to see this content",
+		"createAnAccountToListenSong": "Create an account to listen the song",
+		"doPublic": "Do public",
+		"doPrivate": "Do private",
+		"openInNewTab": "Open in a new tab",
+		"stopFollowing": "Stop following",
+		"following": "Following",
+		"follow": "Follow",
+		"pending": "Pending",
+		"cancelRequest": "Cancel request",
+		"likes": "Likes",
+		"noLikes": "No likes",
+		"noData": "No data",
+		"next": "Next",
+		"visit": "Visit",
+		"myAccount": "My account",
+		"changeAccount": "Switch account",
+		"changeLanguage": "Change language",
+		"logOut": "Log out",
+		"leaveSite": "Are you sure to leave the site?",
+		"addAccount": "Add account",
+		"setAnotherAccount": "Set another account",
+		"hasBeenAdded": "Has been added",
+		"hasBeenAddedTo": "has been added to",
+		"hasBeenRemoved": "Has been removed",
+		"anErrorHasOcurred": "An error has occurred",
+		"createdSuccessfully": "Created successfully",
+		"savedSuccessfully": "Saved successfully",
+		"accountChangedTo": "You have changed the account to",
+		"darkThemeEnabled": "Dark theme enabled",
+		"darkThemeDisabled": "Dark theme disabled",
+		"privateEnabled": "Private account enabled",
+		"privateDisabled": "Private account disabled",
+		"languageChanged": "The language has changed",
+		"copied": "Copied",
+		"completeAllFields": "Complete all fields",
+		"tryToUseAnotherBrowser": "Try to use another browser",
+		"invalidUrl": "The URL in not valid",
+		"sentSuccessfully": "Sent successfully",
+		"accountInUse": "Account is in use",
+		"emailOrPasswordIncorrect": "Email or password is incorrect",
+		"isTooShort": "Write something",
+		"commentPlaceholder": "Wrire here..."
+	}
+}

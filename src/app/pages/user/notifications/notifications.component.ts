@@ -146,7 +146,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-				this.titleService.setTitle(this.translations.notifications);
+				this.titleService.setTitle(this.translations.notifications.title);
 			});
 	}
 
@@ -192,7 +192,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.dataNotifications.noMore = true;
 				}, error => {
 					this.dataNotifications.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataNotifications.noMore && !this.dataNotifications.loadingMoreData) {
 			this.dataNotifications.loadingMoreData = true;
@@ -227,7 +227,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataNotifications.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -356,7 +356,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.dataChats.noMore = true;
 				}, error => {
 					this.dataChats.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataChats.noMore && !this.dataChats.loadingMoreData) {
 			this.dataChats.loadingMoreData = true;
@@ -384,7 +384,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataChats.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}

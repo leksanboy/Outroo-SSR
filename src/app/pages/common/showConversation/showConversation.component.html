@@ -7,11 +7,11 @@
 				</button>
 			</div>
 			<div class="text">
-				{{translations.newMessage}}
+				{{translations?.common?.newMessage}}
 			</div>
 			<div class="actions">
 				<button mat-raised-button type="submit" [disabled]="data.users.length == 0" (click)="initNewChat()">
-					{{translations.next}}
+					{{translations?.common?.next}}
 				</button>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 											<i label="clear"></i>
 										</mat-chip>
 
-										<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+										<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 									</mat-chip-list>
 								</div>
 
@@ -56,7 +56,7 @@
 								<div class="text">
 									<span class="username">
 										{{x.user.username}}
-										<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</span>
 									<br>
 									<span class="name">{{x.user.name}}</span>
@@ -71,7 +71,7 @@
 						<div class="loadingData" *ngIf="dataUsers.loadingData">
 							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 						</div>
-						<div class="noData" *ngIf="dataUsers.noData">{{translations.noData}}</div>
+						<div class="noData" *ngIf="dataUsers.noData">{{translations?.common?.noData}}</div>
 					</span>
 
 					<span *ngIf="data.active == 'search'">
@@ -95,7 +95,7 @@
 						<div class="loadingData" *ngIf="dataSearch.loadingData">
 							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 						</div>
-						<div class="noData" *ngIf="dataSearch.noData">{{translations.noSearchResults}}</div>
+						<div class="noData" *ngIf="dataSearch.noData">{{translations?.common?.noSearchResults}}</div>
 						<div class="loadMore" *ngIf="dataSearch.loadMoreData">
 							<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
 								<i label="add"></i>
@@ -159,18 +159,18 @@
 											</button>
 											
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 											</mat-menu>
 										</div>
 									</div>
 
 									<div class="text" *ngIf="x.type == 'publication' && !x.publication">
 										<div class="content">
-											{{translations.publicationNotAvailable}}
+											{{translations?.common?.publicationNotAvailable}}
 											<br>
 											<span class="subcontent">
-												{{translations.publicationNotAvailableText}}
+												{{translations?.common?.publicationNotAvailableText}}
 											</span>
 										</div>
 
@@ -180,8 +180,8 @@
 											</button>
 											
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -201,8 +201,8 @@
 												</button>
 												
 												<mat-menu #options="matMenu">
-													<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-													<button mat-menu-item (click)="itemOptions('report', x)">{{translations.report}}</button>
+													<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+													<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												</mat-menu>
 											</div>
 										</div>
@@ -268,7 +268,7 @@
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 				<div class="noData" *ngIf="dataDefault.noData && !dataDefault.loadingData">
-					{{translations.writeSomething}}
+					{{translations?.common?.writeSomething}}
 				</div>
 			</div>
 		</div>

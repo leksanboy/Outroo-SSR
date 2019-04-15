@@ -38,21 +38,21 @@ export class UserDataService {
 			case '2': // Español
 				language = 'es_ES';
 				break;
-			case '3': // Français
-				language = 'fr_FR';
+			case '3': // Русский
+				language = 'ru_RU';
 				break;
 			case '4': // Deutsch
 				language = 'de_DE';
 				break;
-			case '5': // Русский
-				language = 'ru_RU';
+			case '5': // Français
+				language = 'fr_FR';
 				break;
 			default: // By default set English
 				language = 'en_US';
 				break;
 		}
 
-		return this.http.get(environment.url + 'assets/langs/' + language + '.json')
+		return this.http.get(environment.url + 'assets/i18n/' + language + '.json')
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));

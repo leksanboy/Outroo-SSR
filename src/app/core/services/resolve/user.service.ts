@@ -7,7 +7,6 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 import { UserDataService } from '../user/userData.service';
-// import { MetaService } from '../seo/meta.service';
 
 @Injectable()
 export class UserResolver implements Resolve<any> {
@@ -16,8 +15,7 @@ export class UserResolver implements Resolve<any> {
 
 	constructor(
 		private http: HttpClient,
-		private userDataService: UserDataService,
-		// private metaService: MetaService,
+		private userDataService: UserDataService
 	) {}
 
 	resolve(route: ActivatedRouteSnapshot): Promise<any> {

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../../environments/environment';
@@ -9,7 +10,7 @@ import { PhotoDataService } from '../../../../../app/core/services/user/photoDat
 	selector: 'app-addPhotos',
 	templateUrl: './addPhotos.component.html'
 })
-export class NewPublicationAddPhotosComponent implements OnInit {
+export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	public sessionData: any;
 	public translations: any;
 	public environment: any = environment;
@@ -21,6 +22,7 @@ export class NewPublicationAddPhotosComponent implements OnInit {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<NewPublicationAddPhotosComponent>,
+		private sanitizer: DomSanitizer,
 		private photoDataService: PhotoDataService
 	) { }
 
@@ -49,6 +51,10 @@ export class NewPublicationAddPhotosComponent implements OnInit {
 		} else {
 			this.default(this.data.sessionData.current.username);
 		}
+	}
+
+	ngOnDestroy() {
+		this.submit(null);
 	}
 
 	// Default
@@ -120,7 +126,7 @@ export class NewPublicationAddPhotosComponent implements OnInit {
 	}
 
 	// Save
-	submit(event: Event){
+	submit(event){
 		let data = {
 			array: this.data.arrayAddedItems,
 			list: this.data.list,
@@ -141,5 +147,137 @@ export class NewPublicationAddPhotosComponent implements OnInit {
 		}
 
 		this.dialogRef.close(data);
+	}
+
+	// Upload files
+	uploadFiles(type, event){
+		let convertToMb = function(bytes) {
+			if (isNaN(parseFloat(bytes)) || !isFinite(bytes))
+				return '-';
+
+			let units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+				number = Math.floor(Math.log(bytes) / Math.log(1024));
+
+			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(1) +  ' ' + units[number];
+		}
+
+		if (type == 1) { // Add files
+			for (let i = 0; i < event.currentTarget.files.length; i++) {
+				let file = event.currentTarget.files[i];
+				file.title = file.name;
+				file.user = this.sessionData.current.id;
+				file.id = '000' + this.data.counterUploaded++;
+				file.uploaded = true;
+				file.mimetype = file.type;
+
+				if (/^image\/\w+$/.test(file.type)) {
+					file.category = 'image';
+					let reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.addEventListener("load", function(e) {
+						file.thumbnail = e.target;
+						file.thumbnail = file.thumbnail.result;
+					});
+
+					if (file.size >= 20000000) {
+						file.sizeBig = convertToMb(file.size);
+						file.status = 'error';
+					} else {
+						this.uploadFiles(2, file);
+					}
+
+					this.data.list.unshift(file);
+				} else if (/^video\/\w+$/.test(file.type)) {
+					file.category = 'video';
+					file.thumbnail = URL.createObjectURL(file);
+					file.thumbnail = this.sanitizer.bypassSecurityTrustUrl(file.thumbnail);
+
+					if (file.size >= 20000000) {
+						file.sizeBig = convertToMb(file.size);
+						file.status = 'error';
+					} else {
+						this.uploadFiles(2, file);
+					}
+
+					this.data.list.unshift(file);
+				} else {
+					file.status = 'error';
+					this.data.list.unshift(file);
+				}
+			}
+		} else if (type == 2) { // Upload one by one
+			let self = this;
+
+			const ajaxCall = function(file, formdata, ajax){
+				formdata.append("fileUpload", file);
+				formdata.append("user", file.user);
+				formdata.append("category", file.category);
+				formdata.append("title", file.title);
+
+				ajax.upload.addEventListener("progress", function(ev){
+					progressHandler(ev, file);
+				}, false);
+
+				ajax.addEventListener("load", function(ev){
+					completeHandler(ev, file);
+				}, false);
+
+				ajax.addEventListener("error", function(ev){
+					errorHandler(ev, file);
+				}, false);
+
+				ajax.addEventListener("abort", function(ev){
+					abortHandler(ev, file);
+				}, false);
+
+				ajax.open("POST", "./assets/api/publications/uploadFiles.php");
+				ajax.send(formdata);
+			}
+
+			const progressHandler = function(event, file) {
+				file.status = 'progress';
+
+				let percent = Math.round((event.loaded / event.total) * 100);
+				file.progress = Math.max(0, Math.min(100, percent));
+			}
+
+			const completeHandler = function(event, file) {
+				let response = JSON.parse(event.currentTarget.response);
+
+				file.status = 'completed';
+				file.up_name = response.name;
+				file.up_type = response.type ? response.type : '';
+				file.up_original_title = response.original_title ? response.original_title : '';
+				file.up_original_artist = response.original_artist ? response.original_artist : '';
+				file.up_genre = response.genre ? response.genre : '';
+				file.up_image = response.image ? response.image : '';
+				file.up_duration = response.duration ? response.duration : '';
+
+				self.toggleItem(file);
+			}
+
+			const errorHandler = function(event, file) {
+				file.status = 'error';
+				disableHandler();
+				self.toggleItem(file);
+			}
+
+			const abortHandler = function(event, file) {
+				file.status = 'error';
+				disableHandler();
+				self.toggleItem(file);
+			}
+
+			const disableHandler = function(){
+				self.data.saveDisabled = true;
+			}
+
+			// Call method
+			let file = event,
+				formdata = new FormData(),
+				ajax = new XMLHttpRequest();
+
+			ajaxCall(file, formdata, ajax);
+		}
 	}
 }

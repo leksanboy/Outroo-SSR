@@ -91,13 +91,14 @@
 								</button>
 							</span>
 							<mat-menu #appMenu="matMenu">
-								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-								<button mat-menu-item (click)="itemAudiosOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations.add : translations.remove}}</button>
-								<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations.add : translations.remove}}</button>
-								<button mat-menu-item (click)="itemAudiosOptions('report', x, null)">{{translations.report}}</button>
+								<button mat-menu-item (click)="itemAudiosOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+								<button mat-menu-item (click)="itemAudiosOptions('report', x, null)">{{translations?.common?.report}}</button>
+								<mat-divider *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'"></mat-divider>
+								<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 							</mat-menu>
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations.createPlaylist}}</button>
+								<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 								<span *ngFor="let p of sessionData.current.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemAudiosOptions('playlist', x, p)">{{p.title}}</button>
 								</span>
@@ -107,7 +108,7 @@
 				</li>
 		    </ul>
 
-		    <div class="noData" *ngIf="noData">{{translations.noData}}</div>
+		    <div class="noData" *ngIf="noData">{{translations?.audios?.noData}}</div>
 		</div>
 	</div>
 </div>

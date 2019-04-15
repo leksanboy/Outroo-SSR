@@ -6,10 +6,10 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.back}}</div>
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
 
-				<div class="pageTitle">{{translations.song}}</div>
+				<div class="pageTitle">{{translations?.song?.title}}</div>
 
 				<div class="song">
 					<div mat-ripple class="inner">
@@ -36,14 +36,14 @@
 							</button>
 							
 							<mat-menu #appMenu="matMenu">
-								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations.addToPlaylist}}</button>
-								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations.share}}</button>
-								<button mat-menu-item (click)="itemOptions('report', dataSong.data, null)">{{translations.report}}</button>
-								<button mat-menu-item (click)="itemOptions('addRemoveUser', dataSong.data, null); dataSong.data.addRemoveUser=!dataSong.data.addRemoveUser;">{{!dataSong.data.addRemoveUser ? translations.add : translations.remove}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+								<button mat-menu-item (click)="itemOptions('report', dataSong.data, null)">{{translations?.common?.report}}</button>
+								<button mat-menu-item (click)="itemOptions('addRemoveUser', dataSong.data, null); dataSong.data.addRemoveUser=!dataSong.data.addRemoveUser;">{{!dataSong.data.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 							</mat-menu>
 							
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item (click)="createPlaylist()">{{translations.createPlaylist}}</button>
+								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 								<span *ngFor="let p of sessionData.current.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', dataSong.data, p)">{{p.title}}</button>
 								</span>
@@ -51,10 +51,10 @@
 
 							<mat-menu #menuShareSocial="matMenu">
 								<button mat-menu-item (click)="shareOn('message', dataSong.data)">
-									{{translations.sendMessage}}
+									{{translations?.common?.sendMessage}}
 								</button>
 								<button mat-menu-item (click)="shareOn('copyLink', dataSong.data)">
-									{{translations.copyLink}}
+									{{translations?.common?.copyLink}}
 								</button>
 							</mat-menu>
 						</div>
@@ -62,7 +62,8 @@
 				</div>
 
 				<div class="stats">
-					Chart icon - 123 Replays | 32 added
+					<div class="title">{{translations?.song?.stats}}</div>
+					<div class="text">123 Replays | 32 Added</div>
 				</div>
 
 				<div class="loadingData" *ngIf="dataSong.loadingData">
@@ -70,7 +71,7 @@
 				</div>
 
 				<div class="noData" *ngIf="dataSong.noData">
-					{{translations.noData}}
+					{{translations?.song?.noData}}
 				</div> 
 			</div>
 		</div>

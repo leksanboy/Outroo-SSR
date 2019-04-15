@@ -23,7 +23,7 @@ export class HeadersService {
 		let auth = userData ? userData.current.authorization : 'pWtcN';
 		let authorization = id + environment.authHash + auth;
 		
-		// VAlidate authorization
+		// Validate authorization
 		let authorizationValidator = this.clicksPerSecond() ? authorization : null;
 
 		if (!authorizationValidator)

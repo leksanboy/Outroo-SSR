@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{data.type == 'create' ? translations.createPlaylist : translations.editPlaylist}}
+			{{data.type == 'create' ? translations?.audios?.createPlaylist : translations?.audios?.editPlaylist}}
 		</div>
 	</div>
 
@@ -17,12 +17,12 @@
 
 				<div class="default" *ngIf="!data.newImage">
 					<span *ngIf="data.type == 'create'">
-						<div class="text">{{translations.addCoverToPlaylist}}</div>
+						<div class="text">{{translations?.audios?.addCoverToPlaylist}}</div>
 						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
 						<div class="actions">
 							<button mat-raised-button type="button" (click)="uploadFile.click()">
 								<i label="file-upload"></i>
-								{{translations.upload}}
+								{{translations?.common?.upload}}
 							</button>
 						</div>
 					</span>
@@ -31,15 +31,15 @@
 						<div class="image" *ngIf="data.current.image">
 							<div class="img" [ngStyle]="{'background-image': 'url(' + data.current.path + 'covers/' + data.current.image + ')'}"></div>
 						</div>
-						<div class="text">{{translations.addCoverToPlaylist}}</div>
+						<div class="text">{{translations?.audios?.addCoverToPlaylist}}</div>
 						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
 						<div class="actions">
 							<button mat-raised-button type="button" (click)="uploadFile.click()">
 								<i label="file-upload"></i>
-								{{translations.upload}}
+								{{translations?.common?.upload}}
 							</button>
 							<button mat-raised-button type="button" (click)="removeCover()">
-								{{translations.removeCover}}
+								{{translations?.audios?.removeCover}}
 							</button>
 						</div>
 					</span>
@@ -77,11 +77,11 @@
 
 	<div mat-dialog-actions class="buttons">
 		<button mat-raised-button type="button" (click)="close()">
-			{{translations.cancel}}
+			{{translations?.common?.cancel}}
 		</button>
 		<button mat-raised-button type="submit" (click)="save()">
 			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-			{{translations.save}}
+			{{translations?.common?.submit}}
 		</button>
 	</div>
 </div>

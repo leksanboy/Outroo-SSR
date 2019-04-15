@@ -222,7 +222,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.userData = res;
 
 				// Set document title
-				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios);
+				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
 
 				// Set Google analytics
 				let urlGa =  '[' + res.id + ']/' + id + '/audios';
@@ -316,7 +316,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 
 			// Get playlists
@@ -360,7 +360,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -412,7 +412,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataAround.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataAround.noMore && !this.dataAround.loadingMoreData) {
 			this.dataAround.loadingMoreData = true;
@@ -446,7 +446,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataAround.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -498,7 +498,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataTop.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 
 			// Get playlists
@@ -541,7 +541,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataTop.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -593,7 +593,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataFresh.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataFresh.noMore && !this.dataFresh.loadingMoreData) {
 			this.dataFresh.loadingMoreData = true;
@@ -627,7 +627,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataFresh.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -677,7 +677,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataSearch.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataSearch.noMore && !this.dataSearch.loadingMoreData) {
 			this.dataSearch.loadingMoreData = true;
@@ -711,7 +711,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					this.dataSearch.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'clear') {
 			this.data.active = 'default';
@@ -895,7 +895,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Play item song
 	playItem(data, item, key, type) {
 		if (!this.sessionData.current.id) {
-			this.alertService.success(this.translations.createAnAccountToListenSong);
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.item.song == item.song) { // Play/Pause current
 				item.playing = !item.playing;
@@ -932,11 +932,11 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case("addRemoveUser"):
@@ -953,10 +953,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case("playlist"):
@@ -973,10 +973,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case("report"):
@@ -995,7 +995,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				break;
 			case "newTab":
 				let url = this.environment.url + 's/' + item.name.slice(0, -4);
-				this.router.navigate([url]);
+				this.window.open(url, '_blank');
 				break;
 			case "copyLink":
 				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);

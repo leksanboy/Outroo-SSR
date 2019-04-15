@@ -6,10 +6,10 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.back}}</div>
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
 
-				<div class="pageTitle">{{translations.bookmarks}}</div>
+				<div class="pageTitle">{{translations?.bookmarks?.title}}</div>
 
 				<span *ngIf="!deniedAccessOnlySession">
 					<span *ngIf="dataDefault.list">
@@ -37,7 +37,7 @@
 							<div class="adContent" *ngIf="line.contentTypeAd">
 								<div class="box" [innerHtml]="line.content | safeHtml"></div>
 								<div class="disableAdBlock" *ngIf="hideAd">
-									{{translations.disableAdBlock}}
+									{{translations?.common?.disableAdBlock}}
 								</div>
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 					</div>
 
 					<div class="noData" *ngIf="dataDefault.noData">
-						{{translations.noData}}
+						{{translations?.bookmarks?.noData}}
 					</div>
 					
 					<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -61,7 +61,7 @@
 
 				<span *ngIf="deniedAccessOnlySession">
 					<div class="noData">
-						{{translations.createAnAccountToSeeContent}}
+						{{translations?.common?.createAnAccountToSeeContent}}
 					</div>
 				</span>
 			</div>

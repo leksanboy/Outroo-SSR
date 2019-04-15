@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{data.comeFrom == 'avatar' ? translations.changeAvatar : translations.changeBackground}}
+			{{translations?.settings?.changeAvatar}}
 		</div>
 	</div>
 
@@ -16,36 +16,38 @@
 			
 			<img *ngIf="data.comeFrom == 'background'" (load)="imageLoad()" [src]="sessionData.current.backgroundCropper ? sessionData.current.backgroundCropper : environment.background" #imageSrc>
 		</div>
-
-		<div class="panel">
-	        <button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
-	        	<i label="zoom-in"></i>
-	        </button>
-	        <button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
-	        	<i label="zoom-out"></i>
-	        </button>
-	        <button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
-	        	<i label="rotate-left"></i>
-	        </button>
-	        <button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
-	        	<i label="rotate-right"></i>
-	        </button>
-	        <button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
-	        	<i label="swap-horiz"></i>
-	        </button>
-	        <button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
-	        	<i label="swap-vert"></i>
-	        </button>
-	    </div>
 	</div>
 
-	<div mat-dialog-actions class="buttons">
-		<button mat-raised-button type="button" (click)="cropperFunctions('close')">
-			{{translations.cancel}}
-		</button>
-		<button mat-raised-button type="submit" (click)="cropperFunctions('crop')">
-			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-			{{translations.save}}
-		</button>
+	<div mat-dialog-actions class="buttons newCropper">
+		<div class="panel">
+			<button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
+				<i label="zoom-in"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
+				<i label="zoom-out"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
+				<i label="rotate-left"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
+				<i label="rotate-right"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
+				<i label="swap-horiz"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
+				<i label="swap-vert"></i>
+			</button>
+		</div>
+
+		<div class="actions">
+			<button mat-raised-button type="button" (click)="cropperFunctions('close')">
+				{{translations?.common?.cancel}}
+			</button>
+			<button mat-raised-button type="submit" (click)="cropperFunctions('crop')">
+				<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+				{{translations?.common?.submit}}
+			</button>
+		</div>
 	</div>
 </div>

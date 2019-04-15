@@ -13,14 +13,14 @@
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">
 										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</a>
 									<span class="date">{{x.date | timeago}}</span>
 								</div>
 								
 								<div class="container">
-									<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations.startFollowingYou}}</span>
-									<span *ngIf="x.type == 'acceptRequest'">{{translations.acceptFollowingRequest}}</span>
+									<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations?.notifications?.startFollowingYou}}</span>
+									<span *ngIf="x.type == 'acceptRequest'">{{translations?.notifications?.acceptFollowingRequest}}</span>
 								</div>
 							</div>
 
@@ -28,46 +28,46 @@
 								<!-- Request from others -->
 								<span *ngIf="sessionData.current.id == x.receiver && x.type == 'startFollowingPrivate'">
 									<button mat-button class="active" (click)="followUnfollow('accept', x)">
-										{{translations.accept}}
+										{{translations?.notifications?.accept}}
 									</button>
 									<button mat-button class="border" (click)="followUnfollow('decline', x)">
-										{{translations.decline}}
+										{{translations?.notifications?.decline}}
 									</button>
 								</span>
 
 								<!-- Mine Requests -->
 								<span *ngIf="x.type != 'startFollowingPrivate'">
 									<button mat-button class="pending" *ngIf="sessionData.current.id != 'x.receiver' && x.statusFollowing == 'pending'" [matMenuTriggerFor]="cancelRequest">
-										{{translations.pending}}
+										{{translations?.common?.pending}}
 									</button>
 
 									<button mat-button class="active" *ngIf="x.statusFollowing == 'unfollow'" (click)="followUnfollow('follow', x)">
-										{{translations.follow}}
+										{{translations?.common?.follow}}
 									</button>
 
 									<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
-											{{translations.cancelRequest}}
+											{{translations?.common?.cancelRequest}}
 										</div>
 										<div class="buttons">
-											<button mat-menu-item>{{translations.no}}</button>
-											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
 
 									<button mat-button *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
-										{{translations.following}}
+										{{translations?.common?.following}}
 									</button>
 
 									<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
-											{{translations.stopFollowing}}
+											{{translations?.notifications?.stopFollowing}}
 											<br>
 											{{x.user.username}}?
 										</div>
 										<div class="buttons">
-											<button mat-menu-item>{{translations.no}}</button>
-											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
 								</span>
@@ -78,8 +78,8 @@
 									</button>
 									
 									<mat-menu #options="matMenu">
-										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 									</mat-menu>
 								</div>
 							</div>
@@ -90,25 +90,25 @@
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">
 										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</a>
 									<span class="date">{{x.date | timeago}}</span>
 								</div>
 
 								<div class="container" (click)="showNotification(x)">
 									<span *ngIf="x.type == 'comment'">
-										{{translations.commentedYourPhoto}}
+										{{translations?.notifications?.commentedYourPhoto}}
 										<br>
 										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 									</span>
 									
-									<span *ngIf="x.type == 'like'">{{translations.likedYourPhoto}}</span>
+									<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPhoto}}</span>
 
-									<span *ngIf="x.type == 'mention'">{{translations.mentionOnPhoto}}</span>
+									<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPhoto}}</span>
 
-									<span *ngIf="x.type == 'mentionComment'">{{translations.mentionOnCommentOnPhoto}}</span>
+									<span *ngIf="x.type == 'mentionComment'">{{translations?.notifications?.mentionOnCommentOnPhoto}}</span>
 
-									<span *ngIf="x.type == 'share'">{{translations.sharePhoto}}</span>
+									<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPhoto}}</span>
 								</div>
 							</div>
 
@@ -123,8 +123,8 @@
 									</button>
 									
 									<mat-menu #options="matMenu">
-										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 									</mat-menu>
 								</div>
 							</div>
@@ -135,25 +135,25 @@
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">
 										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</a>
 									<span class="date">{{x.date | timeago}}</span>
 								</div>
 
 								<div class="container" (click)="showNotification(x)">
 									<span *ngIf="x.type == 'comment'">
-										{{translations.commentedYourPublication}}
+										{{translations?.notifications?.commentedYourPublication}}
 										<br>
 										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 									</span>
 									
-									<span *ngIf="x.type == 'like'">{{translations.likedYourPublication}}</span>
+									<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPublication}}</span>
 
-									<span *ngIf="x.type == 'mention'">{{translations.mentionOnPublication}}</span>
+									<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPublication}}</span>
 
-									<span *ngIf="x.type == 'mentionComment'">{{translations.mentionOnCommentOnPublication}}</span>
+									<span *ngIf="x.type == 'mentionComment'">{{translations?.notifications?.mentionOnCommentOnPublication}}</span>
 
-									<span *ngIf="x.type == 'share'">{{translations.sharePublication}}</span>
+									<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPublication}}</span>
 
 									<span *ngIf="!x.contentData.media">
 										<br>
@@ -173,8 +173,8 @@
 									</button>
 									
 									<mat-menu #options="matMenu">
-										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations.restore : translations.remove}}</button>
-										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('report', x)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemOptionsNotification('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 									</mat-menu>
 								</div>
 							</div>
@@ -187,7 +187,7 @@
 				</div>
 
 				<div class="noData" *ngIf="dataNotifications.noData">
-					{{translations.noData}}
+					{{translations?.notifications?.noData}}
 				</div>
 				
 				<div class="loadMore" *ngIf="dataNotifications.loadMoreData">
@@ -348,7 +348,7 @@
 
 											<span *ngIf="x.type == 'mentionComment'">{{translations.mentionOnCommentOnPublication}}</span>
 
-											<span *ngIf="x.type == 'share'">{{translations.sharePublication}}</span>
+											<span *ngIf="x.type == 'share'">{{translations.sharedPublication}}</span>
 
 											<span *ngIf="!x.contentData.media">
 												<br>

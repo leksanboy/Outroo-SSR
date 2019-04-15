@@ -6,10 +6,10 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.back}}</div>
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
 
-				<div class="pageTitle">{{translations.photos}}</div>
+				<div class="pageTitle">{{translations?.photos?.title}}</div>
 
 				<div class="uploadFilesBox" *ngIf="userData.id == sessionData.current.id">
 					<div class="button">
@@ -19,10 +19,10 @@
 							</div>
 							<div class="right">
 								<div class="top">
-									{{translations.chooseFiles}} {{dataFiles.list.length}}/9
+									{{translations?.photos?.chooseFiles}} {{dataFiles.list.length}}/9
 								</div>
 								<div class="bottom">
-									{{translations.maxSizePerFilePhotos}}
+									{{translations?.photos?.maxSizePerFile}}
 								</div>
 							</div>
 						</button>
@@ -38,8 +38,8 @@
 
 								<div class="category">
 									<i label="videocam" *ngIf="x.category=='video'"></i>
-									<i label="error-outline" matTooltip="{{translations.invalidFile}}" *ngIf="x.category=='unknown'"></i>
-									<div class="size" matTooltip="{{translations.fileSizeToBig}}" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
+									<i label="error-outline" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category=='unknown'"></i>
+									<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
 								</div>
 
 								<div class="status">
@@ -50,7 +50,7 @@
 										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
 										<div class="value">{{x.progress ? x.progress : 1}}%</div>
 									</div>
-									<button mat-icon-button matTooltip="{{translations.errorOnUpload}}" *ngIf="x.status=='error'">
+									<button mat-icon-button matTooltip="{{translations?.common?.errorOnUpload}}" *ngIf="x.status=='error'">
 										<i label="cloud-off"></i>
 									</button>
 									<button mat-icon-button *ngIf="x.status=='completed'">
@@ -64,16 +64,16 @@
 					<div class="buttons" *ngIf="dataFiles.list.length > 0">
 						<div class="group" *ngIf="dataFiles.actions">
 							<button mat-raised-button (click)="uploadFiles(2, $event)">
-								{{translations.cancel}}
+								{{translations?.common?.cancel}}
 							</button>
 							<button mat-raised-button [disabled]="dataFiles.list.length > 9 || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
-								{{translations.upload}}
+								{{translations?.common?.upload}}
 							</button>
 						</div>
 
 						<button *ngIf="dataFiles.reload" mat-raised-button (click)="uploadFiles(5, $event)">
 							<i label="autorenew"></i>
-							{{translations.refresh}}
+							{{translations?.common?.refresh}}
 						</button>
 					</div>
 				</div>
@@ -95,7 +95,7 @@
 				</div>
 
 				<div class="noData" *ngIf="dataDefault.noData">
-					{{translations.noData}}
+					{{translations?.photos?.noData}}
 				</div>
 				
 				<div class="loadMore" *ngIf="dataDefault.loadMoreData">

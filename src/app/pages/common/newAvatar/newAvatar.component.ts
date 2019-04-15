@@ -118,7 +118,7 @@ export class NewAvatarComponent implements OnInit {
 							}, 1000);
 						}, error => {
 							this.saveLoading = false;
-							this.alertService.error(this.translations.anErrorHasOcurred);
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
 						});
 				} else if (this.data.comeFrom == 'background') {
 					let imageBase64 = this.cropperData.getCroppedCanvas({
@@ -144,7 +144,7 @@ export class NewAvatarComponent implements OnInit {
 							}, 1000);
 						}, error => {
 							this.saveLoading = false;
-							this.alertService.error(this.translations.anErrorHasOcurred);
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
 						});
 				}
 				break;

@@ -6,10 +6,10 @@
 					<button mat-icon-button>
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations.back}}</div>
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
 
-				<div class="pageTitle">{{translations.followers}}</div>
+				<div class="pageTitle">{{translations?.followers?.title}}</div>
 
 				<span *ngIf="!deniedAccessOnlySession">
 					<div class="searchBox" *ngIf="((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
@@ -17,7 +17,7 @@
 							<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 								<div class="inner">
 									<i label="search-magnifying-glass"></i>
-									<input type="text" placeholder="{{translations.search}}" formControlName="caption">
+									<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 									<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
 										<i label="search-clear"></i>
 									</button>
@@ -36,43 +36,43 @@
 									<a class="text" routerLink="/{{x.user.username}}">
 										<span class="username">
 											{{x.user.username}}
-											<i label="official" *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+											<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 										</span>
 										<br>
 										<span class="name">{{x.user.name}}</span>
 									</a>
 									<div class="actions" *ngIf="x.user.id != sessionData.current.id">
 										<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
-											{{translations.follow}}
+											{{translations?.common?.follow}}
 										</button>
 
 										<button mat-button class="pending" *ngIf="x.status == 'pending'" [matMenuTriggerFor]="cancelRequest">
-											{{translations.pending}}
+											{{translations?.common?.pending}}
 										</button>
 
 										<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 											<div class="text">
-												{{translations.cancelRequest}}
+												{{translations?.common?.cancelRequest}}
 											</div>
 											<div class="buttons">
-												<button mat-menu-item>{{translations.no}}</button>
-												<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 											</div>
 										</mat-menu>
 
 										<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
-											{{translations.following}}
+											{{translations?.common?.following}}
 										</button>
 
 										<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 											<div class="text">
-												{{translations.stopFollowing}}
+												{{translations?.common?.stopFollowing}}
 												<br>
 												{{x.user.username}}?
 											</div>
 											<div class="buttons">
-												<button mat-menu-item>{{translations.no}}</button>
-												<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 											</div>
 										</mat-menu>
 									</div>
@@ -84,7 +84,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								{{translations.noData}}
+								{{translations?.followers?.noData}}
 							</div>
 							
 							<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -97,7 +97,7 @@
 
 						<span *ngIf="!((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
 							<div class="noData">
-								{{translations.privateAccount}}
+								{{translations?.common?.privateAccount}}
 							</div>
 						</span>
 					</span>
@@ -111,43 +111,43 @@
 								<a class="text" routerLink="/{{x.user.username}}">
 									<span class="username">
 										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</span>
 									<br>
 									<span class="name">{{x.user.name}}</span>
 								</a>
 								<div class="actions" *ngIf="x.user.id != sessionData.current.id">
 									<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
-										{{translations.follow}}
+										{{translations?.common?.follow}}
 									</button>
 									
 									<button mat-button class="pending" *ngIf="x.status == 'pending'" [matMenuTriggerFor]="cancelRequest">
-										{{translations.pending}}
+										{{translations?.common?.pending}}
 									</button>
 
 									<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
-											{{translations.cancelRequest}}
+											{{translations?.common?.cancelRequest}}
 										</div>
 										<div class="buttons">
-											<button mat-menu-item>{{translations.no}}</button>
-											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
 
 									<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
-										{{translations.following}}
+										{{translations?.common?.following}}
 									</button>
 
 									<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
-											{{translations.stopFollowing}}
+											{{translations?.common?.stopFollowing}}
 											<br>
 											{{x.user.username}}?
 										</div>
 										<div class="buttons">
-											<button mat-menu-item>{{translations.no}}</button>
-											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations.yes}}</button>
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
 								</div>
@@ -159,7 +159,7 @@
 						</div>
 
 						<div class="noData" *ngIf="dataSearch.noData">
-							{{translations.noSearchResults}}
+							{{translations?.common?.noSearchResults}}
 						</div>
 						
 						<div class="loadMore" *ngIf="dataSearch.loadMoreData">
@@ -173,7 +173,7 @@
 
 				<span *ngIf="deniedAccessOnlySession">
 					<div class="noData">
-						{{translations.createAnAccountToSeeContent}}
+						{{translations?.common?.createAnAccountToSeeContent}}
 					</div>
 				</span>
 			</div>

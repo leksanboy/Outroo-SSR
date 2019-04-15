@@ -80,7 +80,7 @@ export class NewPlaylistComponent implements OnInit {
 				this.imageLoad();
 			}, 100);
 		} else {
-			this.alertService.error(this.translations.selectedFileIsNotImage);
+			this.alertService.error(this.translations.common.invalidFile);
 		}
 	}
 
@@ -150,7 +150,7 @@ export class NewPlaylistComponent implements OnInit {
 						});
 				} else {
 					// show error message
-					this.alertService.error(this.translations.completeAllFields);
+					this.alertService.error(this.translations.common.completeAllFields);
 				}
 				break;
 			case 'edit':
@@ -215,7 +215,7 @@ export class NewPlaylistComponent implements OnInit {
 						});
 				} else {
 					// show error message
-					this.alertService.error(this.translations.completeAllFields);
+					this.alertService.error(this.translations.common.completeAllFields);
 				}
 				break;
 		}

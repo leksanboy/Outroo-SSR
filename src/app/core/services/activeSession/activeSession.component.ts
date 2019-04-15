@@ -419,7 +419,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			.subscribe(res => {
 				if (!res || res.length === 0) {
 					this.audioPlayerData.noData = true;
-					this.audioPlayerData.current.title = 'Upload or search some songs';
+					this.audioPlayerData.current.title = this.translations.audios.uploadOrSearch;
 				} else {
 					this.audioPlayerData.noData = false;
 					this.audioPlayerData.list = res;
@@ -901,11 +901,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case('addRemoveUser'):
@@ -925,11 +925,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 						item.insertedId = res.json();
 
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAddedSuccessfully) : (' ' + this.translations.hasBeenRemoved);
+							text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case('playlist'):
@@ -947,11 +947,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + playlist.title;
 
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case('createPlaylist'):
@@ -974,7 +974,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 						this.sessionService.setDataPlaylists(this.sessionData);
-						this.alertService.success(this.translations.createdSuccessfully);
+						this.alertService.success(this.translations.common.createdSuccessfully);
 					}
 				});
 			break;
@@ -1123,7 +1123,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			}
 
 			// Alert message
-			this.alertService.success(this.translations.accountChangedTo + ' @' + data.username);
+			this.alertService.success(this.translations.common.accountChangedTo + ' @' + data.username);
 		}
 	}
 
@@ -1168,13 +1168,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.sessionService.setDataTheme(this.sessionData);
 
 					if (this.sessionData.current.theme) {
-						this.alertService.success(this.translations.darkThemeEnabled);
+						this.alertService.success(this.translations.common.darkThemeEnabled);
 					} else {
-						this.alertService.success(this.translations.darkThemeDisabled);
+						this.alertService.success(this.translations.common.darkThemeDisabled);
 					}
 				}, 1000);
 			}, error => {
-				this.alertService.error(this.translations.anErrorHasOcurred);
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
 
@@ -1206,9 +1206,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.momentService.setData(this.sessionData.current.language);
 
 					// Alert
-					this.alertService.success(this.translations.languageChanged);
+					this.alertService.success(this.translations.common.languageChanged);
 				}, error => {
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -1292,28 +1292,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Copy to clipboard
 	copyToClipboard(data) {
-		console.log('copyToClipboard', data);
-
-		// const el = this.document.createElement('textarea');		// Create a <textarea> element
-		// const randId = Math.floor(Math.random() * 6) + 1;		// Random id
-		// el.value = data;										// Set its value to the string that you want copied
-		// el.setAttribute('readonly', '');						// Make it readonly to be tamper-proof
-		// el.setAttribute('id', randId.toString());
-		// el.style.position = 'absolute';
-		// el.style.left = '-9999px';								// Move outside the screen to make it invisible
-		// this.document.body.appendChild(el);						// Append the <textarea> element to the document
-
-		// // Check if there is any content selected previously / Store selection if found / Mark as false to know no selection existed before
-		// const selected = this.document.getSelection().rangeCount > 0 ? this.document.getSelection().getRangeAt(0) : false;
-		// el.select();											// Select the <textarea> content
-		// this.document.execCommand('copy');						// Copy - only works as a result of a user action (e.g. click events)
-		// this.document.body.removeChild(el);						// Remove the <textarea> element
-
-		// if (selected) {											// If a selection existed before copying
-		// 	this.document.getSelection().removeAllRanges();		// Unselect everything on the HTML document
-		// 	this.document.getSelection().addRange(selected);	// Restore the original selection
-		// }
-
 		let selBox = this.document.createElement('textarea');
 		selBox.style.position = 'fixed';
 		selBox.style.opacity = '0';
@@ -1326,6 +1304,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.document.execCommand('copy');
 		this.document.body.removeChild(selBox);
 
-		this.alertService.success(this.translations.copied);
+		this.alertService.success(this.translations.common.copied);
 	}
 }

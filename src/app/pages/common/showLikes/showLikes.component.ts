@@ -95,7 +95,7 @@ export class ShowLikesComponent implements OnInit {
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -123,7 +123,7 @@ export class ShowLikesComponent implements OnInit {
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}

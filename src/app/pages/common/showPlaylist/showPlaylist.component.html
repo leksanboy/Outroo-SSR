@@ -6,7 +6,7 @@
 			</button>
 		</div>
 		<div class="text">
-			{{translations.playlist}}
+			{{translations?.audios?.playlist}}
 		</div>
 	</div>
 
@@ -26,12 +26,12 @@
 				
 				<a class="username" *ngIf="data.current.user" routerLink="/{{data.current.user.username}}">
 					@{{data.current.user.username}}
-					<i *ngIf="data.current.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
+					<i *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 				</a>
 				
 				<div class="button">
 					<button mat-button class="border" (click)="playTrack('play')">
-						{{data.playing ? translations.pause : translations.play}}
+						{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
 					</button>
 				</div>
 			</div>
@@ -68,10 +68,11 @@
 								</button>
 							</span>
 							<mat-menu #options="matMenu">
-								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
-								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? 'Add' : 'Remove'}}</button>
 								<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? 'Add' : 'Remove'}}</button>
-								<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations.report}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
+								<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
+								<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
+								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? 'Add' : 'Remove'}}</button>
 							</mat-menu>
 							<mat-menu #menuPlaylists="matMenu">
 								<button mat-menu-item *ngFor="let p of sessionData.current.playlists" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
@@ -81,7 +82,7 @@
 
 					<div class="ad" *ngIf="x.contentTypeAd">
 						<div class="box" [innerHtml]="x.content"></div>
-						<div class="disableAdBlock" *ngIf="hideAd">{{translations.disableAdBlock}}</div>
+						<div class="disableAdBlock" *ngIf="hideAd">{{translations?.common?.disableAdBlock}}</div>
 					</div>
 				</li>
 			</ul>
@@ -89,7 +90,7 @@
 			<div class="loadingData" *ngIf="data.loadingData">
 				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 			</div>
-			<div class="noData" *ngIf="data.noData">{{translations.noData}}</div>
+			<div class="noData" *ngIf="data.noData">{{translations?.audios?.noData}}</div>
 		</div>
 	</div>
 </div>

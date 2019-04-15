@@ -94,7 +94,7 @@ export class NewPublicationComponent implements OnInit {
 							this.searchBoxMentions = false;
 						}
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			});
 	}
@@ -149,145 +149,6 @@ export class NewPublicationComponent implements OnInit {
 			this.data.audiosRows = res.rows;
 			this.data.audiosLoadMore = res.loadMore;
 		});
-	}
-
-	// Upload files
-	uploadFiles(type, event){
-		let convertToMb = function(bytes) {
-			if (isNaN(parseFloat(bytes)) || !isFinite(bytes))
-				return '-';
-
-			let units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-				number = Math.floor(Math.log(bytes) / Math.log(1024));
-
-			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(1) +  ' ' + units[number];
-		}
-
-		if (type == 1) { // Add files
-			for (let i = 0; i < event.currentTarget.files.length; i++) {
-				let file = event.currentTarget.files[i];
-				file.title = file.name.replace('.mp3', '');
-				file.user = this.sessionData.current.id;
-				file.id = '000' + this.data.counterUploaded++;
-				file.uploaded = true;
-				file.selected = true;
-
-				if (/^audio\/\w+$/.test(file.type)) {
-					file.category = 'audio';
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.audiosArray.push(file);
-				} else if (/^image\/\w+$/.test(file.type)) {
-					file.category = 'image';
-					let reader = new FileReader();
-					reader.readAsDataURL(file);
-					reader.addEventListener("load", function(e) {
-						file.thumbnail = e.target;
-						file.thumbnail = file.thumbnail.result;
-					});
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.photosArray.push(file);
-				} else if (/^video\/\w+$/.test(file.type)) {
-					file.category = 'video';
-					file.thumbnail = URL.createObjectURL(file);
-					file.thumbnail = this.sanitizer.bypassSecurityTrustUrl(file.thumbnail);
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.photosArray.push(file);
-				} else {
-					file.status = 'error';
-					this.data.photosArray.push(file);
-				}
-			}
-		} else if (type == 2) { // Upload one by one
-			let self = this;
-
-			const ajaxCall = function(file, formdata, ajax){
-				formdata.append("fileUpload", file);
-				formdata.append("user", file.user);
-				formdata.append("category", file.category);
-				formdata.append("title", file.title);
-
-				ajax.upload.addEventListener("progress", function(ev){
-					progressHandler(ev, file);
-				}, false);
-
-				ajax.addEventListener("load", function(ev){
-					completeHandler(ev, file);
-				}, false);
-
-				ajax.addEventListener("error", function(ev){
-					errorHandler(ev, file);
-				}, false);
-
-				ajax.addEventListener("abort", function(ev){
-					abortHandler(ev, file);
-				}, false);
-
-				ajax.open("POST", "./assets/api/publications/uploadFiles.php");
-				ajax.send(formdata);
-			}
-
-			const progressHandler = function(event, file) {
-				file.status = 'progress';
-
-				let percent = Math.round((event.loaded / event.total) * 100);
-				file.progress = Math.max(0, Math.min(100, percent));
-			}
-
-			const completeHandler = function(event, file) {
-				let response = JSON.parse(event.currentTarget.response);
-
-				file.status = 'completed';
-				file.up_name = response.name;
-				file.up_type = response.type ? response.type : '';
-				file.up_original_title = response.original_title ? response.original_title : '';
-				file.up_original_artist = response.original_artist ? response.original_artist : '';
-				file.up_genre = response.genre ? response.genre : '';
-				file.up_image = response.image ? response.image : '';
-				file.up_duration = response.duration ? response.duration : '';
-			}
-
-			const errorHandler = function(event, file) {
-				file.status = 'error';
-				disableHandler();
-			}
-
-			const abortHandler = function(event, file) {
-				file.status = 'error';
-				disableHandler();
-			}
-
-			const disableHandler = function(){
-				self.data.saveDisabled = true;
-			}
-
-			// Call method
-			let file = event,
-				formdata = new FormData(),
-				ajax = new XMLHttpRequest();
-
-			ajaxCall(file, formdata, ajax);
-		}
 	}
 
 	// Select/unselect files
@@ -360,7 +221,7 @@ export class NewPublicationComponent implements OnInit {
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		} else {
-			this.alertService.error(this.translations.tryToUseAnotherBrowser);
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
 		}
 
 		return caretOffset;
@@ -414,8 +275,7 @@ export class NewPublicationComponent implements OnInit {
 	// Check if content is empty to set placeholer
 	checkPlaceholder(){
 		if (this.publicationData.original.length == 0)
-			this.publicationData.transformed = '<div class="placeholder">' + this.translations.whatsHappening.one +
-											'<br>' + this.translations.whatsHappening.two + '</div>';
+			this.publicationData.transformed = '<div class="placeholder">' + this.translations.main.whatsHappening.one + '<br>' + this.translations.main.whatsHappening.two + '</div>';
 	}
 
 	// Validate post content
@@ -564,12 +424,12 @@ export class NewPublicationComponent implements OnInit {
 					} else {
 						this.data.urlVideo = [];
 						this.data.urlVideo.exists = false;
-						this.alertService.error(this.translations.invalidUrlVideo);
+						this.alertService.error(this.translations.common.invalidUrl);
 					}
 				}, error => {
 					this.data.urlVideo = [];
 					this.data.urlVideo.exists = false;
-					this.alertService.error(this.translations.invalidUrlVideo);
+					this.alertService.error(this.translations.common.invalidUrl);
 				});
 		} else if (type === 2) {
 			this.data.urlVideo = [];
@@ -614,11 +474,11 @@ export class NewPublicationComponent implements OnInit {
 					this.dialogRef.close(res);
 					this.saveLoading = false;
 				}, error => {
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 					this.saveLoading = false;
 				});
 		} else {
-			this.alertService.error(this.translations.addContentBeforeSubmitPublication);
+			this.alertService.error(this.translations.main.addSomeContent);
 		}
 	}
 

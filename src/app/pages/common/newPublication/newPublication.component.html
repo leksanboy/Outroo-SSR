@@ -5,7 +5,7 @@
 				<i label="back"></i>
 			</button>
 		</div>
-		<div class="text">{{translations.newPublication}}</div>
+		<div class="text">{{translations?.main?.newPublication}}</div>
 	</div>
 
 	<div mat-dialog-content class="bodyCreatePublication">
@@ -30,79 +30,36 @@
 			</div>
 
 			<div class="filesBox">
-				<div class="urlVideo" *ngIf="data.urlVideo.exists">
-					<div class="counter">{{data.urlVideo.type}}</div>
-					<div class="box">
-						<div class="image">
-							<div class="img" [ngStyle]="{'background-image': 'url(' + data.urlVideo.thumbnail + ')'}"></div>
-						</div>
-						<div class="text">
-							<div class="title">{{data.urlVideo.title ? data.urlVideo.title : translations.untitled}}</div>
-							<div class="subtitle">{{data.urlVideo.channel ? data.urlVideo.channel : translations.noChannel}}</div>
-						</div>
-						<button class="clear" mat-mini-fab type="button" (click)="urlVideoInformation(2, data.urlVideo)">
-							<i label="close"></i>
-						</button>
-					</div>
-				</div>
-
 				<div class="photos" *ngIf="data.photosArray.length > 0">
-					<div class="counter" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations.photos}} {{data.photosArray.length}}/10</div>
+					<div class="counter" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations?.photos?.title}} {{data.photosArray.length}}/10</div>
 
 					<ul>
 						<li mat-ripple *ngFor="let x of data.photosArray; let i=index;">
-							<span *ngIf="!x.uploaded">
-								<div class="image" (click)="toggleItem('photos', x)">
-									<div class="img" *ngIf="!x.uploaded" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
+							<div class="image" (click)="toggleItem('photos', x)">
+								<div class="img" *ngIf="!x.uploaded" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
 
-									<div class="category">
-										<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
-										<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
-									</div>
-
-
-									<div class="status">
-										<button mat-icon-button>
-											<i label="check"></i>
-										</button>
-									</div>
+								<div class="category">
+									<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+									<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+									<i label="cloud-upload" *ngIf="x.uploaded"></i>
 								</div>
-							</span>
 
-							<span *ngIf="x.uploaded" (click)="(x.status=='completed' || x.status=='error') ? toggleItem('photos', x) : $event.stopPropagation()">
-								<div class="image">
-									<div class="img" [ngStyle]="{'background-image': 'url(' + x.thumbnail + ')'}"></div>
-
-									<div class="category">
-										<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
-										<i label="videocam" *ngIf="x.category=='video'"></i>
-										<i label="cloud-upload"></i>
-									</div>
-
-									<div class="status">
-										<div class="progress" *ngIf="x.status=='progress'">
-											<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
-											<div class="value">{{x.progress}}%</div>
-										</div>
-										<button mat-icon-button *ngIf="x.status=='error'">
-											<i label="cloud-off"></i>
-										</button>
-										<button mat-icon-button *ngIf="x.status=='completed'">
-											<i label="check"></i>
-										</button>
-									</div>
+								<div class="status">
+									<button mat-icon-button>
+										<i label="check"></i>
+									</button>
 								</div>
-							</span>
+							</div>
 						</li>
 					</ul>
 				</div>
 
 				<div class="audios" *ngIf="data.audiosArray.length > 0">
-					<div class="counter" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations.songs}} {{data.audiosArray.length}}/10</div>
+					<div class="counter" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations?.songs?.title}} {{data.audiosArray.length}}/10</div>
 
 					<ul class="tracks">
 						<li *ngFor="let x of data.audiosArray" [ngClass]="{default: !x.image}" (click)="toggleItem('audios', x)">
-							<div class="inner" *ngIf="!x.uploaded">
+							<div class="inner">
 								<div class="image">
 									<button mat-icon-button>
 										<img *ngIf="x.image" [src]="environment.pathAudios + 'thumbnails/' + x.image"/>
@@ -117,43 +74,14 @@
 									</div>
 									<div class="duration">{{x.duration}}</div>
 								</div>
-								<div class="status">
-									<button mat-icon-button>
-										<i label="check"></i>
-									</button>
-								</div>
-							</div>
-
-							<div class="inner" *ngIf="x.uploaded">
-								<div class="image">
-									<button mat-icon-button>
-										<i label="play"></i>
-									</button>
-								</div>
-
-								<div class="text">
-									<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-										<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-										<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
-									</div>
-								</div>
-
-								<div class="category">
+								
+								<div class="category" *ngIf="x.uploaded">
 									<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
 									<i label="cloud-upload"></i>
 								</div>
 
 								<div class="status">
-									<div class="progress" *ngIf="x.status=='progress'">
-										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
-										<div class="value">{{x.progress}}%</div>
-									</div>
-
-									<button mat-icon-button *ngIf="x.status=='error'">
-										<i label="cloud-off"></i>
-									</button>
-
-									<button mat-icon-button *ngIf="x.status=='completed'">
+									<button mat-icon-button>
 										<i label="check"></i>
 									</button>
 								</div>
@@ -173,41 +101,22 @@
 			<button mat-mini-fab type="button" (click)="openAudios($event)" matTooltip="audios">
 				<i label="music"></i>
 			</button>
-			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="upload files">
-				<i label="cloud-upload"></i>
-			</button>
-			<!-- <button mat-mini-fab type="button" [matMenuTriggerFor]="addUrlVideo" matTooltip="add youtube and vimeo videos">
-				<i label="video"></i>
-			</button> -->
-			
-			<!-- Upload files -->
-			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf, audio/mpeg, audio/mp4">
-
-			<!-- Add video from url -->
-			<!-- <mat-menu #addUrlVideo="matMenu" [overlapTrigger]="false" yPosition="above" class="urlVideo">
-				<div class="box">
-					<input type="text" placeholder="YouTube or Vimeo URL" [(ngModel)]="data.urlVideo.url" (click)="$event.stopPropagation()">
-					<button mat-menu-item (click)="urlVideoInformation(1, data.urlVideo.url)">
-						{{translations.ok}}
-					</button>
-				</div>
-			</mat-menu> -->
 		</div>
 
 		<div class="actions">
 			<div class="web">
 				<button mat-raised-button type="button" (click)="close()">
-					{{translations.cancel}}
+					{{translations?.common?.cancel}}
 				</button>
 				<button mat-raised-button type="submit" (click)="submit()">
 					<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-					{{translations.post}}
+					{{translations?.common?.submit}}
 				</button>
 			</div>
 			<div class="mobile">
 				<button mat-raised-button type="submit" (click)="submit()">
 					<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-					{{translations.post}}
+					{{translations?.common?.submit}}
 				</button>
 			</div>
 		</div>

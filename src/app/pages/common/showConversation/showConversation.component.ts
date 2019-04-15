@@ -241,7 +241,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 					}
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -269,7 +269,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -306,7 +306,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 				}
 			}, error => {
 				this.dataUsers.loadingData = false;
-				this.alertService.error(this.translations.anErrorHasOcurred);
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
 
@@ -344,7 +344,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 				}
 			}, error => {
 				this.dataChats.loadingData = false;
-				this.alertService.error(this.translations.anErrorHasOcurred);
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
 
@@ -489,7 +489,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 				};
 			}, error => {
 				this.saveLoading = false;
-				this.alertService.error(this.translations.anErrorHasOcurred);
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
 
@@ -516,7 +516,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 						this.data.new = true;
 					}, error => {
 						this.saveLoading = false;
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			} else if (this.data.users[i].type == 'chat') {
 				let dataCreate = {
@@ -531,7 +531,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 			}
 		}
 
-		this.alertService.success(this.translations.sentSuccessfully);
+		this.alertService.success(this.translations.common.sentSuccessfully);
 		this.close();
 	}
 
@@ -598,7 +598,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 			}
 		} else if (type == 'checkPlaceholder') {
 			if (item.newCommentData.original.length == 0)
-				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.whatsHappening.one + '</div>';
+				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
@@ -629,7 +629,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 			return newData;
 		} else if (type == 'create') {
 			if (item.newCommentData.original.trim().length == 0) {
-				this.alertService.success(this.translations.commentIsTooShort);
+				this.alertService.success(this.translations.common.isTooShort);
 			} else {
 				let formatedData = this.newComment('transformBeforeSend', null, item);
 				let dataCreate = {
@@ -652,7 +652,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 						// Scroll to bottom
 						this.scrollToBottom();
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			}
 		}
@@ -670,7 +670,7 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		} else {
-			this.alertService.error(this.translations.tryToUseAnotherBrowser);
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
 		}
 
 		return caretOffset;

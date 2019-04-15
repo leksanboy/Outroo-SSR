@@ -126,7 +126,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			item.marked = item.bookmark.checked ? false : true;
 
 			if (item.bookmark.checked)
-				this.alertService.success(this.translations.addedToSaved);
+				this.alertService.success(this.translations.bookmarks.addedTo);
 
 			// data
 			let data = {
@@ -141,7 +141,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 					if (res)
 						item.bookmark.id = res;
 				}, error => {
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -272,10 +272,10 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case("createPlaylist"):
@@ -332,7 +332,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 					}
 				}, error => {
 					item.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (type == 'more') {
 			item.loadingMoreData = true;
@@ -356,7 +356,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 					}, 600);
 				}, error => {
 					item.loadingData = false;
-					this.alertService.error(this.translations.anErrorHasOcurred);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
 	}
@@ -424,7 +424,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			}
 		} else if (type == 'checkPlaceholder') {
 			if (item.newCommentData.original.length == 0)
-				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.whatsHappening.one + '</div>';
+				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
 		} else if (type == 'transformBeforeSend') {
 			let newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
@@ -455,7 +455,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			return newData;
 		} else if (type == 'create') {
 			if (item.newCommentData.original.trim().length == 0) {
-				this.alertService.success(this.translations.commentIsTooShort);
+				this.alertService.success(this.translations.common.isTooShort);
 			} else {
 				let formatedData = this.newComment('transformBeforeSend', null, item);
 				let dataCreate = {
@@ -476,7 +476,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 						this.newComment('clear', null, item);
 					}, error => {
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			}
 		}
@@ -525,7 +525,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
 		} else {
-			this.alertService.error(this.translations.tryToUseAnotherBrowser);
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
 		}
 
 		return caretOffset;
