@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
 	public translations: any = [];
 
 	constructor(
-		private titleService: Title,
+		// private titleService: Title,
 		private _fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
 		ga('send', 'pageview');
 
 		// Set page title
-		this.titleService.setTitle('Sign Up | Create an account');
+		// this.titleService.setTitle('Sign Up | Create an account');
 
 		// forgot password form
 		this.actionForm = this._fb.group({

@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
 declare var ga: Function;
@@ -7,20 +6,14 @@ declare var ga: Function;
 	selector: 'app-error',
 	templateUrl: './error.component.html'
 })
-
 export class ErrorComponent implements OnInit {
 
-	constructor(
-		private titleService: Title,
-	) { }
+	constructor() { }
 
 	ngOnInit() {
 		// Set Google analytics
 		let urlGa = 'error';
 		ga('set', 'page', urlGa);
 		ga('send', 'pageview');
-
-		// Set page title
-		this.titleService.setTitle('Error');
 	}
 }

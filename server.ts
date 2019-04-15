@@ -54,7 +54,6 @@ app.engine('html', (_, options, callback) => {
             provideModuleMap(LAZY_MODULE_MAP),
             <ValueProvider> { provide: REQUEST, useValue: options.req },
             <ValueProvider> { provide: RESPONSE, useValue: options.res },
-            <ValueProvider> { provide: `REQUEST_MODE`, useValue: `USER-REQUEST` },
             <ValueProvider> { provide: `REDIRECT_CONFIG`, useValue: RC }
         ]
     })
@@ -104,7 +103,7 @@ app.get(/.*/, function(req: express.Request, res: express.Response, next: Functi
 // All regular routes use the Universal engine
 app.get('*', (req: express.Request, res: express.Response, next: Function) => {
 
-    if (!req.originalUrl.includes(`404.html`) && !/\?\w+=/.test(req.originalUrl) && /\.|assets*/g.test(req.originalUrl)) {
+    if (/\.|assets*/g.test(req.originalUrl)) {
         console.log(`404 Not Found :: ${req.originalUrl}`);
         res.status(404).send('Not Found');
         return;
@@ -120,7 +119,6 @@ app.get('*', (req: express.Request, res: express.Response, next: Function) => {
         providers: [
             <ValueProvider> { provide: REQUEST, useValue: req },
             <ValueProvider> { provide: RESPONSE, useValue: res },
-            <ValueProvider> { provide: `REQUEST_MODE`, useValue: `USER-REQUEST` },
             <ValueProvider> { provide: `REDIRECT_CONFIG`, useValue: null }
         ],
     });
