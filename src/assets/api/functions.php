@@ -6,7 +6,7 @@
 	// Validate every call to api
 	function validateAccess(){
 		foreach (getallheaders() as $name => $value) {
-			if ($name == 'Authorization') {
+			if ($name === 'Authorization') {
 				$validate = checkUserAuthorization($value);
 			}
 		}
@@ -19,7 +19,7 @@
 	function checkUserAuthorization($data){
 		global $conn;
 
-		if ($data == '0xQ3s1RVrSRpWtcN') {
+		if ($data === '0xQ3s1RVrSRpWtcN') {
 			$result = true;
 		} else {
 			$data = explode('xQ3s1RVrSR', $data);
@@ -33,7 +33,7 @@
 			$result = $conn->query($sql);
 
 			// Close all ACCESS
-			if ($result->num_rows == 0){
+			if ($result->num_rows === 0){
 				$conn->close();
 				exit;
 			}
@@ -66,7 +66,7 @@
 		$minutes = floor(($timeInSeconds / 60) % 60). ':';
 		$seconds = substr('00' . $timeInSeconds % 60, -2);
 
-		if ($hours == '0:')
+		if ($hours === '0:')
 			$hours = '';
 
 		return $hours.$minutes.$seconds;
@@ -235,19 +235,23 @@
 	function checkFollowingStatus($sender, $receiver){
 		global $conn;
 
-		$sql = "SELECT id, status
-				FROM z_following
-				WHERE sender = $sender 
-					AND receiver = $receiver 
-					AND is_deleted = 0";
-		$result = $conn->query($sql)->fetch_assoc();
+		if ($sender !== $receiver) {
+			$sql = "SELECT status
+					FROM z_following
+					WHERE sender = $sender 
+						AND receiver = $receiver 
+						AND is_deleted = 0";
+			$result = $conn->query($sql)->fetch_assoc();
 
-		if ($result)
-			$result = ($result['status'] == 1) ? 'pending' : 'following';
-		else
-			$result = 'unfollow';
+			if ($result)
+				$result = intval($result['status']) === 1 ? 'pending' : 'following';
+			else
+				$result = 'unfollow';
 
-		return $result;
+			return $result;
+		} else {
+			return null;
+		}
 	}
 
 	// Count following
@@ -378,6 +382,48 @@
 		}
 
 		return $data;
+	}
+
+	// Count replays
+	function counSongReplays($id){
+		global $conn;
+
+		$sql = "SELECT id
+				FROM z_audios_replays
+				WHERE song = $id";
+		$result = $conn->query($sql);
+
+		return $result->num_rows;
+	}
+	
+	// Count times added
+	function counSongTimesAdded($id){
+		global $conn;
+
+		$sql = "SELECT id
+				FROM z_audios_favorites
+				WHERE song = $id
+					AND is_deleted = 0";
+		$result = $conn->query($sql);
+
+		return $result->num_rows;
+	}
+
+	// Get publication data for notification
+	function getSongById($id){
+		global $conn;
+
+		$sql = "SELECT id, name, title, original_title, original_artist, duration, image
+				FROM z_audios
+				WHERE id = $id AND is_deleted = 0";
+		$result = $conn->query($sql)->fetch_assoc();
+
+		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
+		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
+		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
+		$result['imageSrc'] = 'assets/media/audios/thumbnails/'.$result['image'];
+
+		return $result;
 	}
 
 	////////////
@@ -517,7 +563,7 @@
 			$result['content'] = html_entity_decode($result['content'], ENT_QUOTES);
 			$result['bookmark'] = array('id' => null, 'checked' => false);
 			$result['likers'] = getPublicationLikers($result['id']);
-			$result['disabledComments'] = ($result['disabledComments'] == 0) ? true : false;
+			$result['disabledComments'] = ($result['disabledComments'] === 0) ? true : false;
 			$result['countComments'] = countCommentsPublication($result['id']);
 			$result['countLikes'] = countLikesPublication($result['id']);
 			$result['comments'] = [];
@@ -777,7 +823,7 @@
 
 		switch ($url) {
 			case 'followers':
-				if ($type == 'startFollowing') {
+				if ($type === 'startFollowing') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -789,7 +835,7 @@
 					$sqlInsert = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 									VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$resultInsert = $conn->query($sqlInsert);
-				} else if ($type == 'stopFollowing') {
+				} else if ($type === 'stopFollowing') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -797,7 +843,7 @@
 								AND page_url = '$url'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
-				} else if ($type == 'startFollowingPrivate') {
+				} else if ($type === 'startFollowingPrivate') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -810,7 +856,7 @@
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
-				} else if ($type == 'acceptRequest') {
+				} else if ($type === 'acceptRequest') {
 					$sql = "UPDATE z_notifications
 							SET page_type = 'startFollowingPrivateAccepted', ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -830,7 +876,7 @@
 					$sqlInsert = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 									VALUES ($receiver, $sender, $id, '$url', '$type', '$ipAddress')";
 					$resultInsert = $conn->query($sqlInsert);
-				} else if ($type == 'declineRequest') {
+				} else if ($type === 'declineRequest') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -843,11 +889,11 @@
 				break;
 			case 'photos':
 			case 'publications':
-				if ($type == 'like') {
+				if ($type === 'like') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
-				} else if ($type == 'unlike') {
+				} else if ($type === 'unlike') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -856,11 +902,11 @@
 								AND page_url = '$url' 
 								AND page_type = 'like'";
 					$result = $conn->query($sql);
-				} else if ($type == 'comment') {
+				} else if ($type === 'comment') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address) 
 							VALUES ($sender, $receiver, $id, '$url', '$type', $comment, '$ipAddress')";
 					$result = $conn->query($sql);
-				} else if ($type == 'uncomment') {
+				} else if ($type === 'uncomment') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 1, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -869,7 +915,7 @@
 								AND page_url = '$url' 
 								AND comment_id = $comment";
 					$result = $conn->query($sql);
-				} else if ($type == 'commentUncommented') {
+				} else if ($type === 'commentUncommented') {
 					$sql = "UPDATE z_notifications
 							SET is_deleted = 0, ip_address = '$ipAddress' 
 							WHERE sender = $sender 
@@ -878,15 +924,24 @@
 								AND page_url = '$url' 
 								AND comment_id = $comment";
 					$result = $conn->query($sql);
-				} else if ($type == 'mention') {
+				} else if ($type === 'mention') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
-				} else if ($type == 'mentionComment') {
+				} else if ($type === 'mentionComment') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address) 
 							VALUES ($sender, $receiver, $id, '$url', '$type', $comment, '$ipAddress')";
 					$result = $conn->query($sql);
+				} else if ($type === 'share') {
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
+					$result = $conn->query($sql);
 				}
+				break;
+			case 'audios':
+				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
+				$result = $conn->query($sql);
 				break;
 		}
 	}

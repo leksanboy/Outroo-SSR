@@ -13,6 +13,9 @@
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+			$row['replays'] = counSongReplays($row['id']);
+			$row['timesAdded'] = counSongTimesAdded($row['id']);
+			$row['imageSrc'] = 'assets/media/audios/thumbnails/'.$row['image'];
 			$data[] = $row;
 		}
 

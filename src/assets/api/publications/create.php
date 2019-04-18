@@ -85,10 +85,8 @@
 				"receiver" 	=> $rcv,
 				"id" 		=> $insertedId
 			);
-			
-			// Check to not notificate myself
-			if ($sender != $receiver)
-				generateNotification($notification);
+
+			generateNotification($notification);
 		}
 	}
 

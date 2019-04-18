@@ -101,6 +101,8 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService
 	) {
+		console.log("data", data);
+
 		this.translations = data.translations;
 		this.sessionData = data.sessionData;
 		this.data.current = data.item ? data.item : [];
@@ -112,31 +114,36 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 		this.newComment('clear', null, this.data.current);
 
 		// Check if is new or conversation
-		if (this.data.comeFrom == 'new'){
-			this.data.active = 'default';
+		// if (this.data.comeFrom == 'new'){
+		// 	this.data.active = 'default';
 
-			// Get default following users list
-			this.defaultUsers();
+		// 	// Get default following users list
+		// 	this.defaultUsers();
 
-			// Search
-			this.actionFormSearch = this._fb.group({
-				caption: ['']
-			});
+		// 	// Search
+		// 	this.actionFormSearch = this._fb.group({
+		// 		caption: ['']
+		// 	});
 
-			// Search/Reset
-			this.actionFormSearch.controls["caption"].valueChanges
-				.pipe(
-					debounceTime(400),
-					distinctUntilChanged())
-				.subscribe(val => {
-					(val.length > 0) ? this.search('default') : this.search('clear');
-				});
-		} else if (this.data.comeFrom == 'conversation'){
-			this.data.users = data.item.users ? data.item.users : [];
+		// 	// Search/Reset
+		// 	this.actionFormSearch.controls["caption"].valueChanges
+		// 		.pipe(
+		// 			debounceTime(400),
+		// 			distinctUntilChanged())
+		// 		.subscribe(val => {
+		// 			(val.length > 0) ? this.search('default') : this.search('clear');
+		// 		});
+		// } else if (this.data.comeFrom == 'conversation'){
+		// 	this.data.users = data.item.users ? data.item.users : [];
 			
-			// Get default conversation
-			this.defaultConversation('default', data.item.id);
-		} else if (this.data.comeFrom == 'sharePublication'){
+		// 	// Get default conversation
+		// 	this.defaultConversation('default', data.item.id);
+		// } else 
+
+		if (this.data.comeFrom == 'sharePhoto' || 
+			this.data.comeFrom == 'sharePublication' || 
+			this.data.comeFrom == 'shareSong'
+		){
 			this.data.active = 'default';
 
 			// Search
@@ -155,31 +162,6 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 
 			// Get default following users list
 			this.defaultUsers();
-
-			// Get default chats
-			this.defaultChats();
-		} else if (this.data.comeFrom == 'shareSong'){
-			this.data.active = 'default';
-
-			// Search
-			this.actionFormSearch = this._fb.group({
-				caption: ['']
-			});
-
-			// Search/Reset
-			this.actionFormSearch.controls["caption"].valueChanges
-				.pipe(
-					debounceTime(400),
-					distinctUntilChanged())
-				.subscribe(val => {
-					(val.length > 0) ? this.search('default') : this.search('clear');
-				});
-
-			// Get default following users list
-			this.defaultUsers();
-
-			// Get default chats
-			// this.defaultChats();
 		}
 	}
 
@@ -495,40 +477,39 @@ export class ShowConversationComponent implements OnInit, OnDestroy, AfterViewCh
 
 	// Send shared
 	sendShared(){
-		for (let i in this.data.users) {
-			if (this.data.users[i].type == 'user') {
-				let list = [];
-				list.push(this.data.users[i].user.id);
-				list.push(this.sessionData.current.id);
+		let users = [];
+		for (let user of this.data.users) {
+			users.push(user.id);
+		}
 
-				let data = {
-					sender: this.sessionData.current.id,
-					receivers: list,
-					publication:  this.data.item.id
-				}
+		if (this.data.users.length > 0) {
+			let id, url
 
-				// Create respective chats and insert publication
-				this.chatDataService.newChat(data)
-					.subscribe((res: any) => {
-						this.saveLoading = false;
-						this.data.comeFrom = 'conversation';
-						this.data.current.id = res;
-						this.data.new = true;
-					}, error => {
-						this.saveLoading = false;
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-			} else if (this.data.users[i].type == 'chat') {
-				let dataCreate = {
-					type: 'create',
-					chat: this.data.users[i].id,
-					user: this.sessionData.current.id,
-					publication: this.data.item.id,
-					action: 'publication'
-				}
-
-				this.chatDataService.comment(dataCreate).subscribe();
+			if (this.data.comeFrom == 'sharePhoto') {
+				id = this.data.item.id;
+				url = 'photos';
+			} else if (this.data.comeFrom == 'sharePublication') {
+				id = this.data.item.id;
+				url = 'publications';
+			} else if (this.data.comeFrom == 'shareSong') {
+				id = this.data.item.song;
+				url = 'audios';
 			}
+
+			let data = {
+				sender: this.sessionData.current.id,
+				receivers: users,
+				url: url,
+				id: id
+			};
+
+			this.notificationsDataService.share(data)
+				.subscribe((res: any) => {
+					this.saveLoading = false;
+				}, error => {
+					this.saveLoading = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 
 		this.alertService.success(this.translations.common.sentSuccessfully);

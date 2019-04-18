@@ -18,9 +18,11 @@
 			WHERE n.is_deleted = 0
 				AND
 				(
-					EXISTS (SELECT 1 FROM z_publications     WHERE id    = n.page_id and is_deleted = 0)
+					EXISTS (SELECT 1 FROM z_publications 		WHERE id    = n.page_id and is_deleted = 0)
 					OR
-					EXISTS (SELECT 1 FROM z_photos_favorites WHERE photo = n.page_id and is_deleted = 0)
+					EXISTS (SELECT 1 FROM z_photos_favorites 	WHERE photo = n.page_id and is_deleted = 0)
+					OR
+					EXISTS (SELECT 1 FROM z_audios 				WHERE id    = n.page_id and is_deleted = 0)
 				)
 				AND n.receiver = $user 
 			ORDER BY n.date DESC 
@@ -51,6 +53,10 @@
 			// Publications
 			if ($row['url'] == 'publications')
 				$row['contentData'] = getIdNameContentMediaCommentFromPublicationById($row['page'], $row['comment']);
+
+			// Audios
+			if ($row['url'] == 'audios')
+				$row['contentData'] = getSongById($row['page']);
 
 			$data[] = $row;
 		}

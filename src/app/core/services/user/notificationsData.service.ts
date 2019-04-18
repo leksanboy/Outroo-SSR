@@ -28,8 +28,8 @@ export class NotificationsDataService {
 			}));
 	}
 
-	generateNotification(data: any) {
-		let url = environment.url + 'assets/api/notifications/notificate.php';
+	share(data: any) {
+		let url = environment.url + 'assets/api/notifications/share.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())

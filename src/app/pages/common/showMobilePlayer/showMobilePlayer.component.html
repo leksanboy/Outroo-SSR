@@ -1,5 +1,11 @@
 <div class="mobilePlayer">
 	<div class="grabber" (click)="close()"></div>
+	
+	<div class="goTo">
+		<button mat-raised-button type="button" routerLink="/{{sessionData.current.username}}/songs" (click)="close()">
+			{{translations?.audios?.goAudios}}
+		</button>
+	</div>
 
 	<div class="box">
 		<div class="player">
@@ -11,11 +17,11 @@
 					</div>
 
 					<div class="add" *ngIf="audioPlayerData.current.initialized">
-						<button mat-mini-fab (click)="itemAudiosOptions('addRemoveSession', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">
+						<button mat-mini-fab (click)="itemSongOptions('addRemoveSession', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">
 							<i label="add" *ngIf="audioPlayerData.current.item.addRemoveSession"></i>
 							<i label="check" *ngIf="!audioPlayerData.current.item.addRemoveSession"></i>
 						</button>
-						<button mat-mini-fab (click)="itemAudiosOptions('addRemoveUser', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">
+						<button mat-mini-fab (click)="itemSongOptions('addRemoveUser', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">
 							<i label="add" *ngIf="!audioPlayerData.current.item.addRemoveUser"></i>
 							<i label="check" *ngIf="audioPlayerData.current.item.addRemoveUser"></i>
 						</button>
@@ -91,16 +97,16 @@
 								</button>
 							</span>
 							<mat-menu #appMenu="matMenu">
-								<button mat-menu-item (click)="itemAudiosOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
-								<button mat-menu-item (click)="itemAudiosOptions('report', x, null)">{{translations?.common?.report}}</button>
+								<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
 								<mat-divider *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'"></mat-divider>
-								<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 							</mat-menu>
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
+								<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 								<span *ngFor="let p of sessionData.current.playlists">
-									<button mat-menu-item *ngIf="!p.removed" (click)="itemAudiosOptions('playlist', x, p)">{{p.title}}</button>
+									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 								</span>
 							</mat-menu>
 						</div>

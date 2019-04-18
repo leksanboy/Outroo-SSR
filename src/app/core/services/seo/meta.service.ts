@@ -19,7 +19,7 @@ export class MetaService {
 		this.meta.updateTag({ itemtype: data.url 																		});
 
 		// Twitter
-		this.meta.updateTag({ name: 'twitter:card',			content: 'summary' 											});
+		this.meta.updateTag({ name: 'twitter:card',			content: 'summary_large_image' 								});
 		this.meta.updateTag({ name: 'twitter:site',			content: '@outroo' 											});
 		this.meta.updateTag({ name: 'twitter:title',		content: data.title 										});
 		this.meta.updateTag({ name: 'twitter:description',	content: data.description 									});

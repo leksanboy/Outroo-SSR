@@ -225,7 +225,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
 
 				// Set Google analytics
-				let urlGa =  '[' + res.id + ']/' + id + '/audios';
+				let urlGa =  '[' + res.id + ']/' + id + '/songs';
 				ga('set', 'page', urlGa);
 				ga('send', 'pageview');
 
@@ -931,10 +931,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+						// let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						// 	text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						
-						this.alertService.success(song + text);
+						// this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
@@ -952,9 +952,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
-						this.alertService.success(song + text);
+						item.insertedId = res;
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
@@ -1012,7 +1010,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Show playlist
 	showPlaylist(item){
-		this.location.go('/' + this.userData.username + '/audios#showPlaylist');
+		this.location.go('/' + this.userData.username + '/songs#showPlaylist');
 
 		let config = {
 			disableClose: false,
@@ -1028,7 +1026,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		let dialogRef = this.dialog.open(ShowPlaylistComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {
-			this.location.go('/' + this.userData.username + '/audios');
+			this.location.go('/' + this.userData.username + '/songs');
 		});
 	}
 
@@ -1065,7 +1063,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	itemOptionsPlaylist(type, item, index){
 		switch(type){
 			case("edit"):
-				this.location.go('/' + this.userData.username + '/audios#editPlaylist');
+				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
 				item.path = this.data.path;
 				item.index = index;
 

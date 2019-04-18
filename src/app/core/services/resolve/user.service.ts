@@ -18,9 +18,9 @@ export class UserResolver implements Resolve<any> {
 		private userDataService: UserDataService
 	) {}
 
-	resolve(route: ActivatedRouteSnapshot): Promise<any> {
+	resolve(route: ActivatedRouteSnapshot) {
 		let id = route.params['id'];
 
-		return this.userDataService.getUserMetaData(id);
+		return this.userDataService.getUserData(id);
 	}
 }

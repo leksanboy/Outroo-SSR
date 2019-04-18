@@ -47,10 +47,8 @@
 					"id" 		=> $id,
 					"comment" 	=> $insertedId
 				);
-				
-				// Check to not notificate myself
-				if ($sender != $receiver)
-					generateNotification($notification);
+
+				generateNotification($notification);
 			}
 		}
 		
@@ -76,6 +74,7 @@
 		);
 
 		generateNotification($notification);
+
 		var_dump(http_response_code(204));
 		
 		$conn->close();

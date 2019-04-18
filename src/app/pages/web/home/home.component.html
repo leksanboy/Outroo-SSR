@@ -38,11 +38,11 @@
 
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event)">
 					<mat-form-field>
-						<input autofocus type="email" matInput placeholder="Email" #Email maxlength="100"  formControlName="email">
+						<input autofocus type="email" matInput placeholder="{{translations?.signIn?.email}}" #Email maxlength="100"  formControlName="email">
 					</mat-form-field>
 
 					<mat-form-field>
-						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="Password" #Password maxlength="100"  formControlName="password">
+						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100"  formControlName="password">
 						<button mat-button matSuffix mat-icon-button type="button" class="noLength" (click)="showPassword=!showPassword" tabindex="-1">
 							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>

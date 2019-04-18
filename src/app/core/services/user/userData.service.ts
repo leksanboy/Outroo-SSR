@@ -139,7 +139,8 @@ export class UserDataService {
 
 	getUserData(id) {
 		let url = environment.url + 'assets/api/user/getUser.php';
-		let params = 	'&id=' + id;
+		let params = 	'&id=' + id +
+						'&s=' + this.getSessionData().current.id;
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params)
@@ -148,19 +149,20 @@ export class UserDataService {
 			}));
 	}
 
-	async getUserMetaData(id): Promise<any> {
-		let url = environment.url + 'assets/api/user/getUser.php';
-		let params = 	'&id=' + id;
-		params = params.replace('&', '?');
+	// async getUserData(id): Promise<any> {
+	// 	let url = environment.url + 'assets/api/user/getUser.php';
+	// 	let params = 	'&id=' + id +
+	// 					'&s=' + this.getSessionData().current.id;
+	// 	params = params.replace('&', '?');
 
-		return await new Promise(resolve => {
-			this.http.get(url + params)
-				.subscribe(data => {
-					let res = data.json();
-					resolve(res)
-				});
-		});
-	}
+	// 	return await new Promise(resolve => {
+	// 		this.http.get(url + params)
+	// 			.subscribe(data => {
+	// 				let res = data.json();
+	// 				resolve(res)
+	// 			});
+	// 	});
+	// }
 
 	// Updates
 	updateData(data) {

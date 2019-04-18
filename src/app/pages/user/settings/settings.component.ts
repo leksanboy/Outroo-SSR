@@ -180,6 +180,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(val => {
 				this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
 			});
+
 		this.actionFormPersonalData.get('username').valueChanges
 			.pipe(
 				debounceTime(400),
@@ -421,70 +422,80 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	// Save personal data
 	submitPersonal() {
-		this.savePersonalDataLoading = true;
-		
-		let dataAbout = this.aboutEdit('transformBeforeSend', null),
-		data = {
+		let dataAbout = this.aboutEdit('transformBeforeSend', null);
+		let form = this.actionFormPersonalData.value;
+		let regex = /^[a-zA-Z0-9._-]+$/;
+		let data = {
 			id: this.sessionData.current.id,
-			username: this.actionFormPersonalData.get('username').value,
-			name: this.actionFormPersonalData.get('name').value.trim(),
-			language: this.actionFormPersonalData.get('language').value,
+			username: form.username,
+			name: form.name.trim(),
+			language: form.language,
 			about: dataAbout.content,
 			aboutOriginal: dataAbout.original
 		};
 
-		this.userDataService.updateData(data)
-			.subscribe(res => {
-				setTimeout(() => {
+		if (data.username.trim().length === 0 || !regex.test(data.username)) {
+			this.alertService.error(this.translations.settings.usernameRequirements);
+		} else {
+			this.savePersonalDataLoading = true;
+
+			this.userDataService.updateData(data)
+				.subscribe(res => {
+					setTimeout(() => {
+						this.savePersonalDataLoading = false;
+						this.sessionData = this.userDataService.getSessionData();
+						this.sessionService.setData(this.sessionData);
+
+						// Get translations
+						this.userDataService.getTranslations(this.sessionData.current.language)
+							.subscribe(data => {
+								this.translations = data;
+
+								// Alert Message
+								this.alertService.success(this.translations.common.savedSuccessfully);
+							});
+					}, 1000);
+				}, error => {
 					this.savePersonalDataLoading = false;
-					this.sessionData = this.userDataService.getSessionData();
-					this.sessionService.setData(this.sessionData);
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
 
-					// Get translations
-					this.userDataService.getTranslations(this.sessionData.current.language)
-						.subscribe(data => {
-							this.translations = data;
-
-							// Alert Message
-							this.alertService.success(this.translations.common.savedSuccessfully);
-						});
-				}, 1000);
-			}, error => {
-				this.savePersonalDataLoading = false;
-				this.alertService.error(this.translations.common.anErrorHasOcurred);
-			});
 	}
 
 	// Save password data
 	submitPassword() {
-		this.savePasswordDataLoading = true;
+		let form = this.actionFormPasswordData.value;
 
-		if (this.actionFormPasswordData.get('oldPassword').value.trim().length > 0 &&
-			this.actionFormPasswordData.get('newPassword').value.trim().length > 0 &&
-			this.actionFormPasswordData.get('confirmPassword').value.trim().length > 0
+		if (form.oldPassword.trim().length > 0 &&
+			form.newPassword.trim().length > 0 &&
+			form.confirmPassword.trim().length > 0
 		) {
-			let data = {
-				id: this.sessionData.current.id,
-				oldPassword: this.actionFormPasswordData.get('oldPassword').value,
-				newPassword: this.actionFormPasswordData.get('newPassword').value
-			}
+			if (form.newPassword.trim() !== form.confirmPassword.trim()) {
+				this.alertService.error(this.translations.settings.passwordsNotMatch);
+			} else {
+				this.savePasswordDataLoading = false;
 
-			this.userDataService.updatePassword(data)
-				.subscribe(res => {
-					setTimeout(() => {
-						this.validatorOldPassword = 'done';
+				let data = {
+					id: this.sessionData.current.id,
+					oldPassword: form.oldPassword,
+					newPassword: form.newPassword
+				}
+
+				this.userDataService.updatePassword(data)
+					.subscribe(res => {
+						setTimeout(() => {
+							this.validatorOldPassword = 'done';
+							this.savePasswordDataLoading = false;
+							this.alertService.success(this.translations.common.savedSuccessfully);
+						}, 1000);
+					}, error => {
+						this.validatorOldPassword = 'bad';
 						this.savePasswordDataLoading = false;
-						this.alertService.success(this.translations.common.savedSuccessfully);
-					}, 1000);
-				}, error => {
-					this.validatorOldPassword = 'bad';
-					this.savePasswordDataLoading = false;
-					this.alertService.error(this.translations.settings.oldPasswordIncorrect);
-				});
+						this.alertService.error(this.translations.settings.oldPasswordIncorrect);
+					});
+			}
 		} else {
-			this.savePasswordDataLoading = false;
-
-			// show error message
 			this.alertService.error(this.translations.common.completeAllFields);
 		}
 

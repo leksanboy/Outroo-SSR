@@ -309,10 +309,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowConversation(item);
 				break;
+			case "newTab":
+				let url = this.environment.url + 'p/' + item.name;
+				this.window.open(url, '_blank');
+				break;
 			case "copyLink":
 				let urlExtension = this.environment.url + 'p/' + item.name;
-				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case "messageSong":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTabSong":
+				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
+				break;
+			case "copyLinkSong":
+				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
 	}
@@ -342,7 +357,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options: add/remove, share, search, report
-	itemAudiosOptions(type, item, playlist){
+	itemSongOptions(type, item, playlist){
 		switch(type){
 			case("addRemoveUser"):
 				item.addRemoveUser = !item.addRemoveUser;

@@ -31,18 +31,15 @@
 									</mat-menu>
 									
 									<mat-menu #menuShareSocial="matMenu">
-										<button mat-menu-item (click)="shareOn('message', x)">
-											{{translations?.common?.sendMessage}}
-										</button>
-										<button mat-menu-item (click)="shareOn('copyLink', x)">
-											{{translations?.common?.copyLink}}
-										</button>
+										<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
+										<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+										<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
 									</mat-menu>
 								</div>
 							</div>
 							
 							<div class="body">
-								<div class="urlVideo" *ngIf="x.urlVideo && !x.photos">
+								<!-- <div class="urlVideo" *ngIf="x.urlVideo && !x.photos">
 									<div class="embedResponsive">
 										<div class="image" (click)="x.urlVideo.showVideo=!x.urlVideo.showVideo" *ngIf="!x.urlVideo.showVideo">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
@@ -55,7 +52,7 @@
 										</div>
 										<span [innerHtml]="x.urlVideo.iframe | safeHtml" *ngIf="x.urlVideo.showVideo"></span>
 									</div>
-								</div>
+								</div> -->
 
 								<div class="photos" *ngIf="x.photos">
 									<span *ngIf="x.photos.length == 1">
@@ -134,6 +131,7 @@
 														<img *ngIf="a.image" [src]="environment.pathAudios + 'thumbnails/' + a.image"/>
 													</button>
 												</div>
+
 												<div class="text" (click)="playItem(x, a, i, 'publication')">
 													<div class="titleArtist" title="{{a.original_title ? a.original_title : a.title}}">
 														<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
@@ -141,21 +139,31 @@
 													</div>
 													<div class="duration">{{a.duration}}</div>
 												</div>
+
 												<div class="actions" *ngIf="sessionData.current.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
 														<i label="check" *ngIf="a.addRemoveUser"></i>
 														<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
 													</button>
+
 													<mat-menu #appMenu="matMenu">
-														<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 														<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
-														<button mat-menu-item (click)="itemAudiosOptions('report', a, null)">{{translations?.common?.report}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuSongShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemSongOptions('report', a, null)">{{translations?.common?.report}}</button>
 													</mat-menu>
+
 													<mat-menu #menuPlaylists="matMenu">
-														<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
+														<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 														<span *ngFor="let p of sessionData.current.playlists">
-															<button mat-menu-item *ngIf="!p.removed" (click)="itemAudiosOptions('playlist', a, p)">{{p.title}}</button>
+															<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">{{p.title}}</button>
 														</span>
+													</mat-menu>
+
+													<mat-menu #menuSongShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOn('messageSong', a)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOn('newTabSong', a)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOn('copyLinkSong', a)">{{translations?.common?.copyLink}}</button>
 													</mat-menu>
 												</div>
 											</div>
@@ -228,7 +236,7 @@
 															</button>
 															<mat-menu #optionsComments="matMenu">
 																<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
-																<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c.user.id == sessionData.current.id">{{c.addRemove ? translations?.common?.add : translations?.common?.remove}}</button>
+																<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c.user.id === sessionData.current.id || x.user.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 															</mat-menu>
 														</div>
 													</div>

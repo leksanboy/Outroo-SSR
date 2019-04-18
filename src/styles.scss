@@ -858,13 +858,13 @@ body{
 	}
 
 	.song{
-		border: none !important;
 		display: flex;
+		border: none;
 		width: 100%;
 		padding: 0;
 		margin: 0;
 
-		.inner{
+		.songInner{
 			padding: 2px 0 2px 18px;
 			box-sizing: border-box;
 			align-items: center;
@@ -878,7 +878,7 @@ body{
 				background-color: transparentize($greyColor, .9);
 			}
 
-			.image{
+			.songImage{
 				width: 42px;
 
 				button{
@@ -907,7 +907,7 @@ body{
 				}
 			}
 
-			.text{
+			.songText{
 				justify-content: space-between;
 				box-sizing: border-box;
 				line-height: 42px;
@@ -920,6 +920,7 @@ body{
 					flex-direction: column;
 					box-sizing: border-box;
 					padding: 0 0 0 12px;
+					position: relative;
 					text-align: left;
 					overflow: hidden;
 					max-width: 80%;
@@ -931,6 +932,7 @@ body{
 						line-height: 15px;
 						overflow: hidden;
 						padding: 4px 0;
+						width: 100%;
 					}
 
 					.artist{
@@ -940,10 +942,12 @@ body{
 						line-height: 13px;
 						overflow: hidden;
 						font-size: 13px;
+						width: 100%;
 					}
 				}
 
 				.duration{
+					justify-content: center;
 					padding: 0 6px 0 0;
 					color: $greyColor;
 					text-align: right;
@@ -953,10 +957,76 @@ body{
 				}
 			}
 
-			.actions{
+			.songActions{
 				button{
 					border-radius: 50% !important;
 				}
+			}
+		}
+
+		&.active{
+			.songInner{
+				background-color: transparentize($fontBlackColor, .95);
+
+				.songText{
+					color: $blueColor;
+
+					.titleArtist .artist{
+						color: transparentize($blueColor, .5);
+					}
+				}
+			}
+		}
+
+		&.default{
+			.songImage{
+				button{
+					i{
+						background-color: currentColor !important;
+					}
+				}
+			}
+		}
+
+		&.remove{
+			filter: grayscale(100%);
+			opacity: .5;
+		}
+	}
+
+	.stats{
+		box-sizing: border-box;
+		padding: 6px 12px 24px;
+		float: left;
+		width: 100%;
+
+		.title{
+			text-transform: uppercase;
+			padding: 0 6px 4px;
+			font-size: 13px;
+		}
+
+		.texts{
+			align-items: center;
+			font-weight: bold;
+			font-size: 17px;
+			display: flex;
+			width: 100%;
+
+			i{
+				margin: 0;
+			}
+
+			.text{
+				padding: 0 0 0 4px;
+				font-size: 13px;
+			}
+
+			.divider{
+				background-color: $greyColor;
+				margin: 0 6px 0 12px;
+				height: 24px;
+				width: 1px;
 			}
 		}
 	}
@@ -1368,6 +1438,8 @@ body{
 							border-radius: 5px;
 							font-size: inherit;
 							line-height: 24px;
+							max-height: 24px;
+							min-height: 24px;
 							height: 24px;
 							padding: 0;
 
@@ -1451,7 +1523,7 @@ body{
 			.countComments{
 				padding: 4px 0 12px 0;
 				font-weight: bold;
-				font-size: 15px;
+				font-size: 13px;
 				width: 100%;
 				float: left;
 			}
@@ -2350,7 +2422,6 @@ body{
 				.footer{
 					color: $whiteColor;
 					text-align: center;
-					font-weight: bold;
 					line-height: 24px;
 					margin: 48px 0 0;
 					font-size: 13px;
@@ -2366,6 +2437,7 @@ body{
 
 						li{
 							display: inline-block;
+							font-weight: bold;
 							list-style: none;
 							padding: 0 6px;
 
@@ -3495,6 +3567,7 @@ body{
 								height: 48px;
 
 								button{
+									text-transform: uppercase;
 									text-transform: inherit;
 									line-height: 32px;
 									padding: 0 12px;
@@ -4256,7 +4329,6 @@ body{
 			.bodyReport{
 				width: $modalWidth;
 				padding: 0 0 24px;
-				min-height: 180px;
 
 				.form{
 					box-sizing: border-box;
@@ -4293,7 +4365,7 @@ body{
 				width: 100%;
 
 				button{
-					background: transparentize($whiteColor, .9);
+					background: transparent;
 					color: currentColor;
 					margin: 0 0 0 8px;
 					box-shadow: none;
@@ -4314,11 +4386,6 @@ body{
 							}
 						}
 					}
-
-					// &:last-child{
-					// 	background: $blueColor;
-					// 	color: $whiteColor;
-					// }
 				}
 
 				&.newChatComment{
@@ -4419,6 +4486,8 @@ body{
 				}
 
 				&.newPublication{
+					padding: 0 8px 0 0;
+
 					.files{
 						text-align: left;
 						display: flex;
@@ -5025,6 +5094,7 @@ body{
 
 						.pending{
 							background-color: $redColor;
+							margin: 18px 12px 0 0;
 							color: $whiteColor;
 							border-radius: 8px;
 							text-align: center;
@@ -5032,7 +5102,6 @@ body{
 							line-height: 12px;
 							padding: 2px 6px;
 							font-size: 10px;
-							margin: 18px 0;
 							height: 12px;
 						}
 
@@ -5824,7 +5893,7 @@ body{
 											height: 36px;
 
 											.inner{
-												width: calc(100% - 12px);
+												width: calc(100% - 12px - 2px);
 												justify-content: center;
 												align-items: center;
 												margin: 0 auto;
@@ -5833,10 +5902,10 @@ body{
 
 												i{
 													mask-size: 24px calc(24px * 15);
+													margin: 0 2px 0 0;
 													min-width: 12px;
 													height: 12px;
 													width: 12px;
-													margin: 0;
 
 													&[label="photo-camera"]{
 														mask-position: -12px -288px;
@@ -5887,9 +5956,11 @@ body{
 							button{
 								background-color: $fontBlackColor;
 								text-transform: uppercase;
+								text-overflow: ellipsis;
 								color: $whiteColor;
 								line-height: 26px;
 								font-weight: bold;
+								overflow: hidden;
 								font-size: 13px;
 								padding: 0 8px;
 								margin: 0 6px;
@@ -6107,8 +6178,15 @@ body{
 								}
 
 								.audios{
+									margin: 12px 0 0;
 									width: 100%;
 									float: left;
+
+									ul{
+										li{
+											padding: inherit;
+										}
+									}
 								}
 							}
 
@@ -6691,6 +6769,23 @@ body{
 										color: $greyColor;
 										cursor: pointer;
 										font-size: 14px;
+										width: 100%;
+
+										.song{
+											border: 1px solid transparentize($greyColor, .5);
+											border-radius: 5px;
+											margin: 4px 0 0;
+
+											.songInner{
+												padding: 6px 0 6px 6px;
+												margin: 0;
+
+												.songText .titleArtist .title,
+												.songText .titleArtist .artist{
+													white-space: inherit;
+												}
+											}
+										}
 									}
 								}
 
@@ -8969,6 +9064,21 @@ body{
 				margin: 12px auto;
 				width: 36px;
 				height: 4px;
+			}
+
+			.goTo{
+				justify-content: center;
+				margin: 0 0 12px;
+				display: flex;
+				width: 100%;
+
+				button{
+					background-color: $blackColor;
+					color: $whiteColor;
+					line-height: 24px;
+					font-size: 13px;
+					height: 24px;
+				}
 			}
 
 			.box{

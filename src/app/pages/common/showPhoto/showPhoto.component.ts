@@ -169,6 +169,24 @@ export class ShowPhotoComponent implements OnInit {
 		}
 	}
 
+	// Share on social media
+	shareOn(type, item){
+		switch (type) {
+			case "message":
+				item.comeFrom = 'sharePhoto';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTab":
+				let url = this.environment.url + 'f/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case "copyLink":
+				let urlExtension = this.environment.url + 'f/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
 	// Check like
 	checkLike(id, user){
 		let data = {

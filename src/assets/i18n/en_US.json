@@ -14,7 +14,8 @@
 		"removeCover": "Remove cover",
 		"addCoverToPlaylist": "Add cover to playlist (can be empty)",
 		"createPlaylist": "Create playlist",
-		"uploadOrSearch": "Upload or search some songs"
+		"uploadOrSearch": "Upload or search some songs",
+		"goAudios": "Go to my songs"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",
@@ -68,14 +69,16 @@
 		"commentedYourPublication": "Commented your publication",
 		"likedYourPublication": "Liked your publication",
 		"mentionOnPublication": "Mention you on publication",
-		"mentionOnCommentOnPublication": "Mention you on comment on publication",
-		"sharedPublication": "Shared a publication with you",
+		"mentionOnCommentOnPublication": "Mention you on comment",
+		"sharedPublication": "Shared a publication",
 		"likedYourPhoto": "Liked your photo",
 		"commentedYourPhoto": "Commented your photo",
 		"mentionOnPhoto": "Mention you on photo",
-		"mentionOnCommentOnPhoto": "Mention you on comment on photo",
+		"mentionOnCommentOnPhoto": "Mention you on comment",
 		"sharedPhoto": "Shared a photo",
-		"goToNotifications": "Go to Notifications"
+		"sharedAudio": "Shared a song",
+		"goToNotifications": "Go to Notifications",
+		"share": "Share"
 	},
 	"photos": {
 		"title": "Photos",
@@ -107,12 +110,16 @@
 		"changeAvatar": "Change avatar",
 		"email": "Email",
 		"password": "Password",
-		"oldPasswordIncorrect": "Old password is incorrect"
+		"oldPasswordIncorrect": "Old password is incorrect",
+		"usernameRequirements": "Username can only contain letters, numbers, ('.' dot), (',' comma), ('_' underscore) and ('-' middle dash)",
+		"passwordsNotMatch": "New password does not match with confirm password"
 	},
 	"song": {
 		"title": "Song",
 		"stats": "Stats",
-		"noData": "The song does not exist or has been removed."
+		"noData": "The song does not exist or has been removed.",
+		"replays": "replays",
+		"timesAdded": "times added"
 	},
 	"about":{
 		"title": "About us",
@@ -171,7 +178,7 @@
 		}
 	},
 	"privacy":{
-		"title": "Privacy",
+		"title": "Privacy policy",
 		"description": "Terms conditions and privacy policy of the site."
 	},
 	"resetPassword":{
@@ -240,6 +247,8 @@
 	"common": {
 		"submit": "Submit",
 		"close": "Close",
+		"post": "Post",
+		"send": "Send",
 		"yes": "Yes",
 		"no": "No",
 		"back": "Back",

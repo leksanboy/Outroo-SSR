@@ -130,7 +130,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Item options: add/remove, share, search, report
-	itemAudiosOptions(type, item, playlist) {
+	itemSongOptions(type, item, playlist) {
 		switch(type){
 			case("addRemoveSession"):
 				item.addRemoveSession = !item.addRemoveSession;

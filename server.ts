@@ -104,7 +104,8 @@ app.get(/.*/, function(req: express.Request, res: express.Response, next: Functi
 // All regular routes use the Universal engine
 app.get('*', (req: express.Request, res: express.Response, next: Function) => {
 
-    if (!req.originalUrl.includes(`404.html`) && !/\?\w+=/.test(req.originalUrl) && /\.|assets*/g.test(req.originalUrl)) {
+    // if (!req.originalUrl.includes(`404.html`) && !/\?\w+=/.test(req.originalUrl) && /\.|assets*/g.test(req.originalUrl)) {
+    if (/assets*/g.test(req.originalUrl)) {
         console.log(`404 Not Found :: ${req.originalUrl}`);
         res.status(404).send('Not Found');
         return;

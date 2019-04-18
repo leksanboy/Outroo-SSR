@@ -49,8 +49,7 @@
 				);
 				
 				// Check to not notificate myself
-				if ($sender != $receiver)
-					generateNotification($notification);
+				generateNotification($notification);
 			}
 		}
 		
@@ -75,10 +74,8 @@
 			"id" 		=> $id,
 			"comment" 	=> $comment
 		);
-		
-		// Check to not notificate myself
-		if ($sender != $receiver)
-			generateNotification($notification);
+
+		generateNotification($notification);
 
 		var_dump(http_response_code(204));
 		

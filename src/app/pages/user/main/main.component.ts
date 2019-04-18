@@ -83,6 +83,9 @@ export class MainComponent implements OnInit, OnDestroy {
 					// User data from routing resolve
 					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 
+					if (this.userData)
+						this.userExists = true;
+
 					let metaData = {
 						page: this.userData.name,
 						title: this.userData.name,
@@ -118,8 +121,33 @@ export class MainComponent implements OnInit, OnDestroy {
 					// Get translations
 					this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
 
-					// Set user page
-					this.siteUserData(this.userData.username);
+					// Update user data if im the user
+					if (this.userData.id == this.sessionData.current.id)
+						this.sessionData = this.userDataService.setSessionData('update', this.userData);
+
+					// Set Google analytics
+					let urlGa =  '[' + this.userData.id + ']/' + this.userData.id + '/main';
+					ga('set', 'page', urlGa);
+					ga('send', 'pageview');
+
+					// Data following/visitor
+					let data = {
+						sender: this.sessionData ? this.sessionData.current.id : 0,
+						receiver: this.userData.id
+					};
+
+					// // Check if following
+					// if (this.sessionData) {
+					// 	this.followsDataService.checkFollowing(data)
+					// 		.subscribe(res => {
+					// 			this.userData.status = res;
+					// 		});
+					// }
+
+					// Set visitor
+					this.userDataService.setVisitor(data).subscribe();
+
+					// Get publications
 					this.default('default', this.userData.username, this.sessionData.current.id);
 				}
 			});
@@ -180,59 +208,61 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeNewPublication.unsubscribe();
 	}
 
-	// User data of the page
-	siteUserData(id){
-		this.userDataService.getUserData(id)
-			.subscribe(res => {
-				if (res) {
-					this.userExists = true;
-					this.userData = res;
+	// // User data of the page
+	// siteUserData(id){
+	// 	this.userDataService.getUserData(id)
+	// 		.subscribe(res => {
+	// 			if (res) {
+	// 				this.userExists = true;
+	// 				this.userData = res;
 
-					// Update user data if im the user
-					if (this.userData.id == this.sessionData.current.id)
-						this.sessionData = this.userDataService.setSessionData('update', res);
+	// 				// Update user data if im the user
+	// 				if (this.userData.id == this.sessionData.current.id)
+	// 					this.sessionData = this.userDataService.setSessionData('update', res);
 
-					// Set Google analytics
-					let urlGa =  '[' + this.userData.id + ']/' + id + '/main';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
+	// 				// Set Google analytics
+	// 				let urlGa =  '[' + this.userData.id + ']/' + id + '/main';
+	// 				ga('set', 'page', urlGa);
+	// 				ga('send', 'pageview');
 
-					// Data following/visitor
-					let data = {
-						sender: this.sessionData ? this.sessionData.current.id : 0,
-						receiver: this.userData.id
-					}
+	// 				// Data following/visitor
+	// 				let data = {
+	// 					sender: this.sessionData ? this.sessionData.current.id : 0,
+	// 					receiver: this.userData.id
+	// 				}
 
-					// Check if following
-					if (this.sessionData) {
-						this.followsDataService.checkFollowing(data)
-							.subscribe(res => {
-								this.userData.status = res;
-							});
-					}
+	// 				// Check if following
+	// 				if (this.sessionData) {
+	// 					this.followsDataService.checkFollowing(data)
+	// 						.subscribe(res => {
+	// 							this.userData.status = res;
+	// 						});
+	// 				}
 
-					// Set visitor
-					this.userDataService.setVisitor(data).subscribe();
-				} else {
-					this.userExists = false;
-					this.userData = [];
-					this.userData.username = id;
-				}
+	// 				// Set visitor
+	// 				this.userDataService.setVisitor(data).subscribe();
+	// 			} else {
+	// 				this.userExists = false;
+	// 				this.userData = [];
+	// 				this.userData.username = id;
+	// 			}
 
-				// Set location init
-				this.location.go('/' + this.userData.username);
-			});
-	}
+	// 			// Set location init
+	// 			this.location.go('/' + this.userData.username);
+
+	// 			console.log("this.userData", this.userData);
+	// 		});
+	// }
 
 	// Follow / Unfollow
 	followUnfollow(type, user){
 		if (type == 'follow')
-			user.status = user.private ? 'pending' : 'following';
+			user.followingStatus = user.private ? 'pending' : 'following';
 		else if (type == 'unfollow')
-			user.status = 'unfollow';
+			user.followingStatus = 'unfollow';
 
 		let data = {
-			type: user.status,
+			type: user.followingStatus,
 			private: user.private,
 			sender: this.sessionData.current.id,
 			receiver: user.id
@@ -266,7 +296,7 @@ export class MainComponent implements OnInit, OnDestroy {
 				setTimeout(() => {
 					this.dataDefault.list.unshift(data);
 					this.dataDefault.noData = false;
-				}, 3000);
+				}, 600);
 			}
 		}
 	}
@@ -404,10 +434,25 @@ export class MainComponent implements OnInit, OnDestroy {
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowConversation(item);
 				break;
+			case "newTab":
+				let url = this.environment.url + 'p/' + item.name;
+				this.window.open(url, '_blank');
+				break;
 			case "copyLink":
 				let urlExtension = this.environment.url + 'p/' + item.name;
-				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case "messageSong":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTabSong":
+				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
+				break;
+			case "copyLinkSong":
+				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
 	}
@@ -437,7 +482,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options: add/remove, share, search, report
-	itemAudiosOptions(type, item, playlist){
+	itemSongOptions(type, item, playlist){
 		switch(type){
 			case("addRemoveUser"):
 				item.removeType = !item.addRemoveUser ? "add" : "remove";

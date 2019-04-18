@@ -1,7 +1,7 @@
 {
 	"audios": {
 		"title": "Canciones",
-		"noData": "No tiene canciones",
+		"noData": "No hay canciones",
 		"songs": "Canciones",
 		"aroundYou": "Cerca de mi",
 		"top": "Top",
@@ -14,24 +14,25 @@
 		"removeCover": "Eliminar portada",
 		"addCoverToPlaylist": "Añadir portada (opcional)",
 		"createPlaylist": "Crear lista de reproducción",
-		"uploadOrSearch": "Suba o busque alguna canción"
+		"uploadOrSearch": "Sube o busca alguna canción",
+		"goAudios": "Ir a mis canciones"
 	},
 	"bookmarks": {
 		"title": "Guardados",
-		"noData": "No tiene guardados",
+		"noData": "No hay guardados",
 		"addedTo": "Añadido a Guardados"
 	},
 	"followers": {
 		"title": "Seguidores",
-		"noData": "No tiene seguidores"
+		"noData": "No hay seguidores"
 	},
 	"following": {
 		"title": "Seguidos",
-		"noData": "No tiene seguidos"
+		"noData": "No hay seguidos"
 	},
 	"main": {
 		"title": "Perfil",
-		"noData": "No tiene publicaciones",
+		"noData": "No hay publicaciones",
 		"newPublication": "Crear nueva publicación",
 		"newPublicationSubtitle": "Canciones / Gif / Fotos / Videos",
 		"registerText": {
@@ -64,22 +65,24 @@
 		"stopFollowing": "Dejar de seguir",
 		"accept": "Aceptar",
 		"decline": "Rechazar",
-		"noData": "No tiene notificaciones",
-		"commentedYourPublication": "Ha comentado su publicación",
-		"likedYourPublication": "Ha dado me gusta en su publicación",
+		"noData": "No hay notificaciones",
+		"commentedYourPublication": "Ha comentado tu publicación",
+		"likedYourPublication": "Ha dado me gusta en tu publicación",
 		"mentionOnPublication": "Te ha mencioinado en una publicación",
-		"mentionOnCommentOnPublication": "Te ha mencioinado en un comentario de una publicación",
+		"mentionOnCommentOnPublication": "Te ha mencioinado en un comentario",
 		"sharedPublication": "Ha compartido una publicación",
-		"likedYourPhoto": "Ha dado me gusta en su foto",
-		"commentedYourPhoto": "Ha comentado su foto",
+		"likedYourPhoto": "Ha dado me gusta en tu foto",
+		"commentedYourPhoto": "Ha comentado tu foto",
 		"mentionOnPhoto": "Te ha mencionado en una foto",
-		"mentionOnCommentOnPhoto": "Te ha mencionado en un comentario de una foto",
+		"mentionOnCommentOnPhoto": "Te ha mencionado en un comentario",
 		"sharedPhoto": "Ha compartido una foto",
-		"goToNotifications": "Ir a Notificaciones"
+		"sharedAudio": "Ha compartido una canción",
+		"goToNotifications": "Ir a Notificaciones",
+		"share": "Compartir"
 	},
 	"photos": {
 		"title": "Fotos",
-		"noData": "No tiene fotos",
+		"noData": "No hay fotos",
 		"chooseFiles": "Subir fotos",
 		"maxSizePerFile": "Fotos & Videos · Tamaño maximo por archivo 20 Mb"
 	},
@@ -96,7 +99,7 @@
 		"uploadPhoto": "Subir foto",
 		"removePhoto": "Eliminar foto",
 		"about": "Biografia",
-		"aboutPlaceholder": "Descripción de su biografia",
+		"aboutPlaceholder": "Descripción de tu biografia",
 		"oldPassword": "Contraseña antigua",
 		"newPassword": "Contraseña nueva",
 		"confirmNewPassword": "Confirmar contraseña nuueva",
@@ -107,12 +110,16 @@
 		"changeAvatar": "Cambiar foto de perfil",
 		"email": "Correo electrónico",
 		"password": "Contraseña",
-		"oldPasswordIncorrect": "La contraseña antigua es inncorrecta"
+		"oldPasswordIncorrect": "La contraseña antigua es inncorrecta",
+		"usernameRequirements": "Nombre de usuario solo puede contener letras, numeros, ('.' punto), (',' coma), ('_' guion bajo) y ('-' guion medio)'",
+		"passwordsNotMatch": "Contraseña nueva no coincide con la contraseña de confirmación"
 	},
 	"song": {
 		"title": "Canción",
 		"stats": "Estadisticas",
-		"noData": "La canción no existe o ha sido eliminada."
+		"noData": "La canción no existe o ha sido eliminada.",
+		"replays": "reproducciones",
+		"timesAdded": "veces añadido"
 	},
 	"about":{
 		"title": "Sobre nosotros",
@@ -131,7 +138,7 @@
 	},
 	"confirmEmail":{
 		"title": "Confirmar correo electrónico",
-		"description": "Confirmar correo electrónico para entrar a la web",
+		"description": "Confirmar correo electrónico para entrar en la web",
 		"defaultText": {
 			"one": "Verificar cuenta",
 			"two": "Verificando su cuenta..."
@@ -152,14 +159,14 @@
 		"description": "Ha ocurrido un error, Página no encontrada, Intente escribir la dirección correcta de la URL."
 	},
 	"forgotPassword":{
-		"title": "Ha olvidado su contraseña | Recuperar acceso a la cuenta",
-		"description": "Si ha olvidado su contraseña, escriba aqui su correo electrónico.",
+		"title": "Has olvidado tu contraseña | Recuperar acceso a la cuenta",
+		"description": "Si has olvidado tu contraseña, escribe aqui el correo electrónico.",
 		"email": "Correo electrónico",
 		"confirmText": {
-			"one": "Revise su correo electrónico",
+			"one": "Revisa tu correo electrónico",
 			"two": "Hemos enviado un correo electrónico a",
-			"three": "Haga clic en el enlace dentro del correo electrónico para restablecer si contraseña.",
-			"four": "Si no ve el correo electrónico, verifique otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
+			"three": "Haz clic en el enlace dentro del correo electrónico para restablecer tu contraseña.",
+			"four": "Si no ves el mensaje, verifica otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
 		}
 	},
 	"logOut":{
@@ -171,18 +178,18 @@
 		}
 	},
 	"privacy":{
-		"title": "Privacidad",
+		"title": "Politica de privacidad",
 		"description": "Términos y condiciones y política de privacidad del sitio."
 	},
 	"resetPassword":{
 		"title": "Restablecer contraseña",
-		"description": "Escriba su nueva contraseña",
+		"description": "Escribe la nueva contraseña",
 		"newPassword": "Nueva contraseña",
-		"confirmNewPassword": "Confirmar nuueva contraseña",
+		"confirmNewPassword": "Confirmar nueva contraseña",
 		"confirmText": {
 			"one": "Felicidades",
 			"two": "La contraseña se ha actualizado con éxito,",
-			"three": "ahora puede entrar con la nueva contraseña.",
+			"three": "ahora puedes entrar con la nueva contraseña.",
 			"four": "Hemos enviado una copia a ",
 			"five": "Ir a mi perfil"
 		},
@@ -193,43 +200,43 @@
 	},
 	"signIn":{
 		"title": "Iniciar sesión",
-		"description": "Intoduzca su correo electrónico y la contraseña para entar.",
+		"description": "Intoduce tu correo electrónico y la contraseña para entar.",
 		"email": "Correo electrónico",
 		"password": "Contraseña"
 	},
 	"signUp":{
 		"title": "Registrarse | Crea una cuenta",
-		"description": "Crea una cuenta para ser parte de nuestra familia.",
+		"description": "Crear cuenta para ser parte de nuestra familia.",
 		"username": "Nombre de usuario",
 		"name": "Nombre",
 		"email": "Correo electrónico",
 		"password": "Contraseña",
 		"privacyText": {
 			"one": "Al registrarte, estás de acuerdo con las reglas de nuestra",
-			"two": "Política de privacidad"
+			"two": "política de privacidad"
 		},
 		"confirmText": {
 			"one": "Bienvenido!",
 			"two": "Hemos enviado un correo electrónico a",
 			"three": "Gracias por crear la cuenta. Sigue a otras personas, busca canciones increíbles y comparte tus fotos y videos con el resto de la comunidad.",
-			"four": "En breve, recibirá un correo electrónico de confirmación para activar su cuenta.",
+			"four": "En breve, recibiras un mensaje de confirmación para activar tu cuenta.",
 			"five": "Ir a mi perfil"
 		}
 	},
 	"support":{
 		"title": "Soporte técnico",
-		"description": "Podemos ayudarle con cualquier cosa.",
+		"description": "Podemos ayudarte con cualquier cosa.",
 		"email": "Correo electrónico",
-		"typeHere": "Escriba aquí, describa el problema",
+		"typeHere": "Escribe aquí, describa el problema",
 		"defaultText": {
-			"one": "Podemos ayudarte con sus preguntas.",
+			"one": "Podemos ayudarte con tus preguntas.",
 			"two": "Si es a causa de spam o similares, tomaremos las medidas adecuadas.",
-			"three": "Complete el formulario y envíe su pregunta, le responderemos lo antes posible."
+			"three": "Completa el formulario y envia la pregunta, tte responderemos lo antes posible."
 		},
 		"confirmText": {
-			"one": "Compruebe su correo electrónico",
+			"one": "Comprueba tu correo electrónico",
 			"two": "Hemos enviado un correo electrónico a",
-			"three": "Si no ve el correo electrónico, verifique otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
+			"three": "Si no ves el mensaje, verifica otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
 		}
 	},
 	"home":{
@@ -240,12 +247,14 @@
 	"common": {
 		"submit": "Guardar",
 		"close": "Cerrar",
+		"post": "Publicar",
+		"send": "Enviar",
 		"yes": "Si",
 		"no": "No",
 		"back": "Ir atras",
 		"signIn": "Entrar",
 		"signUp": "Crear cuennta",
-		"forgotPassword": "¿Ha olvidado su contraseña?",
+		"forgotPassword": "¿Has olvidado tu contraseña?",
 		"sendMessage": "Enviar mensaje",
 		"copyLink": "Copiar URL",
 		"createPlaylist": "Crear lista de reproducción",
@@ -253,7 +262,7 @@
 		"add": "Añadir",
 		"remove": "Eliminar",
 		"report": "Reportar",
-		"reportDescription": "Describa cual es el problema.",
+		"reportDescription": "Describe cual es el problema.",
 		"share": "Compartir",
 		"edit": "Editar",
 		"addToPlaylist": "Añadir a la lista de reproducción",
@@ -265,20 +274,20 @@
 		"invalidFile": "Archivo no valido",
 		"fileSizeToBig": "El tamaña del archivo es demasiado grande",
 		"verifiedAccount": "Cuenta verificada",
-		"restore": "Restablecer",
+		"restore": "Restaurar",
 		"search": "Buscar",
 		"noSearchResults": "No hay resultados de la busqueda",
 		"disableComments": "Deshabilitar comentarios",
 		"enableComments": "Habilitar comentarios",
-		"likedThis": "Le ha gustado",
-		"andMoreLikedThis": "y a más les ha gustado.",
+		"likedThis": "Le ha gustado a",
+		"andMoreLikedThis": "y a más personas les ha gustado.",
 		"comments": "Commentarios",
 		"noComments": "No hay comentarios",
 		"commentsDisabled": "Los comentarios estan deshabilitados",
 		"disableAdBlock": "Deshabilite AdBlock en esta pagina",
 		"privateAccount": "Cuenta privada",
-		"createAnAccountToSeeContent": "Cree una cuenta para ver el contenido",
-		"createAnAccountToListenSong": "Cree una cuenta para escuchar la canción",
+		"createAnAccountToSeeContent": "Crea una cuenta para ver el contenido",
+		"createAnAccountToListenSong": "Crea una cuenta para escuchar la canción",
 		"doPublic": "Hacer publico",
 		"doPrivate": "Hacer privado",
 		"openInNewTab": "Abrir en una pestaña nueva",
@@ -288,7 +297,7 @@
 		"pending": "Pendiente",
 		"cancelRequest": "Cancelar solicitud",
 		"likes": "Me gusta",
-		"noLikes": "No hay Me gusta",
+		"noLikes": "No hay me gusta",
 		"noData": "No hay datos",
 		"next": "Siguiente",
 		"visit": "Visitar",
@@ -300,25 +309,25 @@
 		"addAccount": "Añadir cuenta",
 		"setAnotherAccount": "Añadir otra cuenta",
 		"hasBeenAdded": "Ha sido añadido",
-		"hasBeenAddedTo": "ha sido añadido a",
+		"hasBeenAddedTo": "Ha sido añadido a",
 		"hasBeenRemoved": "Ha sido eliminado",
 		"anErrorHasOcurred": "Ha ocurrido un error",
 		"createdSuccessfully": "Creado con éxito",
 		"savedSuccessfully": "Guardado con éxito",
-		"accountChangedTo": "Ha cambiada la cuenta a",
+		"accountChangedTo": "Has cambiada la cuenta a",
 		"darkThemeEnabled": "Tema oscuro habilitado",
 		"darkThemeDisabled": "Tema oscuro deshabilitado",
 		"privateEnabled": "Cuenta privada habilitada",
 		"privateDisabled": "Cuenta privada deshabilitada",
-		"languageChanged": "Ha cambiado el idioma",
+		"languageChanged": "Has cambiado el idioma",
 		"copied": "Copiado",
-		"completeAllFields": "Complete todos los campos",
-		"tryToUseAnotherBrowser": "Intente probar con otro navegador",
+		"completeAllFields": "Completa todos los campos",
+		"tryToUseAnotherBrowser": "Intenta probar con otro navegador",
 		"invalidUrl": "La URL no es valida",
 		"sentSuccessfully": "Enviado correctamente",
 		"accountInUse": "La cuenta ya esta en uso",
-		"emailOrPasswordIncorrect": "El correo electrónico o la contraseña es incorrecto",
-		"isTooShort": "Escriba algo",
-		"commentPlaceholder": "Escriba aqui..."
+		"emailOrPasswordIncorrect": "El correo electrónico o la contraseña es incorrecta",
+		"isTooShort": "Escribe algo",
+		"commentPlaceholder": "Escribe aqui..."
 	}
 }

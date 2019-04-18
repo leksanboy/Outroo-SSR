@@ -45,7 +45,7 @@
 		<meta property="og:site_name" content="Outroo" />
 
 		<!-- Twitter Card data -->
-		<meta name="twitter:card" content="summary">
+		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="Outroo">
 		<meta name="twitter:description" content="Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates." />
 		<meta name="twitter:site" content="outroo">
@@ -78,11 +78,11 @@
 		</style>
 
 		<script>
-			// (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-			// h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-			// (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-			// })(window,document.documentElement,'async-hide','dataLayer',1000,
-			// {'GTM-TBKL3G6':true});
+			(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+			h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+			(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+			})(window,document.documentElement,'async-hide','dataLayer',1000,
+			{'GTM-TBKL3G6':true});
 				
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -90,7 +90,7 @@
 			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 			
 			// Optimizer
-			// ga('require', 'GTM-TBKL3G6');
+			ga('require', 'GTM-TBKL3G6');
 
 			// Analytics
 			ga('create', 'UA-90068205-1', 'auto');

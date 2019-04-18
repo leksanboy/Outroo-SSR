@@ -36,9 +36,6 @@ const routes: Routes = [
 	}, {
 		path: 'notifications',
 		loadChildren: './pages/user/notifications/notifications.module#NotificationsModule'
-	// }, {
-	// 	path: 'p/:name',
-	// 	loadChildren: './pages/user/post/post.module#PostModule'
 	}, {
 		path: 'privacy',
 		loadChildren: './pages/web/privacy/privacy.module#PrivacyModule'
@@ -76,7 +73,7 @@ const routes: Routes = [
 		path: ':id/photos/:name',
 		loadChildren: './pages/user/photos/photos.module#PhotosModule'
 	}, {
-		path: ':id/audios',
+		path: ':id/songs',
 		loadChildren: './pages/user/audios/audios.module#AudiosModule'
 	}, {
 		path: ':id/following',

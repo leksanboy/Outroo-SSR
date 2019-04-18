@@ -11,17 +11,26 @@
 
 				<div class="pageTitle">{{translations?.song?.title}}</div>
 
-				<div class="song">
-					<div mat-ripple class="inner">
-						<div class="image">
-							<button mat-icon-button (click)="playItem(dataSong.data, dataSong.data, 0, 'default')">
+				<div class="stats">
+					<div class="title">{{translations?.song?.stats}}</div>
+					<div class="texts">
+						<i label="play"></i>{{dataSong.data.replays}}<span class="text">{{translations?.song?.replays}}</span>
+						<div class="divider"></div>
+						<i label="add"></i>{{dataSong.data.timesAdded}}<span class="text">{{translations?.song?.timesAdded}}</span>
+					</div>
+				</div>
+
+				<div class="song" [ngClass]="{active: audioPlayerData.key == 0 && audioPlayerData.location == 'song' && audioPlayerData.type == 'default', default: !dataSong.data.image}">
+					<div mat-ripple class="songInner">
+						<div class="songImage">
+							<button mat-icon-button (click)="playSong(dataSong.data, dataSong.data, 0, 'default')">
 								<i label="play" *ngIf="!dataSong.data.playing || !(audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
 								<i label="pause" *ngIf="dataSong.data.playing && (audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
-								<img *ngIf="dataSong.data.image" [src]="data.path + 'thumbnails/' + dataSong.data.image"/>
+								<img *ngIf="dataSong.data.image" [src]="dataSong.data.imageSrc"/>
 							</button>
 						</div>
 						
-						<div class="text" (click)="playItem(dataSong.data, dataSong.data, 0, 'default')">
+						<div class="songText" (click)="playSong(dataSong.data, dataSong.data, 0, 'default')">
 							<div class="titleArtist" title="{{dataSong.data.original_title ? dataSong.data.original_title : dataSong.data.title}}">
 								<div class="title">{{dataSong.data.original_title ? dataSong.data.original_title : dataSong.data.title}}</div>
 								<div class="artist">{{dataSong.data.original_artist ? dataSong.data.original_artist : dataSong.data.title}}</div>
@@ -29,23 +38,23 @@
 							<div class="duration">{{dataSong.data.duration}}</div>
 						</div>
 						
-						<div class="actions" *ngIf="sessionData.current.id">
+						<div class="songActions" *ngIf="sessionData.current.id">
 							<button mat-icon-button [matMenuTriggerFor]="appMenu">
 								<i label="check" *ngIf="dataSong.data.addRemoveUser"></i>
 								<i label="more" *ngIf="!dataSong.data.addRemoveUser"></i>
 							</button>
 							
 							<mat-menu #appMenu="matMenu">
+								<button mat-menu-item (click)="itemSongOptions('addRemoveUser', dataSong.data, null); dataSong.data.addRemoveUser=!dataSong.data.addRemoveUser">{{!dataSong.data.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-								<button mat-menu-item (click)="itemOptions('report', dataSong.data, null)">{{translations?.common?.report}}</button>
-								<button mat-menu-item (click)="itemOptions('addRemoveUser', dataSong.data, null); dataSong.data.addRemoveUser=!dataSong.data.addRemoveUser;">{{!dataSong.data.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item (click)="itemSongOptions('report', dataSong.data, null)">{{translations?.common?.report}}</button>
 							</mat-menu>
 							
 							<mat-menu #menuPlaylists="matMenu">
 								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 								<span *ngFor="let p of sessionData.current.playlists">
-									<button mat-menu-item *ngIf="!p.removed" (click)="itemOptions('playlist', dataSong.data, p)">{{p.title}}</button>
+									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', dataSong.data, p)">{{p.title}}</button>
 								</span>
 							</mat-menu>
 
@@ -59,11 +68,6 @@
 							</mat-menu>
 						</div>
 					</div>
-				</div>
-
-				<div class="stats">
-					<div class="title">{{translations?.song?.stats}}</div>
-					<div class="text">123 Replays | 32 Added</div>
 				</div>
 
 				<div class="loadingData" *ngIf="dataSong.loadingData">

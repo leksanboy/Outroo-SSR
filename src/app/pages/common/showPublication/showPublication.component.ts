@@ -217,6 +217,36 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Share on social media
+	shareOn(type, item){
+		switch (type) {
+			case "message":
+				item.comeFrom = 'sharePublication';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTab":
+				let url = this.environment.url + 'p/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case "copyLink":
+				let urlExtension = this.environment.url + 'p/' + item.name;
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case "messageSong":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowConversation(item);
+				break;
+			case "newTabSong":
+				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
+				break;
+			case "copyLinkSong":
+				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
+				break;
+		}
+	}
+
 	// Play item song
 	playItem(data, item, key, type) {
 		if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
@@ -238,7 +268,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	// Item audios options
-	itemAudiosOptions(type, item, playlist){
+	itemSongOptions(type, item, playlist){
 		switch(type){
 			case("addRemoveUser"):
 				item.addRemoveUser = !item.addRemoveUser;
