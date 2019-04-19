@@ -372,7 +372,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	itemSongOptions(type, item, playlist) {
 		switch(type){
 			case("addRemoveUser"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataARO = {
 					user: this.sessionData.current.id,
@@ -384,7 +385,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
-						item.insertedId = res.json();
+						item.insertedId = res;
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});

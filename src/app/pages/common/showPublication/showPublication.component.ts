@@ -272,19 +272,19 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		switch(type){
 			case("addRemoveUser"):
 				item.addRemoveUser = !item.addRemoveUser;
-				item.removeType = item.addRemoveUser ? 'remove' : 'add';
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataOther = {
+				let dataU = {
 					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
-					song: item.id
+					item: item.id
 				}
 
-				this.audioDataService.addRemove(dataOther)
+				this.audioDataService.addRemove(dataU)
 					.subscribe((res: any) => {
-						item.insertedId = res.json();
+						item.insertedId = res;
 					});
 				break;
 			case("playlist"):

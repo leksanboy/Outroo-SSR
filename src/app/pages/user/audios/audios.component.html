@@ -181,12 +181,12 @@
 											</span>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 												<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
-												<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null); x.addRemoveSession=!x.addRemoveSession;" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 
 											<mat-menu #menuPlaylists="matMenu">
@@ -256,7 +256,7 @@
 											</button>
 
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
@@ -354,7 +354,7 @@
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
@@ -427,7 +427,7 @@
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 												<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
@@ -502,7 +502,7 @@
 									</button>
 									
 									<mat-menu #appMenu="matMenu">
-										<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null); x.addRemoveUser=!x.addRemoveUser;">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+										<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 										<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 										<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>

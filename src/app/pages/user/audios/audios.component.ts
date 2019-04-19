@@ -920,7 +920,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	itemOptions(type, item, playlist){
 		switch(type){
 			case("addRemoveSession"):
-				item.removeType = item.addRemoveSession ? "add" : "remove";
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
 				let dataARS = {
 					user: this.sessionData.current.id,
@@ -933,14 +934,14 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					.subscribe(res => {
 						// let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
 						// 	text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
-						
 						// this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case("addRemoveUser"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataARO = {
 					user: this.sessionData.current.id,

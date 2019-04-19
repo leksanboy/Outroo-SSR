@@ -193,20 +193,20 @@
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
 												<i label="check" *ngIf="a.addRemoveUser"></i>
-												<i label="more" *ngIf="!a.addRemoveUser"></i>
+												<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
 											</button>
 
 											<mat-menu #appMenu="matMenu">
-												<button mat-menu-item (click)="itemAudiosOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 												<button mat-menu-item [matMenuTriggerFor]="menuSongShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-												<button mat-menu-item (click)="itemAudiosOptions('report', a, null)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemSongOptions('report', a, null)">{{translations?.common?.report}}</button>
 											</mat-menu>
 
 											<mat-menu #menuPlaylists="matMenu">
-												<button mat-menu-item (click)="itemAudiosOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
+												<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 												<span *ngFor="let p of sessionData.current.playlists">
-													<button mat-menu-item *ngIf="!p.removed" (click)="itemAudiosOptions('playlist', a, p)">{{p.title}}</button>
+													<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">{{p.title}}</button>
 												</span>
 											</mat-menu>
 

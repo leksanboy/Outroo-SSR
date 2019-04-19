@@ -227,7 +227,7 @@
 													</button>
 													
 													<mat-menu #appMenu="matMenu">
-														<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x.contentData, null); x.contentData.addRemoveUser=!x.contentData.addRemoveUser;">{{!x.contentData.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x.contentData, null)">{{!x.contentData.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 														<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 														<button mat-menu-item (click)="itemSongOptions('report', x.contentData, null)">{{translations?.common?.report}}</button>
