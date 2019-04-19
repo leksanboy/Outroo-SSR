@@ -6,12 +6,13 @@
 	$name = htmlspecialchars($data['name'], ENT_QUOTES);
 	$email = $data['email'];
 	$password = md5($data['password']);
+	$lang = $data['lang'];
 	$date = time();
 	$generatedHash = generateRandomString(23);
 
 	if (isset($username) && isset($name) && isset($email) && isset($password)) {
-		$sql = "INSERT INTO z_users (username, name, email, password, verification_code, creation_date, ip_address_create)
-				VALUES ('$username', '$name', '$email',  '$password', '$generatedHash', '$date', '$ipAddress')";
+		$sql = "INSERT INTO z_users (username, name, email, password, verification_code, language, creation_date, ip_address_create)
+				VALUES ('$username', '$name', '$email', '$password', '$generatedHash', $lang, '$date', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedUser = $conn->insert_id;
 

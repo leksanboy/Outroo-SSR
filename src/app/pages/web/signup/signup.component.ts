@@ -56,7 +56,8 @@ export class SignupComponent implements OnInit {
 			username: ['', [Validators.required]],
 			name: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-			password: ['', [Validators.required]]
+			password: ['', [Validators.required]],
+			lang: [this.userDataService.getCookieLang() || 1]
 		});
 
 		// Validate username

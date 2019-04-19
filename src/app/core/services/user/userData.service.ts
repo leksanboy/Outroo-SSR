@@ -29,14 +29,10 @@ export class UserDataService {
 		private metaService: MetaService,
 		public state: TransferState,
 		private ssrService: SsrService
-	) {
-		// Detect lang from PC
-		// Get lang from cookie
-		// Get lang from call
-	}
+	) { }
 
 	// Translations
-	getTranslations(lang: number) {
+	getTranslations(lang) {
 		if (!lang) {
 			// Get lang from cookie
 			let langCookie = this.window.localStorage.getItem('lang_' + environment.authHash);
@@ -63,7 +59,7 @@ export class UserDataService {
 					this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
 				}
 			} else {
-				lang = Number(langCookie);
+				lang = langCookie;
 			}
 		} else {
 			this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
@@ -71,7 +67,7 @@ export class UserDataService {
 
 		// Lang cases
 		let language;
-		switch (lang) {
+		switch (Number(lang)) {
 			case 1: // English
 				language = 'en_US';
 				break;
@@ -96,6 +92,10 @@ export class UserDataService {
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
+	}
+
+	getCookieLang() {
+		return this.window.localStorage.getItem('lang_' + environment.authHash);
 	}
 
 	login(username, password) {
