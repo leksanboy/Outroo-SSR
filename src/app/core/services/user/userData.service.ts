@@ -1,5 +1,6 @@
-import { Injectable, } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { DOCUMENT } from "@angular/platform-browser";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -14,37 +15,76 @@ declare var global: any;
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 const NODE_KEY = makeStateKey('meta-resolver');
 
+declare var navigator: any;
+
 @Injectable()
 export class UserDataService {
 	public window: any = global;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		private http: Http,
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
 		private metaService: MetaService,
 		public state: TransferState,
 		private ssrService: SsrService
-	) {}
+	) {
+		// Detect lang from PC
+		// Get lang from cookie
+		// Get lang from call
+	}
 
 	// Translations
-	getTranslations(lang) {
-		let language;
+	getTranslations(lang: number) {
+		if (!lang) {
+			// Get lang from cookie
+			let langCookie = this.window.localStorage.getItem('lang_' + environment.authHash);
 
-		switch (lang || 1) {
-			case '1': // English
+			if (!langCookie) {
+				// Array of available langs which exists on lang files repo
+				const langsArray = ['en', 'es', 'ru'];
+
+				// Detect language from navigator
+				let langRegion = navigator.language;
+
+				// Checking browser lang for validate existing one
+				if (!(langsArray.indexOf(langRegion.slice(0, 2)) > -1)) {
+					lang = null;
+				} else {
+					if (langRegion === 'en') {
+						lang = 1;
+					} else if (langRegion === 'es') {
+						lang = 2;
+					} else if (langRegion === 'ru') {
+						lang = 3;
+					}
+
+					this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
+				}
+			} else {
+				lang = Number(langCookie);
+			}
+		} else {
+			this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
+		}
+
+		// Lang cases
+		let language;
+		switch (lang) {
+			case 1: // English
 				language = 'en_US';
 				break;
-			case '2': // Español
+			case 2: // Español
 				language = 'es_ES';
 				break;
-			case '3': // Русский
+			case 3: // Русский
 				language = 'ru_RU';
 				break;
-			case '4': // Deutsch
+			case 4: // Deutsch
 				language = 'de_DE';
 				break;
-			case '5': // Français
+			case 5: // Français
 				language = 'fr_FR';
 				break;
 			default: // By default set English

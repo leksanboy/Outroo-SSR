@@ -1,4 +1,4 @@
-<div class="pageHomeBox" *ngIf="activeSessionStatus">
+<div class="pageHomeBox {{randColor}}" *ngIf="activeSessionStatus">
 	<div class="left">
 		<div class="text">
 			<div class="counter" #textCounterEffect></div>
@@ -22,6 +22,18 @@
 					<a routerLink="/support">{{translations?.support?.title}}</a>
 				</li>
 			</ul>
+
+			<div class="divider"></div>
+
+			<div class="lang" [matMenuTriggerFor]="langs">
+				{{translations?.settings?.language}}
+			</div>
+
+			<mat-menu #langs="matMenu">
+				<button mat-menu-item (click)="setLang(1)">{{translations?.settings?.english}}</button>
+				<button mat-menu-item (click)="setLang(2)">{{translations?.settings?.spanish}}</button>
+				<button mat-menu-item (click)="setLang(3)">{{translations?.settings?.russian}}</button>
+			</mat-menu>
 		</div>
 	</div>
 
@@ -86,6 +98,19 @@
 				<div class="copyright">
 					{{env.copyright}}
 				</div>
+
+				<div class="lang">
+					<button mat-raised-button [matMenuTriggerFor]="langs">
+						<i label="arrow-drop-down"></i>
+						{{translations?.settings?.language}}
+					</button>
+				</div>
+
+				<mat-menu #langs="matMenu">
+					<button mat-menu-item (click)="setLang(1)">{{translations?.settings?.english}}</button>
+					<button mat-menu-item (click)="setLang(2)">{{translations?.settings?.spanish}}</button>
+					<button mat-menu-item (click)="setLang(3)">{{translations?.settings?.russian}}</button>
+				</mat-menu>
 			</div>
 		</div>
 	</div>

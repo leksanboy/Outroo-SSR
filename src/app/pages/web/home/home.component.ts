@@ -27,32 +27,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 	public errorMessage: boolean;
 	public errorMessageContent: string;
 	public activeTextEffect: any;
-	public listOfPhrases: any = [
-		'be the one',
-		'be amazing',
-		'the world ¬is yours',
-		'be the ¬creator ¬of amazing',
-		'keep calm ¬and ¬go back ¬to bed',
-		'let it be',
-		'don\'t ¬pursue ¬happiness, ¬create it',
-		'mistakes ¬are proof ¬that ¬you are ¬trying',
-		'the ¬perfect ¬time ¬to start ¬something ¬never ¬arrives',
-		'do ¬your best ¬to enjoy ¬your day',
-		'open ¬your eyes ¬and see ¬the beauty',
-		'try hard ¬today',
-		'make it ¬simply, but ¬significant',
-		'think ¬outside ¬the box',
-		'be ¬the best ¬version ¬of you',
-		'first learn ¬the rules, ¬then ¬break them',
-		'you don\'t ¬get the same ¬moment ¬twice ¬in life',
-		'don\'t forget ¬to be ¬awesome',
-		'don\'t ¬give up, ¬great ¬things ¬take time',
-		'too much ¬ego ¬will kill ¬your ¬talent',
-		'the world ¬is full ¬of nice ¬people, ¬if you can\'t ¬find one, ¬be one',
-		'if not now, ¬when?',
-		'don\'t ¬tell ¬people ¬your ¬dreams, ¬show them',
-		'enjoy ¬the little ¬things'
-	];
+	public listOfPhrases: any = [];
+	public colors = ['yellow', 'purple', 'blue', 'red', 'green'];
+	public randColor = this.colors[Math.floor(Math.random() * 4) + 0];
 
 	constructor(
 		private _fb: FormBuilder,
@@ -116,12 +93,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.listOfPhrases = this.translations.common.listOfPhrases;
 				this.setMetaData(data);
 			});
+	}
+
+	setLang(lang) {
+		this.getTranslations(lang);
+
+		// set cookie for global lang
+		// TODO
 	}
 
 	setMetaData(data) {
@@ -138,6 +123,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	counter(element, value) {
+		let setOfNumbers;
+		if (this.translations.common.langCode === 'en_US') {
+			setOfNumbers = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+		} else if (this.translations.common.langCode === 'es_ES') {
+			setOfNumbers = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+		} else if (this.translations.common.langCode === 'ru_RU') {
+			setOfNumbers = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'];
+		}
+
 		if (element) {
 			// Element
 			const nativeElement = element.nativeElement;
@@ -146,18 +140,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 			// Number to count
 			const number = value.toString();
 
-			// create an array from the text,
-			// prepare to identify which characters in the string are numbers
+			// create an array from the text, prepare to identify which characters in the string are numbers
 			const numChars = number.split('');
 			const numArray = [];
-			const setOfNumbers = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+			
+			// create list of strings for html
+			let charsArray = '';
+			for (let c of setOfNumbers){
+				charsArray += (c + '<br>');
+			}
 
 			// for each number, create the animation elements
 			for (let i = 0; i < numChars.length; i++) {
 				if (setOfNumbers.indexOf(numChars[i]) !== -1) {
 					const digit = '<span class="digit-con">\
 									<span class="digit' + numArray.length + '">\
-										a<br>b<br>c<br>d<br>e<br>f<br>g<br>h<br>i<br>j<br>k<br>l<br>m<br>n<br>o<br>p<br>q<br>r<br>s<br>t<br>u<br>v<br>w<br>x<br>y<br>z<br>\
+										' + charsArray + '\
 									</span>\
 								</span>';
 
@@ -185,69 +183,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 				const child = nativeElement.children[i].children[0];
 
 				if (child) {
-					const top = - (increment * pos(numArray[i])) + 'px';
+					const top = - ( increment * setOfNumbers.indexOf(numArray[i]) ) + 'px';
 					child.style.transition = '2s';
 					child.style.top = top;
 				}
 			}
-		}
-		
-		function pos(value){
-			if (value === 'a') {
-				value = 1;
-			} else if (value === 'b') {
-				value = 2;
-			} else if (value === 'c') {
-				value = 3;
-			} else if (value === 'd') {
-				value = 4;
-			} else if (value === 'e') {
-				value = 5;
-			} else if (value === 'f') {
-				value = 6;
-			} else if (value === 'g') {
-				value = 7;
-			} else if (value === 'h') {
-				value = 8;
-			} else if (value === 'i') {
-				value = 9;
-			} else if (value === 'j') {
-				value = 10;
-			} else if (value === 'k') {
-				value = 11;
-			} else if (value === 'l') {
-				value = 12;
-			} else if (value === 'm') {
-				value = 13;
-			} else if (value === 'n') {
-				value = 14;
-			} else if (value === 'o') {
-				value = 15;
-			} else if (value === 'p') {
-				value = 16;
-			} else if (value === 'q') {
-				value = 17;
-			} else if (value === 'r') {
-				value = 18;
-			} else if (value === 's') {
-				value = 19;
-			} else if (value === 't') {
-				value = 20;
-			} else if (value === 'u') {
-				value = 21;
-			} else if (value === 'v') {
-				value = 22;
-			} else if (value === 'w') {
-				value = 23;
-			} else if (value === 'x') {
-				value = 24;
-			} else if (value === 'y') {
-				value = 25;
-			} else if (value === 'z') {
-				value = 26;
-			}
-
-			return value-1;
 		}
 	}
 
