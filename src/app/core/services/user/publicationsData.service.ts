@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { HeadersService } from '../headers/headers.service';
+import { UserDataService } from './userData.service';
 
 @Injectable()
 export class PublicationsDataService {
 	
 	constructor(
 		private http: Http,
-		private headersService: HeadersService
+		private headersService: HeadersService,
+		private userDataService: UserDataService
 	) { }
 
 	default(data: any) {
@@ -77,6 +79,22 @@ export class PublicationsDataService {
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
+				return res.json();
+			}));
+	}
+
+	getPost(data: any) {
+		let session = this.userDataService.getSessionData();
+		session = session ? (session.current ? session.current.id : 0) : 0;
+
+		let url = environment.url + 'assets/api/publications/getPost.php';
+		let params = 	'&n=' + data.name +
+						'&s=' + session;
+
+		params = params.replace('&', '?');
+
+		return this.http.get(url + params, this.headersService.getHeaders())
+			.pipe(map((res: Response) => { 
 				return res.json();
 			}));
 	}

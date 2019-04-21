@@ -19,7 +19,7 @@
 				<ul>
 					<li mat-ripple *ngFor="let x of searchMentionsData" (click)="addSearchedMention(x)">
 						<div class="avatar">
-							<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 						</div>
 						<div class="text">
 							<div class="username">{{x.user.username}}</div>
@@ -36,7 +36,7 @@
 					<ul>
 						<li mat-ripple *ngFor="let x of data.photosArray; let i=index;">
 							<div class="image" (click)="toggleItem('photos', x)">
-								<div class="img" *ngIf="!x.uploaded" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
+								<div class="img" [ngStyle]="{'background-image': 'url(' + ((x.mimetype.indexOf('image') !== -1) ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.name + ')'}"></div>
 
 								<div class="category">
 									<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
@@ -62,7 +62,7 @@
 							<div class="inner">
 								<div class="image">
 									<button mat-icon-button>
-										<img *ngIf="x.image" [src]="environment.pathAudios + 'thumbnails/' + x.image"/>
+										<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 										<i label="play"></i>
 									</button>
 								</div>

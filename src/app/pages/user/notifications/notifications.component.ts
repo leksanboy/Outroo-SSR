@@ -66,7 +66,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		selectedIndex: 0
 	};
 	public activeRouter: any;
-	public activeConversation: any;
+	public activeShare: any;
 	public activeLanguage: any;
 	public audioPlayerData: any = [];
 
@@ -118,8 +118,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				}
 			});
 
-		// Get conversation
-		this.activeConversation = this.sessionService.getDataShowConversation()
+		// Get Share
+		this.activeShare = this.sessionService.getDataShowShare()
 			.subscribe(data => {
 				// Check if is new chat with content
 				if (data.close)
@@ -158,7 +158,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.activeRouter.unsubscribe();
-		this.activeConversation.unsubscribe();
+		this.activeShare.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
@@ -422,7 +422,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case "message":
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTab":
 				let url = this.environment.url + 's/' + item.name.slice(0, -4);

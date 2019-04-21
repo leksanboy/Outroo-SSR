@@ -178,15 +178,21 @@ export class UserDataService {
 	}
 
 	getUserData(id) {
-		let url = environment.url + 'assets/api/user/getUser.php';
-		let params = 	'&id=' + id +
-						'&s=' + this.getSessionData().current.id;
-		params = params.replace('&', '?');
+		if (this.ssrService.isBrowser) {
+			let session = this.getSessionData();
+			session = session ? (session.current ? session.current.id : 0) : 0;
+			console.log("this.getSessionData()", session);
 
-		return this.http.get(url + params)
-			.pipe(map((res: Response) => {
-				return res.json();
-			}));
+			let url = environment.url + 'assets/api/user/getUser.php';
+			let params = 	'&id=' + id +
+							'&s=' + session;
+			params = params.replace('&', '?');
+
+			return this.http.get(url + params)
+				.pipe(map((res: Response) => {
+					return res.json();
+				}));
+		}
 	}
 
 	// async getUserData(id): Promise<any> {

@@ -15,6 +15,7 @@ const routes: Routes = [
 		path: 'news/:name',					loadChildren: './pages/user/news/news.module#NewsModule'																									}, {
 		path: 'notifications',				loadChildren: './pages/user/notifications/notifications.module#NotificationsModule'																			}, {
 		path: 'privacy',					loadChildren: './pages/web/privacy/privacy.module#PrivacyModule'																							}, {
+		path: 'p/:name',					loadChildren: './pages/user/post/post.module#PostModule'																									}, {
 		path: 'reset-password/:code',		loadChildren: './pages/web/reset-password/reset-password.module#ResetPasswordModule'																		}, {
 		path: 's/:name',					loadChildren: './pages/user/song/song.module#SongModule'																									}, {
 		path: 'saved',						loadChildren: './pages/user/bookmarks/bookmarks.module#BookmarksModule'																						}, {

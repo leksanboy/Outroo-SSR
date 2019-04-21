@@ -307,7 +307,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case "message":
 				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTab":
 				let url = this.environment.url + 'p/' + item.name;
@@ -319,7 +319,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				break;
 			case "messageSong":
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTabSong":
 				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);

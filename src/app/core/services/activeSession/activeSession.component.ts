@@ -21,7 +21,7 @@ import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/n
 import { NewReportComponent } from '../../../../app/pages/common/newReport/newReport.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
 import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/showAvatar.component';
-import { ShowConversationComponent } from '../../../../app/pages/common/showConversation/showConversation.component';
+import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
 import { ShowPhotoComponent } from '../../../../app/pages/common/showPhoto/showPhoto.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
@@ -219,7 +219,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get session create playlist
 			this.sessionService.getDataCreatePlaylist()
 				.subscribe(data => {
-					this.itemAudiosOptions('createPlaylist', null, null);
+					this.itemSongOptions('createPlaylist', null, null);
 				});
 
 			// Get session add account
@@ -252,10 +252,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.openLikes(data);
 				});
 
-			// Get conversation
-			this.sessionService.getDataShowConversation()
+			// Get Share
+			this.sessionService.getDataShowShare()
 				.subscribe(data => {
-					this.openConversation(data);
+					this.openShare(data);
 				});
 
 			// Get publication
@@ -885,7 +885,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Item audios options
-	itemAudiosOptions(type, item, playlist) {
+	itemSongOptions(type, item, playlist) {
 		switch (type) {
 			case('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
@@ -982,6 +982,24 @@ export class ActiveSessionComponent implements AfterViewInit {
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 			break;
+		}
+	}
+
+	// Share on social media
+	shareOn(type, item){
+		switch (type) {
+			case "message":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowShare(item);
+				break;
+			case "newTab":
+				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case "copyLink":
+				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
 		}
 	}
 
@@ -1260,10 +1278,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 		});
 	}
 
-	// Conversation
-	openConversation(data) {
-		// Open conversation if is closed because on the other hand we set on dataList new conversation 
-		// or last inserted comment on one conversation
+	// Share
+	openShare(data) {
+		// Open Share if is closed because on the other hand we set on dataList new Share 
+		// or last inserted comment on one Share
 		if (!data.close) {
 			this.location.go(this.router.url + '#' + data.comeFrom);
 
@@ -1277,11 +1295,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 			};
 
-			const dialogRef = this.dialog.open(ShowConversationComponent, config);
+			const dialogRef = this.dialog.open(ShowShareComponent, config);
 			dialogRef.afterClosed().subscribe((res: any) => {
 				// Check if is new chat with content or last insered comment
 				if (res.close) {
-					this.sessionService.setDataShowConversation(res);
+					this.sessionService.setDataShowShare(res);
 				}
 
 				// Set url

@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
 	MatButtonModule,
 	MatButtonToggleModule,
+	MatDialogModule,
+	MatDividerModule,
 	MatInputModule,
 	MatMenuModule,
 	MatProgressSpinnerModule,
@@ -12,16 +14,16 @@ import {
 	MatTooltipModule
 } from '@angular/material';
 
-// Pipe
+import { SwiperModule } from 'angular2-useful-swiper';
+
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
-// Main
-import { SongComponent } from './song.component';
+import { PostComponent } from './post.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: SongComponent
+		component: PostComponent
 	}
 ];
 
@@ -29,11 +31,14 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		PipesModule,
+		SwiperModule,
 		RouterModule.forChild(routes),
 		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
 		MatButtonToggleModule,
+		MatDialogModule,
+		MatDividerModule,
 		MatInputModule,
 		MatMenuModule,
 		MatProgressSpinnerModule,
@@ -41,7 +46,7 @@ const routes: Routes = [
 		MatTooltipModule
 	],
 	declarations: [
-		SongComponent
+		PostComponent
 	]
 })
-export class SongModule { }
+export class PostModule { }

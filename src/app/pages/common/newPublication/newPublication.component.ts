@@ -21,7 +21,7 @@ declare var global: any;
 	templateUrl: './newPublication.component.html'
 })
 export class NewPublicationComponent implements OnInit {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];

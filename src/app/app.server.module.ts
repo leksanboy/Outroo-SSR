@@ -12,9 +12,6 @@ import { AppComponent } from './app.component';
 		ServerTransferStateModule,
 		ModuleMapLoaderModule
 	],
-	providers: [
-		// Add universal-only providers here
-	],
 	bootstrap: [ AppComponent ]
 })
 export class AppServerModule {}

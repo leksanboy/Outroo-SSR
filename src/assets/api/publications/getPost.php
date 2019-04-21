@@ -1,6 +1,6 @@
 <?php include "../db.php";
-	$name = $_GET['name'];
-	$session = $_GET['session'];
+	$name = $_GET['n'];
+	$session = $_GET['s'] || null;
 
 	$sql = "SELECT id, user, name, content, content_original, url_video as urlVideo, photos, audios, disabled_comments as disabledComments, date
 			FROM z_publications

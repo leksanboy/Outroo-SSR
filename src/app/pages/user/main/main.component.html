@@ -35,7 +35,7 @@
 
 					<div class="social">
 						<ul *ngIf="((userData.private && userData.followingStatus == 'following') || !userData.private || userData.followingStatus == 'following' || (userData.id == sessionData.current.id))">
-							<li routerLink="/{{userData.username}}/photos">
+							<!-- <li routerLink="/{{userData.username}}/photos">
 								<button mat-button>
 									<div class="text">
 										{{userData.countPhotos}}
@@ -47,7 +47,7 @@
 										</div>
 									</div>
 								</button>
-							</li>
+							</li> -->
 							<li routerLink="/{{userData.username}}/songs">
 								<button mat-button>
 									<div class="text">

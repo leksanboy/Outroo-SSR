@@ -917,7 +917,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item, playlist){
+	itemSongOptions(type, item, playlist){
 		switch(type){
 			case("addRemoveSession"):
 				item.addRemoveSession = !item.addRemoveSession;
@@ -990,7 +990,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case "message":
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTab":
 				let url = this.environment.url + 's/' + item.name.slice(0, -4);
@@ -1061,7 +1061,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptionsPlaylist(type, item, index){
+	itemPlaylistOptions(type, item, index){
 		switch(type){
 			case("edit"):
 				this.location.go('/' + this.userData.username + '/songs#editPlaylist');

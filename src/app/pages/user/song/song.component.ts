@@ -1,11 +1,8 @@
 import { DOCUMENT, DomSanitizer, Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
@@ -14,9 +11,6 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
-
-import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
-import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -34,33 +28,19 @@ export class SongComponent implements OnInit, OnDestroy {
 	public sessionData: any = [];
 	public translations: any = [];
 	public audioPlayerData: any = [];
-	public dataSong: any = {
+	public dataDefault: any = {
 		data: []
 	};
-	public data: any = {
-		selectedIndex: 0,
-		active: 'default',
-		path: 'assets/media/audios/'
-	};
-	public dataFiles: any = {
-		list: [],
-		reload: false,
-		actions: true,
-		saveDisabled: false,
-		counter: 0
-	};
+	public data: any = [];
 	public activeRouter: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
-	public actionFormSearch: FormGroup;
 	public hideAd: boolean;
 	public audio = new Audio();
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
-		private _fb: FormBuilder,
-		public dialog: MatDialog,
 		private location: Location,
 		private titleService: Title,
 		private sanitizer: DomSanitizer,
@@ -100,7 +80,6 @@ export class SongComponent implements OnInit, OnDestroy {
 					let urlData: any = this.activatedRoute.snapshot.params.name;
 
 					// Load default
-					this.data.selectedIndex = 0;
 					this.default(urlData);
 				}
 			});
@@ -117,14 +96,6 @@ export class SongComponent implements OnInit, OnDestroy {
 				let lang = data.current.language;
 				this.getTranslations(lang);
 			});
-
-		// Load more on scroll on bottom
-		this.window.onscroll = (event) => {
-			let windowHeight = "innerHeight" in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
-			let body = document.body, html = document.documentElement;
-			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-			let windowBottom = windowHeight + this.window.pageYOffset;
-		}
 	}
 
 	ngOnInit() {
@@ -175,14 +146,15 @@ export class SongComponent implements OnInit, OnDestroy {
 
 		this.audioDataService.getSong(data)
 			.subscribe(res => {
-				this.dataSong.loadingData = false;
+				this.dataDefault.loadingData = false;
 
 				if (!res || res.length == 0) {
-					this.dataSong.noData = true;
+					this.dataDefault.noData = true;
 				} else {
-					this.dataSong.data = res;
+					this.dataDefault.data = res;
 					let t = (res.original_artist && res.original_title) ? (res.original_artist + ' - ' + res.original_title) : res.title;
 
+					// Meta
 					let metaData = {
 						page: t,
 						title: t,
@@ -192,10 +164,15 @@ export class SongComponent implements OnInit, OnDestroy {
 						image: this.environment.url + 'assets/media/audios/thumbnails/' + res.image
 					};
 					this.metaService.setData(metaData);
+
+					// Set Google analytics
+					let urlGa =  '[' + res.id + ']/[' + name + ']/s/' + t;
+					ga('set', 'page', urlGa);
+					ga('send', 'pageview');
 				}
 			}, error => {
-				this.dataSong.loadingData = false;
-				this.dataSong.noData = true;
+				this.dataDefault.loadingData = false;
+				this.dataDefault.noData = true;
 				this.alertService.error(this.translations.common.anErrorHasOcurred);
 			});
 	}
@@ -216,7 +193,6 @@ export class SongComponent implements OnInit, OnDestroy {
 				this.audioPlayerData.username = this.sessionData.current.username;
 				this.audioPlayerData.location = 'song';
 				this.audioPlayerData.type = type;
-				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
 
 				this.playerService.setData(this.audioPlayerData);
 				item.playing = true;
@@ -277,7 +253,7 @@ export class SongComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case "message":
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "copyLink":
 				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);

@@ -43,7 +43,7 @@ export class AudioDataService {
 
 	getSong(data: any) {
 		let url = environment.url + 'assets/api/audios/getSong.php';
-		let params = '&song=' + data.name;
+		let params = '&n=' + data.name;
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())

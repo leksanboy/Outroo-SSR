@@ -11,13 +11,9 @@ import { PhotoDataService } from '../../../../../app/core/services/user/photoDat
 	templateUrl: './addPhotos.component.html'
 })
 export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
-	public sessionData: any;
+	public env: any = environment;
 	public translations: any;
-	public environment: any = environment;
-	public noData: boolean;
-	public loadingData: boolean;
-	public loadMoreData: boolean;
-	public loadingMoreData: boolean;
+	public sessionData: any;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -27,9 +23,9 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
-		this.sessionData = this.data.sessionData;
 		this.translations = this.data.translations;
-		this.data.rowsDefault = 0;
+		this.sessionData = this.data.sessionData;
+
 		this.data.list = this.data.list ? this.data.list : [];
 		this.data.arrayAddedItems = [];
 		this.data.arrayAddedItems = Object.assign([], this.data.array);
@@ -46,69 +42,11 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 						this.data.list[i].selected = true;
 
 			this.data.list = this.data.list ? this.data.list : [];
-			this.data.rowsDefault = this.data.rows;
-			this.loadMoreData = this.data.loadMore;
-		} else {
-			this.default(this.data.sessionData.current.username);
 		}
 	}
 
 	ngOnDestroy() {
 		this.submit(null);
-	}
-
-	// Default
-	default(user) {
-		this.data.rowsDefault = 0;
-		this.loadingData = true;
-		this.data.list = [];
-		this.noData = false;
-		this.loadMoreData = false;
-		this.loadingMoreData = false;
-
-		let data = {
-			user: user,
-			rows: this.data.rowsDefault,
-			cuantity: environment.cuantity
-		}
-
-		this.photoDataService.default(data)
-			.subscribe(res => {
-				setTimeout(() => {
-					this.loadingData = false;
-
-					if (!res || res.length == 0) {
-						this.noData = true;
-					} else {
-						this.loadMoreData = (res.length < environment.cuantity) ? false : true;
-						this.noData = false;
-						this.data.list = res;
-					}
-				}, 600);
-			});
-	}
-
-	// Load more
-	loadMore() {
-		this.loadingMoreData = true;
-		this.data.rowsDefault++;
-
-		let data = {
-			user: this.sessionData.current.id,
-			rows: this.data.rowsDefault,
-			cuantity: environment.cuantity
-		}
-
-		this.photoDataService.default(data)
-			.subscribe(res => {
-				setTimeout(() => {
-					this.loadMoreData = (res.length < environment.cuantity) ? false : true;
-					this.loadingMoreData = false;
-
-					for (let i in res)
-						this.data.list.push(res[i]);
-				}, 600);
-			});
 	}
 
 	// Select/unselect
@@ -129,9 +67,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	submit(event){
 		let data = {
 			array: this.data.arrayAddedItems,
-			list: this.data.list,
-			rows: this.data.rowsDefault,
-			loadMore: this.loadMoreData
+			list: this.data.list
 		}
 
 		this.dialogRef.close(data);
@@ -141,9 +77,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	close(){
 		let data = {
 			array: this.data.arrayAddedItemsCopy,
-			list: this.data.list,
-			rows: this.data.rowsDefault,
-			loadMore: this.loadMoreData
+			list: this.data.list
 		}
 
 		this.dialogRef.close(data);

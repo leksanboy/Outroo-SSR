@@ -174,7 +174,7 @@ export class ShowPhotoComponent implements OnInit {
 		switch (type) {
 			case "message":
 				item.comeFrom = 'sharePhoto';
-				this.sessionService.setDataShowConversation(item);
+				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTab":
 				let url = this.environment.url + 'f/' + item.name.slice(0, -4);

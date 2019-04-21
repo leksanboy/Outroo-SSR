@@ -26,17 +26,16 @@
 						<br>
 						<span class="name">{{x.user.name}}</span>
 					</a>
-					
+
 					<div class="actions" *ngIf="x.user.id != sessionData.current.id">
-						<button mat-button class="border" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
+						<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
 							{{translations?.common?.follow}}
 						</button>
-						<button mat-button class="border" *ngIf="x.status == 'pending'" [matMenuTriggerFor]="cancelRequest">
+
+						<button mat-button class="pending" *ngIf="x.status == 'pending'" [matMenuTriggerFor]="cancelRequest">
 							{{translations?.common?.pending}}
 						</button>
-						<button mat-button *ngIf="x.status == 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
-							{{translations?.common?.following}}
-						</button>
+
 						<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 							<div class="text">
 								{{translations?.common?.cancelRequest}}
@@ -46,6 +45,11 @@
 								<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 							</div>
 						</mat-menu>
+
+						<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
+							{{translations?.common?.following}}
+						</button>
+
 						<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 							<div class="text">
 								{{translations?.common?.stopFollowing}}

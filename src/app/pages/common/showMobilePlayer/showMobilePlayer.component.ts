@@ -207,6 +207,24 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 		}
 	}
 
+	// Share on social media
+	shareOn(type, item){
+		switch (type) {
+			case "message":
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataShowShare(item);
+				break;
+			case "newTab":
+				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case "copyLink":
+				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
 	// Progress bar
 	progressBar(event) {
 		let time = ((event.value / 1000) * this.audio.duration);

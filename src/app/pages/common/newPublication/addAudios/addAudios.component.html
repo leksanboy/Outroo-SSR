@@ -17,9 +17,29 @@
 	</div>
 
 	<div mat-dialog-content class="bodyCreatePublication">
+		<div class="uploadFilesBox">
+			<div class="button">
+				<button mat-raised-button (click)="uploadFile.click()">
+					<div class="left" [ngClass]="{'warning': data.list.length > 9}">
+						<i label="cloud"></i>
+					</div>
+					<div class="right">
+						<div class="top">
+							{{translations?.audios?.chooseFiles}} {{data.list.length}}/9
+						</div>
+						<div class="bottom">
+							{{translations?.audios?.maxSizePerFile}}
+						</div>
+					</div>
+				</button>
+
+				<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
+			</div>
+		</div>
+
 		<div class="audios">
 			<ul class="tracks" *ngIf="data.list.length > 0">
-				<li mat-ripple class="upload" (click)="uploadFile.click()">
+				<!-- <li mat-ripple class="upload" (click)="uploadFile.click()">
 					<div class="inner">
 						<div class="label">
 							<i label="cloud-upload"></i>
@@ -29,13 +49,13 @@
 							<div class="subtitle">{{translations?.audios?.maxSizePerFile}}</div>
 						</div>
 					</div>
-				</li>
+				</li> -->
 
 				<li *ngFor="let x of data.list" [ngClass]="{default: !x.image}" (click)="toggleItem(x)">
 					<div class="inner" *ngIf="!x.uploaded">
 						<div class="image">
 							<button mat-icon-button>
-								<img *ngIf="x.image" [src]="environment.pathAudios + 'thumbnails/' + x.image"/>
+								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 								<i label="play"></i>
 							</button>
 						</div>
@@ -59,7 +79,7 @@
 					<div class="inner" *ngIf="x.uploaded">
 						<div class="image">
 							<button mat-icon-button>
-								<img *ngIf="x.image" [src]="environment.pathAudios + 'thumbnails/' + x.image"/>
+								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 								<i label="play"></i>
 							</button>
 						</div>

@@ -13,7 +13,7 @@ export class SessionService {
 	private subjectSetDataLanguage = new Subject<any>();
 	private subjectSetDataReport = new Subject<any>();
 	private subjectSetDataCopy = new Subject<any>();
-	private subjectSetDataShowConversation = new Subject<any>();
+	private subjectSetDataShowShare = new Subject<any>();
 	private subjectSetDataShowPublication = new Subject<any>();
 	private subjectSetDataShowPhoto = new Subject<any>();
 	private subjectSetDataShowLikes = new Subject<any>();
@@ -93,12 +93,12 @@ export class SessionService {
 		return this.subjectSetDataCopy.asObservable();
 	}
 
-	setDataShowConversation(data: any) {
-		this.subjectSetDataShowConversation.next(data);
+	setDataShowShare(data: any) {
+		this.subjectSetDataShowShare.next(data);
 	}
 
-	getDataShowConversation(): Observable<any> {
-		return this.subjectSetDataShowConversation.asObservable();
+	getDataShowShare(): Observable<any> {
+		return this.subjectSetDataShowShare.asObservable();
 	}
 
 	setDataShowPublication(data: any) {

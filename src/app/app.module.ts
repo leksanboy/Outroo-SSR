@@ -48,7 +48,7 @@ import { NewPublicationModule } from './pages/common/newPublication/newPublicati
 import { NewReportModule } from './pages/common/newReport/newReport.module';
 import { NewSessionModule } from './pages/common/newSession/newSession.module';
 import { ShowAvatarModule } from './pages/common/showAvatar/showAvatar.module';
-import { ShowConversationModule } from './pages/common/showConversation/showConversation.module';
+import { ShowShareModule } from './pages/common/showShare/showShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
 import { ShowPhotoModule } from './pages/common/showPhoto/showPhoto.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
@@ -106,7 +106,7 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 		NewReportModule,
 		NewSessionModule,
 		ShowAvatarModule,
-		ShowConversationModule,
+		ShowShareModule,
 		ShowLikesModule,
 		ShowPhotoModule,
 		ShowPlaylistModule,

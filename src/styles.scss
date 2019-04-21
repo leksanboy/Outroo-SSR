@@ -801,14 +801,8 @@ body{
 				}
 
 				.actions{
-					// box-sizing: border-box;
-					// margin: 1px 0;
-
 					button{
 						border-radius: 50% !important;
-						// i{
-						// 	background-color: $greyColor;
-						// }
 					}
 				}
 			}
@@ -852,6 +846,214 @@ body{
 			&.remove{
 				filter: grayscale(100%);
 				opacity: .5;
+			}
+		}
+	}
+
+	.publication{
+		box-sizing: border-box;
+		position: relative;
+		padding: 0 0 12px;
+		overflow: hidden;
+		list-style: none;
+		transition: .15s;
+		float: left;
+		width: 100%;
+		margin: 0;
+
+		.head{
+			padding: 6px 0 6px 18px;
+			box-sizing: border-box;
+			display: flex;
+			width: 100%;
+			float: left;
+
+			.avatar{
+				box-sizing: border-box;
+				border-radius: 50%;
+				overflow: hidden;
+				min-width: 32px;
+				margin: 4px 0;
+				height: 32px;
+				width: 32px;
+
+				img{
+					height: 100%;
+					width: 100%;
+				}
+			}
+
+			.text{
+				text-overflow: ellipsis;
+				box-sizing: border-box;
+				white-space: nowrap;
+				line-height: 40px;
+				overflow: hidden;
+				padding: 0 12px;
+				height: 40px;
+				width: 100%;
+
+				.name{
+					.username{
+						word-break: break-all;
+						font-weight: bold;
+					}
+
+					.date{
+						color: $greyColor;
+						font-size: 13px;
+					}
+				}
+			}
+
+			.actions{
+				button{
+					border-radius: 50% !important;
+				}
+			}
+		}
+
+		.body{
+			box-sizing: border-box;
+			width: 100%;
+			float: left;
+
+			.urlVideo{
+				box-sizing: border-box;
+				width: 100%;
+				float: left;
+				padding: 0;
+
+				.embedResponsive{
+					padding-top: 56.25%;
+					position: relative;
+					overflow: hidden;
+					display: block;
+					width: 100%;
+					margin: 0;
+
+					.image{
+						position: absolute;
+						height: 100%;
+						width: 100%;
+						top: 0;
+
+						.img{
+							background-position: center 50%;
+							background-repeat: no-repeat;
+							transform: translate(0px);
+							box-sizing: border-box;
+							background-size: cover;
+							display: inline-block;
+							height: 100%;
+							width: 100%;
+						}
+
+						.play{
+							background: $whiteColor;
+							box-shadow: $shadowBox2;
+							margin: -21px 0 0 -32px;
+							border-radius: 7px;
+							position: absolute;
+							text-align: center;
+							height: 42px;
+							width: 64px;
+							left: 50%;
+							top: 50%;
+						}
+
+						.type{
+							background-color: $whiteColor;
+							box-shadow: $shadowBox2;
+							color: $fontBlackColor;
+							border-radius: 5px;
+							position: absolute;
+							line-height: 10px;
+							font-weight: bold;
+							padding: 4px 8px;
+							font-size: 10px;
+							margin: 12px;
+							bottom: 0;
+							right: 0;
+						}
+					}
+
+					iframe{
+						position: absolute;
+						height: 100%;
+						width: 100%;
+						border: 0;
+						bottom: 0;
+						left: 0;
+						top: 0;
+					}
+				}
+			}
+
+			.photos{
+				width: 100%;
+				float: left;
+
+				img{
+					width: 100%;
+				}
+
+				video{
+					max-height: 360px;
+					width: 100%;
+				}
+
+				.playPause{
+					margin: -43px 0 0 -43px;
+					position: absolute;
+					height: 86px;
+					width: 86px;
+					left: 50%;
+					top: 50%;
+				}
+			}
+
+			.innerContent{
+				box-sizing: border-box;
+				width: 100%;
+				
+				.textContainer{
+					word-break: break-word;
+					box-sizing: border-box;
+					padding: 12px 18px 6px;
+					width: 100%;
+					float: left;
+				}
+
+				.urlVideo{
+					padding: 0 18px;
+					
+					.embedResponsive{
+						border-radius: 5px;
+						margin: 12px 0 0;
+					}
+				}
+			}
+
+			.audios{
+				margin: 12px 0 0;
+				width: 100%;
+				float: left;
+
+				ul{
+					li{
+						padding: inherit;
+					}
+				}
+			}
+		}
+
+		&.remove{
+			filter: grayscale(100%);
+			opacity: .5;
+
+			.body{
+				pointer-events: none;
 			}
 		}
 	}
@@ -2112,11 +2314,11 @@ body{
 	/*No data*/
 	.noData{
 		box-sizing: border-box;
+		padding: 156px 48px;
 		text-align: center;
-		padding: 156px 0;
 		font-size: 24px;
-		width: 100%;
 		float: left;
+		width: 100%;
 
 		.description{
 			font-size: 15px;
@@ -2933,6 +3135,104 @@ body{
 					}
 				}
 
+				.uploadFilesBox{
+					margin: 12px 0;
+
+					.button{
+						button{
+							border: 1px solid $whiteColor;
+							background: transparent;
+
+							.left i,
+							.right .top{
+								background-color: $whiteColor;
+							}
+						}
+					}
+				}
+
+				.filesBox{
+					width: 100%;
+					float: left;
+
+					.counter{
+						background-color: $whiteColor;
+						color: $fontBlackColor;
+						border-radius: 3px;
+						font-weight: bold;
+						margin: 12px 18px;
+						padding: 2px 6px;
+						font-size: 12px;
+						float: left;
+
+						&.warning{
+							background-color: $redColor;
+						}
+					}
+
+					.urlVideo{
+						box-sizing: border-box;
+						padding: 0 18px;
+						width: 100%;
+						float: left;
+
+						.box{
+							border: 1px solid $greyColor;
+							box-sizing: border-box;
+							position: relative;
+							border-radius: 5px;
+							overflow: hidden;
+							float: left;
+							width: 100%;
+
+							.image{
+								border-bottom: 1px solid $greyColor;
+								height: 180px;
+								float: left;
+								width: 100%;
+
+								.img{
+									background-position: center 35%;
+									background-repeat: no-repeat;
+									transform: translate(0px);
+									box-sizing: border-box;
+									background-size: cover;
+									display: inline-block;
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.text{
+								box-sizing: border-box;
+								font-weight: bold;
+								padding: 8px 12px;
+								float: left;
+								width: 100%;
+
+								.title{
+									color: $whiteColor;
+									font-size: 15px;
+								}
+
+								.subtitle{
+									color: $greyColor;
+									padding: 4px 0 0;
+									font-size: 13px;
+								}
+							}
+
+							.clear{
+								background-color: transparent;
+								position: absolute;
+								box-shadow: none;
+								right: 0;
+								top: 0;
+							}
+						}
+					}
+				}
+
 				.photos{
 					width: 100%;
 					float: left;
@@ -3079,38 +3379,6 @@ body{
 									}
 								}
 							}
-
-							&.upload{
-								cursor: pointer;
-
-								.inner{
-									border: 1px solid $whiteColor;
-									justify-content: center;
-									box-sizing: border-box;
-									align-items: center;
-									border-radius: 5px;
-									display: flex;
-									height: 100%;
-									width: 100%;
-
-									.label{
-										text-align: center;
-										padding: 0 12px;
-										width: 100%;
-
-										.title{
-											text-transform: uppercase;
-											font-size: 13px;
-										}
-
-										.subtitle{
-											color: $greyColor;
-											padding: 2px 0 0;
-											font-size: 10px;
-										}
-									}
-								}
-							}
 						}
 					}
 				}
@@ -3169,129 +3437,12 @@ body{
 									}
 								}
 							}
-
-							&.upload{
-								padding: 12px 18px 6px;
-								cursor: pointer;
-
-								.inner{
-									border: 1px solid $whiteColor;
-									justify-content: center;
-									box-sizing: border-box;
-									align-items: center;
-									border-radius: 5px;
-									padding: 4px 0 6px;
-									display: flex;
-									height: 100%;
-									width: 100%;
-
-									.label{
-										text-align: center;
-										padding: 0 12px;
-										width: 100%;
-
-										.title{
-											text-transform: uppercase;
-											font-size: 13px;
-										}
-
-										.subtitle{
-											color: $greyColor;
-											padding: 2px 0 0;
-											font-size: 10px;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-
-				.filesBox{
-					width: 100%;
-					float: left;
-
-					.counter{
-						background-color: $whiteColor;
-						color: $fontBlackColor;
-						border-radius: 3px;
-						font-weight: bold;
-						margin: 12px 18px;
-						padding: 2px 6px;
-						font-size: 12px;
-						float: left;
-
-						&.warning{
-							background-color: $redColor;
-						}
-					}
-
-					.urlVideo{
-						box-sizing: border-box;
-						padding: 0 18px;
-						width: 100%;
-						float: left;
-
-						.box{
-							border: 1px solid $greyColor;
-							box-sizing: border-box;
-							position: relative;
-							border-radius: 5px;
-							overflow: hidden;
-							float: left;
-							width: 100%;
-
-							.image{
-								border-bottom: 1px solid $greyColor;
-								height: 180px;
-								float: left;
-								width: 100%;
-
-								.img{
-									background-position: center 35%;
-									background-repeat: no-repeat;
-									transform: translate(0px);
-									box-sizing: border-box;
-									background-size: cover;
-									display: inline-block;
-									height: 100%;
-									width: 100%;
-								}
-							}
-
-							.text{
-								box-sizing: border-box;
-								font-weight: bold;
-								padding: 8px 12px;
-								float: left;
-								width: 100%;
-
-								.title{
-									color: $whiteColor;
-									font-size: 15px;
-								}
-
-								.subtitle{
-									color: $greyColor;
-									padding: 4px 0 0;
-									font-size: 13px;
-								}
-							}
-
-							.clear{
-								background-color: transparent;
-								position: absolute;
-								box-shadow: none;
-								right: 0;
-								top: 0;
-							}
 						}
 					}
 				}
 			}
 
-			/*show photos/publication*/
-			.bodyPhotos,
+			/*show publication*/
 			.bodyPublications{
 				min-height: 360px;
 				margin: 0 auto;
@@ -3637,17 +3788,29 @@ body{
 								height: 48px;
 
 								button{
+									background-color: $whiteColor;
 									text-transform: uppercase;
-									text-transform: inherit;
-									line-height: 32px;
-									padding: 0 12px;
-									margin: 7px 0;
+									margin: 10px 0 0 6px;
+									color: $blackColor;
+									line-height: 24px;
+									font-weight: bold;
+									font-size: 11px;
+									padding: 0 8px;
+									height: 28px;
 									min-width: 0;
-									height: 32px;
+
+									&:first-child{
+										margin-left: 0;
+									}
 
 									&.active{
+										border: 1px solid $whiteColor;
+										background-color: transparent;
+										color: $whiteColor;
+									}
+
+									&.pending{
 										background-color: $blueColor;
-										border-color: $blueColor;
 										color: $whiteColor;
 									}
 								}
@@ -4559,6 +4722,8 @@ body{
 					padding: 0 8px 0 0;
 
 					.files{
+						box-sizing: border-box;
+						padding: 0 0 0 6px;
 						text-align: left;
 						display: flex;
 						width: 50%;
@@ -4567,6 +4732,7 @@ body{
 							background: transparent;
 							box-shadow: none;
 							margin: 0 3px;
+							padding: 0;
 
 							i{
 								background-color: $whiteColor;
@@ -4644,6 +4810,25 @@ body{
 						display: flex;
 						height: 56px;
 						width: 100%;
+					}
+				}
+			}
+
+			/*Load more*/
+			.loadMore{
+				button{
+					border: 1px solid $whiteColor !important;
+
+					i{
+						background-color: $whiteColor !important;
+					}
+				}
+
+				mat-progress-spinner{
+					svg {
+						circle{
+							stroke: $whiteColor !important;
+						}
 					}
 				}
 			}
@@ -6544,15 +6729,13 @@ body{
 									}
 
 									&.active{
-										background-color: $blueColor;
-										border-color: $blueColor;
-										color: $whiteColor;
+										border: 1px solid $fontBlackColor;
+										background-color: transparent;
+										color: $fontBlackColor;
 									}
 
 									&.pending{
-										background-color: transparent;
-										border-color: currentColor;
-										color: currentColor;
+										background-color: $blueColor;
 									}
 								}
 							}
@@ -6750,7 +6933,7 @@ body{
 						}
 					}
 
-					.scrolling-wrapper {
+					.scrolling-wrapper{
 						-webkit-overflow-scrolling: touch;
 						white-space: nowrap;
 						overflow-y: hidden;
@@ -6816,8 +6999,8 @@ body{
 								width: 100%;
 
 								.text{
+									padding: 6px 0 6px 12px;
 									box-sizing: border-box;
-									padding: 6px 12px;
 									width: 100%;
 
 									.name{
@@ -6837,6 +7020,7 @@ body{
 									.container{
 										word-break: break-word;
 										color: $greyColor;
+										padding: 2px 0 0;
 										cursor: pointer;
 										font-size: 14px;
 										width: 100%;
@@ -7351,6 +7535,30 @@ body{
 					}
 				}
 			}
+
+			/*Song*/
+			.pageSong{
+				max-width: $pageMaxWidth;
+				margin: 0 auto;
+
+				.content{
+					width: 100%;
+					float: left;
+					margin: 0;
+				}
+			}
+
+			/*Publication*/
+			.pagePublication{
+				max-width: $pageMaxWidth;
+				margin: 0 auto;
+
+				.content{
+					width: 100%;
+					float: left;
+					margin: 0;
+				}
+			}
 		}
 	}
 
@@ -7550,6 +7758,11 @@ body{
 					ul li .actions button{
 						background-color: $whiteColor;
 						color: $fontBlackColor;
+
+						&.active{
+							border: 1px solid $whiteColor;
+							color: $whiteColor;
+						}
 					}
 				}
 			}
@@ -7689,6 +7902,11 @@ body{
 
 			.grabber{
 				background-color: transparentize($whiteColor, .25);
+			}
+
+			.goTo button{
+				background-color: $whiteColor;
+				color: $blackColor;
 			}
 
 			.box .player{
@@ -8175,7 +8393,6 @@ body{
 					width: 100%;
 				}
 
-				.bodyPhotos,
 				.bodyPublications{
 					padding: 0 0 24px;
 					display: block;

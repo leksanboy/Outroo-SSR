@@ -11,9 +11,9 @@ import { AudioDataService } from '../../../../../app/core/services/user/audioDat
 	templateUrl: './addAudios.component.html'
 })
 export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
+	public env: any = environment;
 	public sessionData: any;
 	public translations: any;
-	public environment: any = environment;
 	public noData: boolean;
 	public loadingData: boolean;
 	public loadMoreData: boolean;
@@ -70,7 +70,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			user: user,
 			type: 'default',
 			rows: this.data.rowsDefault,
-			cuantity: environment.cuantity
+			cuantity: this.env.cuantity
 		}
 
 		this.audioDataService.default(data)
@@ -81,7 +81,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 					if (!res || res.length == 0) {
 						this.noData = true;
 					} else {
-						this.loadMoreData = (res.length < environment.cuantity) ? false : true;
+						this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 						this.noData = false;
 						this.data.list = res;
 					}
@@ -98,13 +98,13 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			user: this.sessionData.current.id,
 			type: 'default',
 			rows: this.data.rowsDefault,
-			cuantity: environment.cuantity
+			cuantity: this.env.cuantity
 		}
 
 		this.audioDataService.default(data)
 			.subscribe(res => {
 				setTimeout(() => {
-					this.loadMoreData = (res.length < environment.cuantity) ? false : true;
+					this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 					this.loadingMoreData = false;
 
 					for (let i in res)
