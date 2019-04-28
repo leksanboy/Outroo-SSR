@@ -2,7 +2,7 @@
 	$type = $_GET['type'];
 	$url = $_GET['url'];
 
-	if ($type == 'youtube') { // YouTube: all url types
+	if ($type === 'youtube') { // YouTube: all url types
 		$data = file_get_contents("https://www.youtube.com/oembed?url=". $url ."&format=json");
 		// Decode json to array
 		$data = json_decode($data);
@@ -24,7 +24,7 @@
 
 		// Encode array to json
 		$data = json_encode($data);
-	} else if ($type == 'vimeo') { // Vimeo: check url on preg_match()
+	} else if ($type === 'vimeo') { // Vimeo: check url on preg_match()
 		$regs = array();
 		
         if (preg_match('%^https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)(?:[?]?.*)$%im', $url, $regs)) {

@@ -5,7 +5,6 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
-import { PhotoDataService } from '../../../../app/core/services/user/photoData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
@@ -27,7 +26,6 @@ export class ShowLikesComponent implements OnInit {
 		public dialogRef: MatDialogRef<ShowLikesComponent>,
 		private location: Location,
 		private sessionService: SessionService,
-		private photoDataService: PhotoDataService,
 		private followsDataService: FollowsDataService,
 		private publicationsDataService: PublicationsDataService
 	) {
@@ -51,7 +49,6 @@ export class ShowLikesComponent implements OnInit {
 		let data = {
 			type: item.status,
 			private: item.private,
-			sender: this.sessionData.current.id,
 			receiver: item.user.id
 		}
 
@@ -69,12 +66,11 @@ export class ShowLikesComponent implements OnInit {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false,
-				service: (this.data.item.comeFrom == 'publication') ? this.publicationsDataService : this.photoDataService
+				service: (this.data.item.comeFrom == 'publication') ? this.publicationsDataService : null
 			}
 
 			let data = {
 				id: item.id,
-				session: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity*3
 			}

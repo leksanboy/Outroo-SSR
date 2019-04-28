@@ -12,8 +12,6 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
-import { ChatDataService } from '../../../../app/core/services/user/chatData.service';
-import { PhotoDataService } from '../../../../app/core/services/user/photoData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
@@ -81,8 +79,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private chatDataService: ChatDataService,
-		private photoDataService: PhotoDataService,
 		private audioDataService: AudioDataService,
 		private followsDataService: FollowsDataService,
 		private publicationsDataService: PublicationsDataService,
@@ -114,7 +110,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 					ga('send', 'pageview');
 
 					// Load default
-					this.default('default', this.sessionData.current.id);
+					this.default('default');
 				}
 			});
 
@@ -147,7 +143,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight) {
 				if (this.dataNotifications.list.length > 0)
-					this.default('more', null);
+					this.default('more');
 			}
 		}
 	}
@@ -172,7 +168,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, user) {
+	default(type) {
 		if (type == 'default') {
 			this.dataNotifications = {
 				list: [],
@@ -185,7 +181,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				user: user,
 				type: 'default',
 				rows: this.dataNotifications.rows,
 				cuantity: environment.cuantity
@@ -220,7 +215,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.dataNotifications.rows++;
 
 			let data = {
-				user: this.sessionData.current.id,
 				rows: this.dataNotifications.rows,
 				cuantity: environment.cuantity
 			}
@@ -263,7 +257,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			let data = {
 				type: item.statusF,
 				private: item.private,
-				receiver: this.sessionData.current.id,
 				sender: item.user.id
 			}
 
@@ -281,7 +274,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			let data = {
 				type: item.statusF,
 				private: item.private,
-				receiver: this.sessionData.current.id,
 				sender: item.user.id
 			}
 
@@ -293,8 +285,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			let data = {
 				type: item.statusFollowing,
 				private: item.private,
-				receiver: item.user.id,
-				sender: this.sessionData.current.id
+				receiver: item.user.id
 			}
 
 			this.followsDataService.followUnfollow(data).subscribe();
@@ -305,8 +296,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			let data = {
 				type: item.statusFollowing,
 				private: item.private,
-				receiver: item.user.id,
-				sender: this.sessionData.current.id
+				receiver: item.user.id
 			}
 
 			this.followsDataService.followUnfollow(data).subscribe();
@@ -331,8 +321,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 				let dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.notificationsDataService.addRemove(dataAddRemove).subscribe();
@@ -376,7 +365,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -394,7 +382,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,

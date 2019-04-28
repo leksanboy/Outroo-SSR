@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -33,16 +33,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private _fb: FormBuilder,
-		private route: ActivatedRoute,
-		private router: Router,
-		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
+		private alertService: AlertService,
 		private metaService: MetaService,
+		private router: Router,
 		private userDataService: UserDataService,
 		private ssrService: SsrService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+		this.listOfPhrases = this.translations.common.listOfPhrases;
+
+		// Set meta / Only in home page
+		this.setMetaData(this.translations);
 
 		// User data from routing resolve
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
@@ -51,10 +54,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'home';
+			const urlGa = 'home';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
-		};
+		}
 
 		// login form
 		this.actionForm = this._fb.group({
@@ -66,11 +69,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.sessionData = this.userDataService.getSessionData();
 
 		// If session is set
-		if (this.sessionData)
-			if (this.sessionData.current)
+		if (this.sessionData) {
+			if (this.sessionData.current) {
 				this.router.navigate([this.sessionData.current.username]);
+			}
+		}
 
-		
 		if (this.ssrService.isBrowser) {
 			// Counter phrases
 			const self = this;
@@ -79,12 +83,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 				const rand = Math.floor(Math.random() * self.listOfPhrases.length);
 				self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
 			}, 100);
-	
+
 			this.activeTextEffect = setInterval(function() {
 				const rand = Math.floor(Math.random() * self.listOfPhrases.length);
 				self.counter(self.textCounterEffect, self.listOfPhrases[rand]);
 			}, 13000);
-		};
+		}
 	}
 
 	ngOnDestroy() {
@@ -104,21 +108,17 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	setLang(lang) {
 		this.getTranslations(lang);
-
-		// set cookie for global lang
-		// TODO
 	}
 
 	setMetaData(data) {
-		let metaData = {
+		const metaData = {
 			page: data.home.title,
 			title: data.home.title,
 			description: data.home.description,
 			keywords: data.home.description,
 			url: this.env.url + '/',
 			image: this.env.url + 'assets/images/image_color.png'
-		}
-
+		};
 		this.metaService.setData(metaData);
 	}
 
@@ -143,10 +143,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 			// create an array from the text, prepare to identify which characters in the string are numbers
 			const numChars = number.split('');
 			const numArray = [];
-			
+
 			// create list of strings for html
 			let charsArray = '';
-			for (let c of setOfNumbers){
+			for (const c of setOfNumbers) {
 				charsArray += (c + '<br>');
 			}
 

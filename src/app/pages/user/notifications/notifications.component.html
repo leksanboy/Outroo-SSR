@@ -277,7 +277,7 @@
 				</div>
 				
 				<div class="loadMore" *ngIf="dataNotifications.loadMoreData">
-					<button mat-fab (click)="default('more', null)" *ngIf="!dataNotifications.loadingMoreData">
+					<button mat-fab (click)="default('more')" *ngIf="!dataNotifications.loadingMoreData">
 						<i label="add"></i>
 					</button>
 					<mat-progress-spinner mode="indeterminate" *ngIf="dataNotifications.loadingMoreData"></mat-progress-spinner>

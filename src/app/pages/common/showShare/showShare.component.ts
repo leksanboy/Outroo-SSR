@@ -110,7 +110,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 
 		let data = {
 			user: this.sessionData.current.username,
-			session: this.sessionData.current.id,
 			type: 'following',
 			rows: this.dataUsers.rows,
 			cuantity: environment.cuantity
@@ -148,8 +147,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
-				user: this.sessionData.current.id,
 				caption: this.actionFormSearch.get('caption').value,
 				cuantity: environment.cuantity
 			}
@@ -184,7 +181,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			this.dataSearch.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
 				cuantity: environment.cuantity
@@ -256,7 +252,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				sender: this.sessionData.current.id,
 				receivers: users,
 				url: url,
 				id: id

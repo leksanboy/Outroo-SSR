@@ -9,6 +9,9 @@ export class MetaService {
 	) { }
 
 	setData(data: any) {
+		// Set html lang
+		// this.renderer.setAttribute(this.document.documentElement, 'lang', this.locale);
+
 		// Set title
 		this.title.setTitle(data.page);
 
@@ -19,7 +22,7 @@ export class MetaService {
 		this.meta.updateTag({ itemtype: data.url 																		});
 
 		// Twitter
-		this.meta.updateTag({ name: 'twitter:card',			content: 'summary_large_image' 								});
+		this.meta.updateTag({ name: 'twitter:card',			content: 'summary' 											});
 		this.meta.updateTag({ name: 'twitter:site',			content: '@outroo' 											});
 		this.meta.updateTag({ name: 'twitter:title',		content: data.title 										});
 		this.meta.updateTag({ name: 'twitter:description',	content: data.description 									});

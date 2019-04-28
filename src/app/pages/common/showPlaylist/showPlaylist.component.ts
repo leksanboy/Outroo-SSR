@@ -111,7 +111,6 @@ export class ShowPlaylistComponent implements OnInit {
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 				
 				let dataARS = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					subtype: 'session',
 					location: 'playlist',
@@ -132,7 +131,6 @@ export class ShowPlaylistComponent implements OnInit {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 				
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -152,7 +150,6 @@ export class ShowPlaylistComponent implements OnInit {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 				
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,

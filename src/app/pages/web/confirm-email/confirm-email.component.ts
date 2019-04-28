@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -26,22 +26,34 @@ export class ConfirmEmailComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
+		private router: Router,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.confirmEmail.title,
+			title: this.translations.confirmEmail.title,
+			description: this.translations.confirmEmail.description,
+			keywords: this.translations.confirmEmail.description,
+			url: this.env.url + 'confirm-email',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 
 		// Get url data
-		let urlData: any = this.activatedRoute.snapshot;
-		let data = {
+		const urlData: any = this.activatedRoute.snapshot;
+		const data = {
 			code: urlData.params.code
-		}
+		};
 
+		// Validation
 		this.userDataService.confirmEmail(data)
 			.subscribe(
 				res => {
@@ -61,31 +73,10 @@ export class ConfirmEmailComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'confirm-email';
+			const urlGa = 'confirm-email';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
-	}
-
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.confirmEmail.title,
-			title: data.confirmEmail.title,
-			description: data.confirmEmail.description,
-			keywords: data.confirmEmail.description,
-			url: this.env.url + 'confirm-email',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
 	}
 
 	submit() {

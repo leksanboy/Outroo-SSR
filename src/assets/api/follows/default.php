@@ -1,15 +1,16 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$type = $_GET['type'];
-	$session = $_GET['session'];
+	$session = sessionId();
 	$user = $_GET['user'];
+	$type = $_GET['type'];
 
 	if ($more == 0)
 		$user = userId($user);
 
 	if ($type == 'following') {
-		$sql = "SELECT u.id, u.private 
+		$sql = "SELECT u.id, 
+						u.private 
 				FROM z_following f 
 					INNER JOIN z_users u ON f.receiver = u.id 
 				WHERE f.sender = $user 
@@ -34,7 +35,8 @@
 
 		$conn->close();
 	} else if ($type == 'followers') {
-		$sql = "SELECT u.id, u.private 
+		$sql = "SELECT u.id, 
+						u.private 
 				FROM z_following f 
 					INNER JOIN z_users u ON f.sender = u.id 
 				WHERE f.receiver = $user 

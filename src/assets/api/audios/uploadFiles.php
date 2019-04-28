@@ -2,8 +2,8 @@
 	// Get file information with getid3
     require '/usr/share/php/getid3/getid3.php';
 
-    $user = $_POST['user'];
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+    $session = sessionId();
 	$fileName = generateRandomString(23);
 	$fileNameMp3 = $fileName.'.mp3';
 	$fileNameJpg = $fileName.'.jpg';
@@ -14,8 +14,6 @@
 	
     // If not files to update (count files = 0)
 	if (!$fileTmpLoc) exit();
-
-	// echo 'F-UP:'.json_encode($_FILES["fileUpload"]);
 
 	// Start to upload
 	if (move_uploaded_file($fileTmpLoc, $locationPath.$fileNameMp3)) {
@@ -42,13 +40,13 @@
 
         // Insert file
 		$sql = "INSERT INTO z_audios (user, name, mimetype, title, original_title, original_artist, genre, image, duration, ip_address)
-				VALUES ($user, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', '$duration', '$ipAddress')";
+				VALUES ($session, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', '$duration', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
 
 		// Insert to user
 		$sqlFav = "INSERT INTO z_audios_favorites (user, song, ip_address)
-				VALUES ($user, $insertedId, '$ipAddress')";
+				VALUES ($session, $insertedId, '$ipAddress')";
 		$resultFav = $conn->query($sqlFav);
 
 	    var_dump(http_response_code(204));

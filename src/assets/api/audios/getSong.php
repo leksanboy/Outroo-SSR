@@ -1,10 +1,17 @@
 <?php include "../db.php";
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$name = $_GET['n'].'.mp3';
+	$name = $_GET['name'].'.mp3';
 
-	$sql = "SELECT id, name, title, original_title, original_artist, duration, image
+	$sql = "SELECT id, 
+					name, 
+					title, 
+					original_title, 
+					original_artist, 
+					duration, 
+					image
 			FROM z_audios
-			WHERE name = '$name' AND is_deleted = 0";
+			WHERE name = '$name' 
+				AND is_deleted = 0";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {

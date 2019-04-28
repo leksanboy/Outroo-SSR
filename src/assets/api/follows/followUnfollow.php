@@ -3,11 +3,10 @@
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$type = $data['type'];
-	// $private = $data['private'];
-	$sender = $data['sender'];
-	$receiver = $data['receiver'];
 
-	if ($type == "pending") { // Follow private
+	if ($type === 'pending') { // Follow private
+		$sender = sessionId();
+		$receiver = $data['receiver'];
 		$status = 1;
 
 		// Reset first
@@ -23,13 +22,13 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'followers',
-			"type" 		=> 'startFollowingPrivate',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver,
-			"id" 		=> $receiver
+			'url' 		=> 'followers',
+			'type' 		=> 'startFollowingPrivate',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver,
+			'id' 		=> $receiver
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver)
 			generateNotification($notification);
@@ -37,7 +36,9 @@
 		var_dump(http_response_code(204));
 		
 		$conn->close();
-	} else if ($type == "following") { // Follow normal
+	} else if ($type === 'following') { // Follow normal
+		$sender = sessionId();
+		$receiver = $data['receiver'];
 		$status = 0;
 
 		// Reset first
@@ -53,11 +54,11 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'followers',
-			"type" 		=> 'startFollowing',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver,
-			"id" 		=> $receiver
+			'url' 		=> 'followers',
+			'type' 		=> 'startFollowing',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver,
+			'id' 		=> $receiver
 		);
 		
 		// Check to not notificate myself
@@ -66,7 +67,10 @@
 
 		var_dump(http_response_code(204));
 		$conn->close();
-	} else if ($type == "unfollow") { // Unfollow
+	} else if ($type === 'unfollow') { // Unfollow
+		$sender = sessionId();
+		$receiver = $data['receiver'];
+
 		$sql = "UPDATE z_following
 				SET is_deleted = 1,
 					ip_address = '$ipAddress'
@@ -76,10 +80,10 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'followers',
-			"type" 		=> 'stopFollowing',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver
+			'url' 		=> 'followers',
+			'type' 		=> 'stopFollowing',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver
 		);
 		
 		// Check to not notificate myself
@@ -88,7 +92,10 @@
 
 		var_dump(http_response_code(204));
 		$conn->close();
-	} else if ($type == "accept") { // Accept request
+	} else if ($type === 'accept') { // Accept request
+		$receiver = sessionId();
+		$sender = $data['sender'];
+
 		$sql = "UPDATE z_following
 				SET status = 0, 
 					ip_address = '$ipAddress' 
@@ -98,11 +105,11 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'followers',
-			"type" 		=> 'acceptRequest',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver,
-			"id" 		=> $receiver
+			'url' 		=> 'followers',
+			'type' 		=> 'acceptRequest',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver,
+			'id' 		=> $receiver
 		);
 		
 		// Check to not notificate myself
@@ -113,7 +120,10 @@
 		echo json_encode($followingStatus);
 		
 		$conn->close();
-	} else if ($type == "decline") { // Decline request
+	} else if ($type === 'decline') { // Decline request
+		$receiver = sessionId();
+		$sender = $data['sender'];
+
 		$sql = "UPDATE z_following
 				SET is_deleted = 1, 
 					ip_address = '$ipAddress' 
@@ -123,10 +133,10 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'followers',
-			"type" 		=> 'declineRequest',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver
+			'url' 		=> 'followers',
+			'type' 		=> 'declineRequest',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver
 		);
 		
 		// Check to not notificate myself

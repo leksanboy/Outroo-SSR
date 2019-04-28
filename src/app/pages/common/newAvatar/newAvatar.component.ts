@@ -106,7 +106,6 @@ export class NewAvatarComponent implements OnInit {
 					this.saveLoading = true;
 
 					let d = {
-						id: this.sessionData.current.id,
 						image: imageBase64
 					}
 
@@ -132,7 +131,6 @@ export class NewAvatarComponent implements OnInit {
 					this.saveLoading = true;
 
 					let d = {
-						id: this.sessionData.current.id,
 						image: imageBase64
 					}
 

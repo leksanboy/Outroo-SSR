@@ -3,7 +3,13 @@
 	$more = $_GET['rows']*$cuantity;
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT id, name, title, original_title, original_artist, duration, image 
+	$sql = "SELECT id, 
+					name, 
+					title,
+					original_title,
+					original_artist,
+					duration,
+					image 
 			FROM z_audios
 			WHERE title LIKE '%$caption%' OR 
 					original_title LIKE '%$caption%' OR 

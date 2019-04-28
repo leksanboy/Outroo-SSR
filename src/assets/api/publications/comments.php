@@ -3,9 +3,13 @@
 	$more = $_GET['rows']*$cuantity;
 	$id = $_GET['id'];
 
-	$sql = "SELECT id, user, comment, date
+	$sql = "SELECT id, 
+					user, 
+					comment, 
+					date
 			FROM z_publications_comments
-			WHERE publication = $id AND is_deleted = 0 
+			WHERE publication = $id 
+				AND is_deleted = 0 
 			ORDER BY date DESC 
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);

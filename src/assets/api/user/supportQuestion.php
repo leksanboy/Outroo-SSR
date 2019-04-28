@@ -6,7 +6,7 @@
     $content = $data['content'];
 
 	if (isset($email)) {
-        // create question
+        // Create question
         $sql = "INSERT INTO z_support_questions (email, content, ip_address)
 				VALUES ('$email',  '$content', '$ipAddress')";
 		$result = $conn->query($sql);
@@ -14,7 +14,7 @@
         // Send email
 		emailSupportQuestion($email, $content);
 
-		// return response status
+		// Return response status
 		var_dump(http_response_code(204));
 		
 		$conn->close();

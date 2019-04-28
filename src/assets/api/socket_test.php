@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 	require_once('./WebSockets.php');
 
 	class echoServer extends WebSocketServer {
@@ -29,3 +29,4 @@
 	  $echo->stdout($e->getMessage());
 	}
 ?>
+ -->

@@ -80,7 +80,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 					this.siteUserData(urlData);
 
 					// Load default
-					this.default('default', urlData, this.sessionData.current.id);
+					this.default('default', urlData);
 				}
 			});
 
@@ -101,7 +101,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			if (windowBottom >= docHeight)
 				if (this.data.active == 'default')
 					if (this.dataDefault.list.length > 0)
-						this.default('more', null, null);
+						this.default('more', null);
 				else if (this.data.active == 'search')
 					if (this.dataSearch.list.length > 0)
 						this.search('more');
@@ -147,7 +147,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 
 				// Data
 				let data = {
-					sender: this.sessionData ? this.sessionData.current.id : 0,
 					receiver: this.userData.id
 				}
 
@@ -184,7 +183,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		let data = {
 			type: item.status,
 			private: item.private,
-			sender: this.sessionData.current.id,
 			receiver: item.user.id
 		}
 
@@ -192,7 +190,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, user, session){
+	default(type, user){
 		if (type == 'default') {
 			this.dataDefault = {
 				list: [],
@@ -206,7 +204,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 
 			let data = {
 				user: user,
-				session: session,
 				type: 'followers',
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
@@ -235,7 +232,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 
 			let data = {
 				user: this.userData.id,
-				session: this.sessionData.current.id,
 				type: 'followers',
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
@@ -277,7 +273,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
@@ -308,7 +303,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			this.dataSearch.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,

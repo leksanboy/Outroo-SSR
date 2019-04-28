@@ -2,7 +2,7 @@
 	// Get file information with getid3
     require '/usr/share/php/getid3/getid3.php';
 
-	$user = $_POST['user'];
+	$session = sessionId();
 	$category = $_POST['category'];
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$fileName = generateRandomString(23);
@@ -19,7 +19,7 @@
 	if (!$fileTmpLoc) exit();
 
 	// Start to upload
-	if ($category == 'audio') {
+	if ($category === 'audio') {
 		$fileTitle = htmlspecialchars($_POST['title'], ENT_QUOTES);
 
 		if (move_uploaded_file($fileTmpLoc, $locationPathAudios.$fileNameMp3)) {
@@ -46,20 +46,20 @@
 
 	        // Insert file
 			$sql = "INSERT INTO z_publications_files (user, name, mimetype, title, original_title, original_artist, genre, image, duration, ip_address)
-					VALUES ($user, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', '$duration', '$ipAddress')";
+					VALUES ($session, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', '$duration', '$ipAddress')";
 			$result = $conn->query($sql);
 			$insertedId = $conn->insert_id;
 
 			// Return data
 		    $data = array(
-    			'name' => $fileName,
-    			'mimetype' => $fileType,
-    			'title' => $fileTitle,
-    			'original_title' => $originalTitle,
-    			'original_artist' => $originalArtist,
-    			'genre' => $genre,
-    			'image' => $image,
-    			'duration' => $duration
+    			'name' 				=> $fileName,
+    			'mimetype'			=> $fileType,
+    			'title' 			=> $fileTitle,
+    			'original_title' 	=> $originalTitle,
+    			'original_artist' 	=> $originalArtist,
+    			'genre' 			=> $genre,
+    			'image' 			=> $image,
+    			'duration' 			=> $duration
     		);
 
 			echo json_encode($data);
@@ -67,7 +67,7 @@
 		}  else {
 			var_dump(http_response_code(400));
 		}
-	} else if ($category == 'image') {
+	} else if ($category === 'image') {
 		if (move_uploaded_file($fileTmpLoc, $locationPathPhotos.$fileNameJpg)) {
 			$inFile = $locationPathPhotos.$fileNameJpg;
 			$outFile = $locationPathPhotos.'thumbnails/'.$fileNameJpg;
@@ -77,14 +77,14 @@
 
 			// Insert file
 			$sql = "INSERT INTO z_publications_files (user, name, mimetype, ip_address)
-					VALUES ($user, '$fileNameJpg', '$fileType', '$ipAddress')";
+					VALUES ($session, '$fileNameJpg', '$fileType', '$ipAddress')";
 			$result = $conn->query($sql);
 			$insertedId = $conn->insert_id;
 
 			// Return data
 			$data = array(
-    			'name' => $fileNameJpg,
-    			'mimetype' => $fileType
+    			'name' 		=> $fileNameJpg,
+    			'mimetype' 	=> $fileType
     		);
 
 			echo json_encode($data);
@@ -92,7 +92,7 @@
 		} else {
 			var_dump(http_response_code(400));
 		}
-	} else if ($category == 'video') {
+	} else if ($category === 'video') {
 		if ($fileType != 'video/mp4')
 			$locationFolder = $locationPathVideos.$fileName;
 		else
@@ -124,7 +124,7 @@
 
 			// Insert file
 			$sql = "INSERT INTO z_publications_files (user, name, mimetype, duration, ip_address)
-					VALUES ($user, '$fileNameJpg', '$fileType', '$duration', '$ipAddress')";
+					VALUES ($session, '$fileNameJpg', '$fileType', '$duration', '$ipAddress')";
 
 			$result = $conn->query($sql);
 			$insertedId = $conn->insert_id;
@@ -135,9 +135,9 @@
 
 			// Return data
 		    $data = array(
-    			'name' => $fileNameJpg,
-    			'mimetype' => $fileType,
-    			'duration' => $duration
+    			'name' 		=> $fileNameJpg,
+    			'mimetype' 	=> $fileType,
+    			'duration' 	=> $duration
     		);
 
 			echo json_encode($data);

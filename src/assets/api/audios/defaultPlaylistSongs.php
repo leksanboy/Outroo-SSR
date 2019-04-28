@@ -1,10 +1,18 @@
 <?php include "../db.php";
 	$id = $_GET['id'];
 
-	$sql = "SELECT s.id, a.id as song, a.name, a.title, a.original_title, a.original_artist, a.duration, a.image
+	$sql = "SELECT s.id, 
+					a.id as song, 
+					a.name, 
+					a.title, 
+					a.original_title, 
+					a.original_artist, 
+					a.duration, 
+					a.image
 			FROM z_audios_playlist_songs s
 				INNER JOIN z_audios a ON a.id = s.song
-			WHERE s.playlist = $id AND s.is_deleted = 0";
+			WHERE s.playlist = $id 
+				AND s.is_deleted = 0";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {

@@ -1,10 +1,11 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
+	$session = sessionId();
 	$id = $_GET['id'];
 
-	$sql = "SELECT u.id, u.private
+	$sql = "SELECT u.id, 
+					u.private
 			FROM z_publications_likes p
 				INNER JOIN z_users u ON p.user = u.id 
 			WHERE publication = $id

@@ -8,6 +8,7 @@ import { HeadersService } from '../headers/headers.service';
 
 @Injectable()
 export class FollowsDataService {
+	public env: any = environment;
 
 	constructor(
 		private http: Http,
@@ -15,9 +16,8 @@ export class FollowsDataService {
 	) { }
 
 	default(data: any) {
-		let url = environment.url + 'assets/api/follows/default.php';
-		let params =	'&session=' + data.session +
-						'&user=' + data.user +
+		let url = this.env.url + 'assets/api/follows/default.php';
+		let params =	'&user=' + data.user +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -30,9 +30,8 @@ export class FollowsDataService {
 	}
 
 	search(data: any){
-		let url = environment.url + 'assets/api/follows/search.php';
-		let params = 	'&session=' + data.session +
-						'&caption=' + data.caption +
+		let url = this.env.url + 'assets/api/follows/search.php';
+		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
@@ -44,9 +43,8 @@ export class FollowsDataService {
 	}
 
 	searchFollowing(data: any){
-		let url = environment.url + 'assets/api/follows/searchFollowing.php';
-		let params = 	'&session=' + data.session +
-						'&user=' + data.user +
+		let url = this.env.url + 'assets/api/follows/searchFollowing.php';
+		let params = 	'&user=' + data.user +
 						'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -59,7 +57,7 @@ export class FollowsDataService {
 	}
 
 	followUnfollow(data: any) {
-		let url = environment.url + 'assets/api/follows/followUnfollow.php';
+		let url = this.env.url + 'assets/api/follows/followUnfollow.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -69,9 +67,8 @@ export class FollowsDataService {
 	}
 
 	checkFollowing(data: any) {
-		let url = environment.url + 'assets/api/follows/checkFollowing.php';
-		let params = 	'&sender=' + data.sender +
-						'&receiver=' + data.receiver;
+		let url = this.env.url + 'assets/api/follows/checkFollowing.php';
+		let params = 	'&receiver=' + data.receiver;
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())

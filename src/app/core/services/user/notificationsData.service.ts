@@ -8,6 +8,7 @@ import { HeadersService } from '../headers/headers.service';
 
 @Injectable()
 export class NotificationsDataService {
+	public env: any = environment;
 
 	constructor(
 		private http: Http,
@@ -15,9 +16,8 @@ export class NotificationsDataService {
 	) { }
 
 	default(data: any) {
-		let url = environment.url + 'assets/api/notifications/default.php';
-		let params =	'&user=' + data.user +
-						'&type=' + data.type +
+		let url = this.env.url + 'assets/api/notifications/default.php';
+		let params =	'&type=' + data.type +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
@@ -29,7 +29,7 @@ export class NotificationsDataService {
 	}
 
 	share(data: any) {
-		let url = environment.url + 'assets/api/notifications/share.php';
+		let url = this.env.url + 'assets/api/notifications/share.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -39,18 +39,16 @@ export class NotificationsDataService {
 	}
 
 	pending(id: any) {
-		let url = environment.url + 'assets/api/notifications/pending.php';
-		let params =	'&id=' + id;
-		params = params.replace('&', '?');
+		let url = this.env.url + 'assets/api/notifications/pending.php';
 
-		return this.http.get(url + params, this.headersService.getHeaders())
+		return this.http.get(url, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
 
 	addRemove(data: any) {
-		let url = environment.url + 'assets/api/notifications/addRemove.php';
+		let url = this.env.url + 'assets/api/notifications/addRemove.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())

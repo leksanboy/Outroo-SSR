@@ -2,12 +2,12 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$sender = sessionId();
+	$receiver = $data['receiver'];
 	$type = $data['type'];
 	$id = $data['id'];
-	$sender = $data['sender'];
-	$receiver = $data['receiver'];
 
-	if ($type == "create") {
+	if ($type === "create") {
 		$comment = htmlspecialchars($data['comment'], ENT_QUOTES);
 		$commentOriginal = htmlspecialchars($data['comment_original'], ENT_QUOTES);
 		$mentions = count($data['mentions']) > 0 ? json_encode($data['mentions']) : null;
@@ -22,12 +22,12 @@
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'publications',
-			"type" 		=> 'comment',
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver,
-			"id" 		=> $id,
-			"comment" 	=> $insertedId
+			'url' 		=> 'publications',
+			'type' 		=> 'comment',
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver,
+			'id' 		=> $id,
+			'comment' 	=> $insertedId
 		);
 		
 		// Check to not notificate myself
@@ -40,12 +40,12 @@
 		
 			if ($rcv) {
 				$notification = array(
-					"url" 		=> 'publications',
-					"type" 		=> 'mentionComment',
-					"sender" 	=> $sender,
-					"receiver" 	=> $rcv,
-					"id" 		=> $id,
-					"comment" 	=> $insertedId
+					'url' 		=> 'publications',
+					'type' 		=> 'mentionComment',
+					'sender' 	=> $sender,
+					'receiver' 	=> $rcv,
+					'id' 		=> $id,
+					'comment' 	=> $insertedId
 				);
 
 				generateNotification($notification);
@@ -53,24 +53,26 @@
 		}
 		
 		echo json_encode($inserted);
+
 		$conn->close();
-	} else if ($type == "add" || $type == "remove") {
-		$status = ($type == 'remove') ? 1 : 0;
+	} else if ($type === 'add' || $type === 'remove') {
+		$status = ($type === 'remove') ? 1 : 0;
 		$comment = $data['comment'];
 
 		$sql = "UPDATE z_publications_comments
-				SET is_deleted = $status, ip_address = '$ipAddress' 
+				SET is_deleted = $status, 
+					ip_address = '$ipAddress' 
 				WHERE id = $comment";
 		$result = $conn->query($sql);
 
 		// Notification data
 		$notification = array(
-			"url" 		=> 'publications',
-			"type" 		=> ($status ? 'uncomment' : 'commentUncommented'),
-			"sender" 	=> $sender,
-			"receiver" 	=> $receiver,
-			"id" 		=> $id,
-			"comment" 	=> $comment
+			'url' 		=> 'publications',
+			'type' 		=> ($status ? 'uncomment' : 'commentUncommented'),
+			'sender' 	=> $sender,
+			'receiver' 	=> $receiver,
+			'id' 		=> $id,
+			'comment' 	=> $comment
 		);
 
 		generateNotification($notification);

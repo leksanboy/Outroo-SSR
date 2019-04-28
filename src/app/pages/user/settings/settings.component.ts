@@ -136,7 +136,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				}
 
 				let data = {
-					id: this.sessionData.current.id,
 					theme: this.actionFormPersonalData.get('theme').value
 				}
 
@@ -160,7 +159,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					this.alertService.success(this.translations.common.privateDisabled);
 							
 				let data = {
-					id: this.sessionData.current.id,
 					private: this.actionFormPersonalData.get('private').value
 				}
 
@@ -426,7 +424,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		let form = this.actionFormPersonalData.value;
 		let regex = /^[a-zA-Z0-9._-]+$/;
 		let data = {
-			id: this.sessionData.current.id,
 			username: form.username,
 			name: form.name.trim(),
 			language: form.language,
@@ -477,7 +474,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				this.savePasswordDataLoading = false;
 
 				let data = {
-					id: this.sessionData.current.id,
 					oldPassword: form.oldPassword,
 					newPassword: form.newPassword
 				}

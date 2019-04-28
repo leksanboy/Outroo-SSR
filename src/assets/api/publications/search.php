@@ -1,15 +1,20 @@
 <?php include "../db.php";
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$session = sessionId();
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
 	$caption = $_GET['caption'];
 
 	// Insert search data analytics
 	searchPublicationAnalytics($session, $caption, 'publication');
 
 	// Publications
-	$sql = "SELECT id, user, name, url_video as urlVideo, photos, date
+	$sql = "SELECT id, 
+					user, 
+					name, 
+					url_video as urlVideo, 
+					photos, 
+					date
 			FROM z_publications
 			WHERE hashtags LIKE '%$caption%' 
 				AND (

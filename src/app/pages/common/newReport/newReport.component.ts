@@ -41,7 +41,6 @@ export class NewReportComponent implements OnInit {
 
 		if (this.actionForm.get('content').value.trim().length > 0) {
 			let data = {
-				user: this.sessionData.current.id,
 				pageId: this.data.item.id,
 				pageType: this.data.item.type,
 				content: this.actionForm.get('content').value

@@ -1,12 +1,16 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$user = $_GET['session'];
+	$session = sessionId();
 
-	$sql = "SELECT b.id, b.user, p.name, p.url_video as urlVideo, p.photos
+	$sql = "SELECT b.id, 
+					b.user, 
+					p.name, 
+					p.url_video as urlVideo, 
+					p.photos
 			FROM z_bookmarks b
 				INNER JOIN z_publications p ON p.id = b.post 
-			WHERE b.user = $user 
+			WHERE b.user = $session 
 				AND b.is_deleted = 0 
 				AND p.is_deleted = 0
 			ORDER BY b.id DESC 

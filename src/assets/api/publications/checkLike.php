@@ -1,10 +1,10 @@
 <?php include "../db.php";
 	$id = $_GET['id'];
-	$user = $_GET['user'];
+	$session = sessionId();
 
 	// Check if I liked a photo
 	$data = array(
-		'liked' => checkLikedPublication($id, $user),
+		'liked' => checkLikedPublication($id, $session),
 		'likers' => getPublicationLikers($id)
 	);
 

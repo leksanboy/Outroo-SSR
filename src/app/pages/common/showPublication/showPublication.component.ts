@@ -75,7 +75,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			this.notExists = false;
 
 			// Update replays
-			this.updateReplays(this.data.current.id, this.sessionData.current.id);
+			this.updateReplays(this.data.current.id);
 
 			// Load comments
 			this.defaultComments('default', this.data.current);
@@ -108,10 +108,9 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	// Replays +1
-	updateReplays(id, user) {
+	updateReplays(id) {
 		let data = {
-			id: id,
-			user: user
+			id: id
 		}
 
 		this.publicationsDataService.updateReplays(data).subscribe();
@@ -132,7 +131,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			let data = {
 				item: item.id,
 				id: item.bookmark.id,
-				user: this.sessionData.current.id,
 				type: item.bookmark.checked ? 'add' : 'remove'
 			}
 
@@ -166,7 +164,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		// data
 		let data = {
 			id: item.id,
-			sender: this.sessionData.current.id,
 			receiver: this.userData.id,
 			type: item.liked ? 'like' : 'unlike'
 		}
@@ -189,8 +186,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 				let dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
@@ -200,8 +196,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 				let dataDisableComments = {
 					id: item.id,
-					type: item.disabledComments,
-					user: this.sessionData.current.id
+					type: item.disabledComments
 				}
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
@@ -275,7 +270,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataU = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -292,7 +286,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'remove' : 'add';
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -491,7 +484,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				let dataCreate = {
 					type: 'create',
 					id: item.id,
-					sender: this.sessionData.current.id,
 					receiver: this.userData.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
@@ -520,7 +512,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				comment.removeType = comment.addRemove ? 'remove' : 'add';
 
 				let data = {
-					sender: this.sessionData.current.id,
 					receiver: this.userData.id,
 					type: comment.removeType,
 					comment: comment.id,

@@ -1,5 +1,5 @@
 <?php include "../db.php";
-	$sender = $_GET['sender'];
+	$sender = sessionId();
 	$receiver = $_GET['receiver'];
 
 	// Check if I'm following

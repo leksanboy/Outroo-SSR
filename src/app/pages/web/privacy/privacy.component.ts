@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -17,41 +18,32 @@ export class PrivacyComponent implements OnInit {
 	public translations: any = [];
 
 	constructor(
+		private activatedRoute: ActivatedRoute,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.privacy.title,
+			title: this.translations.privacy.title,
+			description: this.translations.privacy.description,
+			keywords: this.translations.privacy.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'privacy';
+			const urlGa = 'privacy';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
-	}
-
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.privacy.title,
-			title: data.privacy.title,
-			description: data.privacy.description,
-			keywords: data.privacy.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
 	}
 }

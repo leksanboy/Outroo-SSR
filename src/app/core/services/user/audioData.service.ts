@@ -8,6 +8,7 @@ import { HeadersService } from '../headers/headers.service';
 
 @Injectable()
 export class AudioDataService {
+	public env: any = environment;
 
 	constructor(
 		private http: Http,
@@ -15,7 +16,7 @@ export class AudioDataService {
 	) { }
 
 	default(data: any) {
-		let url = environment.url + 'assets/api/audios/default.php';
+		let url = this.env.url + 'assets/api/audios/default.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
@@ -29,7 +30,7 @@ export class AudioDataService {
 	}
 
 	search(data: any){
-		let url = environment.url + 'assets/api/audios/search.php';
+		let url = this.env.url + 'assets/api/audios/search.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -42,8 +43,8 @@ export class AudioDataService {
 	}
 
 	getSong(data: any) {
-		let url = environment.url + 'assets/api/audios/getSong.php';
-		let params = '&n=' + data.name;
+		let url = this.env.url + 'assets/api/audios/getSong.php';
+		let params = '&name=' + data.name;
 		params = params.replace('&', '?');
 
 		return this.http.get(url + params, this.headersService.getHeaders())
@@ -53,7 +54,7 @@ export class AudioDataService {
 	}
 
 	addRemove(data: any) {
-		let url = environment.url + 'assets/api/audios/addRemove.php';
+		let url = this.env.url + 'assets/api/audios/addRemove.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -63,7 +64,7 @@ export class AudioDataService {
 	}
 
 	updateReplays(data: any) {
-		let url = environment.url + 'assets/api/audios/updateReplays.php';
+		let url = this.env.url + 'assets/api/audios/updateReplays.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -73,9 +74,8 @@ export class AudioDataService {
 	}
 
 	defaultPlaylists(data: any) {
-		let url = environment.url + 'assets/api/audios/defaultPlaylists.php';
+		let url = this.env.url + 'assets/api/audios/defaultPlaylists.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
-						(data.session ? ('&session=' + data.session) : '') +
 						'&type=' + data.type;
 		params = params.replace('&', '?');
 
@@ -86,7 +86,7 @@ export class AudioDataService {
 	}
 
 	defaultPlaylistSongs(data: any) {
-		let url = environment.url + 'assets/api/audios/defaultPlaylistSongs.php';
+		let url = this.env.url + 'assets/api/audios/defaultPlaylistSongs.php';
 		let params =	'&id=' + data.id;
 		params = params.replace('&', '?');
 
@@ -97,7 +97,7 @@ export class AudioDataService {
 	}
 
 	createPlaylist(data: any) {
-		let url = environment.url + 'assets/api/audios/createPlaylist.php';
+		let url = this.env.url + 'assets/api/audios/createPlaylist.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -107,7 +107,7 @@ export class AudioDataService {
 	}
 
 	addRemovePlaylist(data: any) {
-		let url = environment.url + 'assets/api/audios/addRemovePlaylist.php';
+		let url = this.env.url + 'assets/api/audios/addRemovePlaylist.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -117,7 +117,7 @@ export class AudioDataService {
 	}
 
 	publicPrivate(data: any) {
-		let url = environment.url + 'assets/api/audios/publicPrivate.php';
+		let url = this.env.url + 'assets/api/audios/publicPrivate.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())

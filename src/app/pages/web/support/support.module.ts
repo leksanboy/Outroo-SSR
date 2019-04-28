@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+	MatButtonModule,
+	MatButtonToggleModule,
+	MatProgressSpinnerModule,
+	MatInputModule } from '@angular/material';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatButtonToggleModule, MatProgressSpinnerModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RecaptchaModule } from 'ng-recaptcha';
@@ -27,11 +31,7 @@ const routes: Routes = [
 		MatProgressSpinnerModule,
 		MatInputModule
 	],
-	exports: [
-       RecaptchaModule
-    ],
-	declarations: [
-		SupportComponent
-	]
+	exports: [ RecaptchaModule ],
+	declarations: [ SupportComponent ]
 })
 export class SupportModule { }

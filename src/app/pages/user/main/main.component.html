@@ -6,7 +6,7 @@
 					<div class="user">
 						<div class="left">
 							<div class="avatar" (click)="showAvatar()">
-								<img [src]="userData.avatar ? userData.avatarUrl : environment.avatar"/>
+								<img [src]="userData?.avatar ? userData?.avatarUrl : environment.avatar"/>
 							</div>
 						</div>
 
@@ -14,31 +14,31 @@
 							<div class="top">
 								<div class="text">
 									<div class="name">
-										{{userData.name}}
-										<i *ngIf="userData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										{{userData?.name}}
+										<i *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</div>
-									<div class="username">@{{userData.username}}</div>
+									<div class="username">@{{userData?.username}}</div>
 								</div>
 
-								<div class="settings" *ngIf="userData.id == sessionData.current.id">
+								<div class="settings" *ngIf="userData?.id == sessionData.current.id">
 									<button mat-button type="button" routerLink="/settings">
 										<i label="settings"></i>
 									</button>
 								</div>
 							</div>
 
-							<div class="bottom" *ngIf="userData.about">
-								<span [innerHtml]="userData.about | safeHtml"></span>
+							<div class="bottom" *ngIf="userData?.about">
+								<span [innerHtml]="userData?.about | safeHtml"></span>
 							</div>
 						</div>
 					</div>
 
 					<div class="social">
-						<ul *ngIf="((userData.private && userData.followingStatus == 'following') || !userData.private || userData.followingStatus == 'following' || (userData.id == sessionData.current.id))">
-							<!-- <li routerLink="/{{userData.username}}/photos">
+						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
+							<!-- <li routerLink="/{{userData?.username}}/photos">
 								<button mat-button>
 									<div class="text">
-										{{userData.countPhotos}}
+										{{userData?.countPhotos}}
 										<div class="inner">
 											<i label="photo-camera"></i>
 											<div class="name">
@@ -48,10 +48,10 @@
 									</div>
 								</button>
 							</li> -->
-							<li routerLink="/{{userData.username}}/songs">
+							<li routerLink="/{{userData?.username}}/songs">
 								<button mat-button>
 									<div class="text">
-										{{userData.countAudios}}
+										{{userData?.countAudios}}
 										<div class="inner">
 											<i label="music"></i>
 											<div class="name">
@@ -61,10 +61,10 @@
 									</div>
 								</button>
 							</li>
-							<li routerLink="/{{userData.username}}/following">
+							<li routerLink="/{{userData?.username}}/following">
 								<button mat-button>
 									<div class="text">
-										{{userData.countFollowing}}
+										{{userData?.countFollowing}}
 										<div class="inner">
 											<i label="person"></i>
 											<div class="name">
@@ -74,10 +74,10 @@
 									</div>
 								</button>
 							</li>
-							<li routerLink="/{{userData.username}}/followers">
+							<li routerLink="/{{userData?.username}}/followers">
 								<button mat-button>
 									<div class="text">
-										{{userData.countFollowers}}
+										{{userData?.countFollowers}}
 										<div class="inner">
 											<i label="group"></i>
 											<div class="name">
@@ -87,10 +87,10 @@
 									</div>
 								</button>
 							</li>
-							<li routerLink="/saved" *ngIf="sessionData.current.id == userData.id">
+							<li routerLink="/saved" *ngIf="sessionData.current.id == userData?.id">
 								<button mat-button>
 									<div class="text">
-										{{userData.countBookmarks}}
+										{{userData?.countBookmarks}}
 										<div class="inner">
 											<i label="bookmark"></i>
 											<div class="name">
@@ -103,7 +103,7 @@
 						</ul>
 					</div>
 
-					<div class="uploadFilesBox" *ngIf="userData.id == sessionData.current.id">
+					<div class="uploadFilesBox" *ngIf="userData?.id == sessionData.current.id">
 						<div class="button">
 							<button mat-raised-button (click)="newPublication('new', null)">
 								<div class="left">
@@ -121,20 +121,20 @@
 						</div>
 					</div>
 
-					<div class="actions" *ngIf="(userData.id != sessionData.current.id) && sessionData.current.id">
+					<div class="actions" *ngIf="(userData?.id != sessionData.current.id) && sessionData.current.id">
 						<button mat-raised-button routerLink="/notifications">
 							{{translations?.common?.sendMessage}}
 						</button>
 
-						<button mat-raised-button *ngIf="userData.followingStatus == 'unfollow'" (click)="followUnfollow('follow', userData)">
+						<button mat-raised-button *ngIf="userData?.followingStatus == 'unfollow'" (click)="followUnfollow('follow', userData)">
 							{{translations?.common?.follow}}
 						</button>
 						
-						<button mat-raised-button *ngIf="userData.followingStatus == 'pending'" [matMenuTriggerFor]="cancelRequest">
+						<button mat-raised-button *ngIf="userData?.followingStatus == 'pending'" [matMenuTriggerFor]="cancelRequest">
 							{{translations?.common?.pending}}
 						</button>
 						
-						<button mat-raised-button *ngIf="userData.followingStatus == 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
+						<button mat-raised-button *ngIf="userData?.followingStatus == 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
 							{{translations?.common?.following}}
 						</button>
 						
@@ -152,7 +152,7 @@
 							<div class="text">
 								{{translations?.common?.stopFollowing}}
 								<br>
-								{{userData.username}}?
+								{{userData?.username}}?
 							</div>
 							<div class="buttons">
 								<button mat-menu-item>{{translations?.common?.no}}</button>
@@ -163,7 +163,7 @@
 				</div>
 			</div>
 
-			<div class="content" *ngIf="((userData.private && userData.followingStatus == 'following') || !userData.private || userData.followingStatus == 'following' || (userData.id == sessionData.current.id))">
+			<div class="content" *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
 				<ul *ngIf="dataDefault.list">
 					<li *ngFor="let x of dataDefault.list" [ngClass]="{'remove': x.addRemoveSession}">
 						<div class="head">
@@ -454,7 +454,7 @@
 				</div>
 			</div>
 
-			<div class="noData" *ngIf="!((userData.private && userData.followingStatus == 'following') || !userData.private || userData.followingStatus == 'following' || (userData.id == sessionData.current.id))">
+			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
 				{{translations?.common?.privateAccount}}
 			</div>
 		</div>

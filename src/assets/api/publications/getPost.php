@@ -1,10 +1,20 @@
 <?php include "../db.php";
-	$name = $_GET['n'];
-	$session = $_GET['s'] || null;
+	$name = $_GET['name'];
+	$session = sessionId();
 
-	$sql = "SELECT id, user, name, content, content_original, url_video as urlVideo, photos, audios, disabled_comments as disabledComments, date
+	$sql = "SELECT id, 
+					user, 
+					name, 
+					content, 
+					content_original, 
+					url_video as urlVideo, 
+					photos, 
+					audios, 
+					disabled_comments as disabledComments, 
+					date
 			FROM z_publications
-			WHERE name = '$name' AND is_deleted = 0
+			WHERE name = '$name' 
+				AND is_deleted = 0
 			ORDER BY date DESC";
 	$result = $conn->query($sql);
 
@@ -15,7 +25,7 @@
 			$row['user'] = userUsernameNameAvatar($row['user']);
 			$row['content'] = trim($row['content']) ? html_entity_decode($row['content'], ENT_QUOTES) : null;
 			$row['likers'] = getPublicationLikers($row['id']);
-			$row['disabledComments'] = ($row['disabledComments'] == 0) ? true : false;
+			$row['disabledComments'] = ($row['disabledComments'] === 0) ? true : false;
 			$row['countComments'] = countCommentsPublication($row['id']);
 			$row['countLikes'] = countLikesPublication($row['id']);
 			$row['comments'] = [];

@@ -1,30 +1,39 @@
 <?php include "../db.php";
+	$session = sessionId();
 	$user = userId($_GET['user']);
-	$session = $_GET['session'];
 	$type = $_GET['type'];
 
 	// Playlists for list or combo
-	if ($type == 'default') {
-		$id = $user;
-
-		$sql = "SELECT id, title, image, private
+	if ($type === 'default') {
+		$sql = "SELECT id, 
+						title, 
+						image, 
+						private
 				FROM z_audios_playlist
-				WHERE user = $id AND is_deleted = 0 
+				WHERE user = $user 
+					AND is_deleted = 0 
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
-	} else if ($type == 'session') {
-		$id = $session;
-
-		$sql = "SELECT id, title, image, private
+	} else if ($type === 'session') {
+		$sql = "SELECT id, 
+						title, 
+						image, 
+						private
 				FROM z_audios_playlist
-				WHERE user = $id AND is_deleted = 0 
+				WHERE user = $session 
+					AND is_deleted = 0 
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
-	} else if ($type == 'top') {
-		$sql = "SELECT id, title, image, private, user 
+	} else if ($type === 'top') {
+		$sql = "SELECT id, 
+						title, 
+						image, 
+						private, 
+						user 
 				FROM z_audios_playlist
 				WHERE is_deleted = 0 
-				ORDER BY RAND() AND date DESC
+				ORDER BY RAND() 
+					AND date DESC
 				LIMIT 10";
 		$result = $conn->query($sql);
 	}
@@ -41,7 +50,7 @@
 			if ($row['user'])
 				$row['user'] = userUsernameNameAvatar($row['user']);
 			
-			if ($session == $user)
+			if ($session === $user)
 				$data[] = $row;
 			else
 				if (!$row['private'])

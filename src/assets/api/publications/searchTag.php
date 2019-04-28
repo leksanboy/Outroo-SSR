@@ -1,8 +1,8 @@
 <?php include "../db.php";
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$session = sessionId();
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
 	$caption = $_GET['caption'];
 
 	// Insert search data analytics
@@ -30,8 +30,8 @@
 			foreach ($row['caption'] as &$h) {
 				if (strpos(strtolower($h), strtolower($caption)) !== false) {
 					$tag = array(
-						"caption" => $h,
-						"count" => hashtagCount($h)
+						'caption' 	=> $h,
+						'count' 	=> hashtagCount($h)
 					);
 					
 					$dataHashtags[] = $tag;

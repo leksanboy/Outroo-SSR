@@ -95,7 +95,6 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 		this.data.rowsDefault++;
 
 		let data = {
-			user: this.sessionData.current.id,
 			type: 'default',
 			rows: this.data.rowsDefault,
 			cuantity: this.env.cuantity
@@ -167,7 +166,6 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			for (let i = 0; i < event.currentTarget.files.length; i++) {
 				let file = event.currentTarget.files[i];
 				file.title = file.name.replace('.mp3', '');
-				file.user = this.sessionData.current.id;
 				file.id = '000' + this.data.counterUploaded++;
 				file.uploaded = true;
 
@@ -189,7 +187,6 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 
 			const ajaxCall = function(file, formdata, ajax){
 				formdata.append("fileUpload", file);
-				formdata.append("user", file.user);
 				formdata.append("category", file.category);
 				formdata.append("title", file.title);
 

@@ -1,11 +1,14 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
+	$session = sessionId();
 	$user = $_GET['user'];
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT u.id, u.about, u.official, u.private
+	$sql = "SELECT u.id, 
+					u.about, 
+					u.official, 
+					u.private
 			FROM z_following f
 				INNER JOIN z_users u ON f.receiver = u.id
 			WHERE f.sender = $user 

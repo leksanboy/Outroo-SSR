@@ -232,7 +232,7 @@
 			"three": "Complete the form and send your question, we answer you as soon as posible."
 		},
 		"confirmText": {
-			"one": "Check your email",
+			"one": "Sent to support",
 			"two": "We've sent an email to",
 			"three": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
 		}
@@ -243,6 +243,7 @@
 		"dontHaveAnAccount": "Don't have an account?"
 	},
 	"common": {
+		"lang": "en",
 		"langCode": "en_US",
 		"listOfPhrases": [
 			"let¬it¬be",

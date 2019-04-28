@@ -50,7 +50,6 @@ import { NewSessionModule } from './pages/common/newSession/newSession.module';
 import { ShowAvatarModule } from './pages/common/showAvatar/showAvatar.module';
 import { ShowShareModule } from './pages/common/showShare/showShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
-import { ShowPhotoModule } from './pages/common/showPhoto/showPhoto.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
 import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
 import { ShowSessionPanelMobileModule } from './pages/common/showSessionPanelMobile/showSessionPanelMobile.module';
@@ -108,7 +107,6 @@ import { ActiveSessionComponent } from './core/services/activeSession/activeSess
 		ShowAvatarModule,
 		ShowShareModule,
 		ShowLikesModule,
-		ShowPhotoModule,
 		ShowPlaylistModule,
 		ShowPublicationModule,
 		ShowSessionPanelMobileModule,

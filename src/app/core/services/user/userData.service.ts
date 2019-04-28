@@ -2,24 +2,24 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { DOCUMENT } from "@angular/platform-browser";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 import { HeadersService } from '../headers/headers.service';
 import { MetaService } from '../seo/meta.service';
 import { SsrService } from '../ssr.service';
 
+import * as moment from 'moment/moment';
+
 declare var global: any;
-
-import { TransferState, makeStateKey } from '@angular/platform-browser';
-const NODE_KEY = makeStateKey('meta-resolver');
-
 declare var navigator: any;
 
 @Injectable()
 export class UserDataService {
+	public env: any = environment;
 	public window: any = global;
+	public locale = moment.locale();
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -27,7 +27,6 @@ export class UserDataService {
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
 		private metaService: MetaService,
-		public state: TransferState,
 		private ssrService: SsrService
 	) { }
 
@@ -35,14 +34,14 @@ export class UserDataService {
 	getTranslations(lang) {
 		if (!lang) {
 			// Get lang from cookie
-			let langCookie = this.window.localStorage.getItem('lang_' + environment.authHash);
+			let langCookie = this.getLang('get', null);
 
 			if (!langCookie) {
 				// Array of available langs which exists on lang files repo
 				const langsArray = ['en', 'es', 'ru'];
 
-				// Detect language from navigator
-				let langRegion = navigator.language;
+				// Detect language
+				let langRegion = this.locale;
 
 				// Checking browser lang for validate existing one
 				if (!(langsArray.indexOf(langRegion.slice(0, 2)) > -1)) {
@@ -56,13 +55,13 @@ export class UserDataService {
 						lang = 3;
 					}
 
-					this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
+					this.getLang('set', lang);
 				}
 			} else {
 				lang = langCookie;
 			}
 		} else {
-			this.window.localStorage.setItem('lang_' + environment.authHash, JSON.stringify(lang));
+			this.getLang('set', lang);
 		}
 
 		// Lang cases
@@ -88,18 +87,28 @@ export class UserDataService {
 				break;
 		}
 
-		return this.http.get(environment.url + 'assets/i18n/' + language + '.json')
+		return this.http.get(this.env.url + 'assets/i18n/' + language + '.json', this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
 
+	getLang(type, lang) {
+		if (this.ssrService.isBrowser) {
+			if (type === 'set') {
+				this.window.localStorage.setItem('lang_' + this.env.authHash, JSON.stringify(lang));
+			} else if (type === 'get') {
+				return this.window.localStorage.getItem('lang_' + this.env.authHash);
+			}
+		}
+	}
+
 	getCookieLang() {
-		return this.window.localStorage.getItem('lang_' + environment.authHash);
+		return this.window.localStorage.getItem('lang_' + this.env.authHash);
 	}
 
 	login(username, password) {
-		let url = environment.url + 'assets/api/user/authenticate.php';
+		let url = this.env.url + 'assets/api/user/authenticate.php';
 		let params = {
 			username: username,
 			password: password
@@ -117,7 +126,7 @@ export class UserDataService {
 	}
 
 	loginNewSession(username, password) {
-		let url = environment.url + 'assets/api/user/authenticate.php';
+		let url = this.env.url + 'assets/api/user/authenticate.php';
 		let params = {
 			username: username,
 			password: password
@@ -130,7 +139,7 @@ export class UserDataService {
 	}
 
 	logout() {
-		if (this.ssrService.isBrowser) this.window.localStorage.removeItem('userData_' + environment.authHash);
+		if (this.ssrService.isBrowser) this.window.localStorage.removeItem('userData_' + this.env.authHash);
 	}
 
 	setSessionData(type, data) {
@@ -142,7 +151,7 @@ export class UserDataService {
 			};
 
 			storageLoginData.sessions.push(data);
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageLoginData));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageLoginData));
 		} else if (type == 'update') {
 			let oldData = this.getSessionData();
 			let storageUpdateData: any = {
@@ -159,11 +168,11 @@ export class UserDataService {
 					storageUpdateData.sessions.push(oldData.sessions[i]);
 				}
 
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(storageUpdateData));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageUpdateData));
 			
 			return this.getSessionData();
 		} else if (type == 'data') {
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + environment.authHash, JSON.stringify(data));
+			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(data));
 
 			return this.getSessionData();
 		}
@@ -171,7 +180,7 @@ export class UserDataService {
 
 	getSessionData() {
 		if (this.ssrService.isBrowser && this.window.localStorage) {
-			let data = this.window.localStorage.getItem('userData_' + environment.authHash);
+			let data = this.window.localStorage.getItem('userData_' + this.env.authHash);
 			
 			return JSON.parse(data);
 		}
@@ -181,38 +190,23 @@ export class UserDataService {
 		if (this.ssrService.isBrowser) {
 			let session = this.getSessionData();
 			session = session ? (session.current ? session.current.id : 0) : 0;
-			console.log("this.getSessionData()", session);
 
-			let url = environment.url + 'assets/api/user/getUser.php';
+			let url = this.env.url + 'assets/api/user/getUser.php';
 			let params = 	'&id=' + id +
-							'&s=' + session;
+							'&session=' + session;
+			
 			params = params.replace('&', '?');
 
-			return this.http.get(url + params)
+			return this.http.get(url + params, this.headersService.getHeaders())
 				.pipe(map((res: Response) => {
 					return res.json();
 				}));
 		}
 	}
 
-	// async getUserData(id): Promise<any> {
-	// 	let url = environment.url + 'assets/api/user/getUser.php';
-	// 	let params = 	'&id=' + id +
-	// 					'&s=' + this.getSessionData().current.id;
-	// 	params = params.replace('&', '?');
-
-	// 	return await new Promise(resolve => {
-	// 		this.http.get(url + params)
-	// 			.subscribe(data => {
-	// 				let res = data.json();
-	// 				resolve(res)
-	// 			});
-	// 	});
-	// }
-
 	// Updates
 	updateData(data) {
-		let url = environment.url + 'assets/api/user/updateData.php';
+		let url = this.env.url + 'assets/api/user/updateData.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -222,11 +216,8 @@ export class UserDataService {
 	}
 
 	updateTheme(data) {
-		let url = environment.url + 'assets/api/user/updateTheme.php';
-		let params = {
-			id: data.id,
-			theme: data.theme
-		};
+		let url = this.env.url + 'assets/api/user/updateTheme.php';
+		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
@@ -235,11 +226,8 @@ export class UserDataService {
 	}
 
 	updateLanguage(data) {
-		let url = environment.url + 'assets/api/user/updateLanguage.php';
-		let params = {
-			id: data.id,
-			language: data.language
-		};
+		let url = this.env.url + 'assets/api/user/updateLanguage.php';
+		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
@@ -248,11 +236,8 @@ export class UserDataService {
 	}
 
 	updatePrivate(data) {
-		let url = environment.url + 'assets/api/user/updatePrivate.php';
-		let params = {
-			id: data.id,
-			private: data.private
-		};
+		let url = this.env.url + 'assets/api/user/updatePrivate.php';
+		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
@@ -261,7 +246,7 @@ export class UserDataService {
 	}
 
 	updatePassword(data) {
-		let url = environment.url + 'assets/api/user/updatePassword.php';
+		let url = this.env.url + 'assets/api/user/updatePassword.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -271,11 +256,8 @@ export class UserDataService {
 	}
 
 	updateAvatar(data) {
-		let url = environment.url + 'assets/api/user/updateAvatar.php';
-		let params = {
-			id: data.id,
-			avatar: data.image
-		};
+		let url = this.env.url + 'assets/api/user/updateAvatar.php';
+		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
@@ -284,11 +266,8 @@ export class UserDataService {
 	}
 
 	updateBackground(data) {
-		let url = environment.url + 'assets/api/user/updateBackground.php';
-		let params = {
-			id: data.id,
-			background: data.image
-		};
+		let url = this.env.url + 'assets/api/user/updateBackground.php';
+		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
@@ -298,29 +277,29 @@ export class UserDataService {
 
 	// Web pages
 	checkUsername(username) {
-		let url = environment.url + 'assets/api/user/checkUsername.php';
+		let url = this.env.url + 'assets/api/user/checkUsername.php';
 		let params = 	'&username=' + username;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params)
+		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
 
 	checkEmail(email) {
-		let url = environment.url + 'assets/api/user/checkEmail.php';
+		let url = this.env.url + 'assets/api/user/checkEmail.php';
 		let params = 	'&email=' + email;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params)
+		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
 
 	confirmEmail(data) {
-		let url = environment.url + 'assets/api/user/confirmEmail.php';
+		let url = this.env.url + 'assets/api/user/confirmEmail.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -330,7 +309,7 @@ export class UserDataService {
 	}
 
 	createAccount(data) {
-		let url = environment.url + 'assets/api/user/createAccount.php';
+		let url = this.env.url + 'assets/api/user/createAccount.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -340,18 +319,18 @@ export class UserDataService {
 	}
 
 	forgotPassword(email) {
-		let url = environment.url + 'assets/api/user/forgotPassword.php';
+		let url = this.env.url + 'assets/api/user/forgotPassword.php';
 		let params = 	'&email=' + email;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params)
+		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));
 	}
 
 	resetPassword(data) {
-		let url = environment.url + 'assets/api/user/resetPassword.php';
+		let url = this.env.url + 'assets/api/user/resetPassword.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -361,7 +340,7 @@ export class UserDataService {
 	}
 
 	updateResetPassword(data) {
-		let url = environment.url + 'assets/api/user/updateResetPassword.php';
+		let url = this.env.url + 'assets/api/user/updateResetPassword.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -371,7 +350,7 @@ export class UserDataService {
 	}
 
 	setVisitor(data) {
-		let url = environment.url + 'assets/api/user/setVisitor.php';
+		let url = this.env.url + 'assets/api/user/setVisitor.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -381,11 +360,12 @@ export class UserDataService {
 	}
 
 	noSessionData() {
-		if (this.ssrService.isBrowser) this.window.location.href = '/';
+		if (this.ssrService.isBrowser)
+			this.window.location.href = '/';
 	}
 
 	supportQuestion(data) {
-		let url = environment.url + 'assets/api/user/supportQuestion.php';
+		let url = this.env.url + 'assets/api/user/supportQuestion.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -395,7 +375,7 @@ export class UserDataService {
 	}
 
 	report(data) {
-		let url = environment.url + 'assets/api/user/report.php';
+		let url = this.env.url + 'assets/api/user/report.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())
@@ -405,12 +385,12 @@ export class UserDataService {
 	}
 
 	searchMentions(data){
-		let url = environment.url + 'assets/api/user/searchMentions.php';
+		let url = this.env.url + 'assets/api/user/searchMentions.php';
 		let params = 	'&caption=' + data.caption + 
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params)
+		return this.http.get(url + params, this.headersService.getHeaders())
 			.pipe(map((res: Response) => {
 				return res.json();
 			}));

@@ -2,7 +2,7 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$sender = $data['sender'];
+	$sender = sessionId();
 	$receiver = $data['receiver'];
 
 	if ($sender != $receiver) {

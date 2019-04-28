@@ -9,7 +9,6 @@ import { AlertService } from '../alert/alert.service';
 import { AudioDataService } from '../user/audioData.service';
 import { MomentService } from '../moment/moment.service';
 import { NotificationsDataService } from '../user/notificationsData.service';
-import { PhotoDataService } from '../user/photoData.service';
 import { PlayerService } from '../player/player.service';
 import { PublicationsDataService } from '../user/publicationsData.service';
 import { SessionService } from '../session/session.service';
@@ -23,7 +22,6 @@ import { NewSessionComponent } from '../../../../app/pages/common/newSession/new
 import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/showAvatar.component';
 import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
-import { ShowPhotoComponent } from '../../../../app/pages/common/showPhoto/showPhoto.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 import { ShowSessionPanelMobileComponent } from '../../../../app/pages/common/showSessionPanelMobile/showSessionPanelMobile.component';
 import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobilePlayer/showMobilePlayer.component';
@@ -43,7 +41,7 @@ declare var global: any;
 export class ActiveSessionComponent implements AfterViewInit {
 	@ViewChild('audioPlayerHtml') audioPlayerHtml: ElementRef;
 
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -76,7 +74,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private userDataService: UserDataService,
 		private platformLocation: PlatformLocation,
 		private audioDataService: AudioDataService,
-		private photoDataService: PhotoDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
 		private bottomSheet: MatBottomSheet,
@@ -114,7 +111,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 		};
 
 		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		if (this.ssrService.isBrowser) {
+			this.getTranslations(this.sessionData ? this.sessionData.current.language : this.env.language);
+		}
 
 		// iPhone X
 		if (this.ssrService.isBrowser && this.window) {
@@ -412,7 +411,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			user: user,
 			type: 'default',
 			rows: 0,
-			cuantity: environment.cuantity
+			cuantity: this.env.cuantity
 		};
 
 		this.audioDataService.default(data)
@@ -467,7 +466,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			user: user,
 			type: 'box',
 			rows: this.dataNotifications.rows,
-			cuantity: environment.cuantity / 3
+			cuantity: this.env.cuantity / 3
 		};
 
 		this.notificationsDataService.default(data)
@@ -501,66 +500,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Show photo from url if is one
 	showNotification(item) {
-		if (item.url === 'photos') {
-			if (item.urlType === 'list') {
-				this.location.go(this.router.url + '#photo');
-
-				const config = {
-					disableClose: false,
-					data: {
-						comeFrom: 'photos',
-						translations: this.translations,
-						sessionData: this.sessionData,
-						userData: item.userData,
-						item: item.item,
-						index: item.index,
-						list: item.list
-					}
-				};
-
-				// Open dialog
-				const dialogRef = this.dialog.open(ShowPhotoComponent, config);
-				dialogRef.afterClosed().subscribe((result: any) => {
-					this.location.go(this.router.url);
-				});
-			} else { // single
-				const data = {
-					name: item.contentData.name,
-					session: this.sessionData.current.id
-				};
-
-				this.photoDataService.getDataByName(data)
-					.subscribe((res: any) => {
-						this.location.go(this.router.url + '#photo');
-
-						const config = {
-							disableClose: false,
-							data: {
-								comeFrom: 'notifications',
-								translations: this.translations,
-								sessionData: this.sessionData,
-								userData: (res ? res.user : null),
-								item: (res ? res.data : null),
-								index: null,
-								list: []
-							}
-						};
-
-						// Open dialog
-						const dialogRef = this.dialog.open(ShowPhotoComponent, config);
-						dialogRef.afterClosed().subscribe((result: any) => {
-							this.location.go(this.router.url);
-						});
-					});
-
-			}
-		} else if (item.url === 'publications') {
+		if (item.url === 'publications') {
 			const data = {
 				name: item.contentData.name,
 				session: this.sessionData.current.id
 			};
 
-			this.publicationsDataService.getDataByName(data)
+			this.publicationsDataService.getPost(data)
 				.subscribe((res: any) => {
 					this.location.go(this.router.url + '#publication');
 
@@ -993,11 +939,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case "newTab":
-				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+				let url = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(url, '_blank');
 				break;
 			case "copyLink":
-				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
@@ -1206,9 +1152,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			this.userDataService.updateLanguage(data)
 				.subscribe(res => {
-					// Get translations
-					// this.getTranslations(lang.id);
-
 					// Close user box
 					this.showChangeLanguage = false;
 					this.showUserBox = false;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
@@ -19,7 +19,6 @@ declare var ga: Function;
 export class SignupComponent implements OnInit {
 	public env: any = environment;
 	public translations: any = [];
-	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public signinLoading: boolean;
@@ -32,21 +31,32 @@ export class SignupComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private route: ActivatedRoute,
-		private router: Router,
+		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
+		private router: Router,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.signUp.title,
+			title: this.translations.signUp.title,
+			description: this.translations.signUp.description,
+			keywords: this.translations.signUp.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'signup';
+			const urlGa = 'signup';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
@@ -55,7 +65,7 @@ export class SignupComponent implements OnInit {
 		this.actionForm = this._fb.group({
 			username: ['', [Validators.required]],
 			name: ['', [Validators.required]],
-			email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
 			password: ['', [Validators.required]],
 			lang: [this.userDataService.getCookieLang() || 1]
 		});
@@ -72,9 +82,9 @@ export class SignupComponent implements OnInit {
 				distinctUntilChanged())
 			.subscribe(val => {
 				this.validatorUsername = 'load';
-				let regex = /^[a-zA-Z0-9._-]+$/;
+				const regex = /^[a-zA-Z0-9._-]+$/;
 
-				if (val != '' && regex.test(val)) {
+				if (val !== '' && regex.test(val)) {
 					this.userDataService.checkUsername(val)
 						.subscribe(res => {
 							setTimeout(() => {
@@ -106,8 +116,8 @@ export class SignupComponent implements OnInit {
 			.subscribe(val => {
 				this.validatorEmail = 'load';
 
-				if (val != '') {
-					if (this.emailPattern.test(val)) {
+				if (val !== '') {
+					if (this.env.emailPattern.test(val)) {
 						this.userDataService.checkEmail(this.actionForm.get('email').value)
 							.subscribe(
 								res => {
@@ -140,28 +150,7 @@ export class SignupComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.signUp.title,
-			title: data.signUp.title,
-			description: data.signUp.description,
-			keywords: data.signUp.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
-	}
-
-	verifyReCaptcha(data){
+	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}
 
@@ -171,7 +160,7 @@ export class SignupComponent implements OnInit {
 		if (this.actionForm.get('name').value.trim().length > 0 &&
 			this.actionForm.get('username').value.trim().length > 0 &&
 			this.actionForm.get('password').value.trim().length > 0 &&
-			this.emailPattern.test(this.actionForm.get('email').value) &&
+			this.env.emailPattern.test(this.actionForm.get('email').value) &&
 			this.recaptcha
 		) {
 			this.userDataService.createAccount(this.actionForm.value)
@@ -207,7 +196,7 @@ export class SignupComponent implements OnInit {
 		this.signinLoading = true;
 
 		if (this.actionForm.get('name').value.trim().length > 0 &&
-			this.emailPattern.test(this.actionForm.get('email').value)
+			this.env.emailPattern.test(this.actionForm.get('email').value)
 		) {
 			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
 				.subscribe(

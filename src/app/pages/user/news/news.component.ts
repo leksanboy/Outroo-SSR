@@ -93,7 +93,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					ga('send', 'pageview');
 
 					// Load default
-					this.default('default', this.sessionData.current.id);
+					this.default('default');
 
 					// Redirected hashtag
 					if (urlData.params.name) {
@@ -127,7 +127,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			if (windowBottom >= docHeight) {
 				if (this.data.active == 'default') {
 					if (this.dataDefault.list.length > 0)
-						this.default('more', null);
+						this.default('more');
 
 				} else if (this.data.active == 'search') {
 					switch (this.data.selectedIndex) {
@@ -205,11 +205,10 @@ export class NewsComponent implements OnInit, OnDestroy {
 	// Show publication
 	show(item) {
 		let data = {
-			name: item.name,
-			session: this.sessionData.current.id
+			name: item.name
 		}
 
-		this.publicationsDataService.getDataByName(data)
+		this.publicationsDataService.getPost(data)
 			.subscribe((res: any) => {
 				this.location.go(this.router.url + '#publication');
 
@@ -282,7 +281,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, session) {
+	default(type) {
 		if (type == 'default') {
 			this.dataDefault = {
 				list: [],
@@ -296,7 +295,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			let data = {
 				type: 'news',
-				session: session,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity*3
 			}
@@ -332,7 +330,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			let data = {
 				type: 'news',
-				session: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity*3
 			}
@@ -376,7 +373,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataTop.searchCaption,
 				rows: this.dataTop.rows,
 				cuantity: environment.cuantity/3
@@ -414,7 +410,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataPeople.searchCaption,
 				rows: this.dataPeople.rows,
 				cuantity: environment.cuantity
@@ -444,7 +439,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.dataPeople.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataPeople.searchCaption,
 				rows: this.dataPeople.rows,
 				cuantity: environment.cuantity
@@ -486,7 +480,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataPosts.searchCaption,
 				rows: this.dataPosts.rows,
 				cuantity: this.environment.cuantity*3
@@ -524,7 +517,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.dataPosts.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataPosts.searchCaption,
 				rows: this.dataPosts.rows,
 				cuantity: this.environment.cuantity*3
@@ -572,7 +564,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataTag.searchCaption,
 				rows: this.dataTag.rows,
 				cuantity: this.environment.cuantity
@@ -605,7 +596,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.dataTag.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataTag.searchCaption,
 				rows: this.dataTag.rows,
 				cuantity: this.environment.cuantity
@@ -656,7 +646,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataHashtag.searchCaption,
 				rows: this.dataHashtag.rows,
 				cuantity: this.environment.cuantity*3
@@ -694,7 +683,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.dataHashtag.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				caption: this.dataHashtag.searchCaption,
 				rows: this.dataHashtag.rows,
 				cuantity: this.environment.cuantity*3

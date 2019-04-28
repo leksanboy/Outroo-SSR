@@ -5,7 +5,11 @@
 	$code = $data['code'];
 
 	if (isset($code)) {
-		$sql = "SELECT id, username, name, avatar, email
+		$sql = "SELECT id, 
+						username, 
+						name, 
+						avatar, 
+						email
 				FROM z_users
 				WHERE reset_password = '$code'";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -14,11 +18,11 @@
 		$result['avatarUrl'] = $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		$array = array(
-			"avatar" => $result['avatar'],
-			"avatarUrl" => $result['avatarUrl'],
-			"email" => $result['email'],
-		    "name" => $result['name'],
-			"username" => $result['username']
+			'avatar'	 	=> $result['avatar'],
+			'avatarUrl'	 	=> $result['avatarUrl'],
+			'email'	 		=> $result['email'],
+		    'name'	 		=> $result['name'],
+			'username'	 	=> $result['username']
 		);
 
         // Check if exist

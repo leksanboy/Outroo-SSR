@@ -8,6 +8,7 @@ import { HeadersService } from '../headers/headers.service';
 
 @Injectable()
 export class BookmarksDataService {
+	public env: any = environment;
 
 	constructor(
 		private http: Http,
@@ -15,9 +16,8 @@ export class BookmarksDataService {
 	) { }
 
 	default(data: any) {
-		let url = environment.url + 'assets/api/bookmarks/default.php';
-		let params =	'&session=' + data.session +
-						'&rows=' + data.rows +
+		let url = this.env.url + 'assets/api/bookmarks/default.php';
+		let params =	'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
@@ -28,7 +28,7 @@ export class BookmarksDataService {
 	}
 
 	markUnmark(data: any) {
-		let url = environment.url + 'assets/api/bookmarks/addRemove.php';
+		let url = this.env.url + 'assets/api/bookmarks/addRemove.php';
 		let params = data;
 
 		return this.http.post(url, params, this.headersService.getHeaders())

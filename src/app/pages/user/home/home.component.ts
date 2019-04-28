@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 					ga('send', 'pageview');
 
 					// Load default
-					this.default('default', this.sessionData.current.id, this.sessionData.current.id);
+					this.default('default', this.sessionData.current.id);
 				}
 			});
 
@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight)
 				if (this.dataDefault.list.length > 0)
-					this.default('more', null, null);
+					this.default('more', null);
 		}
 	}
 
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, user, session) {
+	default(type, user) {
 		if (type == 'default') {
 			this.dataDefault = {
 				list: [],
@@ -200,7 +200,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 			let data = {
 				type: 'home',
 				user: user,
-				session: session,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
 			}
@@ -237,7 +236,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 			let data = {
 				type: 'home',
 				user: this.sessionData.current.id,
-				session: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
 			}
@@ -278,8 +276,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 				let dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
@@ -289,8 +286,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 				let dataDisableComments = {
 					id: item.id,
-					type: item.disabledComments,
-					user: this.sessionData.current.id
+					type: item.disabledComments
 				}
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
@@ -364,7 +360,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataU = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -380,7 +375,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -422,7 +416,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 			let data = {
 				item: item.id,
 				id: item.bookmark.id,
-				user: this.sessionData.current.id,
 				type: item.bookmark.checked ? 'add' : 'remove'
 			}
 
@@ -456,7 +449,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 			// data
 			let data = {
 				id: item.id,
-				sender: this.sessionData.current.id,
 				receiver: item.user.id,
 				type: item.liked ? 'like' : 'unlike'
 			}
@@ -650,7 +642,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 				let dataCreate = {
 					type: 'create',
 					id: item.id,
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
@@ -679,7 +670,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 				comment.type = !comment.addRemove ? "add" : "remove";
 
 				let data = {
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					type: comment.type,
 					comment: comment.id,

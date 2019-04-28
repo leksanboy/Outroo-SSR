@@ -138,7 +138,6 @@ export class NewPlaylistComponent implements OnInit {
 
 					let data = {
 						type: 'create',
-						user: this.sessionData.current.id,
 						title: this.actionForm.get('title').value,
 						image: this.data.newImage
 					}
@@ -179,7 +178,6 @@ export class NewPlaylistComponent implements OnInit {
 							type: 'update',
 							subtype: 'updateNewImage',
 							id: this.data.current.id,
-							user: this.sessionData.current.id,
 							title: this.actionForm.get('title').value,
 							color: this.data.current.color,
 							image: this.data.newImage
@@ -190,7 +188,6 @@ export class NewPlaylistComponent implements OnInit {
 								type: 'update',
 								subtype: 'updateTitle',
 								id: this.data.current.id,
-								user: this.sessionData.current.id,
 								title: this.actionForm.get('title').value,
 								color: this.data.current.color
 							}
@@ -199,7 +196,6 @@ export class NewPlaylistComponent implements OnInit {
 								type: 'update',
 								subtype: 'updateTitleImage',
 								id: this.data.current.id,
-								user: this.sessionData.current.id,
 								title: this.actionForm.get('title').value,
 								color: this.data.current.color
 							}

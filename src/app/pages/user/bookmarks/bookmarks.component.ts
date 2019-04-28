@@ -8,13 +8,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
-import { PhotoDataService } from '../../../../app/core/services/user/photoData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
-import { ShowPhotoComponent } from '../../../../app/pages/common/showPhoto/showPhoto.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -49,7 +47,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private photoDataService: PhotoDataService,
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private ssrService: SsrService
@@ -78,11 +75,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 						this.window.scrollTo(0, 0);
 					}
 
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot.params.id;
-
 					// Load default
-					this.default('default', urlData, this.sessionData.current.id);
+					this.default('default');
 				}
 			});
 
@@ -102,7 +96,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight)
 				if (this.dataDefault.list.length > 0)
-					this.default('more', null, null);
+					this.default('more');
 		}
 	}
 
@@ -148,7 +142,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, user, session) {
+	default(type) {
 		if (type == 'default') {
 			this.dataDefault = {
 				list: [],
@@ -161,7 +155,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			}
 
 			let data = {
-				session: session,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity*3
 			}
@@ -196,7 +189,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			this.dataDefault.rows++;
 
 			let data = {
-				session: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity*3
 			}
@@ -234,11 +226,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		item.index = index;
 
 		let data = {
-			name: item.name,
-			session: this.sessionData.current.id
+			name: item.name
 		}
 
-		this.publicationsDataService.getDataByName(data)
+		this.publicationsDataService.getPost(data)
 			.subscribe((res: any) => {
 				this.location.go(this.router.url + '#publication');
 

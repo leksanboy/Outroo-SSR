@@ -2,18 +2,18 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$id = $data['id'];
+	$session = sessionId();
 	$private = $data['private'];
 
-	// update data
+	// Update data
 	$sql = "UPDATE z_users
 			SET private = '$private',
 				ip_address_update = '$ipAddress'
-			WHERE id = $id";
+			WHERE id = $session";
 	$result = $conn->query($sql);
 
-	// get user data
-	$userData = userData($id);
+	// Get user data
+	$userData = userData($session);
 	echo json_encode($userData);
 	
 	$conn->close();

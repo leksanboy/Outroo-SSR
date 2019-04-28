@@ -2,11 +2,11 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$user = $data['user'];
+	$session = sessionId();
 	$id = $data['id'];
 
 	$sql = "INSERT INTO z_audios_replays (user, song, ip_address)
-			VALUES ($user, $id, '$ipAddress')";
+			VALUES ($session, $id, '$ipAddress')";
 	$result = $conn->query($sql);
 
 	var_dump(http_response_code(204));

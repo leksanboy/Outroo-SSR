@@ -684,7 +684,7 @@
 // 				session: this.sessionData.current.id
 // 			}
 
-// 			this.publicationsDataService.getDataByName(data)
+// 			this.publicationsDataService.getPost(data)
 // 				.subscribe((res: any) => {
 // 					this.location.go(this.router.url + '#publication');
 

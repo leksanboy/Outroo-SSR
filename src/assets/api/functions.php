@@ -3,41 +3,32 @@
 	// COMMON //
 	////////////
 
-	// Validate every call to api
-	function validateAccess(){
-		foreach (getallheaders() as $name => $value) {
-			if ($name === 'Authorization') {
-				$validate = checkUserAuthorization($value);
-			}
-		}
-	};
-
-	// Call all time to validate
-	validateAccess();
-
-	// Check if session with authorization token exists
-	function checkUserAuthorization($data){
+	// Get user id from headers Authorization
+	function sessionId(){
 		global $conn;
 
-		if ($data === '0xQ3s1RVrSRpWtcN') {
-			$result = true;
-		} else {
-			$data = explode('xQ3s1RVrSR', $data);
-			$user = $data[0];
-			$authentication = $data[1];
-
-			$sql = "SELECT id
-					FROM z_logins
-					WHERE user = $user 
-						AND authorization = '$authentication'";
-			$result = $conn->query($sql);
-
-			// Close all ACCESS
-			if ($result->num_rows === 0){
-				$conn->close();
-				exit;
+		foreach (getallheaders() as $name => $value) {
+			if ($name === 'Authorization') {
+				$auth = $value;
 			}
 		}
+
+		if (isset($auth)) {
+			$sql = "SELECT user
+					FROM z_logins
+					WHERE authorization = '$auth'";
+			$result = $conn->query($sql)->fetch_assoc();
+
+			if ($result['user']) {
+				$result = $result['user'];
+			} else {
+				$result = null;
+			}
+		} else {
+			$result = null;
+		}
+
+		return $result;
 	}
 
 	// Get languages

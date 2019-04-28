@@ -1,7 +1,7 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$user = $_GET['user'];
+	$session = sessionId();
 	$type = $_GET['type'];
 
 	$sql = "SELECT 
@@ -24,7 +24,7 @@
 					OR
 					EXISTS (SELECT 1 FROM z_audios 				WHERE id    = n.page_id and is_deleted = 0)
 				)
-				AND n.receiver = $user 
+				AND n.receiver = $session 
 			ORDER BY n.date DESC 
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
@@ -36,26 +36,26 @@
 			$row['user'] = userUsernameNameAvatar($row['sender']);
 
 			// Upgrade status
-			if ($row['type'] != 'box')
+			if ($row['type'] !== 'box')
 				if ($row['status'] == '0')
 					updateNotificationStatus($row['id']);
 
 			// Followers
-			if ($row['url'] == 'followers') {
-				$row['statusFollowing'] = checkFollowingStatus($user, $row['sender']);
+			if ($row['url'] === 'followers') {
+				$row['statusFollowing'] = checkFollowingStatus($session, $row['sender']);
 				$row['private'] = checkUserPrivacy($row['sender']);
 			}
 
 			// Photos
-			if ($row['url'] == 'photos')
+			if ($row['url'] === 'photos')
 				$row['contentData'] = getIdNameContentMediaCommentFromPhotoById($row['page'], $row['comment']);
 
 			// Publications
-			if ($row['url'] == 'publications')
+			if ($row['url'] === 'publications')
 				$row['contentData'] = getIdNameContentMediaCommentFromPublicationById($row['page'], $row['comment']);
 
 			// Audios
-			if ($row['url'] == 'audios')
+			if ($row['url'] === 'audios')
 				$row['contentData'] = getSongById($row['page']);
 
 			$data[] = $row;

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -26,21 +26,32 @@ export class SigninComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
+		private router: Router,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.signIn.title,
+			title: this.translations.signIn.title,
+			description: this.translations.signIn.description,
+			keywords: this.translations.signIn.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'signin';
+			const urlGa = 'signin';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
@@ -55,28 +66,7 @@ export class SigninComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.signIn.title,
-			title: data.signIn.title,
-			description: data.signIn.description,
-			keywords: data.signIn.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
-	}
-
-	verifyReCaptcha(data){
+	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}
 

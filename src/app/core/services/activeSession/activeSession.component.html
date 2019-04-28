@@ -14,14 +14,14 @@
 
 				<div class="right">
 					<button mat-mini-fab (click)="showNotificationsBoxWeb()">
-						<div class="pending" *ngIf="sessionData.current.countPendingNotifications">
-							{{sessionData.current.countPendingNotifications}}
+						<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+							{{sessionData?.current?.countPendingNotifications}}
 						</div>
 						<i label="notifications"></i>
 					</button>
 
 					<button mat-mini-fab class="avatar" (click)="showUserBoxWeb()">
-						<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+						<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 					</button>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 						<ul *ngIf="dataNotifications.list">
 							<li mat-ripple *ngFor="let x of dataNotifications.list" [ngClass]="{'active': x.status == 0}">
 								<a class="avatar" routerLink="/{{x.user.username}}">
-									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 
 								<div class="inner" *ngIf="x.url == 'followers'">
@@ -150,22 +150,22 @@
 				<div class="box">
 					<div class="top" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
 						<div class="image">
-							<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
 						<div class="data">
 							<div class="name">
-								{{sessionData.current.name}}
-								<i *ngIf="sessionData.current.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								{{sessionData?.current?.name}}
+								<i *ngIf="sessionData?.current?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</div>
 							<div class="user">
-								@{{sessionData.current.username}}
+								@{{sessionData?.current?.username}}
 							</div>
 						</div>
 					</div>
 
 					<div class="bottom">
 						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
-							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/{{sessionData.current.username}}">
+							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/{{sessionData?.current?.username}}">
 								<i label="person"></i>
 								<div class="text">{{translations?.common?.myAccount}}</div>
 							</div>
@@ -185,7 +185,7 @@
 							<div class="item" mat-ripple (click)="changeTheme()">
 								<i label="moon"></i>
 								<div class="text">{{translations?.common?.darkTheme}}</div>
-								<mat-slide-toggle [checked]="sessionData.current.theme"></mat-slide-toggle>
+								<mat-slide-toggle [checked]="sessionData?.current?.theme"></mat-slide-toggle>
 							</div>
 
 							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/settings">
@@ -208,9 +208,9 @@
 							</div>
 
 							<div class="switchAccounts">
-								<div class="item" mat-ripple *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
+								<div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 									<div class="avatar" mat-list-avatar (click)="setCurrentUser(x); showChangeSession=false;">
-										<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
+										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 									</div>
 									<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
 									<i label="exit" [matMenuTriggerFor]="signOut"></i>
@@ -226,7 +226,7 @@
 									</mat-menu>
 								</div>
 
-								<div class="item" mat-ripple *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+								<div class="item" mat-ripple *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
 									<div class="add" mat-list-avatar>
 										<i label="add"></i>
 									</div>
@@ -244,9 +244,9 @@
 							</div>
 
 							<div class="changeLanguages">
-								<div class="item" mat-ripple *ngFor="let x of sessionData.current.languages" (click)="changeLanguage(x)">
-									<i label="check" *ngIf="x.id == sessionData.current.language"></i>
-									<i class="empty" *ngIf="x.id != sessionData.current.language"></i>
+								<div class="item" mat-ripple *ngFor="let x of sessionData?.current?.languages" (click)="changeLanguage(x)">
+									<i label="check" *ngIf="x.id == sessionData?.current?.language"></i>
+									<i class="empty" *ngIf="x.id != sessionData?.current?.language"></i>
 									<div class="text">{{x.caption}}</div>
 								</div>
 							</div>
@@ -268,7 +268,7 @@
 									<button mat-menu-item (click)="showCloseSession=false">
 										{{translations?.common?.no}}
 									</button>
-									<button mat-menu-item (click)="showCloseSession=false; closeSession(sessionData.current);">
+									<button mat-menu-item (click)="showCloseSession=false; closeSession(sessionData?.current);">
 										{{translations?.common?.yes}}
 									</button>
 								</div>
@@ -282,14 +282,14 @@
 				<div class="inner" *ngIf="!navMenu">
 					<div mat-ripple class="user" (click)="showChangeSessionOnMenu=!showChangeSessionOnMenu">
 						<div class="avatar" mat-list-avatar>
-							<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
 						<div class="text">
 							<div class="name">
-								{{sessionData.current.name}}
+								{{sessionData?.current?.name}}
 							</div>
 							<div class="username">
-								@{{sessionData.current.username}}
+								@{{sessionData?.current?.username}}
 							</div>
 						</div>
 						<div class="button">
@@ -299,9 +299,9 @@
 					</div>
 
 					<span *ngIf="showChangeSessionOnMenu">
-						<div mat-ripple class="item userMini" *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
+						<div mat-ripple class="item userMini" *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x)">
-								<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
+								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 							</div>
 							<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
 							<i label="exit" [matMenuTriggerFor]="signOut"></i>
@@ -316,7 +316,7 @@
 							</mat-menu>
 						</div>
 
-						<div mat-ripple class="item userMini" *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+						<div mat-ripple class="item userMini" *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
 							<div class="add" mat-list-avatar>
 								<i label="add"></i>
 							</div>
@@ -325,7 +325,7 @@
 					</span>
 
 					<span *ngIf="!showChangeSessionOnMenu">
-						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 							<i label="person"></i>
 							<div class="text">{{translations?.main?.title}}</div>
 						</div>
@@ -337,11 +337,11 @@
 							<i label="search"></i>
 							<div class="text">{{translations?.news?.title}}</div>
 						</div>
-						<!-- <div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/photos" routerLinkActive="selected">
+						<!-- <div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/photos" routerLinkActive="selected">
 							<i label="photo-camera"></i>
 							<div class="text">{{translations?.photos?.title}}</div>
 						</div> -->
-						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData.current.username}}/songs" routerLinkActive="selected">
+						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/songs" routerLinkActive="selected">
 							<i label="music"></i>
 							<div class="text">{{translations?.audios?.title}}</div>
 						</div>
@@ -352,8 +352,8 @@
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
 							<i label="notifications"></i>
 							<div class="text">{{translations?.notifications?.title}}</div>
-							<div class="pending" *ngIf="sessionData.current.countPendingNotifications">
-								{{sessionData.current.countPendingNotifications}}
+							<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+								{{sessionData?.current?.countPendingNotifications}}
 							</div>
 						</div>
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
@@ -423,16 +423,16 @@
 				<button mat-icon-button (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
 					<div class="notifications">
 						<div class="clapper"></div>
-						<div class="pending" *ngIf="sessionData.current.countPendingNotifications">
-							{{sessionData.current.countPendingNotifications}}
+						<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+							{{sessionData?.current?.countPendingNotifications}}
 						</div>
 					</div>
 				</button>
 			</li>
 			<li>
-				<button mat-icon-button (click)="scrollTop()" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+				<button mat-icon-button (click)="scrollTop()" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 					<div class="avatar">
-						<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+						<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 					</div>
 				</button>
 			</li>
@@ -453,11 +453,11 @@
 				</div>
 
 				<div class="add" *ngIf="audioPlayerData.current.initialized">
-					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveSession', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">
+					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveSession', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user == sessionData?.current?.id && audioPlayerData.current.type == 'default'">
 						<i label="add" *ngIf="audioPlayerData.current.item.addRemoveSession"></i>
 						<i label="check" *ngIf="!audioPlayerData.current.item.addRemoveSession"></i>
 					</button>
-					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveUser', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">
+					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveUser', audioPlayerData.current.item, audioPlayerData.current.key)" *ngIf="audioPlayerData.current.user != sessionData?.current?.id || audioPlayerData.current.type != 'default'">
 						<i label="add" *ngIf="!audioPlayerData.current.item.addRemoveUser"></i>
 						<i label="check" *ngIf="audioPlayerData.current.item.addRemoveUser"></i>
 					</button>
@@ -534,13 +534,13 @@
 								<div class="duration">{{(audioPlayerData.current.key == i) ? (x.countdown ? x.countdown : x.duration) : x.duration}}</div>
 							</div>
 							<div class="actions">
-								<span *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">
+								<span *ngIf="audioPlayerData.current.user == sessionData?.current?.id && audioPlayerData.current.type == 'default'">
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
 										<i label="more-mini"></i>
 									</button>
 								</span>
 
-								<span *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">
+								<span *ngIf="audioPlayerData.current.user != sessionData?.current?.id || audioPlayerData.current.type != 'default'">
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
 										<i label="check-mini" *ngIf="x.addRemoveUser"></i>
 										<i label="more-mini" *ngIf="!x.addRemoveUser"></i>
@@ -548,17 +548,17 @@
 								</span>
 
 								<mat-menu #appMenu="matMenu">
-									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData.current.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData.current.user != sessionData?.current?.id || audioPlayerData.current.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-									<mat-divider *ngIf="audioPlayerData.current.user === sessionData.current.id"></mat-divider>
-									<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData.current.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<mat-divider *ngIf="audioPlayerData.current.user === sessionData?.current?.id"></mat-divider>
+									<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData.current.user == sessionData?.current?.id && audioPlayerData.current.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 
 								<mat-menu #menuPlaylists="matMenu">
 									<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
-									<span *ngFor="let p of sessionData.current.playlists">
+									<span *ngFor="let p of sessionData?.current?.playlists">
 										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 									</span>
 								</mat-menu>

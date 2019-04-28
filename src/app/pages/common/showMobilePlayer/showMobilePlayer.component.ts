@@ -137,7 +137,6 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 				item.type = item.addRemoveSession ? 'remove' : 'add';
 
 				let dataARS = {
-					user: this.sessionData.current.id,
 					type: item.type,
 					location: 'session',
 					id: item.id
@@ -158,7 +157,6 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 				item.type = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.type,
 					location: 'user',
 					id: item.insertedId,
@@ -181,7 +179,6 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 				item.type = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.type,
 					location: 'playlist',
 					item: item.song,

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+	MatButtonModule,
+	MatButtonToggleModule } from '@angular/material';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatButtonToggleModule } from '@angular/material';
 
 import { LogoutComponent } from './logout.component';
 
@@ -19,8 +21,6 @@ const routes: Routes = [
 		MatButtonModule,
 		MatButtonToggleModule
 	],
-	declarations: [
-		LogoutComponent
-	]
+	declarations: [ LogoutComponent ]
 })
 export class LogoutModule { }

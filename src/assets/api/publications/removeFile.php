@@ -6,22 +6,24 @@
 	$locationPathVideos = '/var/www/html/assets/media/videos/';
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$user = $data['user'];
-	$fileType = $data['type'];
-	$fileName = $data['name'];
+	$session = sessionId();
 	$id = $data['id'];
 	$status = 1;
+	$fileType = $data['type'];
+	$fileName = $data['name'];
 
 	$sql = "UPDATE z_publications_files
-			SET is_deleted = $status, ip_address = '$ipAddress' 
-			WHERE id = $id AND user = $user";
+			SET is_deleted = $status, 
+				ip_address = '$ipAddress' 
+			WHERE id = $id 
+				AND user = $session";
 	$result = $conn->query($sql);
 
-	if ($fileType == 'audio')
+	if ($fileType === 'audio')
 		unlink($locationPathAudios.$fileName);
-	else if ($fileType == 'photo')
+	else if ($fileType === 'photo')
 		unlink($locationPathPhotos.$fileName);
-	else if ($fileType == 'video')
+	else if ($fileType === 'video')
 		unlink($locationPathVideos.$fileName);
 
 	var_dump(http_response_code(204));

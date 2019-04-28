@@ -132,23 +132,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
 					// Data following/visitor
 					let data = {
-						sender: this.sessionData ? this.sessionData.current.id : 0,
 						receiver: this.userData.id
 					};
-
-					// // Check if following
-					// if (this.sessionData) {
-					// 	this.followsDataService.checkFollowing(data)
-					// 		.subscribe(res => {
-					// 			this.userData.status = res;
-					// 		});
-					// }
 
 					// Set visitor
 					this.userDataService.setVisitor(data).subscribe();
 
 					// Get publications
-					this.default('default', this.userData.username, this.sessionData.current.id);
+					this.default('default', this.userData.username);
 				}
 			});
 
@@ -192,7 +183,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight)
 				if (this.dataDefault.list.length > 0)
-					this.default('more', null, null);
+					this.default('more', null);
 		}
 	}
 
@@ -208,52 +199,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeNewPublication.unsubscribe();
 	}
 
-	// // User data of the page
-	// siteUserData(id){
-	// 	this.userDataService.getUserData(id)
-	// 		.subscribe(res => {
-	// 			if (res) {
-	// 				this.userExists = true;
-	// 				this.userData = res;
-
-	// 				// Update user data if im the user
-	// 				if (this.userData.id == this.sessionData.current.id)
-	// 					this.sessionData = this.userDataService.setSessionData('update', res);
-
-	// 				// Set Google analytics
-	// 				let urlGa =  '[' + this.userData.id + ']/' + id + '/main';
-	// 				ga('set', 'page', urlGa);
-	// 				ga('send', 'pageview');
-
-	// 				// Data following/visitor
-	// 				let data = {
-	// 					sender: this.sessionData ? this.sessionData.current.id : 0,
-	// 					receiver: this.userData.id
-	// 				}
-
-	// 				// Check if following
-	// 				if (this.sessionData) {
-	// 					this.followsDataService.checkFollowing(data)
-	// 						.subscribe(res => {
-	// 							this.userData.status = res;
-	// 						});
-	// 				}
-
-	// 				// Set visitor
-	// 				this.userDataService.setVisitor(data).subscribe();
-	// 			} else {
-	// 				this.userExists = false;
-	// 				this.userData = [];
-	// 				this.userData.username = id;
-	// 			}
-
-	// 			// Set location init
-	// 			this.location.go('/' + this.userData.username);
-
-	// 			console.log("this.userData", this.userData);
-	// 		});
-	// }
-
 	// Follow / Unfollow
 	followUnfollow(type, user){
 		if (type == 'follow')
@@ -264,7 +209,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		let data = {
 			type: user.followingStatus,
 			private: user.private,
-			sender: this.sessionData.current.id,
 			receiver: user.id
 		}
 
@@ -324,7 +268,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type, user, session) {
+	default(type, user) {
 		if (type == 'default') {
 			this.dataDefault = {
 				list: [],
@@ -339,7 +283,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			let data = {
 				type: 'user',
 				user: user,
-				session: session,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
 			}
@@ -369,7 +312,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			let data = {
 				type: 'user',
 				user: this.userData.id,
-				session: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
 			}
@@ -403,8 +345,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				let dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
@@ -414,8 +355,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				let dataDisableComments = {
 					id: item.id,
-					type: item.disabledComments,
-					user: this.sessionData.current.id
+					type: item.disabledComments
 				}
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
@@ -489,7 +429,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataU = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -505,7 +444,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -548,7 +486,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			let data = {
 				item: item.id,
 				id: item.bookmark.id,
-				user: this.sessionData.current.id,
 				type: item.bookmark.checked ? 'add' : 'remove'
 			}
 
@@ -582,7 +519,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			// data
 			let data = {
 				id: item.id,
-				sender: this.sessionData.current.id,
 				receiver: item.user.id,
 				type: item.liked ? 'like' : 'unlike'
 			}
@@ -776,7 +712,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				let dataCreate = {
 					type: 'create',
 					id: item.id,
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
@@ -805,7 +740,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				comment.type = !comment.addRemove ? "add" : "remove";
 
 				let data = {
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					type: comment.type,
 					comment: comment.id,

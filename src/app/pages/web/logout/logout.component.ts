@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -24,43 +24,35 @@ export class LogoutComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private metaService: MetaService,
 		private userDataService: UserDataService,
 		private ssrService: SsrService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.logOut.title,
+			title: this.translations.logOut.title,
+			description: this.translations.logOut.description,
+			keywords: this.translations.logOut.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
 	}
 
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'logout';
+			const urlGa = 'logout';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
-	}
-
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.logOut.title,
-			title: data.logOut.title,
-			description: data.logOut.description,
-			keywords: data.logOut.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
 	}
 }

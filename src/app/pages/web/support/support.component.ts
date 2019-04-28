@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -19,7 +19,6 @@ declare var ga: Function;
 export class SupportComponent implements OnInit {
 	public env: any = environment;
 	public translations: any = [];
-	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public pageStatus = 'default';
@@ -28,28 +27,39 @@ export class SupportComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
+		private router: Router,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.support.title,
+			title: this.translations.support.title,
+			description: this.translations.support.description,
+			keywords: this.translations.support.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 	}
 
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'support';
+			const urlGa = 'support';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
 
 		// Form
 		this.actionForm = this._fb.group({
-			email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
 			content: ['', [Validators.required]]
 		});
 
@@ -57,28 +67,7 @@ export class SupportComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.support.title,
-			title: data.support.title,
-			description: data.support.description,
-			keywords: data.support.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
-	}
-
-	verifyReCaptcha(data){
+	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}
 
@@ -86,14 +75,14 @@ export class SupportComponent implements OnInit {
 		this.submitLoading = true;
 		this.email = this.actionForm.get('email').value;
 
-		if (this.actionForm.get('email').value.trim().length > 0 && 
-			this.actionForm.get('content').value.trim().length > 0 && 
+		if (this.env.emailPattern.test(this.actionForm.get('email').value) &&
+			this.actionForm.get('content').value.trim().length > 0 &&
 			this.recaptcha
 		) {
-			let data = {
+			const data = {
 				email: this.actionForm.get('email').value,
 				content: this.actionForm.get('content').value
-			}
+			};
 
 			this.userDataService.supportQuestion(data)
 				.subscribe(

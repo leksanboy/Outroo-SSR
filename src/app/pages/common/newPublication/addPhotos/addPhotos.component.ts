@@ -4,8 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../../environments/environment';
 
-import { PhotoDataService } from '../../../../../app/core/services/user/photoData.service';
-
 @Component({
 	selector: 'app-addPhotos',
 	templateUrl: './addPhotos.component.html'
@@ -18,8 +16,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<NewPublicationAddPhotosComponent>,
-		private sanitizer: DomSanitizer,
-		private photoDataService: PhotoDataService
+		private sanitizer: DomSanitizer
 	) { }
 
 	ngOnInit() {
@@ -99,7 +96,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			for (let i = 0; i < event.currentTarget.files.length; i++) {
 				let file = event.currentTarget.files[i];
 				file.title = file.name;
-				file.user = this.sessionData.current.id;
 				file.id = '000' + this.data.counterUploaded++;
 				file.uploaded = true;
 				file.mimetype = file.type;
@@ -144,7 +140,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 
 			const ajaxCall = function(file, formdata, ajax){
 				formdata.append("fileUpload", file);
-				formdata.append("user", file.user);
 				formdata.append("category", file.category);
 				formdata.append("title", file.title);
 

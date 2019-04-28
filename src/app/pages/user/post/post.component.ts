@@ -138,7 +138,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack() {
-		this.router.navigate(['/' + this.sessionData.current.username + '/songs']);
+		this.router.navigate(['/' + this.sessionData.current.username]);
 	}
 
 	// Push Google Ad
@@ -181,7 +181,7 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
-					let t = res.content ? res.content : (res.audios ? res.audios[0].title : res.user.name)
+					let t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
 
 					// Meta
 					let metaData = {
@@ -229,8 +229,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				let dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
@@ -240,8 +239,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				let dataDisableComments = {
 					id: item.id,
-					type: item.disabledComments,
-					user: this.sessionData.current.id
+					type: item.disabledComments
 				}
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
@@ -315,7 +313,6 @@ export class PostComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataU = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -331,7 +328,6 @@ export class PostComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -373,7 +369,6 @@ export class PostComponent implements OnInit, OnDestroy {
 			let data = {
 				item: item.id,
 				id: item.bookmark.id,
-				user: this.sessionData.current.id,
 				type: item.bookmark.checked ? 'add' : 'remove'
 			}
 
@@ -407,7 +402,6 @@ export class PostComponent implements OnInit, OnDestroy {
 			// data
 			let data = {
 				id: item.id,
-				sender: this.sessionData.current.id,
 				receiver: item.user.id,
 				type: item.liked ? 'like' : 'unlike'
 			}
@@ -601,7 +595,6 @@ export class PostComponent implements OnInit, OnDestroy {
 				let dataCreate = {
 					type: 'create',
 					id: item.id,
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
@@ -630,7 +623,6 @@ export class PostComponent implements OnInit, OnDestroy {
 				comment.type = !comment.addRemove ? "add" : "remove";
 
 				let data = {
-					sender: this.sessionData.current.id,
 					receiver: item.user.id,
 					type: comment.type,
 					comment: comment.id,

@@ -207,7 +207,6 @@ export class SongComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -225,7 +224,6 @@ export class SongComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,

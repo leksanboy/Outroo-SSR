@@ -4,18 +4,28 @@
 	// Parameters
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$username = $data['username'];
-
-	// Login page & confirm email auto login
-	$password = explode('-', $data['password']);
+	$password = explode('-', $data['password']); // Login page & confirm email auto login
 	if ($password[1]) // Came from validation email
 		$password = $password[0];
 	else // login page
 		$password = md5($data['password']);
 
 	// Log in and return session data
-	$sql = "SELECT id, username, name, avatar, background, email, about, language, theme, official, private, reset_password as rp
+	$sql = "SELECT id, 
+					username, 
+					name, 
+					avatar, 
+					background, 
+					email, 
+					about, 
+					language, 
+					theme, 
+					official, 
+					private, 
+					reset_password as rp
 			FROM z_users
-			WHERE email = '$username' AND password = '$password'";
+			WHERE email = '$username' 
+				AND password = '$password'";
 	$result = $conn->query($sql)->fetch_assoc();
 
 	if ($result){

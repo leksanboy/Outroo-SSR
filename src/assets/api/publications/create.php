@@ -2,7 +2,7 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$user = $data['user'];
+	$session = sessionId();
 	$name = generateRandomString(23);
 	$content = htmlspecialchars($data['content'], ENT_QUOTES);
 	$contentOriginal = htmlspecialchars($data['contentOriginal'], ENT_QUOTES);
@@ -29,7 +29,7 @@
 		
 		foreach($photos as $row){
 			if ($row['uploaded'])
-				$insertedPhoto = uploadPhotosPublication($user,
+				$insertedPhoto = uploadPhotosPublication($session,
 														$row['name'],
 														($row['mimetype'] ? $row['mimetype'] : 'image/jpeg'),
 														$row['duration']);
@@ -48,7 +48,7 @@
 		$audiosArray = array();
 		foreach($audios as $row){
 			if ($row['uploaded'])
-				$insertedAudio = uploadAudiosPublication($user,
+				$insertedAudio = uploadAudiosPublication($session,
 														$row['up_name'].'.mp3',
 														$row['mimetype'],
 														htmlspecialchars($row['title'], ENT_QUOTES),
@@ -69,7 +69,7 @@
 
 	// Set query
 	$sql = "INSERT INTO z_publications (user, name, content, content_original, mentions, hashtags, url_video, photos, audios, ip_address)
-			VALUES ($user, '$name', '$content', '$contentOriginal', '$mentions', '$hashtags', '$urlVideo', '$photosArray', '$audiosArray', '$ipAddress')";
+			VALUES ($session, '$name', '$content', '$contentOriginal', '$mentions', '$hashtags', '$urlVideo', '$photosArray', '$audiosArray', '$ipAddress')";
 	$result = $conn->query($sql);
 	$insertedId = $conn->insert_id;
 
@@ -79,11 +79,11 @@
 	
 		if ($rcv) {
 			$notification = array(
-				"url" 		=> 'publications',
-				"type" 		=> 'mention',
-				"sender" 	=> $user,
-				"receiver" 	=> $rcv,
-				"id" 		=> $insertedId
+				'url' 		=> 'publications',
+				'type' 		=> 'mention',
+				'sender' 	=> $session,
+				'receiver' 	=> $rcv,
+				'id' 		=> $insertedId
 			);
 
 			generateNotification($notification);

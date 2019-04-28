@@ -281,7 +281,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			let data = {
 				user: user,
-				session: this.sessionData.current.id,
 				type: 'default',
 				rows: this.dataDefault.rows,
 				cuantity: environment.cuantity
@@ -738,7 +737,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				let file = event.currentTarget.files[i];
 				file.title = file.name.replace('.mp3', '');
 				file.status = 'clear';
-				file.user = this.sessionData.current.id;
 
 				if (file.size >= 20000000) {
 					file.sizeBig = convertToMb(file.size);
@@ -773,7 +771,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			const ajaxCall = function(file, formdata, ajax) {
 				formdata.append("fileUpload", file);
-				formdata.append("user", file.user);
 				formdata.append("category", file.category);
 				formdata.append("title", file.title);
 
@@ -924,7 +921,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
 				let dataARS = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'session',
 					id: item.id
@@ -944,7 +940,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
@@ -962,7 +957,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removeType = !item.addRemoveUser ? "add" : "remove";
 
 				let dataP = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -1097,7 +1091,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.type = item.private ? "private" : "public";
 
 				let dataPPS = {
-					user: this.sessionData.current.id,
 					type: item.type,
 					id: item.id
 				}
@@ -1110,7 +1103,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removed = item.addRemoveSession ? false : true;
 
 				let dataARS = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'session',
 					id: item.idPlaylist
@@ -1127,7 +1119,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removed = !item.addRemoveUser ? false : true;
 
 				let dataARO = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.id,
@@ -1150,7 +1141,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.removed = !item.addRemoveUserTop ? false : true;
 
 				let dataAROT = {
-					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
 					id: item.id,

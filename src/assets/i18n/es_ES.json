@@ -232,7 +232,7 @@
 			"three": "Completa el formulario y envia la pregunta, tte responderemos lo antes posible."
 		},
 		"confirmText": {
-			"one": "Comprueba tu correo electrónico",
+			"one": "Enviado a Soporte",
 			"two": "Hemos enviado un correo electrónico a",
 			"three": "Si no ves el mensaje, verifica otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
 		}
@@ -243,6 +243,7 @@
 		"dontHaveAnAccount": "¿No tienes una cuenta?"
 	},
 	"common": {
+		"lang": "es",
 		"langCode": "es_ES",
 		"listOfPhrases": [
 			"let¬it¬be",
@@ -304,7 +305,7 @@
 		"noSearchResults": "No hay resultados de la busqueda",
 		"disableComments": "Deshabilitar comentarios",
 		"enableComments": "Habilitar comentarios",
-		"likedThis": "Le ha gustado a",
+		"likedThis": "les ha gustado",
 		"andMoreLikedThis": "y a más personas les ha gustado.",
 		"comments": "Commentarios",
 		"noComments": "No hay comentarios",

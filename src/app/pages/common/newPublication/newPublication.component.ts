@@ -459,7 +459,6 @@ export class NewPublicationComponent implements OnInit {
 			}
 
 			let data = {
-				user: this.sessionData.current.id,
 				content: formatedData.content,
 				contentOriginal: this.publicationData.original,
 				mentions: formatedData.mentions,

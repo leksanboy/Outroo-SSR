@@ -1,8 +1,8 @@
 <?php include "../db.php";
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$session = sessionId();
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
 	$caption = $_GET['caption'];
 
 	// Insert search data analytics
@@ -10,11 +10,11 @@
 
 	// Users
 	$sqlUsers = "SELECT id, about, official, private 
-			FROM z_users 
-			WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%') 
-				AND is_deleted = 0 
-			ORDER by username ASC, name ASC 
-			LIMIT $more, $cuantity";
+				FROM z_users 
+				WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%') 
+					AND is_deleted = 0 
+				ORDER by username ASC, name ASC 
+				LIMIT $more, $cuantity";
 	$resultUsers = $conn->query($sqlUsers);
 
 	$dataUsers = array();
@@ -50,9 +50,9 @@
 			foreach ($row['caption'] as &$h) {
 				if (strpos(strtolower($h), strtolower($caption)) !== false) {
 					$tag = array(
-						"caption" => $h,
-						"type" => 'hashtag',
-						"count" => hashtagCount($h)
+						'caption' 	=> $h,
+						'type' 		=> 'hashtag',
+						'count' 	=> hashtagCount($h)
 					);
 					
 					$dataHashtags[] = $tag;
@@ -62,7 +62,7 @@
 	}
 
 	// Data
-	if ($resultUsers->num_rows == 0 && $resultHashtags->num_rows == 0) {
+	if ($resultUsers->num_rows === 0 && $resultHashtags->num_rows === 0) {
 		var_dump(http_response_code(204));
 	} else {
 		// Order alphabetically

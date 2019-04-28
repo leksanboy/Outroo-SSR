@@ -19,8 +19,6 @@ const routes: Routes = [
 		MatButtonModule,
 		MatButtonToggleModule
 	],
-	declarations: [
-		ErrorComponent
-	]
+	declarations: [ ErrorComponent ]
 })
 export class ErrorModule { }

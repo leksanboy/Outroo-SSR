@@ -1,10 +1,13 @@
 <?php include "../db.php";
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$session = $_GET['session'];
+	$session = sessionId();
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT id, about, official, private 
+	$sql = "SELECT id, 
+					about, 
+					official, 
+					private 
 			FROM z_users 
 			WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%') 
 				AND is_deleted = 0 

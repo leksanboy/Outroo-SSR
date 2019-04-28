@@ -2,38 +2,38 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$session = sessionId();
 	$avatar = $data['avatar'];
-	$id = $data['id'];
 	$name = generateRandomString(23).'.jpg';
 
-	// remove folder images first
-	array_map('unlink', glob('/var/www/html/assets/media/user/'.$id.'/avatar/*'));
+	// Remove folder images first
+	array_map('unlink', glob('/var/www/html/assets/media/user/'.$session.'/avatar/*'));
 
-	// create image
+	// Create image
 	if ($avatar) {
-		$pathAvatar = '/var/www/html/assets/media/user/'.$id.'/avatar/'.$name;
+		$pathAvatar = '/var/www/html/assets/media/user/'.$session.'/avatar/'.$name;
 		$avatar = explode(",",$avatar);
 		$avatar = str_replace(' ', '+', $avatar[1]);
 		$avatar = base64_decode($avatar);
 		file_put_contents($pathAvatar, $avatar);
 
-		// update avatar
+		// Update avatar
 		$sql = "UPDATE z_users
 				SET avatar = '$name',
 					ip_address_update = '$ipAddress'
-				WHERE id = $id";
+				WHERE id = $session";
 	} else {
-		// remove avatar
+		// Remove avatar
 		$sql = "UPDATE z_users
 				SET avatar = NULL,
 					ip_address_update = '$ipAddress'
-				WHERE id = $id";
+				WHERE id = $session";
 	}
 	
 	$result = $conn->query($sql);
 
-	// get user data
-	$userData = userData($id);
+	// Get user data
+	$userData = userData($session);
 	echo json_encode($userData);
 	
 	$conn->close();

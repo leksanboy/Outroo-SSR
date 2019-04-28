@@ -3,38 +3,43 @@ import { RequestOptions, Headers } from '@angular/http';
 
 import { environment } from '../../../../environments/environment';
 import { SessionService } from '../session/session.service';
+import { SsrService } from '../ssr.service';
 
 declare var global: any;
 
 @Injectable()
 export class HeadersService {
+	public env: any = environment;
 	public numberOfClicks: any = [];
-	public limitedClicksPerSecond = 15;
+	public limitedClicksPerSecond = 30;
 	public limitedTime = 1000;
 	public window: any = global;
 
 	constructor(
-		private sessionService: SessionService
+		private sessionService: SessionService,
+		private ssrService: SsrService
 	) {}
 
 	getHeaders() {
-		let userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + environment.authHash));
-		let id = userData ? userData.current.id : 0;
-		let auth = userData ? userData.current.authorization : 'pWtcN';
-		let authorization = id + environment.authHash + auth;
-		
-		// Validate authorization
-		let authorizationValidator = this.clicksPerSecond() ? authorization : null;
+		if (this.ssrService.isBrowser) {
+			let userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
+			let authorization = userData ? userData.current.authorization : '';
 
-		if (!authorizationValidator)
-			alert("STOP DOING THAT");
+			console.log("clicksPerSecond:", this.clicksPerSecond());
 
-		// Headers
-		let headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('Authorization', authorizationValidator);
+			// Validate authorization
+			let authorizationValidator = this.clicksPerSecond() ? authorization : '';
 
-		return new RequestOptions({ headers: headers });
+			// if (!authorizationValidator)
+			// 	alert("STOP DOING THAT");
+
+			// Headers
+			let headers = new Headers();
+			headers.append('Content-Type', 'application/json');
+			headers.append('Authorization', authorizationValidator);
+
+			return new RequestOptions({ headers: headers });
+		}
 	}
 
 	clicksPerSecond() {

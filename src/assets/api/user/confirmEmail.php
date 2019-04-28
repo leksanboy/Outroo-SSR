@@ -13,7 +13,9 @@
     	$result = $conn->query($sql);
 
 		// get data
-		$sqlGet = "SELECT username, email, password
+		$sqlGet = "SELECT username, 
+							email, 
+							password
 					FROM z_users
 					WHERE verification_code = '$code'";
 		$resultGet = $conn->query($sqlGet)->fetch_assoc();

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 declare var ga: Function;
 
@@ -19,7 +19,6 @@ declare var ga: Function;
 export class ResetPasswordComponent implements OnInit {
 	public env: any = environment;
 	public translations: any = [];
-	private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public signinLoading: boolean;
@@ -31,21 +30,32 @@ export class ResetPasswordComponent implements OnInit {
 
 	constructor(
 		private _fb: FormBuilder,
-		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
-		private userDataService: UserDataService,
+		private router: Router,
 		private ssrService: SsrService,
+		private userDataService: UserDataService,
 	) {
 		// Get translations
-		this.getTranslations(null);
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Set meta
+		const metaData = {
+			page: this.translations.resetPassword.title,
+			title: this.translations.resetPassword.title,
+			description: this.translations.resetPassword.description,
+			keywords: this.translations.resetPassword.description,
+			url: this.env.url + '/',
+			image: this.env.url + 'assets/images/image_color.png'
+		};
+		this.metaService.setData(metaData);
 
 		// Get url data
-		let urlData: any = this.activatedRoute.snapshot;
-		let data = {
+		const urlData: any = this.activatedRoute.snapshot;
+		const data = {
 			code: urlData.params.code
-		}
+		};
 
 		this.userDataService.resetPassword(data)
 			.subscribe(
@@ -63,7 +73,7 @@ export class ResetPasswordComponent implements OnInit {
 	ngOnInit() {
 		// Set Google analytics
 		if (this.ssrService.isBrowser) {
-			let urlGa = 'reset-password';
+			const urlGa = 'reset-password';
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
@@ -76,28 +86,7 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	getTranslations(lang){
-		this.userDataService.getTranslations(lang)
-			.subscribe(data => {
-				this.translations = data;
-				this.setMetaData(data);
-			});
-	}
-
-	setMetaData(data) {
-		let metaData = {
-			page: data.resetPassword.title,
-			title: data.resetPassword.title,
-			description: data.resetPassword.description,
-			keywords: data.resetPassword.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
-		}
-
-		this.metaService.setData(metaData);
-	}
-
-	verifyReCaptcha(data){
+	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}
 
@@ -108,8 +97,8 @@ export class ResetPasswordComponent implements OnInit {
 			this.actionForm.get('confirmPassword').value.length > 0 &&
 			this.recaptcha
 		) {
-			if(this.actionForm.get('password').value === this.actionForm.get('confirmPassword').value){
-				let data = {
+			if (this.actionForm.get('password').value === this.actionForm.get('confirmPassword').value) {
+				const data = {
 					code: this.userData.code,
 					email: this.userData.email,
 					username: this.userData.username,

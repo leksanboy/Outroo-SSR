@@ -3,11 +3,11 @@
 
 	foreach($data['receivers'] as $row){
 		$notification = array(
-			"sender" 	=> $data['sender'],
-			"receiver" 	=> $row,
-			"url" 		=> $data['url'],
-			"id" 		=> $data['id'],
-			"type" 		=> "share"
+			'sender' 	=> $data['sender'],
+			'receiver' 	=> $row,
+			'url' 		=> $data['url'],
+			'id' 		=> $data['id'],
+			'type' 		=> "share"
 		);
 
 		generateNotification($notification);

@@ -2,16 +2,27 @@
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
 	$type = $_GET['type'];
-	$session = $_GET['session'];
-	$user = $_GET['user'];
 
-	if ($type == 'user') {
-		if ($more == 0)
+	if ($type === 'user') {
+		$session = sessionId();
+		$user = $_GET['user'];
+
+		if ($more === 0)
 			$user = userId($user);
 
-		$sql = "SELECT id, user, name, content, content_original, url_video as urlVideo, photos, audios, disabled_comments as disabledComments, date
+		$sql = "SELECT id, 
+						user, 
+						name, 
+						content, 
+						content_original, 
+						url_video as urlVideo, 
+						photos, 
+						audios, 
+						disabled_comments as disabledComments, 
+						date
 				FROM z_publications
-				WHERE user = $user AND is_deleted = 0
+				WHERE user = $user 
+					AND is_deleted = 0
 				ORDER BY date DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
@@ -24,7 +35,7 @@
 				$row['bookmark'] = checkMarkedPublication($row['id'], $session);
 				$row['liked'] = checkLikedPublication($row['id'], $session);
 				$row['likers'] = getPublicationLikers($row['id']);
-				$row['disabledComments'] = ($row['disabledComments'] == 0) ? true : false;
+				$row['disabledComments'] = ($row['disabledComments'] === 0) ? true : false;
 				$row['countComments'] = countCommentsPublication($row['id']);
 				$row['countLikes'] = countLikesPublication($row['id']);
 				$row['comments'] = [];
@@ -60,8 +71,20 @@
 		}
 
 		$conn->close();
-	} else if ($type == 'home') {
-		$sql = "SELECT id, user, name, content, content_original, url_video as urlVideo, photos, audios, disabled_comments as disabledComments, date
+	} else if ($type === 'home') {
+		$session = sessionId();
+		$user = $_GET['user'];
+
+		$sql = "SELECT id, 
+						user, 
+						name, 
+						content, 
+						content_original, 
+						url_video as urlVideo, 
+						photos, 
+						audios, 
+						disabled_comments as disabledComments, 
+						date
 				FROM z_publications
 				WHERE (user IN (SELECT
 									CASE
@@ -81,7 +104,7 @@
 				$row['bookmark'] = checkMarkedPublication($row['id'], $session);
 				$row['liked'] = checkLikedPublication($row['id'], $session);
 				$row['likers'] = getPublicationLikers($row['id']);
-				$row['disabledComments'] = ($row['disabledComments'] == 0) ? true : false;
+				$row['disabledComments'] = ($row['disabledComments'] === 0) ? true : false;
 				$row['countComments'] = countCommentsPublication($row['id']);
 				$row['countLikes'] = countLikesPublication($row['id']);
 				$row['comments'] = [];
@@ -117,8 +140,13 @@
 		}
 
 		$conn->close();
-	} else if ($type == 'news') {
-		$sql = "SELECT id, user, name, url_video as urlVideo, photos, date
+	} else if ($type === 'news') {
+		$sql = "SELECT id, 
+						user, 
+						name, 
+						url_video as urlVideo, 
+						photos, 
+						date
 				FROM z_publications
 				WHERE (length(photos) > 0 AND is_deleted = 0) OR  
 						(length(url_video) > 0 AND is_deleted = 0) OR 
