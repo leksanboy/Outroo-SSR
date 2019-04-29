@@ -11,7 +11,7 @@ declare var global: any;
 export class HeadersService {
 	public env: any = environment;
 	public numberOfClicks: any = [];
-	public limitedClicksPerSecond = 30;
+	// public limitedClicksPerSecond = 30;
 	public limitedTime = 1000;
 	public window: any = global;
 
@@ -25,37 +25,35 @@ export class HeadersService {
 			let userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
 			let authorization = userData ? userData.current.authorization : '';
 
-			console.log("clicksPerSecond:", this.clicksPerSecond());
-
 			// Validate authorization
-			let authorizationValidator = this.clicksPerSecond() ? authorization : '';
-
+			// let authorizationValidator = this.clicksPerSecond() ? authorization : '';
 			// if (!authorizationValidator)
 			// 	alert("STOP DOING THAT");
 
 			// Headers
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
-			headers.append('Authorization', authorizationValidator);
+			// headers.append('Authorization', authorizationValidator);
+			headers.append('Authorization', authorization);
 
 			return new RequestOptions({ headers: headers });
 		}
 	}
 
-	clicksPerSecond() {
-		if(this.numberOfClicks.length < this.limitedClicksPerSecond) {
-			this.numberOfClicks.push(new Date().getTime());
+	// clicksPerSecond() {
+	// 	if(this.numberOfClicks.length < this.limitedClicksPerSecond) {
+	// 		this.numberOfClicks.push(new Date().getTime());
 
-			return true;
-		} else {
-			let diff = this.numberOfClicks[this.numberOfClicks.length -1] - this.numberOfClicks[0];
+	// 		return true;
+	// 	} else {
+	// 		let diff = this.numberOfClicks[this.numberOfClicks.length -1] - this.numberOfClicks[0];
 			
-			// If is into limitedTime
-			this.numberOfClicks.shift();
-			this.numberOfClicks.push(new Date().getTime());
+	// 		// If is into limitedTime
+	// 		this.numberOfClicks.shift();
+	// 		this.numberOfClicks.push(new Date().getTime());
 			
-			// Return false for error to cancel other petitions
-			return (diff < this.limitedTime) ? false : true;
-		}
-	}
+	// 		// Return false for error to cancel other petitions
+	// 		return (diff < this.limitedTime) ? false : true;
+	// 	}
+	// }
 }

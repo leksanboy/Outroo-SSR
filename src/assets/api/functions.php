@@ -19,13 +19,12 @@
 					WHERE authorization = '$auth'";
 			$result = $conn->query($sql)->fetch_assoc();
 
-			if ($result['user']) {
+			if ($result['user'])
 				$result = $result['user'];
-			} else {
-				$result = null;
-			}
+			else
+				$result = 0;
 		} else {
-			$result = null;
+			$result = 0;
 		}
 
 		return $result;
