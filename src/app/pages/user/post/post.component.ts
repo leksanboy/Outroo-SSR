@@ -223,7 +223,7 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Item options
 	itemOptions(type, item){
 		switch (type) {
-			case "remove":
+			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
@@ -234,7 +234,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case "disableComments":
+			case 'disableComments':
 				item.disabledComments = !item.disabledComments;
 
 				let dataDisableComments = {
@@ -244,7 +244,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
-			case "report":
+			case 'report':
 				item.type = 'publication';
 				this.sessionService.setDataReport(item);
 				break;
@@ -254,27 +254,27 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Share on social media
 	shareOn(type, item){
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTab":
+			case 'newTab':
 				let url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
-			case "copyLink":
+			case 'copyLink':
 				let urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
-			case "messageSong":
+			case 'messageSong':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTabSong":
+			case 'newTabSong':
 				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
-			case "copyLinkSong":
+			case 'copyLinkSong':
 				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
@@ -308,7 +308,7 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist){
 		switch(type){
-			case("addRemoveUser"):
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -324,8 +324,8 @@ export class PostComponent implements OnInit, OnDestroy {
 						item.insertedId = res;
 					});
 			break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				let dataP = {
 					type: item.removeType,
@@ -343,14 +343,14 @@ export class PostComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
-			case("createPlaylist"):
+			case('createPlaylist'):
 				let data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
 			break;
-			case("share"):
-				alert("Working on Share with friends");
+			case('share'):
+				alert('Working on Share with friends');
 			break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 			break;
@@ -419,13 +419,13 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Show/hide comments box
 	showComments(type, item){
 		switch (type) {
-			case "showHide":
+			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
 				
 				if (item.disabledComments && !item.loaded)
 					this.defaultComments('default', item);
 				break;
-			case "load":
+			case 'load':
 				this.defaultComments('default', item);
 				break;
 		}
@@ -618,9 +618,9 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Comments Options
 	commentsOptions(type, item, comment){
 		switch (type) {
-			case "addRemove":
+			case 'addRemove':
 				comment.addRemove = !comment.addRemove;
-				comment.type = !comment.addRemove ? "add" : "remove";
+				comment.type = !comment.addRemove ? 'add' : 'remove';
 
 				let data = {
 					receiver: item.user.id,
@@ -637,7 +637,7 @@ export class PostComponent implements OnInit, OnDestroy {
 							item.countComments++;
 					});
 				break;
-			case "report":
+			case 'report':
 				item.type = 'publicationComment';
 				this.sessionService.setDataReport(item);
 				break;
@@ -646,7 +646,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {
-		let w3 = (typeof this.window.getSelection != "undefined") && true,
+		let w3 = (typeof this.window.getSelection != 'undefined') && true,
 			caretOffset = 0;
 
 		if (w3) {

@@ -192,7 +192,7 @@
 						</div>
 
 						<div class="boxComments" *ngIf="dataDefault.data?.showCommentsBox">
-							<div class="comments" *ngIf="dataDefault.data?.disabledComments && dataDefault.data?.loaded">
+							<div class="comments" *ngIf="!dataDefault.data?.disabledComments && dataDefault.data?.loaded">
 								<div class="countComments">
 									{{dataDefault.data?.countComments}} 
 									{{translations?.common?.comments}}
@@ -255,11 +255,11 @@
 								</div>
 							</div>
 
-							<div class="noData" *ngIf="!dataDefault.data?.disabledComments">
+							<div class="noData" *ngIf="dataDefault.data?.disabledComments">
 								{{translations?.common?.commentsDisabled}}
 							</div>
 
-							<div class="loadComments" *ngIf="dataDefault.data?.disabledComments && !dataDefault.data?.loaded">
+							<div class="loadComments" *ngIf="!dataDefault.data?.disabledComments && !dataDefault.data?.loaded">
 								<button mat-raised-button (click)="showComments('load', dataDefault.data)">
 									{{translations?.main?.loadComments}}
 								</button>

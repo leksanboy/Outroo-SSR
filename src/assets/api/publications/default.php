@@ -35,7 +35,7 @@
 				$row['bookmark'] = checkMarkedPublication($row['id'], $session);
 				$row['liked'] = checkLikedPublication($row['id'], $session);
 				$row['likers'] = getPublicationLikers($row['id']);
-				$row['disabledComments'] = ($row['disabledComments'] === 0) ? true : false;
+				$row['disabledComments'] = intval($row['disabledComments']) === 0 ? false : true;
 				$row['countComments'] = countCommentsPublication($row['id']);
 				$row['countLikes'] = countLikesPublication($row['id']);
 				$row['comments'] = [];

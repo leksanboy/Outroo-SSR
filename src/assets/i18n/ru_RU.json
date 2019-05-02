@@ -354,6 +354,7 @@
 		"accountInUse": "Текущий аккаунт используется",
 		"emailOrPasswordIncorrect": "Неверный адрес электронной почты или пароль",
 		"isTooShort": "Напиши что-нибудь",
-		"commentPlaceholder": "Пишите здесь..."
+		"commentPlaceholder": "Пишите здесь...",
+		"loadComments": "Загрузить комментарии"
 	}
 }

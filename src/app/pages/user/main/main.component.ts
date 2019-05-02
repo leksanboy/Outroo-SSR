@@ -340,8 +340,9 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Item options
 	itemOptions(type, item){
 		switch (type) {
-			case "remove":
-				item.removeType = item.addRemoveSession ? "add" : "remove";
+			case 'remove':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
 				let dataAddRemove = {
 					id: item.id,
@@ -350,7 +351,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case "disableComments":
+			case 'disableComments':
 				item.disabledComments = !item.disabledComments;
 
 				let dataDisableComments = {
@@ -360,7 +361,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
-			case "report":
+			case 'report':
 				item.type = 'publication';
 				this.sessionService.setDataReport(item);
 				break;
@@ -370,27 +371,27 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Share on social media
 	shareOn(type, item){
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTab":
+			case 'newTab':
 				let url = this.environment.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
-			case "copyLink":
+			case 'copyLink':
 				let urlExtension = this.environment.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
-			case "messageSong":
+			case 'messageSong':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTabSong":
+			case 'newTabSong':
 				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
-			case "copyLinkSong":
+			case 'copyLinkSong':
 				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
@@ -424,7 +425,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist){
 		switch(type){
-			case("addRemoveUser"):
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -440,8 +441,8 @@ export class MainComponent implements OnInit, OnDestroy {
 						item.insertedId = res;
 					});
 			break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				let dataP = {
 					type: item.removeType,
@@ -459,15 +460,15 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
-			case("createPlaylist"):
+			case('createPlaylist'):
 				let data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
 			break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 			break;
-			case("share"):
+			case('share'):
 				item.comeFrom = 'share';
 				this.sessionService.setDataShowShare(item);
 			break;
@@ -535,14 +536,17 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Show/hide comments box
 	showComments(type, item){
+		console.log("item", item);
+
 		switch (type) {
-			case "showHide":
+			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
 				
-				if (item.disabledComments && !item.loaded)
-					this.defaultComments('default', item);
+				if (!item.disabledComments)
+					if (!item.loaded)
+						this.defaultComments('default', item);
 				break;
-			case "load":
+			case 'load':
 				this.defaultComments('default', item);
 				break;
 		}

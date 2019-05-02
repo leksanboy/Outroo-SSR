@@ -6,7 +6,7 @@
 	$id = $data['id'];
 	$type = $data['type'];
 	
-	$status = ($type === false) ? 1 : 0;
+	$status = $type === false ? 0 : 1;
 
 	$sql = "UPDATE z_publications
 			SET disabled_comments = $status, 

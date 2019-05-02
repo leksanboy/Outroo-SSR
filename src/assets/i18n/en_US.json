@@ -354,6 +354,7 @@
 		"accountInUse": "Account is in use",
 		"emailOrPasswordIncorrect": "Email or password is incorrect",
 		"isTooShort": "Write something",
-		"commentPlaceholder": "Wrire here..."
+		"commentPlaceholder": "Wrire here...",
+		"loadComments": "Load comments"
 	}
 }

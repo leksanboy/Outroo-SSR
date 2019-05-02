@@ -184,11 +184,11 @@
 								</button>
 								
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x.user.id == sessionData.current.id">{{x.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x.user.id == sessionData.current.id">{{!x.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 									<mat-divider *ngIf="x.user.id == sessionData.current.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('remove', x); x.addRemoveSession=!x.addRemoveSession;" *ngIf="x.user.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x.user.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 								
 								<mat-menu #menuShareSocial="matMenu">
@@ -361,7 +361,7 @@
 							</div>
 
 							<div class="boxComments" *ngIf="x.showCommentsBox">
-								<div class="comments" *ngIf="x.disabledComments && x.loaded">
+								<div class="comments" *ngIf="!x.disabledComments && x.loaded">
 									<div class="countComments">
 										{{x.countComments}} 
 										{{translations?.common?.comments}}
@@ -424,11 +424,11 @@
 									</div>
 								</div>
 
-								<div class="noData" *ngIf="!x.disabledComments">
+								<div class="noData" *ngIf="x.disabledComments">
 									{{translations?.common?.commentsDisabled}}
 								</div>
 
-								<div class="loadComments" *ngIf="x.disabledComments && !x.loaded">
+								<div class="loadComments" *ngIf="!x.disabledComments && !x.loaded">
 									<button mat-raised-button (click)="showComments('load', x)">
 										{{translations?.common?.loadComments}}
 									</button>

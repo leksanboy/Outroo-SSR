@@ -2633,17 +2633,17 @@ body{
 					color: $whiteColor;
 					text-align: center;
 					line-height: 24px;
-					margin: 48px 0 0;
+					margin: 12px 0 0;
 					font-size: 13px;
-					display: none;
 					width: 100%;
 					float: left;
 
 					ul{
+						margin: 36px 0 0;
+						display: none;
 						width: 100%;
 						float: left;
 						padding: 0;
-						margin: 0;
 
 						li{
 							display: inline-block;
@@ -2665,6 +2665,7 @@ body{
 					.copyright{
 						color: transparentize($whiteColor, .5);
 						padding: 0 6px;
+						display: none;
 						width: 100%;
 						float: left;
 					}
@@ -4598,11 +4599,13 @@ body{
 				width: 100%;
 
 				button{
-					background: transparent;
-					color: currentColor;
+					background: $whiteColor;
+					color: $fontBlackColor;
+					line-height: 28px;
 					margin: 0 0 0 8px;
 					box-shadow: none;
 					padding: 0 12px;
+					height: 28px;
 
 					mat-progress-spinner{
 						height: 16px !important;
@@ -4745,10 +4748,6 @@ body{
 						width: 50%;
 
 						button{
-							background: transparent;
-							color: $whiteColor;
-							margin: 0 0 0 8px;
-
 							&[disabled]{
 								background-color: $greyColor;
 							}
@@ -7068,15 +7067,13 @@ body{
 											}
 
 											&.active{
-												background-color: $blueColor;
-												border-color: $blueColor;
-												color: $whiteColor;
+												border: 1px solid $fontBlackColor;
+												background-color: transparent;
+												color: $fontBlackColor;
 											}
 
 											&.pending{
-												background-color: transparent;
-												border-color: currentColor;
-												color: currentColor;
+												background-color: $blueColor;
 											}
 										}
 									}
@@ -7660,6 +7657,9 @@ body{
 				button{
 					background-color: $whiteColor;
 					color: $blackColor;
+					line-height: 24px;
+					padding: 0 12px;
+					margin: 12px 0;
 				}
 			}
 		}
@@ -7745,6 +7745,16 @@ body{
 					ul.notifications li .inner .operations span button{
 						background-color: $whiteColor;
 						color: $fontBlackColor;
+
+						&.active{
+							border: 1px solid $whiteColor;
+							background-color: transparent;
+							color: $whiteColor;
+						}
+
+						&.pending{
+							background-color: $blueColor;
+						}
 					}
 
 					ul.chat li .avatarsGroup.group .avatar{
@@ -7761,7 +7771,12 @@ body{
 
 						&.active{
 							border: 1px solid $whiteColor;
+							background-color: transparent;
 							color: $whiteColor;
+						}
+
+						&.pending{
+							background-color: $blueColor;
 						}
 					}
 				}
@@ -8354,7 +8369,10 @@ body{
 
 				.inner{
 					.footer{
-						display: block;
+						ul,
+						.copyright{
+							display: block;
+						}
 					}
 				}
 			}
