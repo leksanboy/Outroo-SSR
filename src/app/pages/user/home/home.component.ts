@@ -466,13 +466,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 	// Show/hide comments box
 	showComments(type, item){
 		switch (type) {
-			case "showHide":
+			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
 				
-				if (item.disabledComments && !item.loaded)
-					this.defaultComments('default', item);
+				if (!item.disabledComments)
+					if (!item.loaded)
+						this.defaultComments('default', item);
 				break;
-			case "load":
+			case 'load':
 				this.defaultComments('default', item);
 				break;
 		}

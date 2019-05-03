@@ -4605,6 +4605,7 @@ body{
 					margin: 0 0 0 8px;
 					box-shadow: none;
 					padding: 0 12px;
+					font-size: 13px;
 					height: 28px;
 
 					mat-progress-spinner{
@@ -4618,7 +4619,7 @@ body{
 							width: 16px !important;
 
 							circle{
-								stroke: $whiteColor !important;
+								stroke: $fontBlackColor !important;
 							}
 						}
 					}

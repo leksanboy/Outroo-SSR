@@ -205,7 +205,7 @@
 											{{x.countComments}} 
 											{{translations?.common?.comments}}
 										</div>
-
+									
 										<div class="new" *ngIf="sessionData.current.id">
 											<div class="avatar">
 												<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
@@ -269,7 +269,7 @@
 
 									<div class="loadComments" *ngIf="!x.disabledComments && !x.loaded">
 										<button mat-raised-button (click)="showComments('load', x)">
-											{{translations?.main?.loadComments}}
+											{{translations?.common?.loadComments}}
 										</button>
 									</div>
 								</div>

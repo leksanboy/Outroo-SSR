@@ -27,9 +27,10 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
-	public userData: any = [];
-	public audioPlayerData: any = [];
 	public translations: any = [];
+	public userData: any = [];
+	public dataDefault: any = [];
+	public audioPlayerData: any = [];
 	public swiperConfig: any = {
 		pagination: '.swiper-pagination',
 		nextButton: '.swiperNext',
@@ -37,7 +38,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		paginationClickable: true,
 		spaceBetween: 0
 	};
-	public notExists: boolean;
 	public searchBoxMentions: boolean;
 	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 	public isMobileScreen: boolean;
@@ -58,11 +58,12 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService
 	) {
+		console.log("data", data);
 		this.translations = data.translations;
 		this.sessionData = data.sessionData;
 		this.userData = data.userData;
-		this.data.current = data.item ? data.item : [];
-		this.isMobileScreen = this.deviceService.isMobile();
+		this.dataDefault.data = data.item ? data.item : [];
+		this.showComments('showHide', this.dataDefault.data);
 
 		// Click on a href
 		this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
@@ -70,18 +71,18 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataClickElementRef(event);
 		});
 
-		if (this.data.item) {
+		if (this.dataDefault.data) {
 			// Check if exists
-			this.notExists = false;
+			this.dataDefault.notExists = false;
 
 			// Update replays
-			this.updateReplays(this.data.current.id);
+			this.updateReplays(this.dataDefault.data.id);
 
 			// Load comments
-			this.defaultComments('default', this.data.current);
+			this.defaultComments('default', this.dataDefault.data);
 		} else {
 			// Check if exists
-			this.notExists = true;
+			this.dataDefault.notExists = true;
 		}
 	}
 
@@ -90,7 +91,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.dialogRef.close(this.data.current);
+		this.dialogRef.close(this.dataDefault.data);
 	}
 
 	// Play video
@@ -180,7 +181,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	// Item Options
 	itemOptions(type, item){
 		switch (type) {
-			case "remove":
+			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
@@ -191,7 +192,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case "disableComments":
+			case 'disableComments':
 				item.disabledComments = !item.disabledComments;
 
 				let dataDisableComments = {
@@ -201,12 +202,12 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
-			case "report":
+			case 'report':
 				item.type = 'photo';
 				item.translations = this.translations;
 				this.sessionService.setDataReport(item);
 				break;
-			case "close":
+			case 'close':
 				this.dialogRef.close();
 				break;
 		}
@@ -215,27 +216,27 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	// Share on social media
 	shareOn(type, item){
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTab":
+			case 'newTab':
 				let url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
-			case "copyLink":
+			case 'copyLink':
 				let urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
-			case "messageSong":
+			case 'messageSong':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTabSong":
+			case 'newTabSong':
 				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
-			case "copyLinkSong":
+			case 'copyLinkSong':
 				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
@@ -252,8 +253,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			this.audioPlayerData.list = data.audios;
 			this.audioPlayerData.item = item;
 			this.audioPlayerData.key = key;
-			this.audioPlayerData.user = this.data.current.id;
-			this.audioPlayerData.username = this.data.current.username;
+			this.audioPlayerData.user = this.dataDefault.data.id;
+			this.audioPlayerData.username = this.dataDefault.data.username;
 			this.audioPlayerData.location = 'user';
 			this.audioPlayerData.type = type;
 
@@ -316,8 +317,15 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	// Show/hide comments box
 	showComments(type, item){
 		switch (type) {
-			case "showHide":
+			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
+				
+				if (!item.disabledComments)
+					if (!item.loaded)
+						this.defaultComments('default', item);
+				break;
+			case 'load':
+				this.defaultComments('default', item);
 				break;
 		}
 	}
@@ -331,6 +339,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			item.comments = [];
 			item.comments.list = [];
 			item.rowsComments = 0;
+			item.loaded = true;
 
 			// New comments set
 			this.newComment('clear', null, item);
@@ -357,7 +366,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 					item.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more') {
+		} else if (type == 'more' && !item.loadingMoreData) {
 			item.loadingMoreData = true;
 			item.rowsComments++;
 
@@ -373,7 +382,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 						item.loadingMoreData = false;
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-						if (!res || res.length == 0)
+						// Push items
+						if (!res || res.length > 0)
 							for (let i in res)
 								item.comments.list.push(res[i]);
 					}, 600);
@@ -478,13 +488,13 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			return newData;
 		} else if (type == 'create') {
 			if (item.newCommentData.original.trim().length == 0) {
-				this.alertService.success(this.translations.common.isTooShort);
+				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
 				let formatedData = this.newComment('transformBeforeSend', null, item);
 				let dataCreate = {
 					type: 'create',
 					id: item.id,
-					receiver: this.userData.id,
+					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
 					mentions: formatedData.mentions
@@ -507,13 +517,13 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	// Comments Options
 	commentsOptions(type, item, comment){
 		switch (type) {
-			case "addRemove":
+			case 'addRemove':
 				comment.addRemove = !comment.addRemove;
-				comment.removeType = comment.addRemove ? 'remove' : 'add';
+				comment.type = !comment.addRemove ? 'add' : 'remove';
 
 				let data = {
-					receiver: this.userData.id,
-					type: comment.removeType,
+					receiver: item.user.id,
+					type: comment.type,
 					comment: comment.id,
 					id: item.id
 				}
@@ -526,9 +536,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 							item.countComments++;
 					});
 				break;
-			case "report":
-				item.type = 'photoComment';
-				item.translations = this.translations;
+			case 'report':
+				item.type = 'publicationComment';
 				this.sessionService.setDataReport(item);
 				break;
 		}
@@ -536,7 +545,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {
-		let w3 = (typeof this.window.getSelection != "undefined") && true,
+		let w3 = (typeof this.window.getSelection != 'undefined') && true,
 			caretOffset = 0;
 
 		if (w3) {
@@ -573,6 +582,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Close
 	close(){
-		this.dialogRef.close(this.data.current);
+		this.dialogRef.close(this.dataDefault.data);
 	}
 }

@@ -181,9 +181,10 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
-					let t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
+					this.showComments('showHide', this.dataDefault.data);
 
 					// Meta
+					let t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
 					let metaData = {
 						page: t,
 						title: t,
@@ -422,8 +423,9 @@ export class PostComponent implements OnInit, OnDestroy {
 			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
 				
-				if (item.disabledComments && !item.loaded)
-					this.defaultComments('default', item);
+				if (!item.disabledComments)
+					if (!item.loaded)
+						this.defaultComments('default', item);
 				break;
 			case 'load':
 				this.defaultComments('default', item);

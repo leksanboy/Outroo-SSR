@@ -536,8 +536,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Show/hide comments box
 	showComments(type, item){
-		console.log("item", item);
-
 		switch (type) {
 			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
