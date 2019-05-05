@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -30,6 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private alertService: AlertService,
 		private metaService: MetaService,
+		private router: Router,
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
 	) {
@@ -63,6 +64,10 @@ export class ForgotPasswordComponent implements OnInit {
 
 		// destroy session & reset login
 		this.userDataService.logout();
+	}
+
+	goBack(){
+		this.router.navigate(['/']);
 	}
 
 	verifyReCaptcha(data) {

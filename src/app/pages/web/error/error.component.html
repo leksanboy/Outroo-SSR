@@ -1,23 +1,12 @@
-<div class="innerBodyWeb">
-	<div class="header">
-		<div class="back" routerLink="/">
-			<button mat-icon-button>
-				<i label="back"></i>
-			</button>
-		</div>
-		<div class="center">
-			<div class="logo" routerLink="/"></div>
-		</div>
-	</div>
-
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
-		<div class="container">
-			<div class="title">
-				{{translations?.error?.title}}
-			</div>
+		<div class="pageWeb">
+			<div class="content">
+				<div class="pageTitle">{{translations?.error?.title}}</div>
 
-			<div class="subtitle">
-				{{translations?.error?.description}}
+				<div class="context">
+					{{translations?.error?.description}}
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,64 +1,66 @@
-<div class="innerBodyWeb">
-	<div class="header">
-		<div class="back" routerLink="/">
-			<button mat-icon-button>
-				<i label="back"></i>
-			</button>
-		</div>
-		<div class="center">
-			<div class="logo" routerLink="/"></div>
-		</div>
-	</div>
-
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
-		<div class="container" *ngIf="pageStatus == 'default'">
-			<div class="title">
-				{{translations?.support?.title}}
-			</div>
+		<div class="pageWeb">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
 
-			<div class="text">
-				{{translations?.support?.defaultText?.one}}
-				<br>
-				<br>
-				{{translations?.support?.defaultText?.two}}
-				<br>
-				{{translations?.support?.defaultText?.three}}
-			</div>
+				<div class="pageTitle">{{translations?.support?.title}}</div>
 
-			<div class="form">
-				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
-					<mat-form-field>
-						<input type="email" matInput placeholder="{{translations?.support?.email}}" #Email maxlength="100" formControlName="email">
-						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
-					</mat-form-field>
-
-					<mat-form-field class="textarea">
-						<textarea matInput matTextareaAutosize placeholder="{{translations?.support?.typeHere}}" #Content maxlength="1000" formControlName="content"></textarea>
-						<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
-					</mat-form-field>
-
-					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
-
-					<div class="buttons">
-						<button mat-raised-button type="submit">
-							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-							{{translations?.common?.submit}}
-						</button>
+				<span *ngIf="pageStatus == 'default'">
+					<div class="title">
+						{{translations?.support?.title}}
 					</div>
-				</form>
-			</div>
-		</div>
 
-		<div class="container" *ngIf="pageStatus == 'completed'">
-			<div class="title">
-				{{translations?.support?.confirmText?.one}}
-			</div>
+					<div class="context">
+						{{translations?.support?.defaultText?.one}}
+						<br>
+						<br>
+						{{translations?.support?.defaultText?.two}}
+						<br>
+						{{translations?.support?.defaultText?.three}}
+					</div>
 
-			<div class="text">
-				{{translations?.support?.confirmText?.two}} <b>{{email}}</b>.
-				<br>
-				<br>
-				{{translations?.support?.confirmText?.three}}
+					<div class="form">
+						<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+							<mat-form-field>
+								<input type="email" matInput placeholder="{{translations?.support?.email}}" #Email maxlength="100" formControlName="email">
+								<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
+							</mat-form-field>
+
+							<mat-form-field class="textarea">
+								<textarea matInput matTextareaAutosize placeholder="{{translations?.support?.typeHere}}" #Content maxlength="1000" formControlName="content"></textarea>
+								<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
+							</mat-form-field>
+
+							<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
+
+							<div class="buttons">
+								<button mat-raised-button type="submit">
+									<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+									{{translations?.common?.submit}}
+								</button>
+							</div>
+						</form>
+					</div>
+				</span>
+
+				<span *ngIf="pageStatus == 'completed'">
+					<div class="title">
+						{{translations?.support?.confirmText?.one}}
+					</div>
+
+					<div class="context">
+						{{translations?.support?.confirmText?.two}} <b>{{email}}</b>.
+						<br>
+						<br>
+						{{translations?.support?.confirmText?.three}}
+					</div>
+				</span>
 			</div>
 		</div>
 	</div>

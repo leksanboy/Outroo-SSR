@@ -2761,64 +2761,118 @@ body{
 
 	/*Signing box, if no session*/
 	.signingBox{
-		background-color: transparentize($fontBlackColor, .15);
+		background-color: transparentize($blackColor, .25);
 		box-shadow: $shadowBox2;
 		box-sizing: border-box;
 		color: $whiteColor;
 		border-radius: 0;
 		position: fixed;
-		font-size: 14px;
-		padding: 12px;
 		z-index: 10;
 		width: 100%;
 		margin: 0;
 		bottom: 0;
 
-		.inner{
-			max-width: $pageMaxWidth;
-			margin: 0 auto;
+		.close{
+			position: absolute;
+			right: 6px;
+			top: 14px;
 
-			.panel{
-				display: flex;
+			i{
+				background-color: $greyColor;
+			}
+		}
+
+		.inner{
+			box-sizing: border-box;
+			color: $whiteColor;
+			padding: 24px 18px;
+			max-width: 600px;
+			margin: 0 auto;
+			width: 100%;
+
+			.title{
+				text-transform: uppercase;
+				padding: 0 0 12px;
+				font-weight: bold;
+				text-align: left;
+				font-size: 18px;
+				width: 100%;
+			}		
+
+			.text{
+				word-break: break-word;
+				box-sizing: border-box;
 				width: 100%;
 
-				.title{
-					text-align: center;
-					line-height: 40px;
-					font-weight: bold;
-					width: 100%;
-				}
-
-				.close{
-					position: absolute;
-					right: 12px;
-					top: 12px;
+				a{
+					text-decoration: underline;
+					color: $whiteColor;
 				}
 			}
 
-			.box{
-				padding: 0 12px;
+			.buttons{
+				margin: 12px 0 0;
+				display: flex;
+				width: 100%;
 
-				.text{
-					padding: 12px 0;
-				}
+				button{
+					background-color: $whiteColor;
+					width: calc(100% - 6px);
+					color: $fontBlackColor;
+					font-weight: bold;
+					line-height: 28px;
+					margin: 0 6px 0 0;
+					font-size: 11px;
 
-				.buttons{
-					width: 100%;
-
-					button{
-						background: $blueColor;
-						color: $whiteColor;
-						font-size: 14px;
-						margin: 6px 0;
-						width: 100%;
-
-						&:last-child{
-							background: transparent;
-							color: $blueColor;
-							font-weight: bold;
-						}
+					&:last-child{
+						margin: 0 0 0 6px;
 					}
+				}
+			}
+		}
+	}
+
+	/*Cookies*/
+	.cookiesBox{
+		background-color: $blackColor;
+		width: 100%;
+		margin: 0;
+
+		.close{
+			position: absolute;
+			right: 6px;
+			top: 14px;
+
+			i{
+				background-color: $greyColor;
+			}
+		}
+
+		.inner{
+			box-sizing: border-box;
+			color: $whiteColor;
+			padding: 24px 18px;
+			max-width: 600px;
+			margin: 0 auto;
+			width: 100%;
+
+			.title{
+				text-transform: uppercase;
+				padding: 0 0 12px;
+				font-weight: bold;
+				text-align: left;
+				font-size: 18px;
+				width: 100%;
+			}		
+
+			.text{
+				word-break: break-word;
+				box-sizing: border-box;
+				width: 100%;
+
+				a{
+					text-decoration: underline;
+					color: $whiteColor;
 				}
 			}
 		}
@@ -3012,7 +3066,7 @@ body{
 					}
 				}
 
-				&.headerMobile{
+				&.mobile{
 					display: none;
 				}
 			}
@@ -4603,9 +4657,10 @@ body{
 					color: $fontBlackColor;
 					line-height: 28px;
 					margin: 0 0 0 8px;
+					font-weight: bold;
 					box-shadow: none;
 					padding: 0 12px;
-					font-size: 13px;
+					font-size: 11px;
 					height: 28px;
 
 					mat-progress-spinner{
@@ -4858,282 +4913,6 @@ body{
 	/*·····CONTENT STYLES·····*/
 	/*------------------------*/
 
-	/*Web*/
-	.innerBodyWeb{
-		position: relative;
-		overflow: hidden;
-		height: 100%;
-		width: 100%;
-
-		.header{
-			border-bottom: 1px solid transparentize($greyColor, .75);
-			background: transparentize($headerWhiteColor, .15);
-			position: fixed;
-			display: block;
-			height: 56px;
-			width: 100%;
-			z-index: 10;
-			right: 0;
-			left: 0;
-			top: 0;
-
-			.back{
-				height: 56px;
-				width: 56px;
-				float: left;
-
-				button{
-					border-radius: 50% !important;
-					margin: 8px;
-					float: left;
-				}
-			}
-
-			.center{
-				position: absolute;
-				text-align: center;
-				line-height: 56px;
-				width: 100%;
-				z-index: -1;
-
-				.logo{
-					mask-size: 24px calc(24px * 15);
-					background-color: $blackColor;
-					mask-image: $spriteImages;
-					mask-repeat: no-repeat;
-					display: inline-block;
-					mask-position: 0 0;
-					margin: 16px 0 0;
-					cursor: pointer;
-					height: 24px;
-					width: 24px;
-				}
-			}
-
-			.actions{
-				position: absolute;
-				right: 0;
-				top: 0;
-
-				button{
-					border-radius: 50% !important;
-					margin: 8px;
-					float: left;
-				}
-			}
-		}
-
-		.innerBodyContent{
-			max-width: $pageMaxWidth;
-			padding: 56px 0 100px;
-			position: relative;
-			overflow: hidden;
-			margin: 0 auto;
-			width: 100%;
-			z-index: 8;
-			top: 0;
-
-			.container{
-				box-sizing: border-box;
-				padding: 36px 18px;
-				width: 100%;
-				float: left;
-				margin: 0;
-
-				.title{
-					text-transform: uppercase;
-					padding: 24px 0 48px;
-					font-weight: bold;
-					text-align: left;
-					font-size: 28px;
-					width: 100%;
-					float: left;
-				}
-
-				.subtitle{
-					text-transform: uppercase;
-					font-weight: bold;
-					text-align: left;
-					font-size: 18px;
-					padding: 12px 0;
-					width: 100%;
-					float: left;
-				}
-
-				.text{
-					word-break: break-word;
-					box-sizing: border-box;
-					width: 100%;
-					float: left;
-
-					.userBox{
-						box-sizing: border-box;
-						display: flex;
-						width: 100%;
-						float: left;
-						padding: 0;
-
-						.image{
-							border-radius: 50%;
-							overflow: hidden;
-							min-width: 48px;
-							height: 48px;
-							width: 48px;
-							float: left;
-
-							img{
-								height: 100%;
-								width: 100%;
-							}
-						}
-
-						.data{
-							box-sizing: border-box;
-							position: relative;
-							padding: 0 12px;
-							float: left;
-							width: 100%;
-
-							.name,
-							.user{
-								text-overflow: ellipsis;
-								box-sizing: border-box;
-								display: inline-block;
-								white-space: nowrap;
-								font-weight: bold;
-								overflow: hidden;
-								text-align: left;
-								padding: 6px 0 0;
-								width: 100%;
-							}
-
-							.user{
-								color: $blueColor;
-								font-size: 14px;
-								padding: 0;
-							}
-						}
-					}
-
-					.loading{
-						mat-progress-spinner{
-							height: 16px !important;
-							width: 16px !important;
-							display: inline-block;
-							margin: 0 0 -2px 0;
-
-							svg {
-								height: 16px !important;
-								width: 16px !important;
-
-								circle{
-									stroke: $fontBlackColor !important;
-								}
-							}
-						}
-					}
-
-					a{
-						color: $blueColor;
-					}
-
-					button{
-						background: $blueColor;
-						color: $whiteColor;
-						margin: 24px auto;
-
-						mat-progress-spinner{
-							height: 16px !important;
-							width: 16px !important;
-							margin: 10px 6px 0 0;
-							float: left;
-
-							svg {
-								height: 16px !important;
-								width: 16px !important;
-
-								circle{
-									stroke: $whiteColor !important;
-								}
-							}
-						}
-					}
-				}
-
-				.form{
-					box-sizing: border-box;
-					width: 100%;
-					float: left;
-					padding: 0;
-					margin: 0;
-
-					.terms{
-						color: $greyColor;
-						margin: 24px 0 0;
-						text-align: left;
-						font-size: 15px;
-						height: 32px;
-						width: 100%;
-						float: left;
-						padding: 0;
-					}
-
-					.buttons{
-						text-align: center;
-						margin: 24px 0 0;
-						width: 100%;
-						float: left;
-
-						button{
-							background: $blueColor;
-							color: $whiteColor;
-
-							mat-progress-spinner{
-								height: 16px !important;
-								width: 16px !important;
-								margin: 10px 6px 0 0;
-								float: left;
-
-								svg {
-									height: 16px !important;
-									width: 16px !important;
-
-									circle{
-										stroke: $whiteColor !important;
-									}
-								}
-							}
-
-							&.forgot{
-								background: transparent;
-								margin: 12px auto 0;
-								color: $greyColor;
-							}
-						}
-					}
-				}
-
-				&.about{
-					.image{
-						border: 1px solid transparentize($greyColor, .75);
-						box-sizing: border-box;
-						border-radius: 5px;
-						text-align: center;
-						overflow: hidden;
-						padding: 64px;
-						float: left;
-						width: 100%;
-
-						img{
-							border-radius: 5px;
-							max-width: 100%;
-						}
-					}
-				}
-			}
-		}
-	}
-
 	/*User*/
 	.innerBodyUser{
 		position: relative;
@@ -5145,7 +4924,6 @@ body{
 			border-bottom: 1px solid transparentize($greyColor, .75);
 			position: fixed;
 			display: block;
-			height: 56px;
 			z-index: 10;
 			width: 100%;
 			right: 0;
@@ -5231,7 +5009,7 @@ body{
 							line-height: 32px;
 							min-width: 36px;
 							padding: 0 12px;
-							margin: 0 12px;
+							margin: 0 6px;
 							height: 32px;
 						}
 					}
@@ -5943,6 +5721,200 @@ body{
 				font-size: 32px;
 				float: left;
 				width: 100%;
+			}
+
+			/*Web*/
+			.pageWeb{
+				max-width: $pageMaxWidth;
+				margin: 0 auto;
+				
+				.content{
+					width: 100%;
+					float: left;
+					margin: 0;
+
+					.title{
+						text-transform: uppercase;
+						box-sizing: border-box;
+						padding: 12px 18px;
+						font-weight: bold;
+						text-align: left;
+						font-size: 18px;
+						width: 100%;
+						float: left;
+					}
+
+					.context{
+						word-break: break-word;
+						box-sizing: border-box;
+						padding: 0 18px;
+						width: 100%;
+						float: left;
+
+						.userBox{
+							box-sizing: border-box;
+							display: flex;
+							width: 100%;
+							float: left;
+							padding: 0;
+
+							.image{
+								border-radius: 50%;
+								overflow: hidden;
+								min-width: 48px;
+								height: 48px;
+								width: 48px;
+								float: left;
+
+								img{
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.data{
+								box-sizing: border-box;
+								position: relative;
+								padding: 0 12px;
+								float: left;
+								width: 100%;
+
+								.name,
+								.user{
+									text-overflow: ellipsis;
+									box-sizing: border-box;
+									display: inline-block;
+									white-space: nowrap;
+									font-weight: bold;
+									overflow: hidden;
+									text-align: left;
+									padding: 6px 0 0;
+									width: 100%;
+								}
+
+								.user{
+									color: $blueColor;
+									font-size: 14px;
+									padding: 0;
+								}
+							}
+						}
+
+						.loading{
+							mat-progress-spinner{
+								height: 16px !important;
+								width: 16px !important;
+								display: inline-block;
+								margin: 0 0 -2px 0;
+
+								svg {
+									height: 16px !important;
+									width: 16px !important;
+
+									circle{
+										stroke: $fontBlackColor !important;
+									}
+								}
+							}
+						}
+
+						a{
+							color: $blueColor;
+						}
+
+						button{
+							background: $blueColor;
+							color: $whiteColor;
+							margin: 24px auto;
+
+							mat-progress-spinner{
+								height: 16px !important;
+								width: 16px !important;
+								margin: 10px 6px 0 0;
+								float: left;
+
+								svg {
+									height: 16px !important;
+									width: 16px !important;
+
+									circle{
+										stroke: $whiteColor !important;
+									}
+								}
+							}
+						}
+					}
+
+					.image{
+						border: 1px solid transparentize($greyColor, .75);
+						width: calc(100% - 36px);
+						box-sizing: border-box;
+						border-radius: 12px;
+						text-align: center;
+						overflow: hidden;
+						margin: 0 18px;
+						padding: 24px;
+						float: left;
+
+						img{
+							border-radius: 5px;
+							max-width: 100%;
+						}
+					}
+
+					.form{
+						box-sizing: border-box;
+						padding: 0 18px;
+						width: 100%;
+						float: left;
+						margin: 0;
+
+						.terms{
+							color: $greyColor;
+							margin: 24px 0 0;
+							text-align: left;
+							font-size: 15px;
+							height: 32px;
+							width: 100%;
+							float: left;
+							padding: 0;
+						}
+
+						.buttons{
+							text-align: center;
+							margin: 24px 0 0;
+							width: 100%;
+							float: left;
+
+							button{
+								background: $blueColor;
+								color: $whiteColor;
+
+								mat-progress-spinner{
+									height: 16px !important;
+									width: 16px !important;
+									margin: 10px 6px 0 0;
+									float: left;
+
+									svg {
+										height: 16px !important;
+										width: 16px !important;
+
+										circle{
+											stroke: $whiteColor !important;
+										}
+									}
+								}
+
+								&.forgot{
+									background: transparent;
+									margin: 12px auto 0;
+									color: $greyColor;
+								}
+							}
+						}
+					}
+				}	
 			}
 
 			/*User*/
@@ -7615,6 +7587,16 @@ body{
 			}
 		}
 
+		/*Cookies*/
+		.cookiesBox{
+			background-color: $whiteColor;
+
+			.inner,
+			.inner a{
+				color: $fontBlackColor;
+			}
+		}
+
 		/*Serch*/
 		.searchBox{
 			.box{
@@ -7938,7 +7920,7 @@ body{
 		}
 
 		.signingBox{
-			margin-bottom: 24px !important;
+			padding: 0 0 36px 0;
 		}
 
 		.sessionsPanelMobile{
@@ -8396,7 +8378,7 @@ body{
 				max-height: 100%;
 
 				.header{
-					&.headerMobile{
+					&.mobile{
 						display: flex;
 					}
 				}
@@ -9293,15 +9275,14 @@ body{
 			}
 		}
 
-		.signingBox{
-			border-radius: 18px;
-			margin: 3vw 3%;
-			width: 94%;
-		}
-
 		.innerBodyUser{
 			.header{
-				display: none;
+				.head,
+				.notificationsBox,
+				.userBox,
+				.menuBox{
+					display: none !important;
+				}
 			}
 
 			.innerBodyContent{

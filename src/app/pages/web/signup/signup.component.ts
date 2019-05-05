@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit {
 			name: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
 			password: ['', [Validators.required]],
-			lang: [this.userDataService.getCookieLang() || 1]
+			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 
 		// Validate username
@@ -148,6 +148,10 @@ export class SignupComponent implements OnInit {
 
 		// destroy session & reset login
 		this.userDataService.logout();
+	}
+
+	goBack(){
+		this.router.navigate(['/']);
 	}
 
 	verifyReCaptcha(data) {

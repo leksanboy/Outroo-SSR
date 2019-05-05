@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
@@ -20,6 +20,7 @@ export class ErrorComponent implements OnInit {
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private metaService: MetaService,
+		private router: Router,
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
 	) {
@@ -45,5 +46,9 @@ export class ErrorComponent implements OnInit {
 			ga('set', 'page', urlGa);
 			ga('send', 'pageview');
 		}
+	}
+
+	goBack(){
+		this.router.navigate(['/']);
 	}
 }

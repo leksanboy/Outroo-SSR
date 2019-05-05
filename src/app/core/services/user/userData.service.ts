@@ -103,8 +103,15 @@ export class UserDataService {
 		}
 	}
 
-	getCookieLang() {
-		return this.window.localStorage.getItem('lang_' + this.env.authHash);
+	cookies(type) {
+		if (this.ssrService.isBrowser) {
+			if (type === 'check') {
+				return this.window.localStorage.getItem('cookies_' + this.env.authHash);
+			} else if (type === 'set') {
+				const c = Math.floor(Math.random());
+				this.window.localStorage.setItem('cookies_' + this.env.authHash, JSON.stringify(c));
+			}
+		}
 	}
 
 	login(username, password) {

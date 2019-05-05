@@ -62,11 +62,15 @@ import { AlertComponent } from './core/services/alert/alert.component';
 // Active ssession
 import { ActiveSessionComponent } from './core/services/activeSession/activeSession.component';
 
+// Cookies
+import { CookiesComponent } from './core/services/cookies/cookies.component';
+
 @NgModule({
 	declarations: [
 		AppComponent,
 		AlertComponent,
-		ActiveSessionComponent
+		ActiveSessionComponent,
+		CookiesComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'outroo-server' }),

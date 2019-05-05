@@ -1,45 +1,41 @@
-<div class="innerBodyWeb">
-	<div class="header">
-		<div class="back" routerLink="/">
-			<button mat-icon-button>
-				<i label="back"></i>
-			</button>
-		</div>
-		<div class="center">
-			<div class="logo" routerLink="/"></div>
-		</div>
-	</div>
-
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
-		<div class="container about">
-			<div class="title">
-				{{translations?.about?.title}}
-			</div>
+		<div class="pageWeb">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
 
-			<div class="subtitle">
-				{{translations?.about?.companyText?.one}}
-			</div>
+				<div class="pageTitle">{{translations?.about?.title}}</div>
 
-			<div class="text">
-				{{translations?.about?.companyText?.two}}
-				{{translations?.about?.companyText?.three}}
-			</div>
-			
-			<div class="subtitle">
-				{{translations?.about?.brandText?.one}}
-			</div>
-			
-			<div class="text">
-				{{translations?.about?.brandText?.two}}
-				<br>
-				{{translations?.about?.brandText?.three}}
-				<button mat-raised-button type="button" (click)="downloadAssetPack()">
-					{{translations?.about?.brandText?.four}}
-				</button>
-			</div>
+				<div class="title">
+					{{translations?.about?.companyText?.one}}
+				</div>
 
-			<div class="image">
-				<img src="assets/images/image_color.png" alt="image">
+				<div class="context">
+					{{translations?.about?.companyText?.two}}
+					{{translations?.about?.companyText?.three}}
+				</div>
+				
+				<div class="title">
+					{{translations?.about?.brandText?.one}}
+				</div>
+				
+				<div class="context">
+					{{translations?.about?.brandText?.two}}
+					<br>
+					{{translations?.about?.brandText?.three}}
+					<button mat-raised-button type="button" (click)="downloadAssetPack()">
+						{{translations?.about?.brandText?.four}}
+					</button>
+				</div>
+
+				<div class="image">
+					<img src="assets/images/image_color.png" alt="image">
+				</div>
 			</div>
 		</div>
 	</div>

@@ -66,6 +66,10 @@ export class SigninComponent implements OnInit {
 		this.userDataService.logout();
 	}
 
+	goBack(){
+		this.router.navigate(['/']);
+	}
+
 	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}

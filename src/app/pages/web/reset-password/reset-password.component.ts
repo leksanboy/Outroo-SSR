@@ -86,6 +86,10 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
+	goBack(){
+		this.router.navigate(['/']);
+	}
+
 	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
 	}

@@ -61,6 +61,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public signingBox: boolean;
 	public signOutCurrent: boolean;
 	public audio: any;
+	public cookiesShown: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -81,6 +82,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
+		
+		// Player data
 		this.audioPlayerData = {
 			path: 'assets/media/audios/',
 			key: 0,
@@ -109,6 +112,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 			},
 			list: []
 		};
+
+		// Check if set
+		this.cookies('check');
 
 		// Get translations
 		if (this.ssrService.isBrowser) {
@@ -1266,5 +1272,16 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.document.body.removeChild(selBox);
 
 		this.alertService.success(this.translations.common.copied);
+	}
+
+	// Set/Get
+	cookies(type) {
+		if (type === 'check') {
+			const check = this.userDataService.cookies('check');
+			this.cookiesShown = check ? false : true;
+		} else if (type === 'close') {
+			this.userDataService.cookies('set');
+			this.cookiesShown = false;
+		}
 	}
 }

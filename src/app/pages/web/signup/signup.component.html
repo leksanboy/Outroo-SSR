@@ -1,99 +1,101 @@
-<div class="innerBodyWeb">
-	<div class="header">
-		<div class="back" routerLink="/">
-			<button mat-icon-button>
-				<i label="back"></i>
-			</button>
-		</div>
-		<div class="center">
-			<div class="logo" routerLink="/"></div>
-		</div>
-	</div>
-
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
-		<div class="container" *ngIf="pageStatus == 'default'">
-			<div class="title">
-				{{translations?.signUp?.title}}
-			</div>
+		<div class="pageWeb">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
 
-			<div class="form">
-				<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
-					<mat-form-field>
-						<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
-						<div class="validators">
-							<div class="done" *ngIf="validatorUsername == 'done'">
-								<i label="validator-check"></i>
-							</div>
-							<div class="bad" *ngIf="validatorUsername == 'bad'">
-								<i label="validator-clear"></i>
-							</div>
-							<div class="load" *ngIf="validatorUsername == 'load'">
-								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-							</div>
-						</div>
-						<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
-					</mat-form-field>
+				<div class="pageTitle">{{translations?.signUp?.title}}</div>
 
-					<mat-form-field>
-						<input matInput placeholder="{{translations?.signUp?.name}}" #Name maxlength="100" formControlName="name">
-						<mat-hint align="end">{{Name.value.length}}/100</mat-hint>
-					</mat-form-field>
-
-					<mat-form-field>
-						<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
-						<div class="validators">
-							<div class="done" *ngIf="validatorEmail == 'done'">
-								<i label="validator-check"></i>
-							</div>
-							<div class="bad" *ngIf="validatorEmail == 'bad'">
-								<i label="validator-clear"></i>
-							</div>
-							<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
-						</div>
-						<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
-					</mat-form-field>
-
-					<mat-form-field>
-						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signUp?.password}}" #Password maxlength="100" formControlName="password">
-						<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
-							<i [ngClass]="{'active': showPassword}" label="visibility"></i>
-						</button>
-						<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
-					</mat-form-field>
-
-					<div class="terms">
-						{{translations?.signUp?.privacyText?.one}} <a routerLink="/privacy" target="_blank">{{translations?.signUp?.privacyText?.two}}</a>.
+				<span *ngIf="pageStatus === 'default'">
+					<div class="title">
+						{{translations?.signUp?.title}}
 					</div>
 
-					<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
+					<div class="form">
+						<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+							<mat-form-field>
+								<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
+								<div class="validators">
+									<div class="done" *ngIf="validatorUsername == 'done'">
+										<i label="validator-check"></i>
+									</div>
+									<div class="bad" *ngIf="validatorUsername == 'bad'">
+										<i label="validator-clear"></i>
+									</div>
+									<div class="load" *ngIf="validatorUsername == 'load'">
+										<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+									</div>
+								</div>
+								<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
+							</mat-form-field>
 
-					<div class="buttons">
-						<button mat-raised-button type="submit">
-							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-							{{translations?.common?.submit}}
+							<mat-form-field>
+								<input matInput placeholder="{{translations?.signUp?.name}}" #Name maxlength="100" formControlName="name">
+								<mat-hint align="end">{{Name.value.length}}/100</mat-hint>
+							</mat-form-field>
+
+							<mat-form-field>
+								<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
+								<div class="validators">
+									<div class="done" *ngIf="validatorEmail == 'done'">
+										<i label="validator-check"></i>
+									</div>
+									<div class="bad" *ngIf="validatorEmail == 'bad'">
+										<i label="validator-clear"></i>
+									</div>
+									<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
+								</div>
+								<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
+							</mat-form-field>
+
+							<mat-form-field>
+								<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signUp?.password}}" #Password maxlength="100" formControlName="password">
+								<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
+									<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+								</button>
+								<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
+							</mat-form-field>
+
+							<div class="terms">
+								{{translations?.signUp?.privacyText?.one}} <a routerLink="/privacy" target="_blank">{{translations?.signUp?.privacyText?.two}}</a>.
+							</div>
+
+							<re-captcha class="reCaptcha" (resolved)="verifyReCaptcha($event)" siteKey="{{env.reCaptcha}}"></re-captcha>
+
+							<div class="buttons">
+								<button mat-raised-button type="submit">
+									<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+									{{translations?.common?.submit}}
+								</button>
+							</div>
+						</form>
+					</div>
+				</span>
+
+				<span *ngIf="pageStatus === 'completed'">
+					<div class="title">
+						{{translations?.signUp?.confirmText?.one}}
+					</div>
+
+					<div class="context">
+						{{translations?.signUp?.confirmText?.two}} <b>{{emailAccount}}</b>.
+						<br>
+						{{translations?.signUp?.confirmText?.three}}
+						<br>
+						<br>
+						{{translations?.signUp?.confirmText?.four}}
+						<br>
+						<button mat-raised-button type="button" (click)="signin()">
+							<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
+							{{translations?.signUp?.confirmText?.five}}
 						</button>
 					</div>
-				</form>
-			</div>
-		</div>
-
-		<div class="container" *ngIf="pageStatus == 'completed'">
-			<div class="title">
-				{{translations?.signUp?.confirmText?.one}}
-			</div>
-
-			<div class="text">
-				{{translations?.signUp?.confirmText?.two}} <b>{{emailAccount}}</b>.
-				<br>
-				{{translations?.signUp?.confirmText?.three}}
-				<br>
-				<br>
-				{{translations?.signUp?.confirmText?.four}}
-				<br>
-				<button mat-raised-button type="button" (click)="signin()">
-					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
-					{{translations?.signUp?.confirmText?.five}}
-				</button>
+				</span>
 			</div>
 		</div>
 	</div>

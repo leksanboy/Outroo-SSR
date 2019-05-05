@@ -1,0 +1,16 @@
+<div class="cookiesBox" (click)="cookies('close')" *ngIf="cookiesShown">
+	<button mat-icon-button type="button" class="close" (click)="cookies('close')">
+		<i label="close"></i>
+	</button>
+
+	<div class="inner">
+		<div class="title">
+			{{translations?.main?.cookiesText?.one}}
+		</div>
+
+		<div class="text">
+			{{translations?.main?.cookiesText?.two}}
+			<a routerLink="/privacy" target="_blank">{{translations?.main?.cookiesText?.three}}</a>.
+		</div>
+	</div>
+</div>

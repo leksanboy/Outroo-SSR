@@ -1,47 +1,51 @@
-<div class="innerBodyWeb">
-	<div class="header">
-		<div class="center">
-			<div class="logo" routerLink="/"></div>
-		</div>
-	</div>
-
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
-		<div class="container" *ngIf="pageStatus == 'default'">
-			<div class="title">
-				{{translations?.confirmEmail?.defaultText?.one}}
-			</div>
-
-			<div class="text">
-				<div class="loading">
-					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-					{{translations?.confirmEmail?.defaultText?.two}}
+		<div class="pageWeb">
+			<div class="content">
+				<div class="back" (click)="goBack()">
+					<div class="text">{{translations?.common?.back}}</div>
 				</div>
-			</div>
-		</div>
 
-		<div class="container" *ngIf="pageStatus == 'completed'">
-			<div class="title">
-				{{translations?.confirmEmail?.confirmText?.one}}
-			</div>
+				<div class="pageTitle">{{translations?.confirmEmail?.title}}</div>
 
-			<div class="text">
-				{{translations?.confirmEmail?.confirmText?.two}}
-				<b>@{{userData.username}}</b> {{translations?.confirmEmail?.confirmText?.three}}
-				<br>
-				<button mat-raised-button type="button" (click)="submit()">
-					<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
-					{{translations?.confirmEmail?.confirmText?.four}}
-				</button>
-			</div>
-		</div>
+				<span *ngIf="pageStatus === 'default'">
+					<div class="title">
+						{{translations?.confirmEmail?.defaultText?.one}}
+					</div>
 
-		<div class="container" *ngIf="pageStatus == 'error'">
-			<div class="title">
-				{{translations?.confirmEmail?.errorText?.one}}
-			</div>
+					<div class="context">
+						<div class="loading">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+							{{translations?.confirmEmail?.defaultText?.two}}
+						</div>
+					</div>
+				</span>
 
-			<div class="text">
-				{{translations?.confirmEmail?.errorText?.two}}
+				<span *ngIf="pageStatus === 'completed'">
+					<div class="title">
+						{{translations?.confirmEmail?.confirmText?.one}}
+					</div>
+
+					<div class="context">
+						{{translations?.confirmEmail?.confirmText?.two}}
+						<b>@{{userData.username}}</b> {{translations?.confirmEmail?.confirmText?.three}}
+						<br>
+						<button mat-raised-button type="button" (click)="submit()">
+							<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
+							{{translations?.confirmEmail?.confirmText?.four}}
+						</button>
+					</div>
+				</span>
+
+				<span *ngIf="pageStatus === 'error'">
+					<div class="title">
+						{{translations?.confirmEmail?.errorText?.one}}
+					</div>
+
+					<div class="context">
+						{{translations?.confirmEmail?.errorText?.two}}
+					</div>
+				</span>
 			</div>
 		</div>
 	</div>

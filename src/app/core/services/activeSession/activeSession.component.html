@@ -1,5 +1,22 @@
 <div class="innerBodyUser">
 	<div class="header">
+		<div class="cookiesBox" (click)="cookies('close')" *ngIf="cookiesShown">
+			<button mat-icon-button type="button" class="close" (click)="cookies('close')">
+				<i label="close"></i>
+			</button>
+
+			<div class="inner">
+				<div class="title">
+					{{translations?.main?.cookiesText?.one}}
+				</div>
+
+				<div class="text">
+					{{translations?.main?.cookiesText?.two}}
+					<a routerLink="/privacy" target="_blank">{{translations?.main?.cookiesText?.three}}</a>.
+				</div>
+			</div>
+		</div>
+
 		<span *ngIf="!deniedAccessOnlySession">
 			<div class="head">
 				<div class="left">
@@ -373,12 +390,12 @@
 
 				<div class="right">
 					<div class="signingPanel">
-						<a mat-button href="/signup">
-							{{translations?.common?.signUp}}
-						</a>
-						|
 						<a mat-button href="/signin">
 							{{translations?.common?.signIn}}
+						</a>
+						|
+						<a mat-button href="/signup">
+							{{translations?.common?.signUp}}
 						</a>
 					</div>
 				</div>
@@ -584,31 +601,29 @@
 <!-- Audio -->
 <audio #audioPlayerHtml src=""></audio>
 
-<!-- Mobile sigin/signup -->
+<!-- Sigin/Signup -->
 <span *ngIf="deniedAccessOnlySession">
 	<div class="signingBox" *ngIf="!signingBox">
+		<button mat-icon-button type="button" class="close" (click)="signingBox=!signingBox">
+			<i label="close"></i>
+		</button>
+
 		<div class="inner">
-			<div class="panel">
-				<div class="title">
-					{{translations?.main?.registerText?.one}}
-				</div>
-				<button mat-icon-button class="close" (click)="signingBox=!signingBox">
-					<i label="close"></i>
-				</button>
+			<div class="title">
+				{{translations?.main?.registerText?.one}}
 			</div>
 
-			<div class="box">
-				<div class="text">
-					{{translations?.main?.registerText?.two}}
-				</div>
-				<div class="buttons">
-					<button mat-button type="button" routerLink="/signup">
-						{{translations?.common?.signUp}}
-					</button>
-					<button mat-button type="button" routerLink="/signin">
-						{{translations?.common?.signIn}}
-					</button>
-				</div>
+			<div class="text">
+				{{translations?.main?.registerText?.two}}
+			</div>
+
+			<div class="buttons">
+				<button mat-button type="button" routerLink="/signin">
+					{{translations?.common?.signIn}}
+				</button>
+				<button mat-button type="button" routerLink="/signup">
+					{{translations?.common?.signUp}}
+				</button>
 			</div>
 		</div>
 	</div>

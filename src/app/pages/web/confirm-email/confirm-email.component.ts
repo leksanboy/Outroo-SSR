@@ -79,6 +79,11 @@ export class ConfirmEmailComponent implements OnInit {
 		}
 	}
 
+	// Go back
+	goBack(){
+		this.router.navigate(['/']);
+	}
+
 	submit() {
 		this.submitLoading = true;
 

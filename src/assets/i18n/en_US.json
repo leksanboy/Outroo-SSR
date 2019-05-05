@@ -44,7 +44,12 @@
 			"two": "@mention your friends and add #hashtags"
 		},
 		"addSomeContent": "Add something",
-		"publishing": "Publishing"
+		"publishing": "Publishing",
+		"cookiesText": {
+			"one": "Cookies",
+			"two": "This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. Find out more here",
+			"three": "Privacy policy"
+		}
 	},
 	"news": {
 		"title": "News",
@@ -211,7 +216,7 @@
 		"password": "Password",
 		"privacyText": {
 			"one": "By signing up, you agree with the stipulations of our",
-			"two": "Policy privacy"
+			"two": "Privacy policy"
 		},
 		"confirmText": {
 			"one": "Welcome!",

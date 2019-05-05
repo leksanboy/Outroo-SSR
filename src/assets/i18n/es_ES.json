@@ -44,7 +44,12 @@
 			"two": "@menciona a tus amigos y añade #hashtags"
 		},
 		"addSomeContent": "Añade algo",
-		"publishing": "Publicando"
+		"publishing": "Publicando",
+		"cookiesText": {
+			"one": "Cookies",
+			"two": "Este sitio utiliza cookies. Al continuar navegando, está aceptando el uso de cookies. Obtenga más información aquí",
+			"three": "Politica de privacidad"
+		}
 	},
 	"news": {
 		"title": "Noticias",

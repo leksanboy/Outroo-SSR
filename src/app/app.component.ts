@@ -18,18 +18,23 @@ export class AppComponent implements OnDestroy {
 		// Set component data
 		this.activeRouter = this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
-					if (event.url === '/' ||
-						event.url === '/about' ||
+					// if (event.url === '/' ||
+					// 	event.url === '/about' ||
+					// 	event.url === '/confirm-email' ||
+					// 	event.url === '/error' ||
+					// 	event.url === '/forgot-password' ||
+					// 	event.url === '/logout' ||
+					// 	event.url === '/privacy' ||
+					// 	event.url === '/reset-password' ||
+					// 	event.url === '/signin' ||
+					// 	event.url === '/signup' ||
+					// 	event.url === '/support') 
+					// {
+
+					if (event.url === '/' || 
 						event.url === '/confirm-email' ||
-						event.url === '/error' ||
-						event.url === '/forgot-password' ||
-						event.url === '/logout' ||
-						event.url === '/privacy' ||
 						event.url === '/reset-password' ||
-						event.url === '/signin' ||
-						event.url === '/signup' ||
-						event.url === '/support') 
-					{
+						event.url === '/logout') {
 						this.activeSessionStatus = false;
 					} else {
 						this.activeSessionStatus = true;
