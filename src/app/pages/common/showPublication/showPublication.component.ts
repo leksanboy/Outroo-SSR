@@ -39,7 +39,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		spaceBetween: 0
 	};
 	public searchBoxMentions: boolean;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 	public isMobileScreen: boolean;
 
 	constructor(
@@ -428,7 +427,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			});
 
 			// url
-			str = str.replace(this.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value){
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -481,7 +480,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 				return '<a class="url">' + value + '</a>';
 			});
 

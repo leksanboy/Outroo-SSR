@@ -5,9 +5,6 @@
 	$user = $_GET['user'];
 	$type = $_GET['type'];
 
-	if ($more == 0)
-		$user = userId($user);
-
 	if ($type == 'following') {
 		$sql = "SELECT u.id, 
 						u.private 

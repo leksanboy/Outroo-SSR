@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-confirm-email',
 	templateUrl: './confirm-email.component.html'
@@ -68,15 +66,17 @@ export class ConfirmEmailComponent implements OnInit {
 					}, 600);
 				}
 			);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'confirm-email';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'confirm-email';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
+		// not in use
 	}
 
 	// Go back

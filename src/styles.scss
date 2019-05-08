@@ -2823,6 +2823,9 @@ body{
 					line-height: 28px;
 					margin: 0 6px 0 0;
 					font-size: 11px;
+					padding: 0 8px;
+					min-width: 0;
+					height: 28px;
 
 					&:last-child{
 						margin: 0 0 0 6px;
@@ -4655,12 +4658,13 @@ body{
 				button{
 					background: $whiteColor;
 					color: $fontBlackColor;
+					font-weight: bold;
 					line-height: 28px;
 					margin: 0 0 0 8px;
-					font-weight: bold;
 					box-shadow: none;
-					padding: 0 12px;
 					font-size: 11px;
+					padding: 0 8px;
+					min-width: 0;
 					height: 28px;
 
 					mat-progress-spinner{
@@ -4921,7 +4925,6 @@ body{
 		width: 100%;
 
 		.header{
-			border-bottom: 1px solid transparentize($greyColor, .75);
 			position: fixed;
 			display: block;
 			z-index: 10;
@@ -4931,6 +4934,7 @@ body{
 			top: 0;
 
 			.head{
+				border-bottom: 1px solid transparentize($greyColor, .75);
 				background-color: $headerWhiteColor;
 				box-shadow: $shadowBox0;
 				position: absolute;
@@ -6689,12 +6693,12 @@ body{
 									text-transform: uppercase;
 									margin: 10px 0 0 6px;
 									color: $whiteColor;
-									line-height: 24px;
 									font-weight: bold;
+									line-height: 28px;
 									font-size: 11px;
 									padding: 0 8px;
-									height: 28px;
 									min-width: 0;
+									height: 28px;
 
 									&:first-child{
 										margin-left: 0;
@@ -7028,12 +7032,12 @@ body{
 											text-transform: uppercase;
 											margin: 6px 0 0 6px;
 											color: $whiteColor;
-											line-height: 24px;
 											font-weight: bold;
+											line-height: 28px;
 											font-size: 11px;
 											padding: 0 8px;
-											height: 28px;
 											min-width: 0;
+											height: 28px;
 
 											&:first-child{
 												margin-left: 0;
@@ -7493,12 +7497,12 @@ body{
 									text-transform: uppercase;
 									margin: 10px 0 0 6px;
 									color: currentColor;
-									line-height: 24px;
 									font-weight: bold;
+									line-height: 28px;
 									font-size: 11px;
 									padding: 0 8px;
-									height: 28px;
 									min-width: 0;
+									height: 28px;
 								}
 							}
 						}

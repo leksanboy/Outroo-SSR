@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$user = userId($_GET['id']);
-	$session = $_GET['session'];
+	$session = sessionId();
 
 	if ($user) {
 		$sql = "SELECT id, 
@@ -36,7 +36,9 @@
 				$row['countPhotos'] 		= countUserPhotos($user);
 				$row['countAudios'] 		= countUserAudios($user);
 				$row['countBookmarks'] 		= countUserBookmarks($user);
-				$row['followingStatus'] 	= checkFollowingStatus($session, $row['id']);
+
+				if ($session)
+					$row['followingStatus'] = checkFollowingStatus($session, $row['id']);
 
 				if ($user === $row['id'])
 					$row['playlists'] 		= getPlaylists($row['id']);

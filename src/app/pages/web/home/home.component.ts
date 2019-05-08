@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html'
@@ -49,16 +47,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 		// User data from routing resolve
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
+
+		// Set Google analytics
+		let url = 'home';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'home';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
 		// login form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required]],

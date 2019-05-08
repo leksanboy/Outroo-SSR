@@ -6,9 +6,6 @@
 	$more = $_GET['rows']*$cuantity;
 
 	if ($type === 'default') {
-		if ($more === 0)
-			$user = userId($user);
-
 		$sql = "SELECT f.id, 
 						f.song, 
 						m.name, 

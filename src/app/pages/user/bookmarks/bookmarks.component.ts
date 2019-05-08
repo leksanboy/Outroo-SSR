@@ -17,7 +17,6 @@ import { ShowPublicationComponent } from '../../../../app/pages/common/showPubli
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -33,9 +32,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	public translations: any = [];
 	public dataDefault: any = [];
 	public dataSearch: any = [];
-	public activeRouter: any;
 	public activeLanguage: any;
-	public deniedAccessOnlySession: boolean;
 	public hideAd: boolean;
 
 	constructor(
@@ -51,34 +48,26 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		private publicationsDataService: PublicationsDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Check session exists
-		if (!this.sessionData) {
-			this.deniedAccessOnlySession = true;
-			this.sessionData = [];
-			this.sessionData.current = {
-				id: null
-			};
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.translations.bookmarks.title);
+
+			// Set Google analytics
+			let url = '[' + this.sessionData.current.id + ']/bookmarks';
+			this.userDataService.analytics(url);
+
+			// Load default
+			this.default('default');
+		} else {
+			this.userDataService.noSessionData();
 		}
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Load default
-					this.default('default');
-				}
-			});
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
@@ -94,9 +83,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
 			let windowBottom = windowHeight + this.window.pageYOffset;
 
-			if (windowBottom >= docHeight)
+			if (windowBottom >= docHeight) {
 				if (this.dataDefault.list.length > 0)
 					this.default('more');
+			}
 		}
 	}
 
@@ -105,21 +95,18 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
 	// Go back
 	goBack(){
-		// this.location.back();
 		this.router.navigate([this.sessionData.current.username]);
 	}
 
 	// Push Google Ad
 	pushAd(){
-		let ad = this.environment.ad;
-
-		let a = {
+		const ad = this.environment.ad;
+		const a = {
 			contentTypeAd: true,
 			content: ad
 		}

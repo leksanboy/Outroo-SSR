@@ -11,12 +11,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
-import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -24,11 +22,10 @@ declare var global: any;
 	templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
-	public activeRouter: any;
 	public activeLanguage: any;
 	public actionFormPersonalData: any;
 	public actionFormPasswordData: any;
@@ -38,7 +35,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public validatorUsername: string;
 	public validatorOldPassword: string;
 	public validatorNewPassword: string;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -51,37 +47,28 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
-		private userDataService: UserDataService,
-		private ssrService: SsrService
+		private userDataService: UserDataService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Exit if no session
-		if (!this.sessionData)
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.translations.settings.title);
+
+			// Set Google analytics
+			let url = '[' + this.sessionData.current.id + ']/settings';
+			this.userDataService.analytics(url);
+
+			// Set froms
+			this.setForms(this.sessionData.current);
+		} else {
 			this.userDataService.noSessionData();
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Set Google analytics
-					let urlGa =  '[' + this.sessionData.current.id + ']/settings';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
-
-					// Set froms
-					this.setForms(this.sessionData.current);
-				}
-			});
+		}
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
@@ -96,12 +83,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -110,7 +96,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	// Set forms
-	setForms(data){
+	setForms(data) {
 		this.validatorUsername = null;
 		this.validatorNewPassword = null;
 		this.validatorOldPassword = null;
@@ -375,7 +361,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				});
 
 				// url
-				str = str.replace(this.urlRegex, function(value){
+				str = str.replace(this.env.urlRegex, function(value){
 					return '<span class="url">' + value + '</span>';
 				});
 
@@ -410,7 +396,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 				return '<a class="url">' + value + '</a>';
 			});
 

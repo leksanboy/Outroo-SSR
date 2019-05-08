@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-signin',
 	templateUrl: './signin.component.html'
@@ -46,24 +44,21 @@ export class SigninComponent implements OnInit {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'signin';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'signin';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
-		// login form
+		// Form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required]],
 			password: ['', [Validators.required]]
 		});
-
-		// destroy session & reset login
-		this.userDataService.logout();
 	}
 
 	goBack(){

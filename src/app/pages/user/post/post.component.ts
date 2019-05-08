@@ -13,12 +13,10 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -41,13 +39,11 @@ export class PostComponent implements OnInit, OnDestroy {
 		paginationClickable: true,
 		spaceBetween: 0
 	};
-	public activeRouter: any;
 	public activeLanguage: any;
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
 	public hideAd: boolean;
 	public searchBoxMentions: boolean;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -65,39 +61,17 @@ export class PostComponent implements OnInit, OnDestroy {
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private metaService: MetaService,
-		private ssrService: SsrService
+		private metaService: MetaService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.env.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Check if session exists
-		if (!this.sessionData) {
-			this.sessionData = [];
-			this.sessionData.current = {
-				id: null
-			};
-		}
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot.params.name;
-
-					// Load default
-					this.default(urlData);
-				}
-			});
+		// Load default
+		const n: any = this.activatedRoute.snapshot.params.name;
+		this.default(n);
 
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
@@ -130,7 +104,6 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
@@ -163,7 +136,6 @@ export class PostComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-				this.titleService.setTitle(this.translations.feed.title);
 			});
 	}
 
@@ -191,14 +163,13 @@ export class PostComponent implements OnInit, OnDestroy {
 						description: t,
 						keywords: t,
 						url: this.env.url + 'p/' + name,
-						image: this.env.url + (res.photos ? 'assets/media/photos/thumbnails/' + res.photos[0].name : (res.audios ? 'assets/media/photos/thumbnails/' + res.audios[0].name : this.env.avatar))
+						image: this.env.url + (res.photos ? 'assets/media/photos/thumbnails/' + res.photos[0].name : (res.audios ? 'assets/media/photos/thumbnails/' + res.audios[0].name : this.env.image))
 					};
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					let urlGa =  '[' + res.id + ']/[' + name + ']/p/' + t;
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
+					let url = '[' + res.id + ']/[' + name + ']/p/' + t;
+					this.userDataService.analytics(url);
 				}
 			}, error => {
 				this.dataDefault.loadingData = false;
@@ -531,7 +502,7 @@ export class PostComponent implements OnInit, OnDestroy {
 			});
 
 			// url
-			str = str.replace(this.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value){
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -584,7 +555,7 @@ export class PostComponent implements OnInit, OnDestroy {
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 				return '<a class="url">' + value + '</a>';
 			});
 

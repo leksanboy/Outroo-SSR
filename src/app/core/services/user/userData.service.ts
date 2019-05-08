@@ -12,6 +12,7 @@ import { SsrService } from '../ssr.service';
 
 import * as moment from 'moment/moment';
 
+declare var ga: Function;
 declare var global: any;
 declare var navigator: any;
 
@@ -103,6 +104,13 @@ export class UserDataService {
 		}
 	}
 
+	analytics(url) {
+		if (this.ssrService.isBrowser) {
+			ga('set', 'page', url);
+			ga('send', 'pageview');
+		}
+	}
+
 	cookies(type) {
 		if (this.ssrService.isBrowser) {
 			if (type === 'check') {
@@ -175,11 +183,13 @@ export class UserDataService {
 					storageUpdateData.sessions.push(oldData.sessions[i]);
 				}
 
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageUpdateData));
+			if (this.ssrService.isBrowser)
+				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageUpdateData));
 			
 			return this.getSessionData();
 		} else if (type == 'data') {
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(data));
+			if (this.ssrService.isBrowser)
+				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(data));
 
 			return this.getSessionData();
 		}
@@ -187,28 +197,20 @@ export class UserDataService {
 
 	getSessionData() {
 		if (this.ssrService.isBrowser && this.window.localStorage) {
-			let data = this.window.localStorage.getItem('userData_' + this.env.authHash);
-			
+			const data = this.window.localStorage.getItem('userData_' + this.env.authHash);
 			return JSON.parse(data);
 		}
 	}
 
-	getUserData(id) {
-		if (this.ssrService.isBrowser) {
-			let session = this.getSessionData();
-			session = session ? (session.current ? session.current.id : 0) : 0;
+	getUserData(id: any) {
+		let url = this.env.url + 'assets/api/user/getUser.php';
+		let params = '&id=' + id;
+		params = params.replace('&', '?');
 
-			let url = this.env.url + 'assets/api/user/getUser.php';
-			let params = 	'&id=' + id +
-							'&session=' + session;
-			
-			params = params.replace('&', '?');
-
-			return this.http.get(url + params, this.headersService.getHeaders())
-				.pipe(map((res: Response) => {
-					return res.json();
-				}));
-		}
+		return this.http.get(url + params, this.headersService.getHeaders())
+			.pipe(map((res: Response) => {
+				return res.json();
+			}));
 	}
 
 	// Updates

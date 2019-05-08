@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { UserDataService } from './../user/userData.service';
 
 @Injectable()
-export class LoginValidationResolver implements Resolve<any> {
+export class LoginResolver implements Resolve<any> {
 
 	constructor(
 		public userDataService: UserDataService

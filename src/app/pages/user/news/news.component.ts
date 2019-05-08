@@ -18,7 +18,6 @@ import { ShowPublicationComponent } from '../../../../app/pages/common/showPubli
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -43,7 +42,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 		active: 'default',
 		selectedHashtag: null
 	};
-	public activeRouter: any;
 	public activeLanguage: any;
 	public activeSessionPlaylists: any;
 	public hideAd: boolean;
@@ -65,44 +63,34 @@ export class NewsComponent implements OnInit, OnDestroy {
 		private followsDataService: FollowsDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Exit if no session
-		if (!this.sessionData)
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.translations.settings.title);
+
+			// Set Google analytics
+			let url = '[' + this.sessionData.current.id + ']/news';
+			this.userDataService.analytics(url);
+
+			// Load default
+			this.default('default');
+
+			// Redirected hashtag
+			let urlData: any = this.activatedRoute.snapshot;
+			if (urlData.params.name) {
+				this.data.newSearchCaption = urlData.params.name;
+				this.data.selectedIndex = 2;
+				this.search('default');
+			}
+		} else {
 			this.userDataService.noSessionData();
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot;
-
-					// Set Google analytics
-					let urlGa =  '[' + this.sessionData.current.id + ']/news';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
-
-					// Load default
-					this.default('default');
-
-					// Redirected hashtag
-					if (urlData.params.name) {
-						this.data.newSearchCaption = urlData.params.name;
-						this.data.selectedIndex = 2;
-						this.search('default');
-					}
-				}
-			});
+		}
 
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
@@ -171,7 +159,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}

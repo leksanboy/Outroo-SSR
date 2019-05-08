@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-signup',
 	templateUrl: './signup.component.html'
@@ -51,17 +49,17 @@ export class SignupComponent implements OnInit {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'signup';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'signup';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
-		// forgot password form
+		// Form
 		this.actionForm = this._fb.group({
 			username: ['', [Validators.required]],
 			name: ['', [Validators.required]],
@@ -145,9 +143,6 @@ export class SignupComponent implements OnInit {
 					this.validatorEmail = 'bad';
 				}
 			});
-
-		// destroy session & reset login
-		this.userDataService.logout();
 	}
 
 	goBack(){

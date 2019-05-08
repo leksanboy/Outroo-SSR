@@ -6,7 +6,7 @@
 					<div class="user">
 						<div class="left">
 							<div class="avatar" (click)="showAvatar()">
-								<img [src]="userData?.avatar ? userData?.avatarUrl : environment.avatar"/>
+								<img [src]="userData?.avatar ? userData?.avatarUrl : env.avatar"/>
 							</div>
 						</div>
 
@@ -20,7 +20,7 @@
 									<div class="username">@{{userData?.username}}</div>
 								</div>
 
-								<div class="settings" *ngIf="userData?.id == sessionData.current.id">
+								<div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
 									<button mat-button type="button" routerLink="/settings">
 										<i label="settings"></i>
 									</button>
@@ -34,7 +34,7 @@
 					</div>
 
 					<div class="social">
-						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
+						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
 							<!-- <li routerLink="/{{userData?.username}}/photos">
 								<button mat-button>
 									<div class="text">
@@ -87,7 +87,7 @@
 									</div>
 								</button>
 							</li>
-							<li routerLink="/saved" *ngIf="sessionData.current.id == userData?.id">
+							<li routerLink="/saved" *ngIf="sessionData?.current?.id == userData?.id">
 								<button mat-button>
 									<div class="text">
 										{{userData?.countBookmarks}}
@@ -103,7 +103,7 @@
 						</ul>
 					</div>
 
-					<div class="uploadFilesBox" *ngIf="userData?.id == sessionData.current.id">
+					<div class="uploadFilesBox" *ngIf="userData?.id == sessionData?.current?.id">
 						<div class="button">
 							<button mat-raised-button (click)="newPublication('new', null)">
 								<div class="left">
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 
-					<div class="actions" *ngIf="(userData?.id != sessionData.current.id) && sessionData.current.id">
+					<div class="actions" *ngIf="(userData?.id != sessionData?.current?.id) && sessionData?.current?.id">
 						<button mat-raised-button routerLink="/notifications">
 							{{translations?.common?.sendMessage}}
 						</button>
@@ -163,12 +163,12 @@
 				</div>
 			</div>
 
-			<div class="content" *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
-				<ul *ngIf="dataDefault.list">
-					<li *ngFor="let x of dataDefault.list" [ngClass]="{'remove': x.addRemoveSession}">
+			<div class="content" *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
+				<ul *ngIf="dataDefault?.list">
+					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.addRemoveSession}">
 						<div class="head">
 							<a class="avatar" routerLink="/{{x.user.username}}">
-								<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 							</a>
 							
 							<div class="text">
@@ -178,17 +178,17 @@
 								</div>
 							</div>
 							
-							<div class="actions" *ngIf="sessionData.current.id">
+							<div class="actions" *ngIf="sessionData?.current?.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
 									<i label="more"></i>
 								</button>
 								
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x.user.id == sessionData.current.id">{{!x.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-									<mat-divider *ngIf="x.user.id == sessionData.current.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x.user.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<mat-divider *ngIf="x?.user?.id == sessionData?.current?.id"></mat-divider>
+									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 								
 								<mat-menu #menuShareSocial="matMenu">
@@ -200,31 +200,16 @@
 						</div>
 						
 						<div class="body">
-							<!-- <div class="urlVideo" *ngIf="x.urlVideo && !x.photos">
-								<div class="embedResponsive">
-									<div class="image" (click)="x.urlVideo.showVideo=!x.urlVideo.showVideo" *ngIf="!x.urlVideo.showVideo">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
-										<div class="play">
-											<i label="play"></i>
-										</div>
-										<div class="type">
-											{{x.urlVideo.type}}
-										</div>
-									</div>
-									<span [innerHtml]="x.urlVideo.iframe | safeHtml" *ngIf="x.urlVideo.showVideo"></span>
-								</div>
-							</div> -->
-
 							<div class="photos" *ngIf="x.photos">
 								<span *ngIf="x.photos.length == 1">
-									<img *ngIf="x.photos[0].mimetype.indexOf('image') !== -1" [src]="environment.pathPhotos + x.photos[0].name">
+									<img *ngIf="x.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x.photos[0].name">
 
-									<video *ngIf="x.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x.id}}" width="100%" height="auto" poster="{{environment.pathVideos + 'thumbnails/' + x.photos[0].name}}">
-										<source src="{{environment.pathVideos + x.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+									<video *ngIf="x.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x.photos[0].name}}">
+										<source src="{{env.pathVideos + x.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
 									</video>
 
 									<span *ngIf="x.photos[0].mimetype.indexOf('video') !== -1">
-										<div class="playPause" (click)="playVideo(x.photos[0], 'videoPlayer' + x.id)" *ngIf="!x.photos[0].playButton">
+										<div class="playPause" (click)="playVideo(x.photos[0], 'videoPlayer' + x?.id)" *ngIf="!x?.photos[0].playButton">
 											<i label="play"></i>
 										</div>
 									</span>
@@ -235,14 +220,14 @@
 										<div class="swiper-slide" *ngFor="let p of x.photos">
 											<div class="slide">
 												<div class="image">
-													<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + environment.pathPhotos + p.name + ')'}"></div>
+													<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
 
-													<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p.id}}" width="100%" height="auto" poster="{{environment.pathVideos + 'thumbnails/' + p.name}}">
-														<source src="{{environment.pathVideos + p.name.split('.')[0] + '.mp4'}}" type="video/mp4">
+													<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p?.name}}">
+														<source src="{{env.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
 													</video>
 
 													<span *ngIf="p.mimetype.indexOf('video') !== -1">
-														<div class="playPause" (click)="playVideo(p, 'videoPlayer' + p.id)" *ngIf="!p.playButton">
+														<div class="playPause" (click)="playVideo(p, 'videoPlayer' + p?.id)" *ngIf="!p.playButton">
 															<i label="play"></i>
 														</div>
 													</span>
@@ -265,31 +250,31 @@
 							<div class="innerContent">
 								<div class="textContainer" *ngIf="x.content" [innerHTML]="x.content | safeHtml"></div>
 
-								<div class="urlVideo" *ngIf="x.urlVideo && x.photos">
+								<div class="urlVideo" *ngIf="x?.urlVideo && x?.photos">
 									<div class="embedResponsive">
-										<div class="image" (click)="x.urlVideo.showVideo=!x.urlVideo.showVideo" *ngIf="!x.urlVideo.showVideo">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
+										<div class="image" (click)="x?.urlVideo.showVideo=!x?.urlVideo.showVideo" *ngIf="!x?.urlVideo.showVideo">
+											<div class="img" [ngStyle]="{'background-image': 'url(' + x?.urlVideo.thumbnail + ')'}"></div>
 											<div class="play">
 												<i label="play"></i>
 											</div>
 											<div class="type">
-												{{x.urlVideo.type}}
+												{{x?.urlVideo?.type}}
 											</div>
 										</div>
-										<span [innerHtml]="x.urlVideo.iframe | safeHtml" *ngIf="x.urlVideo.showVideo"></span>
+										<span [innerHtml]="x?.urlVideo.iframe | safeHtml" *ngIf="x?.urlVideo.showVideo"></span>
 									</div>
 								</div>
 							</div>
 
-							<div class="audios" *ngIf="x.audios">
+							<div class="audios" *ngIf="x?.audios">
 								<ul class="tracks">
-									<li *ngFor="let a of x.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData.postId == x.id, default: !a.image}">
+									<li *ngFor="let a of x?.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData?.postId == x?.id, default: !a.image}">
 										<div class="inner">
 											<div class="image">
 												<button mat-icon-button (click)="playItem(x, a, i, 'publication')">
-													<i label="play" *ngIf="!a.playing || !(audioPlayerData.postId == x.id)"></i>
-													<i label="pause" *ngIf="a.playing && (audioPlayerData.postId == x.id)"></i>
-													<img *ngIf="a.image" [src]="environment.pathAudios + 'thumbnails/' + a.image"/>
+													<i label="play" *ngIf="!a.playing || !(audioPlayerData?.postId == x?.id)"></i>
+													<i label="pause" *ngIf="a.playing && (audioPlayerData?.postId == x?.id)"></i>
+													<img *ngIf="a.image" [src]="env.pathAudios + 'thumbnails/' + a.image"/>
 												</button>
 											</div>
 
@@ -301,7 +286,7 @@
 												<div class="duration">{{a.duration}}</div>
 											</div>
 
-											<div class="actions" *ngIf="sessionData.current.id">
+											<div class="actions" *ngIf="sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i label="check" *ngIf="a.addRemoveUser"></i>
 													<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
@@ -316,7 +301,7 @@
 
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
-													<span *ngFor="let p of sessionData.current.playlists">
+													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">{{p.title}}</button>
 													</span>
 												</mat-menu>
@@ -341,39 +326,39 @@
 								
 								<div class="buttonBox">
 									<button mat-icon-button (click)="likeUnlike(x)">
-										<i label="analytics-like" [ngClass]="{'active' : x.liked}"></i>
+										<i label="analytics-like" [ngClass]="{'active' : x?.liked}"></i>
 									</button>
-									{{x.countLikes}}
+									{{x?.countLikes}}
 								</div>
 								
-								<a class="likers" *ngIf="x.countLikes > 0" (click)="showLikes(x)">
-									<span *ngFor="let l of x.likers; let isLast = last">
+								<a class="likers" *ngIf="x?.countLikes > 0" (click)="showLikes(x)">
+									<span *ngFor="let l of x?.likers; let isLast = last">
 										{{l.username}}{{isLast ? '' : ', '}}
 									</span>
-									{{x.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
+									{{x?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
 								</a>
 
 								<div class="buttonBox bookmark">
 									<button mat-icon-button (click)="markUnmark(x)">
-										<i label="analytics-bookmark" [ngClass]="{'active' : x.bookmark.checked}"></i>
+										<i label="analytics-bookmark" [ngClass]="{'active' : x?.bookmark?.checked}"></i>
 									</button>
 								</div>
 							</div>
 
-							<div class="boxComments" *ngIf="x.showCommentsBox">
-								<div class="comments" *ngIf="!x.disabledComments && x.loaded">
+							<div class="boxComments" *ngIf="x?.showCommentsBox">
+								<div class="comments" *ngIf="!x?.disabledComments && x?.loaded">
 									<div class="countComments">
-										{{x.countComments}} 
+										{{x?.countComments}} 
 										{{translations?.common?.comments}}
 									</div>
 								
-									<div class="new" *ngIf="sessionData.current.id">
+									<div class="new" *ngIf="sessionData?.current?.id">
 										<div class="avatar">
-											<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+											<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 										</div>
 										<div class="richComment">
-											<div class="highlights" [innerHTML]="x.newCommentData.transformed"></div>
-											<div class="origin" contenteditable="plaintext-only" [textContent]="x.newCommentData.onBackground" (input)="newComment('writingChanges', $event.target.innerText, x)" (keyup)="newComment('keyCode', $event, x)" (keydown)="newComment('keyCode', $event, x)" (mouseup)="newComment('keyCode', $event, x)"></div>
+											<div class="highlights" [innerHTML]="x?.newCommentData?.transformed"></div>
+											<div class="origin" contenteditable="plaintext-only" [textContent]="x?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, x)" (keyup)="newComment('keyCode', $event, x)" (keydown)="newComment('keyCode', $event, x)" (mouseup)="newComment('keyCode', $event, x)"></div>
 										</div>
 										<div class="actions">
 											<button mat-icon-button type="submit" (click)="newComment('create', $event, x)">
@@ -383,21 +368,21 @@
 									</div>
 
 									<ul>
-										<li *ngFor="let c of x.comments.list" [ngClass]="{'remove': c.addRemove}">
+										<li *ngFor="let c of x?.comments?.list" [ngClass]="{'remove': c.addRemove}">
 											<a class="avatar" routerLink="/{{c.user.username}}">
-												<img [src]="c.user.avatar ? c.user.avatarUrl : environment.avatar"/>
+												<img [src]="c.user.avatar ? c.user.avatarUrl : env.avatar"/>
 											</a>
 											<div class="text">
 												<div class="name">
 													<a class="username" routerLink="/{{c.user.username}}">{{c.user.username}}</a>
 													<span class="date">{{c.date | timeago}}</span>
-													<div class="actions" *ngIf="sessionData.current.id">
+													<div class="actions" *ngIf="sessionData?.current?.id">
 														<button mat-icon-button [matMenuTriggerFor]="optionsComments">
 															<i label="more-mini"></i>
 														</button>
 														<mat-menu #optionsComments="matMenu">
 															<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
-															<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c.user.id === sessionData.current.id || x.user.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+															<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c.user.id === sessionData?.current?.id || x?.user?.id === sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 														</mat-menu>
 													</div>
 												</div>
@@ -408,27 +393,27 @@
 										</li>
 									</ul>
 
-									<div class="loadingData" *ngIf="x.loadingData">
+									<div class="loadingData" *ngIf="x?.loadingData">
 										<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 									</div>
 
-									<div class="noData" *ngIf="x.noData">
+									<div class="noData" *ngIf="x?.noData">
 										{{translations?.common?.noComments}}
 									</div>
 									
-									<div class="loadMore" *ngIf="x.loadMoreData">
-										<button mat-fab (click)="defaultComments('more', x)" *ngIf="!x.loadingMoreData">
+									<div class="loadMore" *ngIf="x?.loadMoreData">
+										<button mat-fab (click)="defaultComments('more', x)" *ngIf="!x?.loadingMoreData">
 											<i label="add"></i>
 										</button>
-										<mat-progress-spinner mode="indeterminate" *ngIf="x.loadingMoreData"></mat-progress-spinner>
+										<mat-progress-spinner mode="indeterminate" *ngIf="x?.loadingMoreData"></mat-progress-spinner>
 									</div>
 								</div>
 
-								<div class="noData" *ngIf="x.disabledComments">
+								<div class="noData" *ngIf="x?.disabledComments">
 									{{translations?.common?.commentsDisabled}}
 								</div>
 
-								<div class="loadComments" *ngIf="!x.disabledComments && !x.loaded">
+								<div class="loadComments" *ngIf="!x?.disabledComments && !x?.loaded">
 									<button mat-raised-button (click)="showComments('load', x)">
 										{{translations?.common?.loadComments}}
 									</button>
@@ -438,23 +423,23 @@
 					</li>
 				</ul>
 
-				<div class="loadingData" *ngIf="dataDefault.loadingData">
+				<div class="loadingData" *ngIf="dataDefault?.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 				
-				<div class="noData" *ngIf="dataDefault.noData">
+				<div class="noData" *ngIf="dataDefault?.noData">
 					{{translations?.main?.noData}}
 				</div>
 				
-				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
-					<button mat-fab (click)="default('more', null, null)" *ngIf="!dataDefault.loadingMoreData">
+				<div class="loadMore" *ngIf="dataDefault?.loadMoreData">
+					<button mat-fab (click)="default('more', null, null)" *ngIf="!dataDefault?.loadingMoreData">
 						<i label="add"></i>
 					</button>
-					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
 				</div>
 			</div>
 
-			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData.current.id))">
+			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
 				{{translations?.common?.privateAccount}}
 			</div>
 		</div>

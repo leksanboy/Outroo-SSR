@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-forgot-password',
 	templateUrl: './forgot-password.component.html'
@@ -47,23 +45,20 @@ export class ForgotPasswordComponent implements OnInit {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'forgot-password';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'forgot-password';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
-		// forgot password form
+		// Form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]]
 		});
-
-		// destroy session & reset login
-		this.userDataService.logout();
 	}
 
 	goBack(){

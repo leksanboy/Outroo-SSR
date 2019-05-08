@@ -8,8 +8,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-logout',
 	templateUrl: './logout.component.html'
@@ -45,14 +43,13 @@ export class LogoutComponent implements OnInit {
 
 		// Destroy session & reset login
 		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'home';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'logout';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
+		// not in use
 	}
 }

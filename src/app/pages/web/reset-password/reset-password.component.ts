@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-reset-password',
 	templateUrl: './reset-password.component.html'
@@ -68,17 +66,17 @@ export class ResetPasswordComponent implements OnInit {
 					this.pageStatus = 'error';
 				}
 			);
+
+		// Destroy session & reset login
+		this.userDataService.logout();
+
+		// Set Google analytics
+		let url = 'reset-password';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'reset-password';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
-		// login form
+		// Form
 		this.actionForm = this._fb.group({
 			password: ['', [Validators.required]],
 			confirmPassword: ['', [Validators.required]],

@@ -19,7 +19,6 @@ import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -51,7 +50,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		saveDisabled: false,
 		counter: 0
 	};
-	public activeRouter: any;
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
@@ -75,42 +73,38 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private audioDataService: AudioDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// User
+		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 
-		// Check if session exists
-		if (!this.sessionData) {
-			this.sessionData = [];
-			this.sessionData.current = {
-				id: null
-			};
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Data
+		if (this.userData) {
+			// Set title
+			this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
+
+			// Set Google analytics
+			let url = '[' + this.userData.id + ']/songs';
+			this.userDataService.analytics(url);
+
+			// Set playlist current playing
+			if (this.sessionData) {
+				if (this.sessionData.current.listInformation && 
+					this.sessionData.current.listInformation.user === this.userData.id) {
+					this.audioPlayerData = this.sessionData.current.listInformation;
+				}
+			}
+
+			// Load default
+			this.data.selectedIndex = 0;
+			this.default('default', this.userData.id);
 		}
 
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot.params.id;
-
-					// Get user data
-					this.siteUserData(urlData);
-
-					// Load default
-					this.data.selectedIndex = 0;
-					this.default('default', urlData);
-				}
-			});
-
-		// Session playlists
+		// Playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
 			.subscribe(data => {
 				if (this.userData.id == this.sessionData.current.id){
@@ -121,7 +115,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				}
 			});
 
-		// Get player data
+		// Audio data
 		this.activePlayerInformation = this.playerService.getCurrentTrack()
 			.subscribe(data => {
 				this.audioPlayerData = data;
@@ -186,7 +180,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
@@ -194,15 +187,13 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack(){
-		// this.location.back();
 		this.router.navigate([this.userData.username]);
 	}
 
 	// Push Google Ad
 	pushAd(){
-		let ad = this.environment.ad;
-
-		let a = {
+		const ad = this.environment.ad;
+		const a = {
 			contentTypeAd: true,
 			content: ad
 		}
@@ -215,31 +206,12 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		return a;
 	}
 
-	// User Data of the Page
-	siteUserData(id){
-		this.userDataService.getUserData(id)
-			.subscribe(res => {
-				this.userData = res;
-
-				// Set document title
-				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
-
-				// Set Google analytics
-				let urlGa =  '[' + res.id + ']/' + id + '/songs';
-				ga('set', 'page', urlGa);
-				ga('send', 'pageview');
-
-				// Set playlist current playing
-				if (this.sessionData.current.listInformation && this.sessionData.current.listInformation.user == res.id)
-					this.audioPlayerData = this.sessionData.current.listInformation;
-			});
-	}
-
 	// Get translations
 	getTranslations(lang){
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
 			});
 	}
 

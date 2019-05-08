@@ -44,7 +44,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 	public showUsers: boolean;
 	public saveLoading: boolean;
 	public searchBoxMentions: boolean;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,

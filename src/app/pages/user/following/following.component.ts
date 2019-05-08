@@ -13,7 +13,6 @@ import { FollowsDataService } from '../../../../app/core/services/user/followsDa
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -31,7 +30,6 @@ export class FollowingComponent implements OnInit, OnDestroy {
 	public data: any = {
 		active: 'default'
 	};
-	public activeRouter: any;
 	public activeLanguage: any;
 	public deniedAccessOnlySession: boolean;
 	public actionFormSearch: FormGroup;
@@ -49,41 +47,36 @@ export class FollowingComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// User
+		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 
-		// Check session exists
-		if (!this.sessionData) {
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.userData.name + ' - ' + this.translations.followers.title);
+
+			// Set Google analytics
+			let url = '[' + this.userData.id + ']/following';
+			this.userDataService.analytics(url);
+
+			// Check if following
+			const data = { receiver: this.userData ? this.userData.id : null };
+			this.followsDataService.checkFollowing(data)
+				.subscribe(res => {
+					this.userData.status = res;
+				});
+
+			// Load default
+			this.default('default', this.userData.id);
+		} else {
 			this.deniedAccessOnlySession = true;
-			this.sessionData = [];
-			this.sessionData.current = {
-				id: null
-			};
 		}
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot.params.id;
-
-					// Get user data
-					this.siteUserData(urlData);
-
-					// Load default
-					if (this.sessionData)
-						this.default('default', urlData);
-				}
-			});
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
@@ -99,13 +92,14 @@ export class FollowingComponent implements OnInit, OnDestroy {
 			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
 			let windowBottom = windowHeight + this.window.pageYOffset;
 
-			if (windowBottom >= docHeight)
+			if (windowBottom >= docHeight) {
 				if (this.data.active == 'default')
 					if (this.dataDefault.list.length > 0)
 						this.default('more', null);
 				else if (this.data.active == 'search')
 					if (this.dataSearch.list.length > 0)
 						this.search('more');
+			}
 		}
 	}
 
@@ -126,44 +120,12 @@ export class FollowingComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
 	// Go back
 	goBack(){
-		// this.location.back();
 		this.router.navigate([this.userData.username]);
-	}
-
-	// User Data of the Page
-	siteUserData(id){
-		this.userDataService.getUserData(id)
-			.subscribe(res => {
-				// User data
-				this.userData = res;
-
-				// Set Document title
-				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.following.title);
-
-				// Data
-				let data = {
-					receiver: this.userData.id
-				}
-
-				// Check if following
-				if (this.sessionData) {
-					this.followsDataService.checkFollowing(data)
-						.subscribe(res => {
-							this.userData.status = res;
-						});
-				}
-
-				// Set Google analytics
-				let urlGa =  '[' + res.id + ']/' + id + '/following';
-				ga('set', 'page', urlGa);
-				ga('send', 'pageview');
-			});
 	}
 
 	// Get translations
@@ -171,6 +133,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
+				this.titleService.setTitle(this.userData.name + ' - ' + this.translations.followers.title);
 			});
 	}
 

@@ -225,7 +225,7 @@
 							</div>
 
 							<div class="switchAccounts">
-								<div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
+								<div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x?.id}">
 									<div class="avatar" mat-list-avatar (click)="setCurrentUser(x); showChangeSession=false;">
 										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 									</div>
@@ -262,8 +262,8 @@
 
 							<div class="changeLanguages">
 								<div class="item" mat-ripple *ngFor="let x of sessionData?.current?.languages" (click)="changeLanguage(x)">
-									<i label="check" *ngIf="x.id == sessionData?.current?.language"></i>
-									<i class="empty" *ngIf="x.id != sessionData?.current?.language"></i>
+									<i label="check" *ngIf="x?.id == sessionData?.current?.language"></i>
+									<i class="empty" *ngIf="x?.id != sessionData?.current?.language"></i>
 									<div class="text">{{x.caption}}</div>
 								</div>
 							</div>
@@ -316,7 +316,7 @@
 					</div>
 
 					<span *ngIf="showChangeSessionOnMenu">
-						<div mat-ripple class="item userMini" *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
+						<div mat-ripple class="item userMini" *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x?.id}">
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x)">
 								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 							</div>

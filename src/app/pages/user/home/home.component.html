@@ -7,7 +7,7 @@
 						<span *ngIf="!x.contentTypeAd">
 							<div class="head">
 								<a class="avatar" routerLink="/{{x.user.username}}">
-									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 								
 								<div class="text">
@@ -56,10 +56,10 @@
 
 								<div class="photos" *ngIf="x.photos">
 									<span *ngIf="x.photos.length == 1">
-										<img *ngIf="x.photos[0].mimetype.indexOf('image') !== -1" [src]="environment.pathPhotos + x.photos[0].name">
+										<img *ngIf="x.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x.photos[0].name">
 
-										<video *ngIf="x.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x.id}}" width="100%" height="auto" poster="{{environment.pathVideos + 'thumbnails/' + x.photos[0].name}}">
-											<source src="{{environment.pathVideos + x.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+										<video *ngIf="x.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x.photos[0].name}}">
+											<source src="{{env.pathVideos + x.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
 										</video>
 
 										<span *ngIf="x.photos[0].mimetype.indexOf('video') !== -1">
@@ -74,10 +74,10 @@
 											<div class="swiper-slide" *ngFor="let p of x.photos">
 												<div class="slide">
 													<div class="image">
-														<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + environment.pathPhotos + p.name + ')'}"></div>
+														<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
 
-														<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p.id}}" width="100%" height="auto" poster="{{environment.pathVideos + 'thumbnails/' + p.name}}">
-															<source src="{{environment.pathVideos + p.name.split('.')[0] + '.mp4'}}" type="video/mp4">
+														<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p.name}}">
+															<source src="{{env.pathVideos + p.name.split('.')[0] + '.mp4'}}" type="video/mp4">
 														</video>
 
 														<span *ngIf="p.mimetype.indexOf('video') !== -1">
@@ -128,7 +128,7 @@
 													<button mat-icon-button (click)="playItem(x, a, i, 'publication')">
 														<i label="play" *ngIf="!a.playing || !(audioPlayerData.postId == x.id)"></i>
 														<i label="pause" *ngIf="a.playing && (audioPlayerData.postId == x.id)"></i>
-														<img *ngIf="a.image" [src]="environment.pathAudios + 'thumbnails/' + a.image"/>
+														<img *ngIf="a.image" [src]="env.pathAudios + 'thumbnails/' + a.image"/>
 													</button>
 												</div>
 
@@ -208,7 +208,7 @@
 									
 										<div class="new" *ngIf="sessionData.current.id">
 											<div class="avatar">
-												<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+												<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 											</div>
 											<div class="richComment">
 												<div class="highlights" [innerHTML]="x.newCommentData.transformed"></div>
@@ -224,7 +224,7 @@
 										<ul>
 											<li *ngFor="let c of x.comments.list" [ngClass]="{'remove': c.addRemove}">
 												<a class="avatar" routerLink="/{{c.user.username}}">
-													<img [src]="c.user.avatar ? c.user.avatarUrl : environment.avatar"/>
+													<img [src]="c.user.avatar ? c.user.avatarUrl : env.avatar"/>
 												</a>
 												<div class="text">
 													<div class="name">

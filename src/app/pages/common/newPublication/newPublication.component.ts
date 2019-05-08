@@ -30,7 +30,6 @@ export class NewPublicationComponent implements OnInit {
 	public openPhotoBox: boolean;
 	public searchBoxMentions: boolean;
 	public actionFormSearchMentions: FormGroup;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 	public searchMentionsData: any = [];
 	public publicationData: any = {
 		original: '',
@@ -198,7 +197,7 @@ export class NewPublicationComponent implements OnInit {
 		});
 
 		// url
-		str = str.replace(this.urlRegex, function(value){
+		str = str.replace(this.env.urlRegex, function(value){
 			return '<span class="url">' + value + '</span>';
 		});
 
@@ -329,7 +328,7 @@ export class NewPublicationComponent implements OnInit {
 		});
 
 		// detect url
-		newData.content = newData.content.replace(this.urlRegex, function(value){
+		newData.content = newData.content.replace(this.env.urlRegex, function(value){
 			return '<a class="url">' + value + '</a>';
 		});
 

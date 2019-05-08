@@ -6,7 +6,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -39,15 +38,14 @@ export class AboutComponent implements OnInit {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+
+		// Set Google analytics
+		let url = 'about';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'about';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
+		// not in use
 	}
 
 	goBack(){

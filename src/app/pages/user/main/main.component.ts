@@ -3,7 +3,6 @@ import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy, Inject, Element
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Location } from '@angular/common';
-
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -21,7 +20,6 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -30,7 +28,7 @@ declare var global: any;
 	providers: [ TimeagoPipe, SafeHtmlPipe ]
 })
 export class MainComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public userData: any = [];
@@ -53,7 +51,6 @@ export class MainComponent implements OnInit, OnDestroy {
 	public data: any;
 	public dataDefault: any;
 	public searchBoxMentions: boolean;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -76,23 +73,45 @@ export class MainComponent implements OnInit, OnDestroy {
 		private ssrService: SsrService,
 
 	) {
+		// // User
+		// let u = this.activatedRoute.snapshot.data.userResolvedData;
+
+		// // Meta
+		// let metaData = {
+		// 	page: u.name,
+		// 	title: u.name,
+		// 	description: u.aboutOriginal,
+		// 	keywords: u.aboutOriginal,
+		// 	url: this.env.url + u.username,
+		// 	image: this.env.url + u.avatarUrl
+		// };
+		// console.log("0.metaData", metaData);
+		// this.metaService.setData(metaData);
+
 		// Set component data
 		this.activeRouter = this.router.events
 			.subscribe(event => {
 				if(event instanceof NavigationEnd) {
-					// User data from routing resolve
+					// Session
+					this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
+
+					// User
 					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 
-					if (this.userData)
-						this.userExists = true;
+					// Translations
+					this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
+					// Exit if no session
+					this.userExists = this.userData ? true : false;
+
+					// Meta
 					let metaData = {
 						page: this.userData.name,
 						title: this.userData.name,
 						description: this.userData.aboutOriginal,
 						keywords: this.userData.aboutOriginal,
-						url: this.environment.url + this.userData.username,
-						image: this.environment.url + this.userData.avatarUrl
+						url: this.env.url + this.userData.username,
+						image: this.env.url + this.userData.avatarUrl
 					};
 					this.metaService.setData(metaData);
 
@@ -103,32 +122,17 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.activeRouterExists = true;
 
 					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get session data
-					this.sessionData = this.userDataService.getSessionData();
-
-					// Check if session exists, if not set by default empty data
-					if (!this.sessionData) {
-						this.sessionData = [];
-						this.sessionData.current = {
-							id: null
-						};
-					}
-
-					// Get translations
-					this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
-
+					this.window.scrollTo(0, 0);
+					
 					// Update user data if im the user
-					if (this.userData.id == this.sessionData.current.id)
-						this.sessionData = this.userDataService.setSessionData('update', this.userData);
+					if (this.sessionData) {
+						if (this.userData.id == this.sessionData.current.id)
+							this.sessionData = this.userDataService.setSessionData('update', this.userData);
+					}
 
 					// Set Google analytics
-					let urlGa =  '[' + this.userData.id + ']/' + this.userData.id + '/main';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
+					let url = '[' + this.userData.id + ']/' + this.userData.id + '/main';
+					this.userDataService.analytics(url);
 
 					// Data following/visitor
 					let data = {
@@ -284,7 +288,7 @@ export class MainComponent implements OnInit, OnDestroy {
 				type: 'user',
 				user: user,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.default(data)
@@ -294,12 +298,12 @@ export class MainComponent implements OnInit, OnDestroy {
 					if (!res || res.length == 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;
 						this.dataDefault.list = res;
 					}
 
-					if (!res || res.length < this.environment.cuantity)
+					if (!res || res.length < this.env.cuantity)
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -313,13 +317,13 @@ export class MainComponent implements OnInit, OnDestroy {
 				type: 'user',
 				user: this.userData.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.default(data)
 				.subscribe(res => {
 					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
@@ -327,7 +331,7 @@ export class MainComponent implements OnInit, OnDestroy {
 							for (let i in res)
 								this.dataDefault.list.push(res[i]);
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.env.cuantity)
 							this.dataDefault.noMore = true;
 					}, 600);
 				}, error => {
@@ -376,11 +380,11 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTab':
-				let url = this.environment.url + 'p/' + item.name;
+				let url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				let urlExtension = this.environment.url + 'p/' + item.name;
+				let urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 			case 'messageSong':
@@ -388,11 +392,11 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTabSong':
-				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
 			case 'copyLinkSong':
-				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
@@ -400,25 +404,27 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playItem(data, item, key, type) {
-		if (!this.sessionData.current.id) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.postId = data.id;
-				this.audioPlayerData.list = data.audios;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.userData.id;
-				this.audioPlayerData.username = this.userData.username;
-				this.audioPlayerData.location = 'user';
-				this.audioPlayerData.type = type;
+		if (this.sessionData) {
+			if (this.sessionData.current.id) {
+				if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
+					item.playing = !item.playing;
+					this.playerService.setPlayTrack(this.audioPlayerData);
+				} else { // Play new one
+					this.audioPlayerData.postId = data.id;
+					this.audioPlayerData.list = data.audios;
+					this.audioPlayerData.item = item;
+					this.audioPlayerData.key = key;
+					this.audioPlayerData.user = this.userData.id;
+					this.audioPlayerData.username = this.userData.username;
+					this.audioPlayerData.location = 'user';
+					this.audioPlayerData.type = type;
 
-				item.playing = true;
-				this.playerService.setData(this.audioPlayerData);
+					item.playing = true;
+					this.playerService.setData(this.audioPlayerData);
+				}
 			}
+		} else {
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		}
 	}
 
@@ -476,55 +482,59 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Bookmarks
-	markUnmark(item){
-		if (this.sessionData.current.id) {
-			item.bookmark.checked = !item.bookmark.checked;
+	markUnmark(item) {
+		if (this.sessionData) {
+			if (this.sessionData.current.id) {
+				item.bookmark.checked = !item.bookmark.checked;
 
-			if (item.bookmark.checked)
-				this.alertService.success(this.translations.bookmarks.addedTo);
+				if (item.bookmark.checked)
+					this.alertService.success(this.translations.bookmarks.addedTo);
 
-			// data
-			let data = {
-				item: item.id,
-				id: item.bookmark.id,
-				type: item.bookmark.checked ? 'add' : 'remove'
+				// data
+				let data = {
+					item: item.id,
+					id: item.bookmark.id,
+					type: item.bookmark.checked ? 'add' : 'remove'
+				}
+
+				this.bookmarksDataService.markUnmark(data)
+					.subscribe(res => {
+						if (res)
+							item.bookmark.id = res;
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
 			}
-
-			this.bookmarksDataService.markUnmark(data)
-				.subscribe(res => {
-					if (res)
-						item.bookmark.id = res;
-				}, error => {
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
 		}
 	}
 
 	// Like / Unlike
 	likeUnlike(item){
-		if (this.sessionData.current.id) {
-			if (item.liked) {
-				item.liked = false;
-				item.countLikes--;
+		if (this.sessionData) {
+			if (this.sessionData.current.id) {
+				if (item.liked) {
+					item.liked = false;
+					item.countLikes--;
 
-				for (let i in item.likers)
-					if (item.likers[i].id == this.sessionData.current.id)
-						item.likers.splice(i, 1);
-			} else {
-				item.liked = true;
-				item.countLikes++;
+					for (let i in item.likers)
+						if (item.likers[i].id == this.sessionData.current.id)
+							item.likers.splice(i, 1);
+				} else {
+					item.liked = true;
+					item.countLikes++;
 
-				item.likers.unshift(this.sessionData.current);
+					item.likers.unshift(this.sessionData.current);
+				}
+
+				// data
+				let data = {
+					id: item.id,
+					receiver: item.user.id,
+					type: item.liked ? 'like' : 'unlike'
+				}
+
+				this.publicationsDataService.likeUnlike(data).subscribe();
 			}
-
-			// data
-			let data = {
-				id: item.id,
-				receiver: item.user.id,
-				type: item.liked ? 'like' : 'unlike'
-			}
-
-			this.publicationsDataService.likeUnlike(data).subscribe();
 		}
 	}
 
@@ -568,7 +578,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			let data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.comments(data)
@@ -579,7 +589,7 @@ export class MainComponent implements OnInit, OnDestroy {
 						item.noData = true;
 					} else {
 						item.noData = false;
-						item.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						item.comments.list = res;
 					}
 				}, error => {
@@ -593,14 +603,14 @@ export class MainComponent implements OnInit, OnDestroy {
 			let data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
 					setTimeout(() => {
 						item.loadingMoreData = false;
-						item.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						// Push items
 						if (!res || res.length > 0)
@@ -648,7 +658,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			});
 
 			// url
-			str = str.replace(this.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value){
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -701,7 +711,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 				return '<a class="url">' + value + '</a>';
 			});
 

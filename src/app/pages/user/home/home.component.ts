@@ -17,7 +17,6 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -26,7 +25,7 @@ declare var global: any;
 	providers: [ TimeagoPipe, SafeHtmlPipe ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -40,13 +39,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 		paginationClickable: true,
 		spaceBetween: 0
 	};
-	public activeRouter: any;
 	public activeLanguage: any;
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
 	public hideAd: boolean;
 	public searchBoxMentions: boolean;
-	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -66,34 +63,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Exit if no session
-		if (!this.sessionData)
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.translations.feed.title);
+
+			// Set Google analytics
+			let url = '[' + this.sessionData.current.id + ']/home';
+			this.userDataService.analytics(url);
+
+			// Load default
+			this.default('default', this.sessionData.current.id);
+		} else {
 			this.userDataService.noSessionData();
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Set Google analytics
-					let urlGa =  '[' + this.sessionData.current.id + ']/home';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
-
-					// Load default
-					this.default('default', this.sessionData.current.id);
-				}
-			});
+		}
 
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
@@ -138,7 +127,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
@@ -146,7 +134,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd(){
-		let ad = this.environment.ad;
+		let ad = this.env.ad;
 
 		let a = {
 			contentTypeAd: true,
@@ -201,7 +189,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				type: 'home',
 				user: user,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.default(data)
@@ -211,7 +199,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 					if (!res || res.length == 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (let i in res) {
 							// Push items
@@ -223,7 +211,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.environment.cuantity)
+					if (!res || res.length < this.env.cuantity)
 						this.dataDefault.noMore = true;
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -237,13 +225,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 				type: 'home',
 				user: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.default(data)
 				.subscribe(res => {
 					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
 
 						if (!res || res.length > 0) {
@@ -257,7 +245,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.env.cuantity)
 							this.dataDefault.noMore = true;
 					}, 600);
 				}, error => {
@@ -306,11 +294,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTab':
-				let url = this.environment.url + 'p/' + item.name;
+				let url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				let urlExtension = this.environment.url + 'p/' + item.name;
+				let urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 			case 'messageSong':
@@ -318,11 +306,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTabSong':
-				let urlSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
 			case 'copyLinkSong':
-				let urlExtensionSong = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
@@ -497,7 +485,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			let data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.comments(data)
@@ -508,7 +496,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						item.noData = true;
 					} else {
 						item.noData = false;
-						item.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						item.comments.list = res;
 					}
 				}, error => {
@@ -522,14 +510,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 			let data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			}
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
 					setTimeout(() => {
 						item.loadingMoreData = false;
-						item.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						// Push items
 						if (!res || res.length > 0)
@@ -577,7 +565,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			});
 
 			// url
-			str = str.replace(this.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value){
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -630,7 +618,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 				return '<a class="url">' + value + '</a>';
 			});
 

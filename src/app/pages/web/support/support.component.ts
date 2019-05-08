@@ -9,8 +9,6 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 
-declare var ga: Function;
-
 @Component({
 	selector: 'app-support',
 	templateUrl: './support.component.html'
@@ -47,24 +45,18 @@ export class SupportComponent implements OnInit {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+
+		// Set Google analytics
+		let url = 'support';
+		this.userDataService.analytics(url);
 	}
 
 	ngOnInit() {
-		// Set Google analytics
-		if (this.ssrService.isBrowser) {
-			const urlGa = 'support';
-			ga('set', 'page', urlGa);
-			ga('send', 'pageview');
-		}
-
 		// Form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
 			content: ['', [Validators.required]]
 		});
-
-		// destroy session & reset login
-		this.userDataService.logout();
 	}
 
 	goBack(){

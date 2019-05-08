@@ -10,11 +10,9 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
-import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
 @Component({
@@ -23,7 +21,7 @@ declare var global: any;
 	providers: [ SafeHtmlPipe ]
 })
 export class SongComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -32,11 +30,9 @@ export class SongComponent implements OnInit, OnDestroy {
 		data: []
 	};
 	public data: any = [];
-	public activeRouter: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
 	public hideAd: boolean;
-	public audio = new Audio();
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -50,39 +46,17 @@ export class SongComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private metaService: MetaService,
-		private ssrService: SsrService
+		private metaService: MetaService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Check if session exists
-		if (!this.sessionData) {
-			this.sessionData = [];
-			this.sessionData.current = {
-				id: null
-			};
-		}
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Get url data
-					let urlData: any = this.activatedRoute.snapshot.params.name;
-
-					// Load default
-					this.default(urlData);
-				}
-			});
+		// Load default
+		const n: any = this.activatedRoute.snapshot.params.name;
+		this.default(n);
 
 		// Get player data
 		this.activePlayerInformation = this.playerService.getCurrentTrack()
@@ -103,7 +77,6 @@ export class SongComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
@@ -115,7 +88,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd() {
-		let ad = this.environment.ad;
+		let ad = this.env.ad;
 
 		let a = {
 			contentTypeAd: true,
@@ -160,15 +133,14 @@ export class SongComponent implements OnInit, OnDestroy {
 						title: t,
 						description: t,
 						keywords: t,
-						url: this.environment.url + 's/' + name,
-						image: this.environment.url + 'assets/media/audios/thumbnails/' + res.image
+						url: this.env.url + 's/' + name,
+						image: res.image ? (this.env.url + 'assets/media/audios/thumbnails/' + res.image) : this.env.image
 					};
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					let urlGa =  '[' + res.id + ']/[' + name + ']/s/' + t;
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
+					let url = '[' + res.id + ']/[' + name + ']/s/' + t;
+					this.userDataService.analytics(url);
 				}
 			}, error => {
 				this.dataDefault.loadingData = false;
@@ -254,7 +226,7 @@ export class SongComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case "copyLink":
-				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				let urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
 				break;

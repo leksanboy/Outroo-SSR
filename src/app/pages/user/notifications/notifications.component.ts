@@ -18,35 +18,11 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 
-declare var ga: Function;
 declare var global: any;
 
-// √ Ha comenzado a seguirte
-// √ Solicitud de amistad
-// √ Ha aceptado la solicitud de amistad (cuenta privada)
-
-// √ Like en la foto
-// √ Comentario en la foto
-// x Mencion en la foto
-// √ Mencion en el comentario en la foto
-// √ Ha compartido una foto
-// √ Eliminar comentarios dentro de mi foto (creader de la foto y creador del comentario)
-
-// √ Like en la publicacion
-// √ Comentario en la publicacion
-// √ Mencion en la publicacion
-// √ Mencion en el comentario en la publicacion 
-// √ Ha compartido una publicacion
-// √ Eliminar comentarios dentro de mi publicacion (creader de la publicacion y creador del comentario)
-
-// √ Ha compartido una cancion
-// √ Ha compartido una cancion desde una publicacion (show, main & home)
+// - Una vez logado que no entre en signup/confirmEmail/recoverPassowrd/etc...
 // - Ha compartido una playlist desde canciones
-// - Te ha enviado un mensaje (msg corto)
-
-// √ Cambiar el usted/su por tu (es_ES)
-// - Cambiar el usted/su por tu (ru_RU)
-// ? Comentarios con counter a la derecha
+// - Te ha enviado un mensaje
 
 @Component({
 	selector: 'app-notifications',
@@ -63,7 +39,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	public data: any = {
 		selectedIndex: 0
 	};
-	public activeRouter: any;
 	public activeShare: any;
 	public activeLanguage: any;
 	public audioPlayerData: any = [];
@@ -85,34 +60,26 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private ssrService: SsrService
 	) {
-		// Get session data
-		this.sessionData = this.userDataService.getSessionData();
+		// Session
+		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// Get translations
-		this.getTranslations(this.sessionData ? this.sessionData.current.language : this.environment.language);
+		// Translations
+		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Exit if no session
-		if (!this.sessionData)
+		// Data
+		if (this.sessionData) {
+			// Set title
+			this.titleService.setTitle(this.translations.notifications.title);
+
+			// Set Google analytics
+			let url = '[' + this.sessionData.current.id + ']/notifications';
+			this.userDataService.analytics(url);
+
+			// Load default
+			this.default('default');
+		} else {
 			this.userDataService.noSessionData();
-
-		// Set component data
-		this.activeRouter = this.router.events
-			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
-					// Go top of page on change user
-					if (this.ssrService.isBrowser) {
-						this.window.scrollTo(0, 0);
-					}
-
-					// Set Google analytics
-					let urlGa =  '[' + this.sessionData.current.id + ']/notifications';
-					ga('set', 'page', urlGa);
-					ga('send', 'pageview');
-
-					// Load default
-					this.default('default');
-				}
-			});
+		}
 
 		// Get Share
 		this.activeShare = this.sessionService.getDataShowShare()
@@ -153,13 +120,12 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeRouter.unsubscribe();
 		this.activeShare.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -248,7 +214,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	// Follow / Unfollow
-	followUnfollow(type, item){
+	followUnfollow(type, item) {
 		if (type == 'accept') {
 			// When other send you a request
 			item.type = 'startFollowing';
@@ -313,7 +279,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item){
+	itemOptions(type, item) {
 		switch (type) {
 			case "remove":
 				item.addRemoveSession = !item.addRemoveSession;
@@ -422,102 +388,4 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				break;
 		}
 	}
-
-	// // Default
-	// defaultChats(type, user) {
-	// 	if (type == 'default') {
-	// 		this.dataChats = {
-	// 			list: [],
-	// 			rows: 0,
-	// 			loadingData: true,
-	// 			loadMoreData: false,
-	// 			loadingMoreData: false,
-	// 			noData: false,
-	// 			noMore: false
-	// 		}
-
-	// 		let data = {
-	// 			user: user,
-	// 			rows: this.dataChats.rows,
-	// 			cuantity: environment.cuantity
-	// 		}
-
-	// 		this.chatDataService.default(data)
-	// 			.subscribe(res => {
-	// 				this.dataChats.loadingData = false;
-
-	// 				if (!res || res.length == 0) {
-	// 					this.dataChats.noData = true;
-	// 				} else {
-	// 					this.dataChats.loadMoreData = (!res || res.length < environment.cuantity) ? false : true;
-	// 					this.dataChats.list = res;
-	// 				}
-
-	// 				if (!res || res.length < environment.cuantity)
-	// 					this.dataChats.noMore = true;
-	// 			}, error => {
-	// 				this.dataChats.loadingData = false;
-	// 				this.alertService.error(this.translations.common.anErrorHasOcurred);
-	// 			});
-	// 	} else if (type == 'more' && !this.dataChats.noMore && !this.dataChats.loadingMoreData) {
-	// 		this.dataChats.loadingMoreData = true;
-	// 		this.dataChats.rows++;
-
-	// 		let data = {
-	// 			user: this.sessionData.current.id,
-	// 			rows: this.dataChats.rows,
-	// 			cuantity: environment.cuantity
-	// 		}
-
-	// 		this.chatDataService.default(data)
-	// 			.subscribe(res => {
-	// 				setTimeout(() => {
-	// 					this.dataChats.loadMoreData = (!res || res.length < environment.cuantity) ? false : true;
-	// 					this.dataChats.loadingMoreData = false;
-
-	// 					// Push items
-	// 					if (!res || res.length > 0)
-	// 						for (let i in res)
-	// 							this.dataChats.list.push(res[i]);
-
-	// 					if (!res || res.length < environment.cuantity)
-	// 						this.dataChats.noMore = true;
-	// 				}, 600);
-	// 			}, error => {
-	// 				this.dataChats.loadingData = false;
-	// 				this.alertService.error(this.translations.common.anErrorHasOcurred);
-	// 			});
-	// 	}
-	// }
-
-	// // Item options
-	// itemOptionsChat(type, item){
-	// 	switch(type){
-	// 		case("remove"):
-	// 			item.addRemoveSession = !item.addRemoveSession;
-	// 			item.removeType = item.addRemoveSession ? 'remove' : 'add';
-
-	// 			let dataSession = {
-	// 				id: item.id,
-	// 				type: item.removeType,
-	// 				user: this.sessionData.current.id
-	// 			}
-
-	// 			this.chatDataService.addRemove(dataSession).subscribe();
-	// 		break;
-	// 		case("report"):
-	// 			item.type = 'chat';
-	// 			this.sessionService.setDataReport(item);
-	// 		break;
-	// 	}
-	// }
-
-	// // Open conversation
-	// showConversation(type, data) {
-	// 	data = (type == 'new') ? [] : data;
-	// 	data.comeFrom = type;
-	// 	data.close = false;
-
-	// 	this.sessionService.setDataShowConversation(data);
-	// }
 }

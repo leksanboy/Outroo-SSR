@@ -85,7 +85,6 @@
 // 	public showUsers: boolean;
 // 	public saveLoading: boolean;
 // 	public searchBoxMentions: boolean;
-// 	public urlRegex: any = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
 
 // 	constructor(
 // 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -550,7 +549,7 @@
 // 			});
 
 // 			// url
-// 			str = str.replace(this.urlRegex, function(value){
+// 			str = str.replace(this.env.urlRegex, function(value){
 // 				return '<span class="url">' + value + '</span>';
 // 			});
 
@@ -603,7 +602,7 @@
 // 			});
 
 // 			// detect url
-// 			newData.content = newData.content.replace(this.urlRegex, function(value){
+// 			newData.content = newData.content.replace(this.env.urlRegex, function(value){
 // 				return '<a class="url">' + value + '</a>';
 // 			});
 

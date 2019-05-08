@@ -26,7 +26,7 @@
 
 								<div class="avatar">
 									<div class="image" [matMenuTriggerFor]="avatarOptions">
-										<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+										<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 
 										<div class="layer">
 											<i label="image" class="big"></i>
@@ -44,7 +44,7 @@
 
 							<div class="avatar">
 								<div class="image" [matMenuTriggerFor]="avatarOptions">
-									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : environment.avatar"/>
+									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 
 									<div class="layer">
 										<i label="photo-camera"></i>
@@ -184,7 +184,7 @@
 		 				<ul>
 							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
 								<div class="avatar" (click)="setCurrentUser(x)">
-									<img [src]="x.avatar ? x.avatarUrl : environment.avatar"/>
+									<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 								</div>
 								<div class="text" (click)="setCurrentUser(x)">
 									<span class="name">{{x.name}}</span>
