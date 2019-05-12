@@ -50,7 +50,7 @@ export class ForgotPasswordComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'forgot-password';
+		const url = 'forgot-password';
 		this.userDataService.analytics(url);
 	}
 
@@ -61,7 +61,7 @@ export class ForgotPasswordComponent implements OnInit {
 		});
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

@@ -162,9 +162,12 @@
 		"description": "An error has occurred, Page not found, Try to write the correct url direction."
 	},
 	"forgotPassword":{
-		"title": "Forgot password | Recover account access",
+		"title": "Forgot password?",
 		"description": "If you forgot your password acceess here and enter your email.",
 		"email": "Email",
+		"defaultText": {
+			"one": "Recover account acceess"
+		},
 		"confirmText": {
 			"one": "Check your email",
 			"two": "We've sent an email to",
@@ -202,13 +205,13 @@
 		}
 	},
 	"signIn":{
-		"title": "Sign In | Login",
+		"title": "Sign In",
 		"description": "Enter your email and password to access.",
 		"email": "Email",
 		"password": "Password"
 	},
 	"signUp":{
-		"title": "Sign Up | Create an account",
+		"title": "Sign Up",
 		"description": "Create an account to be part of our family.",
 		"username": "Username",
 		"name": "Name",

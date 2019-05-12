@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { DOCUMENT } from "@angular/platform-browser";
+import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,9 +12,8 @@ import { SsrService } from '../ssr.service';
 
 import * as moment from 'moment/moment';
 
-declare var ga: Function;
 declare var global: any;
-declare var navigator: any;
+declare var ga: Function;
 
 @Injectable()
 export class UserDataService {
@@ -33,6 +32,8 @@ export class UserDataService {
 
 	// Translations
 	getTranslations(lang) {
+		console.log('lang', lang);
+
 		if (!lang) {
 			// Get lang from cookie
 			let langCookie = this.getLang('get', null);
@@ -105,10 +106,10 @@ export class UserDataService {
 	}
 
 	analytics(url) {
-		if (this.ssrService.isBrowser) {
-			ga('set', 'page', url);
-			ga('send', 'pageview');
-		}
+		// if (this.ssrService.isBrowser) {
+		// }
+		ga('set', 'page', url);
+		ga('send', 'pageview');
 	}
 
 	cookies(type) {

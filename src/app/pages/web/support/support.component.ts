@@ -47,7 +47,7 @@ export class SupportComponent implements OnInit {
 		this.metaService.setData(metaData);
 
 		// Set Google analytics
-		let url = 'support';
+		const url = 'support';
 		this.userDataService.analytics(url);
 	}
 
@@ -59,7 +59,7 @@ export class SupportComponent implements OnInit {
 		});
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

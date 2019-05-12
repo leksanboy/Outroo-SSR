@@ -1,16 +1,19 @@
 import { Title, Meta } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
+// import { DOCUMENT } from '@angular/common';
 
 @Injectable()
 export class MetaService {
 	constructor(
-		private title: Title,
-		private meta: Meta
+		// @Inject(DOCUMENT) private document: Document,
+		private meta: Meta,
+		// private renderer: Renderer2,
+		private title: Title
 	) { }
 
 	setData(data: any) {
 		// Set html lang
-		// this.renderer.setAttribute(this.document.documentElement, 'lang', this.locale);
+		// this.renderer.setAttribute(this.document.documentElement, 'lang', 'es_ES');
 
 		// Set title
 		this.title.setTitle(data.page);

@@ -93,6 +93,11 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		this.dialogRef.close(this.dataDefault.data);
 	}
 
+	// Close
+	close(){
+		this.dialogRef.close(this.dataDefault.data);
+	}
+
 	// Play video
 	playVideo(item, player){
 		player = document.getElementById(player);
@@ -562,10 +567,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
-		let word = '';
-
 		// Get content of div
-		let content = el.textContent;
+		const content = el.textContent;
 
 		// Check if clicked at the end of word
 		position = content[position] === ' ' ? position - 1 : position;
@@ -577,10 +580,5 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		endPosition = endPosition === -1 ? content.length : endPosition;
 
 		return content.substring(startPosition + 1, endPosition);
-	}
-
-	// Close
-	close(){
-		this.dialogRef.close(this.dataDefault.data);
 	}
 }

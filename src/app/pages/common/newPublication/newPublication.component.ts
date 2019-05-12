@@ -228,10 +228,8 @@ export class NewPublicationComponent implements OnInit {
 
 	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
-		let word = '';
-
 		// Get content of div
-		let content = el.textContent;
+		const content = el.textContent;
 
 		// Check if clicked at the end of word
 		position = content[position] === ' ' ? position - 1 : position;

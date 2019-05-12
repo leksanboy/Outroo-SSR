@@ -71,7 +71,7 @@ export class ConfirmEmailComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'confirm-email';
+		const url = 'confirm-email';
 		this.userDataService.analytics(url);
 	}
 
@@ -80,7 +80,7 @@ export class ConfirmEmailComponent implements OnInit {
 	}
 
 	// Go back
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

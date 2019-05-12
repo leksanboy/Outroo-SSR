@@ -54,7 +54,7 @@ export class SignupComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'signup';
+		const url = 'signup';
 		this.userDataService.analytics(url);
 	}
 
@@ -145,7 +145,7 @@ export class SignupComponent implements OnInit {
 			});
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

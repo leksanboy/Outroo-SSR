@@ -1,8 +1,7 @@
-import { DOCUMENT } from '@angular/platform-browser';
-import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy, Inject, ElementRef, Renderer } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -47,7 +46,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public activeNewPublication: any;
 	public activeRouterExists: any;
 	public activeSessionPlaylists: any;
-	public userExists: boolean = true;
+	public userExists = true;
 	public data: any;
 	public dataDefault: any;
 	public searchBoxMentions: boolean;
@@ -57,7 +56,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		public dialog: MatDialog,
 		private router: Router,
 		private location: Location,
-		private renderer: Renderer,
+		private renderer: Renderer2,
 		private elementRef: ElementRef,
 		private alertService: AlertService,
 		private playerService: PlayerService,
@@ -73,25 +72,10 @@ export class MainComponent implements OnInit, OnDestroy {
 		private ssrService: SsrService,
 
 	) {
-		// // User
-		// let u = this.activatedRoute.snapshot.data.userResolvedData;
-
-		// // Meta
-		// let metaData = {
-		// 	page: u.name,
-		// 	title: u.name,
-		// 	description: u.aboutOriginal,
-		// 	keywords: u.aboutOriginal,
-		// 	url: this.env.url + u.username,
-		// 	image: this.env.url + u.avatarUrl
-		// };
-		// console.log("0.metaData", metaData);
-		// this.metaService.setData(metaData);
-
 		// Set component data
 		this.activeRouter = this.router.events
 			.subscribe(event => {
-				if(event instanceof NavigationEnd) {
+				if (event instanceof NavigationEnd) {
 					// Session
 					this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
@@ -105,7 +89,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.userExists = this.userData ? true : false;
 
 					// Meta
-					let metaData = {
+					const metaData = {
 						page: this.userData.name,
 						title: this.userData.name,
 						description: this.userData.aboutOriginal,
@@ -123,19 +107,20 @@ export class MainComponent implements OnInit, OnDestroy {
 
 					// Go top of page on change user
 					this.window.scrollTo(0, 0);
-					
+
 					// Update user data if im the user
 					if (this.sessionData) {
-						if (this.userData.id == this.sessionData.current.id)
+						if (this.userData.id === this.sessionData.current.id) {
 							this.sessionData = this.userDataService.setSessionData('update', this.userData);
+						}
 					}
 
 					// Set Google analytics
-					let url = '[' + this.userData.id + ']/' + this.userData.id + '/main';
+					const url = '[' + this.userData.id + ']/' + this.userData.id + '/main';
 					this.userDataService.analytics(url);
 
 					// Data following/visitor
-					let data = {
+					const data = {
 						receiver: this.userData.id
 					};
 
@@ -162,7 +147,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 
@@ -174,21 +159,24 @@ export class MainComponent implements OnInit, OnDestroy {
 
 		// Click on a href
 		this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
-			if (event.target.localName == 'a')
+			if (event.target.localName === 'a') {
 				this.sessionService.setDataClickElementRef(event);
+			}
 		});
 
 		// Load more on scroll on bottom
 		this.window.onscroll = (event) => {
-			let windowHeight = "innerHeight" in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
-			let body = document.body, html = document.documentElement;
-			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-			let windowBottom = windowHeight + this.window.pageYOffset;
+			const windowHeight = 'innerHeight' in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
+			const body = document.body, html = document.documentElement;
+			const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+			const windowBottom = windowHeight + this.window.pageYOffset;
 
-			if (windowBottom >= docHeight)
-				if (this.dataDefault.list.length > 0)
+			if (windowBottom >= docHeight) {
+				if (this.dataDefault.list.length > 0) {
 					this.default('more', null);
-		}
+				}
+			}
+		};
 	}
 
 	ngOnInit() {
@@ -204,24 +192,25 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Follow / Unfollow
-	followUnfollow(type, user){
-		if (type == 'follow')
+	followUnfollow(type, user) {
+		if (type === 'follow') {
 			user.followingStatus = user.private ? 'pending' : 'following';
-		else if (type == 'unfollow')
+		} else if (type === 'unfollow') {
 			user.followingStatus = 'unfollow';
+		}
 
-		let data = {
+		const data = {
 			type: user.followingStatus,
 			private: user.private,
 			receiver: user.id
-		}
+		};
 
 		this.followsDataService.followUnfollow(data).subscribe();
 	}
 
 	// Show user images
-	showAvatar(){
-		let data = {
+	showAvatar() {
+		const data = {
 			userData: this.userData
 		};
 
@@ -229,9 +218,9 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// New publication
-	newPublication(type, data){
+	newPublication(type, data) {
 		if (type === 'new') {
-			let opt = {
+			const opt = {
 				type: 'new',
 				data: null
 			};
@@ -250,7 +239,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -258,7 +247,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Play video
-	playVideo(item, player){
+	playVideo(item, player) {
 		player = document.getElementById(player);
 		player.load();
 		player.play();
@@ -273,7 +262,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Default
 	default(type, user) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
 				rows: 0,
@@ -282,20 +271,20 @@ export class MainComponent implements OnInit, OnDestroy {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false
-			}
+			};
 
-			let data = {
+			const data = {
 				type: 'user',
 				user: user,
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.default(data)
 				.subscribe(res => {
 					this.dataDefault.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
@@ -303,22 +292,23 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.dataDefault.list = res;
 					}
 
-					if (!res || res.length < this.env.cuantity)
+					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
 			this.dataDefault.rows++;
 
-			let data = {
+			const data = {
 				type: 'user',
 				user: this.userData.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.default(data)
 				.subscribe(res => {
@@ -327,12 +317,17 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								this.dataDefault.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataDefault.list.push(res[i]);
+								}
+							}
+						}
 
-						if (!res || res.length < this.env.cuantity)
+						if (!res || res.length < this.env.cuantity) {
 							this.dataDefault.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -342,26 +337,26 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item){
+	itemOptions(type, item) {
 		switch (type) {
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataAddRemove = {
+				const dataAddRemove = {
 					id: item.id,
 					type: item.removeType
-				}
+				};
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
 			case 'disableComments':
 				item.disabledComments = !item.disabledComments;
 
-				let dataDisableComments = {
+				const dataDisableComments = {
 					id: item.id,
 					type: item.disabledComments
-				}
+				};
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
@@ -373,18 +368,18 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Share on social media
-	shareOn(type, item){
+	shareOn(type, item) {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTab':
-				let url = this.env.url + 'p/' + item.name;
+				const url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				let urlExtension = this.env.url + 'p/' + item.name;
+				const urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 			case 'messageSong':
@@ -392,11 +387,11 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTabSong':
-				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
+				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
 			case 'copyLinkSong':
-				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
+				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
@@ -406,7 +401,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	playItem(data, item, key, type) {
 		if (this.sessionData) {
 			if (this.sessionData.current.id) {
-				if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
+				if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
 					item.playing = !item.playing;
 					this.playerService.setPlayTrack(this.audioPlayerData);
 				} else { // Play new one
@@ -429,18 +424,18 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options: add/remove, share, search, report
-	itemSongOptions(type, item, playlist){
-		switch(type){
+	itemSongOptions(type, item, playlist) {
+		switch (type) {
 			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataU = {
+				const dataU = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataU)
 					.subscribe((res: any) => {
@@ -450,24 +445,25 @@ export class MainComponent implements OnInit, OnDestroy {
 			case('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case('createPlaylist'):
-				let data = 'create';
+				const data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
 			break;
 			case('report'):
@@ -487,20 +483,22 @@ export class MainComponent implements OnInit, OnDestroy {
 			if (this.sessionData.current.id) {
 				item.bookmark.checked = !item.bookmark.checked;
 
-				if (item.bookmark.checked)
+				if (item.bookmark.checked) {
 					this.alertService.success(this.translations.bookmarks.addedTo);
+				}
 
 				// data
-				let data = {
+				const data = {
 					item: item.id,
 					id: item.bookmark.id,
 					type: item.bookmark.checked ? 'add' : 'remove'
-				}
+				};
 
 				this.bookmarksDataService.markUnmark(data)
 					.subscribe(res => {
-						if (res)
+						if (res) {
 							item.bookmark.id = res;
+						}
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
@@ -509,16 +507,20 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Like / Unlike
-	likeUnlike(item){
+	likeUnlike(item) {
 		if (this.sessionData) {
 			if (this.sessionData.current.id) {
 				if (item.liked) {
 					item.liked = false;
 					item.countLikes--;
 
-					for (let i in item.likers)
-						if (item.likers[i].id == this.sessionData.current.id)
-							item.likers.splice(i, 1);
+					for (const i in item.likers) {
+						if (i) {
+							if (item.likers[i].id === this.sessionData.current.id) {
+								item.likers.splice(i, 1);
+							}
+						}
+					}
 				} else {
 					item.liked = true;
 					item.countLikes++;
@@ -527,11 +529,11 @@ export class MainComponent implements OnInit, OnDestroy {
 				}
 
 				// data
-				let data = {
+				const data = {
 					id: item.id,
 					receiver: item.user.id,
 					type: item.liked ? 'like' : 'unlike'
-				}
+				};
 
 				this.publicationsDataService.likeUnlike(data).subscribe();
 			}
@@ -539,20 +541,22 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Show people who like
-	showLikes(item){
+	showLikes(item) {
 		item.comeFrom = 'publication';
 		this.sessionService.setDataShowLikes(item);
 	}
 
 	// Show/hide comments box
-	showComments(type, item){
+	showComments(type, item) {
 		switch (type) {
 			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
-				
-				if (!item.disabledComments)
-					if (!item.loaded)
+
+				if (!item.disabledComments) {
+					if (!item.loaded) {
 						this.defaultComments('default', item);
+					}
+				}
 				break;
 			case 'load':
 				this.defaultComments('default', item);
@@ -562,7 +566,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Comments
 	defaultComments(type, item) {
-		if (type == 'default') {
+		if (type === 'default') {
 			item.noData = false;
 			item.loadMoreData = false;
 			item.loadingData = true;
@@ -575,17 +579,17 @@ export class MainComponent implements OnInit, OnDestroy {
 			this.newComment('clear', null, item);
 
 			// Data
-			let data = {
+			const data = {
 				id: item.id,
 				rows: item.rowsComments,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
 					item.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						item.noData = true;
 					} else {
 						item.noData = false;
@@ -596,15 +600,15 @@ export class MainComponent implements OnInit, OnDestroy {
 					item.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !item.loadingMoreData) {
+		} else if (type === 'more' && !item.loadingMoreData) {
 			item.loadingMoreData = true;
 			item.rowsComments++;
 
-			let data = {
+			const data = {
 				id: item.id,
 				rows: item.rowsComments,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
@@ -613,9 +617,13 @@ export class MainComponent implements OnInit, OnDestroy {
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								item.comments.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									item.comments.list.push(res[i]);
+								}
+							}
+						}
 					}, 600);
 				}, error => {
 					item.loadingData = false;
@@ -625,8 +633,8 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// New comment
-	newComment(type, event, item){
-		if (type == 'clear') {
+	newComment(type, event, item) {
+		if (type === 'clear') {
 			item.newCommentData = [];
 
 			setTimeout(() => {
@@ -640,34 +648,34 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				this.newComment('checkPlaceholder', null, item);
 			}, 100);
-		} else if (type == 'writingChanges') {
+		} else if (type === 'writingChanges') {
 			let str = event;
 			item.newCommentData.original = event;
-			
+
 			// new line
 			str = str.replace(/\n/g, '<br>');
 
 			// hashtag
-			str = str.replace(/(#)\w+/g, function(value){
+			str = str.replace(/(#)\w+/g, function(value) {
 				return '<span class="hashtag">' + value + '</span>';
 			});
 
 			// mention
-			str = str.replace(/(@)\w+/g, function(value){
+			str = str.replace(/(@)\w+/g, function(value) {
 				return '<span class="mention">' + value + '</span>';
 			});
 
 			// url
-			str = str.replace(this.env.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value) {
 				return '<span class="url">' + value + '</span>';
 			});
 
 			// writing content
 			item.newCommentData.transformed = str;
 
-			//check empty contenteditable
+			// check empty contenteditable
 			this.newComment('checkPlaceholder', null, item);
-		} else if (type == 'keyCode') {
+		} else if (type === 'keyCode') {
 			if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
 				// Space, Enter, Escape
 				this.searchBoxMentions = false;
@@ -676,59 +684,60 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.searchBoxMentions = false;
 				} else {
 					item.newCommentData.eventTarget = event.target;
-					let position = this.getCaretPosition(event.target);
-					let word = this.getCurrentWord(event.target, position);
-					
+					const position = this.getCaretPosition(event.target);
+					const word = this.getCurrentWord(event.target, position);
+
 					item.newCommentData.lastTypedWord = {
 						word: word,
 						position: position
 					};
 				}
 			}
-		} else if (type == 'checkPlaceholder') {
-			if (item.newCommentData.original.length == 0)
+		} else if (type === 'checkPlaceholder') {
+			if (item.newCommentData.original.length === 0) {
 				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
-		} else if (type == 'transformBeforeSend') {
-			let newData = {
+			}
+		} else if (type === 'transformBeforeSend') {
+			const newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
 				original: item.newCommentData.original ? item.newCommentData.original : '',
 				mentions: [],
 				hashtags: []
-			}
+			};
 
 			// new line
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value){
+			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value){
+			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
 				newData.mentions.push(value);
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
 				return '<a class="url">' + value + '</a>';
 			});
 
 			return newData;
-		} else if (type == 'create') {
-			if (item.newCommentData.original.trim().length == 0) {
+		} else if (type === 'create') {
+			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
-				let formatedData = this.newComment('transformBeforeSend', null, item);
-				let dataCreate = {
+				const formatedData = this.newComment('transformBeforeSend', null, item);
+				const dataCreate = {
 					type: 'create',
 					id: item.id,
 					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
 					mentions: formatedData.mentions
-				}
+				};
 
 				this.publicationsDataService.comment(dataCreate)
 					.subscribe((res: any) => {
@@ -745,28 +754,29 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Comments Options
-	commentsOptions(type, item, comment){
+	commentsOptions(type, item, comment) {
 		switch (type) {
-			case "addRemove":
+			case 'addRemove':
 				comment.addRemove = !comment.addRemove;
-				comment.type = !comment.addRemove ? "add" : "remove";
+				comment.type = !comment.addRemove ? 'add' : 'remove';
 
-				let data = {
+				const data = {
 					receiver: item.user.id,
 					type: comment.type,
 					comment: comment.id,
 					id: item.id
-				}
+				};
 
 				this.publicationsDataService.comment(data)
 					.subscribe((res: any) => {
-						if (comment.addRemove)
+						if (comment.addRemove) {
 							item.countComments--;
-						else
+						} else {
 							item.countComments++;
+						}
 					});
 				break;
-			case "report":
+			case 'report':
 				item.type = 'publicationComment';
 				this.sessionService.setDataReport(item);
 				break;
@@ -775,12 +785,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {
-		let w3 = (typeof this.window.getSelection != "undefined") && true,
-			caretOffset = 0;
+		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
+		let caretOffset = 0;
 
 		if (w3) {
-			let range = this.window.getSelection().getRangeAt(0);
-			let preCaretRange = range.cloneRange();
+			const range = this.window.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
 			preCaretRange.selectNodeContents(element);
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
@@ -793,10 +803,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
-		let word = '';
-
 		// Get content of div
-		let content = el.textContent;
+		const content = el.textContent;
 
 		// Check if clicked at the end of word
 		position = content[position] === ' ' ? position - 1 : position;

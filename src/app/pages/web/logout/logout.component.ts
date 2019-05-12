@@ -45,7 +45,7 @@ export class LogoutComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'home';
+		const url = 'home';
 		this.userDataService.analytics(url);
 	}
 

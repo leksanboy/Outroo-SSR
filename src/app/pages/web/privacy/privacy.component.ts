@@ -37,7 +37,7 @@ export class PrivacyComponent implements OnInit {
 		this.metaService.setData(metaData);
 
 		// Set Google analytics
-		let url = 'privacy';
+		const url = 'privacy';
 		this.userDataService.analytics(url);
 	}
 
@@ -45,7 +45,7 @@ export class PrivacyComponent implements OnInit {
 		// not in use
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 }

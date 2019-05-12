@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
-import { DOCUMENT } from "@angular/platform-browser";
-import { Location, PlatformLocation } from '@angular/common';
+import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
@@ -82,6 +81,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 	) {
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
+
+		// Get translations
+		this.getTranslations(null);
 		
 		// Player data
 		this.audioPlayerData = {
@@ -115,11 +117,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 		// Check if set
 		this.cookies('check');
-
-		// Get translations
-		if (this.ssrService.isBrowser) {
-			this.getTranslations(this.sessionData ? this.sessionData.current.language : this.env.language);
-		}
 
 		// iPhone X
 		if (this.ssrService.isBrowser && this.window) {

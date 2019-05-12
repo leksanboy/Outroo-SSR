@@ -1,6 +1,6 @@
-import { DOCUMENT, DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -61,7 +61,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(this.translations.settings.title);
 
 			// Set Google analytics
-			let url = '[' + this.sessionData.current.id + ']/settings';
+			const url = '[' + this.sessionData.current.id + ']/settings';
 			this.userDataService.analytics(url);
 
 			// Set froms
@@ -73,7 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 	}
@@ -96,18 +96,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	// Set forms
-	setForms(data) {
+	setForms(form) {
 		this.validatorUsername = null;
 		this.validatorNewPassword = null;
 		this.validatorOldPassword = null;
 
 		// Personal data form
 		this.actionFormPersonalData = this._fb.group({
-			theme: [data.theme],
-			private: [data.private],
-			username: [data.username, [Validators.required]],
-			name: [data.name, [Validators.required]],
-			language: [data.language, [Validators.required]]
+			theme: [form.theme],
+			private: [form.private],
+			username: [form.username, [Validators.required]],
+			name: [form.name, [Validators.required]],
+			language: [form.language, [Validators.required]]
 		});
 
 		// Dark theme
@@ -121,9 +121,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					this.alertService.success(this.translations.common.darkThemeDisabled);
 				}
 
-				let data = {
+				const data = {
 					theme: this.actionFormPersonalData.get('theme').value
-				}
+				};
 
 				this.userDataService.updateTheme(data)
 					.subscribe(res => {
@@ -139,14 +139,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		// Private account
 		this.actionFormPersonalData.get('private').valueChanges
 			.subscribe(val => {
-				if (val)
+				if (val) {
 					this.alertService.success(this.translations.common.privateEnabled);
-				else
+				} else {
 					this.alertService.success(this.translations.common.privateDisabled);
-							
-				let data = {
-					private: this.actionFormPersonalData.get('private').value
 				}
+
+				const data = {
+					private: this.actionFormPersonalData.get('private').value
+				};
 
 				this.userDataService.updatePrivate(data)
 					.subscribe(res => {
@@ -171,27 +172,28 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				distinctUntilChanged())
 			.subscribe(val => {
 				this.validatorUsername = 'load';
-				let regex = /^[a-zA-Z0-9._-]+$/;
+				const regex = /^[a-zA-Z0-9._-]+$/;
 
-				if (val != '' && regex.test(val)) {
-					this.userDataService.checkUsername(val).subscribe(
-						res => {
-							setTimeout(() => {
-								if (res) {
-									if (val == data.username) {
+				if (val !== '' && regex.test(val)) {
+					this.userDataService.checkUsername(val)
+						.subscribe(
+							res => {
+								setTimeout(() => {
+									if (res) {
+										if (val === form.username) {
+											this.actionFormPersonalData.controls['username'].setErrors(null);
+											this.validatorUsername = 'done';
+										} else {
+											this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
+											this.validatorUsername = 'bad';
+										}
+									} else {
 										this.actionFormPersonalData.controls['username'].setErrors(null);
 										this.validatorUsername = 'done';
-									} else {
-										this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
-										this.validatorUsername = 'bad';
 									}
-								} else {
-									this.actionFormPersonalData.controls['username'].setErrors(null);
-									this.validatorUsername = 'done';
-								}
-							}, 600);
-						}
-					);
+								}, 600);
+							}
+						);
 				} else {
 					this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
 					this.validatorUsername = 'bad';
@@ -211,9 +213,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				this.actionFormPasswordData.controls['newPassword'].setErrors({ validate: false });
 				this.validatorNewPassword = 'load';
 
-				if (val.trim() != '') {
+				if (val.trim() !== '') {
 					setTimeout(() => {
-						if(val == this.actionFormPasswordData.get('confirmPassword').value){
+						if (val === this.actionFormPasswordData.get('confirmPassword').value) {
 							this.actionFormPasswordData.controls['confirmPassword'].setErrors(null);
 							this.actionFormPasswordData.controls['newPassword'].setErrors(null);
 							this.validatorNewPassword = 'done';
@@ -234,9 +236,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				this.actionFormPasswordData.controls['confirmPassword'].setErrors({ validate: false });
 				this.validatorNewPassword = 'load';
 
-				if (val.trim() != '') {
+				if (val.trim() !== '') {
 					setTimeout(() => {
-						if(val == this.actionFormPasswordData.get('newPassword').value){
+						if (val === this.actionFormPasswordData.get('newPassword').value) {
 							this.actionFormPasswordData.controls['newPassword'].setErrors(null);
 							this.actionFormPasswordData.controls['confirmPassword'].setErrors(null);
 							this.validatorNewPassword = 'done';
@@ -255,7 +257,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	// Change avatar/background
 	openAvatar(type, action, event) {
 		switch (type) {
-			case "avatar":
+			case 'avatar':
 				if (action === 'upload') {
 					let file = event.target.files[0];
 
@@ -264,7 +266,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 						this.sessionData.current.avatarCropper = this.sanitizer.bypassSecurityTrustUrl(file);
 						this.location.go('/settings#avatar');
 
-						let config = {
+						const config = {
 							disableClose: false,
 							data: {
 								sessionData: this.sessionData,
@@ -273,7 +275,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							}
 						};
 
-						let dialogRef = this.dialog.open(NewAvatarComponent, config);
+						const dialogRef = this.dialog.open(NewAvatarComponent, config);
 						dialogRef.afterClosed().subscribe((res: string) => {
 							this.location.go('/settings');
 
@@ -296,8 +298,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 						});
 				}
 				break;
-			case "background":
-				if (action == 'upload') {
+			case 'background':
+				if (action === 'upload') {
 					let file = event.target.files[0];
 
 					if (/^image\/\w+$/.test(file.type)) {
@@ -305,7 +307,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 						this.sessionData.current.backgroundCropper = this.sanitizer.bypassSecurityTrustUrl(file);
 						this.location.go('/settings#background');
 
-						let config = {
+						const config = {
 							disableClose: false,
 							data: {
 								sessionData: this.sessionData,
@@ -314,7 +316,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							}
 						};
 
-						let dialogRef = this.dialog.open(NewAvatarComponent, config);
+						const dialogRef = this.dialog.open(NewAvatarComponent, config);
 						dialogRef.afterClosed().subscribe((res: string) => {
 							this.location.go('/settings');
 
@@ -327,7 +329,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					} else {
 						this.alertService.error(this.translations.common.invalidFile);
 					}
-				} else if (action == 'remove') {
+				} else if (action === 'remove') {
 					this.sessionData.current.newBackground = '';
 					this.userDataService.updateBackground(this.sessionData.current)
 						.subscribe(res => {
@@ -341,8 +343,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	// About edit
-	aboutEdit(type, event){
-		if (type == 'writingChanges') {
+	aboutEdit(type, event) {
+		if (type === 'writingChanges') {
 			let str = event;
 			this.sessionData.current.aboutWriting = event;
 
@@ -351,17 +353,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				str = str.replace(/\n/g, '<br>');
 
 				// hashtag
-				str = str.replace(/(#)\w+/g, function(value){
+				str = str.replace(/(#)\w+/g, function(value) {
 					return '<span class="hashtag">' + value + '</span>';
 				});
 
 				// mention
-				str = str.replace(/(@)\w+/g, function(value){
+				str = str.replace(/(@)\w+/g, function(value) {
 					return '<span class="mention">' + value + '</span>';
 				});
 
 				// url
-				str = str.replace(this.env.urlRegex, function(value){
+				str = str.replace(this.env.urlRegex, function(value) {
 					return '<span class="url">' + value + '</span>';
 				});
 
@@ -369,34 +371,35 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				this.sessionData.current.about = str;
 			}
 
-			//check empty contenteditable
+			// check empty contenteditable
 			this.aboutEdit('checkPlaceholder', event);
-		} else if (type == 'checkPlaceholder') {
+		} else if (type === 'checkPlaceholder') {
 			event = event.trim();
 
-			if (event.length == 0)
+			if (event.length === 0) {
 				this.sessionData.current.about = '<div class="placeholder">' + this.translations.settings.aboutPlaceholder + '</div>';
-		} else if (type == 'transformBeforeSend') {
-			let newData = {
+			}
+		} else if (type === 'transformBeforeSend') {
+			const newData = {
 				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal,
 				original: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal
-			}
+			};
 
 			// new line
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value){
+			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value){
+			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
 				return '<a class="url">' + value + '</a>';
 			});
 
@@ -406,10 +409,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	// Save personal data
 	submitPersonal() {
-		let dataAbout = this.aboutEdit('transformBeforeSend', null);
-		let form = this.actionFormPersonalData.value;
-		let regex = /^[a-zA-Z0-9._-]+$/;
-		let data = {
+		const dataAbout = this.aboutEdit('transformBeforeSend', null),
+		form = this.actionFormPersonalData.value,
+		regex = /^[a-zA-Z0-9._-]+$/,
+		params = {
 			username: form.username,
 			name: form.name.trim(),
 			language: form.language,
@@ -417,12 +420,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			aboutOriginal: dataAbout.original
 		};
 
-		if (data.username.trim().length === 0 || !regex.test(data.username)) {
+		if (params.username.trim().length === 0 || !regex.test(params.username)) {
 			this.alertService.error(this.translations.settings.usernameRequirements);
 		} else {
 			this.savePersonalDataLoading = true;
 
-			this.userDataService.updateData(data)
+			this.userDataService.updateData(params)
 				.subscribe(res => {
 					setTimeout(() => {
 						this.savePersonalDataLoading = false;
@@ -448,7 +451,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	// Save password data
 	submitPassword() {
-		let form = this.actionFormPasswordData.value;
+		const form = this.actionFormPasswordData.value;
 
 		if (form.oldPassword.trim().length > 0 &&
 			form.newPassword.trim().length > 0 &&
@@ -459,10 +462,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			} else {
 				this.savePasswordDataLoading = false;
 
-				let data = {
+				const data = {
 					oldPassword: form.oldPassword,
 					newPassword: form.newPassword
-				}
+				};
 
 				this.userDataService.updatePassword(data)
 					.subscribe(res => {
@@ -480,50 +483,52 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		} else {
 			this.alertService.error(this.translations.common.completeAllFields);
 		}
-
 	}
 
 	// Add more sessions
-	openNewSession(){
-		let dONS = {
+	openNewSession() {
+		const dONS = {
 			type: 'create',
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations,
 			}
-		}
+		};
 
 		this.sessionService.setDataAddAccount(dONS);
 	}
 
 	// Change user session
-	setCurrentUser(data){
-		if (this.sessionData.current.id != data.id) {
-			let dSCU = {
+	setCurrentUser(data) {
+		if (this.sessionData.current.id !== data.id) {
+			const dSCU = {
 				type: 'set',
 				data: data
-			}
+			};
 
 			this.sessionService.setDataAddAccount(dSCU);
 		}
 	}
 
 	// Close session
-	closeSession(data){
-		let dCS = {
+	closeSession(data) {
+		const dCS = {
 			type: 'close',
 			data: data
-		}
+		};
 
 		this.sessionService.setDataAddAccount(dCS);
 
 		// Remove session
-		for (var i in this.sessionData.sessions)
-			if (this.sessionData.sessions[i].id == data.id)
+		for (const i in this.sessionData.sessions) {
+			if (this.sessionData.sessions[i].id === data.id) {
 				this.sessionData.sessions.splice(i, 1);
+			}
+		}
 
 		// Set session after remove
-		if (this.sessionData.sessions[0].id != data.id)
+		if (this.sessionData.sessions[0].id !== data.id) {
 			this.sessionData.current = this.sessionData.sessions[0];
+		}
 	}
 }

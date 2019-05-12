@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Build PROD
 
-$ npm run build:ssr
+$ npm run build:ssr [For GoogleCloudPlatform]
 $ npm run build:ssr && npm run serve:ssr [compile & run on localhost]
 
 ----------------------------------------------------------------------------------------------------

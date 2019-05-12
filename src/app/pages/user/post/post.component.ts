@@ -1,7 +1,7 @@
-import { DOCUMENT, Title } from '@angular/platform-browser';
-import { Component, OnInit, OnDestroy, Inject, ElementRef, Renderer } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Component, OnInit, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -49,7 +49,7 @@ export class PostComponent implements OnInit, OnDestroy {
 		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
 		private location: Location,
-		private renderer: Renderer,
+		private renderer: Renderer2,
 		private titleService: Title,
 		private elementRef: ElementRef,
 		private alertService: AlertService,
@@ -88,14 +88,15 @@ export class PostComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 
 		// Click on a href
 		this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
-			if (event.target.localName == 'a')
+			if (event.target.localName === 'a') {
 				this.sessionService.setDataClickElementRef(event);
+			}
 		});
 	}
 
@@ -115,24 +116,24 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Push Google Ad
-	pushAd(){
-		let ad = this.env.ad;
-
-		let a = {
+	pushAd() {
+		const ad = {
 			contentTypeAd: true,
-			content: ad
-		}
+			content: this.env.ad
+		};
 
 		setTimeout(() => {
-			let g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
-			if (g == 1) this.hideAd = true;
+			const g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
+			if (g === 1) {
+				this.hideAd = true;
+			}
 		}, 100);
 
-		return a;
+		return ad;
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -141,23 +142,23 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Default
 	default(name) {
-		let data = {
+		const data = {
 			name: name
-		}
+		};
 
 		this.publicationsDataService.getPost(data)
 			.subscribe(res => {
 				this.dataDefault.loadingData = false;
 
-				if (!res || res.length == 0) {
+				if (!res || res.length === 0) {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
 					this.showComments('showHide', this.dataDefault.data);
 
 					// Meta
-					let t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
-					let metaData = {
+					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
+					const metaData = {
 						page: t,
 						title: t,
 						description: t,
@@ -168,7 +169,7 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					let url = '[' + res.id + ']/[' + name + ']/p/' + t;
+					const url = '[' + res.id + ']/[' + name + ']/p/' + t;
 					this.userDataService.analytics(url);
 				}
 			}, error => {
@@ -179,7 +180,7 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Play video
-	playVideo(item, player){
+	playVideo(item, player) {
 		player = document.getElementById(player);
 		player.load();
 		player.play();
@@ -193,26 +194,26 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item){
+	itemOptions(type, item) {
 		switch (type) {
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataAddRemove = {
+				const dataAddRemove = {
 					id: item.id,
 					type: item.removeType
-				}
+				};
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
 			case 'disableComments':
 				item.disabledComments = !item.disabledComments;
 
-				let dataDisableComments = {
+				const dataDisableComments = {
 					id: item.id,
 					type: item.disabledComments
-				}
+				};
 
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
@@ -224,18 +225,18 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Share on social media
-	shareOn(type, item){
+	shareOn(type, item) {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTab':
-				let url = this.env.url + 'p/' + item.name;
+				const url = this.env.url + 'p/' + item.name;
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				let urlExtension = this.env.url + 'p/' + item.name;
+				const urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 			case 'messageSong':
@@ -243,11 +244,11 @@ export class PostComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTabSong':
-				let urlSong = this.env.url + 's/' + item.name.slice(0, -4);
+				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(urlSong, '_blank');
 				break;
 			case 'copyLinkSong':
-				let urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
+				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
@@ -258,7 +259,7 @@ export class PostComponent implements OnInit, OnDestroy {
 		if (!this.sessionData.current.id) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.postId == data.id) { // Play/Pause current
+			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
@@ -278,18 +279,18 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options: add/remove, share, search, report
-	itemSongOptions(type, item, playlist){
-		switch(type){
+	itemSongOptions(type, item, playlist) {
+		switch (type) {
 			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataU = {
+				const dataU = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataU)
 					.subscribe((res: any) => {
@@ -299,24 +300,24 @@ export class PostComponent implements OnInit, OnDestroy {
 			case('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
 			case('createPlaylist'):
-				let data = 'create';
+				const data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
 			break;
 			case('share'):
@@ -330,24 +331,25 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Bookmarks
-	markUnmark(item){
+	markUnmark(item) {
 		if (this.sessionData.current.id) {
 			item.bookmark.checked = !item.bookmark.checked;
 
-			if (item.bookmark.checked)
+			if (item.bookmark.checked) {
 				this.alertService.success(this.translations.bookmarks.addedTo);
+			}
 
-			// data
-			let data = {
+			const data = {
 				item: item.id,
 				id: item.bookmark.id,
 				type: item.bookmark.checked ? 'add' : 'remove'
-			}
+			};
 
 			this.bookmarksDataService.markUnmark(data)
 				.subscribe(res => {
-					if (res)
+					if (res) {
 						item.bookmark.id = res;
+					}
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
@@ -355,15 +357,17 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Like / Unlike
-	likeUnlike(item){
+	likeUnlike(item) {
 		if (this.sessionData.current.id) {
 			if (item.liked) {
 				item.liked = false;
 				item.countLikes--;
 
-				for (let i in item.likers)
-					if (item.likers[i].id == this.sessionData.current.id)
+				for (const i in item.likers) {
+					if (item.likers[i].id === this.sessionData.current.id) {
 						item.likers.splice(i, 1);
+					}
+				}
 			} else {
 				item.liked = true;
 				item.countLikes++;
@@ -371,32 +375,33 @@ export class PostComponent implements OnInit, OnDestroy {
 				item.likers.unshift(this.sessionData.current);
 			}
 
-			// data
-			let data = {
+			const data = {
 				id: item.id,
 				receiver: item.user.id,
 				type: item.liked ? 'like' : 'unlike'
-			}
+			};
 
 			this.publicationsDataService.likeUnlike(data).subscribe();
 		}
 	}
 
 	// Show people who like
-	showLikes(item){
+	showLikes(item) {
 		item.comeFrom = 'publication';
 		this.sessionService.setDataShowLikes(item);
 	}
 
 	// Show/hide comments box
-	showComments(type, item){
+	showComments(type, item) {
 		switch (type) {
 			case 'showHide':
 				item.showCommentsBox = !item.showCommentsBox;
-				
-				if (!item.disabledComments)
-					if (!item.loaded)
+
+				if (!item.disabledComments) {
+					if (!item.loaded) {
 						this.defaultComments('default', item);
+					}
+				}
 				break;
 			case 'load':
 				this.defaultComments('default', item);
@@ -406,7 +411,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Comments
 	defaultComments(type, item) {
-		if (type == 'default') {
+		if (type === 'default') {
 			item.noData = false;
 			item.loadMoreData = false;
 			item.loadingData = true;
@@ -419,17 +424,17 @@ export class PostComponent implements OnInit, OnDestroy {
 			this.newComment('clear', null, item);
 
 			// Data
-			let data = {
+			const data = {
 				id: item.id,
 				rows: item.rowsComments,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
 					item.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						item.noData = true;
 					} else {
 						item.noData = false;
@@ -440,15 +445,15 @@ export class PostComponent implements OnInit, OnDestroy {
 					item.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !item.loadingMoreData) {
+		} else if (type === 'more' && !item.loadingMoreData) {
 			item.loadingMoreData = true;
 			item.rowsComments++;
 
-			let data = {
+			const data = {
 				id: item.id,
 				rows: item.rowsComments,
 				cuantity: this.env.cuantity
-			}
+			};
 
 			this.publicationsDataService.comments(data)
 				.subscribe(res => {
@@ -457,9 +462,13 @@ export class PostComponent implements OnInit, OnDestroy {
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								item.comments.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									item.comments.list.push(res[i]);
+								}
+							}
+						}
 					}, 600);
 				}, error => {
 					item.loadingData = false;
@@ -469,8 +478,8 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// New comment
-	newComment(type, event, item){
-		if (type == 'clear') {
+	newComment(type, event, item) {
+		if (type === 'clear') {
 			item.newCommentData = [];
 
 			setTimeout(() => {
@@ -484,34 +493,34 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				this.newComment('checkPlaceholder', null, item);
 			}, 100);
-		} else if (type == 'writingChanges') {
+		} else if (type === 'writingChanges') {
 			let str = event;
 			item.newCommentData.original = event;
-			
+
 			// new line
 			str = str.replace(/\n/g, '<br>');
 
 			// hashtag
-			str = str.replace(/(#)\w+/g, function(value){
+			str = str.replace(/(#)\w+/g, function(value) {
 				return '<span class="hashtag">' + value + '</span>';
 			});
 
 			// mention
-			str = str.replace(/(@)\w+/g, function(value){
+			str = str.replace(/(@)\w+/g, function(value) {
 				return '<span class="mention">' + value + '</span>';
 			});
 
 			// url
-			str = str.replace(this.env.urlRegex, function(value){
+			str = str.replace(this.env.urlRegex, function(value) {
 				return '<span class="url">' + value + '</span>';
 			});
 
 			// writing content
 			item.newCommentData.transformed = str;
 
-			//check empty contenteditable
+			// check empty contenteditable
 			this.newComment('checkPlaceholder', null, item);
-		} else if (type == 'keyCode') {
+		} else if (type === 'keyCode') {
 			if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
 				// Space, Enter, Escape
 				this.searchBoxMentions = false;
@@ -520,59 +529,60 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.searchBoxMentions = false;
 				} else {
 					item.newCommentData.eventTarget = event.target;
-					let position = this.getCaretPosition(event.target);
-					let word = this.getCurrentWord(event.target, position);
-					
+					const position = this.getCaretPosition(event.target);
+					const word = this.getCurrentWord(event.target, position);
+
 					item.newCommentData.lastTypedWord = {
 						word: word,
 						position: position
 					};
 				}
 			}
-		} else if (type == 'checkPlaceholder') {
-			if (item.newCommentData.original.length == 0)
+		} else if (type === 'checkPlaceholder') {
+			if (item.newCommentData.original.length === 0) {
 				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
-		} else if (type == 'transformBeforeSend') {
-			let newData = {
+			}
+		} else if (type === 'transformBeforeSend') {
+			const newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
 				original: item.newCommentData.original ? item.newCommentData.original : '',
 				mentions: [],
 				hashtags: []
-			}
+			};
 
 			// new line
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value){
+			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value){
+			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
 				newData.mentions.push(value);
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value){
+			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
 				return '<a class="url">' + value + '</a>';
 			});
 
 			return newData;
-		} else if (type == 'create') {
-			if (item.newCommentData.original.trim().length == 0) {
+		} else if (type === 'create') {
+			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
-				let formatedData = this.newComment('transformBeforeSend', null, item);
-				let dataCreate = {
+				const formatedData = this.newComment('transformBeforeSend', null, item);
+				const dataCreate = {
 					type: 'create',
 					id: item.id,
 					receiver: item.user.id,
 					comment: formatedData.content,
 					comment_original: formatedData.original,
 					mentions: formatedData.mentions
-				}
+				};
 
 				this.publicationsDataService.comment(dataCreate)
 					.subscribe((res: any) => {
@@ -589,25 +599,26 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Comments Options
-	commentsOptions(type, item, comment){
+	commentsOptions(type, item, comment) {
 		switch (type) {
 			case 'addRemove':
 				comment.addRemove = !comment.addRemove;
 				comment.type = !comment.addRemove ? 'add' : 'remove';
 
-				let data = {
+				const data = {
 					receiver: item.user.id,
 					type: comment.type,
 					comment: comment.id,
 					id: item.id
-				}
+				};
 
 				this.publicationsDataService.comment(data)
 					.subscribe((res: any) => {
-						if (comment.addRemove)
+						if (comment.addRemove) {
 							item.countComments--;
-						else
+						} else {
 							item.countComments++;
+						}
 					});
 				break;
 			case 'report':
@@ -619,12 +630,12 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {
-		let w3 = (typeof this.window.getSelection != 'undefined') && true,
-			caretOffset = 0;
+		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
+		let caretOffset = 0;
 
 		if (w3) {
-			let range = this.window.getSelection().getRangeAt(0);
-			let preCaretRange = range.cloneRange();
+			const range = this.window.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
 			preCaretRange.selectNodeContents(element);
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
@@ -637,10 +648,8 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
-		let word = '';
-
 		// Get content of div
-		let content = el.textContent;
+		const content = el.textContent;
 
 		// Check if clicked at the end of word
 		position = content[position] === ' ' ? position - 1 : position;

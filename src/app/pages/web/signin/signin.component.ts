@@ -49,7 +49,7 @@ export class SigninComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'signin';
+		const url = 'signin';
 		this.userDataService.analytics(url);
 	}
 
@@ -61,7 +61,7 @@ export class SigninComponent implements OnInit {
 		});
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

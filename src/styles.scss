@@ -1527,9 +1527,9 @@ body{
 	/*Alert*/
 	.alertBox{
 		position: fixed;
-		z-index: 99999;
+		z-index: 999;
 		width: 100%;
-		top: 56px;
+		top: 64px;
 		left: 0;
 
 		.inner{
@@ -2822,7 +2822,7 @@ body{
 					font-weight: bold;
 					line-height: 28px;
 					margin: 0 6px 0 0;
-					font-size: 11px;
+					font-size: 12px;
 					padding: 0 8px;
 					min-width: 0;
 					height: 28px;
@@ -3850,7 +3850,7 @@ body{
 									text-transform: uppercase;
 									margin: 10px 0 0 6px;
 									color: $blackColor;
-									line-height: 24px;
+									line-height: 28px;
 									font-weight: bold;
 									font-size: 11px;
 									padding: 0 8px;
@@ -4662,7 +4662,7 @@ body{
 					line-height: 28px;
 					margin: 0 0 0 8px;
 					box-shadow: none;
-					font-size: 11px;
+					font-size: 12px;
 					padding: 0 8px;
 					min-width: 0;
 					height: 28px;
@@ -5000,21 +5000,26 @@ body{
 					}
 
 					.signingPanel{
-						margin: 12px 24px 0 0;
-						color: $greyColor;
-						line-height: 32px;
+						align-items: center;
+						margin: 0 24px 0 0;
 						display: flex;
+						height: 56px;
 
-						a{
-							background: transparent;
-							border-radius: 5px;
+						button{
+							text-transform: uppercase;
 							color: $blueColor;
+							margin: 0 0 0 6px;
 							font-weight: bold;
-							line-height: 32px;
-							min-width: 36px;
+							line-height: 28px;
+							font-size: 12px;
 							padding: 0 12px;
-							margin: 0 6px;
-							height: 32px;
+							height: 28px;
+							min-width: 0;
+
+							&:first-child{
+								background-color: $blueColor;
+								color: $whiteColor;								
+							}
 						}
 					}
 
@@ -5310,7 +5315,7 @@ body{
 											margin: 10px 0 0 6px;
 											color: currentColor;
 											font-weight: bold;
-											line-height: 24px;
+											line-height: 28px;
 											font-size: 11px;
 											padding: 0 8px;
 											height: 28px;
@@ -6695,7 +6700,7 @@ body{
 									color: $whiteColor;
 									font-weight: bold;
 									line-height: 28px;
-									font-size: 11px;
+									font-size: 12px;
 									padding: 0 8px;
 									min-width: 0;
 									height: 28px;
@@ -7034,7 +7039,7 @@ body{
 											color: $whiteColor;
 											font-weight: bold;
 											line-height: 28px;
-											font-size: 11px;
+											font-size: 12px;
 											padding: 0 8px;
 											min-width: 0;
 											height: 28px;
@@ -7499,7 +7504,7 @@ body{
 									color: currentColor;
 									font-weight: bold;
 									line-height: 28px;
-									font-size: 11px;
+									font-size: 12px;
 									padding: 0 8px;
 									min-width: 0;
 									height: 28px;

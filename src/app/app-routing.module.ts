@@ -30,7 +30,7 @@ const routes: Routes = [
 		path: ':id/songs',					loadChildren: './pages/user/audios/audios.module#AudiosModule',								resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver, userResolvedData: UserResolver }	}, {
 		path: ':id/following',				loadChildren: './pages/user/following/following.module#FollowingModule',					resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver, userResolvedData: UserResolver }	}, {
 		path: ':id/followers',				loadChildren: './pages/user/followers/followers.module#FollowersModule',					resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver, userResolvedData: UserResolver }	}, {
-		path: '**',							loadChildren: './pages/web/error/error.module#ErrorModule',									resolve: { langResolvedData: LangResolver 																			}
+		path: '**',							loadChildren: './pages/web/error/error.module#ErrorModule',									resolve: { langResolvedData: LangResolver }
 	}
 ];
 

@@ -1,4 +1,4 @@
-import { DOCUMENT, DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -35,7 +35,6 @@ export class SongComponent implements OnInit, OnDestroy {
 	public hideAd: boolean;
 
 	constructor(
-		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
 		private location: Location,
 		private titleService: Title,
@@ -67,7 +66,7 @@ export class SongComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 	}
@@ -88,19 +87,19 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Push Google Ad
 	pushAd() {
-		let ad = this.env.ad;
-
-		let a = {
+		const ad = {
 			contentTypeAd: true,
-			content: ad
-		}
+			content: this.env.ad
+		};
 
 		setTimeout(() => {
-			let g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
-			if (g == 1) this.hideAd = true;
+			const g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
+			if (g === 1) {
+				this.hideAd = true;
+			}
 		}, 100);
 
-		return a;
+		return ad;
 	}
 
 	// Get translations
@@ -113,22 +112,22 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Default
 	default(name) {
-		let data = {
+		const data = {
 			name: name
-		}
+		};
 
 		this.audioDataService.getSong(data)
 			.subscribe(res => {
 				this.dataDefault.loadingData = false;
 
-				if (!res || res.length == 0) {
+				if (!res || res.length === 0) {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
-					let t = (res.original_artist && res.original_title) ? (res.original_artist + ' - ' + res.original_title) : res.title;
+					const t = (res.original_artist && res.original_title) ? (res.original_artist + ' - ' + res.original_title) : res.title;
 
 					// Meta
-					let metaData = {
+					const metaData = {
 						page: t,
 						title: t,
 						description: t,
@@ -139,7 +138,7 @@ export class SongComponent implements OnInit, OnDestroy {
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					let url = '[' + res.id + ']/[' + name + ']/s/' + t;
+					const url = '[' + res.id + ']/[' + name + ']/s/' + t;
 					this.userDataService.analytics(url);
 				}
 			}, error => {
@@ -154,7 +153,10 @@ export class SongComponent implements OnInit, OnDestroy {
 		if (!this.sessionData.current.id) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.item.song == item.song) { // Play/Pause current
+			if (this.audioPlayerData.key === key &&
+				this.audioPlayerData.type === type &&
+				this.audioPlayerData.item.song === item.song
+			) {
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
@@ -174,16 +176,16 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Item options
 	itemSongOptions(type, item, playlist) {
-		switch(type){
-			case("addRemoveUser"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+		switch (type) {
+			case('addRemoveUser'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataARO = {
+				const dataARO = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
@@ -192,26 +194,26 @@ export class SongComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
 							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
@@ -221,12 +223,12 @@ export class SongComponent implements OnInit, OnDestroy {
 	// Share on social media
 	shareOn(type, item) {
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "copyLink":
-				let urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+			case 'copyLink':
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				urlExtension.toString();
 				this.sessionService.setDataCopy(urlExtension);
 				break;

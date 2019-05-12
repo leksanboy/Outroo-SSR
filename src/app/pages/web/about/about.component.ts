@@ -40,7 +40,7 @@ export class AboutComponent implements OnInit {
 		this.metaService.setData(metaData);
 
 		// Set Google analytics
-		let url = 'about';
+		const url = 'about';
 		this.userDataService.analytics(url);
 	}
 
@@ -48,7 +48,7 @@ export class AboutComponent implements OnInit {
 		// not in use
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

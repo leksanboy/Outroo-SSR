@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
 
 		// Set Google analytics
-		let url = 'home';
+		const url = 'home';
 		this.userDataService.analytics(url);
 	}
 

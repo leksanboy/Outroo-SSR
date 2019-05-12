@@ -657,23 +657,22 @@
 // 	}
 
 // 	// Get current typing word on contenteditable
-// 	getCurrentWord(el, position) {
-// 		let word = '';
+// Get current typing word on contenteditable
+	// getCurrentWord(el, position) {
+	// 	// Get content of div
+	// 	const content = el.textContent;
 
-// 		// Get content of div
-// 		let content = el.textContent;
+	// 	// Check if clicked at the end of word
+	// 	position = content[position] === ' ' ? position - 1 : position;
 
-// 		// Check if clicked at the end of word
-// 		position = content[position] === ' ' ? position - 1 : position;
+	// 	// Get the start and end index
+	// 	let startPosition = content.lastIndexOf(' ', position);
+	// 	startPosition = startPosition === content.length ? 0 : startPosition;
+	// 	let endPosition = content.indexOf(' ', position);
+	// 	endPosition = endPosition === -1 ? content.length : endPosition;
 
-// 		// Get the start and end index
-// 		let startPosition = content.lastIndexOf(' ', position);
-// 		startPosition = startPosition === content.length ? 0 : startPosition;
-// 		let endPosition = content.indexOf(' ', position);
-// 		endPosition = endPosition === -1 ? content.length : endPosition;
-
-// 		return content.substring(startPosition + 1, endPosition);
-// 	}
+	// 	return content.substring(startPosition + 1, endPosition);
+	// }
 
 // 	// Show photo from url if is one
 // 	showShared(item) {

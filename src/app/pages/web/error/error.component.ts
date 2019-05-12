@@ -37,7 +37,7 @@ export class ErrorComponent implements OnInit {
 		this.metaService.setData(metaData);
 
 		// Set Google analytics
-		let url = 'error';
+		const url = 'error';
 		this.userDataService.analytics(url);
 	}
 
@@ -45,7 +45,7 @@ export class ErrorComponent implements OnInit {
 		// not in use
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 }

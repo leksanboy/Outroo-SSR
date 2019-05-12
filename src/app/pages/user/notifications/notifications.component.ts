@@ -1,6 +1,6 @@
-import { DOCUMENT, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { environment } from '../../../../environments/environment';
@@ -72,7 +72,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(this.translations.notifications.title);
 
 			// Set Google analytics
-			let url = '[' + this.sessionData.current.id + ']/notifications';
+			const url = '[' + this.sessionData.current.id + ']/notifications';
 			this.userDataService.analytics(url);
 
 			// Load default
@@ -85,34 +85,39 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		this.activeShare = this.sessionService.getDataShowShare()
 			.subscribe(data => {
 				// Check if is new chat with content
-				if (data.close)
-					if (data.new && data.list.length > 0)
+				if (data.close) {
+					if (data.new && data.list.length > 0) {
 						this.dataChats.list.unshift(data);
-					else if (data.list.length > 0)
-						for (let i in this.dataChats.list)
-							if(this.dataChats.list[i].id == data.item.id)
+					} else if (data.list.length > 0) {
+						for (const i in this.dataChats.list) {
+							if (this.dataChats.list[i].id === data.item.id) {
 								this.dataChats.list[i].last = data.last;
+							}
+						}
+					}
+				}
 			});
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 
 		// Load more on scroll on bottom
 		this.window.onscroll = (event) => {
-			let windowHeight = "innerHeight" in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
-			let body = document.body, html = document.documentElement;
-			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-			let windowBottom = windowHeight + this.window.pageYOffset;
+			const windowHeight = 'innerHeight' in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
+			const body = document.body, html = document.documentElement;
+			const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.dataNotifications.list.length > 0)
+				if (this.dataNotifications.list.length > 0) {
 					this.default('more');
+				}
 			}
-		}
+		};
 	}
 
 	ngOnInit() {
@@ -135,7 +140,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Default
 	default(type) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.dataNotifications = {
 				list: [],
 				rows: 0,
@@ -144,46 +149,50 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false
-			}
+			};
 
-			let data = {
+			const data = {
 				type: 'default',
 				rows: this.dataNotifications.rows,
 				cuantity: environment.cuantity
-			}
+			};
 
 			this.notificationsDataService.default(data)
 				.subscribe(res => {
 					this.dataNotifications.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						this.dataNotifications.noData = true;
 					} else {
 						this.dataNotifications.loadMoreData = (!res || res.length < environment.cuantity) ? false : true;
 
-						for (let i in res)
-							setTimeout(() => {
-								res[i].status = 1;
-							}, 1800);
+						for (const i in res) {
+							if (i) {
+								setTimeout(() => {
+									res[i].status = 1;
+								}, 1800);
+							}
+						}
 
 						this.dataNotifications.list = res;
 						this.sessionService.setPendingNotifications('refresh');
 					}
 
-					if (!res || res.length < environment.cuantity)
+					if (!res || res.length < environment.cuantity) {
 						this.dataNotifications.noMore = true;
+					}
 				}, error => {
 					this.dataNotifications.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataNotifications.noMore && !this.dataNotifications.loadingMoreData) {
+		} else if (type === 'more' && !this.dataNotifications.noMore && !this.dataNotifications.loadingMoreData) {
 			this.dataNotifications.loadingMoreData = true;
 			this.dataNotifications.rows++;
 
-			let data = {
+			const data = {
 				rows: this.dataNotifications.rows,
 				cuantity: environment.cuantity
-			}
+			};
 
 			this.notificationsDataService.default(data)
 				.subscribe(res => {
@@ -192,19 +201,23 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.dataNotifications.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res) {
-								setTimeout(() => {
-									res[i].status = 1;
-								}, 1800);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (res[i]) {
+									setTimeout(() => {
+										res[i].status = 1;
+									}, 1800);
 
-								this.dataNotifications.list.push(res[i]);
+									this.dataNotifications.list.push(res[i]);
+								}
 							}
+						}
 
 						this.sessionService.setPendingNotifications('refresh');
 
-						if (!res || res.length < environment.cuantity)
+						if (!res || res.length < environment.cuantity) {
 							this.dataNotifications.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataNotifications.loadingData = false;
@@ -215,55 +228,55 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Follow / Unfollow
 	followUnfollow(type, item) {
-		if (type == 'accept') {
+		if (type === 'accept') {
 			// When other send you a request
 			item.type = 'startFollowing';
 			item.statusF = 'accept';
 
-			let data = {
+			const data = {
 				type: item.statusF,
 				private: item.private,
 				sender: item.user.id
-			}
+			};
 
 			// Check following status
 			this.followsDataService.followUnfollow(data)
 				.subscribe((res: any) => {
 					item.statusFollowing = res;
 				});
-		} else if (type == 'decline') {
+		} else if (type === 'decline') {
 			// When other send you a request
 			item.type = 'startFollowing';
 			item.statusFollowing = 'declined';
 			item.statusF = 'decline';
 
-			let data = {
+			const data = {
 				type: item.statusF,
 				private: item.private,
 				sender: item.user.id
-			}
+			};
 
 			this.followsDataService.followUnfollow(data).subscribe();
-		} else if (type == 'follow') { 
+		} else if (type === 'follow') {
 			// When you start following someone who follow you
 			item.statusFollowing = item.private ? 'pending' : 'following';
 
-			let data = {
+			const data = {
 				type: item.statusFollowing,
 				private: item.private,
 				receiver: item.user.id
-			}
+			};
 
 			this.followsDataService.followUnfollow(data).subscribe();
-		} else if (type == 'unfollow') { 
+		} else if (type === 'unfollow') {
 			// Stop following
 			item.statusFollowing = 'unfollow';
 
-			let data = {
+			const data = {
 				type: item.statusFollowing,
 				private: item.private,
 				receiver: item.user.id
-			}
+			};
 
 			this.followsDataService.followUnfollow(data).subscribe();
 		}
@@ -271,9 +284,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Show photo from url if is one
 	show(item) {
-		if (item.url == 'photos') {
+		if (item.url === 'photos') {
 			this.sessionService.setDataShowPhoto(item);
-		} else if (item.url == 'publications') {
+		} else if (item.url === 'publications') {
 			this.sessionService.setDataShowPublication(item);
 		}
 	}
@@ -281,18 +294,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Item options
 	itemOptions(type, item) {
 		switch (type) {
-			case "remove":
+			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataAddRemove = {
+				const dataAddRemove = {
 					id: item.id,
 					type: item.removeType
-				}
+				};
 
 				this.notificationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case "report":
+			case 'report':
 				item.type = 'notification';
 				this.sessionService.setDataReport(item);
 				break;
@@ -304,7 +317,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		if (!this.sessionData.current.id) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.item.song == item.song) { // Play/Pause current
+			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.item.song === item.song) { // Play/Pause current
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
@@ -325,17 +338,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Item options
 	itemSongOptions(type, item, playlist) {
-		switch(type){
-			case("addRemoveUser"):
+		switch (type) {
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataARO = {
+				const dataARO = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
@@ -344,26 +357,26 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
@@ -373,17 +386,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Share on social media
 	shareOn(type, item) {
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTab":
-				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+			case 'newTab':
+				const url = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.window.open(url, '_blank');
 				break;
-			case "copyLink":
-				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
-				urlExtension.toString();
+			case 'copyLink':
+				const urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}

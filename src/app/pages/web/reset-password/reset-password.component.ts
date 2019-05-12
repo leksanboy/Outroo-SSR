@@ -71,7 +71,7 @@ export class ResetPasswordComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		let url = 'reset-password';
+		const url = 'reset-password';
 		this.userDataService.analytics(url);
 	}
 
@@ -84,7 +84,7 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	goBack(){
+	goBack() {
 		this.router.navigate(['/']);
 	}
 

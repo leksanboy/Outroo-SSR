@@ -1,6 +1,6 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Location, DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
@@ -35,6 +35,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	public actionFormSearch: FormGroup;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
 		private _fb: FormBuilder,
 		private location: Location,
@@ -62,7 +63,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(this.userData.name + ' - ' + this.translations.followers.title);
 
 			// Set Google analytics
-			let url = '[' + this.userData.id + ']/followers';
+			const url = '[' + this.userData.id + ']/followers';
 			this.userDataService.analytics(url);
 
 			// Check if following
@@ -81,26 +82,29 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				let lang = data.current.language;
+				const lang = data.current.language;
 				this.getTranslations(lang);
 			});
 
 		// Load more on scroll on bottom
 		this.window.onscroll = (event) => {
-			let windowHeight = "innerHeight" in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
-			let body = document.body, html = document.documentElement;
-			let docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-			let windowBottom = windowHeight + this.window.pageYOffset;
+			const windowHeight = 'innerHeight' in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
+			const body = document.body, html = document.documentElement;
+			const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.data.active == 'default')
-					if (this.dataDefault.list.length > 0)
+				if (this.data.active === 'default') {
+					if (this.dataDefault.list.length > 0) {
 						this.default('more', null);
-				else if (this.data.active == 'search')
-					if (this.dataSearch.list.length > 0)
+					}
+				} else if (this.data.active === 'search') {
+					if (this.dataSearch.list.length > 0) {
 						this.search('more');
+					}
+				}
 			}
-		}
+		};
 	}
 
 	ngOnInit() {
@@ -110,11 +114,11 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		});
 
 		// Search/Reset
-		this.actionFormSearch.controls["caption"].valueChanges
+		this.actionFormSearch.controls['caption'].valueChanges
 			.pipe(
 				debounceTime(400),
 				distinctUntilChanged())
-			.subscribe(val => {	
+			.subscribe(val => {
 				(val.length > 0) ? this.search('default') : this.search('clear');
 			});
 	}
@@ -124,12 +128,12 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	}
 
 	// Go back
-	goBack(){
+	goBack() {
 		this.router.navigate([this.userData.username]);
 	}
 
 	// Get translations
-	getTranslations(lang){
+	getTranslations(lang) {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
@@ -138,24 +142,25 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	}
 
 	// Follow / Unfollow
-	followUnfollow(type, item){
-		if (type == 'follow')
+	followUnfollow(type, item) {
+		if (type === 'follow') {
 			item.status = item.private ? 'pending' : 'following';
-		else if (type == 'unfollow')
+		} else if (type === 'unfollow') {
 			item.status = 'unfollow';
+		}
 
-		let data = {
+		const data = {
 			type: item.status,
 			private: item.private,
 			receiver: item.user.id
-		}
+		};
 
 		this.followsDataService.followUnfollow(data).subscribe();
 	}
 
 	// Default
 	default(type, user) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
 				rows: 0,
@@ -164,42 +169,43 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false
-			}
+			};
 
-			let data = {
+			const data = {
 				user: user,
 				type: 'followers',
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
-			}
+			};
 
 			this.followsDataService.default(data)
 				.subscribe(res => {
 					this.dataDefault.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
 						this.dataDefault.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
 						this.dataDefault.list = res;
 					}
-					
-					if (!res || res.length < this.environment.cuantity)
+
+					if (!res || res.length < this.environment.cuantity) {
 						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
 			this.dataDefault.rows++;
 
-			let data = {
+			const data = {
 				user: this.userData.id,
 				type: 'followers',
 				rows: this.dataDefault.rows,
 				cuantity: this.environment.cuantity
-			}
+			};
 
 			this.followsDataService.default(data)
 				.subscribe(res => {
@@ -208,12 +214,17 @@ export class FollowersComponent implements OnInit, OnDestroy {
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								this.dataDefault.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataDefault.list.push(res[i]);
+								}
+							}
+						}
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.environment.cuantity) {
 							this.dataDefault.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -223,8 +234,8 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	}
 
 	// Search
-	search(type){
-		if (type == 'default') {
+	search(type) {
+		if (type === 'default') {
 			this.data.active = 'search';
 			this.dataSearch = {
 				list: [],
@@ -234,44 +245,45 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false
-			}
+			};
 
-			let data = {
+			const data = {
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
 				cuantity: this.environment.cuantity
-			}
+			};
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe(res => {
 					setTimeout(() => {
 						this.dataSearch.loadingData = false;
 
-						if (!res || res.length == 0) {
+						if (!res || res.length === 0) {
 							this.dataSearch.noData = true;
 						} else {
 							this.dataSearch.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
 							this.dataSearch.list = res;
 						}
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.environment.cuantity) {
 							this.dataSearch.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataSearch.noMore && !this.dataSearch.loadingMoreData) {
+		} else if (type === 'more' && !this.dataSearch.noMore && !this.dataSearch.loadingMoreData) {
 			this.dataSearch.loadingMoreData = true;
 			this.dataSearch.rows++;
 
-			let data = {
+			const data = {
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
 				cuantity: this.environment.cuantity
-			}
+			};
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe(res => {
@@ -280,18 +292,23 @@ export class FollowersComponent implements OnInit, OnDestroy {
 						this.dataSearch.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								this.dataSearch.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.list.push(res[i]);
+								}
+							}
+						}
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.environment.cuantity) {
 							this.dataSearch.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'clear') {
+		} else if (type === 'clear') {
 			this.data.active = 'default';
 			this.actionFormSearch.get('caption').setValue('');
 		}
