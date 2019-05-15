@@ -5,10 +5,10 @@
 				<ul class="notifications" *ngIf="dataNotifications.list">
 					<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status == 0, 'remove': x.addRemoveSession}">
 						<a class="avatar" routerLink="/{{x.user.username}}">
-							<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 						</a>
 
-						<div class="inner" *ngIf="x.url == 'followers'">
+						<div class="inner" *ngIf="x.url === 'followers'">
 							<div class="text">
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">
@@ -85,56 +85,7 @@
 							</div>
 						</div>
 
-						<div class="inner" *ngIf="x.url == 'photos'">
-							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
-								</div>
-
-								<div class="container" (click)="show(x)">
-									<span *ngIf="x.type == 'comment'">
-										{{translations?.notifications?.commentedYourPhoto}}
-										<br>
-										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
-									</span>
-
-									<span *ngIf="x.type == 'mentionComment'">
-										{{translations?.notifications?.mentionOnCommentOnPhoto}}
-										<br>
-										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
-									</span>
-									
-									<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPhoto}}</span>
-
-									<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPhoto}}</span>
-
-									<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPhoto}}</span>
-								</div>
-							</div>
-
-							<div class="operations">
-								<div class="image" *ngIf="x.contentData.media" (click)="show(x)">
-									<div class="img" [ngStyle]="{'background-image': 'url(' + x.contentData.media + ')'}"></div>
-								</div>
-
-								<div class="actions">
-									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
-									</button>
-									
-									<mat-menu #options="matMenu">
-										<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-										<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
-									</mat-menu>
-								</div>
-							</div>
-						</div>
-
-						<div class="inner" *ngIf="x.url == 'publications'">
+						<div class="inner" *ngIf="x.url === 'publications'">
 							<div class="text">
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">
@@ -188,7 +139,7 @@
 							</div>
 						</div>
 
-						<div class="inner" *ngIf="x.url == 'audios'">
+						<div class="inner" *ngIf="x.url === 'audios'">
 							<div class="text">
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">

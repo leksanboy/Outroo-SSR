@@ -92,7 +92,7 @@ export class SupportComponent implements OnInit {
 						this.submitLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.emailNotExist);
+						this.alertService.error(this.translations.common.emailNotExist);
 
 						// reset reCaptcha
 						this.recaptcha = false;
@@ -102,7 +102,7 @@ export class SupportComponent implements OnInit {
 			this.submitLoading = false;
 
 			// show success message
-			this.alertService.error(this.translations.completeAllFieldsRecaptcha);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 }

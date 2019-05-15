@@ -281,7 +281,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -311,7 +311,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
@@ -398,7 +398,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Play item song
-	playItem(data, item, key, type) {
+	playSong(data, item, key, type) {
 		if (this.sessionData) {
 			if (this.sessionData.current.id) {
 				if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
@@ -586,7 +586,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.comments(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					item.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -611,7 +611,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.comments(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						item.loadingMoreData = false;
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;

@@ -42,13 +42,13 @@
 				<li *ngFor="let x of data.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
 					<div class="inner" *ngIf="!x.contentTypeAd">
 						<div class="image">
-							<button mat-icon-button (click)="playItem(data.list, x, i, 'default')">
+							<button mat-icon-button (click)="playSong(data.list, x, i, 'default')">
 								<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
 								<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
 								<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
 							</button>
 						</div>
-						<div class="text" (click)="playItem(data.list, x, i, 'default')">
+						<div class="text" (click)="playSong(data.list, x, i, 'default')">
 							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>

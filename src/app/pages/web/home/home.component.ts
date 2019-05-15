@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
-import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
@@ -32,7 +31,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 	constructor(
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private alertService: AlertService,
 		private metaService: MetaService,
 		private router: Router,
 		private userDataService: UserDataService,
@@ -201,13 +199,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 					error => {
 						this.submitLoading = false;
 						this.errorMessage = true;
-						this.errorMessageContent = this.translations.emailOrPasswordIncorrect;
+						this.errorMessageContent = this.translations.common.emailOrPasswordIncorrect;
 					}
 				);
 		} else {
 			this.submitLoading = false;
 			this.errorMessage = true;
-			this.errorMessageContent = this.translations.completeAllFields;
+			this.errorMessageContent = this.translations.common.completeAllFields;
 		}
 	}
 }

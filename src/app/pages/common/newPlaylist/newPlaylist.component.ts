@@ -10,7 +10,7 @@ import { AudioDataService } from '../../../../app/core/services/user/audioData.s
 declare var Cropper: any;
 
 @Component({
-	selector: 'app-newPlaylist',
+	selector: 'app-new-playlist',
 	templateUrl: './newPlaylist.component.html'
 })
 export class NewPlaylistComponent implements OnInit {
@@ -37,11 +37,11 @@ export class NewPlaylistComponent implements OnInit {
 		this.translations = data.translations;
 		this.data.current = data.item ? data.item : null;
 
-		if (this.data.type == 'edit') {
+		if (this.data.type === 'edit') {
 			this.actionForm = this._fb.group({
 				title: [this.data.current.title, [Validators.required]]
 			});
-		} else if (this.data.type == 'create') {
+		} else if (this.data.type === 'create') {
 			this.actionForm = this._fb.group({
 				title: ['', [Validators.required]]
 			});
@@ -86,7 +86,7 @@ export class NewPlaylistComponent implements OnInit {
 
 	// cropper functions
 	cropperFunctions(type) {
-		switch(type) {
+		switch (type) {
 			case 'zoomIn':
 				this.cropperData.zoom(0.1);
 				break;
@@ -111,19 +111,19 @@ export class NewPlaylistComponent implements OnInit {
 	}
 
 	// remove cover
-	removeCover(){
+	removeCover() {
 		this.data.image = null;
 	}
 
 	// save edit
-	save(){
-		switch(this.data.type) {
+	save() {
+		switch (this.data.type) {
 			case 'create':
 				if (this.actionForm.get('title').value.trim().length > 0) {
 					this.saveLoading = true;
 
 					if (this.data.newImage) {
-						let imageB64 = this.cropperData.getCroppedCanvas({
+						const imageB64 = this.cropperData.getCroppedCanvas({
 							width: 240,
 							height: 240,
 							fillColor: '#fff',
@@ -136,16 +136,16 @@ export class NewPlaylistComponent implements OnInit {
 						this.data.newImage = '';
 					}
 
-					let data = {
+					const data = {
 						type: 'create',
 						title: this.actionForm.get('title').value,
 						image: this.data.newImage
-					}
+					};
 
 					this.audioDataService.createPlaylist(data)
-						.subscribe(res => {
+						.subscribe((res: any) => {
 							this.saveLoading = false;
-							this.dialogRef.close(res.json());
+							this.dialogRef.close(res);
 						});
 				} else {
 					// show error message
@@ -158,7 +158,7 @@ export class NewPlaylistComponent implements OnInit {
 
 					// Crop new image
 					if (this.data.newImage) {
-						let imageB64 = this.cropperData.getCroppedCanvas({
+						const imageB64 = this.cropperData.getCroppedCanvas({
 							width: 240,
 							height: 240,
 							fillColor: '#fff',
@@ -181,32 +181,31 @@ export class NewPlaylistComponent implements OnInit {
 							title: this.actionForm.get('title').value,
 							color: this.data.current.color,
 							image: this.data.newImage
-						}
+						};
 					} else {
-						if (this.data.current.image)
+						if (this.data.current.image) {
 							data = {
 								type: 'update',
 								subtype: 'updateTitle',
 								id: this.data.current.id,
 								title: this.actionForm.get('title').value,
 								color: this.data.current.color
-							}
-						else
+							};
+						} else {
 							data = {
 								type: 'update',
 								subtype: 'updateTitleImage',
 								id: this.data.current.id,
 								title: this.actionForm.get('title').value,
 								color: this.data.current.color
-							}
+							};
+						}
 					}
 
 					this.audioDataService.createPlaylist(data)
 						.subscribe((res: any) => {
 							this.saveLoading = false;
-							res = res.json();
 							res.index = this.data.current.index;
-
 							this.dialogRef.close(res);
 						});
 				} else {
@@ -218,7 +217,7 @@ export class NewPlaylistComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

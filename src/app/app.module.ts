@@ -1,7 +1,6 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule, PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
 // Reactive forms
@@ -74,7 +73,6 @@ import { CookiesComponent } from './core/services/cookies/cookies.component';
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'outroo-server' }),
-		HttpModule,
 		BrowserTransferStateModule,
 		HttpClientModule,
 		AppRoutingModule,

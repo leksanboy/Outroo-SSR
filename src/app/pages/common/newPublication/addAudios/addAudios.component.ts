@@ -7,7 +7,7 @@ import { environment } from '../../../../../environments/environment';
 import { AudioDataService } from '../../../../../app/core/services/user/audioData.service';
 
 @Component({
-	selector: 'app-addAudios',
+	selector: 'app-add-audios',
 	templateUrl: './addAudios.component.html'
 })
 export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
@@ -18,7 +18,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	public loadingData: boolean;
 	public loadMoreData: boolean;
 	public loadingMoreData: boolean;
-	
+
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<NewPublicationAddAudiosComponent>,
@@ -37,13 +37,23 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 		this.data.arrayAddedItemsCopy = Object.assign([], this.data.array);
 
 		if (this.data.list.length > 0) {
-			for (let i in this.data.list)
-				this.data.list[i].selected = false;
+			for (const i of this.data.list) {
+				if (i) {
+					i.selected = false;
+				}
+			}
 
-			for (let i in this.data.list)
-				for (let e in this.data.array)
-					if (this.data.list[i].id == this.data.array[e].id)
-						this.data.list[i].selected = true;
+			for (const i of this.data.list) {
+				if (i) {
+					for (const e of this.data.array) {
+						if (e) {
+							if (i.id === e.id) {
+								i.selected = true;
+							}
+						}
+					}
+				}
+			}
 
 			this.data.list = this.data.list ? this.data.list : [];
 			this.data.rowsDefault = this.data.rows;
@@ -66,19 +76,19 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 		this.loadMoreData = false;
 		this.loadingMoreData = false;
 
-		let data = {
+		const data = {
 			user: user,
 			type: 'default',
 			rows: this.data.rowsDefault,
 			cuantity: this.env.cuantity
-		}
+		};
 
 		this.audioDataService.default(data)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				setTimeout(() => {
 					this.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						this.noData = true;
 					} else {
 						this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
@@ -94,30 +104,37 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 		this.loadingMoreData = true;
 		this.data.rowsDefault++;
 
-		let data = {
+		const data = {
 			type: 'default',
 			rows: this.data.rowsDefault,
 			cuantity: this.env.cuantity
-		}
+		};
 
 		this.audioDataService.default(data)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				setTimeout(() => {
 					this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 					this.loadingMoreData = false;
 
-					for (let i in res)
-						this.data.list.push(res[i]);
+					for (const i of res) {
+						if (i) {
+							this.data.list.push(i);
+						}
+					}
 				}, 600);
 			});
 	}
 
 	// Select/unselect
-	toggleItem(item){
+	toggleItem(item) {
 		if (item.selected) {
-			for (let i in this.data.arrayAddedItems)
-				if (this.data.arrayAddedItems[i].id == item.id)
-					this.data.arrayAddedItems.splice(i, 1);
+			for (const i in this.data.arrayAddedItems) {
+				if (i) {
+					if (this.data.arrayAddedItems[i].id === item.id) {
+						this.data.arrayAddedItems.splice(i, 1);
+					}
+				}
+			}
 
 			item.selected = false;
 		} else {
@@ -127,44 +144,45 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Save
-	submit(event){
-		let data = {
+	submit(event) {
+		const data = {
 			array: this.data.arrayAddedItems,
 			list: this.data.list,
 			rows: this.data.rowsDefault,
 			loadMore: this.loadMoreData
-		}
+		};
 
 		this.dialogRef.close(data);
 	}
 
 	// Close
-	close(){
-		let data = {
+	close() {
+		const data = {
 			array: this.data.arrayAddedItemsCopy,
 			list: this.data.list,
 			rows: this.data.rowsDefault,
 			loadMore: this.loadMoreData
-		}
+		};
 
 		this.dialogRef.close(data);
 	}
 
 	// Upload files
-	uploadFiles(type, event){
-		let convertToMb = function(bytes) {
-			if (isNaN(parseFloat(bytes)) || !isFinite(bytes))
+	uploadFiles(type, event) {
+		const convertToMb = function(bytes) {
+			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
 				return '-';
+			}
 
-			let units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-				number = Math.floor(Math.log(bytes) / Math.log(1024));
+			const units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+			number = Math.floor(Math.log(bytes) / Math.log(1024));
 
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(1) +  ' ' + units[number];
-		}
+		};
 
-		if (type == 1) { // Add files
+		if (type === 1) { // Add files
 			for (let i = 0; i < event.currentTarget.files.length; i++) {
-				let file = event.currentTarget.files[i];
+				const file = event.currentTarget.files[i];
 				file.title = file.name.replace('.mp3', '');
 				file.id = '000' + this.data.counterUploaded++;
 				file.uploaded = true;
@@ -180,82 +198,83 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 					}
 
 					this.data.list.push(file);
+				} else {
+					file.status = 'error';
+					this.data.list.unshift(file);
 				}
 			}
-		} else if (type == 2) { // Upload one by one
-			let self = this;
+		} else if (type === 2) { // Upload one by one
+			const self = this;
 
-			const ajaxCall = function(file, formdata, ajax){
-				formdata.append("fileUpload", file);
-				formdata.append("category", file.category);
-				formdata.append("title", file.title);
+			const progressHandler = function(ev, fl) {
+				fl.status = 'progress';
 
-				ajax.upload.addEventListener("progress", function(ev){
-					progressHandler(ev, file);
-				}, false);
+				const percent = Math.round((ev.loaded / ev.total) * 100);
+				fl.progress = Math.max(0, Math.min(100, percent));
+			};
 
-				ajax.addEventListener("load", function(ev){
-					completeHandler(ev, file);
-				}, false);
+			const completeHandler = function(ev, fl) {
+				const response = JSON.parse(ev.currentTarget.response);
 
-				ajax.addEventListener("error", function(ev){
-					errorHandler(ev, file);
-				}, false);
+				fl.status = 'completed';
+				fl.up_name = response.name;
+				fl.up_type = response.type ? response.type : '';
+				fl.up_original_title = response.original_title ? response.original_title : '';
+				fl.up_original_artist = response.original_artist ? response.original_artist : '';
+				fl.up_genre = response.genre ? response.genre : '';
+				fl.up_image = response.image ? response.image : '';
+				fl.up_duration = response.duration ? response.duration : '';
 
-				ajax.addEventListener("abort", function(ev){
-					abortHandler(ev, file);
-				}, false);
+				self.toggleItem(fl);
+			};
 
-				ajax.open("POST", "./assets/api/publications/uploadFiles.php");
-				ajax.send(formdata);
-			}
-
-			const progressHandler = function(event, file) {
-				file.status = 'progress';
-
-				let percent = Math.round((event.loaded / event.total) * 100);
-				file.progress = Math.max(0, Math.min(100, percent));
-			}
-
-			const completeHandler = function(event, file) {
-				let response = JSON.parse(event.currentTarget.response);
-
-				file.status = 'completed';
-				file.up_name = response.name;
-				file.up_type = response.type ? response.type : '';
-				file.up_original_title = response.original_title ? response.original_title : '';
-				file.up_original_artist = response.original_artist ? response.original_artist : '';
-				file.up_genre = response.genre ? response.genre : '';
-				file.up_image = response.image ? response.image : '';
-				file.up_duration = response.duration ? response.duration : '';
-
-				self.toggleItem(file);
-			}
-
-			const errorHandler = function(event, file) {
-				file.status = 'error';
-				disableHandler();
-
-				self.toggleItem(file);
-			}
-
-			const abortHandler = function(event, file) {
-				file.status = 'error';
-				disableHandler();
-
-				self.toggleItem(file);
-			}
-
-			const disableHandler = function(){
+			const disableHandler = function() {
 				self.data.saveDisabled = true;
-			}
+			};
+
+			const errorHandler = function(ev, fl) {
+				fl.status = 'error';
+				disableHandler();
+				self.toggleItem(fl);
+			};
+
+			const abortHandler = function(ev, fl) {
+				fl.status = 'error';
+				disableHandler();
+				self.toggleItem(fl);
+			};
+
+			const ajaxCall = function(fl, formdata, ajax) {
+				formdata.append('fileUpload', fl);
+				formdata.append('category', fl.category);
+				formdata.append('title', fl.title);
+
+				ajax.upload.addEventListener('progress', function(ev) {
+					progressHandler(ev, fl);
+				}, false);
+
+				ajax.addEventListener('load', function(ev) {
+					completeHandler(ev, fl);
+				}, false);
+
+				ajax.addEventListener('error', function(ev) {
+					errorHandler(ev, fl);
+				}, false);
+
+				ajax.addEventListener('abort', function(ev) {
+					abortHandler(ev, fl);
+				}, false);
+
+				ajax.open('POST', './assets/api/publications/uploadFiles.php');
+				ajax.send(formdata);
+			};
 
 			// Call method
-			let file = event,
-				formdata = new FormData(),
-				ajax = new XMLHttpRequest();
+			const newFile = event,
+			newFormdata = new FormData(),
+			newAjax = new XMLHttpRequest();
 
-			ajaxCall(file, formdata, ajax);
+			ajaxCall(newFile, newFormdata, newAjax);
 		}
 	}
 }

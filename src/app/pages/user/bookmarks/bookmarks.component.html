@@ -17,7 +17,7 @@
 							<li mat-ripple *ngFor="let x of line; let i = index;" [ngClass]="{'remove': x.addRemoveSession, 'remove': x.marked}">
 								<a class="image" (click)="show(x, l, i)">
 									<span *ngIf="x.type == 'photo'">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
+										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 										<div class="category" *ngIf="x.photos.mimetype.indexOf('video') !== -1">
 											<i label="videocam"></i>
 										</div>

@@ -116,7 +116,7 @@ export class ResetPasswordComponent implements OnInit {
 							this.submitLoading = false;
 
 							// show error message
-							this.alertService.error(this.translations.anErrorHasOcurred);
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
 
 							// reset reCaptcha
 							this.recaptcha = false;
@@ -124,13 +124,13 @@ export class ResetPasswordComponent implements OnInit {
 					);
 			} else {
 				this.submitLoading = false;
-				this.alertService.error(this.translations.fieldsNotMatch);
+				this.alertService.error(this.translations.common.fieldsNotMatch);
 			}
 		} else {
 			this.submitLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.completeAllFieldsRecaptcha);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 
@@ -148,7 +148,7 @@ export class ResetPasswordComponent implements OnInit {
 						this.signinLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 
 						// reset recaptcha
 						this.recaptcha = false;
@@ -158,7 +158,7 @@ export class ResetPasswordComponent implements OnInit {
 			this.signinLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.completeAllFieldsRecaptcha);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 }

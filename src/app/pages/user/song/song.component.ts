@@ -117,7 +117,7 @@ export class SongComponent implements OnInit, OnDestroy {
 		};
 
 		this.audioDataService.getSong(data)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				this.dataDefault.loadingData = false;
 
 				if (!res || res.length === 0) {
@@ -189,7 +189,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
-						item.insertedId = res.json();
+						item.insertedId = res;
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});

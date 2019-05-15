@@ -31,7 +31,7 @@
 							<ul *ngIf="dataDefault.list">
 								<li *ngFor="let x of dataDefault.list; let i=index;">
 									<a class="avatar" routerLink="/{{x.user.username}}">
-										<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 									</a>
 
 									<a class="text" routerLink="/{{x.user.username}}">
@@ -108,7 +108,7 @@
 						<ul *ngIf="dataSearch.list">
 							<li *ngFor="let x of dataSearch.list; let i=index;">
 								<a class="avatar" routerLink="/{{x.user.username}}">
-									<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 
 								<a class="text" routerLink="/{{x.user.username}}">

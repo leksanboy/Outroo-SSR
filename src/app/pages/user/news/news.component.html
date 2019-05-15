@@ -23,7 +23,7 @@
 								<li mat-ripple *ngFor="let x of line">
 									<a class="image" (click)="show(x)">
 										<span *ngIf="x.type == 'photo'">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
+											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 											<div class="category">
 												<i label="videocam" *ngIf="x.photos.mimetype.indexOf('video') !== -1"></i>
 												<i label="gif" *ngIf="x.photos.mimetype.indexOf('image/gif') !== -1"></i>
@@ -71,7 +71,7 @@
 								<li *ngFor="let x of dataTop.list; let i=index;">
 									<div class="inner" *ngIf="x.type == 'user'">
 										<a class="avatar" routerLink="/{{x.user.username}}">
-											<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+											<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 										</a>
 										<a class="text" routerLink="/{{x.user.username}}">
 											<span class="username">
@@ -112,7 +112,7 @@
 								<li *ngFor="let x of dataPeople.list; let i=index;">
 									<div class="inner">
 										<a class="avatar" routerLink="/{{x.user.username}}">
-											<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+											<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 										</a>
 										<a class="text" routerLink="/{{x.user.username}}">
 											<span class="username">
@@ -148,7 +148,7 @@
 									<li mat-ripple *ngFor="let x of line">
 										<a class="image" (click)="show(x, i)">
 											<span *ngIf="x.type == 'photo'">
-												<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
+												<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 											</span>
 											<span *ngIf="x.type == 'url'">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
@@ -230,7 +230,7 @@
 							<li mat-ripple *ngFor="let x of line">
 								<a class="image" (click)="show(x, i)">
 									<span *ngIf="x.type == 'photo'">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? environment.pathPhotos : environment.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
+										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 									</span>
 									<span *ngIf="x.type == 'url'">
 										<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>

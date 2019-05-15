@@ -5,7 +5,7 @@ import { Alert } from './alert.model';
 import { AlertService } from './alert.service';
 
 @Component({
-	selector: 'alert',
+	selector: 'app-alert',
 	templateUrl: 'alert.component.html',
 	animations: [
 		trigger('showFromTopAnimation', [

@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-	selector: 'app-showAvatar',
+	selector: 'app-show-avatar',
 	templateUrl: './showAvatar.component.html'
 })
 export class ShowAvatarComponent {
@@ -19,8 +19,7 @@ export class ShowAvatarComponent {
 		this.translations = data.translations;
 	}
 
-	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

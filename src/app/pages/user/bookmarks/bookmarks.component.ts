@@ -150,7 +150,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			};
 
 			this.bookmarksDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -187,7 +187,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			};
 
 			this.bookmarksDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 						this.dataDefault.loadingMoreData = false;

@@ -97,14 +97,14 @@ export class ConfirmEmailComponent implements OnInit {
 						this.submitLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					}
 				);
 		} else {
 			this.submitLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.incorrectCredentials);
+			this.alertService.error(this.translations.common.incorrectCredentials);
 		}
 	}
 }

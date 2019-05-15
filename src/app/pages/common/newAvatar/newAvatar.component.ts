@@ -8,7 +8,7 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 declare var Cropper: any;
 
 @Component({
-	selector: 'app-newAvatar',
+	selector: 'app-new-avatar',
 	templateUrl: './newAvatar.component.html'
 })
 export class NewAvatarComponent implements OnInit {
@@ -38,10 +38,10 @@ export class NewAvatarComponent implements OnInit {
 
 	// load image to crop
 	imageLoad() {
-		if (this.data.comeFrom == 'avatar') {
+		if (this.data.comeFrom === 'avatar') {
 			this.cropperData = new Cropper(this.input.nativeElement, {
 				viewMode: 3,
-				aspectRatio: 1/1,
+				aspectRatio: 1 / 1,
 				dragMode: 'move',
 				modal: true,
 				guides: true,
@@ -51,10 +51,10 @@ export class NewAvatarComponent implements OnInit {
 				autoCropArea: 0.7,
 				responsive: true
 			});
-		} else if (this.data.comeFrom == 'background') {
+		} else if (this.data.comeFrom === 'background') {
 			this.cropperData = new Cropper(this.input.nativeElement, {
 				viewMode: 3,
-				aspectRatio: 192/64,
+				aspectRatio: 192 / 64,
 				dragMode: 'move',
 				modal: true,
 				guides: true,
@@ -69,7 +69,7 @@ export class NewAvatarComponent implements OnInit {
 
 	// cropper functions
 	cropperFunctions(type) {
-		switch(type) {
+		switch (type) {
 			case 'zoomIn':
 				this.cropperData.zoom(0.1);
 				break;
@@ -94,8 +94,8 @@ export class NewAvatarComponent implements OnInit {
 				this.dialogRef.close(null);
 				break;
 			case 'crop':
-				if (this.data.comeFrom == 'avatar') {
-					let imageBase64 = this.cropperData.getCroppedCanvas({
+				if (this.data.comeFrom === 'avatar') {
+					const imageBase64 = this.cropperData.getCroppedCanvas({
 						width: 320,
 						height: 320,
 						fillColor: '#fff',
@@ -105,9 +105,9 @@ export class NewAvatarComponent implements OnInit {
 
 					this.saveLoading = true;
 
-					let d = {
+					const d = {
 						image: imageBase64
-					}
+					};
 
 					this.userDataService.updateAvatar(d)
 						.subscribe(res => {
@@ -119,8 +119,8 @@ export class NewAvatarComponent implements OnInit {
 							this.saveLoading = false;
 							this.alertService.error(this.translations.common.anErrorHasOcurred);
 						});
-				} else if (this.data.comeFrom == 'background') {
-					let imageBase64 = this.cropperData.getCroppedCanvas({
+				} else if (this.data.comeFrom === 'background') {
+					const imageBase64 = this.cropperData.getCroppedCanvas({
 						width: 1920,
 						height: 640,
 						fillColor: '#fff',
@@ -130,9 +130,9 @@ export class NewAvatarComponent implements OnInit {
 
 					this.saveLoading = true;
 
-					let d = {
+					const d = {
 						image: imageBase64
-					}
+					};
 
 					this.userDataService.updateBackground(d)
 						.subscribe(res => {
@@ -150,7 +150,7 @@ export class NewAvatarComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

@@ -9,7 +9,7 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 @Component({
-	selector: 'app-showLikes',
+	selector: 'app-show-likes',
 	templateUrl: './showLikes.component.html'
 })
 export class ShowLikesComponent implements OnInit {
@@ -31,7 +31,7 @@ export class ShowLikesComponent implements OnInit {
 	) {
 		this.translations = data.translations;
 		this.sessionData = data.sessionData;
-		
+
 		this.default('default', this.data.item);
 	}
 
@@ -40,24 +40,25 @@ export class ShowLikesComponent implements OnInit {
 	}
 
 	// Follow / Unfollow
-	followUnfollow(type, item){
-		if (type == 'follow')
+	followUnfollow(type, item) {
+		if (type === 'follow') {
 			item.status = item.private ? 'pending' : 'following';
-		else if (type == 'unfollow')
+		} else if (type === 'unfollow') {
 			item.status = 'unfollow';
+		}
 
-		let data = {
+		const data = {
 			type: item.status,
 			private: item.private,
 			receiver: item.user.id
-		}
+		};
 
 		this.followsDataService.followUnfollow(data).subscribe();
 	}
 
 	// Default
 	default(type, item) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
 				rows: 0,
@@ -66,20 +67,20 @@ export class ShowLikesComponent implements OnInit {
 				loadingMoreData: false,
 				noData: false,
 				noMore: false,
-				service: (this.data.item.comeFrom == 'publication') ? this.publicationsDataService : null
-			}
+				service: (this.data.item.comeFrom === 'publication') ? this.publicationsDataService : null
+			};
 
-			let data = {
+			const data = {
 				id: item.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity*3
-			}
+				cuantity: this.environment.cuantity * 3
+			};
 
 			this.dataDefault.service.likes(data)
 				.subscribe(res => {
 					this.dataDefault.loadingData = false;
 
-					if (!res || res.length == 0) {
+					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
@@ -87,21 +88,22 @@ export class ShowLikesComponent implements OnInit {
 						this.dataDefault.list = res;
 					}
 
-					if (!res || res.length < this.environment.cuantity)
+					if (!res || res.length < this.environment.cuantity) {
 						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
 			this.dataDefault.rows++;
 
-			let data = {
+			const data = {
 				id: this.dataDefault.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity*3
-			}
+				cuantity: this.environment.cuantity * 3
+			};
 
 			this.dataDefault.service.likes(data)
 				.subscribe(res => {
@@ -110,12 +112,17 @@ export class ShowLikesComponent implements OnInit {
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								this.dataDefault.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i of res) {
+								if (i) {
+									this.dataDefault.list.push(i);
+								}
+							}
+						}
 
-						if (!res || res.length < this.environment.cuantity)
+						if (!res || res.length < this.environment.cuantity) {
 							this.dataDefault.noMore = true;
+						}
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -125,7 +132,7 @@ export class ShowLikesComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

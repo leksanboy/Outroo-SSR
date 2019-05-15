@@ -10,10 +10,10 @@ export class MomentService {
 		// Set by default if not exists
 		data = data || 1;
 
-		if (data == 1) {
+		if (data === 1) {
 			// English
 			moment.locale('en');
-			
+
 			moment.updateLocale('en', {
 				relativeTime : {
 					future: 'in %s',
@@ -32,7 +32,7 @@ export class MomentService {
 					yy: '%d\Y'
 				}
 			});
-		} else if (data == 2) {
+		} else if (data === 2) {
 			// Spanish
 			moment.locale('es');
 
@@ -54,7 +54,7 @@ export class MomentService {
 					yy: '%d\Y'
 				}
 			});
-		} else if (data == 3) {
+		} else if (data === 3) {
 			// Russian
 			moment.locale('ru');
 

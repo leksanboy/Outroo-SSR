@@ -1,13 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { DOCUMENT } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
 
+import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
-import { MetaService } from '../seo/meta.service';
 import { SsrService } from '../ssr.service';
 
 import * as moment from 'moment/moment';
@@ -22,28 +19,23 @@ export class UserDataService {
 	public locale = moment.locale();
 
 	constructor(
-		@Inject(DOCUMENT) private document: Document,
-		private http: Http,
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
-		private metaService: MetaService,
 		private ssrService: SsrService
 	) { }
 
 	// Translations
 	getTranslations(lang) {
-		console.log('lang', lang);
-
 		if (!lang) {
 			// Get lang from cookie
-			let langCookie = this.getLang('get', null);
+			const langCookie = this.getLang('get', null);
 
 			if (!langCookie) {
 				// Array of available langs which exists on lang files repo
 				const langsArray = ['en', 'es', 'ru'];
 
 				// Detect language
-				let langRegion = this.locale;
+				const langRegion = this.locale;
 
 				// Checking browser lang for validate existing one
 				if (!(langsArray.indexOf(langRegion.slice(0, 2)) > -1)) {
@@ -89,9 +81,9 @@ export class UserDataService {
 				break;
 		}
 
-		return this.http.get(this.env.url + 'assets/i18n/' + language + '.json', this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(this.env.url + 'assets/i18n/' + language + '.json', this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
@@ -124,8 +116,8 @@ export class UserDataService {
 	}
 
 	login(username, password) {
-		let url = this.env.url + 'assets/api/user/authenticate.php';
-		let params = {
+		const url = this.env.url + 'assets/api/user/authenticate.php';
+		const params = {
 			username: username,
 			password: password
 		};
@@ -133,64 +125,73 @@ export class UserDataService {
 		// Reset storage data
 		this.logout();
 
-		// Call api
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				this.setSessionData('login', res.json());
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				this.setSessionData('login', res);
+				return res;
 			}));
 	}
 
 	loginNewSession(username, password) {
-		let url = this.env.url + 'assets/api/user/authenticate.php';
-		let params = {
+		const url = this.env.url + 'assets/api/user/authenticate.php';
+		const params = {
 			username: username,
 			password: password
 		};
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	logout() {
-		if (this.ssrService.isBrowser) this.window.localStorage.removeItem('userData_' + this.env.authHash);
+		if (this.ssrService.isBrowser) {
+			this.window.localStorage.removeItem('userData_' + this.env.authHash);
+		}
 	}
 
 	setSessionData(type, data) {
-		if (type == 'login') {
-			let storageLoginData: any = {
+		if (type === 'login') {
+			const storageLoginData: any = {
 				name: 'O',
 				current: data,
 				sessions : []
 			};
 
 			storageLoginData.sessions.push(data);
-			if (this.ssrService.isBrowser) this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageLoginData));
-		} else if (type == 'update') {
-			let oldData = this.getSessionData();
-			let storageUpdateData: any = {
+
+			if (this.ssrService.isBrowser) {
+				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageLoginData));
+			}
+		} else if (type === 'update') {
+			const oldData = this.getSessionData();
+			const storageUpdateData: any = {
 				name: 'O',
 				current: data,
 				sessions: []
 			};
 
-			for (let i in oldData.sessions)
-				if (oldData.sessions[i].id == data.id){
-					data.authorization = oldData.sessions[i].authorization;
-					storageUpdateData.sessions.push(data);
-				} else {
-					storageUpdateData.sessions.push(oldData.sessions[i]);
+			for (const i of oldData.sessions) {
+				if (i) {
+					if (i.id === data.id) {
+						data.authorization = i.authorization;
+						storageUpdateData.sessions.push(data);
+					} else {
+						storageUpdateData.sessions.push(oldData.sessions[i]);
+					}
 				}
+			}
 
-			if (this.ssrService.isBrowser)
+			if (this.ssrService.isBrowser) {
 				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageUpdateData));
-			
+			}
+
 			return this.getSessionData();
-		} else if (type == 'data') {
-			if (this.ssrService.isBrowser)
+		} else if (type === 'data') {
+			if (this.ssrService.isBrowser) {
 				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(data));
+			}
 
 			return this.getSessionData();
 		}
@@ -204,205 +205,206 @@ export class UserDataService {
 	}
 
 	getUserData(id: any) {
-		let url = this.env.url + 'assets/api/user/getUser.php';
+		const url = this.env.url + 'assets/api/user/getUser.php';
 		let params = '&id=' + id;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	// Updates
 	updateData(data) {
-		let url = this.env.url + 'assets/api/user/updateData.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateData.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	updateTheme(data) {
-		let url = this.env.url + 'assets/api/user/updateTheme.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateTheme.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	updateLanguage(data) {
-		let url = this.env.url + 'assets/api/user/updateLanguage.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateLanguage.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	updatePrivate(data) {
-		let url = this.env.url + 'assets/api/user/updatePrivate.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updatePrivate.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	updatePassword(data) {
-		let url = this.env.url + 'assets/api/user/updatePassword.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updatePassword.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	updateAvatar(data) {
-		let url = this.env.url + 'assets/api/user/updateAvatar.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateAvatar.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	updateBackground(data) {
-		let url = this.env.url + 'assets/api/user/updateBackground.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateBackground.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return this.setSessionData('update', res.json());
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return this.setSessionData('update', res);
 			}));
 	}
 
 	// Web pages
 	checkUsername(username) {
-		let url = this.env.url + 'assets/api/user/checkUsername.php';
+		const url = this.env.url + 'assets/api/user/checkUsername.php';
 		let params = 	'&username=' + username;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	checkEmail(email) {
-		let url = this.env.url + 'assets/api/user/checkEmail.php';
+		const url = this.env.url + 'assets/api/user/checkEmail.php';
 		let params = 	'&email=' + email;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	confirmEmail(data) {
-		let url = this.env.url + 'assets/api/user/confirmEmail.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/confirmEmail.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	createAccount(data) {
-		let url = this.env.url + 'assets/api/user/createAccount.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/createAccount.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	forgotPassword(email) {
-		let url = this.env.url + 'assets/api/user/forgotPassword.php';
+		const url = this.env.url + 'assets/api/user/forgotPassword.php';
 		let params = 	'&email=' + email;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	resetPassword(data) {
-		let url = this.env.url + 'assets/api/user/resetPassword.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/resetPassword.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	updateResetPassword(data) {
-		let url = this.env.url + 'assets/api/user/updateResetPassword.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/updateResetPassword.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	setVisitor(data) {
-		let url = this.env.url + 'assets/api/user/setVisitor.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/setVisitor.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	noSessionData() {
-		if (this.ssrService.isBrowser)
+		if (this.ssrService.isBrowser) {
 			this.window.location.href = '/';
+		}
 	}
 
 	supportQuestion(data) {
-		let url = this.env.url + 'assets/api/user/supportQuestion.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/supportQuestion.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	report(data) {
-		let url = this.env.url + 'assets/api/user/report.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/user/report.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
-	searchMentions(data){
-		let url = this.env.url + 'assets/api/user/searchMentions.php';
-		let params = 	'&caption=' + data.caption + 
+	searchMentions(data) {
+		const url = this.env.url + 'assets/api/user/searchMentions.php';
+		let params = 	'&caption=' + data.caption +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 }

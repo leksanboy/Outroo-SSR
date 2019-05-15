@@ -7,7 +7,7 @@ import { SessionResolver } from './core/services/resolve/session.service';
 import { UserResolver } from './core/services/resolve/user.service';
 
 const routes: Routes = [
-	{ 	
+	{
 		path: '', pathMatch: 'full', 		loadChildren: './pages/web/home/home.module#HomeModule', 									resolve: { langResolvedData: LangResolver, loginValidationResolvedData: LoginResolver } 							}, {
 		path: 'about', 						loadChildren: './pages/web/about/about.module#AboutModule', 								resolve: { langResolvedData: LangResolver }																			}, {
 		path: 'confirm-email/:code',		loadChildren: './pages/web/confirm-email/confirm-email.module#ConfirmEmailModule',			resolve: { langResolvedData: LangResolver }																			}, {

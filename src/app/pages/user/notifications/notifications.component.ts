@@ -30,7 +30,7 @@ declare var global: any;
 	providers: [ TimeagoPipe, SafeHtmlPipe ]
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -154,17 +154,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			const data = {
 				type: 'default',
 				rows: this.dataNotifications.rows,
-				cuantity: environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.notificationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataNotifications.loadingData = false;
 
 					if (!res || res.length === 0) {
 						this.dataNotifications.noData = true;
 					} else {
-						this.dataNotifications.loadMoreData = (!res || res.length < environment.cuantity) ? false : true;
+						this.dataNotifications.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
@@ -178,7 +178,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.sessionService.setPendingNotifications('refresh');
 					}
 
-					if (!res || res.length < environment.cuantity) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataNotifications.noMore = true;
 					}
 				}, error => {
@@ -191,13 +191,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 			const data = {
 				rows: this.dataNotifications.rows,
-				cuantity: environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.notificationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataNotifications.loadMoreData = (!res || res.length < environment.cuantity) ? false : true;
+						this.dataNotifications.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataNotifications.loadingMoreData = false;
 
 						// Push items
@@ -215,7 +215,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 						this.sessionService.setPendingNotifications('refresh');
 
-						if (!res || res.length < environment.cuantity) {
+						if (!res || res.length < this.env.cuantity) {
 							this.dataNotifications.noMore = true;
 						}
 					}, 600);
@@ -317,7 +317,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		if (!this.sessionData.current.id) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.item.song === item.song) { // Play/Pause current
+			if (this.audioPlayerData.key === key &&
+				this.audioPlayerData.type === type &&
+				this.audioPlayerData.item.song === item.song
+			) { // Play/Pause current
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
@@ -391,11 +394,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataShowShare(item);
 				break;
 			case 'newTab':
-				const url = this.environment.url + 's/' + item.name.slice(0, -4);
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				const urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}

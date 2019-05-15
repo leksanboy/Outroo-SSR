@@ -363,6 +363,9 @@
 		"emailOrPasswordIncorrect": "Email or password is incorrect",
 		"isTooShort": "Write something",
 		"commentPlaceholder": "Wrire here...",
-		"loadComments": "Load comments"
+		"loadComments": "Load comments",
+		"incorrectCredentials": "The credentials are incorrect",
+		"emailNotExist": "Email not exist",
+		"fieldsNotMatch": "Fields not match"
 	}
 }

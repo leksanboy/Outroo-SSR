@@ -265,7 +265,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -322,7 +322,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
@@ -371,7 +371,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataAround.loadingData = false;
 
@@ -411,7 +411,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataAround.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataAround.loadingMoreData = false;
@@ -460,7 +460,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataTop.loadingData = false;
 
@@ -514,7 +514,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataTop.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataTop.loadingMoreData = false;
@@ -563,7 +563,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataFresh.loadingData = false;
 
@@ -603,7 +603,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataFresh.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataFresh.loadingMoreData = false;
@@ -653,7 +653,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataSearch.loadingData = false;
 
@@ -693,7 +693,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			this.audioDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataSearch.loadingMoreData = false;
@@ -901,11 +901,14 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Play item song
-	playItem(data, item, key, type) {
+	playSong(data, item, key, type) {
 		if (!this.sessionData) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.item.song === item.song) { // Play/Pause current
+			if (this.audioPlayerData.key === key &&
+				this.audioPlayerData.type === type &&
+				this.audioPlayerData.item.song === item.song
+			) { // Play/Pause current
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one

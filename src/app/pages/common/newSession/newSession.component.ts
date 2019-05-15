@@ -7,7 +7,7 @@ import { AlertService } from '../../../../app/core/services/alert/alert.service'
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
 @Component({
-	selector: 'app-newSession',
+	selector: 'app-new-session',
 	templateUrl: './newSession.component.html'
 })
 export class NewSessionComponent implements OnInit {
@@ -37,15 +37,19 @@ export class NewSessionComponent implements OnInit {
 		});
 	}
 
-	submit(event: Event){
+	submit(event: Event) {
 		this.inUse = false;
 
 		if (this.actionForm.get('email').value.trim().length > 0 &&
 			this.actionForm.get('password').value.trim().length > 0
 		) {
-			for (let i in this.sessionData.sessions)
-				if (this.actionForm.get('email').value == this.sessionData.sessions[i].email)
-					this.inUse = true;
+			for (const i of this.sessionData.sessions) {
+				if (i) {
+					if (this.actionForm.get('email').value === i.email) {
+						this.inUse = true;
+					}
+				}
+			}
 
 			if (!this.inUse) {
 				this.saveLoading = true;
@@ -68,7 +72,7 @@ export class NewSessionComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

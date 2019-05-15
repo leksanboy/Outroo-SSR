@@ -296,7 +296,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -334,7 +334,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 						this.dataDefault.loadingMoreData = false;
@@ -381,7 +381,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.searchTop(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataTop.loadingData = false;
 
@@ -419,7 +419,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.followsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataPeople.loadingData = false;
 
@@ -449,7 +449,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.followsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataPeople.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 						this.dataPeople.loadingMoreData = false;
@@ -494,7 +494,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataPosts.loadingData = false;
 
@@ -534,7 +534,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 						this.dataPosts.loadingMoreData = false;
@@ -584,7 +584,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.searchTag(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataTag.loadingData = false;
 
@@ -619,7 +619,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.searchTag(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataTag.loadingMoreData = false;
@@ -674,7 +674,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataHashtag.loadingData = false;
 
@@ -714,7 +714,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.search(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 						this.dataHashtag.loadingMoreData = false;

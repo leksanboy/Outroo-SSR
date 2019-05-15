@@ -363,6 +363,9 @@
 		"emailOrPasswordIncorrect": "El correo electrónico o la contraseña es incorrecta",
 		"isTooShort": "Escribe algo",
 		"commentPlaceholder": "Escribe aqui...",
-		"loadComments": "Cargar comentarios"
+		"loadComments": "Cargar comentarios",
+		"incorrectCredentials": "Las credenciales no son válidas",
+		"emailNotExist": "El correo electrónico no existe",
+		"fieldsNotMatch": "Los campos no coinciden"
 	}
 }

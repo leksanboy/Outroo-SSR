@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
 
 @Injectable()
@@ -11,118 +11,118 @@ export class AudioDataService {
 	public env: any = environment;
 
 	constructor(
-		private http: Http,
+		private httpClient: HttpClient,
 		private headersService: HeadersService
 	) { }
 
 	default(data: any) {
-		let url = this.env.url + 'assets/api/audios/default.php';
+		const url = this.env.url + 'assets/api/audios/default.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
-	search(data: any){
-		let url = this.env.url + 'assets/api/audios/search.php';
+	search(data: any) {
+		const url = this.env.url + 'assets/api/audios/search.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	getSong(data: any) {
-		let url = this.env.url + 'assets/api/audios/getSong.php';
+		const url = this.env.url + 'assets/api/audios/getSong.php';
 		let params = '&name=' + data.name;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	addRemove(data: any) {
-		let url = this.env.url + 'assets/api/audios/addRemove.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/audios/addRemove.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	updateReplays(data: any) {
-		let url = this.env.url + 'assets/api/audios/updateReplays.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/audios/updateReplays.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	defaultPlaylists(data: any) {
-		let url = this.env.url + 'assets/api/audios/defaultPlaylists.php';
+		const url = this.env.url + 'assets/api/audios/defaultPlaylists.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	defaultPlaylistSongs(data: any) {
-		let url = this.env.url + 'assets/api/audios/defaultPlaylistSongs.php';
+		const url = this.env.url + 'assets/api/audios/defaultPlaylistSongs.php';
 		let params =	'&id=' + data.id;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	createPlaylist(data: any) {
-		let url = this.env.url + 'assets/api/audios/createPlaylist.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/audios/createPlaylist.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
 				return res;
 			}));
 	}
 
 	addRemovePlaylist(data: any) {
-		let url = this.env.url + 'assets/api/audios/addRemovePlaylist.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/audios/addRemovePlaylist.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	publicPrivate(data: any) {
-		let url = this.env.url + 'assets/api/audios/publicPrivate.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/audios/publicPrivate.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 }

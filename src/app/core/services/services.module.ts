@@ -29,4 +29,4 @@ import { SsrService } from './ssr.service';
 		SsrService
 	]
 })
-export class ServicesModule { }
+export class ServicesModule {}

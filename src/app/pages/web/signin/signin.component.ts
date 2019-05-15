@@ -85,7 +85,7 @@ export class SigninComponent implements OnInit {
 						this.submitLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.emailOrPasswordIncorrect);
+						this.alertService.error(this.translations.common.emailOrPasswordIncorrect);
 
 						// reset reCaptcha
 						this.recaptcha = false;
@@ -95,7 +95,7 @@ export class SigninComponent implements OnInit {
 			this.submitLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.completeAllFieldsRecaptcha);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 }

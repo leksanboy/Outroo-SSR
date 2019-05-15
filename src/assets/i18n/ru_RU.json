@@ -363,6 +363,8 @@
 		"emailOrPasswordIncorrect": "Неверный адрес электронной почты или пароль",
 		"isTooShort": "Напиши что-нибудь",
 		"commentPlaceholder": "Пишите здесь...",
-		"loadComments": "Загрузить комментарии"
+		"loadComments": "Загрузить комментарии",
+		"incorrectCredentials": "Учетные данные не действительны",
+		"fieldsNotMatch": "Поля не совпадают"
 	}
 }

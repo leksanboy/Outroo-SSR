@@ -1,192 +1,190 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
-import { UserDataService } from './userData.service';
 
 @Injectable()
 export class PublicationsDataService {
 	public env: any = environment;
-	
+
 	constructor(
-		private http: Http,
-		private headersService: HeadersService,
-		private userDataService: UserDataService
+		private httpClient: HttpClient,
+		private headersService: HeadersService
 	) { }
 
 	default(data: any) {
-		let url = this.env.url + 'assets/api/publications/default.php';
+		const url = this.env.url + 'assets/api/publications/default.php';
 		let params =	'&user=' + data.user +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	search(data: any) {
-		let url = this.env.url + 'assets/api/publications/search.php';
+		const url = this.env.url + 'assets/api/publications/search.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	searchTop(data: any) {
-		let url = this.env.url + 'assets/api/publications/searchTop.php';
+		const url = this.env.url + 'assets/api/publications/searchTop.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
-	searchTag(data: any){
-		let url = this.env.url + 'assets/api/publications/searchTag.php';
+	searchTag(data: any) {
+		const url = this.env.url + 'assets/api/publications/searchTag.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	createPublication(data: any) {
-		let url = this.env.url + 'assets/api/publications/create.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/create.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	addRemove(data: any) {
-		let url = this.env.url + 'assets/api/publications/addRemove.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/addRemove.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	likeUnlike(data: any) {
-		let url = this.env.url + 'assets/api/publications/likeUnlike.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/likeUnlike.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	likes(data: any) {
-		let url = this.env.url + 'assets/api/publications/likes.php';
+		const url = this.env.url + 'assets/api/publications/likes.php';
 		let params =	'&id=' + data.id +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	enableDisableComments(data: any) {
-		let url = this.env.url + 'assets/api/publications/enableDisableComments.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/enableDisableComments.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	comment(data: any) {
-		let url = this.env.url + 'assets/api/publications/comment.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/comment.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	comments(data: any) {
-		let url = this.env.url + 'assets/api/publications/comments.php';
+		const url = this.env.url + 'assets/api/publications/comments.php';
 		let params =	'&id=' + data.id +
-						'&rows=' + data.rows + 
+						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	getPost(data: any) {
-		let url = this.env.url + 'assets/api/publications/getPost.php';
+		const url = this.env.url + 'assets/api/publications/getPost.php';
 		let params =	'&name=' + data.name;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	updateReplays(data: any) {
-		let url = this.env.url + 'assets/api/publications/updateReplays.php';
-		let params = data;
+		const url = this.env.url + 'assets/api/publications/updateReplays.php';
+		const params = data;
 
-		return this.http.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	checkLike(data: any) {
-		let url = this.env.url + 'assets/api/publications/checkLike.php';
+		const url = this.env.url + 'assets/api/publications/checkLike.php';
 		let params = 	'&id=' + data.id;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 
 	urlVideoInformation(data: any) {
-		let url = this.env.url + 'assets/api/publications/urlVideoInformation.php';
+		const url = this.env.url + 'assets/api/publications/urlVideoInformation.php';
 		let params =	'&type=' + data.type +
 						'&url=' + data.url;
 		params = params.replace('&', '?');
 
-		return this.http.get(url + params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => {
-				return res.json();
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 }

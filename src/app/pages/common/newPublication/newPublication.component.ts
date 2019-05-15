@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DOCUMENT, DomSanitizer } from '@angular/platform-browser';
-import { Location } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Location, DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
@@ -17,7 +17,7 @@ import { NewPublicationAddAudiosComponent } from './addAudios/addAudios.componen
 declare var global: any;
 
 @Component({
-	selector: 'app-newPublication',
+	selector: 'app-new-ublication',
 	templateUrl: './newPublication.component.html'
 })
 export class NewPublicationComponent implements OnInit {
@@ -75,13 +75,13 @@ export class NewPublicationComponent implements OnInit {
 				debounceTime(400),
 				distinctUntilChanged())
 			.subscribe(val => {
-				let data = {
+				const data = {
 					caption: val,
 					cuantity: 5
-				}
+				};
 
 				this.userDataService.searchMentions(data)
-					.subscribe(res => {
+					.subscribe((res: any) => {
 						if (res.length > 0) {
 							if (this.publicationData.lastTypedWord.word.indexOf('@') > -1) {
 								this.searchMentionsData = res;
@@ -99,9 +99,9 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Open dialog photos
-	openPhotos(event: Event){
+	openPhotos(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addPhotos');
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
@@ -113,7 +113,7 @@ export class NewPublicationComponent implements OnInit {
 			}
 		};
 
-		let dialogRef = this.dialog.open(NewPublicationAddPhotosComponent, config);
+		const dialogRef = this.dialog.open(NewPublicationAddPhotosComponent, config);
 		dialogRef.afterClosed().subscribe((res: any) => {
 			this.location.go('/' + this.sessionData.current.username + '#newPublication');
 
@@ -125,9 +125,9 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Open dialog audios
-	openAudios(event: Event){
+	openAudios(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addAudios');
-		let config = {
+		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
@@ -139,7 +139,7 @@ export class NewPublicationComponent implements OnInit {
 			}
 		};
 
-		let dialogRef = this.dialog.open(NewPublicationAddAudiosComponent, config);
+		const dialogRef = this.dialog.open(NewPublicationAddAudiosComponent, config);
 		dialogRef.afterClosed().subscribe((res: any) => {
 			this.location.go('/' + this.sessionData.current.username + '#newPublication');
 
@@ -151,23 +151,31 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Select/unselect files
-	toggleItem(type, item){
-		if (type == 'photos') {
+	toggleItem(type, item) {
+		if (type === 'photos') {
 			if (item.selected) {
-				for (let i in this.data.photosArray)
-					if (this.data.photosArray[i].id == item.id)
-						this.data.photosArray.splice(i, 1);
+				for (const i in this.data.photosArray) {
+					if (i) {
+						if (this.data.photosArray[i].id === item.id) {
+							this.data.photosArray.splice(i, 1);
+						}
+					}
+				}
 
 				item.selected = false;
 			} else {
 				this.data.photosArray.push(item);
 				item.selected = true;
 			}
-		} else if (type == 'audios') {
+		} else if (type === 'audios') {
 			if (item.selected) {
-				for (let i in this.data.audiosArray)
-					if (this.data.audiosArray[i].id == item.id)
-						this.data.audiosArray.splice(i, 1);
+				for (const i in this.data.audiosArray) {
+					if (i) {
+						if (this.data.audiosArray[i].id === item.id) {
+							this.data.audiosArray.splice(i, 1);
+						}
+					}
+				}
 
 				item.selected = false;
 			} else {
@@ -178,44 +186,44 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Writing post and parsing
-	writingChanges(innerText){
-		let self = this;
+	writingChanges(innerText) {
+		const self = this;
 		let str = innerText;
 		this.publicationData.original = innerText;
-		
+
 		// new line
 		str = str.replace(/\n/g, '<br>');
 
 		// hashtag
-		str = str.replace(/(#)\w+/g, function(value){
+		str = str.replace(/(#)\w+/g, function(value) {
 			return '<span class="hashtag">' + value + '</span>';
 		});
 
 		// mention
-		str = str.replace(/(@)\w+/g, function(value){
+		str = str.replace(/(@)\w+/g, function(value) {
 			return '<span class="mention">' + value + '</span>';
 		});
 
 		// url
-		str = str.replace(this.env.urlRegex, function(value){
+		str = str.replace(this.env.urlRegex, function(value) {
 			return '<span class="url">' + value + '</span>';
 		});
 
 		// generate clear content
 		this.publicationData.transformed = str;
 
-		//check empty contenteditable
+		// check empty contenteditable
 		this.checkPlaceholder();
 	}
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {
-		let w3 = (typeof this.window.getSelection != "undefined") && true,
-			caretOffset = 0;
+		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
+		let caretOffset = 0;
 
 		if (w3) {
-			let range = this.window.getSelection().getRangeAt(0);
-			let preCaretRange = range.cloneRange();
+			const range = this.window.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
 			preCaretRange.selectNodeContents(element);
 			preCaretRange.setEnd(range.endContainer, range.endOffset);
 			caretOffset = preCaretRange.toString().length;
@@ -244,7 +252,7 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Cehck pressing key
-	checkKeyCode(event){
+	checkKeyCode(event) {
 		// Space, Enter, Escape
 		if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
 			this.searchBoxMentions = false;
@@ -253,80 +261,92 @@ export class NewPublicationComponent implements OnInit {
 				this.searchBoxMentions = false;
 			} else {
 				this.publicationData.eventTarget = event.target;
-				let position = this.getCaretPosition(event.target);
-				let word = this.getCurrentWord(event.target, position);
+				const position = this.getCaretPosition(event.target);
+				const word = this.getCurrentWord(event.target, position);
+
 				this.publicationData.lastTypedWord = {
 					word: word,
 					position: position
 				};
 
 				// Detect mention in word
-				if (word.indexOf('@') > -1 && word.length > 1)
+				if (word.indexOf('@') > -1 && word.length > 1) {
 					this.actionFormSearchMentions.get('search').setValue(word.substr(1));
-				else
+				} else {
 					this.searchBoxMentions = false;
+				}
 			}
 		}
 	}
 
 	// Check if content is empty to set placeholer
-	checkPlaceholder(){
-		if (this.publicationData.original.length == 0)
+	checkPlaceholder() {
+		if (this.publicationData.original.length === 0) {
 			this.publicationData.transformed = '<div class="placeholder">' + this.translations.main.whatsHappening.one + '<br>' + this.translations.main.whatsHappening.two + '</div>';
+		}
 	}
 
 	// Validate post content
-	validateBeforeSubmit(data){
+	validateBeforeSubmit(data) {
 		// validate if exists audios or photos
-		if (data.audiosArray.length > 0 || data.photosArray.length > 0)
+		if (data.audiosArray.length > 0 || data.photosArray.length > 0) {
 			data.saveDisabled = false;
-		else
+		} else {
 			data.saveDisabled = true;
+		}
 
 		// validate array audios
-		for (let i in data.audiosArray)
-			if (data.audiosArray[i].status == 'error')
-				data.saveDisabled = true;
+		for (const i of data.audiosArray) {
+			if (i) {
+				if (i.status === 'error') {
+					data.saveDisabled = true;
+				}
+			}
+		}
 
 		// validate array photos
-		for (let i in data.photosArray)
-			if (data.photosArray[i].status == 'error')
-				data.saveDisabled = true;
+		for (const i of data.photosArray) {
+			if (i) {
+				if (i.status === 'error') {
+					data.saveDisabled = true;
+				}
+			}
+		}
 
 		// validate text, array audios & photos and youtube/vimeo url
-		let valid = (this.publicationData.original.length == 0 && // validate text
-					data.saveDisabled && // validate existing audios or photos
-					!data.urlVideo.exists) ? false : true; // validate youtube/vimeo url video
+		const valid = (this.publicationData.original.length === 0 && // validate text
+						data.saveDisabled && // validate existing audios or photos
+						!data.urlVideo.exists) ? false : true; // validate youtube/vimeo url video
 
 		return valid;
 	}
 
 	// Transform content of the post and send
-	transformBeforeSubmit(data){
-		let newData = {
+	transformBeforeSubmit(data) {
+		const newData = {
 			content: data ? data : '',
 			original: this.publicationData.original ? this.publicationData.original : '',
 			mentions: [],
 			hashtags: []
-		}
+		};
 
 		// new line
 		newData.content = newData.content.replace(/\n/g, '<br>');
 
 		// hashtag
-		newData.content = newData.content.replace(/(#)\w+/g, function(value){
+		newData.content = newData.content.replace(/(#)\w+/g, function(value) {
 			newData.hashtags.push(value);
 			return '<a class="hashtag">' + value + '</a>';
 		});
 
 		// mention
-		newData.content = newData.content.replace(/(@)\w+/g, function(value){
+		newData.content = newData.content.replace(/(@)\w+/g, function(value) {
 			newData.mentions.push(value);
 			return '<a class="mention">' + value + '</a>';
 		});
 
 		// detect url
-		newData.content = newData.content.replace(this.env.urlRegex, function(value){
+		newData.content = newData.content.replace(this.env.urlRegex, function(value) {
 			return '<a class="url">' + value + '</a>';
 		});
 
@@ -335,29 +355,29 @@ export class NewPublicationComponent implements OnInit {
 
 	// Set caret position
 	setSelectionRange() {
-		let el = this.publicationData.eventTarget;
+		const el = this.publicationData.eventTarget;
 
 		// Check the diference between positions this.publicationData.lastTypedWord.word & this.publicationData.lastTypedWord.searched
-		let a = this.publicationData.lastTypedWord.word.length;
-		let b = this.publicationData.lastTypedWord.searched.length;
-		let c = b - a;
+		const a = this.publicationData.lastTypedWord.word.length;
+		const b = this.publicationData.lastTypedWord.searched.length;
+		const c = b - a;
 
 		// TODO: Check if is last word on content then add space
 
-		let range = document.createRange();
+		const range = document.createRange();
 		range.setStart(el.childNodes[0], this.publicationData.lastTypedWord.position + c);
 		range.collapse(true);
-		
-		let sel = this.window.getSelection();
+
+		const sel = this.window.getSelection();
 		sel.removeAllRanges();
 		sel.addRange(range);
-		
+
 		el.focus();
 	}
 
 	// Add mention from mentions serch list
-	addSearchedMention(data){
-		this.publicationData.lastTypedWord.searched = '@'+data.user.username;
+	addSearchedMention(data) {
+		this.publicationData.lastTypedWord.searched = '@' + data.user.username;
 		this.publicationData.onBackground = this.publicationData.original.replace(this.publicationData.lastTypedWord.word, '@' + data.user.username);
 		this.writingChanges(this.publicationData.onBackground);
 		this.searchBoxMentions = false;
@@ -368,27 +388,28 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Video information from url YouTube/vimeo
-	urlVideoInformation(type, url){
+	urlVideoInformation(type, url) {
 		if (type === 1) {
 			this.data.urlVideo = [];
-			let data = {
+			const data = {
 				type: 'other',
 				url: url
-			}
+			};
 
 			// Check type
-			if (url.indexOf('youtu') > -1)
+			if (url.indexOf('youtu') > -1) {
 				data.type = 'youtube';
-			else if (url.indexOf('vimeo') > -1)
+			} else if (url.indexOf('vimeo') > -1) {
 				data.type = 'vimeo';
-			else
+			} else {
 				data.type = 'other';
+			}
 
 			// Get data
 			this.publicationsDataService.urlVideoInformation(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					if (res) {
-						if (data.type === 'youtube')
+						if (data.type === 'youtube') {
 							this.data.urlVideo = {
 								exists: true,
 								url: data.url,
@@ -397,8 +418,8 @@ export class NewPublicationComponent implements OnInit {
 								channel: res.author_name,
 								thumbnail: res.thumbnail_url,
 								iframe: res.iframe
-							}
-						else if (data.type === 'vimeo')
+							};
+						} else if (data.type === 'vimeo') {
 							this.data.urlVideo = {
 								exists: true,
 								url: data.url,
@@ -407,8 +428,8 @@ export class NewPublicationComponent implements OnInit {
 								channel: res.user_name,
 								thumbnail: res.thumbnail_large,
 								iframe: res.iframe
-							}
-						else
+							};
+						} else {
 							this.data.urlVideo = {
 								exists: true,
 								url: data.url,
@@ -417,7 +438,8 @@ export class NewPublicationComponent implements OnInit {
 								channel: null,
 								thumbnail: null,
 								iframe: null
-							}
+							};
+						}
 					} else {
 						this.data.urlVideo = [];
 						this.data.urlVideo.exists = false;
@@ -435,27 +457,29 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Create publication
-	submit(){
-		let validate = this.validateBeforeSubmit(this.data);
+	submit() {
+		const validate = this.validateBeforeSubmit(this.data);
 
-		if(validate){
+		if (validate) {
 			this.saveLoading = true;
-			let formatedData = this.transformBeforeSubmit(this.publicationData.original);
-			let photosData = [];
+			const formatedData = this.transformBeforeSubmit(this.publicationData.original);
+			const photosData = [];
 
-			for (let i in this.data.photosArray) {
-				let a = {
-					id: this.data.photosArray[i].uploaded ? this.data.photosArray[i].id : this.data.photosArray[i].photo,
-					name: this.data.photosArray[i].uploaded ? this.data.photosArray[i].up_name : this.data.photosArray[i].name,
-					mimetype: this.data.photosArray[i].uploaded ? this.data.photosArray[i].up_type : this.data.photosArray[i].type,
-					duration: this.data.photosArray[i].uploaded ? this.data.photosArray[i].up_duration : this.data.photosArray[i].duration,
-					uploaded: this.data.photosArray[i].uploaded ? true : false
+			for (const i of this.data.photosArray) {
+				if (i) {
+					const a = {
+						id: i.uploaded ? i.id : i.photo,
+						name: i.uploaded ? i.up_name : i.name,
+						mimetype: i.uploaded ? i.up_type : i.type,
+						duration: i.uploaded ? i.up_duration : i.duration,
+						uploaded: i.uploaded ? true : false
+					};
+
+					photosData.push(a);
 				}
-
-				photosData.push(a);
 			}
 
-			let data = {
+			const data = {
 				content: formatedData.content,
 				contentOriginal: this.publicationData.original,
 				mentions: formatedData.mentions,
@@ -463,7 +487,7 @@ export class NewPublicationComponent implements OnInit {
 				urlVideo: this.data.urlVideo,
 				photos: (photosData.length > 0 ? photosData : ''),
 				audios: (this.data.audiosArray.length > 0 ? this.data.audiosArray : ''),
-			}
+			};
 
 			this.publicationsDataService.createPublication(data)
 				.subscribe(res => {
@@ -479,7 +503,7 @@ export class NewPublicationComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

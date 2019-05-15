@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 declare var global: any;
 
 @Component({
-	selector: 'app-showMobilePlayer',
+	selector: 'app-show-mobile-player',
 	templateUrl: './showMobilePlayer.component.html'
 })
 export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -25,8 +25,8 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	public audio: any;
 	public showPlayer: boolean;
 	public showPlayerAnimation: boolean;
-	public rippleColor: string = 'rgba(255, 255, 255, .15)';
-	public activeDetectChanges: boolean = true;
+	public rippleColor = 'rgba(255, 255, 255, .15)';
+	public activeDetectChanges = true;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -53,36 +53,37 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	ngAfterViewInit() {
-		let self = this;
-		
+		const self = this;
+
 		// Auto progress bar
 		this.audio.addEventListener('timeupdate', function() {
-			let countDown = Math.round(self.audio.duration - self.audio.currentTime);
+			const countDown = Math.round(self.audio.duration - self.audio.currentTime);
 			self.audioPlayerData.current.time = self.formatTime(self.audio.currentTime);
 
 			// Detect changes when song is playing
 			self.detectChanges();
 
 			// Countdown time
-			let durationCountDown = self.formatTime(countDown);
-			self.audioPlayerData.current.duration = parseInt(durationCountDown.split(':')[1]) == 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
-			self.audioPlayerData.list[self.audioPlayerData.current.key].countdown = parseInt(durationCountDown.split(':')[1]) == 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
+			const durationCountDown = self.formatTime(countDown);
+			self.audioPlayerData.current.duration = parseInt(durationCountDown.split(':')[1], 10) === 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
+			self.audioPlayerData.list[self.audioPlayerData.current.key].countdown = parseInt(durationCountDown.split(':')[1], 10) === 0 ? self.audioPlayerData.list[self.audioPlayerData.current.key].duration : durationCountDown;
 
 			// Progress bar
-			let progress = ((self.audio.currentTime / self.audio.duration) * 1000);
+			const progress = ((self.audio.currentTime / self.audio.duration) * 1000);
 			self.audioPlayerData.current.progress = progress;
 		});
 	}
 
 	// Refresh data on sheet / progresbar ant duration
 	detectChanges() {
-		if (this.activeDetectChanges)
+		if (this.activeDetectChanges) {
 			this.ref.detectChanges();
+		}
 	}
 
 	// repeat · next · play/pause · prev · shuffle
 	playTrack(type, key) {
-		switch(type){
+		switch (type) {
 			case('item'):
 				this.audioPlayerData.key = key;
 				this.audioPlayerData.buttonType = 'item';
@@ -114,90 +115,91 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 
 	// Time format
 	formatTime(time) {
-		let duration = time,
-			hours = Math.floor(duration / 3600),
-			minutes = Math.floor((duration % 3600) / 60),
-			seconds = Math.floor(duration % 60),
-			result = [];
+		const duration = time,
+		hours = Math.floor(duration / 3600),
+		minutes = Math.floor((duration % 3600) / 60),
+		seconds = Math.floor(duration % 60),
+		result = [];
 
-		if (hours)
-			result.push(hours)
+		if (hours) {
+			result.push(hours);
+		}
 
-		result.push(((hours ? "0" : "") + (minutes ? minutes : 0)).substr(-2));
-		result.push(("0" + (seconds ? seconds : 0)).substr(-2));
+		result.push(((hours ? '0' : '') + (minutes ? minutes : 0)).substr(-2));
+		result.push(('0' + (seconds ? seconds : 0)).substr(-2));
 
-		return result.join(":");
+		return result.join(':');
 	}
 
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist) {
-		switch(type){
-			case("addRemoveSession"):
+		switch (type) {
+			case('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.type = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataARS = {
+				const dataARS = {
 					type: item.type,
 					location: 'session',
 					id: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? ' has been added successfully' : ' has been removed';
-						
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = !item.addRemoveSession ? ' has been added successfully' : ' has been removed';
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
 			break;
-			case("addRemoveUser"):
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.type = item.addRemoveUser ? 'add' : 'remove';
 
-				let dataARO = {
+				const dataARO = {
 					type: item.type,
 					location: 'user',
 					id: item.insertedId,
 					item: item.song
-				}
+				};
 
 				this.audioDataService.addRemove(dataARO)
-					.subscribe(res => {
-						item.insertedId = res.json();
-						
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? ' has been added successfully' : ' has been removed';
-						
+					.subscribe((res: any) => {
+						item.insertedId = res;
+
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? ' has been added successfully' : ' has been removed';
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
 			break;
-			case("playlist"):
-				item.type = !item.addRemoveUser ? "add" : "remove";
+			case('playlist'):
+				item.type = !item.addRemoveUser ? 'add' : 'remove';
 
-				let dataP = {
+				const dataP = {
 					type: item.type,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title;
 						this.alertService.success(song + ' has been added to ' + playlist.title);
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
 			break;
-			case("createPlaylist"):
-				let data = 'create';
+			case('createPlaylist'):
+				const data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
 			break;
-			case("report"):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 			break;
@@ -205,18 +207,18 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// Share on social media
-	shareOn(type, item){
+	shareOn(type, item) {
 		switch (type) {
-			case "message":
+			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataShowShare(item);
 				break;
-			case "newTab":
-				let url = this.environment.url + 's/' + item.name.slice(0, -4);
+			case 'newTab':
+				const url = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.window.open(url, '_blank');
 				break;
-			case "copyLink":
-				let urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+			case 'copyLink':
+				const urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
@@ -224,7 +226,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 
 	// Progress bar
 	progressBar(event) {
-		let time = ((event.value / 1000) * this.audio.duration);
+		const time = ((event.value / 1000) * this.audio.duration);
 		this.audio.currentTime = time;
 	}
 

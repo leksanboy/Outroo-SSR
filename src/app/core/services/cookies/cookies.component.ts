@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { UserDataService } from '../user/userData.service';
 
 @Component({
-	selector: 'cookies',
+	selector: 'app-cookies',
 	templateUrl: 'cookies.component.html'
 })
 
@@ -31,7 +31,6 @@ export class CookiesComponent implements OnInit {
 		this.userDataService.getTranslations(lang)
 			.subscribe(data => {
 				this.translations = data;
-				console.log("this.translations", this.translations);
 			});
 	}
 

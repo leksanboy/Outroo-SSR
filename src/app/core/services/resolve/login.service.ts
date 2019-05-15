@@ -6,15 +6,14 @@ import { UserDataService } from './../user/userData.service';
 
 @Injectable()
 export class LoginResolver implements Resolve<any> {
-
 	constructor(
 		public userDataService: UserDataService
 	) { }
 
 	resolve(): Observable<any> {
-		let sessionData = this.userDataService.getSessionData();
-		let result: any = sessionData ? false : true;
+		const sessionData = this.userDataService.getSessionData();
+		const result: any = sessionData ? false : true;
 
 		return result;
 	}
-} 
+}

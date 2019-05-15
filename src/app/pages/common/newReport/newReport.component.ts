@@ -7,7 +7,7 @@ import { AlertService } from '../../../core/services/alert/alert.service';
 import { UserDataService } from '../../../core/services/user/userData.service';
 
 @Component({
-	selector: 'app-newReport',
+	selector: 'app-new-report',
 	templateUrl: './newReport.component.html'
 })
 export class NewReportComponent implements OnInit {
@@ -36,11 +36,11 @@ export class NewReportComponent implements OnInit {
 		});
 	}
 
-	submit(event: Event){
+	submit(event: Event) {
 		this.saveLoading = true;
 
 		if (this.actionForm.get('content').value.trim().length > 0) {
-			let data = {
+			const data = {
 				pageId: this.data.item.id,
 				pageType: this.data.item.type,
 				content: this.actionForm.get('content').value
@@ -64,7 +64,7 @@ export class NewReportComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

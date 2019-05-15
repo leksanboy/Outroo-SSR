@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 @Component({
-	selector: 'app-showSessionPanelMobile',
+	selector: 'app-show-session-panel-mobile',
 	templateUrl: './showSessionPanelMobile.component.html'
 })
 export class ShowSessionPanelMobileComponent {
@@ -22,16 +22,16 @@ export class ShowSessionPanelMobileComponent {
 
 	// Set user
 	setCurrentUser(data) {
-		let current = {
+		const current = {
 			data: data,
 			type: 'set'
-		}
+		};
 
 		this.sessionService.setDataAddAccount(current);
 		this.bottomSheetRef.dismiss();
 	}
 
 	close() {
-		this.bottomSheetRef.dismiss();	
+		this.bottomSheetRef.dismiss();
 	}
 }

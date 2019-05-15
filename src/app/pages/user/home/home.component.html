@@ -125,14 +125,14 @@
 										<li *ngFor="let a of x.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData.postId == x.id, default: !a.image}">
 											<div class="inner">
 												<div class="image">
-													<button mat-icon-button (click)="playItem(x, a, i, 'publication')">
+													<button mat-icon-button (click)="playSong(x, a, i, 'publication')">
 														<i label="play" *ngIf="!a.playing || !(audioPlayerData.postId == x.id)"></i>
 														<i label="pause" *ngIf="a.playing && (audioPlayerData.postId == x.id)"></i>
 														<img *ngIf="a.image" [src]="env.pathAudios + 'thumbnails/' + a.image"/>
 													</button>
 												</div>
 
-												<div class="text" (click)="playItem(x, a, i, 'publication')">
+												<div class="text" (click)="playSong(x, a, i, 'publication')">
 													<div class="titleArtist" title="{{a.original_title ? a.original_title : a.title}}">
 														<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
 														<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>

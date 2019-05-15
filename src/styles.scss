@@ -5244,10 +5244,120 @@ body{
 							padding: 0;
 							margin: 0;
 
+							// li{
+							// 	box-sizing: border-box;
+							// 	position: relative;
+							// 	padding: 4px 18px;
+							// 	list-style: none;
+							// 	transition: .15s;
+							// 	margin: 0 0 4px;
+							// 	display: flex;
+							// 	float: left;
+							// 	width: 100%;
+
+							// 	.avatar{
+							// 		box-sizing: border-box;
+							// 		border-radius: 50%;
+							// 		overflow: hidden;
+							// 		min-width: 40px;
+							// 		margin: 4px 0;
+							// 		height: 40px;
+							// 		width: 40px;
+
+							// 		img{
+							// 			height: 100%;
+							// 			width: 100%;
+							// 		}
+							// 	}
+
+							// 	.inner{
+							// 		display: flex;
+							// 		width: 100%;
+
+							// 		.text{
+							// 			box-sizing: border-box;
+							// 			padding: 6px 12px;
+							// 			width: 100%;
+
+							// 			.name{
+							// 				display: block;
+
+							// 				.username{
+							// 					word-break: break-all;
+							// 					font-weight: bold;
+							// 				}
+
+							// 				.date{
+							// 					color: $greyColor;
+							// 					font-size: 13px;
+							// 				}
+							// 			}
+
+							// 			.container{
+							// 				word-break: break-word;
+							// 				color: $greyColor;
+							// 				cursor: pointer;
+							// 				font-size: 14px;
+							// 			}
+							// 		}
+
+							// 		.operations{
+							// 			display: flex;
+							// 			height: 48px;
+
+							// 			span{
+							// 				display: inherit;
+							// 			}
+
+							// 			button{
+							// 				border: 1px solid currentColor;
+							// 				text-transform: uppercase;
+							// 				margin: 10px 0 0 6px;
+							// 				color: currentColor;
+							// 				font-weight: bold;
+							// 				line-height: 28px;
+							// 				font-size: 11px;
+							// 				padding: 0 8px;
+							// 				height: 28px;
+							// 				min-width: 0;
+							// 			}
+
+							// 			.image{
+							// 				border-radius: 5px;
+							// 				overflow: hidden;
+							// 				cursor: pointer;
+							// 				display: block;
+							// 				height: 48px;
+							// 				width: 48px;
+
+							// 				.img{
+							// 					background-position: center 35%;
+							// 					background-repeat: no-repeat;
+							// 					transform: translate(0px);
+							// 					box-sizing: border-box;
+							// 					background-size: cover;
+							// 					display: inline-block;
+							// 					border-radius: 5px;
+							// 					height: 100%;
+							// 					width: 100%;
+							// 				}
+							// 			}
+							// 		}
+							// 	}
+
+							// 	&:hover{
+							// 		background-color: transparentize($greyColor, .9);
+							// 	}
+
+							// 	&.active{
+							// 		background-color: transparentize($blueColor, .75);
+							// 	}
+							// }
+
 							li{
+								padding: 4px 0 4px 18px;
 								box-sizing: border-box;
 								position: relative;
-								padding: 4px 18px;
 								list-style: none;
 								transition: .15s;
 								margin: 0 0 4px;
@@ -5275,8 +5385,8 @@ body{
 									width: 100%;
 
 									.text{
+										padding: 6px 0 6px 12px;
 										box-sizing: border-box;
-										padding: 6px 12px;
 										width: 100%;
 
 										.name{
@@ -5296,30 +5406,63 @@ body{
 										.container{
 											word-break: break-word;
 											color: $greyColor;
+											padding: 2px 0 0;
 											cursor: pointer;
 											font-size: 14px;
+											width: 100%;
+
+											.song{
+												border: 1px solid transparentize($greyColor, .5);
+												border-radius: 5px;
+												margin: 4px 0 0;
+
+												.songInner{
+													padding: 6px 0 6px 6px;
+													margin: 0;
+
+													.songText .titleArtist .title,
+													.songText .titleArtist .artist{
+														white-space: inherit;
+													}
+												}
+											}
 										}
 									}
 
 									.operations{
+										padding: 2px 0 0;
 										display: flex;
 										height: 48px;
 
 										span{
 											display: inherit;
-										}
 
-										button{
-											border: 1px solid currentColor;
-											text-transform: uppercase;
-											margin: 10px 0 0 6px;
-											color: currentColor;
-											font-weight: bold;
-											line-height: 28px;
-											font-size: 11px;
-											padding: 0 8px;
-											height: 28px;
-											min-width: 0;
+											button{
+												background-color: $fontBlackColor;
+												text-transform: uppercase;
+												margin: 6px 0 0 6px;
+												color: $whiteColor;
+												font-weight: bold;
+												line-height: 28px;
+												font-size: 12px;
+												padding: 0 8px;
+												min-width: 0;
+												height: 28px;
+
+												&:first-child{
+													margin-left: 0;
+												}
+
+												&.active{
+													border: 1px solid $fontBlackColor;
+													background-color: transparent;
+													color: $fontBlackColor;
+												}
+
+												&.pending{
+													background-color: $blueColor;
+												}
+											}
 										}
 
 										.image{
@@ -5342,6 +5485,12 @@ body{
 												width: 100%;
 											}
 										}
+
+										.actions{
+											button{
+												border-radius: 50% !important;
+											}
+										}
 									}
 								}
 
@@ -5351,6 +5500,11 @@ body{
 
 								&.active{
 									background-color: transparentize($blueColor, .75);
+								}
+
+								&.remove{
+									filter: grayscale(100%);
+									opacity: .5;
 								}
 							}
 						}

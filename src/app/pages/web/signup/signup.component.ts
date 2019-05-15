@@ -177,7 +177,7 @@ export class SignupComponent implements OnInit {
 						this.submitLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 
 						// reset reCaptcha
 						this.recaptcha = false;
@@ -187,7 +187,7 @@ export class SignupComponent implements OnInit {
 			this.submitLoading = false;
 
 			// show success message
-			this.alertService.error(this.translations.completeAllFieldsRecaptcha);
+			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 
@@ -206,14 +206,14 @@ export class SignupComponent implements OnInit {
 						this.signinLoading = false;
 
 						// show error message
-						this.alertService.error(this.translations.anErrorHasOcurred);
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					}
 				);
 		} else {
 			this.signinLoading = false;
 
 			// show error message
-			this.alertService.error(this.translations.incorrectCredentials);
+			this.alertService.error(this.translations.common.incorrectCredentials);
 		}
 	}
 }

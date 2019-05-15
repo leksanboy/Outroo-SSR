@@ -20,7 +20,7 @@ declare var global: any;
 	templateUrl: './followers.component.html'
 })
 export class FollowersComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public userData: any = [];
@@ -175,21 +175,21 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				user: user,
 				type: 'followers',
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.list = res;
 					}
 
-					if (!res || res.length < this.environment.cuantity) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
 					}
 				}, error => {
@@ -204,13 +204,13 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				user: this.userData.id,
 				type: 'followers',
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.default(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataDefault.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
@@ -222,7 +222,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						if (!res || res.length < this.environment.cuantity) {
+						if (!res || res.length < this.env.cuantity) {
 							this.dataDefault.noMore = true;
 						}
 					}, 600);
@@ -251,22 +251,22 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.searchFollowing(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataSearch.loadingData = false;
 
 						if (!res || res.length === 0) {
 							this.dataSearch.noData = true;
 						} else {
-							this.dataSearch.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
+							this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 							this.dataSearch.list = res;
 						}
 
-						if (!res || res.length < this.environment.cuantity) {
+						if (!res || res.length < this.env.cuantity) {
 							this.dataSearch.noMore = true;
 						}
 					}, 600);
@@ -282,13 +282,13 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				user: this.userData.id,
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
-				cuantity: this.environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.searchFollowing(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataSearch.loadMoreData = (res.length < this.environment.cuantity) ? false : true;
+						this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
 						this.dataSearch.loadingMoreData = false;
 
 						// Push items
@@ -300,7 +300,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						if (!res || res.length < this.environment.cuantity) {
+						if (!res || res.length < this.env.cuantity) {
 							this.dataSearch.noMore = true;
 						}
 					}, 600);

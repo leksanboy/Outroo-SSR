@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../../environments/environment';
 import { SessionService } from '../session/session.service';
@@ -10,10 +11,12 @@ declare var global: any;
 @Injectable()
 export class HeadersService {
 	public env: any = environment;
-	public numberOfClicks: any = [];
-	// public limitedClicksPerSecond = 30;
-	public limitedTime = 1000;
 	public window: any = global;
+	public limitedClicks = {
+		clicks: 50,
+		time: 1000,
+		clicked: []
+	};
 
 	constructor(
 		private sessionService: SessionService,
@@ -22,38 +25,36 @@ export class HeadersService {
 
 	getHeaders() {
 		if (this.ssrService.isBrowser) {
-			let userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
-			let authorization = userData ? userData.current.authorization : '';
+			const userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
+			const authorization = userData ? userData.current.authorization : '';
 
-			// Validate authorization
-			// let authorizationValidator = this.clicksPerSecond() ? authorization : '';
-			// if (!authorizationValidator)
-			// 	alert("STOP DOING THAT");
+			// const authorizationValidator = this.clicksPerSecond() ? authorization : '';
+			// if (!authorizationValidator) {
+			// 	alert('STOP DOING THAT');
+			// }
 
-			// Headers
-			let headers = new Headers();
-			headers.append('Content-Type', 'application/json');
-			// headers.append('Authorization', authorizationValidator);
-			headers.append('Authorization', authorization);
+			const headers = new HttpHeaders();
+			headers.set('Content-Type', 'application/json');
+			headers.set('Authorization', authorization);
 
-			return new RequestOptions({ headers: headers });
+			return {headers: headers};
 		}
 	}
 
-	// clicksPerSecond() {
-	// 	if(this.numberOfClicks.length < this.limitedClicksPerSecond) {
-	// 		this.numberOfClicks.push(new Date().getTime());
+	clicksPerSecond() {
+		if (this.limitedClicks.clicked.length < this.limitedClicks.clicks) {
+			this.limitedClicks.clicked.push(new Date().getTime());
 
-	// 		return true;
-	// 	} else {
-	// 		let diff = this.numberOfClicks[this.numberOfClicks.length -1] - this.numberOfClicks[0];
-			
-	// 		// If is into limitedTime
-	// 		this.numberOfClicks.shift();
-	// 		this.numberOfClicks.push(new Date().getTime());
-			
-	// 		// Return false for error to cancel other petitions
-	// 		return (diff < this.limitedTime) ? false : true;
-	// 	}
-	// }
+			return true;
+		} else {
+			const diff = this.limitedClicks.clicked[this.limitedClicks.clicked.length - 1] - this.limitedClicks.clicked[0];
+
+			// If is into limitedTime
+			this.limitedClicks.clicked.shift();
+			this.limitedClicks.clicked.push(new Date().getTime());
+
+			// Return false for error to cancel other petitions
+			return (diff < this.limitedClicks.time) ? false : true;
+		}
+	}
 }

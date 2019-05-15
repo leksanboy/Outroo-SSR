@@ -8,7 +8,7 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 @Component({
-	selector: 'app-showPlaylist',
+	selector: 'app-show-playlist',
 	templateUrl: './showPlaylist.component.html'
 })
 export class ShowPlaylistComponent implements OnInit {
@@ -36,18 +36,19 @@ export class ShowPlaylistComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		let params = {
+		const params = {
 			id: this.data.current.id
-		}
+		};
 
 		this.audioDataService.defaultPlaylistSongs(params)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				this.data.loadingData = false;
 
-				if (!res || res.length == 0)
+				if (!res || res.length === 0) {
 					this.data.noData = true;
-				else
+				} else {
 					this.data.list = res;
+				}
 			});
 
 
@@ -59,8 +60,11 @@ export class ShowPlaylistComponent implements OnInit {
 	}
 
 	// Play item song
-	playItem(data, item, key, type) {
-		if (this.audioPlayerData.key == key && this.audioPlayerData.type == type && this.audioPlayerData.item.song == item.song) { // Play/Pause current
+	playSong(data, item, key, type) {
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
 			item.playing = !item.playing;
 			this.data.playing = !this.data.playing;
 			this.playerService.setPlayTrack(this.audioPlayerData);
@@ -83,18 +87,17 @@ export class ShowPlaylistComponent implements OnInit {
 	// Play/Pause
 	playTrack(type) {
 		if (this.data.list.length > 0) {
-			if (type == 'play') {
-				this.playItem(
-					this.data.list, 
-					(this.audioPlayerData.item ? this.audioPlayerData.item : this.data.list[0]), 
-					(this.audioPlayerData.key ? this.audioPlayerData.key : 0), 
-					'default');
-			} else if (type == 'prev') {
-				let prevKey = (this.audioPlayerData.key == 0) ? (this.data.list.length - 1) : (this.audioPlayerData.key - 1);
+			if (type === 'play') {
+				this.playSong(this.data.list,
+							(this.audioPlayerData.item ? this.audioPlayerData.item : this.data.list[0]),
+							(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
+							'default');
+			} else if (type === 'prev') {
+				const prevKey = (this.audioPlayerData.key === 0) ? (this.data.list.length - 1) : (this.audioPlayerData.key - 1);
 				this.audioPlayerData.key = prevKey;
 				this.playerService.setData(this.audioPlayerData);
-			} else if (type == 'next') {
-				let nextKey = (this.audioPlayerData.key == this.data.list.length - 1) ? 0 : (this.audioPlayerData.key + 1);
+			} else if (type === 'next') {
+				const nextKey = (this.audioPlayerData.key === this.data.list.length - 1) ? 0 : (this.audioPlayerData.key + 1);
 				this.audioPlayerData.key = nextKey;
 				this.playerService.setData(this.audioPlayerData);
 			}
@@ -104,68 +107,71 @@ export class ShowPlaylistComponent implements OnInit {
 	}
 
 	// Item options
-	itemOptions(type, item, playlist){
-		switch(type){
-			case("addRemoveSession"):
+	itemOptions(type, item, playlist) {
+		switch (type) {
+			case('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
-				
-				let dataARS = {
+
+				const dataARS = {
 					type: item.removeType,
 					subtype: 'session',
 					location: 'playlist',
 					id: item.id
-				}
+				};
 
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
-			case("addRemoveUser"):
+			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
-				
-				let dataARO = {
+
+				const dataARO = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.song
-				}
+				};
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
-			case("playlist"):
-				item.removeType = !item.addRemoveUser ? "add" : "remove";
-				
-				let dataP = {
+			case('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
+
+				const dataP = {
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
 					playlist: playlist.idPlaylist
-				}
+				};
 
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
-						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			break;
-			case("report"):
+			case('report'):
 				item.type = 'playlist';
 				this.sessionService.setDataReport(item);
 			break;
@@ -173,7 +179,7 @@ export class ShowPlaylistComponent implements OnInit {
 	}
 
 	// Close
-	close(){
+	close() {
 		this.dialogRef.close();
 	}
 }

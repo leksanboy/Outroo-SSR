@@ -147,7 +147,7 @@ export class PostComponent implements OnInit, OnDestroy {
 		};
 
 		this.publicationsDataService.getPost(data)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				this.dataDefault.loadingData = false;
 
 				if (!res || res.length === 0) {
@@ -255,7 +255,7 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Play item song
-	playItem(data, item, key, type) {
+	playSong(data, item, key, type) {
 		if (!this.sessionData.current.id) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
@@ -431,7 +431,7 @@ export class PostComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.comments(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					item.loadingData = false;
 
 					if (!res || res.length === 0) {
@@ -456,7 +456,7 @@ export class PostComponent implements OnInit, OnDestroy {
 			};
 
 			this.publicationsDataService.comments(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						item.loadingMoreData = false;
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;

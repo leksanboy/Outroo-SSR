@@ -15,7 +15,7 @@ import { TruncatePipe } from '../../../../app/core/pipes/truncate.pipe';
 declare var global: any;
 
 @Component({
-	selector: 'app-showShare',
+	selector: 'app-show-share',
 	templateUrl: './showShare.component.html',
 	providers: [ DateTimePipe, SafeHtmlPipe, TruncatePipe ]
 })
@@ -54,8 +54,6 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 		private followsDataService: FollowsDataService,
 		private notificationsDataService: NotificationsDataService
 	) {
-		console.log("data", data);
-
 		this.translations = data.translations;
 		this.sessionData = data.sessionData;
 		this.data.current = data.item ? data.item : [];
@@ -63,10 +61,10 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 		this.data.list = [];
 		this.data.new = false;
 
-		if (this.data.comeFrom == 'sharePhoto' || 
-			this.data.comeFrom == 'sharePublication' || 
-			this.data.comeFrom == 'shareSong'
-		){
+		if (this.data.comeFrom === 'sharePhoto' ||
+			this.data.comeFrom === 'sharePublication' ||
+			this.data.comeFrom === 'shareSong'
+		) {
 			this.data.active = 'default';
 
 			// Search
@@ -75,7 +73,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			});
 
 			// Search/Reset
-			this.actionFormSearch.controls["caption"].valueChanges
+			this.actionFormSearch.controls['caption'].valueChanges
 				.pipe(
 					debounceTime(400),
 					distinctUntilChanged())
@@ -105,20 +103,20 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			loadingData: true,
 			loadMoreData: false,
 			loadingMoreData: false
-		}
+		};
 
-		let data = {
+		const data = {
 			user: this.sessionData.current.username,
 			type: 'following',
 			rows: this.dataUsers.rows,
 			cuantity: environment.cuantity
-		}
+		};
 
 		this.followsDataService.default(data)
-			.subscribe(res => {
+			.subscribe((res: any) => {
 				this.dataUsers.loadingData = false;
 
-				if (res.length == 0) {
+				if (res.length === 0) {
 					this.dataUsers.noData = true;
 				} else {
 					res.length < environment.cuantity ? this.dataUsers.loadMoreData = false : this.dataUsers.loadMoreData = true;
@@ -133,7 +131,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 
 	// Search
 	search(type) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.data.active = 'search';
 			this.dataSearch = {
 				list: [],
@@ -143,64 +141,73 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 				loadMoreData: false,
 				loadingMoreData: false,
 				noMore: false
-			}
+			};
 
-			let data = {
+			const data = {
 				caption: this.actionFormSearch.get('caption').value,
 				cuantity: environment.cuantity
-			}
+			};
 
 			this.followsDataService.searchFollowing(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataSearch.loadingData = false;
 
-						if (!res || res.length == 0) {
+						if (!res || res.length === 0) {
 							this.dataSearch.noData = true;
 							this.dataSearch.noMore = true;
 						} else {
 							this.dataSearch.loadMoreData = (res.length < environment.cuantity) ? false : true;
 							this.dataSearch.noData = false;
-							
+
 							// validate added
-							for(let i in res)
-								for(let u in this.data.users)
-									if (res[i].id == this.data.users[u].user.id)
-										res[i].added = true;
+							for (const i of res) {
+								for (const u of this.data.users) {
+									if (i.id === u.user.id) {
+										i.added = true;
+									}
+								}
+							}
 
 							this.dataSearch.list = res;
 
-							if (res.length < environment.cuantity)
+							if (res.length < environment.cuantity) {
 								this.dataSearch.noMore = true;
+							}
 						}
 					}, 600);
 				});
-		} else if (type == 'more' && !this.dataSearch.noMore) {
+		} else if (type === 'more' && !this.dataSearch.noMore) {
 			this.dataSearch.loadingMoreData = true;
 			this.dataSearch.rows++;
 
-			let data = {
+			const data = {
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
 				cuantity: environment.cuantity
-			}
+			};
 
 			this.followsDataService.searchFollowing(data)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataSearch.loadMoreData = (res.length < environment.cuantity) ? false : true;
 						this.dataSearch.loadingMoreData = false;
 
 						// Push items
-						if (!res || res.length > 0)
-							for (let i in res)
-								this.dataSearch.list.push(res[i]);
+						if (!res || res.length > 0) {
+							for (const i of res) {
+								if (i) {
+									this.dataSearch.list.push(i);
+								}
+							}
+						}
 
-						if (res.length < environment.cuantity)
+						if (res.length < environment.cuantity) {
 							this.dataSearch.noMore = true;
+						}
 					}, 600);
 				});
-		} else if (type == 'clear') {
+		} else if (type === 'clear') {
 			this.data.active = 'default';
 			this.actionFormSearch.get('caption').setValue('');
 		}
@@ -212,16 +219,21 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 
 		if (!item.added) {
 			// Remove from users list and chat list
-			for (let i in this.dataUsers.list)
-				if (this.dataUsers.list[i].id == item.id)
-					this.dataUsers.list[i].added = false;
-			
+			for (const i of this.dataUsers.list) {
+				if (i) {
+					if (this.dataUsers.list[i].id === item.id) {
+						this.dataUsers.list[i].added = false;
+					}
+				}
+			}
 
 			// Remove from common list
-			for (let i in this.data.users) {
-				if (this.data.users[i].id == item.id) {
-					this.data.users.splice(i, 1);
-					return false;
+			for (const i in this.data.users) {
+				if (i) {
+					if (this.data.users[i].id === item.id) {
+						this.data.users.splice(i, 1);
+						return false;
+					}
 				}
 			}
 		} else {
@@ -231,26 +243,29 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 
 	// Send shared
 	sendShared() {
-		let users = [];
-		for (let user of this.data.users) {
-			users.push(user.id);
+		const users = [];
+
+		for (const user of this.data.users) {
+			if (user) {
+				users.push(user.id);
+			}
 		}
 
 		if (this.data.users.length > 0) {
-			let id, url
+			let id, url;
 
-			if (this.data.comeFrom == 'sharePhoto') {
+			if (this.data.comeFrom === 'sharePhoto') {
 				id = this.data.item.id;
 				url = 'photos';
-			} else if (this.data.comeFrom == 'sharePublication') {
+			} else if (this.data.comeFrom === 'sharePublication') {
 				id = this.data.item.id;
 				url = 'publications';
-			} else if (this.data.comeFrom == 'shareSong') {
+			} else if (this.data.comeFrom === 'shareSong') {
 				id = this.data.item.song;
 				url = 'audios';
 			}
 
-			let data = {
+			const data = {
 				receivers: users,
 				url: url,
 				id: id
