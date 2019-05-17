@@ -27,17 +27,14 @@ export class HeadersService {
 		if (this.ssrService.isBrowser) {
 			const userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
 			const authorization = userData ? userData.current.authorization : '';
+			const headers = new HttpHeaders().set('Authorization', authorization).set('Content-Type', 'application/json');
 
 			// const authorizationValidator = this.clicksPerSecond() ? authorization : '';
 			// if (!authorizationValidator) {
 			// 	alert('STOP DOING THAT');
 			// }
 
-			const headers = new HttpHeaders();
-			headers.set('Content-Type', 'application/json');
-			headers.set('Authorization', authorization);
-
-			return {headers: headers};
+			return { headers: headers };
 		}
 	}
 

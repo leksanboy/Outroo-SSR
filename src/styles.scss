@@ -4670,7 +4670,7 @@ body{
 					mat-progress-spinner{
 						height: 16px !important;
 						width: 16px !important;
-						margin: 10px 6px 0 0;
+						margin: 6px 6px 0 0;
 						float: left;
 
 						svg {
@@ -5243,116 +5243,6 @@ body{
 							width: 100%;
 							padding: 0;
 							margin: 0;
-
-							// li{
-							// 	box-sizing: border-box;
-							// 	position: relative;
-							// 	padding: 4px 18px;
-							// 	list-style: none;
-							// 	transition: .15s;
-							// 	margin: 0 0 4px;
-							// 	display: flex;
-							// 	float: left;
-							// 	width: 100%;
-
-							// 	.avatar{
-							// 		box-sizing: border-box;
-							// 		border-radius: 50%;
-							// 		overflow: hidden;
-							// 		min-width: 40px;
-							// 		margin: 4px 0;
-							// 		height: 40px;
-							// 		width: 40px;
-
-							// 		img{
-							// 			height: 100%;
-							// 			width: 100%;
-							// 		}
-							// 	}
-
-							// 	.inner{
-							// 		display: flex;
-							// 		width: 100%;
-
-							// 		.text{
-							// 			box-sizing: border-box;
-							// 			padding: 6px 12px;
-							// 			width: 100%;
-
-							// 			.name{
-							// 				display: block;
-
-							// 				.username{
-							// 					word-break: break-all;
-							// 					font-weight: bold;
-							// 				}
-
-							// 				.date{
-							// 					color: $greyColor;
-							// 					font-size: 13px;
-							// 				}
-							// 			}
-
-							// 			.container{
-							// 				word-break: break-word;
-							// 				color: $greyColor;
-							// 				cursor: pointer;
-							// 				font-size: 14px;
-							// 			}
-							// 		}
-
-							// 		.operations{
-							// 			display: flex;
-							// 			height: 48px;
-
-							// 			span{
-							// 				display: inherit;
-							// 			}
-
-							// 			button{
-							// 				border: 1px solid currentColor;
-							// 				text-transform: uppercase;
-							// 				margin: 10px 0 0 6px;
-							// 				color: currentColor;
-							// 				font-weight: bold;
-							// 				line-height: 28px;
-							// 				font-size: 11px;
-							// 				padding: 0 8px;
-							// 				height: 28px;
-							// 				min-width: 0;
-							// 			}
-
-							// 			.image{
-							// 				border-radius: 5px;
-							// 				overflow: hidden;
-							// 				cursor: pointer;
-							// 				display: block;
-							// 				height: 48px;
-							// 				width: 48px;
-
-							// 				.img{
-							// 					background-position: center 35%;
-							// 					background-repeat: no-repeat;
-							// 					transform: translate(0px);
-							// 					box-sizing: border-box;
-							// 					background-size: cover;
-							// 					display: inline-block;
-							// 					border-radius: 5px;
-							// 					height: 100%;
-							// 					width: 100%;
-							// 				}
-							// 			}
-							// 		}
-							// 	}
-
-							// 	&:hover{
-							// 		background-color: transparentize($greyColor, .9);
-							// 	}
-
-							// 	&.active{
-							// 		background-color: transparentize($blueColor, .75);
-							// 	}
-							// }
 
 							li{
 								padding: 4px 0 4px 18px;

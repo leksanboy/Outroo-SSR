@@ -16,7 +16,7 @@ export class CookiesComponent implements OnInit {
 
 	constructor(
 		private userDataService: UserDataService
-	) { }
+	) {}
 
 	ngOnInit() {
 		// Check if set

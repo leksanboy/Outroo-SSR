@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
+import { MetaService } from '../seo/meta.service';
 import { SsrService } from '../ssr.service';
 
 import * as moment from 'moment/moment';
@@ -21,11 +22,13 @@ export class UserDataService {
 	constructor(
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
+		private metaService: MetaService,
 		private ssrService: SsrService
-	) { }
+	) {}
 
-	// Translations
 	getTranslations(lang) {
+		console.log('-> lang:', lang);
+
 		if (!lang) {
 			// Get lang from cookie
 			const langCookie = this.getLang('get', null);
@@ -60,26 +63,33 @@ export class UserDataService {
 
 		// Lang cases
 		let language;
+		let htmlLang;
 		switch (Number(lang)) {
+			default:
 			case 1: // English
 				language = 'en_US';
+				htmlLang = 'en';
 				break;
 			case 2: // Español
 				language = 'es_ES';
+				htmlLang = 'es';
 				break;
 			case 3: // Русский
 				language = 'ru_RU';
+				htmlLang = 'ru';
 				break;
 			case 4: // Deutsch
 				language = 'de_DE';
+				htmlLang = 'de';
 				break;
 			case 5: // Français
 				language = 'fr_FR';
-				break;
-			default: // By default set English
-				language = 'en_US';
+				htmlLang = 'fr';
 				break;
 		}
+
+		// Set html lang attr
+		this.metaService.setHtmlLang(htmlLang);
 
 		return this.httpClient.get(this.env.url + 'assets/i18n/' + language + '.json', this.headersService.getHeaders())
 			.pipe(map(res => {
@@ -90,7 +100,7 @@ export class UserDataService {
 	getLang(type, lang) {
 		if (this.ssrService.isBrowser) {
 			if (type === 'set') {
-				this.window.localStorage.setItem('lang_' + this.env.authHash, JSON.stringify(lang));
+				this.window.localStorage.setItem('lang_' + this.env.authHash, lang);
 			} else if (type === 'get') {
 				return this.window.localStorage.getItem('lang_' + this.env.authHash);
 			}
@@ -98,10 +108,14 @@ export class UserDataService {
 	}
 
 	analytics(url) {
-		// if (this.ssrService.isBrowser) {
-		// }
-		ga('set', 'page', url);
-		ga('send', 'pageview');
+		console.log('analytics 1:', url);
+
+		if (this.ssrService.isBrowser) {
+			console.log('analytics 2:', url);
+
+			ga('set', 'page', url);
+			ga('send', 'pageview');
+		}
 	}
 
 	cookies(type) {
@@ -215,7 +229,6 @@ export class UserDataService {
 			}));
 	}
 
-	// Updates
 	updateData(data) {
 		const url = this.env.url + 'assets/api/user/updateData.php';
 		const params = data;
@@ -286,7 +299,6 @@ export class UserDataService {
 			}));
 	}
 
-	// Web pages
 	checkUsername(username) {
 		const url = this.env.url + 'assets/api/user/checkUsername.php';
 		let params = 	'&username=' + username;

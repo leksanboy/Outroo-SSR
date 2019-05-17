@@ -13,7 +13,7 @@ export class NotificationsDataService {
 	constructor(
 		private httpClient: HttpClient,
 		private headersService: HeadersService
-	) { }
+	) {}
 
 	default(data: any) {
 		const url = this.env.url + 'assets/api/notifications/default.php';

@@ -13,7 +13,7 @@ export class BookmarksDataService {
 	constructor(
 		private httpClient: HttpClient,
 		private headersService: HeadersService
-	) { }
+	) {}
 
 	default(data: any) {
 		const url = this.env.url + 'assets/api/bookmarks/default.php';

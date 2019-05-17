@@ -116,7 +116,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					}
 
 					// Set Google analytics
-					const url = '[' + this.userData.id + ']/' + this.userData.id + '/main';
+					const url = '[' + this.userData.id + ']/main';
 					this.userDataService.analytics(url);
 
 					// Data following/visitor

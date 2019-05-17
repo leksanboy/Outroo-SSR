@@ -8,7 +8,7 @@ import { UserDataService } from './../user/userData.service';
 export class LoginResolver implements Resolve<any> {
 	constructor(
 		public userDataService: UserDataService
-	) { }
+	) {}
 
 	resolve(): Observable<any> {
 		const sessionData = this.userDataService.getSessionData();

@@ -838,7 +838,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			let canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height, gradient;
 			context = new AudioContext();
 			analyser = context.createAnalyser();
-			canvas = document.getElementById('audioAnalyser');
+			canvas = this.document.getElementById('audioAnalyser');
 			ctx = canvas.getContext('2d');
 
 			gradient = ctx.createLinearGradient(0, 0, 0, 1);
@@ -993,7 +993,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		const self = this;
 
 		if (image) {
-			const img = document.createElement('img');
+			const img = this.document.createElement('img');
 			img.setAttribute('src', image);
 			const vibrant = new Vibrant(img);
 			const swatches = vibrant.swatches();

@@ -26,7 +26,7 @@ export class AlertComponent implements OnInit {
 
 	constructor(
 		private alertService: AlertService
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.alertService.getData()

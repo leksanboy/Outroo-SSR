@@ -13,11 +13,11 @@ export class PublicationsDataService {
 	constructor(
 		private httpClient: HttpClient,
 		private headersService: HeadersService
-	) { }
+	) {}
 
 	default(data: any) {
 		const url = this.env.url + 'assets/api/publications/default.php';
-		let params =	'&user=' + data.user +
+		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
