@@ -5,6 +5,7 @@ import { BookmarksDataService } from './user/bookmarksData.service';
 import { FollowsDataService } from './user/followsData.service';
 import { HeadersService } from './headers/headers.service';
 import { MetaService } from './seo/meta.service';
+import { MessageDataService } from './user/messageData.service';
 import { MomentService } from './moment/moment.service';
 import { NotificationsDataService } from './user/notificationsData.service';
 import { PlayerService } from './player/player.service';
@@ -20,6 +21,7 @@ import { SsrService } from './ssr.service';
 		FollowsDataService,
 		HeadersService,
 		MetaService,
+		MessageDataService,
 		MomentService,
 		NotificationsDataService,
 		PlayerService,

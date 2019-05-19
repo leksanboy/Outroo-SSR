@@ -526,7 +526,7 @@
 </div>
 
 <span *ngIf="!deniedAccessOnlySession">
-	<!-- Bottom anv -->
+	<!-- Bottom anv user buttons-->
 	<div class="bottomNav">
 		<ul>
 			<li>
@@ -718,32 +718,22 @@
 			</div>
 		</div>
 	</div>
+
 </span>
 
 <!-- Audio -->
 <audio #audioPlayerHtml src=""></audio>
 
-<!-- Sigin/Signup -->
 <span *ngIf="deniedAccessOnlySession">
-	<div class="signingBox" *ngIf="!signingBox">
-		<button mat-icon-button type="button" class="close" (click)="signingBox=!signingBox">
-			<i label="close"></i>
-		</button>
-
+	<!-- Bottom anv signin/signup-->
+	<div class="bottomNav">
 		<div class="inner">
-			<div class="title">
-				{{translations?.main?.registerText?.one}}
-			</div>
-
-			<div class="text">
-				{{translations?.main?.registerText?.two}}
-			</div>
-
+			<div class="logo" routerLink="/"></div>
 			<div class="buttons">
-				<button mat-button type="button" routerLink="/signin">
+				<button mat-button routerLink="/signin">
 					{{translations?.common?.signIn}}
 				</button>
-				<button mat-button type="button" routerLink="/signup">
+				<button mat-button routerLink="/signup">
 					{{translations?.common?.signUp}}
 				</button>
 			</div>

@@ -116,10 +116,10 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			.subscribe((res: any) => {
 				this.dataUsers.loadingData = false;
 
-				if (res.length === 0) {
+				if (!res) {
 					this.dataUsers.noData = true;
 				} else {
-					res.length < environment.cuantity ? this.dataUsers.loadMoreData = false : this.dataUsers.loadMoreData = true;
+					this.dataUsers.loadMoreData = res ? (res.length < environment.cuantity ? false : true) : false;
 					this.dataUsers.noData = false;
 					this.dataUsers.list = res;
 				}
@@ -157,7 +157,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 							this.dataSearch.noData = true;
 							this.dataSearch.noMore = true;
 						} else {
-							this.dataSearch.loadMoreData = (res.length < environment.cuantity) ? false : true;
+							this.dataSearch.loadMoreData = res ? ((res.length < environment.cuantity) ? false : true) : false;
 							this.dataSearch.noData = false;
 
 							// validate added
@@ -190,7 +190,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataSearch.loadMoreData = (res.length < environment.cuantity) ? false : true;
+						this.dataSearch.loadMoreData = res ? ((res.length < environment.cuantity) ? false : true) : false;
 						this.dataSearch.loadingMoreData = false;
 
 						// Push items

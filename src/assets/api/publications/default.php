@@ -7,8 +7,9 @@
 		$session = sessionId();
 		$user = $_GET['user'];
 
-		if ($more === 0)
+		if ($more === 0) {
 			$user = userId($user);
+		}
 
 		$sql = "SELECT id, 
 						user, 

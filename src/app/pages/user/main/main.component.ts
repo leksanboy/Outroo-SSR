@@ -397,6 +397,11 @@ export class MainComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Send message
+	sendMessage() {
+		this.sessionService.setDataShowMessage(this.userData);
+	}
+
 	// Play item song
 	playSong(data, item, key, type) {
 		if (this.sessionData) {

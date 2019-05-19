@@ -4,126 +4,23 @@ import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 export class SessionService {
-	private subjectSetData = new Subject<any>();
-	private subjectPendingNotifications = new Subject<any>();
-	private subjectSetDataPlaylists = new Subject<any>();
-	private subjectSetDataCreatePlaylist = new Subject<any>();
-	private subjectSetDataAddAccount = new Subject<any>();
-	private subjectSetDataTheme = new Subject<any>();
-	private subjectSetDataLanguage = new Subject<any>();
-	private subjectSetDataReport = new Subject<any>();
-	private subjectSetDataCopy = new Subject<any>();
-	private subjectSetDataShowShare = new Subject<any>();
-	private subjectSetDataShowPublication = new Subject<any>();
-	private subjectSetDataShowPhoto = new Subject<any>();
-	private subjectSetDataShowLikes = new Subject<any>();
 	private subjectClickElementRef = new Subject<any>();
-	private subjectSetDataShowAvatar = new Subject<any>();
-	private subjectSetDataNewPublication = new Subject<any>();
-
-	setData(data: string) {
-		this.subjectSetData.next(data);
-	}
-
-	getData(): Observable<any> {
-		return this.subjectSetData.asObservable();
-	}
-
-	setPendingNotifications(data: string) {
-		this.subjectPendingNotifications.next(data);
-	}
-
-	getPendingNotifications(): Observable<any> {
-		return this.subjectPendingNotifications.asObservable();
-	}
-
-	setDataPlaylists(data: string) {
-		this.subjectSetDataPlaylists.next(data);
-	}
-
-	getDataPlaylists(): Observable<any> {
-		return this.subjectSetDataPlaylists.asObservable();
-	}
-
-	setDataCreatePlaylist(data: any) {
-		this.subjectSetDataCreatePlaylist.next(data);
-	}
-
-	getDataCreatePlaylist(): Observable<any> {
-		return this.subjectSetDataCreatePlaylist.asObservable();
-	}
-
-	setDataAddAccount(data: any) {
-		this.subjectSetDataAddAccount.next(data);
-	}
-
-	getDataAddAccount(): Observable<any> {
-		return this.subjectSetDataAddAccount.asObservable();
-	}
-
-	setDataTheme(data: any) {
-		this.subjectSetDataTheme.next(data);
-	}
-
-	getDataTheme(): Observable<any> {
-		return this.subjectSetDataTheme.asObservable();
-	}
-
-	setDataLanguage(data: any) {
-		this.subjectSetDataLanguage.next(data);
-	}
-
-	getDataLanguage(): Observable<any> {
-		return this.subjectSetDataLanguage.asObservable();
-	}
-
-	setDataReport(data: any) {
-		this.subjectSetDataReport.next(data);
-	}
-
-	getDataReport(): Observable<any> {
-		return this.subjectSetDataReport.asObservable();
-	}
-
-	setDataCopy(data: any) {
-		this.subjectSetDataCopy.next(data);
-	}
-
-	getDataCopy(): Observable<any> {
-		return this.subjectSetDataCopy.asObservable();
-	}
-
-	setDataShowShare(data: any) {
-		this.subjectSetDataShowShare.next(data);
-	}
-
-	getDataShowShare(): Observable<any> {
-		return this.subjectSetDataShowShare.asObservable();
-	}
-
-	setDataShowPublication(data: any) {
-		this.subjectSetDataShowPublication.next(data);
-	}
-
-	getDataShowPublication(): Observable<any> {
-		return this.subjectSetDataShowPublication.asObservable();
-	}
-
-	setDataShowPhoto(data: any) {
-		this.subjectSetDataShowPhoto.next(data);
-	}
-
-	getDataShowPhoto(): Observable<any> {
-		return this.subjectSetDataShowPhoto.asObservable();
-	}
-
-	setDataShowLikes(data: any) {
-		this.subjectSetDataShowLikes.next(data);
-	}
-
-	getDataShowLikes(): Observable<any> {
-		return this.subjectSetDataShowLikes.asObservable();
-	}
+	private subjectAddAccount = new Subject<any>();
+	private subjectCopy = new Subject<any>();
+	private subjectCreatePlaylist = new Subject<any>();
+	private subjectLanguage = new Subject<any>();
+	private subjectNewPublication = new Subject<any>();
+	private subjectPlaylists = new Subject<any>();
+	private subjectTheme = new Subject<any>();
+	private subjectPendingNotifications = new Subject<any>();
+	private subjectReport = new Subject<any>();
+	private subjectSetData = new Subject<any>();
+	private subjectShowMessage = new Subject<any>();
+	private subjectShowShare = new Subject<any>();
+	private subjectShowAvatar = new Subject<any>();
+	private subjectShowLikes = new Subject<any>();
+	private subjectShowPhoto = new Subject<any>();
+	private subjectShowPublication = new Subject<any>();
 
 	setDataClickElementRef(data: any) {
 		this.subjectClickElementRef.next(data);
@@ -133,19 +30,131 @@ export class SessionService {
 		return this.subjectClickElementRef.asObservable();
 	}
 
-	setDataShowAvatar(data: any) {
-		this.subjectSetDataShowAvatar.next(data);
+	setDataAddAccount(data: any) {
+		this.subjectAddAccount.next(data);
 	}
 
-	getDataShowAvatar(): Observable<any> {
-		return this.subjectSetDataShowAvatar.asObservable();
+	getDataAddAccount(): Observable<any> {
+		return this.subjectAddAccount.asObservable();
+	}
+
+	setDataCopy(data: any) {
+		this.subjectCopy.next(data);
+	}
+
+	getDataCopy(): Observable<any> {
+		return this.subjectCopy.asObservable();
+	}
+
+	setDataCreatePlaylist(data: any) {
+		this.subjectCreatePlaylist.next(data);
+	}
+
+	getDataCreatePlaylist(): Observable<any> {
+		return this.subjectCreatePlaylist.asObservable();
+	}
+
+	setDataLanguage(data: any) {
+		this.subjectLanguage.next(data);
+	}
+
+	getDataLanguage(): Observable<any> {
+		return this.subjectLanguage.asObservable();
 	}
 
 	setDataNewPublication(data: any) {
-		this.subjectSetDataNewPublication.next(data);
+		this.subjectNewPublication.next(data);
 	}
 
 	getDataNewPublication(): Observable<any> {
-		return this.subjectSetDataNewPublication.asObservable();
+		return this.subjectNewPublication.asObservable();
+	}
+
+	setDataPlaylists(data: any) {
+		this.subjectPlaylists.next(data);
+	}
+
+	getDataPlaylists(): Observable<any> {
+		return this.subjectPlaylists.asObservable();
+	}
+
+	setDataTheme(data: any) {
+		this.subjectTheme.next(data);
+	}
+
+	getDataTheme(): Observable<any> {
+		return this.subjectTheme.asObservable();
+	}
+
+	setPendingNotifications(data: any) {
+		this.subjectPendingNotifications.next(data);
+	}
+
+	getPendingNotifications(): Observable<any> {
+		return this.subjectPendingNotifications.asObservable();
+	}
+
+	setDataReport(data: any) {
+		this.subjectReport.next(data);
+	}
+
+	getDataReport(): Observable<any> {
+		return this.subjectReport.asObservable();
+	}
+
+	setData(data: any) {
+		this.subjectSetData.next(data);
+	}
+
+	getData(): Observable<any> {
+		return this.subjectSetData.asObservable();
+	}
+
+	setDataShowMessage(data: any) {
+		this.subjectShowMessage.next(data);
+	}
+
+	getDataShowMessage(): Observable<any> {
+		return this.subjectShowMessage.asObservable();
+	}
+
+	setDataShowShare(data: any) {
+		this.subjectShowShare.next(data);
+	}
+
+	getDataShowShare(): Observable<any> {
+		return this.subjectShowShare.asObservable();
+	}
+
+	setDataShowAvatar(data: any) {
+		this.subjectShowAvatar.next(data);
+	}
+
+	getDataShowAvatar(): Observable<any> {
+		return this.subjectShowAvatar.asObservable();
+	}
+
+	setDataShowLikes(data: any) {
+		this.subjectShowLikes.next(data);
+	}
+
+	getDataShowLikes(): Observable<any> {
+		return this.subjectShowLikes.asObservable();
+	}
+
+	setDataShowPhoto(data: any) {
+		this.subjectShowPhoto.next(data);
+	}
+
+	getDataShowPhoto(): Observable<any> {
+		return this.subjectShowPhoto.asObservable();
+	}
+
+	setDataShowPublication(data: any) {
+		this.subjectShowPublication.next(data);
+	}
+
+	getDataShowPublication(): Observable<any> {
+		return this.subjectShowPublication.asObservable();
 	}
 }

@@ -7,7 +7,7 @@ Version: 1.0.2
 /*Material default styles*/
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-.material-icons {
+.material-icons{
 	-webkit-font-feature-settings: 'liga';
 	-webkit-font-smoothing: antialiased;
 	font-family: 'Material Icons';
@@ -33,6 +33,7 @@ $iconWidth: 1px;
 /*Images*/
 $spriteAudios: url('assets/images/sprite_audios.png');
 $spriteImages: url('assets/images/sprite_images.png');
+$logoTextImage: url('assets/images/logo_text.png');
 
 /*Colors*/
 $backgroundBlackColor: #050505;
@@ -791,7 +792,7 @@ body{
 					}
 
 					.duration{
-						padding: 0 6px 0 0;
+						padding: 0 18px 0 0;
 						color: $greyColor;
 						text-align: right;
 						font-size: 14px;
@@ -2460,16 +2461,6 @@ body{
 					float: left;
 				}
 
-				.lang{
-					cursor: pointer;
-					padding: 0 6px;
-					float: left;
-
-					&:hover{
-						text-decoration: underline;
-					}
-				}
-
 				.divider{
 					background-color: transparentize($whiteColor, .5);
 					margin: 0 6px;
@@ -2679,11 +2670,15 @@ body{
 						float: left;
 
 						button{
+							border: 1px solid transparentize($whiteColor, .5);
 							text-transform: capitalize;
-							margin: 0 0 0 -8px;
 							color: $whiteColor;
-							background: none;
+							padding: 0 8px 0 0;
+							line-height: 32px;
+							margin: 12px 0 0;
 							box-shadow: none;
+							background: 0 0;
+							height: 32px;
 							
 							i{
 								margin: 0 -6px 0 0;
@@ -2757,82 +2752,6 @@ body{
 	/*Bottom nav bar*/
 	.bottomNav{
 		display: none;
-	}
-
-	/*Signing box, if no session*/
-	.signingBox{
-		background-color: transparentize($blackColor, .25);
-		box-shadow: $shadowBox2;
-		box-sizing: border-box;
-		color: $whiteColor;
-		border-radius: 0;
-		position: fixed;
-		z-index: 10;
-		width: 100%;
-		margin: 0;
-		bottom: 0;
-
-		.close{
-			position: absolute;
-			right: 6px;
-			top: 14px;
-
-			i{
-				background-color: $greyColor;
-			}
-		}
-
-		.inner{
-			box-sizing: border-box;
-			color: $whiteColor;
-			padding: 24px 18px;
-			max-width: 600px;
-			margin: 0 auto;
-			width: 100%;
-
-			.title{
-				text-transform: uppercase;
-				padding: 0 0 12px;
-				font-weight: bold;
-				text-align: left;
-				font-size: 18px;
-				width: 100%;
-			}		
-
-			.text{
-				word-break: break-word;
-				box-sizing: border-box;
-				width: 100%;
-
-				a{
-					text-decoration: underline;
-					color: $whiteColor;
-				}
-			}
-
-			.buttons{
-				margin: 12px 0 0;
-				display: flex;
-				width: 100%;
-
-				button{
-					background-color: $whiteColor;
-					width: calc(100% - 6px);
-					color: $fontBlackColor;
-					font-weight: bold;
-					line-height: 28px;
-					margin: 0 6px 0 0;
-					font-size: 12px;
-					padding: 0 8px;
-					min-width: 0;
-					height: 28px;
-
-					&:last-child{
-						margin: 0 0 0 6px;
-					}
-				}
-			}
-		}
 	}
 
 	/*Cookies*/
@@ -4687,7 +4606,7 @@ body{
 				&.newChatComment{
 					border-top: 1px solid transparentize($greyColor, .75);
 					padding: 12px 18px;
-					height: inherit;
+					height: auto;
 
 					.new{
 						background: transparentize($greyColor, .75);
@@ -5995,17 +5914,17 @@ body{
 							float: left;
 
 							.left{
-								width: 100px;
+								width: 86px;
 
 								.avatar{
 									box-shadow: $shadowBox2;
 									box-sizing: border-box;
 									border-radius: 50%;
-									min-width: 100px;
+									min-width: 86px;
 									overflow: hidden;
 									cursor: pointer;
-									height: 100px;
-									width: 100px;
+									height: 86px;
+									width: 86px;
 									float: left;
 
 									img{
@@ -6016,10 +5935,10 @@ body{
 							}
 
 							.right{
-								width: calc(100% - 100px);
+								width: calc(100% - 86px);
 
 								.top{
-									padding: 4px 0 4px 24px;
+									padding: 4px 0 4px 18px;
 									box-sizing: border-box;
 									display: flex;
 									width: 100%;
@@ -6117,7 +6036,7 @@ body{
 								.bottom{
 									box-sizing: border-box;
 									word-break: break-word;
-									padding: 0 0 0 24px;
+									padding: 0 0 0 18px;
 									line-height: 18px;
 									text-align: left;
 									font-size: 14px;
@@ -7830,34 +7749,38 @@ body{
 		.bottomNav{
 			background-color: $blackColor;
 
-			ul li button{
-				.home{
-					.roof{
-						&:before{
-							border-bottom-color: $blackColor;
+			ul{
+				li{
+					button{
+						.home{
+							.roof{
+								&:before{
+									border-bottom-color: $blackColor;
+								}
+
+								&:after{
+									background-color: $blackColor;
+								}
+							}
 						}
 
-						&:after{
-							background-color: $blackColor;
+						.notifications{
+							&:after{
+								border-bottom-color: $blackColor;
+							}
+
+							.clapper:after{
+								background-color: $blackColor;
+							}
 						}
-					}
-				}
 
-				.notifications{
-					&:after{
-						border-bottom-color: $blackColor;
-					}
+						&.selected{ 
+							color: $whiteColor;
 
-					.clapper:after{
-						background-color: $blackColor;
-					}
-				}
-
-				&.selected{ 
-					color: $whiteColor;
-
-					.avatar{
-						border-color: $whiteColor;
+							.avatar{
+								border-color: $whiteColor;
+							}
+						}
 					}
 				}
 			}
@@ -7970,10 +7893,6 @@ body{
 	&.iphoneXClass{
 		.bottomNav{
 			height: 84px !important;
-		}
-
-		.signingBox{
-			padding: 0 0 36px 0;
 		}
 
 		.sessionsPanelMobile{
@@ -8901,6 +8820,50 @@ body{
 							.avatar{
 								border-color: $blackColor;
 							}
+						}
+					}
+				}
+			}
+
+			.inner{
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 18px;
+				display: flex;
+				height: 48px;
+				width: 100%;
+
+				.logo{
+					background-color: $blackColor;
+					mask-image: $logoTextImage;
+					mask-repeat: no-repeat;
+					display: inline-block;
+					mask-size: auto 32px;
+					mask-position: 0 0;
+					height: 32px;
+					width: 100%;
+					margin: 0;
+				}
+
+				.buttons{
+					display: flex;
+
+					button{
+						background-color: $blueColor;
+						color: $whiteColor;
+						font-weight: bold;
+						line-height: 30px;
+						margin: 0 4px 0 0;
+						font-size: 12px;
+						padding: 0 8px;
+						min-width: 0;
+						height: 30px;
+
+						&:last-child{
+							background-color: transparent;
+							border: 1px solid $blueColor;
+							color: $blueColor;
+							margin: 0;
 						}
 					}
 				}

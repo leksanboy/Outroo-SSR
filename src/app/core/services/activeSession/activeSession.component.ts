@@ -6,7 +6,6 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../alert/alert.service';
 import { AudioDataService } from '../user/audioData.service';
-import { MomentService } from '../moment/moment.service';
 import { NotificationsDataService } from '../user/notificationsData.service';
 import { PlayerService } from '../player/player.service';
 import { PublicationsDataService } from '../user/publicationsData.service';
@@ -19,11 +18,12 @@ import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/n
 import { NewReportComponent } from '../../../../app/pages/common/newReport/newReport.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
 import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/showAvatar.component';
-import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
+import { ShowMessageComponent } from '../../../../app/pages/common/showMessage/showMessage.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
+import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobilePlayer/showMobilePlayer.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 import { ShowSessionPanelMobileComponent } from '../../../../app/pages/common/showSessionPanelMobile/showSessionPanelMobile.component';
-import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobilePlayer/showMobilePlayer.component';
+import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
 
 import { TimeagoPipe } from '../../pipes/timeago.pipe';
 
@@ -69,7 +69,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private location: Location,
 		private alertService: AlertService,
 		private playerService: PlayerService,
-		private momentService: MomentService,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private platformLocation: PlatformLocation,
@@ -149,9 +148,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			// Set list information
 			this.sessionData.current.listInformation = null;
-
-			// Set moment locale
-			this.momentService.setData(this.sessionData.current.language);
 
 			// Load default audios
 			this.defaultAudios(this.sessionData.current.username);
@@ -258,6 +254,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionService.getDataShowShare()
 				.subscribe(data => {
 					this.openShare(data);
+				});
+
+			// Get Message
+			this.sessionService.getDataShowMessage()
+				.subscribe(data => {
+					this.openMessage(data);
 				});
 
 			// Get publication
@@ -1109,9 +1111,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionData.current = data;
 			this.sessionService.setData(this.sessionData);
 
-			// Set moment
-			this.momentService.setData(this.sessionData.current.language);
-
 			// Session set
 			this.sessionData = this.userDataService.setSessionData('data', this.sessionData);
 			this.showSessions = false;
@@ -1206,9 +1205,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 					// Set translations
 					this.getTranslations(this.sessionData.current.language);
 
-					// Set moment
-					this.momentService.setData(this.sessionData.current.language);
-
 					// Alert
 					this.alertService.success(this.translations.common.languageChanged);
 				}, error => {
@@ -1292,6 +1288,26 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.location.go(this.router.url);
 			});
 		}
+	}
+
+	// Message
+	openMessage(data) {
+		this.location.go(this.router.url + '#sendMessage');
+
+		const config = {
+			disableClose: false,
+			data: {
+				sessionData: this.sessionData,
+				userData: data,
+				translations: this.translations
+			}
+		};
+
+		const dialogRef = this.dialog.open(ShowMessageComponent, config);
+		dialogRef.afterClosed().subscribe((res: any) => {
+			// Set url
+			this.location.go(this.router.url);
+		});
 	}
 
 	// Copy to clipboard

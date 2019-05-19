@@ -49,6 +49,7 @@ import { NewSessionModule } from './pages/common/newSession/newSession.module';
 import { ShowAvatarModule } from './pages/common/showAvatar/showAvatar.module';
 import { ShowShareModule } from './pages/common/showShare/showShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
+import { ShowMessageModule } from './pages/common/showMessage/showMessage.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
 import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
 import { ShowSessionPanelMobileModule } from './pages/common/showSessionPanelMobile/showSessionPanelMobile.module';
@@ -109,6 +110,7 @@ import { CookiesComponent } from './core/services/cookies/cookies.component';
 		ShowAvatarModule,
 		ShowShareModule,
 		ShowLikesModule,
+		ShowMessageModule,
 		ShowPlaylistModule,
 		ShowPublicationModule,
 		ShowSessionPanelMobileModule,

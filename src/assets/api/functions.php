@@ -252,9 +252,9 @@
 				FROM z_following
 				WHERE sender = $id 
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count followers
@@ -266,9 +266,9 @@
 				WHERE receiver = $id 
 					AND is_deleted = 0 
 					AND status = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count photos
@@ -279,9 +279,9 @@
 				FROM z_photos_favorites
 				WHERE user = $id 
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count audios
@@ -292,9 +292,9 @@
 				FROM z_audios_favorites
 				WHERE user = $id 
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count bookmarks
@@ -307,9 +307,9 @@
 				WHERE b.user = $id 
 					AND b.is_deleted = 0
 					AND p.is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	////////////
@@ -381,9 +381,9 @@
 		$sql = "SELECT id
 				FROM z_audios_replays
 				WHERE song = $id";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 	
 	// Count times added
@@ -394,9 +394,9 @@
 				FROM z_audios_favorites
 				WHERE song = $id
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Get publication data for notification
@@ -440,9 +440,9 @@
 				FROM z_photos_likes
 				WHERE photo = '$photo' 
 					AND user = $user";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		if ($result->num_rows)
+		if ($result)
 			$result = true;
 		else
 			$result = false;
@@ -493,9 +493,9 @@
 		$sql = "SELECT id
 				FROM z_photos_likes
 				WHERE photo = $id";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count comments photo
@@ -506,9 +506,9 @@
 				FROM z_photos_comments
 				WHERE photo = $id 
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Get photo data for notification
@@ -593,9 +593,9 @@
 		$sql = "SELECT id
 				FROM z_publications_likes
 				WHERE publication = $id";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Count comments publication
@@ -606,9 +606,9 @@
 				FROM z_publications_comments
 				WHERE publication = $id 
 					AND is_deleted = 0";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		return $result->num_rows;
+		return $result;
 	}
 
 	// Check if I liked a publication
@@ -619,9 +619,9 @@
 				FROM z_publications_likes
 				WHERE publication = '$publication' 
 					AND user = $user";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->num_rows;
 
-		if ($result->num_rows)
+		if ($result)
 			$result = true;
 		else
 			$result = false;

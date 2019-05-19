@@ -122,7 +122,7 @@
 					</div>
 
 					<div class="actions" *ngIf="(userData?.id != sessionData?.current?.id) && sessionData?.current?.id">
-						<button mat-raised-button routerLink="/notifications">
+						<button mat-raised-button (click)="sendMessage()">
 							{{translations?.common?.sendMessage}}
 						</button>
 

@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
 import { MetaService } from '../seo/meta.service';
+import { MomentService } from '../moment/moment.service';
 import { SsrService } from '../ssr.service';
 
 import * as moment from 'moment/moment';
@@ -23,6 +24,7 @@ export class UserDataService {
 		private httpClient: HttpClient,
 		private headersService: HeadersService,
 		private metaService: MetaService,
+		private momentService: MomentService,
 		private ssrService: SsrService
 	) {}
 
@@ -88,6 +90,9 @@ export class UserDataService {
 				break;
 		}
 
+		// Set moment locale
+		this.momentService.setData(htmlLang);
+
 		// Set html lang attr
 		this.metaService.setHtmlLang(htmlLang);
 
@@ -108,8 +113,6 @@ export class UserDataService {
 	}
 
 	analytics(url) {
-		console.log('analytics 1:', url);
-
 		if (this.ssrService.isBrowser) {
 			console.log('analytics 2:', url);
 

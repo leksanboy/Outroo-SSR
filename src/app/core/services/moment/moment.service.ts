@@ -7,10 +7,7 @@ export class MomentService {
 	constructor() { }
 
 	setData(data: any) {
-		// Set by default if not exists
-		data = data || 1;
-
-		if (data === 1) {
+		if (data === 'en') {
 			// English
 			moment.locale('en');
 
@@ -32,7 +29,7 @@ export class MomentService {
 					yy: '%d\Y'
 				}
 			});
-		} else if (data === 2) {
+		} else if (data === 'es') {
 			// Spanish
 			moment.locale('es');
 
@@ -54,7 +51,7 @@ export class MomentService {
 					yy: '%d\Y'
 				}
 			});
-		} else if (data === 3) {
+		} else if (data === 'ru') {
 			// Russian
 			moment.locale('ru');
 
