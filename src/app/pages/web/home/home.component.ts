@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
 				.subscribe(
 					res => {
-						this.router.navigate(['home']);
+						this.router.navigate([this.env.defaultPage]);
 					},
 					error => {
 						this.submitLoading = false;

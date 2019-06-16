@@ -54,7 +54,6 @@ export class NewPublicationComponent implements OnInit {
 	) {
 		this.data.photosArray = [];
 		this.data.audiosArray = [];
-		this.data.urlVideo = [];
 		this.data.counterUploaded = 0;
 		this.sessionData = this.data.sessionData;
 		this.translations = this.data.translations;
@@ -116,6 +115,8 @@ export class NewPublicationComponent implements OnInit {
 		const dialogRef = this.dialog.open(NewPublicationAddPhotosComponent, config);
 		dialogRef.afterClosed().subscribe((res: any) => {
 			this.location.go('/' + this.sessionData.current.username + '#newPublication');
+
+			console.log('res', res);
 
 			this.data.photosArray = res.array;
 			this.data.photosList = res.list;
@@ -315,8 +316,7 @@ export class NewPublicationComponent implements OnInit {
 
 		// validate text, array audios & photos and youtube/vimeo url
 		const valid = (this.publicationData.original.length === 0 && // validate text
-						data.saveDisabled && // validate existing audios or photos
-						!data.urlVideo.exists) ? false : true; // validate youtube/vimeo url video
+						data.saveDisabled) ? false : true; // validate existing audios or photos
 
 		return valid;
 	}
@@ -387,75 +387,6 @@ export class NewPublicationComponent implements OnInit {
 		}, 300);
 	}
 
-	// Video information from url YouTube/vimeo
-	urlVideoInformation(type, url) {
-		if (type === 1) {
-			this.data.urlVideo = [];
-			const data = {
-				type: 'other',
-				url: url
-			};
-
-			// Check type
-			if (url.indexOf('youtu') > -1) {
-				data.type = 'youtube';
-			} else if (url.indexOf('vimeo') > -1) {
-				data.type = 'vimeo';
-			} else {
-				data.type = 'other';
-			}
-
-			// Get data
-			this.publicationsDataService.urlVideoInformation(data)
-				.subscribe((res: any) => {
-					if (res) {
-						if (data.type === 'youtube') {
-							this.data.urlVideo = {
-								exists: true,
-								url: data.url,
-								type: 'YouTube',
-								title: res.title,
-								channel: res.author_name,
-								thumbnail: res.thumbnail_url,
-								iframe: res.iframe
-							};
-						} else if (data.type === 'vimeo') {
-							this.data.urlVideo = {
-								exists: true,
-								url: data.url,
-								type: 'Vimeo',
-								title: res.title,
-								channel: res.user_name,
-								thumbnail: res.thumbnail_large,
-								iframe: res.iframe
-							};
-						} else {
-							this.data.urlVideo = {
-								exists: true,
-								url: data.url,
-								type: 'Other',
-								title: null,
-								channel: null,
-								thumbnail: null,
-								iframe: null
-							};
-						}
-					} else {
-						this.data.urlVideo = [];
-						this.data.urlVideo.exists = false;
-						this.alertService.error(this.translations.common.invalidUrl);
-					}
-				}, error => {
-					this.data.urlVideo = [];
-					this.data.urlVideo.exists = false;
-					this.alertService.error(this.translations.common.invalidUrl);
-				});
-		} else if (type === 2) {
-			this.data.urlVideo = [];
-			this.data.urlVideo.exists = false;
-		}
-	}
-
 	// Create publication
 	submit() {
 		const validate = this.validateBeforeSubmit(this.data);
@@ -463,30 +394,48 @@ export class NewPublicationComponent implements OnInit {
 		if (validate) {
 			this.saveLoading = true;
 			const formatedData = this.transformBeforeSubmit(this.publicationData.original);
-			const photosData = [];
+			const photosArray = [];
+			const audiosArray = [];
 
 			for (const i of this.data.photosArray) {
 				if (i) {
 					const a = {
-						id: i.uploaded ? i.id : i.photo,
-						name: i.uploaded ? i.up_name : i.name,
-						mimetype: i.uploaded ? i.up_type : i.type,
-						duration: i.uploaded ? i.up_duration : i.duration,
-						uploaded: i.uploaded ? true : false
+						id: 		i.uploaded ? i.id : i.photo,
+						name: 		i.uploaded ? i.up_name : i.name,
+						mimetype: 	i.uploaded ? i.up_type : i.type,
+						duration: 	i.uploaded ? i.up_duration : i.duration,
+						uploaded: 	i.uploaded ? true : false
 					};
 
-					photosData.push(a);
+					photosArray.push(a);
+				}
+			}
+
+			for (const i of this.data.audiosArray) {
+				if (i) {
+					const a = {
+						id: 				i.uploaded ? i.id : i.photo,
+						song: 				i.uploaded ? '' : i.song,
+						name: 				i.uploaded ? i.up_name : i.name,
+						original_title: 	i.uploaded ? i.up_original_title : i.title,
+						original_artist: 	i.uploaded ? i.up_original_artist : i.title,
+						genre: 				i.uploaded ? i.up_genre : '',
+						image:				i.uploaded ? i.up_image : '',
+						duration: 			i.uploaded ? i.up_duration : '',
+						uploaded: 			i.uploaded ? true : false
+					};
+
+					audiosArray.push(a);
 				}
 			}
 
 			const data = {
-				content: formatedData.content,
-				contentOriginal: this.publicationData.original,
-				mentions: formatedData.mentions,
-				hashtags: formatedData.hashtags,
-				urlVideo: this.data.urlVideo,
-				photos: (photosData.length > 0 ? photosData : ''),
-				audios: (this.data.audiosArray.length > 0 ? this.data.audiosArray : ''),
+				content: 			formatedData.content,
+				contentOriginal: 	this.publicationData.original,
+				mentions: 			formatedData.mentions,
+				hashtags: 			formatedData.hashtags,
+				photos: 			(photosArray.length > 0 ? photosArray : ''),
+				audios: 			(audiosArray.length > 0 ? audiosArray : '')
 			};
 
 			this.publicationsDataService.createPublication(data)

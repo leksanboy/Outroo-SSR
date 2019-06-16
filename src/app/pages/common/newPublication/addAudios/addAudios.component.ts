@@ -59,7 +59,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			this.data.rowsDefault = this.data.rows;
 			this.loadMoreData = this.data.loadMore;
 		} else {
-			this.default(this.data.sessionData.current.username);
+			this.default(this.data.sessionData.current.id);
 		}
 	}
 

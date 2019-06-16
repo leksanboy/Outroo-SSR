@@ -1,11 +1,9 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
 
-	$cuantity = $data['cuantity'];
-	$more = $data['rows']*$cuantity;
+	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
 	$user = $data['user'];
-	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$id = $data['id'];
 	$content = htmlspecialchars($data['content'], ENT_QUOTES);
 	$contentOriginal = htmlspecialchars($data['content_original'], ENT_QUOTES);
@@ -22,9 +20,24 @@
 		$sql = "SELECT id, message, user, content, content_original, date
 				FROM z_message_conversation
 				WHERE id = $insertedIdMC";
-		$result = $conn->query($sql)->fetch_assoc();
+		$result = $conn->query($sql);
+		$insertedId = $conn->insert_id;
 
-		echo json_encode($result);
+		// Notification data
+		$notification = array(
+			'url' 		=> 'message',
+			'type' 		=> 'comment',
+			'sender' 	=> $session,
+			'receiver' 	=> $user,
+			'id' 		=> $insertedIdMC,
+			'comment' 	=> $insertedId
+		);
+
+		generateNotification($notification);
+
+		$comment = $result->fetch_assoc();
+		$comment['user'] = userUsernameNameAvatar($comment['user']);
+		echo json_encode($comment);
 	} else {
 		// Create message
 		$sqlM = "INSERT INTO z_message (sender, receiver, ip_address)
@@ -38,13 +51,28 @@
 		$resultMC = $conn->query($sqlMC);
 		$insertedIdMC = $conn->insert_id;
 
-		// Get inseted
+		// Get inserted
 		$sql = "SELECT id, message, user, content, content_original, date
 				FROM z_message_conversation
 				WHERE id = $insertedIdMC";
-		$result = $conn->query($sql)->fetch_assoc();
+		$result = $conn->query($sql);
+		$insertedId = $conn->insert_id;
 
-		echo json_encode($result);
+		// Notification data
+		$notification = array(
+			'url' 		=> 'message',
+			'type' 		=> 'comment',
+			'sender' 	=> $session,
+			'receiver' 	=> $user,
+			'id' 		=> $insertedIdMC,
+			'comment' 	=> $insertedId
+		);
+
+		generateNotification($notification);
+
+		$comment = $result->fetch_assoc();
+		$comment['user'] = userUsernameNameAvatar($comment['user']);
+		echo json_encode($comment);
 	}
 
 	$conn->close();

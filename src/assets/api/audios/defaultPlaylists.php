@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$session = sessionId();
-	$user = userId($_GET['user']);
+	$user = $_GET['user'];
 	$type = $_GET['type'];
 
 	// Playlists for list or combo

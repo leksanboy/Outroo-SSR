@@ -78,8 +78,8 @@ export class SigninComponent implements OnInit {
 		) {
 			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
 				.subscribe(
-					(res: any) => {
-						this.router.navigate([res.username]);
+					res => {
+						this.router.navigate([this.env.defaultPage]);
 					},
 					error => {
 						this.submitLoading = false;

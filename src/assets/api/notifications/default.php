@@ -58,6 +58,10 @@
 			if ($row['url'] === 'audios')
 				$row['contentData'] = getSongById($row['page']);
 
+			// Message
+			if ($row['url'] === 'message')
+				$row['contentData'] = getMessageById($row['page']);
+
 			$data[] = $row;
 		}
 

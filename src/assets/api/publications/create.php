@@ -9,19 +9,8 @@
 	$hashtags = count($data['hashtags']) > 0 ? json_encode($data['hashtags']) : null;
 	$mentions = count($data['mentions']) > 0 ? json_encode($data['mentions']) : null;
 	$mentionsNotificate = $data['mentions'];
-	$urlVideo = $data['urlVideo'];
 	$photos = $data['photos'];
 	$audios = $data['audios'];
-
-	// Scape special chars in urlVideo array
-	if ($urlVideo) {
-		$urlVideo['title'] = htmlspecialchars($urlVideo['title'], ENT_QUOTES);
-		$urlVideo['channel'] = htmlspecialchars($urlVideo['channel'], ENT_QUOTES);
-		$urlVideo['iframe'] = htmlspecialchars($urlVideo['iframe'], ENT_QUOTES);
-		$urlVideo = json_encode($urlVideo);
-	} else {
-		$urlVideo = null;
-	}
 
 	// Create new array and insert photo & video files on table
 	if ($photos) {
@@ -47,16 +36,17 @@
 	if ($audios) {
 		$audiosArray = array();
 		foreach($audios as $row){
-			if ($row['uploaded'])
+			if ($row['uploaded']) {
 				$insertedAudio = uploadAudiosPublication($session,
-														$row['up_name'].'.mp3',
+														$row['name'].'.mp3',
 														$row['mimetype'],
 														htmlspecialchars($row['title'], ENT_QUOTES),
-														htmlspecialchars($row['up_original_title'], ENT_QUOTES),
-														htmlspecialchars($row['up_original_artist'], ENT_QUOTES),
-														$row['up_genre'],
-														$row['up_image'],
-														$row['up_duration']);
+														htmlspecialchars($row['original_title'], ENT_QUOTES),
+														htmlspecialchars($row['original_artist'], ENT_QUOTES),
+														$row['genre'],
+														$row['image'],
+														$row['duration']);
+			}
 
 			$newAudio = ($row['uploaded'] ? $insertedAudio : $row['song']);
 			$audiosArray[] = $newAudio;
@@ -68,8 +58,8 @@
 	}
 
 	// Set query
-	$sql = "INSERT INTO z_publications (user, name, content, content_original, mentions, hashtags, url_video, photos, audios, ip_address)
-			VALUES ($session, '$name', '$content', '$contentOriginal', '$mentions', '$hashtags', '$urlVideo', '$photosArray', '$audiosArray', '$ipAddress')";
+	$sql = "INSERT INTO z_publications (user, name, content, content_original, mentions, hashtags, photos, audios, ip_address)
+			VALUES ($session, '$name', '$content', '$contentOriginal', '$mentions', '$hashtags', '$photosArray', '$audiosArray', '$ipAddress')";
 	$result = $conn->query($sql);
 	$insertedId = $conn->insert_id;
 

@@ -29,12 +29,12 @@ export class MessageDataService {
 			}));
 	}
 
-	newComment(data: any){
-		const url = environment.url + 'assets/api/message/newComment.php';
+	comment(data: any) {
+		const url = environment.url + 'assets/api/message/comment.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => { 
+			.pipe(map(res => {
 				return res;
 			}));
 	}
@@ -44,8 +44,8 @@ export class MessageDataService {
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map((res: Response) => { 
-				return res.json();
+			.pipe(map(res => {
+				return res;
 			}));
 	}
 }

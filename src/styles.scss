@@ -1528,7 +1528,7 @@ body{
 	/*Alert*/
 	.alertBox{
 		position: fixed;
-		z-index: 999;
+		z-index: 9999;
 		width: 100%;
 		top: 64px;
 		left: 0;
@@ -3122,7 +3122,7 @@ body{
 
 							.left i,
 							.right .top{
-								background-color: $whiteColor;
+								color: $whiteColor;
 							}
 						}
 					}
@@ -4261,11 +4261,15 @@ body{
 										max-width: 100%;
 										float: right;
 									}
+
+									&.remove{
+										filter: grayscale(100%);
+										opacity: .5;
+									}
 								}
 							}
 
-							&.me,
-							&.publication{
+							&.me{
 								.box{
 									.bottom{
 										.text{
@@ -4423,17 +4427,6 @@ body{
 										}
 									}
 								}
-							}
-
-							&.publication{
-								.box{
-									width: 60%;
-								}
-							}
-
-							&.remove{
-								filter: grayscale(100%);
-								opacity: .5;
 							}
 						}
 					}
@@ -4682,6 +4675,7 @@ body{
 								min-width: 0;
 								height: 24px;
 								width: 24px;
+								padding: 0;
 								margin: 0;
 
 								i{
@@ -6788,12 +6782,12 @@ body{
 							width: 40vw;
 
 							.image{
-								height: calc(40vw - 24px);
 								box-sizing: border-box;
 								position: relative;
 								border-radius: 5px;
-								max-height: 207px;
+								max-height: 100px;
 								cursor: pointer;
+								height: 56vw;
 								width: 100%;
 								float: left;
 
@@ -6820,7 +6814,8 @@ body{
 							}
 
 							.panel{
-								padding: 0 0 6px 0;
+								box-sizing: border-box;
+								padding: 0 6px 6px;
 								position: relative;
 								display: flex;
 								width: 100%;

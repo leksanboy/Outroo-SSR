@@ -29,8 +29,6 @@ export class UserDataService {
 	) {}
 
 	getTranslations(lang) {
-		console.log('-> lang:', lang);
-
 		if (!lang) {
 			// Get lang from cookie
 			const langCookie = this.getLang('get', null);

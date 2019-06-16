@@ -217,7 +217,39 @@
 							</div>
 						</div>
 
-						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publications' || x.url === 'audios')">
+						<div class="inner" *ngIf="x.url === 'message'">
+							<div class="text">
+								<div class="name">
+									<a class="username" routerLink="/{{x.user.username}}">
+										{{x.user.username}}
+										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									</a>
+									<span class="date">{{x.date | timeago}}</span>
+								</div>
+
+								<div class="container" (click)="show(x)">
+									{{translations?.notifications?.haveNewMessage}}
+									<br>
+									<span [innerHtml]="x.contentData.content | safeHtml"></span>
+								</div>
+							</div>
+
+							<div class="operations">
+								<div class="actions">
+									<button mat-icon-button [matMenuTriggerFor]="options">
+										<i label="more"></i>
+									</button>
+									
+									<mat-menu #options="matMenu">
+										<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									</mat-menu>
+								</div>
+							</div>
+						</div>
+
+						<!-- ITEM for REMOVE if NOT EXISTS -->
+						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publications' || x.url === 'audios' || x.url === 'message')">
 							<div class="text">
 								<div class="name">
 									<a class="username" routerLink="/{{x.user.username}}">

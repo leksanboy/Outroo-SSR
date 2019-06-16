@@ -57,10 +57,10 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService
 	) {
-		this.translations = data.translations;
-		this.sessionData = data.sessionData;
-		this.userData = data.userData;
-		this.dataDefault.data = data.item ? data.item : [];
+		this.translations = this.data.translations;
+		this.sessionData = this.data.sessionData;
+		this.userData = this.data.userData;
+		this.dataDefault.data = this.data.item ? this.data.item : [];
 		this.showComments('showHide', this.dataDefault.data);
 
 		// Click on a href

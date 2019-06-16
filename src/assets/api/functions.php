@@ -877,7 +877,6 @@
 					$result = $conn->query($sql);
 				}
 				break;
-			case 'photos':
 			case 'publications':
 				if ($type === 'like') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
@@ -933,65 +932,81 @@
 						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 				$result = $conn->query($sql);
 				break;
+			case 'message':
+				if ($type === 'comment') {
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
+					$result = $conn->query($sql);
+				} else if ($type === 'add') {
+					$sql = "UPDATE z_notifications
+							SET is_deleted = 0, ip_address = '$ipAddress' 
+							WHERE page_id = $id";
+					$result = $conn->query($sql);
+				} else if ($type === 'remove') {
+					$sql = "UPDATE z_notifications
+							SET is_deleted = 1, ip_address = '$ipAddress' 
+							WHERE page_id = $id";
+				}
+				break;
 		}
 	}
 
-	//////////
-	// CHAT //
-	//////////
+	/////////////
+	// MESSAGE //
+	/////////////
 
-	// Get conversation users
-	function getChatConversationUsers($id, $user){
-		global $conn;
+	// // Get conversation users
+	// function getChatConversationUsers($id, $user){
+	// 	global $conn;
 
-		$sql = "SELECT user
-				FROM z_chat_users
-				WHERE chat = $id 
-					AND is_deleted = 0
-				ORDER BY date DESC
-				LIMIT 100";
-		$result = $conn->query($sql);
+	// 	$sql = "SELECT user
+	// 			FROM z_chat_users
+	// 			WHERE chat = $id 
+	// 				AND is_deleted = 0
+	// 			ORDER BY date DESC
+	// 			LIMIT 100";
+	// 	$result = $conn->query($sql);
 
-		$dataAll = array();
-		$dataExcluded = array();
-		while($row = $result->fetch_assoc()) {
-			$row['user'] = userUsernameNameAvatar($row['user']);
-			$dataAll[] = $row;
+	// 	$dataAll = array();
+	// 	$dataExcluded = array();
+	// 	while($row = $result->fetch_assoc()) {
+	// 		$row['user'] = userUsernameNameAvatar($row['user']);
+	// 		$dataAll[] = $row;
 
-			if ($user != $row['user']['id'])
-				$dataExcluded[] = $row;
-		}
+	// 		if ($user != $row['user']['id'])
+	// 			$dataExcluded[] = $row;
+	// 	}
 
-		$data = array(
-			"all" 	=> $dataAll,
-			"excluded" 	=> $dataExcluded
-		);
+	// 	$data = array(
+	// 		"all" 	=> $dataAll,
+	// 		"excluded" 	=> $dataExcluded
+	// 	);
 
-		return $data;
-	}
+	// 	return $data;
+	// }
 
-	// Get last inserted comment
-	function getChatConversationLastComment($id){
-		global $conn;
+	// // Get last inserted comment
+	// function getChatConversationLastComment($id){
+	// 	global $conn;
 
-		$sql = "SELECT content, date, type
-				FROM z_chat_conversation
-				WHERE chat = $id 
-					AND is_deleted = 0
-				ORDER BY date DESC
-				LIMIT 1";
-		$result = $conn->query($sql)->fetch_assoc();
-		$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
+	// 	$sql = "SELECT content, date, type
+	// 			FROM z_chat_conversation
+	// 			WHERE chat = $id 
+	// 				AND is_deleted = 0
+	// 			ORDER BY date DESC
+	// 			LIMIT 1";
+	// 	$result = $conn->query($sql)->fetch_assoc();
+	// 	$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
 
-		return $result;
-	}
+	// 	return $result;
+	// }
 
 	// Get inserted comment in conversation
-	function getChatConversationComment($id){
+	function getMessageById($id){
 		global $conn;
 
-		$sql = "SELECT id, user, type, content, publication, date
-				FROM z_chat_conversation
+		$sql = "SELECT id, user, message, content, content_original, date
+				FROM z_message_conversation
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
 

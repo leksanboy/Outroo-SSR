@@ -39,7 +39,7 @@ declare var global: any;
 	],
 	providers: [ DateTimePipe, SafeHtmlPipe, TruncatePipe ]
 })
-export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class ShowMessageComponent implements OnInit, OnDestroy {
 	@ViewChild('conversationContainer') private myScrollContainer: ElementRef;
 	public env: any = environment;
 	public window: any = global;
@@ -67,11 +67,10 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 		private sessionService: SessionService,
 		private messageDataService: MessageDataService
 	) {
-		console.log("data", data);
-
-		this.sessionData = data.sessionData;
-		this.userData = data.userData;
-		this.translations = data.translations;
+		this.sessionData = this.data.sessionData;
+		this.userData = this.data.userData;
+		this.translations = this.data.translations;
+		console.log('data:', this.data);
 
 		// New comments set
 		this.newComment('clear', null, this.data);
@@ -88,16 +87,16 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 		this.close();
 	}
 
-	ngAfterViewChecked() {
-		this.scrollToBottom();
-	}
+	// ngAfterViewChecked() {
+	// 	this.scrollToBottom();
+	// }
 
 	scrollToBottom() {
 		this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
 	}
 
 	default(type) {
-		if (type == 'default') {
+		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
 				rows: 0,
@@ -108,13 +107,14 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 				noMore: false
 			};
 
-			const data = {
+			const d = {
 				user: this.userData.id,
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
 			};
+			console.log('default', d);
 
-			this.messageDataService.default(data)
+			this.messageDataService.default(d)
 				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
@@ -137,7 +137,7 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type == 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
 			this.dataDefault.rows++;
 
@@ -153,12 +153,13 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0)
+						if (!res || res.length > 0) {
 							for (const i of res) {
 								if (i) {
 									this.dataDefault.list.push(i);
 								}
 							}
+						}
 
 						if (!res || res.length < this.env.cuantity) {
 							this.dataDefault.noMore = true;
@@ -173,19 +174,18 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 
 	itemOptions(type, item) {
 		switch (type) {
-			case "remove":
+			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				let dataAddRemove = {
+				const dataAddRemove = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
-				}
+					type: item.removeType
+				};
 
-				// this.messageDataService.addRemove(dataAddRemove).subscribe();
+				this.messageDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case "report":
+			case 'report':
 				item.type = 'notification';
 				item.translations = this.translations;
 				this.sessionService.setDataReport(item);
@@ -194,7 +194,7 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 	}
 
 	newComment(type, event, item) {
-		if (type == 'clear') {
+		if (type === 'clear') {
 			item.newCommentData = [];
 
 			setTimeout(() => {
@@ -208,34 +208,34 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 
 				this.newComment('checkPlaceholder', null, item);
 			}, 100);
-		} else if (type == 'writingChanges') {
+		} else if (type === 'writingChanges') {
 			let str = event;
 			item.newCommentData.original = event;
-			
+
 			// new line
 			str = str.replace(/\n/g, '<br>');
 
 			// hashtag
-			str = str.replace(/(#)\w+/g, function(value){
+			str = str.replace(/(#)\w+/g, function(value) {
 				return '<span class="hashtag">' + value + '</span>';
 			});
 
 			// mention
-			str = str.replace(/(@)\w+/g, function(value){
+			str = str.replace(/(@)\w+/g, function(value) {
 				return '<span class="mention">' + value + '</span>';
 			});
 
 			// url
-			str = str.replace(this.urlRegex, function(value){
+			str = str.replace(this.urlRegex, function(value) {
 				return '<span class="url">' + value + '</span>';
 			});
 
 			// writing content
 			item.newCommentData.transformed = str;
 
-			//check empty contenteditable
+			// check empty contenteditable
 			this.newComment('checkPlaceholder', null, item);
-		} else if (type == 'keyCode') {
+		} else if (type === 'keyCode') {
 			if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
 				// Space, Enter, Escape
 				this.searchBoxMentions = false;
@@ -244,48 +244,49 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 					this.searchBoxMentions = false;
 				} else {
 					item.newCommentData.eventTarget = event.target;
-					let position = this.getCaretPosition(event.target);
-					let word = this.getCurrentWord(event.target, position);
-					
+					const position = this.getCaretPosition(event.target);
+					const word = this.getCurrentWord(event.target, position);
+
 					item.newCommentData.lastTypedWord = {
 						word: word,
 						position: position
 					};
 				}
 			}
-		} else if (type == 'checkPlaceholder') {
-			if (item.newCommentData.original.length == 0)
+		} else if (type === 'checkPlaceholder') {
+			if (item.newCommentData.original.length === 0) {
 				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
-		} else if (type == 'transformBeforeSend') {
-			let newData = {
+			}
+		} else if (type === 'transformBeforeSend') {
+			const newData = {
 				content: item.newCommentData.original ? item.newCommentData.original : '',
 				original: item.newCommentData.original ? item.newCommentData.original : '',
 				mentions: [],
 				hashtags: []
-			}
+			};
 
 			// new line
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value){
+			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value){
+			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
 				newData.mentions.push(value);
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.urlRegex, function(value){
+			newData.content = newData.content.replace(this.urlRegex, function(value) {
 				return '<a class="url">' + value + '</a>';
 			});
 
 			return newData;
-		} else if (type == 'create') {
-			if (item.newCommentData.original.trim().length == 0) {
+		} else if (type === 'create') {
+			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.success(this.translations.common.isTooShort);
 			} else {
 				const formatedData = this.newComment('transformBeforeSend', null, item);
@@ -296,10 +297,12 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 					content_original: formatedData.original
 				};
 
-				this.messageDataService.newComment(dataCreate)
+				this.messageDataService.comment(dataCreate)
 					.subscribe((res: any) => {
+						console.log('New', res);
+
 						this.dataDefault.noData = false;
-						this.dataDefault.id = res.message;
+						this.dataDefault.id = res.content;
 						this.dataDefault.list.push(res);
 
 						// Clear comment box
@@ -314,6 +317,7 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 		}
 	}
 
+	// Caret position on contenteditable
 	getCaretPosition(element) {
 		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
 		let caretOffset = 0;
@@ -331,6 +335,7 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 		return caretOffset;
 	}
 
+	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
 		// Get content of div
 		const content = el.textContent;
@@ -349,17 +354,6 @@ export class ShowMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 
 	close() {
 		this.data.close = true;
-		
-		// // On close check if is new so then add to the list on component page
-		// if (this.dataDefault.list.length > 0) {
-		// 	this.data.list = this.dataDefault.list;
-
-		// 	this.data.last = {
-		// 		content: this.dataDefault.list[this.dataDefault.list.length-1].content,
-		// 		date: this.dataDefault.list[this.dataDefault.list.length-1].date,
-		// 		type: this.dataDefault.list[this.dataDefault.list.length-1].type ? this.dataDefault.list[this.dataDefault.list.length-1].type : 'text'
-		// 	};
-		// }
 
 		this.dialogRef.close(this.data);
 	}

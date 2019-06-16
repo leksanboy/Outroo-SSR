@@ -22,7 +22,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.translations = this.data.translations;
 		this.sessionData = this.data.sessionData;
-
 		this.data.list = this.data.list ? this.data.list : [];
 		this.data.arrayAddedItems = [];
 		this.data.arrayAddedItems = Object.assign([], this.data.array);
@@ -90,6 +89,8 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			array: this.data.arrayAddedItemsCopy,
 			list: this.data.list
 		};
+
+		console.log('data', data);
 
 		this.dialogRef.close(data);
 	}
@@ -166,10 +167,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 				fl.status = 'completed';
 				fl.up_name = response.name;
 				fl.up_type = response.type ? response.type : '';
-				fl.up_original_title = response.original_title ? response.original_title : '';
-				fl.up_original_artist = response.original_artist ? response.original_artist : '';
-				fl.up_genre = response.genre ? response.genre : '';
-				fl.up_image = response.image ? response.image : '';
 				fl.up_duration = response.duration ? response.duration : '';
 
 				self.toggleItem(fl);

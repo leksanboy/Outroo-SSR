@@ -78,13 +78,15 @@
 		"sharedPublication": "Shared a publication",
 		"sharedAudio": "Shared a song",
 		"goToNotifications": "Go to Notifications",
-		"share": "Share"
+		"share": "Share",
+		"haveNewMessage": "Have a new message"
 	},
 	"photos": {
 		"title": "Photos",
 		"noData": "No photos",
 		"chooseFiles": "Choose photos",
-		"maxSizePerFile": "Photos & Videos · Max size per file 20 Mb"
+		"maxSizePerFile": "Photos & Videos · Max size per file 20 Mb",
+		"addSomeFiles": "Upload photos, videos, gif"
 	},
 	"post": {
 		"title": "Publication",

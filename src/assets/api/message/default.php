@@ -34,12 +34,14 @@
 				$list = array();
 
 				while($row = $result->fetch_assoc()) {
+					$row['user'] = userUsernameNameAvatar($row['user']);
+					$row['content'] = trim($row['content']) ? html_entity_decode($row['content'], ENT_QUOTES) : null;
 					$list[] = $row;
 				}
 
 				$res = array(
 					'id' => $id,
-					'list' => $list
+					'list' => array_reverse($list)
 				);
 
 				echo json_encode($res);
@@ -72,7 +74,7 @@
 
 			$res = array(
 				'id' => $id,
-				'list' => $list
+				'list' => array_reverse($list)
 			);
 
 			echo json_encode($res);

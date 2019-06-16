@@ -39,18 +39,6 @@
 
 		<div class="audios">
 			<ul class="tracks" *ngIf="data.list.length > 0">
-				<!-- <li mat-ripple class="upload" (click)="uploadFile.click()">
-					<div class="inner">
-						<div class="label">
-							<i label="cloud-upload"></i>
-							<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
-							<br>
-							<div class="title">{{translations?.audios?.chooseFiles}}</div>
-							<div class="subtitle">{{translations?.audios?.maxSizePerFile}}</div>
-						</div>
-					</div>
-				</li> -->
-
 				<li *ngFor="let x of data.list" [ngClass]="{default: !x.image}" (click)="toggleItem(x)">
 					<div class="inner" *ngIf="!x.uploaded">
 						<div class="image">
@@ -119,7 +107,7 @@
 		    <div class="loadingData" *ngIf="loadingData">
 		    	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 		    </div>
-		    <div class="noData" *ngIf="noData">{{translations?.photos?.noData}}</div>
+		    <div class="noData" *ngIf="noData">{{translations?.audios?.noData}}</div>
 		    <div class="loadMore" *ngIf="loadMoreData">
 		    	<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
 		    		<i label="add"></i>

@@ -288,6 +288,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.sessionService.setDataShowPhoto(item);
 		} else if (item.url === 'publications') {
 			this.sessionService.setDataShowPublication(item);
+		} else if (item.url === 'message') {
+			this.sessionService.setDataShowMessage(item.user);
 		}
 	}
 

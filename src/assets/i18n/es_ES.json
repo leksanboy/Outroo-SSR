@@ -78,13 +78,15 @@
 		"sharedPublication": "Ha compartido una publicación",
 		"sharedAudio": "Ha compartido una canción",
 		"goToNotifications": "Ir a Notificaciones",
-		"share": "Compartir"
+		"share": "Compartir",
+		"haveNewMessage": "Tienes un nuevo mensaje"
 	},
 	"photos": {
 		"title": "Fotos",
 		"noData": "No hay fotos",
 		"chooseFiles": "Subir fotos",
-		"maxSizePerFile": "Fotos & Videos · Tamaño maximo por archivo 20 Mb"
+		"maxSizePerFile": "Fotos & Videos · Tamaño maximo por archivo 20 Mb",
+		"addSomeFiles": "Sube fotos, videos, gif"
 	},
 	"post": {
 		"title": "Publicación",
