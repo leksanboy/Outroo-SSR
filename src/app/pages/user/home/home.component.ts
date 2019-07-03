@@ -204,6 +204,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						this.dataDefault.noData = true;
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataDefault.noData = false;
 
 						for (const i in res) {
 							if (i) {

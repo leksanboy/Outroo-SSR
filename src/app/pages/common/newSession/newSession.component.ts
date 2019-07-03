@@ -17,6 +17,7 @@ export class NewSessionComponent implements OnInit {
 	public actionForm: FormGroup;
 	public saveLoading: boolean;
 	public inUse: boolean;
+	public showPassword: boolean;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,

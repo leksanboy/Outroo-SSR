@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
@@ -47,7 +48,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		private alertService: AlertService,
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
-		private userDataService: UserDataService
+		private userDataService: UserDataService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -84,6 +86,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.activeLanguage.unsubscribe();
+	}
+
+	// Go back
+	goBack() {
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Get translations
@@ -491,7 +498,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			type: 'create',
 			data: {
 				sessionData: this.sessionData,
-				translations: this.translations,
+				translations: this.translations
 			}
 		};
 

@@ -5,7 +5,14 @@
 				<i label="back"></i>
 			</button>
 		</div>
-		<div class="text">{{translations?.main?.newPublication}}</div>
+		<div class="text">
+			{{translations?.main?.newPublication}}
+		</div>
+		<div class="button">
+			<button mat-button type="submit" (click)="submit()">
+				{{translations?.common?.post}}
+			</button>
+		</div>
 	</div>
 
 	<div mat-dialog-content class="bodyCreatePublication">

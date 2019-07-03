@@ -14,6 +14,7 @@ import { NotificationsDataService } from '../../../../app/core/services/user/not
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
@@ -58,7 +59,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		private followsDataService: FollowsDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -127,6 +129,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.activeShare.unsubscribe();
 		this.activeLanguage.unsubscribe();
+	}
+
+	// Go back
+	goBack() {
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Get translations

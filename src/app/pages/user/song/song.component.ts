@@ -10,6 +10,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -45,7 +46,8 @@ export class SongComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private metaService: MetaService
+		private metaService: MetaService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -82,7 +84,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack() {
-		this.router.navigate(['/' + this.sessionData.current.username + '/songs']);
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Push Google Ad

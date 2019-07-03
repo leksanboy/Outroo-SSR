@@ -3,7 +3,14 @@
 		<div class="pageUser" *ngIf="userExists">
 			<div class="panel">
 				<div class="dataBox">
-					<div class="user">
+					<div class="back" (click)="goBack()" *ngIf="comeFromUserButton">
+						<button mat-icon-button>
+							<i label="back"></i>
+						</button>
+						<div class="text">{{translations?.common?.back}}</div>
+					</div>
+
+					<div class="user" [ngClass]="{'noBack': comeFromUserButton}">
 						<div class="left">
 							<div class="avatar" (click)="showAvatar()">
 								<img [src]="userData?.avatar ? userData?.avatarUrl : env.avatar"/>
@@ -15,15 +22,19 @@
 								<div class="text">
 									<div class="name">
 										{{userData?.name}}
-										<i *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<i class="icon65 blue" label="official" *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</div>
 									<div class="username">@{{userData?.username}}</div>
 								</div>
 
-								<div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
-									<button mat-button type="button" routerLink="/settings">
-										<i label="settings"></i>
+								<div class="button">
+									<button mat-icon-button [matMenuTriggerFor]="options">
+										<i class="grey" label="more"></i>
 									</button>
+									
+									<mat-menu #options="matMenu">
+										<button mat-menu-item (click)="itemOptions('report', userData)">{{translations?.common?.report}}</button>
+									</mat-menu>
 								</div>
 							</div>
 
@@ -33,21 +44,15 @@
 						</div>
 					</div>
 
+					<div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
+						<button mat-button type="button" routerLink="/settings">
+							<i class="icon65 grey" label="settings"></i>
+							{{translations?.settings?.title}}
+						</button>
+					</div>
+
 					<div class="social">
 						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
-							<!-- <li routerLink="/{{userData?.username}}/photos">
-								<button mat-button>
-									<div class="text">
-										{{userData?.countPhotos}}
-										<div class="inner">
-											<i label="photo-camera"></i>
-											<div class="name">
-												{{translations?.photos?.title}}
-											</div>
-										</div>
-									</div>
-								</button>
-							</li> -->
 							<li routerLink="/{{userData?.username}}/songs">
 								<button mat-button>
 									<div class="text">
@@ -165,30 +170,31 @@
 
 			<div class="content" *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
 				<ul *ngIf="dataDefault?.list">
-					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.addRemoveSession}">
+					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x?.addRemoveSession}">
 						<div class="head">
-							<a class="avatar" routerLink="/{{x.user.username}}">
-								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+							<a class="avatar" routerLink="/{{x?.user?.username}}">
+								<img [src]="x?.user?.avatar ? x?.user?.avatarUrl : env.avatar"/>
 							</a>
-							
-							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-									<span class="date">{{x.date | timeago}}</span>
+
+							<div class="username">
+								<div class="data">
+									<a class="name" routerLink="/{{x?.user?.username}}">{{x?.user?.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 							</div>
 							
 							<div class="actions" *ngIf="sessionData?.current?.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
-									<i label="more"></i>
+									<i class="icon85 grey" label="more"></i>
 								</button>
 								
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 									<mat-divider *ngIf="x?.user?.id == sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 								
 								<mat-menu #menuShareSocial="matMenu">
@@ -200,24 +206,24 @@
 						</div>
 						
 						<div class="body">
-							<div class="photos" *ngIf="x.photos">
-								<span *ngIf="x.photos.length == 1">
-									<img *ngIf="x.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x.photos[0].name">
+							<div class="photos" *ngIf="x?.photos">
+								<span *ngIf="x?.photos.length == 1">
+									<img *ngIf="x?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x?.photos[0].name">
 
-									<video *ngIf="x.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x.photos[0].name}}">
-										<source src="{{env.pathVideos + x.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+									<video *ngIf="x?.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x?.photos[0].name}}">
+										<source src="{{env.pathVideos + x?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
 									</video>
 
-									<span *ngIf="x.photos[0].mimetype.indexOf('video') !== -1">
-										<div class="playPause" (click)="playVideo(x.photos[0], 'videoPlayer' + x?.id)" *ngIf="!x?.photos[0].playButton">
+									<span *ngIf="x?.photos[0].mimetype.indexOf('video') !== -1">
+										<div class="playPause" (click)="playVideo(x?.photos[0], 'videoPlayer' + x?.id)" *ngIf="!x?.photos[0].playButton">
 											<i label="play"></i>
 										</div>
 									</span>
 								</span>
 
-								<swiper *ngIf="x.photos.length > 1" [config]="swiperConfig">
+								<swiper *ngIf="x?.photos.length > 1" [config]="swiperConfig">
 									<div class="swiper-wrapper">
-										<div class="swiper-slide" *ngFor="let p of x.photos">
+										<div class="swiper-slide" *ngFor="let p of x?.photos">
 											<div class="slide">
 												<div class="image">
 													<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
@@ -248,22 +254,7 @@
 							</div>
 
 							<div class="innerContent">
-								<div class="textContainer" *ngIf="x.content" [innerHTML]="x.content | safeHtml"></div>
-
-								<div class="urlVideo" *ngIf="x?.urlVideo && x?.photos">
-									<div class="embedResponsive">
-										<div class="image" (click)="x?.urlVideo.showVideo=!x?.urlVideo.showVideo" *ngIf="!x?.urlVideo.showVideo">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + x?.urlVideo.thumbnail + ')'}"></div>
-											<div class="play">
-												<i label="play"></i>
-											</div>
-											<div class="type">
-												{{x?.urlVideo?.type}}
-											</div>
-										</div>
-										<span [innerHtml]="x?.urlVideo.iframe | safeHtml" *ngIf="x?.urlVideo.showVideo"></span>
-									</div>
-								</div>
+								<div class="textContainer" *ngIf="x?.content" [innerHTML]="x?.content | safeHtml"></div>
 							</div>
 
 							<div class="audios" *ngIf="x?.audios">
@@ -288,8 +279,8 @@
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i label="check" *ngIf="a.addRemoveUser"></i>
-													<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
+													<i class="icon75 blue" label="check" *ngIf="a.addRemoveUser"></i>
+													<i class="icon75 grey" label="more" *ngIf="!a.addRemoveUser"></i>
 												</button>
 
 												<mat-menu #appMenu="matMenu">
@@ -362,7 +353,7 @@
 										</div>
 										<div class="actions">
 											<button mat-icon-button type="submit" (click)="newComment('create', $event, x)">
-												<i label="send-comment"></i>
+												<i class="icon75 blue" label="send-comment"></i>
 											</button>
 										</div>
 									</div>
@@ -378,7 +369,7 @@
 													<span class="date">{{c.date | timeago}}</span>
 													<div class="actions" *ngIf="sessionData?.current?.id">
 														<button mat-icon-button [matMenuTriggerFor]="optionsComments">
-															<i label="more-mini"></i>
+															<i class="icon75 grey" label="more"></i>
 														</button>
 														<mat-menu #optionsComments="matMenu">
 															<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
@@ -398,7 +389,7 @@
 									</div>
 
 									<div class="noData" *ngIf="x?.noData">
-										{{translations?.common?.noComments}}
+										<div class="description">{{translations?.common?.noComments}}</div>
 									</div>
 									
 									<div class="loadMore" *ngIf="x?.loadMoreData">
@@ -410,7 +401,7 @@
 								</div>
 
 								<div class="noData" *ngIf="x?.disabledComments">
-									{{translations?.common?.commentsDisabled}}
+									<div class="description">{{translations?.common?.commentsDisabled}}</div>
 								</div>
 
 								<div class="loadComments" *ngIf="!x?.disabledComments && !x?.loaded">
@@ -428,7 +419,8 @@
 				</div>
 				
 				<div class="noData" *ngIf="dataDefault?.noData">
-					{{translations?.main?.noData}}
+					<div class="image"><i class="icon200" label="cloud-upload"></i></div>
+					<div class="description">{{translations?.main?.noData}}</div>
 				</div>
 				
 				<div class="loadMore" *ngIf="dataDefault?.loadMoreData">
@@ -440,17 +432,15 @@
 			</div>
 
 			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
-				{{translations?.common?.privateAccount}}
+				<div class="image"><i class="icon200" label="person"></i></div>
+				<div class="description">{{translations?.common?.privateAccount}}</div>
 			</div>
 		</div>
 
 		<div class="pageUser" *ngIf="!userExists">
 			<div class="noData">
-				{{translations?.common?.pageNotFound}}
-				<br>
-				<span class="description">
-					{{translations?.common?.pageNotFoundDescription}}
-				</span>
+				<div class="image"><i class="icon200" label="person"></i></div>
+				<div class="description">{{translations?.main?.userNotFound}}</div>
 			</div>
 		</div>
 	</div>

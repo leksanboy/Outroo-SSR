@@ -4,14 +4,16 @@ import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
-import { AlertService } from '../alert/alert.service';
-import { AudioDataService } from '../user/audioData.service';
-import { NotificationsDataService } from '../user/notificationsData.service';
-import { PlayerService } from '../player/player.service';
-import { PublicationsDataService } from '../user/publicationsData.service';
-import { SessionService } from '../session/session.service';
-import { UserDataService } from '../user/userData.service';
-import { SsrService } from '../ssr.service';
+import { AlertService } from '../../../../app/core/services/alert/alert.service';
+import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
+import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
+import { PlayerService } from '../../../../app/core/services/player/player.service';
+import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
+import { SessionService } from '../../../../app/core/services/session/session.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SsrService } from '../../../../app/core/services/ssr.service';
+
+import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 
 import { NewPublicationComponent } from '../../../../app/pages/common/newPublication/newPublication.component';
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
@@ -24,8 +26,6 @@ import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobi
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 import { ShowSessionPanelMobileComponent } from '../../../../app/pages/common/showSessionPanelMobile/showSessionPanelMobile.component';
 import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
-
-import { TimeagoPipe } from '../../pipes/timeago.pipe';
 
 declare var navigator: any;
 declare var MediaMetadata: any;
@@ -44,7 +44,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
-	public audioPlayerData: any = [];
 	public dataNotifications: any = [];
 	public navMenu: boolean;
 	public deniedAccessOnlySession: boolean;
@@ -60,7 +59,35 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public signingBox: boolean;
 	public signOutCurrent: boolean;
 	public audio: any;
-	public cookiesShown: boolean;
+	public cookiesBoxStatus: boolean;
+	public audioPlayerData: any = {
+		path: 'assets/media/audios/',
+		key: 0,
+		repeat: false,
+		shuffle: false,
+		playing: false,
+		loadingToPlay: false,
+		equalizerInitialized: false,
+		volume: {
+			mute: false,
+			beforeMuteValue: 75,
+			value: 75
+		},
+		current: {
+			title: 'Loading...',
+			time: '0:00',
+			duration: '0:00',
+			image: '',
+			key: 0,
+			progress: 0,
+			initialized: false,
+			type: 'default',
+			addRemoveSession: null,
+			addRemoveOther: null,
+			color: null
+		},
+		list: []
+	};
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -84,37 +111,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		// Get translations
 		this.getTranslations(null);
 
-		// Player data
-		this.audioPlayerData = {
-			path: 'assets/media/audios/',
-			key: 0,
-			repeat: false,
-			shuffle: false,
-			playing: false,
-			loadingToPlay: false,
-			equalizerInitialized: false,
-			volume: {
-				mute: false,
-				beforeMuteValue: 75,
-				value: 75
-			},
-			current: {
-				title: 'Loading...',
-				time: '0:00',
-				duration: '0:00',
-				image: '',
-				key: 0,
-				progress: 0,
-				initialized: false,
-				type: 'default',
-				addRemoveSession: null,
-				addRemoveOther: null,
-				color: null
-			},
-			list: []
-		};
-
-		// Check if set
+		// Check if cookies set
 		this.cookies('check');
 
 		// iPhone X
@@ -145,9 +142,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			} else {
 				this.document.body.classList.remove('darkTheme');
 			}
-
-			// Set list information
-			this.sessionData.current.listInformation = null;
 
 			// Load default audios
 			this.defaultAudios(this.sessionData.current.username);
@@ -309,7 +303,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Audios player - document ready -> audio addEventListener
 	ngAfterViewInit() {
-		if (!this.ssrService.isBrowser) { return; }
+		if (!this.ssrService.isBrowser) {
+			return;
+		}
+
 		this.audio = this.audioPlayerHtml.nativeElement;
 
 		const self = this;
@@ -408,6 +405,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Update session data
 	updateSessionDataFromSettings(data) {
 		this.sessionData = data;
+	}
+
+	// Set button come from
+	setComeFromUserButton() {
+		this.sessionData.current.comeFromUserButton = true;
+		this.userDataService.setSessionData('update', this.sessionData.current);
 	}
 
 	// Default audios
@@ -671,7 +674,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.playerService.setCurrentTrack(this.audioPlayerData);
 
 				// Set to session
-				this.sessionData.current.listInformation = this.audioPlayerData;
+				this.sessionData.current.audioPlayerData = this.audioPlayerData;
 				this.userDataService.setSessionData('data', this.sessionData);
 			break;
 			case('play'):
@@ -1331,10 +1334,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 	cookies(type) {
 		if (type === 'check') {
 			const check = this.userDataService.cookies('check');
-			this.cookiesShown = check ? false : true;
+			this.cookiesBoxStatus = check;
 		} else if (type === 'close') {
 			this.userDataService.cookies('set');
-			this.cookiesShown = false;
+			this.cookiesBoxStatus = false;
 		}
 	}
 }

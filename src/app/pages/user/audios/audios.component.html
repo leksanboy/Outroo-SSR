@@ -15,10 +15,10 @@
 					<div class="box">
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
-								<i label="search-magnifying-glass"></i>
+								<i class="icon85 grey" label="search"></i>
 								<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-									<i label="search-clear"></i>
+									<i class="icon85 grey" label="close"></i>
 								</button>
 							</div>
 						</form>
@@ -68,7 +68,7 @@
 												<i label="cloud-off"></i>
 											</button>
 											<button mat-icon-button *ngIf="x.status=='completed'">
-												<i label="check"></i>
+												<i class="icon85 blue" label="check"></i>
 											</button>
 											<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations?.common?.remove}}" *ngIf="x.status=='clear'">
 												<i label="clear"></i>
@@ -126,13 +126,13 @@
 										<div class="actions">
 											<span *ngIf="userData?.id == sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i label="more"></i>
+													<i class="icon85 grey" label="more"></i>
 												</button>
 											</span>
 											<span *ngIf="userData?.id != sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i label="check" *ngIf="x.addRemoveUser"></i>
-													<i label="more" *ngIf="!x.addRemoveUser"></i>
+													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+													<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 												</button>
 											</span>
 											<mat-menu #appMenu="matMenu">
@@ -169,14 +169,14 @@
 										<div class="actions" *ngIf="sessionData?.current?.id">
 											<span *ngIf="userData?.id == sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i label="more"></i>
+													<i class="icon85 grey" label="more"></i>
 												</button>
 											</span>
 											
 											<span *ngIf="userData?.id != sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i label="check" *ngIf="x.addRemoveUser"></i>
-													<i label="more" *ngIf="!x.addRemoveUser"></i>
+													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+													<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 												</button>
 											</span>
 											
@@ -218,7 +218,8 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								{{translations?.audios?.noData}}
+								<div class="image"><i class="icon200" label="music"></i></div>
+								<div class="description">{{translations?.audios?.noData}}</div>
 							</div>
 
 							<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -251,8 +252,8 @@
 										
 										<div class="actions" *ngIf="sessionData?.current?.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="x.addRemoveUser"></i>
-												<i label="more" *ngIf="!x.addRemoveUser"></i>
+												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
 
 											<mat-menu #appMenu="matMenu">
@@ -316,8 +317,8 @@
 
 										<div class="actions">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="x.addRemoveUserTop"></i>
-												<i label="more" *ngIf="!x.addRemoveUserTop"></i>
+												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUserTop"></i>
+												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUserTop"></i>
 											</button>
 											<mat-menu #appMenu="matMenu">
 												<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
@@ -349,8 +350,8 @@
 										
 										<div class="actions" *ngIf="sessionData?.current?.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="x.addRemoveUser"></i>
-												<i label="more" *ngIf="!x.addRemoveUser"></i>
+												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
@@ -422,8 +423,8 @@
 										
 										<div class="actions" *ngIf="sessionData?.current?.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="x.addRemoveUser"></i>
-												<i label="more" *ngIf="!x.addRemoveUser"></i>
+												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 											</button>
 											
 											<mat-menu #appMenu="matMenu">
@@ -497,8 +498,8 @@
 								
 								<div class="actions" *ngIf="sessionData?.current?.id">
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
-										<i label="check" *ngIf="x.addRemoveUser"></i>
-										<i label="more" *ngIf="!x.addRemoveUser"></i>
+										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 									</button>
 									
 									<mat-menu #appMenu="matMenu">
@@ -537,7 +538,8 @@
 					</div>
 
 					<div class="noData" *ngIf="dataSearch.noData">
-						{{translations?.common?.noSearchResults}}
+						<div class="image"><i class="icon200" label="search"></i></div>
+						<div class="description">{{translations?.common?.noSearchResults}}</div>
 					</div>
 					
 					<div class="loadMore" *ngIf="dataSearch.loadMoreData">

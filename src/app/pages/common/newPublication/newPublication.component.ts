@@ -116,8 +116,6 @@ export class NewPublicationComponent implements OnInit {
 		dialogRef.afterClosed().subscribe((res: any) => {
 			this.location.go('/' + this.sessionData.current.username + '#newPublication');
 
-			console.log('res', res);
-
 			this.data.photosArray = res.array;
 			this.data.photosList = res.list;
 			this.data.photosRows = res.rows;

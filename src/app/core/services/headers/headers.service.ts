@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RequestOptions, Headers } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../../environments/environment';
@@ -25,7 +24,7 @@ export class HeadersService {
 
 	getHeaders() {
 		if (this.ssrService.isBrowser) {
-			const userData: any = JSON.parse(this.window.localStorage.getItem('userData_' + this.env.authHash));
+			const userData: any = JSON.parse(this.window.localStorage.getItem('userData'));
 			const authorization = userData ? userData.current.authorization : '';
 			const headers = new HttpHeaders().set('Authorization', authorization).set('Content-Type', 'application/json');
 

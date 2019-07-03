@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
@@ -21,6 +22,7 @@ export class ErrorComponent implements OnInit {
 		private router: Router,
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
+		private location: Location,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -46,6 +48,6 @@ export class ErrorComponent implements OnInit {
 	}
 
 	goBack() {
-		this.router.navigate(['/']);
+		this.location.back();
 	}
 }

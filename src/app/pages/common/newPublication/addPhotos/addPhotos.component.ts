@@ -90,8 +90,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			list: this.data.list
 		};
 
-		console.log('data', data);
-
 		this.dialogRef.close(data);
 	}
 

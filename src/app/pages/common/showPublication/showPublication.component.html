@@ -17,18 +17,18 @@
 					<a class="avatar" routerLink="/{{userData.username}}">
 						<img [src]="userData.avatar ? userData.avatarUrl : env.avatar"/>
 					</a>
-					<div class="text">
-						<a class="name" routerLink="/{{userData.username}}">
-							<span class="username">
-								{{userData.username}}
-								<i label="official" *ngIf="userData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-							</span>
-							<span class="date">{{dataDefault?.data?.date | timeago}}</span>
-						</a>
+
+					<div class="username">
+						<div class="data">
+							<a class="name" routerLink="/{{userData?.username}}">{{userData?.username}}</a>
+							<i class="icon50 blue" label="official" *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							<div class="date">{{dataDefault?.data?.date | timeago}}</div>
+						</div>
 					</div>
+
 					<div class="actions" *ngIf="sessionData.current.id">
 						<button mat-icon-button [matMenuTriggerFor]="options">
-							<i label="more"></i>
+							<i class="icon85 grey" label="more"></i>
 						</button>
 
 						<mat-menu #options="matMenu">
@@ -102,18 +102,18 @@
 							<a class="avatar" routerLink="/{{userData.username}}">
 								<img [src]="userData.avatar ? userData.avatarUrl : env.avatar"/>
 							</a>
-							<div class="text">
-								<a class="name" routerLink="/{{userData.username}}">
-									<span class="username">
-										{{userData.username}}
-										<i label="official" *ngIf="userData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</span>
-									<span class="date">{{dataDefault?.data?.date | timeago}}</span>
-								</a>
+
+							<div class="username">
+								<div class="data">
+									<a class="name" routerLink="/{{userData?.username}}">{{userData?.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{dataDefault?.data?.date | timeago}}</div>
+								</div>
 							</div>
+
 							<div class="actions" *ngIf="sessionData.current.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
-									<i label="more"></i>
+									<i class="icon85 grey" label="more"></i>
 								</button>
 
 								<mat-menu #options="matMenu">
@@ -156,8 +156,8 @@
 
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="a.addRemoveUser"></i>
-												<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
+												<i class="icon85 blue" label="check" *ngIf="a.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!a.addRemoveUser"></i>
 											</button>
 
 											<mat-menu #appMenu="matMenu">
@@ -231,7 +231,7 @@
 								</div>
 								<div class="actions">
 									<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault?.data)">
-										<i label="send-comment"></i>
+										<i class="icon75 grey" label="send-comment"></i>
 									</button>
 								</div>
 							</div>
@@ -247,7 +247,7 @@
 											<span class="date">{{c.date | timeago}}</span>
 											<div class="actions" *ngIf="sessionData.current.id">
 												<button mat-icon-button [matMenuTriggerFor]="optionsComments">
-													<i label="more-mini"></i>
+													<i class="icon85 grey" label="more"></i>
 												</button>
 												<mat-menu #optionsComments="matMenu">
 													<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>

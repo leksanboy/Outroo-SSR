@@ -9,8 +9,8 @@
 			{{translations?.photos?.title}} 
 			{{data.arrayAddedItems.length}}/10
 		</div>
-		<div class="actions">
-			<button mat-raised-button type="submit" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1" (click)="submit($event)">
+		<div class="button">
+			<button mat-button type="submit" (click)="submit($event)" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1">
 				{{translations?.common?.ok}}
 			</button>
 		</div>

@@ -22,10 +22,10 @@
 								<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
 								<div class="validators">
 									<div class="done" *ngIf="validatorUsername == 'done'">
-										<i label="validator-check"></i>
+										<i class="icon75 blue" label="validator-check"></i>
 									</div>
 									<div class="bad" *ngIf="validatorUsername == 'bad'">
-										<i label="validator-clear"></i>
+										<i class="icon75 red" label="validator-clear"></i>
 									</div>
 									<div class="load" *ngIf="validatorUsername == 'load'">
 										<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -43,10 +43,10 @@
 								<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
 								<div class="validators">
 									<div class="done" *ngIf="validatorEmail == 'done'">
-										<i label="validator-check"></i>
+										<i class="icon75 blue" label="validator-check"></i>
 									</div>
 									<div class="bad" *ngIf="validatorEmail == 'bad'">
-										<i label="validator-clear"></i>
+										<i class="icon75 red" label="validator-clear"></i>
 									</div>
 									<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
 								</div>
@@ -56,7 +56,7 @@
 							<mat-form-field>
 								<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signUp?.password}}" #Password maxlength="100" formControlName="password">
 								<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
-									<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+									<i class="icon75 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 								</button>
 								<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
 							</mat-form-field>

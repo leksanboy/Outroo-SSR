@@ -15,6 +15,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -50,6 +51,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public data: any;
 	public dataDefault: any;
 	public searchBoxMentions: boolean;
+	public comeFromUserButton: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -70,7 +72,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private metaService: MetaService,
 		private ssrService: SsrService,
-
+		private routingStateService: RoutingStateService,
 	) {
 		// Set component data
 		this.activeRouter = this.router.events
@@ -78,6 +80,9 @@ export class MainComponent implements OnInit, OnDestroy {
 				if (event instanceof NavigationEnd) {
 					// Session
 					this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
+
+					// Check button back
+					this.comeFromUserButton = this.sessionData ? (this.sessionData.current ? this.sessionData.current.comeFromUserButton : null) : null;
 
 					// User
 					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
@@ -106,7 +111,9 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.activeRouterExists = true;
 
 					// Go top of page on change user
-					this.window.scrollTo(0, 0);
+					if (this.ssrService.isBrowser) {
+						this.window.scrollTo(0, 0);
+					}
 
 					// Update user data if im the user
 					if (this.sessionData) {
@@ -189,6 +196,11 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
+	}
+
+	// Go back
+	goBack() {
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Follow / Unfollow

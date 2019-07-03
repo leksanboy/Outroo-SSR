@@ -41,6 +41,7 @@ import { PipesModule } from './core/pipes/pipes.module';
 import { ServicesModule } from './core/services/services.module';
 
 // Common Modules
+import { ActiveSessionComponent } from './pages/common/activeSession/activeSession.component';
 import { NewAvatarModule } from './pages/common/newAvatar/newAvatar.module';
 import { NewPlaylistModule } from './pages/common/newPlaylist/newPlaylist.module';
 import { NewPublicationModule } from './pages/common/newPublication/newPublication.module';
@@ -58,9 +59,6 @@ import { ShowMobilePlayerModule } from './pages/common/showMobilePlayer/showMobi
 // Alert
 import { AlertService } from './core/services/alert/alert.service';
 import { AlertComponent } from './core/services/alert/alert.component';
-
-// Active ssession
-import { ActiveSessionComponent } from './core/services/activeSession/activeSession.component';
 
 // Cookies
 import { CookiesComponent } from './core/services/cookies/cookies.component';
@@ -143,6 +141,5 @@ export class AppModule {
 		@Inject(APP_ID) private appId: string
 	) {
 		const platform = isPlatformBrowser(platformId) ? 'in the browser' : 'on the server';
-		console.log(`Running ${platform} with appId=${appId}`);
 	}
 }

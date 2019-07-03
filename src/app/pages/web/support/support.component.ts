@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -31,6 +32,7 @@ export class SupportComponent implements OnInit {
 		private router: Router,
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
+		private location: Location,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -60,7 +62,7 @@ export class SupportComponent implements OnInit {
 	}
 
 	goBack() {
-		this.router.navigate(['/']);
+		this.location.back();
 	}
 
 	verifyReCaptcha(data) {

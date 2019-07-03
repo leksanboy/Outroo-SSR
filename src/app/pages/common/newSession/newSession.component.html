@@ -8,6 +8,11 @@
 		<div class="text">
 			{{translations?.common?.addAccount}}
 		</div>
+		<div class="button">
+			<button mat-button type="submit" (click)="submit($event)">
+				{{translations?.common?.submit}}
+			</button>
+		</div>
 	</div>
 
 	<div mat-dialog-content class="bodySession">
@@ -18,7 +23,11 @@
 				</mat-form-field>
 
 				<mat-form-field>
-					<input matInput type="password" placeholder="{{translations?.settings?.password}}" maxlength="100" formControlName="password">
+					<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.settings?.password}}" #Password maxlength="100" formControlName="password">
+					<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
+						<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
+					</button>
+					<mat-hint align="end">{{Password.value.length}}/100</mat-hint>
 				</mat-form-field>
 			</form>
 		</div>
@@ -30,7 +39,7 @@
 		</button>
 		<button mat-raised-button type="submit" (click)="submit($event)">
 			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
-			{{translations?.common?.signIn}}
+			{{translations?.common?.submit}}
 		</button>
 	</div>
 </div>

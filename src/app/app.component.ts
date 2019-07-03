@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
 import { SsrService } from './core/services/ssr.service';
+import { RoutingStateService } from './core/services/route/state.service';
 
 @Component({
 	selector: 'app-root',
@@ -13,7 +15,8 @@ export class AppComponent implements OnDestroy {
 	constructor(
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Set component data
 		this.activeRouter = this.router.events.subscribe(event => {
@@ -29,6 +32,9 @@ export class AppComponent implements OnDestroy {
 					}
 				}
 			});
+
+		// Load navigation history
+		this.routingStateService.loadRouting();
 	}
 
 	ngOnDestroy() {

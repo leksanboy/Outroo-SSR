@@ -12,20 +12,20 @@
 
 	<div mat-dialog-content class="bodyLikes">
 		<div class="container">
-			<ul *ngIf="dataDefault.list">
+			<ul class="followers" *ngIf="dataDefault.list">
 				<li *ngFor="let x of dataDefault.list; let i=index;">
 					<a class="avatar" routerLink="/{{x.user.username}}">
 						<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
 					</a>
 
-					<a class="text" routerLink="/{{x.user.username}}">
-						<span class="username">
-							{{x.user.username}}
-							<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-						</span>
-						<br>
-						<span class="name">{{x.user.name}}</span>
-					</a>
+					<div class="username">
+						<div class="data">
+							<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+							<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							<div class="date"></div>
+						</div>
+						<div class="info">{{x.user.name}}</div>
+					</div>
 
 					<div class="actions" *ngIf="x.user.id != sessionData.current.id">
 						<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">

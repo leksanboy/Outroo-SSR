@@ -12,6 +12,7 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 declare var global: any;
 
@@ -46,7 +47,8 @@ export class FollowingComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private followsDataService: FollowsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -129,7 +131,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack() {
-		this.router.navigate([this.userData.username]);
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Get translations

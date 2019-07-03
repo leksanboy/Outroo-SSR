@@ -47,7 +47,8 @@
 				</div>
 
 				<div class="noData" *ngIf="dataDefault.noData">
-					{{translations?.bookmarks?.noData}}
+					<div class="image"><i class="icon200" label="bookmarks"></i></div>
+					<div class="description">{{translations?.bookmarks?.noData}}</div>
 				</div>
 				
 				<div class="loadMore" *ngIf="dataDefault.loadMoreData">

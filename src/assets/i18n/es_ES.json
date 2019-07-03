@@ -49,7 +49,8 @@
 			"one": "Cookies",
 			"two": "Este sitio utiliza cookies. Al continuar navegando, está aceptando el uso de cookies. Obtenga más información aquí",
 			"three": "Politica de privacidad"
-		}
+		},
+		"userNotFound": "La cuenta de usuario no existe"
 	},
 	"news": {
 		"title": "Noticias",
@@ -343,7 +344,7 @@
 		"logOut": "Salir",
 		"leaveSite": "¿Estas seguro de abandonar la pagina?",
 		"addAccount": "Añadir cuenta",
-		"setAnotherAccount": "Añadir otra cuenta",
+		"setAnotherAccount": "Setear otra cuenta",
 		"hasBeenAdded": "Ha sido añadido",
 		"hasBeenAddedTo": "Ha sido añadido a",
 		"hasBeenRemoved": "Ha sido eliminado",

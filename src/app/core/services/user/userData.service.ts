@@ -103,16 +103,16 @@ export class UserDataService {
 	getLang(type, lang) {
 		if (this.ssrService.isBrowser) {
 			if (type === 'set') {
-				this.window.localStorage.setItem('lang_' + this.env.authHash, lang);
+				this.window.localStorage.setItem('lang', lang);
 			} else if (type === 'get') {
-				return this.window.localStorage.getItem('lang_' + this.env.authHash);
+				return this.window.localStorage.getItem('lang');
 			}
 		}
 	}
 
 	analytics(url) {
 		if (this.ssrService.isBrowser) {
-			console.log('analytics 2:', url);
+			console.log('analytics:', url);
 
 			ga('set', 'page', url);
 			ga('send', 'pageview');
@@ -122,10 +122,10 @@ export class UserDataService {
 	cookies(type) {
 		if (this.ssrService.isBrowser) {
 			if (type === 'check') {
-				return this.window.localStorage.getItem('cookies_' + this.env.authHash);
+				let check = this.window.localStorage.getItem('cookies');
+				return check ? false : true;
 			} else if (type === 'set') {
-				const c = Math.floor(Math.random());
-				this.window.localStorage.setItem('cookies_' + this.env.authHash, JSON.stringify(c));
+				this.window.localStorage.setItem('cookies', true);
 			}
 		}
 	}
@@ -162,7 +162,7 @@ export class UserDataService {
 
 	logout() {
 		if (this.ssrService.isBrowser) {
-			this.window.localStorage.removeItem('userData_' + this.env.authHash);
+			this.window.localStorage.removeItem('userData');
 		}
 	}
 
@@ -177,7 +177,7 @@ export class UserDataService {
 			storageLoginData.sessions.push(data);
 
 			if (this.ssrService.isBrowser) {
-				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageLoginData));
+				this.window.localStorage.setItem('userData', JSON.stringify(storageLoginData));
 			}
 		} else if (type === 'update') {
 			const oldData = this.getSessionData();
@@ -187,10 +187,10 @@ export class UserDataService {
 				sessions: []
 			};
 
-			for (const i of oldData.sessions) {
-				if (i) {
-					if (i.id === data.id) {
-						data.authorization = i.authorization;
+			for (const i in oldData.sessions) {
+				if (oldData.sessions[i]) {
+					if (oldData.sessions[i].id === data.id) {
+						data.authorization = oldData.sessions[i].authorization;
 						storageUpdateData.sessions.push(data);
 					} else {
 						storageUpdateData.sessions.push(oldData.sessions[i]);
@@ -199,13 +199,13 @@ export class UserDataService {
 			}
 
 			if (this.ssrService.isBrowser) {
-				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(storageUpdateData));
+				this.window.localStorage.setItem('userData', JSON.stringify(storageUpdateData));
 			}
 
 			return this.getSessionData();
 		} else if (type === 'data') {
 			if (this.ssrService.isBrowser) {
-				this.window.localStorage.setItem('userData_' + this.env.authHash, JSON.stringify(data));
+				this.window.localStorage.setItem('userData', JSON.stringify(data));
 			}
 
 			return this.getSessionData();
@@ -214,7 +214,7 @@ export class UserDataService {
 
 	getSessionData() {
 		if (this.ssrService.isBrowser && this.window.localStorage) {
-			const data = this.window.localStorage.getItem('userData_' + this.env.authHash);
+			const data = this.window.localStorage.getItem('userData');
 			return JSON.parse(data);
 		}
 	}

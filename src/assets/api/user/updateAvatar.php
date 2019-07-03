@@ -3,7 +3,7 @@
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
-	$avatar = $data['avatar'];
+	$avatar = $data['image'];
 	$name = generateRandomString(23).'.jpg';
 
 	// Remove folder images first

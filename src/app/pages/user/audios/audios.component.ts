@@ -13,6 +13,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
@@ -71,7 +72,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -93,9 +95,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			// Set playlist current playing
 			if (this.sessionData) {
-				if (this.sessionData.current.listInformation &&
-					this.sessionData.current.listInformation.user === this.userData.id) {
-					this.audioPlayerData = this.sessionData.current.listInformation;
+				if (this.sessionData.current.audioPlayerData &&
+					this.sessionData.current.audioPlayerData.user === this.userData.id) {
+					this.audioPlayerData = this.sessionData.current.audioPlayerData;
 				}
 			}
 
@@ -192,7 +194,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack() {
-		this.router.navigate([this.userData.username]);
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Push Google Ad
@@ -1029,7 +1031,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				userData: this.userData,
 				translations: this.translations,
 				item: item,
-				listInformation: this.audioPlayerData,
+				audioPlayerData: this.audioPlayerData,
 				path: this.data.path
 			}
 		};

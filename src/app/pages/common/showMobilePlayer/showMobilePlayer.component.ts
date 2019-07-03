@@ -82,7 +82,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	}
 
 	// repeat · next · play/pause · prev · shuffle
-	playTrack(type, key) {
+	playSong(type, key) {
 		switch (type) {
 			case('item'):
 				this.audioPlayerData.key = key;
@@ -90,7 +90,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			break;
 			case('play'):
-				this.playTrack('item', this.audioPlayerData.key);
+				this.playSong('item', this.audioPlayerData.key);
 			break;
 			case('prev'):
 				this.audioPlayerData.key = key;

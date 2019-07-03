@@ -58,13 +58,13 @@
 						<div class="actions">
 							<span *ngIf="userData.id == sessionData.current.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
-									<i label="more"></i>
+									<i class="icon85 grey" label="more"></i>
 								</button>
 							</span>
 							<span *ngIf="userData.id != sessionData.current.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
-									<i label="check" *ngIf="x.addRemoveUser"></i>
-									<i label="more" *ngIf="!x.addRemoveUser"></i>
+									<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+									<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 								</button>
 							</span>
 							<mat-menu #options="matMenu">

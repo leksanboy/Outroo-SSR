@@ -16,17 +16,18 @@
 						<a class="avatar" routerLink="/{{dataDefault.data?.user?.username}}">
 							<img [src]="dataDefault.data?.user?.avatar ? dataDefault.data?.user?.avatarUrl : env.avatar"/>
 						</a>
-						
-						<div class="text">
-							<a class="name" routerLink="/{{dataDefault.data?.user?.username}}">
-								<span class="username">{{dataDefault.data?.user?.username}}</span>
-								<span class="date">{{dataDefault.data?.date | timeago}}</span>
-							</a>
+
+						<div class="username">
+							<div class="data">
+								<a class="name" routerLink="/{{x?.user?.username}}">{{x?.user?.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="x?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								<div class="date">{{x?.date | timeago}}</div>
+							</div>
 						</div>
 						
 						<div class="actions" *ngIf="sessionData.current.id">
 							<button mat-icon-button [matMenuTriggerFor]="options">
-								<i label="more"></i>
+								<i class="icon85 grey" label="more"></i>
 							</button>
 
 							<mat-menu #options="matMenu">
@@ -134,8 +135,8 @@
 
 										<div class="actions" *ngIf="sessionData.current.id">
 											<button mat-icon-button [matMenuTriggerFor]="appMenu">
-												<i label="check" *ngIf="a.addRemoveUser"></i>
-												<i label="more-mini" *ngIf="!a.addRemoveUser"></i>
+												<i class="icon75 blue" label="check" *ngIf="a.addRemoveUser"></i>
+												<i class="icon75 grey" label="more" *ngIf="!a.addRemoveUser"></i>
 											</button>
 
 											<mat-menu #appMenu="matMenu">
@@ -208,7 +209,7 @@
 									</div>
 									<div class="actions">
 										<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault.data)">
-											<i label="send-comment"></i>
+											<i class="icon75 blue" label="send-comment"></i>
 										</button>
 									</div>
 								</div>
@@ -273,7 +274,8 @@
 				</div>
 
 				<div class="noData" *ngIf="dataDefault.noData">
-					{{translations?.song?.noData}}
+					<div class="image"><i class="icon200" label="cloud-upload"></i></div>
+					<div class="description">{{translations?.post?.noData}}</div>
 				</div> 
 			</div>
 		</div>

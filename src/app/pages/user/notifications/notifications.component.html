@@ -2,6 +2,15 @@
 	<div class="innerBodyContent">
 		<div class="pageNotifications">
 			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
+
+				<div class="pageTitle">{{translations?.notifications?.title}}</div>
+
 				<ul class="notifications" *ngIf="dataNotifications.list">
 					<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status == 0, 'remove': x.addRemoveSession}">
 						<a class="avatar" routerLink="/{{x.user.username}}">
@@ -10,12 +19,12 @@
 
 						<div class="inner" *ngIf="x.url === 'followers'">
 							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<div class="date">{{x?.date | timeago}}</div>
+									</div>
 								</div>
 								
 								<div class="container">
@@ -74,7 +83,7 @@
 
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
+										<i class="icon85 grey" label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -87,12 +96,12 @@
 
 						<div class="inner" *ngIf="x.url === 'publications'">
 							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<div class="date">{{x?.date | timeago}}</div>
+									</div>
 								</div>
 
 								<div class="container" (click)="show(x)">
@@ -128,7 +137,7 @@
 
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
+										<i class="icon85 grey" label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -141,12 +150,12 @@
 
 						<div class="inner" *ngIf="x.url === 'audios'">
 							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<div class="date">{{x?.date | timeago}}</div>
+									</div>
 								</div>
 
 								<div class="container">
@@ -173,8 +182,8 @@
 												
 												<div class="textActions" *ngIf="sessionData.current.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
-														<i label="check" *ngIf="x.contentData.addRemoveUser"></i>
-														<i label="more" *ngIf="!x.contentData.addRemoveUser"></i>
+														<i class="icon75 blue" label="check" *ngIf="x.contentData.addRemoveUser"></i>
+														<i class="icon75 grey" label="more" *ngIf="!x.contentData.addRemoveUser"></i>
 													</button>
 													
 													<mat-menu #appMenu="matMenu">
@@ -206,7 +215,7 @@
 							<div class="operations">
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
+										<i class="icon85 grey" label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -219,12 +228,12 @@
 
 						<div class="inner" *ngIf="x.url === 'message'">
 							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<div class="date">{{x?.date | timeago}}</div>
+									</div>
 								</div>
 
 								<div class="container" (click)="show(x)">
@@ -237,7 +246,7 @@
 							<div class="operations">
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
+										<i class="icon85 grey" label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -251,12 +260,12 @@
 						<!-- ITEM for REMOVE if NOT EXISTS -->
 						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publications' || x.url === 'audios' || x.url === 'message')">
 							<div class="text">
-								<div class="name">
-									<a class="username" routerLink="/{{x.user.username}}">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</a>
-									<span class="date">{{x.date | timeago}}</span>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										<div class="date">{{x?.date | timeago}}</div>
+									</div>
 								</div>
 
 								<div class="container">
@@ -267,7 +276,7 @@
 							<div class="operations">
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i label="more"></i>
+										<i class="icon85 grey" label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -285,7 +294,8 @@
 				</div>
 
 				<div class="noData" *ngIf="dataNotifications.noData">
-					{{translations?.notifications?.noData}}
+					<div class="image"><i class="icon200" label="notifications"></i></div>
+					<div class="description">{{translations?.notifications?.noData}}</div>
 				</div>
 				
 				<div class="loadMore" *ngIf="dataNotifications.loadMoreData">

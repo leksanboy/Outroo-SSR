@@ -24,7 +24,7 @@
 					<div class="box">
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
-								<i label="search-magnifying-glass"></i>
+								<i label="search"></i>
 
 								<div class="chips">
 									<mat-chip-list matPrefix>
@@ -41,7 +41,7 @@
 								</div>
 
 								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-									<i label="search-clear"></i>
+									<i label="close"></i>
 								</button>
 							</div>
 						</form>

@@ -6,10 +6,10 @@
 				 	<div class="box">
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
-								<i label="search-magnifying-glass"></i>
+								<i class="icon85 grey" label="search"></i>
 								<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 								<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-									<i label="search-clear"></i>
+									<i class="icon85 grey" label="close"></i>
 								</button>
 							</div>
 						</form>
@@ -131,7 +131,8 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPeople.noData">
-								{{translations?.news?.noSearchResults}}
+								<div class="image"><i class="icon200" label="search"></i></div>
+						<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
@@ -170,7 +171,8 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPosts.noData">
-								{{translations?.news?.noSearchResults}}
+								<div class="image"><i class="icon200" label="search"></i></div>
+						<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPosts.loadMoreData">
@@ -204,7 +206,8 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTag.noData">
-								{{translations?.news?.noSearchResults}}
+								<div class="image"><i class="icon200" label="search"></i></div>
+						<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataTag.loadMoreData">
@@ -252,7 +255,8 @@
 					</div>
 
 					<div class="noData" *ngIf="dataHashtag.noData">
-						{{translations?.news?.noSearchResults}}
+						<div class="image"><i class="icon200" label="search"></i></div>
+						<div class="description">{{translations?.common?.noSearchResults}}</div>
 					</div>
 					
 					<div class="loadMore" *ngIf="dataHashtag.loadMoreData">

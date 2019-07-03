@@ -16,10 +16,10 @@
 						<div class="box">
 							<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 								<div class="inner">
-									<i label="search-magnifying-glass"></i>
+									<i class="icon85 grey" label="search"></i>
 									<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
 									<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-										<i label="search-clear"></i>
+										<i class="icon85 grey" label="close"></i>
 									</button>
 								</div>
 							</form>
@@ -28,20 +28,19 @@
 
 					<span *ngIf="data.active == 'default'">
 						<span *ngIf="((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
-							<ul *ngIf="dataDefault.list">
+							<ul class="followers" *ngIf="dataDefault.list">
 								<li *ngFor="let x of dataDefault.list; let i=index;">
 									<a class="avatar" routerLink="/{{x.user.username}}">
 										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 									</a>
 
-									<a class="text" routerLink="/{{x.user.username}}">
-										<span class="username">
-											{{x.user.username}}
-											<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										</span>
-										<br>
-										<span class="name">{{x.user.name}}</span>
-									</a>
+									<div class="username">
+										<div class="data">
+											<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										</div>
+										<div class="info">{{x.user.name}}</div>
+									</div>
 
 									<div class="actions" *ngIf="x.user.id != sessionData.current.id">
 										<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
@@ -86,7 +85,8 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								{{translations?.following?.noData}}
+								<div class="image"><i class="icon200" label="person"></i></div>
+								<div class="description">{{translations?.following?.noData}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -105,20 +105,19 @@
 					</span>
 
 					<span *ngIf="data.active == 'search'">
-						<ul *ngIf="dataSearch.list">
+						<ul class="followers" *ngIf="dataSearch.list">
 							<li *ngFor="let x of dataSearch.list; let i=index;">
 								<a class="avatar" routerLink="/{{x.user.username}}">
 									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 
-								<a class="text" routerLink="/{{x.user.username}}">
-									<span class="username">
-										{{x.user.username}}
-										<i label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-									</span>
-									<br>
-									<span class="name">{{x.user.name}}</span>
-								</a>
+								<div class="username">
+									<div class="data">
+										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									</div>
+									<div class="info">{{x.user.name}}</div>
+								</div>
 
 								<div class="actions" *ngIf="x.user.id != sessionData.current.id">
 									<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
@@ -163,7 +162,8 @@
 						</div>
 
 						<div class="noData" *ngIf="dataSearch.noData">
-							{{translations?.common?.noSearchResults}}
+							<div class="image"><i class="icon200" label="search"></i></div>
+							<div class="description">{{translations?.common?.noSearchResults}}</div>
 						</div>
 						
 						<div class="loadMore" *ngIf="dataSearch.loadMoreData">

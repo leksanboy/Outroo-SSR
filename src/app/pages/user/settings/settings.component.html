@@ -2,52 +2,24 @@
 	<div class="innerBodyContent">
 		<div class="pageSettings">
 			<div class="content">
+				<div class="back" (click)="goBack()">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
+
+				<div class="pageTitle">{{translations?.settings?.title}}</div>
+
 				<mat-tab-group mat-stretch-tabs>
 		 			<mat-tab label="{{translations?.settings?.editProfile}}">
 		 				<div class="avatarBackground">
-			 				<!-- <div class="background">
-								<div class="image" [matMenuTriggerFor]="backgroundOneOptions">
-									<img [src]="sessionData.current.backgroundUrl" *ngIf="sessionData.current.background"/>
-
-									<div class="layer">
-										<div class="text">
-											<i label="image"></i>
-											{{translations.changeBackground}}
-										</div>
-									</div>
-								</div>
-								<input type="file" hidden (change)="openAvatar('background', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #backgroundFile>
-
-								<mat-menu #backgroundOneOptions="matMenu" [overlapTrigger]="false" xPosition="before">
-									<button mat-menu-item (click)="backgroundFile.click()">{{translations.uploadPhoto}}</button>
-									<button mat-menu-item (click)="openAvatar('background', 'remove', $event)">{{translations.removePhoto}}</button>
-									<button mat-menu-item>{{translations.cancel}}</button>
-								</mat-menu>
-
-								<div class="avatar">
-									<div class="image" [matMenuTriggerFor]="avatarOptions">
-										<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
-
-										<div class="layer">
-											<i label="image" class="big"></i>
-										</div>
-									</div>
-									<input type="file" hidden (change)="openAvatar('avatar', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
-
-									<mat-menu #avatarOptions="matMenu" [overlapTrigger]="false">
-										<button mat-menu-item (click)="avatarFile.click()">{{translations.uploadPhoto}}</button>
-										<button mat-menu-item (click)="openAvatar('avatar', 'remove', $event)">{{translations.removePhoto}}</button>
-										<button mat-menu-item>{{translations.cancel}}</button>
-									</mat-menu>
-								</div>
-							</div> -->
-
 							<div class="avatar">
 								<div class="image" [matMenuTriggerFor]="avatarOptions">
 									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 
 									<div class="layer">
-										<i label="photo-camera"></i>
+										<i class="icon200 white" label="photo-camera"></i>
 									</div>
 								</div>
 								<input type="file" hidden (change)="openAvatar('avatar', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
@@ -74,15 +46,9 @@
 								<mat-form-field>
 									<input matInput placeholder="{{translations?.settings?.username}}" #Username maxlength="100" formControlName="username">
 									<div class="validators">
-										<div class="done" *ngIf="validatorUsername == 'done'">
-											<i label="validator-check"></i>
-										</div>
-										<div class="bad" *ngIf="validatorUsername == 'bad'">
-											<i label="validator-clear"></i>
-										</div>
-										<div class="load" *ngIf="validatorUsername == 'load'">
-											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-										</div>
+										<i class="icon75 blue" label="check" *ngIf="validatorUsername == 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorUsername == 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorUsername == 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -122,12 +88,10 @@
 								<mat-form-field>
 									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.oldPassword}}" #OldPassword maxlength="100" formControlName="oldPassword">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
-										<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<div class="bad" *ngIf="validatorOldPassword == 'bad'">
-											<i label="validator-clear"></i>
-										</div>
+										<i class="icon75 red" label="close" *ngIf="validatorOldPassword == 'bad'"></i>
 									</div>
 									<mat-hint align="end">{{OldPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -135,18 +99,12 @@
 								<mat-form-field>
 									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.newPassword}}" #NewPassword maxlength="100" formControlName="newPassword">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
-										<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<div class="done" *ngIf="validatorNewPassword == 'done'">
-											<i label="validator-check"></i>
-										</div>
-										<div class="bad" *ngIf="validatorNewPassword == 'bad'">
-											<i label="validator-clear"></i>
-										</div>
-										<div class="load" *ngIf="validatorNewPassword == 'load'">
-											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-										</div>
+										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword == 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorNewPassword == 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword == 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{NewPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -154,18 +112,12 @@
 								<mat-form-field>
 									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.confirmNewPassword}}" #ConfirmPassword maxlength="100" formControlName="confirmPassword">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
-										<i [ngClass]="{'active': showPassword}" label="visibility"></i>
+										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<div class="done" *ngIf="validatorNewPassword == 'done'">
-											<i label="validator-check"></i>
-										</div>
-										<div class="bad" *ngIf="validatorNewPassword == 'bad'">
-											<i label="validator-cleaar"></i>
-										</div>
-										<div class="load" *ngIf="validatorNewPassword == 'load'">
-											<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-										</div>
+										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword == 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorNewPassword == 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword == 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{ConfirmPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -182,15 +134,21 @@
 
 		 			<mat-tab label="{{translations?.settings?.accounts}}">
 		 				<ul>
-							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData.current.id == x.id}">
+							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 								<div class="avatar" (click)="setCurrentUser(x)">
 									<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 								</div>
+
 								<div class="text" (click)="setCurrentUser(x)">
-									<span class="name">{{x.name}}</span>
-									<br>
-									<span class="username">@{{x.username}}</span>
+									<div class="in">
+										<div class="data">
+											<a class="name">{{x.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										</div>
+										<div class="info">@{{x.username}}</div>
+									</div>
 								</div>
+
 								<div class="actions">
 									<button mat-button [matMenuTriggerFor]="signOut">{{translations?.common?.logOut}}</button>
 									<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
@@ -212,9 +170,10 @@
 									<i label="add"></i>
 								</div>
 								<div class="text">
-									<span class="name">{{translations?.common?.addAccount}}</span>
-									<br>
-									<span class="username">{{translations?.common?.setAnotherAccount}}</span>
+									<div class="in">
+										<div class="data">{{translations?.common?.addAccount}}</div>
+										<div class="info">{{translations?.common?.setAnotherAccount}}</div>
+									</div>
 								</div>
 							</li>
 					    </ul>

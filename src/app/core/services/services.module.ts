@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { RoutingStateService } from './route/state.service';
 import { AudioDataService } from './user/audioData.service';
 import { BookmarksDataService } from './user/bookmarksData.service';
 import { FollowsDataService } from './user/followsData.service';
@@ -16,6 +17,7 @@ import { SsrService } from './ssr.service';
 
 @NgModule({
 	providers: [
+		RoutingStateService,
 		AudioDataService,
 		BookmarksDataService,
 		FollowsDataService,

@@ -8,6 +8,11 @@
 		<div class="text">
 			{{translations?.settings?.changeAvatar}}
 		</div>
+		<div class="button">
+			<button mat-button type="submit" (click)="cropperFunctions('crop')">
+				{{translations?.common?.submit}}
+			</button>
+		</div>
 	</div>
 
 	<div mat-dialog-content class="bodyCropper">

@@ -70,7 +70,6 @@ export class ShowMessageComponent implements OnInit, OnDestroy {
 		this.sessionData = this.data.sessionData;
 		this.userData = this.data.userData;
 		this.translations = this.data.translations;
-		console.log('data:', this.data);
 
 		// New comments set
 		this.newComment('clear', null, this.data);
@@ -112,7 +111,6 @@ export class ShowMessageComponent implements OnInit, OnDestroy {
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
 			};
-			console.log('default', d);
 
 			this.messageDataService.default(d)
 				.subscribe((res: any) => {
@@ -299,8 +297,6 @@ export class ShowMessageComponent implements OnInit, OnDestroy {
 
 				this.messageDataService.comment(dataCreate)
 					.subscribe((res: any) => {
-						console.log('New', res);
-
 						this.dataDefault.noData = false;
 						this.dataDefault.id = res.content;
 						this.dataDefault.list.push(res);

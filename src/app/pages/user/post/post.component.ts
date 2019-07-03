@@ -13,6 +13,7 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -61,7 +62,8 @@ export class PostComponent implements OnInit, OnDestroy {
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private metaService: MetaService
+		private metaService: MetaService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -112,7 +114,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Go back
 	goBack() {
-		this.router.navigate(['/' + this.sessionData.current.username]);
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Push Google Ad
