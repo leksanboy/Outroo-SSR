@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { SsrService } from './core/services/ssr.service';
@@ -13,6 +14,7 @@ export class AppComponent implements OnDestroy {
 	public activeRouter: any;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private ssrService: SsrService,

@@ -59,7 +59,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public signingBox: boolean;
 	public signOutCurrent: boolean;
 	public audio: any;
-	public cookiesBoxStatus: boolean;
 	public audioPlayerData: any = {
 		path: 'assets/media/audios/',
 		key: 0,
@@ -110,9 +109,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 		// Get translations
 		this.getTranslations(null);
-
-		// Check if cookies set
-		this.cookies('check');
 
 		// iPhone X
 		if (this.ssrService.isBrowser && this.window) {
@@ -407,10 +403,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.sessionData = data;
 	}
 
-	// Set button come from
+	// Set come from user button
 	setComeFromUserButton() {
-		this.sessionData.current.comeFromUserButton = true;
-		this.userDataService.setSessionData('update', this.sessionData.current);
+		console.log("setComeFromUserButton-->TRUE");
+
+		setTimeout(() => {
+			this.sessionService.setComeFromUserButton(true);
+		}, 100);
 	}
 
 	// Default audios
@@ -1190,12 +1189,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Change language
 	changeLanguage(lang) {
 		if (this.sessionData.current.language !== lang.id) {
-			const data = {
-				id: this.sessionData.current.id,
-				language: lang.id
-			};
-
-			this.userDataService.updateLanguage(data)
+			this.userDataService.updateLanguage(lang.id)
 				.subscribe(res => {
 					// Close user box
 					this.showChangeLanguage = false;
@@ -1203,7 +1197,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 					// Set data
 					this.sessionData.current.language = lang.id;
-					this.sessionService.setDataLanguage(this.sessionData);
+					this.sessionService.setDataLanguage(lang.id);
 
 					// Set translations
 					this.getTranslations(this.sessionData.current.language);
@@ -1328,16 +1322,5 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.document.body.removeChild(selBox);
 
 		this.alertService.success(this.translations.common.copied);
-	}
-
-	// Set/Get
-	cookies(type) {
-		if (type === 'check') {
-			const check = this.userDataService.cookies('check');
-			this.cookiesBoxStatus = check;
-		} else if (type === 'close') {
-			this.userDataService.cookies('set');
-			this.cookiesBoxStatus = false;
-		}
 	}
 }

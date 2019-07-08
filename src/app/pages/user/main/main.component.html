@@ -3,7 +3,7 @@
 		<div class="pageUser" *ngIf="userExists">
 			<div class="panel">
 				<div class="dataBox">
-					<div class="back" (click)="goBack()" *ngIf="comeFromUserButton">
+					<div class="back" (click)="goBack()" *ngIf="!comeFromUserButton">
 						<button mat-icon-button>
 							<i label="back"></i>
 						</button>

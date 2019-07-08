@@ -84,8 +84,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				const lang = data.current.language;
-				this.getTranslations(lang);
+				this.getTranslations(data);
 			});
 
 		// Load more on scroll on bottom

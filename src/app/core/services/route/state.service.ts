@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { SsrService } from '../ssr.service';
+import { SessionService } from '../session/session.service';
 
 declare var global: any;
 
@@ -13,7 +14,8 @@ export class RoutingStateService {
 
 	constructor(
 		private router: Router,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private sessionService: SessionService,
 	) {}
 
 	loadRouting(): void {
@@ -27,6 +29,12 @@ export class RoutingStateService {
 				if (this.history) {
 					if (this.history[this.history.length - 1] !== urlAfterRedirects) {
 						this.history = [...this.history, urlAfterRedirects];
+
+						// Set come from user button
+						this.sessionService.setComeFromUserButton(false);
+
+						// Set last url
+						this.sessionService.setDataLastUrl(urlAfterRedirects);
 
 						// Set localStorage
 						this.getBrowserHistory('set', this.history);
@@ -58,5 +66,10 @@ export class RoutingStateService {
 		// Navigate
 		const url = this.history[this.history.length - 1] || '/';
 		this.router.navigate([url]);
+	}
+
+	getLastUrl(){
+		const url = (this.history ? this.history[this.history.length - 1] : null) || '/';
+		return url;
 	}
 }

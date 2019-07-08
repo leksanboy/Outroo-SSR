@@ -348,7 +348,7 @@
 
 					<div class="bottom">
 						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
-							<div class="item" mat-ripple (click)="setComeFromUserButton(); showUserBox = false;" routerLink="/{{sessionData?.current?.username}}">
+							<div class="item" mat-ripple (click)="showUserBox = false;" routerLink="/{{sessionData?.current?.username}}">
 								<i label="person"></i>
 								<div class="text">{{translations?.common?.myAccount}}</div>
 							</div>
@@ -520,10 +520,6 @@
 							<i label="search"></i>
 							<div class="text">{{translations?.news?.title}}</div>
 						</div>
-						<!-- <div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/photos" routerLinkActive="selected">
-							<i label="photo-camera"></i>
-							<div class="text">{{translations?.photos?.title}}</div>
-						</div> -->
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/songs" routerLinkActive="selected">
 							<i label="music"></i>
 							<div class="text">{{translations?.audios?.title}}</div>
@@ -611,7 +607,7 @@
 				</button>
 			</li>
 			<li>
-				<button mat-icon-button (click)="setComeFromUserButton(); scrollTop();" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+				<button mat-icon-button (click)="scrollTop()" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 					<div class="avatar">
 						<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 					</div>
@@ -781,21 +777,3 @@
 		</div>
 	</div>
 </span>
-
-<!-- Cookies -->
-<div class="cookiesBox" *ngIf="cookiesBoxStatus">
-	<div class="inner">
-		<button mat-icon-button type="button" class="close" (click)="cookies('close')">
-			<i label="close"></i>
-		</button>
-
-		<div class="title">
-			{{translations?.main?.cookiesText?.one}}
-		</div>
-
-		<div class="text">
-			{{translations?.main?.cookiesText?.two}}
-			<a routerLink="/privacy" target="_blank">{{translations?.main?.cookiesText?.three}}</a>.
-		</div>
-	</div>
-</div>

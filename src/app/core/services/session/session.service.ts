@@ -21,6 +21,8 @@ export class SessionService {
 	private subjectShowLikes = new Subject<any>();
 	private subjectShowPhoto = new Subject<any>();
 	private subjectShowPublication = new Subject<any>();
+	private subjectLastUrl = new Subject<any>();
+	private subjectComeFromUserButton = new Subject<any>();
 
 	setDataClickElementRef(data: any) {
 		this.subjectClickElementRef.next(data);
@@ -156,5 +158,21 @@ export class SessionService {
 
 	getDataShowPublication(): Observable<any> {
 		return this.subjectShowPublication.asObservable();
+	}
+
+	setDataLastUrl(data: any) {
+		this.subjectLastUrl.next(data);
+	}
+
+	getDataLastUrl(): Observable<any> {
+		return this.subjectLastUrl.asObservable();
+	}
+
+	setComeFromUserButton(data: any) {
+		this.subjectComeFromUserButton.next(data);
+	}
+
+	getComeFromUserButton(): Observable<any> {
+		return this.subjectComeFromUserButton.asObservable();
 	}
 }

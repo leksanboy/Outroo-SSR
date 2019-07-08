@@ -113,7 +113,6 @@ export class UserDataService {
 	analytics(url) {
 		if (this.ssrService.isBrowser) {
 			console.log('analytics:', url);
-
 			ga('set', 'page', url);
 			ga('send', 'pageview');
 		}
@@ -250,9 +249,11 @@ export class UserDataService {
 			}));
 	}
 
-	updateLanguage(data) {
+	updateLanguage(lang) {
 		const url = this.env.url + 'assets/api/user/updateLanguage.php';
-		const params = data;
+		const params = {
+			language: lang
+		};
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
 			.pipe(map(res => {

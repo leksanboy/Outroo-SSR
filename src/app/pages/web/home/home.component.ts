@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SessionService } from '../../../../app/core/services/session/session.service';
 
 @Component({
 	selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private metaService: MetaService,
 		private router: Router,
 		private userDataService: UserDataService,
+		private sessionService: SessionService,
 		private ssrService: SsrService,
 	) {
 		// Get translations
@@ -100,6 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	setLang(lang) {
+		this.sessionService.setDataLanguage(lang);
 		this.getTranslations(lang);
 	}
 

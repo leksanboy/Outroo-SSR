@@ -817,9 +817,9 @@ body{
 
 	.username{
 		width: calc(100% - 72px);
-		// padding: 6px 0 6px 12px;
 		box-sizing: border-box;
 		padding: 0 0 0 12px;
+		display: flex;
 
 		.data{
 			align-items: center;
@@ -2769,10 +2769,10 @@ body{
 	/*Cookies*/
 	.cookiesBox{
 		background-color: $whiteColor;
+		max-width: calc(50% - 32px);
 		box-shadow: $shadowBox1;
 		margin: 0 0 104px 16px;
 		color: currentColor;
-		max-width: 600px;
 		position: fixed;
 		z-index: 99;
 		width: 100%;
@@ -2780,8 +2780,8 @@ body{
 		left: 0;
 
 		.inner{
+			padding: 42px 24px 48px;
 			box-sizing: border-box;
-			padding: 24px;
 			width: 100%;
 
 			.close{
@@ -2816,6 +2816,16 @@ body{
 					color: currentColor;
 				}
 			}
+		}
+
+		&.home{
+			background-color: $darkThemeColor;
+			margin: 0 0 16px 16px;
+			color: $whiteColor;
+		}
+
+		&.web{
+			margin: 0 0 16px 16px;
 		}
 	}
 

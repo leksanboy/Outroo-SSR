@@ -47,6 +47,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public activeNewPublication: any;
 	public activeRouterExists: any;
 	public activeSessionPlaylists: any;
+	public activeComeFromUserButton: any;
 	public userExists = true;
 	public data: any;
 	public dataDefault: any;
@@ -80,9 +81,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				if (event instanceof NavigationEnd) {
 					// Session
 					this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
-
-					// Check button back
-					this.comeFromUserButton = this.sessionData ? (this.sessionData.current ? this.sessionData.current.comeFromUserButton : null) : null;
 
 					// User
 					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
@@ -139,6 +137,13 @@ export class MainComponent implements OnInit, OnDestroy {
 				}
 			});
 
+		// Check button back
+		this.activeComeFromUserButton = this.sessionService.getComeFromUserButton()
+			.subscribe(data => {
+				console.log("comeFromUserButton:", data);
+				this.comeFromUserButton = data;
+			});
+
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
 			.subscribe(data => {
@@ -154,8 +159,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
-				const lang = data.current.language;
-				this.getTranslations(lang);
+				this.getTranslations(data);
 			});
 
 		// Get new publication
@@ -196,6 +200,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
+		this.activeComeFromUserButton.unsubscribe();
 	}
 
 	// Go back
