@@ -782,6 +782,20 @@ body{
 				}
 			}
 
+			.text{
+				box-sizing: border-box;
+				width: 100%;
+
+				.container{
+					word-break: break-word;
+					padding: 0 0 0 12px;
+					color: $greyColor;
+					cursor: pointer;
+					font-size: 14px;
+					width: 100%;
+				}
+			}
+
 			.actions{
 				height: 48px;
 
@@ -824,6 +838,7 @@ body{
 		.data{
 			align-items: center;
 			display: flex;
+			width: 100%;
 
 			.name{
 				text-overflow: ellipsis;
@@ -838,15 +853,8 @@ body{
 				white-space: nowrap;
 				color: $greyColor;
 				font-size: 13px;
+				max-width: 75%;
 			}
-		}
-
-		.info{
-			word-break: break-word;
-			color: $greyColor;
-			padding: 2px 0 0;
-			font-size: 14px;
-			width: 100%;
 		}
 	}
 
@@ -6859,12 +6867,10 @@ body{
 		background-color: $blackColor;
 		color: $whiteColor;
 
-		/*Links*/
 		a{
 			color: $whiteColor;
 		}
 
-		/*Buttons generic*/
 		button{
 			&.border{
 				border: 1px solid $whiteColor;
@@ -6872,7 +6878,23 @@ body{
 			}
 		}
 
-		/*Mat menu*/
+		ul.notifications{
+			li .inner .operations span button{
+				background-color: $whiteColor;
+				color: $fontBlackColor;
+
+				&.active{
+					border: 1px solid $whiteColor;
+					background-color: transparent;
+					color: $whiteColor;
+				}
+
+				&.pending{
+					background-color: $blueColor;
+				}
+			}
+		}
+
 		.mat-menu-panel{
 			background: $darkThemeColor;
 
@@ -7053,29 +7075,6 @@ body{
 								}
 							}
 						}
-					}
-				}
-			}
-
-			.pageNotifications{
-				.content{
-					ul.notifications li .inner .operations span button{
-						background-color: $whiteColor;
-						color: $fontBlackColor;
-
-						&.active{
-							border: 1px solid $whiteColor;
-							background-color: transparent;
-							color: $whiteColor;
-						}
-
-						&.pending{
-							background-color: $blueColor;
-						}
-					}
-
-					ul.chat li .avatarsGroup.group .avatar{
-						border-color: $blackColor;
 					}
 				}
 			}

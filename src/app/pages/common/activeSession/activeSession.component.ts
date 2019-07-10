@@ -140,7 +140,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			}
 
 			// Load default audios
-			this.defaultAudios(this.sessionData.current.username);
+			this.defaultAudios(this.sessionData.current.id);
 
 			// Load default notifications
 			this.defaultNotifications(this.sessionData.current.id);

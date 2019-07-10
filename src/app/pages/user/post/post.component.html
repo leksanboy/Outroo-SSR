@@ -19,9 +19,9 @@
 
 						<div class="username">
 							<div class="data">
-								<a class="name" routerLink="/{{x?.user?.username}}">{{x?.user?.username}}</a>
-								<i class="icon50 blue" label="official" *ngIf="x?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-								<div class="date">{{x?.date | timeago}}</div>
+								<a class="name" routerLink="/{{dataDefault.data?.user?.username}}">{{dataDefault.data?.user?.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="dataDefault.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								<div class="date">{{dataDefault.data?.date | timeago}}</div>
 							</div>
 						</div>
 						

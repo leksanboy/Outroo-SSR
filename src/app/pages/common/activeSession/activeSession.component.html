@@ -348,7 +348,7 @@
 
 					<div class="bottom">
 						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
-							<div class="item" mat-ripple (click)="showUserBox = false;" routerLink="/{{sessionData?.current?.username}}">
+							<div class="item" mat-ripple (click)="setComeFromUserButton(); showUserBox = false;" routerLink="/{{sessionData?.current?.username}}">
 								<i label="person"></i>
 								<div class="text">{{translations?.common?.myAccount}}</div>
 							</div>
@@ -607,7 +607,7 @@
 				</button>
 			</li>
 			<li>
-				<button mat-icon-button (click)="scrollTop()" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+				<button mat-icon-button (click)="setComeFromUserButton(); scrollTop();" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 					<div class="avatar">
 						<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 					</div>
