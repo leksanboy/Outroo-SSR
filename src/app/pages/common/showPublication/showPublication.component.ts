@@ -123,62 +123,66 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Bookmarks
 	markUnmark(item) {
-		if (this.sessionData.current.id) {
-			item.bookmark.checked = !item.bookmark.checked;
+		if (this.sessionData) {
+			if (this.sessionData.current.id) {
+				item.bookmark.checked = !item.bookmark.checked;
 
-			// Se usa en la pantalla de bookmarks para saber los que ya estaban dentro
-			item.marked = item.bookmark.checked ? false : true;
+				// Se usa en la pantalla de bookmarks para saber los que ya estaban dentro
+				item.marked = item.bookmark.checked ? false : true;
 
-			if (item.bookmark.checked) {
-				this.alertService.success(this.translations.bookmarks.addedTo);
+				if (item.bookmark.checked) {
+					this.alertService.success(this.translations.bookmarks.addedTo);
+				}
+
+				// data
+				const data = {
+					item: item.id,
+					id: item.bookmark.id,
+					type: item.bookmark.checked ? 'add' : 'remove'
+				};
+
+				this.bookmarksDataService.markUnmark(data)
+					.subscribe(res => {
+						if (res) {
+							item.bookmark.id = res;
+						}
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
 			}
-
-			// data
-			const data = {
-				item: item.id,
-				id: item.bookmark.id,
-				type: item.bookmark.checked ? 'add' : 'remove'
-			};
-
-			this.bookmarksDataService.markUnmark(data)
-				.subscribe(res => {
-					if (res) {
-						item.bookmark.id = res;
-					}
-				}, error => {
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
 		}
 	}
 
 	// Like / Unlike
 	likeUnlike(item) {
-		if (item.liked) {
-			item.liked = false;
-			item.countLikes--;
+		if (this.sessionData) {
+			if (item.liked) {
+				item.liked = false;
+				item.countLikes--;
 
-			for (const i in item.likers) {
-				if (i) {
-					if (item.likers[i].id === this.sessionData.current.id) {
-						item.likers.splice(i, 1);
+				for (const i in item.likers) {
+					if (i) {
+						if (item.likers[i].id === this.sessionData.current.id) {
+							item.likers.splice(i, 1);
+						}
 					}
 				}
+			} else {
+				item.liked = true;
+				item.countLikes++;
+
+				item.likers.unshift(this.sessionData.current);
 			}
-		} else {
-			item.liked = true;
-			item.countLikes++;
 
-			item.likers.unshift(this.sessionData.current);
+			// data
+			const data = {
+				id: item.id,
+				receiver: this.userData.id,
+				type: item.liked ? 'like' : 'unlike'
+			};
+
+			this.publicationsDataService.likeUnlike(data).subscribe();
 		}
-
-		// data
-		const data = {
-			id: item.id,
-			receiver: this.userData.id,
-			type: item.liked ? 'like' : 'unlike'
-		};
-
-		this.publicationsDataService.likeUnlike(data).subscribe();
 	}
 
 	// Show people who like

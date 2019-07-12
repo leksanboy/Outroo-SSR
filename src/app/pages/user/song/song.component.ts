@@ -151,7 +151,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
 	// Play song
 	playSong(data, item, key, type) {
-		if (!this.sessionData.current.id) {
+		if (!this.sessionData) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key === key &&

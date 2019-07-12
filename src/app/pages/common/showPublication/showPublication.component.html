@@ -231,33 +231,39 @@
 								</div>
 								<div class="actions">
 									<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault?.data)">
-										<i class="icon75 grey" label="send-comment"></i>
+										<i class="icon75 blue" label="send-comment"></i>
 									</button>
 								</div>
 							</div>
 
 							<ul>
 								<li *ngFor="let c of dataDefault?.data?.comments?.list" [ngClass]="{'remove': c.addRemove}">
-									<a class="avatar" routerLink="/{{c.user.username}}">
-										<img [src]="c.user.avatar ? c.user.avatarUrl : env.avatar"/>
-									</a>
-									<div class="text">
-										<div class="name">
-											<a class="username" routerLink="/{{c.user.username}}">{{c.user.username}}</a>
-											<span class="date">{{c.date | timeago}}</span>
-											<div class="actions" *ngIf="sessionData.current.id">
-												<button mat-icon-button [matMenuTriggerFor]="optionsComments">
-													<i class="icon85 grey" label="more"></i>
-												</button>
-												<mat-menu #optionsComments="matMenu">
-													<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>
-													<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c.user.id === sessionData.current.id || dataDefault?.data?.user?.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
-												</mat-menu>
+									<div class="top">
+										<a class="avatar" routerLink="/{{c?.user?.username}}">
+											<img [src]="c?.user?.avatar ? c?.user?.avatarUrl : env.avatar"/>
+										</a>
+
+										<div class="username">
+											<div class="data">
+												<a class="name" routerLink="/{{c?.user?.username}}">{{c?.user?.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="c?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+												<div class="date">{{c?.date | timeago}}</div>
 											</div>
 										</div>
-										<div class="container">
-											<span [innerHtml]="c.comment | safeHtml"></span>
+										
+										<div class="actions" *ngIf="sessionData.current.id">
+											<button mat-icon-button [matMenuTriggerFor]="optionsComments">
+												<i class="icon75 grey" label="more"></i>
+											</button>
+											<mat-menu #optionsComments="matMenu">
+												<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c.user.id === sessionData.current.id || dataDefault?.data?.user?.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+											</mat-menu>
 										</div>
+									</div>
+
+									<div class="bottom">
+										<span [innerHtml]="c.comment | safeHtml"></span>
 									</div>
 								</li>
 							</ul>

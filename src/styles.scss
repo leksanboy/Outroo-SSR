@@ -1731,7 +1731,7 @@ body{
 	/*Comments box*/
 	.boxComments{
 		box-sizing: border-box;
-		padding: 0 6px 0 18px;
+		padding: 0 0 0 18px;
 		width: 100%;
 		float: left;
 
@@ -1749,13 +1749,13 @@ body{
 
 			.new{
 				background: transparentize($greyColor, .75);
+				width: calc(100% - 6px);
 				box-sizing: border-box;
-				margin: 0 0 8px -6px;
+				margin: 0 0 6px -6px;
 				position: relative;
 				border-radius: 5px;
 				display: flex;
 				padding: 6px;
-				width: 100%;
 				float: left;
 
 				.avatar{
@@ -1836,65 +1836,48 @@ body{
 					border: none !important;
 					box-sizing: border-box;
 					position: relative;
-					padding: 0 0 8px 0;
 					list-style: none;
-					display: flex;
-					float: left;
 					width: 100%;
+					padding: 0;
 					margin: 0;
 
-					.avatar{
+					.top{
 						box-sizing: border-box;
-						margin: 4px 12px 0 0;
-						border-radius: 50%;
-						overflow: hidden;
-						min-width: 24px;
-						height: 24px;
-						width: 24px;
-
-						img{
-							height: 100%;
-							width: 100%;
-						}
-					}
-
-					.text{
-						box-sizing: border-box;
+						align-items: center;
+						display: flex;
 						width: 100%;
 						padding: 0;
 
-						.name{
-							.username{
-								word-break: break-all;
-								font-weight: bold;
-							}
-
-							.date{
-								color: $greyColor;
-								font-size: 13px;
-							}
-
-							.actions{
-								box-sizing: border-box;
-								float: right;
-								height: 24px;
-								width: 24px;
-
-								button{
-									margin: -3px 0 0 -2px !important;
-									border-radius: 50% !important;
-									padding: 0 !important;
-									height: 24px;
-									width: 24px;
-								}
-							}
-						}
-
-						.container{
+						.avatar{
 							box-sizing: border-box;
-							word-break: break-all;
-							padding: 0 12px 0 0;
+							border-radius: 50%;
+							overflow: hidden;
+							min-width: 24px;
+							height: 24px;
+							width: 24px;
+
+							img{
+								height: 100%;
+								width: 100%;
+							}
 						}
+
+						.actions{
+							margin: 0 0 0 8px;
+
+							button{
+								border-radius: 50% !important;
+							}
+						}
+					}
+
+					.bottom{
+						box-sizing: border-box;
+						padding: 0 24px 0 36px;
+						word-break: break-all;
+						margin: -6px 0 0;
+						font-size: 13px;
+						width: 100%;
 					}
 
 					&.remove{
@@ -7764,6 +7747,13 @@ body{
 					}
 				}
 			}
+		}
+
+		.disableAdBlock{
+			background-color: $greyColor;
+			border-radius: 0;
+			width: 100%;
+			margin: 0;
 		}
 
 		.alertBox{

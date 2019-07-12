@@ -38,7 +38,7 @@
 							<div class="duration">{{dataDefault.data.duration}}</div>
 						</div>
 						
-						<div class="songActions" *ngIf="sessionData.current.id">
+						<div class="songActions" *ngIf="sessionData?.current?.id">
 							<button mat-icon-button [matMenuTriggerFor]="appMenu">
 								<i class="icon85 blue" label="check" *ngIf="dataDefault.data.addRemoveUser"></i>
 								<i class="icon85 grey" label="more" *ngIf="!dataDefault.data.addRemoveUser"></i>
@@ -53,7 +53,7 @@
 							
 							<mat-menu #menuPlaylists="matMenu">
 								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
-								<span *ngFor="let p of sessionData.current.playlists">
+								<span *ngFor="let p of sessionData?.current?.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', dataDefault.data, p)">{{p.title}}</button>
 								</span>
 							</mat-menu>

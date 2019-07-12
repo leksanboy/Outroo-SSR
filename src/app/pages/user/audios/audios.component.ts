@@ -205,12 +205,14 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		setTimeout(() => {
 			const g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
+			console.log("g:", g);
 
 			if (g === 1) {
 				this.hideAd = true;
 			}
 		}, 100);
 
+		console.log("ad:", ad);
 		return ad;
 	}
 

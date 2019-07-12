@@ -257,7 +257,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData.current.id) {
+		if (!this.sessionData) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
 			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
@@ -333,7 +333,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Bookmarks
 	markUnmark(item) {
-		if (this.sessionData.current.id) {
+		if (this.sessionData) {
 			item.bookmark.checked = !item.bookmark.checked;
 
 			if (item.bookmark.checked) {
@@ -359,7 +359,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Like / Unlike
 	likeUnlike(item) {
-		if (this.sessionData.current.id) {
+		if (this.sessionData) {
 			if (item.liked) {
 				item.liked = false;
 				item.countLikes--;
