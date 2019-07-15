@@ -37,19 +37,21 @@
 				</div>
 
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event)">
-					<mat-form-field>
-						<input autofocus type="email" matInput placeholder="{{translations?.signIn?.email}}" #Email maxlength="100"  formControlName="email">
+					<mat-form-field appearance="outline" class="homeBox">
+						<mat-label>{{translations?.signIn?.email}}</mat-label>
+						<input autofocus type="email" matInput #Email maxlength="100" formControlName="email">
 					</mat-form-field>
 
-					<mat-form-field>
-						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100"  formControlName="password">
+					<mat-form-field appearance="outline" class="homeBox">
+						<mat-label>{{translations?.signIn?.password}}</mat-label>
+						<input type="{{showPassword ? 'text' : 'password'}}" matInput #Password maxlength="100" formControlName="password">
 						<button mat-button matSuffix mat-icon-button type="button" class="noLength" (click)="showPassword=!showPassword" tabindex="-1">
 							<i class="icon75 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
 					</mat-form-field>
 
 					<div class="buttons">
-						<button mat-raised-button type="submit">
+						<button mat-raised-button type="submit" [disabled]="submitLoading">
 							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 							{{translations?.common?.signIn}}
 						</button>
@@ -90,7 +92,7 @@
 				<div class="lang">
 					<button mat-raised-button [matMenuTriggerFor]="langs">
 						<i label="arrow-drop-down"></i>
-						{{translations?.settings?.language}}
+						{{translations?.common?.langText}}
 					</button>
 				</div>
 

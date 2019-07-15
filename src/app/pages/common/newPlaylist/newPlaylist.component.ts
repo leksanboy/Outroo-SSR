@@ -22,7 +22,7 @@ export class NewPlaylistComponent implements OnInit {
 	public cropperData: any;
 	public flipHrz: boolean;
 	public flipVrt: boolean;
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 	public actionForm: FormGroup;
 
 	constructor(
@@ -52,7 +52,6 @@ export class NewPlaylistComponent implements OnInit {
 		// not in use
 	}
 
-	// load image to crop
 	imageLoad() {
 		this.cropperData = new Cropper(this.inputImage.nativeElement, {
 			viewMode: 3,
@@ -68,7 +67,6 @@ export class NewPlaylistComponent implements OnInit {
 		});
 	}
 
-	// upload image
 	upload(type, event) {
 		let file = event.target.files[0];
 
@@ -84,7 +82,6 @@ export class NewPlaylistComponent implements OnInit {
 		}
 	}
 
-	// cropper functions
 	cropperFunctions(type) {
 		switch (type) {
 			case 'zoomIn':
@@ -110,17 +107,15 @@ export class NewPlaylistComponent implements OnInit {
 		}
 	}
 
-	// remove cover
 	removeCover() {
 		this.data.image = null;
 	}
 
-	// save edit
 	save() {
 		switch (this.data.type) {
 			case 'create':
 				if (this.actionForm.get('title').value.trim().length > 0) {
-					this.saveLoading = true;
+					this.submitLoading = true;
 
 					if (this.data.newImage) {
 						const imageB64 = this.cropperData.getCroppedCanvas({
@@ -144,7 +139,7 @@ export class NewPlaylistComponent implements OnInit {
 
 					this.audioDataService.createPlaylist(data)
 						.subscribe((res: any) => {
-							this.saveLoading = false;
+							this.submitLoading = false;
 							this.dialogRef.close(res);
 						});
 				} else {
@@ -154,7 +149,7 @@ export class NewPlaylistComponent implements OnInit {
 				break;
 			case 'edit':
 				if (this.actionForm.get('title').value.trim().length > 0) {
-					this.saveLoading = true;
+					this.submitLoading = true;
 
 					// Crop new image
 					if (this.data.newImage) {
@@ -204,7 +199,7 @@ export class NewPlaylistComponent implements OnInit {
 
 					this.audioDataService.createPlaylist(data)
 						.subscribe((res: any) => {
-							this.saveLoading = false;
+							this.submitLoading = false;
 							res.index = this.data.current.index;
 							this.dialogRef.close(res);
 						});
@@ -216,7 +211,6 @@ export class NewPlaylistComponent implements OnInit {
 		}
 	}
 
-	// Close
 	close() {
 		this.dialogRef.close();
 	}

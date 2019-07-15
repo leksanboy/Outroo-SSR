@@ -15,7 +15,7 @@ export class NewSessionComponent implements OnInit {
 	public sessionData: any = [];
 	public translations: any = [];
 	public actionForm: FormGroup;
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 	public inUse: boolean;
 	public showPassword: boolean;
 
@@ -38,7 +38,7 @@ export class NewSessionComponent implements OnInit {
 		});
 	}
 
-	submit(event: Event) {
+	submit() {
 		this.inUse = false;
 
 		if (this.actionForm.get('email').value.trim().length > 0 &&
@@ -53,14 +53,14 @@ export class NewSessionComponent implements OnInit {
 			}
 
 			if (!this.inUse) {
-				this.saveLoading = true;
+				this.submitLoading = true;
 
 				this.userDataService.loginNewSession(this.actionForm.get('email').value, this.actionForm.get('password').value)
 					.subscribe(res => {
 						this.dialogRef.close(res);
-						this.saveLoading = false;
+						this.submitLoading = false;
 					}, error => {
-						this.saveLoading = false;
+						this.submitLoading = false;
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			} else {
@@ -72,7 +72,6 @@ export class NewSessionComponent implements OnInit {
 		}
 	}
 
-	// Close
 	close() {
 		this.dialogRef.close();
 	}

@@ -15,7 +15,7 @@ export class NewReportComponent implements OnInit {
 	public sessionData: any = [];
 	public translations: any = [];
 	public actionForm: FormGroup;
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 	public inUse: boolean;
 
 	constructor(
@@ -36,8 +36,8 @@ export class NewReportComponent implements OnInit {
 		});
 	}
 
-	submit(event: Event) {
-		this.saveLoading = true;
+	submit() {
+		this.submitLoading = true;
 
 		if (this.actionForm.get('content').value.trim().length > 0) {
 			const data = {
@@ -49,21 +49,20 @@ export class NewReportComponent implements OnInit {
 			this.userDataService.report(data)
 				.subscribe(res => {
 					this.dialogRef.close(res);
-					this.saveLoading = false;
+					this.submitLoading = false;
 					this.alertService.success(this.translations.common.sentSuccessfully);
 				}, error => {
-					this.saveLoading = false;
+					this.submitLoading = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else {
-			this.saveLoading = false;
+			this.submitLoading = false;
 
 			// show error message
 			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}
 
-	// Close
 	close() {
 		this.dialogRef.close();
 	}

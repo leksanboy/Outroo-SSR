@@ -73,8 +73,8 @@
 								</div>
 
 								<div class="buttons">
-									<button mat-raised-button type="submit" [disabled]="savePersonalDataLoading">
-										<mat-progress-spinner mode="indeterminate" *ngIf="savePersonalDataLoading"></mat-progress-spinner>
+									<button mat-raised-button type="submit" [disabled]="submitPersonalLoading">
+										<mat-progress-spinner mode="indeterminate" *ngIf="submitPersonalLoading"></mat-progress-spinner>
 										{{translations?.common?.submit}}
 									</button>
 								</div>
@@ -123,8 +123,8 @@
 								</mat-form-field>
 
 								<div class="buttons">
-									<button mat-raised-button type="submit" [disabled]="savePersonalDataLoading">
-										<mat-progress-spinner mode="indeterminate" *ngIf="savePasswordDataLoading"></mat-progress-spinner>
+									<button mat-raised-button type="submit" [disabled]="submitPasswordLoading">
+										<mat-progress-spinner mode="indeterminate" *ngIf="submitPasswordLoading"></mat-progress-spinner>
 										{{translations?.common?.submit}}
 									</button>
 								</div>

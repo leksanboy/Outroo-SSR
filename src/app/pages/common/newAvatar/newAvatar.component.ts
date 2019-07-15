@@ -20,7 +20,7 @@ export class NewAvatarComponent implements OnInit {
 	public cropperData: any;
 	public flipHrz: boolean;
 	public flipVrt: boolean;
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,7 +36,6 @@ export class NewAvatarComponent implements OnInit {
 		// no init
 	}
 
-	// load image to crop
 	imageLoad() {
 		if (this.data.comeFrom === 'avatar') {
 			this.cropperData = new Cropper(this.input.nativeElement, {
@@ -67,7 +66,6 @@ export class NewAvatarComponent implements OnInit {
 		}
 	}
 
-	// cropper functions
 	cropperFunctions(type) {
 		switch (type) {
 			case 'zoomIn':
@@ -94,62 +92,34 @@ export class NewAvatarComponent implements OnInit {
 				this.dialogRef.close(null);
 				break;
 			case 'crop':
-				if (this.data.comeFrom === 'avatar') {
-					const imageBase64 = this.cropperData.getCroppedCanvas({
-						width: 320,
-						height: 320,
-						fillColor: '#fff',
-						imageSmoothingEnabled: false,
-						imageSmoothingQuality: 'high'
-					}).toDataURL('image/jpeg');
+				const imageBase64 = this.cropperData.getCroppedCanvas({
+					width: 320,
+					height: 320,
+					fillColor: '#fff',
+					imageSmoothingEnabled: false,
+					imageSmoothingQuality: 'high'
+				}).toDataURL('image/jpeg');
 
-					this.saveLoading = true;
+				this.submitLoading = true;
 
-					const d = {
-						image: imageBase64
-					};
+				const d = {
+					image: imageBase64
+				};
 
-					this.userDataService.updateAvatar(d)
-						.subscribe(res => {
-							setTimeout(() => {
-								this.saveLoading = false;
-								this.dialogRef.close(res);
-							}, 1000);
-						}, error => {
-							this.saveLoading = false;
-							this.alertService.error(this.translations.common.anErrorHasOcurred);
-						});
-				} else if (this.data.comeFrom === 'background') {
-					const imageBase64 = this.cropperData.getCroppedCanvas({
-						width: 1920,
-						height: 640,
-						fillColor: '#fff',
-						imageSmoothingEnabled: false,
-						imageSmoothingQuality: 'high'
-					}).toDataURL('image/jpeg');
-
-					this.saveLoading = true;
-
-					const d = {
-						image: imageBase64
-					};
-
-					this.userDataService.updateBackground(d)
-						.subscribe(res => {
-							setTimeout(() => {
-								this.saveLoading = false;
-								this.dialogRef.close(res);
-							}, 1000);
-						}, error => {
-							this.saveLoading = false;
-							this.alertService.error(this.translations.common.anErrorHasOcurred);
-						});
-				}
+				this.userDataService.updateAvatar(d)
+					.subscribe(res => {
+						setTimeout(() => {
+							this.submitLoading = false;
+							this.dialogRef.close(res);
+						}, 1000);
+					}, error => {
+						this.submitLoading = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
 				break;
 		}
 	}
 
-	// Close
 	close() {
 		this.dialogRef.close();
 	}

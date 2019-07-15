@@ -30,8 +30,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public activeLanguage: any;
 	public actionFormPersonalData: any;
 	public actionFormPasswordData: any;
-	public savePersonalDataLoading: boolean;
-	public savePasswordDataLoading: boolean;
+	public submitPersonalLoading: boolean;
+	public submitPasswordLoading: boolean;
 	public showPassword: boolean;
 	public validatorUsername: string;
 	public validatorOldPassword: string;
@@ -429,12 +429,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		if (params.username.trim().length === 0 || !regex.test(params.username)) {
 			this.alertService.error(this.translations.settings.usernameRequirements);
 		} else {
-			this.savePersonalDataLoading = true;
+			this.submitPersonalLoading = true;
 
 			this.userDataService.updateData(params)
 				.subscribe(res => {
 					setTimeout(() => {
-						this.savePersonalDataLoading = false;
+						this.submitPersonalLoading = false;
 						this.sessionData = this.userDataService.getSessionData();
 						this.sessionService.setData(this.sessionData);
 
@@ -448,7 +448,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							});
 					}, 1000);
 				}, error => {
-					this.savePersonalDataLoading = false;
+					this.submitPersonalLoading = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
@@ -466,7 +466,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			if (form.newPassword.trim() !== form.confirmPassword.trim()) {
 				this.alertService.error(this.translations.settings.passwordsNotMatch);
 			} else {
-				this.savePasswordDataLoading = false;
+				this.submitPasswordLoading = false;
 
 				const data = {
 					oldPassword: form.oldPassword,
@@ -477,12 +477,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					.subscribe(res => {
 						setTimeout(() => {
 							this.validatorOldPassword = 'done';
-							this.savePasswordDataLoading = false;
+							this.submitPasswordLoading = false;
 							this.alertService.success(this.translations.common.savedSuccessfully);
 						}, 1000);
 					}, error => {
 						this.validatorOldPassword = 'bad';
-						this.savePasswordDataLoading = false;
+						this.submitPasswordLoading = false;
 						this.alertService.error(this.translations.settings.oldPasswordIncorrect);
 					});
 			}

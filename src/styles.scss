@@ -1405,6 +1405,26 @@ body{
 				}
 			}
 		}
+
+		&.mat-form-field-appearance-outline{
+			height: inherit;
+			margin: 0;
+
+			.mat-form-field-wrapper {
+				padding: 24px 0 0;
+				margin: 0;
+
+				.mat-form-field-flex{
+					.mat-form-field-outline{
+						color: $greyColor;
+					}
+				}
+			}
+
+			.mat-form-field-suffix{
+				top: 0;
+			}
+		}
 	}
 
 	/*Slide toggle*/
@@ -2658,7 +2678,6 @@ body{
 
 					.copyright{
 						color: transparentize($whiteColor, .5);
-						padding: 0 6px;
 						display: none;
 						width: 100%;
 						float: left;
@@ -2666,21 +2685,20 @@ body{
 
 					.lang{
 						justify-content: center;
-						padding: 6px 6px 0;
+						padding: 6px 0 0;
 						cursor: pointer;
 						display: flex;
 						width: 100%;
 						float: left;
 
 						button{
-							border: 1px solid transparentize($whiteColor, .5);
 							text-transform: capitalize;
-							color: $whiteColor;
+							background: $whiteColor;
+							color: $fontBlackColor;
 							padding: 0 8px 0 0;
 							line-height: 32px;
 							margin: 12px 0 0;
 							box-shadow: none;
-							background: 0 0;
 							height: 32px;
 							
 							i{

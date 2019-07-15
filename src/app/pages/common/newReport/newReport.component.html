@@ -12,7 +12,7 @@
 
 	<div mat-dialog-content class="bodyReport">
 		<div class="form">
-			<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+			<form [formGroup]="actionForm" (ngSubmit)="submit()">
 				<mat-form-field class="textarea">
 					<textarea matInput matTextareaAutosize placeholder="{{translations?.common?.reportDescription}}" #Question maxlength="1000" formControlName="content"></textarea>
 					<mat-hint align="end">{{Question.value.length}}/1000</mat-hint>
@@ -25,8 +25,8 @@
 		<button mat-raised-button type="button" (click)="close()">
 			{{translations?.common?.cancel}}
 		</button>
-		<button mat-raised-button type="submit" (click)="submit($event)">
-			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 			{{translations?.common?.send}}
 		</button>
 	</div>

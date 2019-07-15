@@ -25,7 +25,7 @@ export class NewPublicationComponent implements OnInit {
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 	public errorMessage: any;
 	public openPhotoBox: boolean;
 	public searchBoxMentions: boolean;
@@ -97,7 +97,6 @@ export class NewPublicationComponent implements OnInit {
 			});
 	}
 
-	// Open dialog photos
 	openPhotos(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addPhotos');
 		const config = {
@@ -123,7 +122,6 @@ export class NewPublicationComponent implements OnInit {
 		});
 	}
 
-	// Open dialog audios
 	openAudios(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addAudios');
 		const config = {
@@ -149,7 +147,6 @@ export class NewPublicationComponent implements OnInit {
 		});
 	}
 
-	// Select/unselect files
 	toggleItem(type, item) {
 		if (type === 'photos') {
 			if (item.selected) {
@@ -184,7 +181,6 @@ export class NewPublicationComponent implements OnInit {
 		}
 	}
 
-	// Writing post and parsing
 	writingChanges(innerText) {
 		const self = this;
 		let str = innerText;
@@ -215,7 +211,6 @@ export class NewPublicationComponent implements OnInit {
 		this.checkPlaceholder();
 	}
 
-	// Caret position on contenteditable
 	getCaretPosition(element) {
 		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
 		let caretOffset = 0;
@@ -233,7 +228,6 @@ export class NewPublicationComponent implements OnInit {
 		return caretOffset;
 	}
 
-	// Get current typing word on contenteditable
 	getCurrentWord(el, position) {
 		// Get content of div
 		const content = el.textContent;
@@ -250,7 +244,6 @@ export class NewPublicationComponent implements OnInit {
 		return content.substring(startPosition + 1, endPosition);
 	}
 
-	// Cehck pressing key
 	checkKeyCode(event) {
 		// Space, Enter, Escape
 		if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
@@ -278,14 +271,12 @@ export class NewPublicationComponent implements OnInit {
 		}
 	}
 
-	// Check if content is empty to set placeholer
 	checkPlaceholder() {
 		if (this.publicationData.original.length === 0) {
 			this.publicationData.transformed = '<div class="placeholder">' + this.translations.main.whatsHappening.one + '<br>' + this.translations.main.whatsHappening.two + '</div>';
 		}
 	}
 
-	// Validate post content
 	validateBeforeSubmit(data) {
 		// validate if exists audios or photos
 		if (data.audiosArray.length > 0 || data.photosArray.length > 0) {
@@ -319,7 +310,6 @@ export class NewPublicationComponent implements OnInit {
 		return valid;
 	}
 
-	// Transform content of the post and send
 	transformBeforeSubmit(data) {
 		const newData = {
 			content: data ? data : '',
@@ -351,7 +341,6 @@ export class NewPublicationComponent implements OnInit {
 		return newData;
 	}
 
-	// Set caret position
 	setSelectionRange() {
 		const el = this.publicationData.eventTarget;
 
@@ -373,7 +362,6 @@ export class NewPublicationComponent implements OnInit {
 		el.focus();
 	}
 
-	// Add mention from mentions serch list
 	addSearchedMention(data) {
 		this.publicationData.lastTypedWord.searched = '@' + data.user.username;
 		this.publicationData.onBackground = this.publicationData.original.replace(this.publicationData.lastTypedWord.word, '@' + data.user.username);
@@ -385,12 +373,11 @@ export class NewPublicationComponent implements OnInit {
 		}, 300);
 	}
 
-	// Create publication
 	submit() {
 		const validate = this.validateBeforeSubmit(this.data);
 
 		if (validate) {
-			this.saveLoading = true;
+			this.submitLoading = true;
 			const formatedData = this.transformBeforeSubmit(this.publicationData.original);
 			const photosArray = [];
 			const audiosArray = [];
@@ -439,17 +426,16 @@ export class NewPublicationComponent implements OnInit {
 			this.publicationsDataService.createPublication(data)
 				.subscribe(res => {
 					this.dialogRef.close(res);
-					this.saveLoading = false;
+					this.submitLoading = false;
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
-					this.saveLoading = false;
+					this.submitLoading = false;
 				});
 		} else {
 			this.alertService.error(this.translations.main.addSomeContent);
 		}
 	}
 
-	// Close
 	close() {
 		this.dialogRef.close();
 	}

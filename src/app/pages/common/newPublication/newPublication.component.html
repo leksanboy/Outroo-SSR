@@ -115,14 +115,14 @@
 				<button mat-raised-button type="button" (click)="close()">
 					{{translations?.common?.cancel}}
 				</button>
-				<button mat-raised-button type="submit" (click)="submit()">
-					<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+				<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+					<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 					{{translations?.common?.post}}
 				</button>
 			</div>
 			<div class="mobile">
-				<button mat-raised-button type="submit" (click)="submit()">
-					<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+				<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+					<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 					{{translations?.common?.post}}
 				</button>
 			</div>

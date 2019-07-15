@@ -9,7 +9,7 @@
 			{{translations?.common?.addAccount}}
 		</div>
 		<div class="button">
-			<button mat-button type="submit" (click)="submit($event)">
+			<button mat-button type="submit" (click)="submit()">
 				{{translations?.common?.submit}}
 			</button>
 		</div>
@@ -37,8 +37,8 @@
 		<button mat-raised-button type="button" (click)="close()">
 			{{translations?.common?.cancel}}
 		</button>
-		<button mat-raised-button type="submit" (click)="submit($event)">
-			<mat-progress-spinner mode="indeterminate" *ngIf="saveLoading"></mat-progress-spinner>
+		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 			{{translations?.common?.submit}}
 		</button>
 	</div>

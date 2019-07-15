@@ -26,8 +26,8 @@
 						{{translations?.confirmEmail?.confirmText?.two}}
 						<b>@{{userData.username}}</b> {{translations?.confirmEmail?.confirmText?.three}}
 						<br>
-						<button mat-raised-button type="button" (click)="submit()">
-							<mat-progress-spinner mode="indeterminate" *ngIf="signinLoading"></mat-progress-spinner>
+						<button mat-raised-button type="button" (click)="submit()" [disabled]="submitLoading">
+							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 							{{translations?.confirmEmail?.confirmText?.four}}
 						</button>
 					</div>

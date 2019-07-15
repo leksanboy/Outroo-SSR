@@ -192,31 +192,31 @@
 							</div>
 						</div>
 
-						<div class="boxComments" *ngIf="dataDefault.data?.showCommentsBox">
-							<div class="comments" *ngIf="!dataDefault.data?.disabledComments && dataDefault.data?.loaded">
+						<div class="boxComments" *ngIf="dataDefault?.data?.showCommentsBox">
+							<div class="comments" *ngIf="!dataDefault?.data?.disabledComments && dataDefault?.data?.loaded">
 								<div class="countComments">
-									{{dataDefault.data?.countComments}} 
+									{{dataDefault?.data?.countComments}} 
 									{{translations?.common?.comments}}
 								</div>
 
-								<div class="new" *ngIf="sessionData?.current?.id">
+								<div class="new" *ngIf="sessionData.current.id">
 									<div class="avatar">
 										<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 									</div>
 									<div class="richComment">
-										<div class="highlights" [innerHTML]="dataDefault.data?.newCommentData?.transformed"></div>
-										<div class="origin" contenteditable="plaintext-only" [textContent]="dataDefault.data?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, dataDefault.data)" (keyup)="newComment('keyCode', $event, dataDefault.data)" (keydown)="newComment('keyCode', $event, dataDefault.data)" (mouseup)="newComment('keyCode', $event, dataDefault.data)"></div>
+										<div class="highlights" [innerHTML]="dataDefault?.data?.newCommentData?.transformed"></div>
+										<div class="origin" contenteditable="plaintext-only" [textContent]="dataDefault?.data?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, dataDefault?.data)" (keyup)="newComment('keyCode', $event, dataDefault?.data)" (keydown)="newComment('keyCode', $event, dataDefault?.data)" (mouseup)="newComment('keyCode', $event, dataDefault?.data)"></div>
 									</div>
 									<div class="actions">
-										<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault.data)">
+										<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault?.data)">
 											<i class="icon75 blue" label="send-comment"></i>
 										</button>
 									</div>
 								</div>
 
 								<ul>
-									<li *ngFor="let c of dataDefault.data?.comments?.list" [ngClass]="{'remove': c.addRemove}">
-										<div class="toop">
+									<li *ngFor="let c of dataDefault?.data?.comments?.list" [ngClass]="{'remove': c.addRemove}">
+										<div class="top">
 											<a class="avatar" routerLink="/{{c?.user?.username}}">
 												<img [src]="c?.user?.avatar ? c?.user?.avatarUrl : env.avatar"/>
 											</a>
@@ -229,13 +229,13 @@
 												</div>
 											</div>
 											
-											<div class="actions" *ngIf="sessionData?.current?.id">
+											<div class="actions" *ngIf="sessionData.current.id">
 												<button mat-icon-button [matMenuTriggerFor]="optionsComments">
 													<i class="icon75 grey" label="more"></i>
 												</button>
 												<mat-menu #optionsComments="matMenu">
 													<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>
-													<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c.user.id === sessionData?.current?.id || dataDefault?.data?.user?.id === sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+													<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c.user.id === sessionData.current.id || dataDefault?.data?.user?.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 												</mat-menu>
 											</div>
 										</div>
@@ -246,28 +246,28 @@
 									</li>
 								</ul>
 
-								<div class="loadingData" *ngIf="dataDefault.data?.loadingData">
+								<div class="loadingData" *ngIf="dataDefault?.data?.loadingData">
 									<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 								</div>
 
-								<div class="noData" *ngIf="dataDefault.data?.noData">
+								<div class="noData" *ngIf="dataDefault?.data?.noData">
 									{{translations?.common?.noComments}}
 								</div>
 								
-								<div class="loadMore" *ngIf="dataDefault.data?.loadMoreData">
-									<button mat-fab (click)="defaultComments('more', dataDefault.data)" *ngIf="!dataDefault.data?.loadingMoreData">
+								<div class="loadMore" *ngIf="dataDefault?.data?.loadMoreData">
+									<button mat-fab (click)="defaultComments('more', dataDefault?.data)" *ngIf="!dataDefault?.data?.loadingMoreData">
 										<i label="add"></i>
 									</button>
-									<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.data?.loadingMoreData"></mat-progress-spinner>
+									<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.data?.loadingMoreData"></mat-progress-spinner>
 								</div>
 							</div>
 
-							<div class="noData" *ngIf="dataDefault.data?.disabledComments">
+							<div class="noData" *ngIf="dataDefault?.data?.disabledComments">
 								{{translations?.common?.commentsDisabled}}
 							</div>
 
-							<div class="loadComments" *ngIf="!dataDefault.data?.disabledComments && !dataDefault.data?.loaded">
-								<button mat-raised-button (click)="showComments('load', dataDefault.data)">
+							<div class="loadComments" *ngIf="!dataDefault?.data?.disabledComments && !dataDefault?.data?.loaded">
+								<button mat-raised-button (click)="showComments('load', dataDefault?.data)">
 									{{translations?.main?.loadComments}}
 								</button>
 							</div>
