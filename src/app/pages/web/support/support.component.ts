@@ -9,6 +9,7 @@ import { AlertService } from '../../../../app/core/services/alert/alert.service'
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 @Component({
 	selector: 'app-support',
@@ -33,6 +34,7 @@ export class SupportComponent implements OnInit {
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
 		private location: Location,
+		private routingStateService: RoutingStateService,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -62,7 +64,7 @@ export class SupportComponent implements OnInit {
 	}
 
 	goBack() {
-		this.location.back();
+		this.routingStateService.getPreviousUrl();
 	}
 
 	verifyReCaptcha(data) {

@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			for (let i = 0; i < numChars.length; i++) {
 				if (setOfNumbers.indexOf(numChars[i]) !== -1) {
 					const digit = '<span class="digit-con">\
-									<span class="digit' + numArray.length + '">\
+									<span class="digit-in digit' + numArray.length + '">\
 										' + charsArray + '\
 									</span>\
 								</span>';

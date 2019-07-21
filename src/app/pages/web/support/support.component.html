@@ -33,7 +33,15 @@
 							</mat-form-field>
 
 							<mat-form-field class="textarea">
-								<textarea matInput matTextareaAutosize placeholder="{{translations?.support?.typeHere}}" #Content maxlength="1000" formControlName="content"></textarea>
+								<textarea matInput  
+								placeholder="{{translations?.support?.typeHere}}" 
+								#Content 
+								maxlength="1000" 
+								formControlName="content"
+								cdkTextareaAutosize
+								#autosize="cdkTextareaAutosize"
+								cdkAutosizeMinRows="5"
+								cdkAutosizeMaxRows="7"></textarea>
 								<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
 							</mat-form-field>
 
@@ -42,7 +50,7 @@
 							<div class="buttons">
 								<button mat-raised-button type="submit" [disabled]="submitLoading">
 									<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-									{{translations?.common?.submit}}
+									{{translations?.common?.send}}
 								</button>
 							</div>
 						</form>

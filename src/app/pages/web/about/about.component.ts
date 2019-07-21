@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 declare var global: any;
 
@@ -26,6 +27,7 @@ export class AboutComponent implements OnInit {
 		private ssrService: SsrService,
 		private userDataService: UserDataService,
 		private location: Location,
+		private routingStateService: RoutingStateService,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -51,7 +53,7 @@ export class AboutComponent implements OnInit {
 	}
 
 	goBack() {
-		this.location.back();
+		this.routingStateService.getPreviousUrl();
 	}
 
 	downloadAssetPack() {

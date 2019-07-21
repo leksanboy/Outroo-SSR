@@ -66,7 +66,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			this.userDataService.analytics(url);
 
 			// Load default
-			this.default('default');
+			const localStotageData = this.userDataService.getLocalStotage('bookmarksPage');
+			if (localStotageData) {
+				this.dataDefault = localStotageData;
+			} else {
+				this.default('default');
+			}
 		} else {
 			this.userDataService.noSessionData();
 		}
@@ -174,6 +179,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					if (!res || res.length < this.env.cuantity * 3) {
 						this.dataDefault.noMore = true;
 					}
+
+					this.userDataService.setLocalStotage('bookmarksPage', this.dataDefault);
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -209,6 +216,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 						if (!res || res.length < this.env.cuantity * 3) {
 							this.dataDefault.noMore = true;
 						}
+
+						this.userDataService.setLocalStotage('bookmarksPage', this.dataDefault);
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;

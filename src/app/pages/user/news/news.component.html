@@ -67,33 +67,43 @@
 				<span *ngIf="data.active == 'search'">
 					<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
 						<mat-tab label="{{translations?.news?.top}}">
-							<ul class="people" *ngIf="dataTop.list">
+							<ul class="followers people" *ngIf="dataTop.list">
 								<li *ngFor="let x of dataTop.list; let i=index;">
-									<div class="inner" *ngIf="x.type == 'user'">
+									<div class="type" *ngIf="x.type == 'user'">
 										<a class="avatar" routerLink="/{{x.user.username}}">
 											<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 										</a>
-										<a class="text" routerLink="/{{x.user.username}}">
-											<span class="username">
-												{{x.user.username}}
-												<i *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-											</span>
-											<br>
-											<span class="name">{{x.user.name}}</span>
-										</a>
+
+										<div class="text">
+											<div class="username">
+												<div class="data">
+													<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+													<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+												</div>
+											</div>
+
+											<div class="container">
+												{{x.user.name}}
+											</div>
+										</div>
 									</div>
 
-									<div class="inner" *ngIf="x.type == 'hashtag'" (click)="setHashtag('set', x)">
-										<div class="avatar tag">
+									<div class="type" *ngIf="x.type == 'hashtag'" (click)="setHashtag('set', x)">
+										<div class="tag">
 											#
 										</div>
-										<a class="text">
-											<span class="username">
-												{{x.caption}}
-											</span>
-											<br>
-											<span class="name">{{x.count}}</span>
-										</a>
+
+										<div class="text">
+											<div class="username">
+												<div class="data">
+													<a class="name">{{x.caption}}</a>
+												</div>
+											</div>
+
+											<div class="container">
+												{{x.count}} {{translations?.news?.posts}}
+											</div>
+										</div>
 									</div>
 								</li>
 							</ul>
@@ -108,20 +118,23 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.people}}">
-							<ul class="people" *ngIf="dataPeople.list">
+							<ul class="followers" *ngIf="dataPeople.list">
 								<li *ngFor="let x of dataPeople.list; let i=index;">
-									<div class="inner">
-										<a class="avatar" routerLink="/{{x.user.username}}">
-											<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
-										</a>
-										<a class="text" routerLink="/{{x.user.username}}">
-											<span class="username">
-												{{x.user.username}}
-												<i *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-											</span>
-											<br>
-											<span class="name">{{x.user.name}}</span>
-										</a>
+									<a class="avatar" routerLink="/{{x.user.username}}">
+										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+									</a>
+
+									<div class="text">
+										<div class="username">
+											<div class="data">
+												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											</div>
+										</div>
+
+										<div class="container">
+											{{x.user.name}}
+										</div>
 									</div>
 								</li>
 							</ul>
@@ -132,7 +145,7 @@
 
 							<div class="noData" *ngIf="dataPeople.noData">
 								<div class="image"><i class="icon200" label="search"></i></div>
-						<div class="description">{{translations?.common?.noSearchResults}}</div>
+								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
@@ -172,7 +185,7 @@
 
 							<div class="noData" *ngIf="dataPosts.noData">
 								<div class="image"><i class="icon200" label="search"></i></div>
-						<div class="description">{{translations?.common?.noSearchResults}}</div>
+								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataPosts.loadMoreData">
@@ -184,19 +197,22 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.tag}}">
-							<ul class="people" *ngIf="dataTop.list">
-								<li *ngFor="let x of dataTag.list; let i=index;">
-									<div class="inner" (click)="setHashtag('set', x)">
-										<div class="avatar tag">
-											#
+							<ul class="followers people" *ngIf="dataTop.list">
+								<li *ngFor="let x of dataTag.list; let i=index;" (click)="setHashtag('set', x)">
+									<div class="tag">
+										#
+									</div>
+
+									<div class="text">
+										<div class="username">
+											<div class="data">
+												<a class="name">{{x.caption}}</a>
+											</div>
 										</div>
-										<a class="text">
-											<span class="username">
-												{{x.caption}}
-											</span>
-											<br>
-											<span class="name">{{x.count}}</span>
-										</a>
+
+										<div class="container">
+											{{x.count}} {{translations?.news?.posts}}
+										</div>
 									</div>
 								</li>
 							</ul>
@@ -207,7 +223,7 @@
 
 							<div class="noData" *ngIf="dataTag.noData">
 								<div class="image"><i class="icon200" label="search"></i></div>
-						<div class="description">{{translations?.common?.noSearchResults}}</div>
+								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataTag.loadMoreData">

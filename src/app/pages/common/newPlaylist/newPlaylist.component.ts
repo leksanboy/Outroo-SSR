@@ -54,7 +54,7 @@ export class NewPlaylistComponent implements OnInit {
 
 	imageLoad() {
 		this.cropperData = new Cropper(this.inputImage.nativeElement, {
-			viewMode: 3,
+			viewMode: 0,
 			aspectRatio: 1 / 1,
 			dragMode: 'move',
 			modal: true,
@@ -121,7 +121,7 @@ export class NewPlaylistComponent implements OnInit {
 						const imageB64 = this.cropperData.getCroppedCanvas({
 							width: 240,
 							height: 240,
-							fillColor: '#fff',
+							// fillColor: '#fff',
 							imageSmoothingEnabled: false,
 							imageSmoothingQuality: 'high'
 						}).toDataURL('image/jpeg');

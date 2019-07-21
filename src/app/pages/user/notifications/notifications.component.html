@@ -11,8 +11,8 @@
 
 				<div class="pageTitle">{{translations?.notifications?.title}}</div>
 
-				<ul class="notifications" *ngIf="dataNotifications.list">
-					<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status == 0, 'remove': x.addRemoveSession}">
+				<ul class="notifications" *ngIf="dataDefault.list">
+					<li mat-ripple *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'active': x.status == 0, 'remove': x.addRemoveSession}">
 						<a class="avatar" routerLink="/{{x.user.username}}">
 							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 						</a>
@@ -289,20 +289,20 @@
 					</li>
 				</ul>
 
-				<div class="loadingData" *ngIf="dataNotifications.loadingData">
+				<div class="loadingData" *ngIf="dataDefault.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataNotifications.noData">
+				<div class="noData" *ngIf="dataDefault.noData">
 					<div class="image"><i class="icon200" label="notifications"></i></div>
 					<div class="description">{{translations?.notifications?.noData}}</div>
 				</div>
 				
-				<div class="loadMore" *ngIf="dataNotifications.loadMoreData">
-					<button mat-fab (click)="default('more')" *ngIf="!dataNotifications.loadingMoreData">
+				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
+					<button mat-fab (click)="default('more')" *ngIf="!dataDefault.loadingMoreData">
 						<i label="add"></i>
 					</button>
-					<mat-progress-spinner mode="indeterminate" *ngIf="dataNotifications.loadingMoreData"></mat-progress-spinner>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
 				</div>
 			</div>
 		</div>

@@ -1,9 +1,9 @@
 <?php
-	// *Email sender
+	// Email sender service
 	require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
 
-	// Email Register "Welcome"
-	function emailWelcome($name, $email, $hash){
+	// Register "Welcome"
+	function emailWelcome($name, $email, $hash) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -102,8 +102,8 @@
 		$mail->Send();
 	}
 
-	// Email new login
-	function emailNewLogin($name, $email, $hash, $device, $location, $date){
+	// New login
+	function emailNewLogin($name, $email, $hash, $device, $location, $date) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -218,8 +218,8 @@
 		$mail->Send();
 	}
 
-	// Email forgot password
-	function emailForgotPassword($name, $email, $hash){
+	// Forgot password
+	function emailForgotPassword($name, $email, $hash) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -327,8 +327,8 @@
 		$mail->Send();
 	}
 
-	// Email reset password
-	function emailResetPassword($name, $email, $hash){
+	// Reset password
+	function emailResetPassword($name, $email, $hash) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -424,8 +424,8 @@
 		$mail->Send();
 	}
 
-	// Email support question
-	function emailSupportQuestion($email, $content){
+	// Support
+	function emailSupportQuestion($email, $content) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -541,8 +541,120 @@
 		$mail->Send();
 	}
 
-	// Email report
-	function emailReport($email, $content){
-		echo 'Working on!';
+	// Report
+	function emailReport($email, $content) {
+		$urlWeb = 'https://outroo.com/';
+		$nameWeb = 'Outroo';
+		$messageContent = '<div style="background-color:#fff">
+									<div id="left-align" dir="ltr" style="max-width:760px;margin:0 auto;">
+										<div id="main">
+											<div id="logo-row-box" style="width:95%;text-align:right;padding:5% 0;">
+												<a href="'.$urlWeb.'" style="outline:none" role="link" target="_blank">
+													<img id="logo-in-row-box" src="'.$urlWeb.'assets/images/icons/round/icon-72x72.png" style="display:inline-block;height:32px;width:32px">
+												</a>
+											</div>
+											<table id="message-body-wrapper" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+												<tbody>
+													<tr>
+														<td id="message-body">
+															<table id="paragraphs" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+																<tbody>
+																	<tr>
+																		<td id="title" style="padding:0 5% 24px;font:18px/12px Arial,Helvetica,sans-serif;font-weight:bold;text-transform:uppercase;color:#333">
+																			Report
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																			Hello, recently we received a report from this email <b>'.$email.'</b> in Support.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																			We send you the copy of the report.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																			"<b>'.$content.'</b>"
+																		</td>
+																	</tr>
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																			We will respond to your request as soon as possible.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#999">
+																			If you haven\'t done this action, your email has been compromised,
+																			do not leave your email in third-party pages.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#999">
+																			If you have any question, please
+																			<a href="'.$urlWeb.'support" style="color:#09f;text-decoration:none" role="link" target="_blank">
+																				contact us
+																			</a>
+																			.
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<footer style="width:100%; margin: 0;">
+											<table id="footer-paragraphs" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+												<tbody>
+													<tr>
+														<td id="footer-links" style="padding:12px 0 0;text-align:center;font:12px/15px Arial,Helvetica,sans-serif;color:#999">
+															<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+																About
+															</a>
+															<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+																Privacy
+															</a>
+															<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+																Support
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td id="copyright-cell" style="padding:6px 0 0;margin-bottom:0;text-align:center;font:11px/15px Arial,Helvetica,sans-serif;;font-weight:bold;color:#999">
+															© '.date("Y").' '.$nameWeb.'
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</footer>
+									</div>
+								</div>';
+
+		$mail = new PHPMailer();
+		$mail->isSMTP(true); // telling the class to use SMTP
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
+		$mail->SMTPSecure = 'tls';
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 587;
+		$mail->SMTPAuth = true;
+		$mail->Username = 'noreply.outhroo@gmail.com';
+		$mail->Password = 'Rafalskyy1991';
+		$mail->setFrom('noreply.outhroo@gmail.com');
+		$mail->FromName = $nameWeb;
+		$mail->AddAddress($email);
+		$mail->Subject = "Report";
+		$mail->IsHTML(true);
+		$mail->Body = $messageContent;
+		$mail->Send();
 	}
 ?>

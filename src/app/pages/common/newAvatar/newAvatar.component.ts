@@ -37,33 +37,18 @@ export class NewAvatarComponent implements OnInit {
 	}
 
 	imageLoad() {
-		if (this.data.comeFrom === 'avatar') {
-			this.cropperData = new Cropper(this.input.nativeElement, {
-				viewMode: 3,
-				aspectRatio: 1 / 1,
-				dragMode: 'move',
-				modal: true,
-				guides: true,
-				highlight: true,
-				background: true,
-				autoCrop: true,
-				autoCropArea: 0.7,
-				responsive: true
-			});
-		} else if (this.data.comeFrom === 'background') {
-			this.cropperData = new Cropper(this.input.nativeElement, {
-				viewMode: 3,
-				aspectRatio: 192 / 64,
-				dragMode: 'move',
-				modal: true,
-				guides: true,
-				highlight: true,
-				background: true,
-				autoCrop: true,
-				autoCropArea: 0.7,
-				responsive: true
-			});
-		}
+		this.cropperData = new Cropper(this.input.nativeElement, {
+			viewMode: 0,
+			aspectRatio: 1 / 1,
+			dragMode: 'move',
+			modal: true,
+			guides: true,
+			highlight: true,
+			background: true,
+			autoCrop: true,
+			autoCropArea: 0.7,
+			responsive: true
+		});
 	}
 
 	cropperFunctions(type) {
@@ -95,7 +80,7 @@ export class NewAvatarComponent implements OnInit {
 				const imageBase64 = this.cropperData.getCroppedCanvas({
 					width: 320,
 					height: 320,
-					fillColor: '#fff',
+					// fillColor: '#fff',
 					imageSmoothingEnabled: false,
 					imageSmoothingQuality: 'high'
 				}).toDataURL('image/jpeg');

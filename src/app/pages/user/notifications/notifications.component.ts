@@ -21,10 +21,6 @@ import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 
 declare var global: any;
 
-// - Una vez logado que no entre en signup/confirmEmail/recoverPassowrd/etc...
-// - Ha compartido una playlist desde canciones
-// - Te ha enviado un mensaje
-
 @Component({
 	selector: 'app-notifications',
 	templateUrl: './notifications.component.html',
@@ -35,12 +31,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
-	public dataNotifications: any = [];
-	public dataChats: any = [];
+	public dataDefault: any = [];
 	public data: any = {
 		selectedIndex: 0
 	};
-	public activeShare: any;
 	public activeLanguage: any;
 	public audioPlayerData: any = [];
 
@@ -78,27 +72,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.userDataService.analytics(url);
 
 			// Load default
-			this.default('default');
+			const localStotageData = this.userDataService.getLocalStotage('notificationsPage');
+			if (localStotageData) {
+				this.dataDefault = localStotageData;
+			} else {
+				this.default('default');
+			}
 		} else {
 			this.userDataService.noSessionData();
 		}
-
-		// Get Share
-		this.activeShare = this.sessionService.getDataShowShare()
-			.subscribe(data => {
-				// Check if is new chat with content
-				if (data.close) {
-					if (data.new && data.list.length > 0) {
-						this.dataChats.list.unshift(data);
-					} else if (data.list.length > 0) {
-						for (const i in this.dataChats.list) {
-							if (this.dataChats.list[i].id === data.item.id) {
-								this.dataChats.list[i].last = data.last;
-							}
-						}
-					}
-				}
-			});
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
@@ -114,7 +96,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.dataNotifications.list.length > 0) {
+				if (this.dataDefault.list.length > 0) {
 					this.default('more');
 				}
 			}
@@ -126,7 +108,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.activeShare.unsubscribe();
 		this.activeLanguage.unsubscribe();
 	}
 
@@ -147,7 +128,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Default
 	default(type) {
 		if (type === 'default') {
-			this.dataNotifications = {
+			this.dataDefault = {
 				list: [],
 				rows: 0,
 				loadingData: true,
@@ -159,18 +140,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 			const data = {
 				type: 'default',
-				rows: this.dataNotifications.rows,
+				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
 			};
 
 			this.notificationsDataService.default(data)
 				.subscribe((res: any) => {
-					this.dataNotifications.loadingData = false;
+					this.dataDefault.loadingData = false;
 
 					if (!res || res.length === 0) {
-						this.dataNotifications.noData = true;
+						this.dataDefault.noData = true;
 					} else {
-						this.dataNotifications.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
@@ -180,31 +161,33 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						this.dataNotifications.list = res;
+						this.dataDefault.list = res;
 						this.sessionService.setPendingNotifications('refresh');
 					}
 
 					if (!res || res.length < this.env.cuantity) {
-						this.dataNotifications.noMore = true;
+						this.dataDefault.noMore = true;
 					}
+
+					this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 				}, error => {
-					this.dataNotifications.loadingData = false;
+					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type === 'more' && !this.dataNotifications.noMore && !this.dataNotifications.loadingMoreData) {
-			this.dataNotifications.loadingMoreData = true;
-			this.dataNotifications.rows++;
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+			this.dataDefault.loadingMoreData = true;
+			this.dataDefault.rows++;
 
 			const data = {
-				rows: this.dataNotifications.rows,
+				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
 			};
 
 			this.notificationsDataService.default(data)
 				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataNotifications.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataNotifications.loadingMoreData = false;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataDefault.loadingMoreData = false;
 
 						// Push items
 						if (!res || res.length > 0) {
@@ -214,7 +197,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 										res[i].status = 1;
 									}, 1800);
 
-									this.dataNotifications.list.push(res[i]);
+									this.dataDefault.list.push(res[i]);
 								}
 							}
 						}
@@ -222,11 +205,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.sessionService.setPendingNotifications('refresh');
 
 						if (!res || res.length < this.env.cuantity) {
-							this.dataNotifications.noMore = true;
+							this.dataDefault.noMore = true;
 						}
+
+						this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 					}, 600);
 				}, error => {
-					this.dataNotifications.loadingData = false;
+					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
@@ -286,6 +271,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.followUnfollow(data).subscribe();
 		}
+
+		this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 	}
 
 	// Show photo from url if is one
@@ -312,6 +299,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				};
 
 				this.notificationsDataService.addRemove(dataAddRemove).subscribe();
+
+				this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 				break;
 			case 'report':
 				item.type = 'notification';

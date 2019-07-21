@@ -421,4 +421,21 @@ export class UserDataService {
 				return res;
 			}));
 	}
+
+	setLocalStotage(name, data) {
+		if (this.ssrService.isBrowser) {
+			this.window.localStorage.setItem(name, JSON.stringify(data));
+		}
+	}
+
+	getLocalStotage(name) {
+		if (this.ssrService.isBrowser) {
+			if (this.window.localStorage) {
+				const data = this.window.localStorage.getItem(name);
+				return JSON.parse(data);
+			} else {
+				return null;
+			}
+		}
+	}
 }

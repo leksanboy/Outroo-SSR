@@ -72,14 +72,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 		// Data
 		if (this.sessionData) {
 			// Set title
-			this.titleService.setTitle(this.translations.settings.title);
+			this.titleService.setTitle(this.translations.news.title);
 
 			// Set Google analytics
 			const url = '[' + this.sessionData.current.id + ']/news';
 			this.userDataService.analytics(url);
-
-			// Load default
-			this.default('default');
 
 			// Redirected hashtag
 			const urlData: any = this.activatedRoute.snapshot;
@@ -87,6 +84,14 @@ export class NewsComponent implements OnInit, OnDestroy {
 				this.data.newSearchCaption = urlData.params.name;
 				this.data.selectedIndex = 2;
 				this.search('default');
+			} else {
+				// Load default
+				const localStotageData = this.userDataService.getLocalStotage('newsPage');
+				if (localStotageData) {
+					this.dataDefault = localStotageData;
+				} else {
+					this.default('default');
+				}
 			}
 		} else {
 			this.userDataService.noSessionData();
@@ -318,6 +323,8 @@ export class NewsComponent implements OnInit, OnDestroy {
 					if (!res || res.length < this.env.cuantity * 3) {
 						this.dataDefault.noMore = true;
 					}
+
+					this.userDataService.setLocalStotage('newsPage', this.dataDefault);
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -354,6 +361,8 @@ export class NewsComponent implements OnInit, OnDestroy {
 						if (!res || res.length < this.env.cuantity * 3) {
 							this.dataDefault.noMore = true;
 						}
+
+						this.userDataService.setLocalStotage('newsPage', this.dataDefault);
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;

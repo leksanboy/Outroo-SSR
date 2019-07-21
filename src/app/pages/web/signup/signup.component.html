@@ -22,10 +22,10 @@
 								<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
 								<div class="validators">
 									<div class="done" *ngIf="validatorUsername == 'done'">
-										<i class="icon75 blue" label="validator-check"></i>
+										<i class="icon75 blue" label="check"></i>
 									</div>
 									<div class="bad" *ngIf="validatorUsername == 'bad'">
-										<i class="icon75 red" label="validator-clear"></i>
+										<i class="icon75 red" label="clear"></i>
 									</div>
 									<div class="load" *ngIf="validatorUsername == 'load'">
 										<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -43,10 +43,10 @@
 								<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
 								<div class="validators">
 									<div class="done" *ngIf="validatorEmail == 'done'">
-										<i class="icon75 blue" label="validator-check"></i>
+										<i class="icon75 blue" label="check"></i>
 									</div>
 									<div class="bad" *ngIf="validatorEmail == 'bad'">
-										<i class="icon75 red" label="validator-clear"></i>
+										<i class="icon75 red" label="clear"></i>
 									</div>
 									<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
 								</div>
@@ -70,7 +70,7 @@
 							<div class="buttons">
 								<button mat-raised-button type="submit" [disabled]="submitLoading">
 									<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-									{{translations?.common?.submit}}
+									{{translations?.common?.signUp}}
 								</button>
 							</div>
 						</form>

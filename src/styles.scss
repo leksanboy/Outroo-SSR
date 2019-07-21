@@ -167,24 +167,12 @@ body{
 			mask-position: -24px -528px;
 		}
 
-		&[label="refresh-page"]{
-			mask-position: 0 -480px;
-		}
-
 		&[label="visibility"]{
 			mask-position: 0 -216px;
 
 			&.active{
 				mask-position: -24px -216px;
 			}
-		}
-
-		&[label="validator-check"]{
-			mask-position: 0 -528px;
-		}
-
-		&[label="validator-clear"]{
-			mask-position: -24px -528px;
 		}
 
 		&[label="send-comment"]{
@@ -324,11 +312,6 @@ body{
 			mask-position: 0 -120px;
 		}
 
-		&[label="more-mini"]{
-			background-color: $greyColor;
-			mask-position: 0 -100px;
-		}
-
 		&[label="menu"]{
 			mask-position: 0 -600px;
 		}
@@ -447,7 +430,7 @@ body{
 			line-height: 0 !important;
 			display: block !important;
 
-			.mat-button-wrapper {
+			.mat-button-wrapper{
 				padding: 0 !important;
 			}
 		}
@@ -1394,7 +1377,7 @@ body{
 					width: 12px !important;
 					margin: 0 auto;
 
-					svg {
+					svg{
 						height: 12px !important;
 						width: 12px !important;
 
@@ -1410,13 +1393,21 @@ body{
 			height: inherit;
 			margin: 0;
 
-			.mat-form-field-wrapper {
+			.mat-form-field-wrapper{
 				padding: 24px 0 0;
 				margin: 0;
 
 				.mat-form-field-flex{
 					.mat-form-field-outline{
 						color: $greyColor;
+
+						.mat-form-field-outline-start{
+							border-radius: 10px 0 0 10px;
+						}
+
+						.mat-form-field-outline-end{
+							border-radius: 0 10px 10px 0;
+						}
 					}
 				}
 			}
@@ -2135,7 +2126,7 @@ body{
 							height: 36px !important;
 							width: 36px !important;
 
-							svg {
+							svg{
 								filter: drop-shadow($shadowText1);
 								height: 36px !important;
 								width: 36px !important;
@@ -2279,7 +2270,7 @@ body{
 							height: 36px !important;
 							width: 36px !important;
 
-							svg {
+							svg{
 								filter: drop-shadow($shadowText1);
 								height: 36px !important;
 								width: 36px !important;
@@ -2363,7 +2354,7 @@ body{
 			width: 36px !important;
 			margin: 0 auto;
 
-			svg {
+			svg{
 				height: 36px !important;
 				width: 36px !important;
 
@@ -2403,7 +2394,7 @@ body{
 			width: 52px !important;
 			margin: 0 auto;
 
-			svg {
+			svg{
 				height: 52px !important;
 				width: 52px !important;
 
@@ -2448,21 +2439,24 @@ body{
 					text-transform: uppercase;
 					display: initial;
 
-					* + * {
+					* + *{
 						margin-top: 0;
 					}
 					
-					.digit-con {
+					.digit-con{
 						display: inline-block;
 						vertical-align: top;
 						overflow: hidden;
-						height: 48px;
+						height: 58px;
+						line-height: 58px;
 
-						span {
+						span{
 							position: relative;
 							text-align: center;
 							display: block;
+							height: 58px;
 							top: 0;
+							line-height: 58px;
 						}
 					}
 				}
@@ -2585,7 +2579,7 @@ body{
 								margin: 10px 6px 0 0;
 								float: left;
 
-								svg {
+								svg{
 									height: 16px !important;
 									width: 16px !important;
 
@@ -3371,7 +3365,7 @@ body{
 										height: 36px !important;
 										width: 36px !important;
 
-										svg {
+										svg{
 											filter: drop-shadow($shadowText1);
 											height: 36px !important;
 											width: 36px !important;
@@ -3428,7 +3422,7 @@ body{
 											height: 36px !important;
 											width: 36px !important;
 
-											svg {
+											svg{
 												filter: drop-shadow($shadowText1);
 												height: 36px !important;
 												width: 36px !important;
@@ -4526,7 +4520,7 @@ body{
 						margin: 6px 6px 0 0;
 						float: left;
 
-						svg {
+						svg{
 							height: 16px !important;
 							width: 16px !important;
 
@@ -4662,7 +4656,7 @@ body{
 								margin: 10px 6px 0 0;
 								float: left;
 
-								svg {
+								svg{
 									height: 16px !important;
 									width: 16px !important;
 
@@ -4728,7 +4722,7 @@ body{
 				}
 
 				mat-progress-spinner{
-					svg {
+					svg{
 						circle{
 							stroke: $whiteColor !important;
 						}
@@ -5159,7 +5153,7 @@ body{
 						.data{
 							box-sizing: border-box;
 							position: relative;
-							padding: 24px 12px;
+							padding: 28px 18px;
 							max-width: 220px;
 							min-width: 120px;
 							float: left;
@@ -5177,6 +5171,7 @@ body{
 								overflow: hidden;
 								text-align: left;
 								font-size: 18px;
+								display: flex;
 								width: 100%;
 							}
 
@@ -5228,7 +5223,7 @@ body{
 									margin: 0 12px 0 0;
 
 									&.mat-checked:not(.mat-disabled){
-										.mat-slide-toggle-bar {
+										.mat-slide-toggle-bar{
 											background-color: $greyColor;
 										}
 
@@ -5483,6 +5478,7 @@ body{
 							width: 100%;
 							float: left;
 							padding: 0;
+							margin: 0;
 
 							.image{
 								border-radius: 50%;
@@ -5533,7 +5529,7 @@ body{
 								display: inline-block;
 								margin: 0 0 -2px 0;
 
-								svg {
+								svg{
 									height: 16px !important;
 									width: 16px !important;
 
@@ -5559,7 +5555,7 @@ body{
 								margin: 10px 6px 0 0;
 								float: left;
 
-								svg {
+								svg{
 									height: 16px !important;
 									width: 16px !important;
 
@@ -5571,7 +5567,7 @@ body{
 						}
 					}
 
-					.image{
+					.asset{
 						border: 1px solid transparentize($greyColor, .75);
 						width: calc(100% - 36px);
 						box-sizing: border-box;
@@ -5622,7 +5618,7 @@ body{
 									margin: 10px 6px 0 0;
 									float: left;
 
-									svg {
+									svg{
 										height: 16px !important;
 										width: 16px !important;
 
@@ -6211,87 +6207,24 @@ body{
 					}
 
 					ul.people{
-						float: left;
-						width: 100%;
-						padding: 0;
-						margin: 0;
-
 						li{
-							box-sizing: border-box;
-							position: relative;
-							padding: 4px 18px;
-							list-style: none;
-							margin: 0 0 4px;
-							display: flex;
-							float: left;
-							width: 100%;
-
-							.inner{
+							.type{
+								align-items: center;
 								display: flex;
 								width: 100%;
-								
-								.avatar{
-									box-sizing: border-box;
-									border-radius: 50%;
-									overflow: hidden;
-									min-width: 40px;
-									margin: 4px 0;
-									height: 40px;
-									width: 40px;
+							}
 
-									img{
-										height: 100%;
-										width: 100%;
-									}
-
-									&.tag{
-										background-color: $fontBlackColor;
-										color: $whiteColor;
-										text-align: center;
-										line-height: 40px;
-										font-weight: bold;
-										font-size: 24px;
-									}
-								}
-
-								.text{
-									box-sizing: border-box;
-									padding: 6px 12px;
-									width: 100%;
-
-									.username{
-										word-break: break-all;
-										position: relative;
-										font-weight: bold;
-										line-height: 18px;
-										height: 18px;
-									}
-
-									.name{
-										word-break: break-word;
-										color: $greyColor;
-										font-size: 14px;
-										float: left;
-									}
-								}
-
-								.actions{
-									height: 48px;
-
-									button{
-										line-height: 32px;
-										padding: 0 12px;
-										margin: 7px 0;
-										min-width: 0;
-										height: 32px;
-
-										&.active{
-											background-color: $blueColor;
-											border-color: $blueColor;
-											color: $whiteColor;
-										}
-									}
-								}
+							.tag{
+								border: 1px solid currentColor;
+								color: currentColor;
+								text-align: center;
+								border-radius: 50%;
+								line-height: 40px;
+								font-weight: 700;
+								font-size: 20px;
+								min-width: 40px;
+								height: 40px;
+								width: 40px;
 							}
 						}
 					}
@@ -6508,7 +6441,7 @@ body{
 						margin: 12px 0;
 						width: 100%;
 
-						.card {
+						.card{
 							display: inline-block;
 							background: grey;
 							margin: 0 6px;
@@ -6683,7 +6616,7 @@ body{
 									margin: 8px 6px 0 0;
 									float: left;
 
-									svg {
+									svg{
 										height: 16px !important;
 										width: 16px !important;
 
@@ -6902,7 +6835,7 @@ body{
 			button{
 				color: $whiteColor;
 				
-				&.mat-menu-item-submenu-trigger::after {
+				&.mat-menu-item-submenu-trigger::after{
 					color: $whiteColor;
 				}
 			}
@@ -7034,13 +6967,6 @@ body{
 				}
 			}
 
-			.pageNews{
-				.content ul.people li .inner .avatar.tag{
-					background-color: $whiteColor;
-					color: $fontBlackColor;
-				}
-			}
-
 			.pageSettings{
 				.content{
 					.form{
@@ -7050,7 +6976,7 @@ body{
 								color: $fontBlackColor;
 
 								mat-progress-spinner{
-									svg {
+									svg{
 										circle{
 											stroke: $fontBlackColor;
 										}
@@ -7894,7 +7820,7 @@ body{
 								width: 0;
 								top: 1px;
 
-								&:before {
+								&:before{
 									content: '';
 									border-bottom: 11px solid $whiteColor;
 									border-right: 13px solid transparent;
@@ -7907,7 +7833,7 @@ body{
 									width: 0;
 								}
 
-								&:after {
+								&:after{
 									content: '';
 									border-bottom: 1px solid currentColor;
 									background-color: $whiteColor;
@@ -8020,7 +7946,7 @@ body{
 								width: 24px !important;
 								margin: 0 auto;
 
-								svg {
+								svg{
 									height: 24px !important;
 									width: 24px !important;
 
@@ -8051,7 +7977,7 @@ body{
 								top: 3px;
 							}
 
-							&:after {
+							&:after{
 								content: '';
 								border-bottom: solid $iconWidth $whiteColor;
 								border-top: solid $iconWidth currentColor;
@@ -8070,7 +7996,7 @@ body{
 								left: 8px;
 								bottom: 0;
 
-								&:before {
+								&:before{
 									content: '';
 									border: solid $iconWidth currentColor;
 									box-sizing: border-box;
@@ -8082,7 +8008,7 @@ body{
 									top: -16px;
 								}
 
-								&:after {
+								&:after{
 									content: '';
 									background-color: $whiteColor;
 									position: absolute;
@@ -8140,7 +8066,7 @@ body{
 								}
 
 								.roof{
-									&:after {
+									&:after{
 										background-color: currentColor;
 									}
 
@@ -8608,7 +8534,7 @@ body{
 								color: $blueColor;
 							}
 
-							.username{
+							.user{
 								color: transparentize($blueColor, .25);
 							}
 						}
@@ -8628,7 +8554,7 @@ body{
 							word-break: break-all;
 						}
 
-						.username{
+						.user{
 							word-break: break-word;
 							white-space: pre-line;
 							color: $greyColor;
