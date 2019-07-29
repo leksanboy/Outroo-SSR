@@ -1369,21 +1369,17 @@ body{
 				margin: -15px 6px 0;
 			}
 
-			.load{
-				margin: 3px 2px 0;
+			mat-progress-spinner{
+				height: 12px !important;
+				width: 12px !important;
+				margin: 3px auto 0;
 
-				mat-progress-spinner{
+				svg{
 					height: 12px !important;
 					width: 12px !important;
-					margin: 0 auto;
 
-					svg{
-						height: 12px !important;
-						width: 12px !important;
-
-						circle{
-							stroke: $blueColor !important;
-						}
+					circle{
+						stroke: $blueColor !important;
 					}
 				}
 			}
@@ -3932,16 +3928,6 @@ body{
 							max-height: 84px;
 						}
 
-						.username{
-							word-break: break-all;
-							position: relative;
-							font-weight: bold;
-							line-height: 18px;
-							height: 18px;
-							float: left;
-							width: 100%;
-						}
-
 						.button{
 							float: left;
 
@@ -4529,6 +4515,10 @@ body{
 							}
 						}
 					}
+
+					&[disabled]{
+						background-color: $greyColor;
+					}
 				}
 
 				&.newChatComment{
@@ -4646,10 +4636,6 @@ body{
 						width: 50%;
 
 						button{
-							&[disabled]{
-								background-color: $greyColor;
-							}
-
 							mat-progress-spinner{
 								height: 16px !important;
 								width: 16px !important;

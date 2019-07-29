@@ -18,13 +18,17 @@
 						<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
 					</a>
 
-					<div class="username">
-						<div class="data">
-							<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-							<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-							<div class="date"></div>
+					<div class="text">
+						<div class="username">
+							<div class="data">
+								<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							</div>
 						</div>
-						<div class="info">{{x.user.name}}</div>
+
+						<div class="container">
+							{{x.user.name}}
+						</div>
 					</div>
 
 					<div class="actions" *ngIf="x.user.id != sessionData.current.id">

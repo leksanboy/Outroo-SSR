@@ -21,15 +21,9 @@
 							<mat-form-field>
 								<input type="text" matInput placeholder="{{translations?.signUp?.username}}" #Username maxlength="100" formControlName="username">
 								<div class="validators">
-									<div class="done" *ngIf="validatorUsername == 'done'">
-										<i class="icon75 blue" label="check"></i>
-									</div>
-									<div class="bad" *ngIf="validatorUsername == 'bad'">
-										<i class="icon75 red" label="clear"></i>
-									</div>
-									<div class="load" *ngIf="validatorUsername == 'load'">
-										<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-									</div>
+									<i class="icon75 blue" label="check" *ngIf="validatorUsername == 'done'"></i>
+									<i class="icon75 red" label="close" *ngIf="validatorUsername == 'bad'"></i>
+									<mat-progress-spinner mode="indeterminate" *ngIf="validatorUsername == 'load'"></mat-progress-spinner>
 								</div>
 								<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
 							</mat-form-field>
@@ -42,13 +36,9 @@
 							<mat-form-field>
 								<input type="email" matInput placeholder="{{translations?.signUp?.email}}" #Email maxlength="100" formControlName="email">
 								<div class="validators">
-									<div class="done" *ngIf="validatorEmail == 'done'">
-										<i class="icon75 blue" label="check"></i>
-									</div>
-									<div class="bad" *ngIf="validatorEmail == 'bad'">
-										<i class="icon75 red" label="clear"></i>
-									</div>
-									<div class="load" *ngIf="validatorEmail == 'load'"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
+									<i class="icon75 blue" label="check" *ngIf="validatorEmail == 'done'"></i>
+									<i class="icon75 red" label="close" *ngIf="validatorEmail == 'bad'"></i>
+									<mat-progress-spinner mode="indeterminate" *ngIf="validatorEmail == 'load'"></mat-progress-spinner>
 								</div>
 								<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
 							</mat-form-field>

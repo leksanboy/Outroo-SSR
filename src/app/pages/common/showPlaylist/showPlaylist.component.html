@@ -21,12 +21,12 @@
 			<div class="right">
 				<div class="title" [style.color]="data.current.color">
 					{{data.current.title}}
-					<i label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
+					<i class="icon50 white" label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
 				</div>
 				
 				<a class="username" *ngIf="data.current.user" routerLink="/{{data.current.user.username}}">
 					@{{data.current.user.username}}
-					<i *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+					<i class="icon50 blue" label="official" *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 				</a>
 				
 				<div class="button">
