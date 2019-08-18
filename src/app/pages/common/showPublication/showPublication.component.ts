@@ -231,7 +231,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 'p/' + item.name;
@@ -243,7 +243,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				break;
 			case 'messageSong':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTabSong':
 				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);

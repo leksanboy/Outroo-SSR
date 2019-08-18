@@ -78,8 +78,8 @@ export class NewAvatarComponent implements OnInit {
 				break;
 			case 'crop':
 				const imageBase64 = this.cropperData.getCroppedCanvas({
-					width: 320,
-					height: 320,
+					width: 400,
+					height: 400,
 					// fillColor: '#fff',
 					imageSmoothingEnabled: false,
 					imageSmoothingQuality: 'high'

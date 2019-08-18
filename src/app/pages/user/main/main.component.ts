@@ -121,16 +121,15 @@ export class MainComponent implements OnInit, OnDestroy {
 					}
 
 					// Set Google analytics
-					const url = '[' + this.userData.id + ']/main';
-					this.userDataService.analytics(url);
+					const url = this.userData.username;
+					const title = this.userData.name;
+					const userId = this.userData.id;
+					this.userDataService.analytics(url, title, userId);
 
 					// Data following/visitor
 					const data = {
 						receiver: this.userData.id
 					};
-
-					// Set visitor
-					this.userDataService.setVisitor(data).subscribe();
 
 					// Get publications
 					this.default('default', this.userData.username);
@@ -306,7 +305,13 @@ export class MainComponent implements OnInit, OnDestroy {
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;
-						this.dataDefault.list = res;
+
+						for (const i in res) {
+							if (i) {
+								res[i].contentLimit = this.env.contentLengthLimit;
+								this.dataDefault.list.push(res[i]);
+							}
+						}
 					}
 
 					if (!res || res.length < this.env.cuantity) {
@@ -389,7 +394,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 'p/' + item.name;
@@ -401,7 +406,7 @@ export class MainComponent implements OnInit, OnDestroy {
 				break;
 			case 'messageSong':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTabSong':
 				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
@@ -494,7 +499,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			break;
 			case('share'):
 				item.comeFrom = 'share';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 			break;
 		}
 	}

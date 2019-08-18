@@ -208,6 +208,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 				}, false);
 
 				ajax.open('POST', './assets/api/publications/uploadFiles.php');
+				ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
 				ajax.send(formdata);
 			};
 

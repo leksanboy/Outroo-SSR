@@ -16,7 +16,7 @@ export class SessionService {
 	private subjectReport = new Subject<any>();
 	private subjectSetData = new Subject<any>();
 	private subjectShowMessage = new Subject<any>();
-	private subjectShowShare = new Subject<any>();
+	private subjectNewShare = new Subject<any>();
 	private subjectShowAvatar = new Subject<any>();
 	private subjectShowLikes = new Subject<any>();
 	private subjectShowPhoto = new Subject<any>();
@@ -120,12 +120,12 @@ export class SessionService {
 		return this.subjectShowMessage.asObservable();
 	}
 
-	setDataShowShare(data: any) {
-		this.subjectShowShare.next(data);
+	setDataNewShare(data: any) {
+		this.subjectNewShare.next(data);
 	}
 
-	getDataShowShare(): Observable<any> {
-		return this.subjectShowShare.asObservable();
+	getDataNewShare(): Observable<any> {
+		return this.subjectNewShare.asObservable();
 	}
 
 	setDataShowAvatar(data: any) {

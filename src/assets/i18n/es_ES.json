@@ -8,12 +8,11 @@
 		"fresh": "Novedades",
 		"chooseFiles": "Subir canciones",
 		"maxSizePerFile": "Canciones · Tamaño maximo por archivo 20 Mb",
-		"play": "Reproduciir",
+		"play": "Reproducir",
 		"pause": "Pausar",
 		"playlist": "Lista de reproducción",
 		"removeCover": "Eliminar portada",
 		"addCoverToPlaylist": "Añadir portada (opcional)",
-		"createPlaylist": "Crear lista de reproducción",
 		"uploadOrSearch": "Sube o busca alguna canción",
 		"goAudios": "Ir a mis canciones"
 	},
@@ -33,7 +32,7 @@
 	"main": {
 		"title": "Perfil",
 		"noData": "No hay publicaciones",
-		"newPublication": "Crear nueva publicación",
+		"newPublication": "Crear publicación",
 		"newPublicationSubtitle": "Canciones / Gif / Fotos / Videos",
 		"registerText": {
 			"one": "Registrate en Outroo",
@@ -118,7 +117,12 @@
 		"passwordsNotMatch": "Contraseña nueva no coincide con la contraseña de confirmación",
 		"english": "Ingles",
 		"spanish": "Español",
-		"russian": "Ruso"
+		"russian": "Ruso",
+		"themes": {
+			"white": "Predeterminado",
+			"blue": "Claro oscuro",
+			"black": "Oscuro"
+		}
 	},
 	"song": {
 		"title": "Canción",
@@ -295,7 +299,7 @@
 		"forgotPassword": "¿Has olvidado tu contraseña?",
 		"sendMessage": "Enviar mensaje",
 		"copyLink": "Copiar URL",
-		"createPlaylist": "Crear lista de reproducción",
+		"create": "Crear",
 		"ok": "OK",
 		"add": "Añadir",
 		"remove": "Eliminar",
@@ -353,8 +357,7 @@
 		"createdSuccessfully": "Creado con éxito",
 		"savedSuccessfully": "Guardado con éxito",
 		"accountChangedTo": "Has cambiada la cuenta a",
-		"darkThemeEnabled": "Tema oscuro habilitado",
-		"darkThemeDisabled": "Tema oscuro deshabilitado",
+		"themeEnabled": "Tema habilitado",
 		"privateEnabled": "Cuenta privada habilitada",
 		"privateDisabled": "Cuenta privada deshabilitada",
 		"languageChanged": "Has cambiado el idioma",
@@ -370,6 +373,9 @@
 		"loadComments": "Cargar comentarios",
 		"incorrectCredentials": "Las credenciales no son válidas",
 		"emailNotExist": "El correo electrónico no existe",
-		"fieldsNotMatch": "Los campos no coinciden"
+		"fieldsNotMatch": "Los campos no coinciden",
+		"more": "más",
+		"addSomeSongsToPlaylist": "Añade alguna canción a la lista de reproducción",
+		"createPlaylist": "Crear lista de reproducción"
 	}
 }

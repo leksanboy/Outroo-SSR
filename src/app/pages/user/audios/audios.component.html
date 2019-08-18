@@ -31,12 +31,12 @@
 							<div class="uploadFilesBox" *ngIf="userData?.id == sessionData?.current?.id">
 								<div class="button">
 									<button mat-raised-button (click)="uploadFile.click()" [disabled]="!dataFiles.actions">
-										<div class="left" [ngClass]="{'warning': dataFiles.list.length > 9}">
+										<div class="left" [ngClass]="{'warning': dataFiles.list.length > dataFiles.max}">
 											<i label="cloud"></i>
 										</div>
 										<div class="right">
 											<div class="top">
-												{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/9
+												{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}
 											</div>
 											<div class="bottom">
 												{{translations?.audios?.maxSizePerFile}}
@@ -82,7 +82,7 @@
 										<button mat-raised-button (click)="uploadFiles(2, $event)">
 											{{translations?.common?.cancel}}
 										</button>
-										<button mat-raised-button [disabled]="dataFiles.list.length > 9 || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
+										<button mat-raised-button [disabled]="dataFiles.list.length > dataFiles.max || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
 											{{translations?.common?.upload}}
 										</button>
 									</div>
@@ -109,7 +109,7 @@
 									</div>
 								</div>
 								
-								<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.addRemoveSession}">
+								<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removeType === 'remove'}">
 									<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
 										<div class="img" [ngStyle]="{'background-image': 'url(' + data.path + 'covers/' + x.image + ')'}"></div>
 

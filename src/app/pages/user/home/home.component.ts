@@ -71,12 +71,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.translations.feed.title);
-
 			// Set Google analytics
-			const url = '[' + this.sessionData.current.id + ']/home';
-			this.userDataService.analytics(url);
+			const url = 'home';
+			const title = this.translations.feed.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Load default
 			this.default('default', this.sessionData.current.id);
@@ -207,6 +209,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 						for (const i in res) {
 							if (i) {
+								res[i].contentLimit = this.env.contentLengthLimit;
 								this.dataDefault.list.push(res[i]);
 
 								// Push ad
@@ -301,7 +304,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 'p/' + item.name;
@@ -313,7 +316,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				break;
 			case 'messageSong':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTabSong':
 				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
@@ -399,7 +402,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			break;
 			case('share'):
 				item.comeFrom = 'share';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 			break;
 		}
 	}

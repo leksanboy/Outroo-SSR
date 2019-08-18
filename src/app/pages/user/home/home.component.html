@@ -29,7 +29,7 @@
 									<mat-divider *ngIf="x?.user?.id == sessionData?.current?.id"></mat-divider>
 									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
-								
+
 								<mat-menu #menuShareSocial="matMenu">
 									<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
 									<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
@@ -86,8 +86,9 @@
 								</swiper>
 							</div>
 
-							<div class="innerContent">
-								<div class="textContainer" *ngIf="x?.content" [innerHTML]="x?.content | safeHtml"></div>
+							<div class="innerContent" *ngIf="x?.content">
+								<div class="textContainer" [innerHTML]="x?.content | slice:0:x?.contentLimit | safeHtml"></div>
+								<span class="more" *ngIf="x?.content.length > 300 && !x?.contentMore" (click)="x.contentLimit = -1; x.contentMore = true">... {{translations?.common?.more}}</span>
 							</div>
 
 							<div class="audios" *ngIf="x?.audios">

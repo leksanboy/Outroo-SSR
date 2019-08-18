@@ -12,10 +12,6 @@
 				<div class="pageTitle">{{translations?.support?.title}}</div>
 
 				<span *ngIf="pageStatus == 'default'">
-					<div class="title">
-						{{translations?.support?.title}}
-					</div>
-
 					<div class="context">
 						{{translations?.support?.defaultText?.one}}
 						<br>
@@ -34,7 +30,7 @@
 
 							<mat-form-field class="textarea">
 								<textarea matInput  
-								placeholder="{{translations?.support?.typeHere}}" 
+								placeholder="{{translations?.support?.reportDescription}}" 
 								#Content 
 								maxlength="1000" 
 								formControlName="content"

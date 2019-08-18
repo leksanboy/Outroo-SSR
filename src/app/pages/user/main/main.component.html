@@ -28,8 +28,12 @@
 								</div>
 
 								<div class="button">
+									<button mat-icon-button type="button" routerLink="/settings" *ngIf="userData?.id == sessionData?.current?.id">
+										<i class="icon85" label="settings"></i>
+									</button>
+
 									<button mat-icon-button [matMenuTriggerFor]="options">
-										<i class="grey" label="more"></i>
+										<i label="more"></i>
 									</button>
 									
 									<mat-menu #options="matMenu">
@@ -44,12 +48,12 @@
 						</div>
 					</div>
 
-					<div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
+					<!-- <div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
 						<button mat-button type="button" routerLink="/settings">
 							<i class="icon65 grey" label="settings"></i>
 							{{translations?.settings?.title}}
 						</button>
-					</div>
+					</div> -->
 
 					<div class="social">
 						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
@@ -253,8 +257,9 @@
 								</swiper>
 							</div>
 
-							<div class="innerContent">
-								<div class="textContainer" *ngIf="x?.content" [innerHTML]="x?.content | safeHtml"></div>
+							<div class="innerContent" *ngIf="x?.content">
+								<div class="textContainer" [innerHTML]="x?.content | slice:0:x?.contentLimit | safeHtml"></div>
+								<span class="more" *ngIf="x?.content.length > 300 && !x?.contentMore" (click)="x.contentLimit = -1; x.contentMore = true">... {{translations?.common?.more}}</span>
 							</div>
 
 							<div class="audios" *ngIf="x?.audios">

@@ -29,23 +29,21 @@
 	$result = $conn->query($sql)->fetch_assoc();
 
 	if ($result){
-		$result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['about'] = html_entity_decode($result['about'], ENT_QUOTES);
-		$result['languages'] = getLanguages();
-		$result['avatarUrl'] = $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
-		$result['backgroundUrl'] = $result['background'] ? ('./assets/media/user/'.$result['id'].'/background/'.$result['background']) : '';
-		$result['theme'] = $result['theme'] ? true : false;
-		$result['official'] = $result['official'] ? true : false;
-		$result['private'] = $result['private'] ? true : false;
-		$result['playlists'] = getPlaylists($result['id']);
-		$result['countFollowing'] = countUserFollowing($result['id']);
-		$result['countFollowers'] = countUserFollowers($result['id']);
-		$result['countPhotos'] = countUserPhotos($result['id']);
-		$result['countAudios'] = countUserAudios($result['id']);
-		$result['countBookmarks'] = countUserBookmarks($result['id']);
+		$result['avatarUrl'] 			= $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['languages'] 			= getLanguages();
+		$result['theme'] 				= intval($result['theme']);
+		$result['official'] 			= $result['official'] ? true : false;
+		$result['private'] 				= $result['private'] ? true : false;
+		$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
+		$result['about'] 				= html_entity_decode($result['about'], ENT_QUOTES);
+		$result['aboutOriginal'] 		= html_entity_decode($result['aboutOriginal'], ENT_QUOTES);
+		$result['countFollowing'] 		= countUserFollowing($result['id']);
+		$result['countFollowers'] 		= countUserFollowers($result['id']);
+		$result['countAudios'] 			= countUserAudios($result['id']);
+		$result['countBookmarks'] 		= countUserBookmarks($result['id']);
 
 		// Set user activity
-		$result['authorization'] = userLoginActivity($result['id']);
+		$result['authorization'] 	= userLoginActivity($result['id']);
 
 		// Get Device
 		$device = $_SERVER['HTTP_USER_AGENT'];

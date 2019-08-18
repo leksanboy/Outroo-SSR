@@ -22,10 +22,10 @@ import { NewSessionComponent } from '../../../../app/pages/common/newSession/new
 import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/showAvatar.component';
 import { ShowMessageComponent } from '../../../../app/pages/common/showMessage/showMessage.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
-import { ShowMobilePlayerComponent } from '../../../../app/pages/common/showMobilePlayer/showMobilePlayer.component';
+import { ActivePlayerMobileComponent } from '../../../../app/pages/common/activePlayerMobile/activePlayerMobile.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
-import { ShowSessionPanelMobileComponent } from '../../../../app/pages/common/showSessionPanelMobile/showSessionPanelMobile.component';
-import { ShowShareComponent } from '../../../../app/pages/common/showShare/showShare.component';
+import { ActiveSessionsMobileComponent } from '../../../../app/pages/common/activeSessionsMobile/activeSessionsMobile.component';
+import { NewShareComponent } from '../../../../app/pages/common/newShare/newShare.component';
 
 declare var navigator: any;
 declare var MediaMetadata: any;
@@ -134,9 +134,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 		} else {
 			// Add dark theme
 			if (this.sessionData.current.theme) {
-				this.document.body.classList.add('darkTheme');
+				this.document.body.classList.add('blackTheme');
 			} else {
-				this.document.body.classList.remove('darkTheme');
+				this.document.body.classList.remove('blackTheme');
 			}
 
 			// Load default audios
@@ -241,7 +241,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 				});
 
 			// Get Share
-			this.sessionService.getDataShowShare()
+			this.sessionService.getDataNewShare()
 				.subscribe(data => {
 					this.openShare(data);
 				});
@@ -959,6 +959,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
+					console.log('createPlaylist:', res);
+
 					if (res) {
 						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
@@ -979,7 +981,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 's/' + item.name.slice(0, -4);
@@ -1028,7 +1030,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		};
 
 		// Set sheet
-		const bottomSheetRef = this.bottomSheet.open(ShowMobilePlayerComponent, config);
+		const bottomSheetRef = this.bottomSheet.open(ActivePlayerMobileComponent, config);
 		bottomSheetRef.afterDismissed().subscribe(val => {
 			// no actions
 		});
@@ -1061,7 +1063,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		};
 
 		// Set sheet
-		const bottomSheetRef = this.bottomSheet.open(ShowSessionPanelMobileComponent, config);
+		const bottomSheetRef = this.bottomSheet.open(ActiveSessionsMobileComponent, config);
 		bottomSheetRef.afterDismissed().subscribe(val => {
 			// no actions
 		});
@@ -1095,9 +1097,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (this.sessionData.current.id !== data.id) {
 			// Dark/White theme
 			if (data.theme) {
-				this.document.body.classList.add('darkTheme');
+				this.document.body.classList.add('blackTheme');
 			} else {
-				this.document.body.classList.remove('darkTheme');
+				this.document.body.classList.remove('blackTheme');
 			}
 
 			// Get translations
@@ -1136,7 +1138,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Close session
 	closeSession(data) {
 		if (this.sessionData.sessions.length === 1) {
-			this.document.body.classList.remove('darkTheme');
+			this.document.body.classList.remove('blackTheme');
 			this.userDataService.logout();
 			this.playPlayer('stop', null);
 			this.router.navigate(['logout']);
@@ -1159,9 +1161,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.sessionData.current.theme = !this.sessionData.current.theme;
 
 		if (this.sessionData.current.theme) {
-			this.document.body.classList.add('darkTheme');
+			this.document.body.classList.add('blackTheme');
 		} else {
-			this.document.body.classList.remove('darkTheme');
+			this.document.body.classList.remove('blackTheme');
 		}
 
 		const data = {
@@ -1174,12 +1176,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 				setTimeout(() => {
 					this.sessionData = this.userDataService.getSessionData();
 					this.sessionService.setDataTheme(this.sessionData);
-
-					if (this.sessionData.current.theme) {
-						this.alertService.success(this.translations.common.darkThemeEnabled);
-					} else {
-						this.alertService.success(this.translations.common.darkThemeDisabled);
-					}
 				}, 1000);
 			}, error => {
 				this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -1274,11 +1270,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 			};
 
-			const dialogRef = this.dialog.open(ShowShareComponent, config);
+			const dialogRef = this.dialog.open(NewShareComponent, config);
 			dialogRef.afterClosed().subscribe((res: any) => {
 				// Check if is new chat with content or last insered comment
 				if (res.close) {
-					this.sessionService.setDataShowShare(res);
+					this.sessionService.setDataNewShare(res);
 				}
 
 				// Set url

@@ -1,21 +1,24 @@
-<div class="dialogBox">
+<div class="dialogBox bodySession">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
+
+			<div class="text">
+				{{translations?.common?.addAccount}}
+			</div>
 		</div>
-		<div class="text">
-			{{translations?.common?.addAccount}}
-		</div>
-		<div class="button">
-			<button mat-button type="submit" (click)="submit()">
-				{{translations?.common?.submit}}
+
+		<div class="right">
+			<button mat-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.add}}
 			</button>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodySession">
+	<div mat-dialog-content class="content">
 		<div class="form">
 			<form [formGroup]="actionForm">
 				<mat-form-field>
@@ -39,7 +42,7 @@
 		</button>
 		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
 			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-			{{translations?.common?.submit}}
+			{{translations?.common?.add}}
 		</button>
 	</div>
 </div>

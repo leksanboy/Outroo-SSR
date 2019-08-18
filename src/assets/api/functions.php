@@ -168,28 +168,24 @@
 		$sql = "SELECT id, username, name, avatar, background, email, about, about_original as aboutOriginal, language, theme, official, private
 				FROM z_users
 				WHERE id = $id";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->fetch_assoc();
 
-		$data = array();
-		while($row = $result->fetch_assoc()) {
-			$row['avatarUrl'] = $row['avatar'] ? ('./assets/media/user/'.$row['id'].'/avatar/'.$row['avatar']) : '';
-			$row['backgroundUrl'] = $row['background'] ? ('./assets/media/user/'.$row['id'].'/background/'.$row['background']) : '';
-			$row['languages'] = getLanguages();
-			$row['theme'] = $row['theme'] ? true : false;
-			$row['official'] = $row['official'] ? true : false;
-			$row['private'] = $row['private'] ? true : false;
-			$row['name'] = html_entity_decode($row['name'], ENT_QUOTES);
-			$row['about'] = html_entity_decode($row['about'], ENT_QUOTES);
-			$row['aboutOriginal'] = html_entity_decode($row['aboutOriginal'], ENT_QUOTES);
-			$row['countFollowing'] = countUserFollowing($id);
-			$row['countFollowers'] = countUserFollowers($id);
-			$row['countPhotos'] = countUserPhotos($id);
-			$row['countAudios'] = countUserAudios($id);
-			$row['countBookmarks'] = countUserBookmarks($id);
-			$data = $row;
+		if ($result){
+			$result['avatarUrl'] 			= $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+			$result['languages'] 			= getLanguages();
+			$result['theme'] 				= intval($result['theme']);
+			$result['official'] 			= $result['official'] ? true : false;
+			$result['private'] 				= $result['private'] ? true : false;
+			$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
+			$result['about'] 				= html_entity_decode($result['about'], ENT_QUOTES);
+			$result['aboutOriginal'] 		= html_entity_decode($result['aboutOriginal'], ENT_QUOTES);
+			$result['countFollowing'] 		= countUserFollowing($result['id']);
+			$result['countFollowers'] 		= countUserFollowers($result['id']);
+			$result['countAudios'] 			= countUserAudios($result['id']);
+			$result['countBookmarks'] 		= countUserBookmarks($result['id']);
 		}
 
-		return $data;
+		return $result;
 	}
 
 	// Get user triplete data by id
@@ -207,6 +203,7 @@
 		return $result;
 	}
 
+	// Check username
 	function checkUsername($username){
 		global $conn;
 
@@ -339,6 +336,20 @@
 		$result = $conn->query($sql)->num_rows;
 
 		return $result;
+	}
+
+	// Set visitor
+	function setVisitor($sender, $receiver){
+		global $conn;
+		$ipAddress = $_SERVER['REMOTE_ADDR'];
+
+		if ($sender != $receiver) {
+			$sql = "INSERT INTO z_users_replays (user, visitor, ip_address)
+					VALUES ($sender, $receiver, '$ipAddress')";
+			$result = $conn->query($sql);
+
+			return $result;
+		}
 	}
 
 	////////////

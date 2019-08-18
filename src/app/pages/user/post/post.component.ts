@@ -170,8 +170,10 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					const url = '[' + res.id + ']/[' + name + ']/p/' + t;
-					this.userDataService.analytics(url);
+					const url = 'p/' + name;
+					const title = t;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) :  null;
+					this.userDataService.analytics(url, title, userId);
 				}
 			}, error => {
 				this.dataDefault.loadingData = false;
@@ -230,7 +232,7 @@ export class PostComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 'p/' + item.name;
@@ -242,7 +244,7 @@ export class PostComponent implements OnInit, OnDestroy {
 				break;
 			case 'messageSong':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTabSong':
 				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);

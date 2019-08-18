@@ -1,18 +1,26 @@
-<div class="dialogBox">
+<div class="dialogBox bodyCreatePlaylist">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
+
+			<div class="text">
+				{{translations?.audios?.playlist}}
+			</div>
 		</div>
-		<div class="text">
-			{{data.type == 'create' ? translations?.audios?.createPlaylist : translations?.audios?.editPlaylist}}
+
+		<div class="right">
+			<button mat-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.create}}
+			</button>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyCreatePlaylist">
+	<div mat-dialog-content class="content">
 		<form [formGroup]="actionForm">
-			<div class="imageCover">
+			<div class="cover">
 				<img [src]="data.newImage" *ngIf="data.newImage" #imageSrc>
 
 				<div class="default" *ngIf="!data.newImage">
@@ -21,7 +29,7 @@
 						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
 						<div class="actions">
 							<button mat-raised-button type="button" (click)="uploadFile.click()">
-								<i label="file-upload"></i>
+								<!-- <i label="file-upload"></i> -->
 								{{translations?.common?.upload}}
 							</button>
 						</div>
@@ -79,9 +87,9 @@
 		<button mat-raised-button type="button" (click)="close()">
 			{{translations?.common?.cancel}}
 		</button>
-		<button mat-raised-button type="submit" (click)="save()" [disabled]="submitLoading">
+		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
 			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-			{{translations?.common?.submit}}
+			{{translations?.common?.create}}
 		</button>
 	</div>
 </div>

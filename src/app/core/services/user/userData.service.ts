@@ -110,11 +110,18 @@ export class UserDataService {
 		}
 	}
 
-	analytics(url) {
+	analytics(page, title, userId) {
 		if (this.ssrService.isBrowser) {
-			console.log('analytics:', url);
-			ga('set', 'page', url);
-			ga('send', 'pageview');
+			ga('create', 'UA-90068205-1', 'auto');
+			// ga('set', 'page', page);
+			// ga('send', 'pageview');
+
+			ga('send', {
+				'hitType': 'pageview',
+				'page': page,
+				'title': title,
+				'userId': userId
+			});
 		}
 	}
 
@@ -366,16 +373,6 @@ export class UserDataService {
 
 	updateResetPassword(data) {
 		const url = this.env.url + 'assets/api/user/updateResetPassword.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return res;
-			}));
-	}
-
-	setVisitor(data) {
-		const url = this.env.url + 'assets/api/user/setVisitor.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

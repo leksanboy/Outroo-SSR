@@ -11,6 +11,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 $ npm run build:ssr [For GoogleCloudPlatform]
 $ npm run build:ssr && npm run serve:ssr [compile & run on localhost]
 
+$ cd /var/www/html && sudo rm -rf dist/
+$ cd /var/www/html/ && pm2 stop 0 && pm2 delete 0 && sudo rm -rf dist/
+$ pm2 start dist/server.js
+
 ----------------------------------------------------------------------------------------------------
 
 # ADDITIONAL CODE

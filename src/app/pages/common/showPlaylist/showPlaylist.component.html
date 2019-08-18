@@ -1,16 +1,17 @@
 <div class="dialogBox">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
-		</div>
-		<div class="text">
-			{{translations?.audios?.playlist}}
+
+			<div class="text">
+				{{translations?.audios?.playlist}}
+			</div>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyAudios">
+	<div mat-dialog-content class="bodyPlaylist">
 		<div class="head">
 			<div class="left">
 				<div class="image" [style.background-image]="data.current.color">
@@ -24,13 +25,13 @@
 					<i class="icon50 white" label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
 				</div>
 				
-				<a class="username" *ngIf="data.current.user" routerLink="/{{data.current.user.username}}">
+				<a class="subtitle" routerLink="/{{data.current.user.username}}">
 					@{{data.current.user.username}}
 					<i class="icon50 blue" label="official" *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 				</a>
 				
 				<div class="button">
-					<button mat-button class="border" (click)="playTrack('play')">
+					<button mat-button (click)="playTrack('play')">
 						{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
 					</button>
 				</div>

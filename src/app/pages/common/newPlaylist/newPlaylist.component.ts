@@ -111,7 +111,7 @@ export class NewPlaylistComponent implements OnInit {
 		this.data.image = null;
 	}
 
-	save() {
+	submit() {
 		switch (this.data.type) {
 			case 'create':
 				if (this.actionForm.get('title').value.trim().length > 0) {

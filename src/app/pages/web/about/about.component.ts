@@ -45,7 +45,8 @@ export class AboutComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'about';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.about.title, userId);
 	}
 
 	ngOnInit() {

@@ -64,12 +64,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.translations.notifications.title);
-
 			// Set Google analytics
-			const url = '[' + this.sessionData.current.id + ']/notifications';
-			this.userDataService.analytics(url);
+			const url = 'notifications';
+			const title = this.translations.notifications.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Load default
 			const localStotageData = this.userDataService.getLocalStotage('notificationsPage');
@@ -388,7 +390,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 's/' + item.name.slice(0, -4);

@@ -1,21 +1,24 @@
-<div class="dialogBox scrollable">
+<div class="dialogBox bodyCreatePublication">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
+
+			<div class="text">
+				{{translations?.main?.newPublication}}
+			</div>
 		</div>
-		<div class="text">
-			{{translations?.main?.newPublication}}
-		</div>
-		<div class="button">
-			<button mat-button type="submit" (click)="submit()">
-				{{translations?.common?.post}}
+
+		<div class="right">
+			<button mat-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.create}}
 			</button>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyCreatePublication">
+	<div mat-dialog-content class="content">
 		<div class="form">
 			<div class="richPublication">
 				<div class="highlights" [innerHTML]="publicationData.transformed"></div>
@@ -100,7 +103,7 @@
 		</div>
 	</div>
 
-	<div mat-dialog-actions class="buttons newPublication">
+	<div mat-dialog-actions class="buttons">
 		<div class="files">
 			<button mat-mini-fab type="button" (click)="openPhotos($event)" matTooltip="photos">
 				<i label="photo-camera"></i>
@@ -111,21 +114,13 @@
 		</div>
 
 		<div class="actions">
-			<div class="web">
-				<button mat-raised-button type="button" (click)="close()">
-					{{translations?.common?.cancel}}
-				</button>
-				<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
-					<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-					{{translations?.common?.post}}
-				</button>
-			</div>
-			<div class="mobile">
-				<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
-					<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-					{{translations?.common?.post}}
-				</button>
-			</div>
+			<button mat-raised-button type="button" (click)="close()">
+				{{translations?.common?.cancel}}
+			</button>
+			<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.create}}
+			</button>
 		</div>
 	</div>
 </div>

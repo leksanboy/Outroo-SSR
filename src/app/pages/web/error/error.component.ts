@@ -42,7 +42,8 @@ export class ErrorComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'error';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.error.title, userId);
 	}
 
 	ngOnInit() {

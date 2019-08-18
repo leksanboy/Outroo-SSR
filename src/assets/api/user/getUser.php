@@ -3,7 +3,7 @@
 	$session = sessionId();
 
 	if ($user) {
-		$sql = "SELECT id, 
+		$sql = "SELECT id,
 						username, 
 						name, 
 						avatar, 
@@ -23,24 +23,24 @@
 			$data = array();
 			while($row = $result->fetch_assoc()) {
 				$row['avatarUrl'] 			= $row['avatar'] ? ('./assets/media/user/'.$row['id'].'/avatar/'.$row['avatar']) : '';
-				$row['backgroundUrl'] 		= $row['background'] ? ('./assets/media/user/'.$row['id'].'/background/'.$row['background']) : '';
 				$row['languages'] 			= getLanguages();
-				$row['theme'] 				= $row['theme'] ? true : false;
+				$row['theme'] 				= intval($row['theme']);
 				$row['official'] 			= $row['official'] ? true : false;
 				$row['private'] 			= $row['private'] ? true : false;
 				$row['name'] 				= html_entity_decode($row['name'], ENT_QUOTES);
 				$row['about'] 				= html_entity_decode($row['about'], ENT_QUOTES);
 				$row['aboutOriginal'] 		= html_entity_decode($row['aboutOriginal'], ENT_QUOTES);
-				$row['countFollowing'] 		= countUserFollowing($user);
-				$row['countFollowers'] 		= countUserFollowers($user);
-				$row['countPhotos'] 		= countUserPhotos($user);
-				$row['countAudios'] 		= countUserAudios($user);
-				$row['countBookmarks'] 		= countUserBookmarks($user);
+				$row['countFollowing'] 		= countUserFollowing($row['id']);
+				$row['countFollowers'] 		= countUserFollowers($row['id']);
+				$row['countAudios'] 		= countUserAudios($row['id']);
+				$row['countBookmarks'] 		= countUserBookmarks($row['id']);
 
-				if ($session)
+				if ($session) {
 					$row['followingStatus'] = checkFollowingStatus($session, $row['id']);
+											  setVisitor($session, $row['id']);
+				}
 
-				if ($user === $row['id'])
+				if ($session === $row['id'])
 					$row['playlists'] 		= getPlaylists($row['id']);
 				
 				$data = $row;

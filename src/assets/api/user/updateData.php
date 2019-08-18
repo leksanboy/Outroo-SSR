@@ -2,16 +2,14 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 	
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$sessioin = sessionId();
+	$session = sessionId();
 	$username = $data['username'];
 	$name = htmlspecialchars($data['name'], ENT_QUOTES);
 	$language = $data['language'];
 	$about = htmlspecialchars($data['about'], ENT_QUOTES);
 	$aboutOriginal = htmlspecialchars($data['aboutOriginal'], ENT_QUOTES);
 
-	if (checkUsername($username)) {
-		var_dump(http_response_code(403));
-	} else {
+	if ((strtolower(userUsername($session)) === strtolower($username)) || !checkUsername($username)) {
 		// Update data
 		$sql = "UPDATE z_users
 				SET username = '$username',
@@ -20,13 +18,15 @@
 					about = '$about',
 					about_original = '$aboutOriginal',
 					ip_address_update = '$ipAddress'
-				WHERE id = $sessioin";
+				WHERE id = $session";
 		$result = $conn->query($sql);
 
 		// Get user data
-		$userData = userData($sessioin);
+		$userData = userData($session);
 		echo json_encode($userData);
 		
 		$conn->close();
+	} else {
+		var_dump(http_response_code(403));
 	}
 ?>

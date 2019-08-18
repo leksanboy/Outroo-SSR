@@ -32,7 +32,7 @@
 			</div>
 
 			<div class="form">
-				<div class="error" *ngIf="errorMessage">
+				<div class="error" *ngIf="errorMessage" (click)="errorMessage = false">
 					{{errorMessageContent}}
 				</div>
 

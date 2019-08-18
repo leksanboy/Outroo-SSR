@@ -48,13 +48,13 @@ import { NewPublicationModule } from './pages/common/newPublication/newPublicati
 import { NewReportModule } from './pages/common/newReport/newReport.module';
 import { NewSessionModule } from './pages/common/newSession/newSession.module';
 import { ShowAvatarModule } from './pages/common/showAvatar/showAvatar.module';
-import { ShowShareModule } from './pages/common/showShare/showShare.module';
+import { NewShareModule } from './pages/common/newShare/newShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
 import { ShowMessageModule } from './pages/common/showMessage/showMessage.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
 import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
-import { ShowSessionPanelMobileModule } from './pages/common/showSessionPanelMobile/showSessionPanelMobile.module';
-import { ShowMobilePlayerModule } from './pages/common/showMobilePlayer/showMobilePlayer.module';
+import { ActiveSessionsMobileModule } from './pages/common/activeSessionsMobile/activeSessionsMobile.module';
+import { ActivePlayerMobileModule } from './pages/common/activePlayerMobile/activePlayerMobile.module';
 
 // Alert
 import { AlertService } from './core/services/alert/alert.service';
@@ -100,19 +100,19 @@ import { CookiesComponent } from './core/services/cookies/cookies.component';
 		MatSlideToggleModule,
 		MatTooltipModule,
 		// Common modules
+		ActivePlayerMobileModule,
+		ActiveSessionsMobileModule,
 		NewAvatarModule,
 		NewPlaylistModule,
 		NewPublicationModule,
 		NewReportModule,
 		NewSessionModule,
+		NewShareModule,
 		ShowAvatarModule,
-		ShowShareModule,
 		ShowLikesModule,
 		ShowMessageModule,
 		ShowPlaylistModule,
-		ShowPublicationModule,
-		ShowSessionPanelMobileModule,
-		ShowMobilePlayerModule
+		ShowPublicationModule
 	],
 	exports: [
 		MatBottomSheetModule,

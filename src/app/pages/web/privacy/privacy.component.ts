@@ -42,7 +42,8 @@ export class PrivacyComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'privacy';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.privacy.title, userId);
 	}
 
 	ngOnInit() {

@@ -102,7 +102,7 @@ export class ShowPlaylistComponent implements OnInit {
 				this.playerService.setData(this.audioPlayerData);
 			}
 		} else {
-			this.alertService.warning(this.translations.addToPlaylist);
+			this.alertService.warning(this.translations.common.addSomeSongsToPlaylist);
 		}
 	}
 

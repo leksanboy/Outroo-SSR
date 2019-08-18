@@ -13,7 +13,6 @@
 		"playlist": "Playlist",
 		"removeCover": "Remove cover",
 		"addCoverToPlaylist": "Add cover to playlist (can be empty)",
-		"createPlaylist": "Create playlist",
 		"uploadOrSearch": "Upload or search some songs",
 		"goAudios": "Go to my songs"
 	},
@@ -118,7 +117,12 @@
 		"passwordsNotMatch": "New password does not match with confirm password",
 		"english": "English",
 		"spanish": "Spanish",
-		"russian": "Russian"
+		"russian": "Russian",
+		"themes": {
+			"white": "Default",
+			"blue": "Light dark theme",
+			"black": "Dark theme"
+		}
 	},
 	"song": {
 		"title": "Song",
@@ -295,7 +299,7 @@
 		"forgotPassword": "Forgot password?",
 		"sendMessage": "Send message",
 		"copyLink": "Copy link",
-		"createPlaylist": "Create playlist",
+		"create": "Create",
 		"ok": "OK",
 		"add": "Add",
 		"remove": "Remove",
@@ -353,8 +357,7 @@
 		"createdSuccessfully": "Created successfully",
 		"savedSuccessfully": "Saved successfully",
 		"accountChangedTo": "You have changed the account to",
-		"darkThemeEnabled": "Dark theme enabled",
-		"darkThemeDisabled": "Dark theme disabled",
+		"themeEnabled": "Theme enabled",
 		"privateEnabled": "Private account enabled",
 		"privateDisabled": "Private account disabled",
 		"languageChanged": "The language has changed",
@@ -370,6 +373,9 @@
 		"loadComments": "Load comments",
 		"incorrectCredentials": "The credentials are incorrect",
 		"emailNotExist": "Email not exist",
-		"fieldsNotMatch": "Fields not match"
+		"fieldsNotMatch": "Fields not match",
+		"more": "more",
+		"addSomeSongsToPlaylist": "Add some songs to playlist",
+		"createPlaylist": "Create playlist"
 	}
 }

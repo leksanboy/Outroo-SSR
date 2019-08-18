@@ -59,7 +59,8 @@ export class SignupComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'signup';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.signUp.title, userId);
 	}
 
 	ngOnInit() {

@@ -16,12 +16,12 @@ import {
 
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
-import { ShowShareComponent } from './showShare.component';
+import { NewShareComponent } from './newShare.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ShowShareComponent
+		component: NewShareComponent
 	}
 ];
 
@@ -43,10 +43,10 @@ const routes: Routes = [
 		MatChipsModule
 	],
 	declarations: [
-		ShowShareComponent
+		NewShareComponent
 	],
 	exports: [
-		ShowShareComponent
+		NewShareComponent
 	]
 })
-export class ShowShareModule {}
+export class NewShareModule {}

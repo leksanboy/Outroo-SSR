@@ -45,8 +45,9 @@ export class LogoutComponent implements OnInit {
 		this.userDataService.logout();
 
 		// Set Google analytics
-		const url = 'home';
-		this.userDataService.analytics(url);
+		const url = 'logout';
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.logOut.title, userId);
 	}
 
 	ngOnInit() {

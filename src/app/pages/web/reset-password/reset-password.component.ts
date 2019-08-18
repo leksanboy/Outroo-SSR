@@ -74,7 +74,8 @@ export class ResetPasswordComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'reset-password';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.resetPassword.title, userId);
 	}
 
 	ngOnInit() {

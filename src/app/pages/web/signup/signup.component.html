@@ -12,10 +12,6 @@
 				<div class="pageTitle">{{translations?.signUp?.title}}</div>
 
 				<span *ngIf="pageStatus === 'default'">
-					<div class="title">
-						{{translations?.signUp?.title}}
-					</div>
-
 					<div class="form">
 						<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
 							<mat-form-field>

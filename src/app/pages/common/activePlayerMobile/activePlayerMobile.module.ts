@@ -16,12 +16,12 @@ import {
 
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
-import { ShowMobilePlayerComponent } from './showMobilePlayer.component';
+import { ActivePlayerMobileComponent } from './activePlayerMobile.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ShowMobilePlayerComponent
+		component: ActivePlayerMobileComponent
 	}
 ];
 
@@ -41,10 +41,10 @@ const routes: Routes = [
 		MatSliderModule
 	],
 	declarations: [
-		ShowMobilePlayerComponent
+		ActivePlayerMobileComponent
 	],
 	exports: [
-		ShowMobilePlayerComponent
+		ActivePlayerMobileComponent
 	]
 })
-export class ShowMobilePlayerModule {}
+export class ActivePlayerMobileModule {}

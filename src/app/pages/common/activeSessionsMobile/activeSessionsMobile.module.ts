@@ -12,12 +12,12 @@ import {
 
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
-import { ShowSessionPanelMobileComponent } from './showSessionPanelMobile.component';
+import { ActiveSessionsMobileComponent } from './activeSessionsMobile.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ShowSessionPanelMobileComponent
+		component: ActiveSessionsMobileComponent
 	}
 ];
 
@@ -34,10 +34,10 @@ const routes: Routes = [
 		MatRippleModule
 	],
 	declarations: [
-		ShowSessionPanelMobileComponent
+		ActiveSessionsMobileComponent
 	],
 	exports: [
-		ShowSessionPanelMobileComponent
+		ActiveSessionsMobileComponent
 	]
 })
-export class ShowSessionPanelMobileModule {}
+export class ActiveSessionsMobileModule {}

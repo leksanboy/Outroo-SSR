@@ -5,16 +5,16 @@ import { environment } from '../../../../environments/environment';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 @Component({
-	selector: 'app-show-session-panel-mobile',
-	templateUrl: './showSessionPanelMobile.component.html'
+	selector: 'app-active-sessions-mobile',
+	templateUrl: './activeSessionsMobile.component.html'
 })
-export class ShowSessionPanelMobileComponent {
+export class ActiveSessionsMobileComponent {
 	public environment: any = environment;
 	public sessionData: any = [];
 
 	constructor(
 		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-		private bottomSheetRef: MatBottomSheetRef<ShowSessionPanelMobileComponent>,
+		private bottomSheetRef: MatBottomSheetRef<ActiveSessionsMobileComponent>,
 		private sessionService: SessionService
 	) {
 		this.sessionData = this.data.sessionData;

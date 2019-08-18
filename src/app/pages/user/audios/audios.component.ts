@@ -49,7 +49,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		reload: false,
 		actions: true,
 		saveDisabled: false,
-		counter: 0
+		counter: 0,
+		max: 30
 	};
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
@@ -86,12 +87,14 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.userData) {
-			// Set title
-			this.titleService.setTitle(this.userData.name + ' - ' + this.translations.audios.title);
-
 			// Set Google analytics
-			const url = '[' + this.userData.id + ']/songs';
-			this.userDataService.analytics(url);
+			const url = 'songs';
+			const title = this.userData.name + ' - ' + this.translations.audios.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Set playlist current playing
 			if (this.sessionData) {
@@ -829,6 +832,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				}, false);
 
 				ajax.open('POST', './assets/api/audios/uploadFiles.php');
+				ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
 				ajax.send(formdata);
 			};
 
@@ -845,7 +849,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			}
 		} else if (type === 5) { // Reload
 			this.data.selectedIndex = 0;
-			this.default('default', this.sessionData.current.username);
+			this.default('default', this.sessionData.current.id);
 
 			this.dataFiles = {
 				list: [],
@@ -1002,7 +1006,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.env.url + 's/' + item.name.slice(0, -4);

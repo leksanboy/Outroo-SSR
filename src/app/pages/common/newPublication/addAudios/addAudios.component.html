@@ -1,22 +1,38 @@
-<div class="dialogBox scrollable">
+<div class="dialogBox bodyCreatePublication">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
-		</div>
-		<div class="text">
-			{{translations?.audios?.title}} 
+
+			<div class="text">
+				{{translations?.audios?.title}} 
 			{{data.arrayAddedItems.length}}/10
+			</div>
 		</div>
-		<div class="button">
+
+		<div class="right createPublication">
 			<button mat-button type="submit" (click)="submit($event)" [disabled]="data.arrayAddedItems.length > 10 || data.arrayAddedItems.length < 1">
-				{{translations?.common?.ok}}
+				{{translations?.common?.submit}}
 			</button>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyCreatePublication">
+	<div mat-dialog-content class="content">
+		<div class="searchBox">
+			<div class="box">
+				<form>
+					<div class="inner">
+						<i class="icon85 grey" label="search"></i>
+						<input type="text" placeholder="{{translations?.common?.search}}" name="caption">
+						<button mat-icon-button type="button">
+							<i class="icon85 grey" label="close"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<div class="uploadFilesBox">
 			<div class="button">
 				<button mat-raised-button (click)="uploadFile.click()">
@@ -37,83 +53,81 @@
 			</div>
 		</div>
 
-		<div class="audios">
-			<ul class="tracks" *ngIf="data.list.length > 0">
-				<li *ngFor="let x of data.list" [ngClass]="{default: !x.image}" (click)="toggleItem(x)">
-					<div class="inner" *ngIf="!x.uploaded">
-						<div class="image">
-							<button mat-icon-button>
-								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
-								<i label="play"></i>
-							</button>
+		<ul class="tracks" *ngIf="data.list.length > 0">
+			<li *ngFor="let x of data.list" [ngClass]="{default: !x.image}" (click)="toggleItem(x)">
+				<div class="inner" *ngIf="!x.uploaded">
+					<div class="image">
+						<button mat-icon-button>
+							<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+							<i label="play"></i>
+						</button>
+					</div>
+					
+					<div class="text">
+						<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+							<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+							<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 						</div>
-						
-						<div class="text">
-							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
-							</div>
-							<div class="duration">{{x.duration}}</div>
-						</div>
-
-						<div class="status">
-							<button mat-icon-button>
-								<i label="add" *ngIf="!x.selected"></i>
-								<i label="check" *ngIf="x.selected"></i>
-							</button>
-						</div>
+						<div class="duration">{{x.duration}}</div>
 					</div>
 
-					<div class="inner" *ngIf="x.uploaded">
-						<div class="image">
-							<button mat-icon-button>
-								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
-								<i label="play"></i>
-							</button>
-						</div>
-
-						<div class="text">
-							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
-							</div>
-							<div class="duration">{{x.duration}}</div>
-						</div>
-
-						<div class="category">
-							<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
-							<i label="cloud-upload"></i>
-						</div>
-
-						<div class="status">
-							<div class="progress" *ngIf="x.status=='progress'">
-								<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
-								<div class="value">{{x.progress}}%</div>
-							</div>
-
-							<button mat-icon-button *ngIf="x.status=='error'">
-								<i label="cloud-off"></i>
-							</button>
-
-							<button mat-icon-button *ngIf="x.status=='completed'">
-								<i label="add" *ngIf="!x.selected"></i>
-								<i label="check" *ngIf="x.selected"></i>
-							</button>
-						</div>
+					<div class="status">
+						<button mat-icon-button>
+							<i label="add" *ngIf="!x.selected"></i>
+							<i label="check" *ngIf="x.selected"></i>
+						</button>
 					</div>
-				</li>
-		    </ul>
+				</div>
 
-		    <div class="loadingData" *ngIf="loadingData">
-		    	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-		    </div>
-		    <div class="noData" *ngIf="noData">{{translations?.audios?.noData}}</div>
-		    <div class="loadMore" *ngIf="loadMoreData">
-		    	<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
-		    		<i label="add"></i>
-		    	</button>
-		    	<mat-progress-spinner mode="indeterminate" *ngIf="loadingMoreData"></mat-progress-spinner>
-		    </div>
+				<div class="inner" *ngIf="x.uploaded">
+					<div class="image">
+						<button mat-icon-button>
+							<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+							<i label="play"></i>
+						</button>
+					</div>
+
+					<div class="text">
+						<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+							<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+							<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+						</div>
+						<div class="duration">{{x.duration}}</div>
+					</div>
+
+					<div class="category">
+						<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
+						<i label="cloud-upload"></i>
+					</div>
+
+					<div class="status">
+						<div class="progress" *ngIf="x.status=='progress'">
+							<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
+							<div class="value">{{x.progress}}%</div>
+						</div>
+
+						<button mat-icon-button *ngIf="x.status=='error'">
+							<i label="cloud-off"></i>
+						</button>
+
+						<button mat-icon-button *ngIf="x.status=='completed'">
+							<i label="add" *ngIf="!x.selected"></i>
+							<i label="check" *ngIf="x.selected"></i>
+						</button>
+					</div>
+				</div>
+			</li>
+		</ul>
+
+		<div class="loadingData" *ngIf="loadingData">
+			<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+		</div>
+		<div class="noData" *ngIf="noData">{{translations?.audios?.noData}}</div>
+		<div class="loadMore" *ngIf="loadMoreData">
+			<button mat-fab (click)="loadMore()" *ngIf="!loadingMoreData">
+				<i label="add"></i>
+			</button>
+			<mat-progress-spinner mode="indeterminate" *ngIf="loadingMoreData"></mat-progress-spinner>
 		</div>
 	</div>
 </div>

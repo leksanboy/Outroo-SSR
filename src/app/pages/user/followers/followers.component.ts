@@ -61,12 +61,14 @@ export class FollowersComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.userData.name + ' - ' + this.translations.followers.title);
-
 			// Set Google analytics
-			const url = '[' + this.userData.id + ']/followers';
-			this.userDataService.analytics(url);
+			const url = 'followers';
+			const title = this.userData.name + ' - ' + this.translations.followers.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Check if following
 			const data = { receiver: this.userData ? this.userData.id : null };

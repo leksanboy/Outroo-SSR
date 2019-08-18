@@ -125,9 +125,9 @@ export class SongComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
-					const t = (res.original_artist && res.original_title) ? (res.original_artist + ' - ' + res.original_title) : res.title;
 
 					// Meta
+					const t = (res.original_artist && res.original_title) ? (res.original_artist + ' - ' + res.original_title) : res.title;
 					const metaData = {
 						page: t,
 						title: t,
@@ -139,8 +139,10 @@ export class SongComponent implements OnInit, OnDestroy {
 					this.metaService.setData(metaData);
 
 					// Set Google analytics
-					const url = '[' + res.id + ']/[' + name + ']/s/' + t;
-					this.userDataService.analytics(url);
+					const url = 's/' + name;
+					const title = t;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) :  null;
+					this.userDataService.analytics(url, title, userId);
 				}
 			}, error => {
 				this.dataDefault.loadingData = false;
@@ -226,7 +228,7 @@ export class SongComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);

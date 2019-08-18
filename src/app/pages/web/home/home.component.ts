@@ -50,7 +50,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 		// Set Google analytics
 		const url = 'home';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, 'Outroo', userId);
 	}
 
 	ngOnInit() {

@@ -71,12 +71,14 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.translations.news.title);
-
 			// Set Google analytics
-			const url = '[' + this.sessionData.current.id + ']/news';
-			this.userDataService.analytics(url);
+			const url = 'news';
+			const title = this.translations.news.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Redirected hashtag
 			const urlData: any = this.activatedRoute.snapshot;

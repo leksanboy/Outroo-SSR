@@ -15,11 +15,11 @@ import { TruncatePipe } from '../../../../app/core/pipes/truncate.pipe';
 declare var global: any;
 
 @Component({
-	selector: 'app-show-share',
-	templateUrl: './showShare.component.html',
+	selector: 'app-new-share',
+	templateUrl: './newShare.component.html',
 	providers: [ DateTimePipe, SafeHtmlPipe, TruncatePipe ]
 })
-export class ShowShareComponent implements OnInit, OnDestroy {
+export class NewShareComponent implements OnInit, OnDestroy {
 	public environment: any = environment;
 	public window: any = global;
 	public translations: any = [];
@@ -47,7 +47,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
-		public dialogRef: MatDialogRef<ShowShareComponent>,
+		public dialogRef: MatDialogRef<NewShareComponent>,
 		public dialog: MatDialog,
 		private _fb: FormBuilder,
 		private alertService: AlertService,
@@ -242,7 +242,7 @@ export class ShowShareComponent implements OnInit, OnDestroy {
 	}
 
 	// Send shared
-	sendShared() {
+	submit() {
 		const users = [];
 
 		for (const user of this.data.users) {

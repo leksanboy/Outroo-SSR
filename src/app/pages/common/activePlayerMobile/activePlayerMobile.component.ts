@@ -12,10 +12,10 @@ import { environment } from '../../../../environments/environment';
 declare var global: any;
 
 @Component({
-	selector: 'app-show-mobile-player',
-	templateUrl: './showMobilePlayer.component.html'
+	selector: 'app-active-player-mobile',
+	templateUrl: './activePlayerMobile.component.html'
 })
-export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterViewInit {
 	public environment: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
@@ -31,7 +31,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
 		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-		private bottomSheetRef: MatBottomSheetRef<ShowMobilePlayerComponent>,
+		private bottomSheetRef: MatBottomSheetRef<ActivePlayerMobileComponent>,
 		private alertService: AlertService,
 		private audioDataService: AudioDataService,
 		private playerService: PlayerService,
@@ -211,7 +211,7 @@ export class ShowMobilePlayerComponent implements OnInit, OnDestroy, AfterViewIn
 		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
-				this.sessionService.setDataShowShare(item);
+				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
 				const url = this.environment.url + 's/' + item.name.slice(0, -4);

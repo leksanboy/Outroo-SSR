@@ -59,12 +59,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.translations.settings.title);
-
 			// Set Google analytics
-			const url = '[' + this.sessionData.current.id + ']/settings';
-			this.userDataService.analytics(url);
+			const url = 'settings';
+			const title = this.translations.settings.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Set froms
 			this.setForms(this.sessionData.current);
@@ -110,25 +112,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		// Personal data form
 		this.actionFormPersonalData = this._fb.group({
 			theme: [form.theme],
-			private: [form.private],
 			username: [form.username, [Validators.required]],
 			name: [form.name, [Validators.required]],
-			language: [form.language, [Validators.required]]
+			language: [form.language, [Validators.required]],
+			private: [form.private]
 		});
 
-		// Dark theme
+		// Theme
 		this.actionFormPersonalData.get('theme').valueChanges
 			.subscribe(val => {
-				if (val) {
-					this.document.body.classList.add('darkTheme');
-					this.alertService.success(this.translations.common.darkThemeEnabled);
-				} else {
-					this.document.body.classList.remove('darkTheme');
-					this.alertService.success(this.translations.common.darkThemeDisabled);
+				if (val === 0) {
+					this.document.body.classList.remove('blackTheme');
+					this.document.body.classList.remove('blueTheme');
+				} else if (val === 1) {
+					this.document.body.classList.remove('blackTheme');
+					this.document.body.classList.add('blueTheme');
+				} else if (val === 2) {
+					this.document.body.classList.remove('blueTheme');
+					this.document.body.classList.add('blackTheme');
 				}
 
+				this.alertService.success(this.translations.common.themeEnabled);
+
 				const data = {
-					theme: this.actionFormPersonalData.get('theme').value
+					theme: val
 				};
 
 				this.userDataService.updateTheme(data)

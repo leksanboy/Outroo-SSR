@@ -55,7 +55,8 @@ export class ForgotPasswordComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'forgot-password';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.forgotPassword.title, userId);
 	}
 
 	ngOnInit() {

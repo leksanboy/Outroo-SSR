@@ -1,16 +1,17 @@
 <div class="dialogBox">
 	<div mat-dialog-title class="header">
-		<div class="back">
+		<div class="left">
 			<button mat-icon-button (click)="close()">
 				<i label="back"></i>
 			</button>
-		</div>
-		<div class="text">
-			{{translations?.common?.sendMessage}}
+
+			<div class="text">
+				{{translations?.common?.sendMessage}}
+			</div>
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyChat" #conversationContainer>
+	<div mat-dialog-content class="bodyMessage" #conversationContainer>
 		<div class="container">
 			<div class="loadMore" *ngIf="dataDefault.loadMoreData">
 				<button mat-fab (click)="default('more')" *ngIf="!dataDefault.loadingMoreData">

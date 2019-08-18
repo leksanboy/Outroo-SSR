@@ -58,12 +58,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
 		// Data
 		if (this.sessionData) {
-			// Set title
-			this.titleService.setTitle(this.translations.bookmarks.title);
-
 			// Set Google analytics
-			const url = '[' + this.sessionData.current.id + ']/bookmarks';
-			this.userDataService.analytics(url);
+			const url = 'bookmarks';
+			const title = this.translations.bookmarks.title;
+			const userId = this.sessionData.current.id;
+			this.userDataService.analytics(url, title, userId);
+
+			// Set title
+			this.titleService.setTitle(title);
 
 			// Load default
 			const localStotageData = this.userDataService.getLocalStotage('bookmarksPage');

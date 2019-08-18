@@ -52,7 +52,8 @@ export class SupportComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'support';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.support.title, userId);
 	}
 
 	ngOnInit() {

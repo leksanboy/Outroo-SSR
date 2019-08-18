@@ -74,7 +74,8 @@ export class ConfirmEmailComponent implements OnInit {
 
 		// Set Google analytics
 		const url = 'confirm-email';
-		this.userDataService.analytics(url);
+		const userId = null;
+		this.userDataService.analytics(url, this.translations.confirmEmail.title, userId);
 	}
 
 	ngOnInit() {

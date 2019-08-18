@@ -36,11 +36,11 @@
 						<div class="form">
 							<form [formGroup]="actionFormPersonalData" (ngSubmit)="submitPersonal()">
 								<div class="theme">
-									<mat-slide-toggle formControlName="theme">{{translations?.common?.darkTheme}}</mat-slide-toggle>
-								</div>
-
-								<div class="theme">
-									<mat-slide-toggle formControlName="private">{{translations?.common?.privateAccount}}</mat-slide-toggle>
+									<mat-radio-group formControlName="theme" name="theme">
+										<mat-radio-button [value]="0" class="white">{{translations?.settings?.themes?.white}}</mat-radio-button>
+										<mat-radio-button [value]="1" class="blue">{{translations?.settings?.themes?.blue}}</mat-radio-button>
+										<mat-radio-button [value]="2" class="black">{{translations?.settings?.themes?.black}}</mat-radio-button>
+									</mat-radio-group>
 								</div>
 
 								<mat-form-field>
@@ -70,6 +70,10 @@
 										<div class="highlights" [innerHTML]="sessionData.current.about"></div>
 										<div class="origin" contenteditable="plaintext-only" [innerHTML]="sessionData.current.aboutOriginal" (input)="aboutEdit('writingChanges', $event.target.innerText)"></div>
 									</div>
+								</div>
+
+								<div class="private">
+									<mat-slide-toggle formControlName="private">{{translations?.common?.privateAccount}}</mat-slide-toggle>
 								</div>
 
 								<div class="buttons">
