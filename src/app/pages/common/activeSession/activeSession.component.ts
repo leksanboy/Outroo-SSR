@@ -356,7 +356,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 
 				// Check if is ad item
-				if (self.audioPlayerData.list[key].contentTypeAd) {
+				if (self.audioPlayerData.list[key].contentTypeAd || self.audioPlayerData.list[key].id === 0) {
 					key = key + 1;
 				}
 
@@ -699,7 +699,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 
 				// Check if is ad item
-				if (this.audioPlayerData.list[prevKey].contentTypeAd) {
+				if (this.audioPlayerData.list[prevKey].contentTypeAd || this.audioPlayerData.list[prevKey].id === 0) {
 					prevKey = prevKey - 1;
 				}
 
@@ -715,9 +715,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 
 				// Check if is ad item
-				if (this.audioPlayerData.list[nextKey].contentTypeAd) {
+				if (this.audioPlayerData.list[nextKey].contentTypeAd || this.audioPlayerData.list[nextKey].id === 0) {
 					// Check if last element of the list is ad
-					if (this.audioPlayerData.list[this.audioPlayerData.list.length - 1].contentTypeAd) {
+					if (this.audioPlayerData.list[this.audioPlayerData.list.length - 1].contentTypeAd || this.audioPlayerData.list[this.audioPlayerData.list.length - 1].id === 0) {
 						nextKey = 0;
 					} else {
 						nextKey = nextKey + 1;
@@ -744,24 +744,28 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (!this.sessionData) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
 		} else {
-			if (this.audioPlayerData.key === key &&
-				this.audioPlayerData.type === type &&
-				this.audioPlayerData.item.song === item.song
-			) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.list = data;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username;
-				this.audioPlayerData.location = 'playlist';
-				this.audioPlayerData.type = type;
-				this.audioPlayerData.selectedIndex = null;
+			if (item.id === 0) {
+				this.alertService.warning(this.translations.common.songNotUploaded);
+			} else {
+				if (this.audioPlayerData.key === key &&
+					this.audioPlayerData.type === type &&
+					this.audioPlayerData.item.song === item.song
+				) { // Play/Pause current
+					item.playing = !item.playing;
+					this.playerService.setPlayTrack(this.audioPlayerData);
+				} else { // Play new one
+					this.audioPlayerData.list = data;
+					this.audioPlayerData.item = item;
+					this.audioPlayerData.key = key;
+					this.audioPlayerData.user = this.sessionData.current.id;
+					this.audioPlayerData.username = this.sessionData.current.username;
+					this.audioPlayerData.location = 'playlist';
+					this.audioPlayerData.type = type;
+					this.audioPlayerData.selectedIndex = null;
 
-				this.playerService.setData(this.audioPlayerData);
-				item.playing = true;
+					this.playerService.setData(this.audioPlayerData);
+					item.playing = true;
+				}
 			}
 		}
 	}

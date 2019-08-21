@@ -32,7 +32,7 @@
 							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 						</div>
 						<div class="text">
-							<div class="username">{{x.user.username}}</div>
+							<div class="username">@{{x.user.username}}</div>
 							<div class="name">{{x.user.name}}</div>
 						</div>
 					</li>
@@ -40,65 +40,60 @@
 			</div>
 
 			<div class="filesBox">
-				<div class="photos" *ngIf="data.photosArray.length > 0">
-					<div class="counter" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations?.photos?.title}} {{data.photosArray.length}}/10</div>
+				<div class="counter" *ngIf="data.photosArray.length > 0" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations?.photos?.title}} {{data.photosArray.length}}/10</div>
 
-					<ul>
-						<li mat-ripple *ngFor="let x of data.photosArray; let i=index;">
-							<div class="image" (click)="toggleItem('photos', x)">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + x.thumbnail + ')'}"></div>
+				<ul class="photos" *ngIf="data.photosArray.length > 0">
+					<li mat-ripple *ngFor="let x of data.photosArray" (click)="toggleItem('photos', x)">
+						<div class="image">
+							<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + 'thumbnails/' + x.up_name + ')'}"></div>
 
-								<div class="category">
-									<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
-									<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
-									<i label="cloud-upload" *ngIf="x.uploaded"></i>
-								</div>
-
-								<div class="status">
-									<button mat-icon-button>
-										<i label="check"></i>
-									</button>
-								</div>
+							<div class="category">
+								<i label="videocam" *ngIf="x.mimetype.indexOf('video') !== -1"></i>
+								<i label="gif" *ngIf="x.mimetype.indexOf('image/gif') !== -1"></i>
+								<i label="cloud-upload"></i>
 							</div>
-						</li>
-					</ul>
-				</div>
 
-				<div class="audios" *ngIf="data.audiosArray.length > 0">
-					<div class="counter" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations?.songs?.title}} {{data.audiosArray.length}}/10</div>
-
-					<ul class="tracks">
-						<li *ngFor="let x of data.audiosArray" [ngClass]="{default: !x.image}" (click)="toggleItem('audios', x)">
-							<div class="inner">
-								<div class="image">
-									<button mat-icon-button>
-										<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
-										<i label="play"></i>
-									</button>
-								</div>
-
-								<div class="text">
-									<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-										<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-										<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
-									</div>
-									<div class="duration">{{x.duration}}</div>
-								</div>
-								
-								<div class="category" *ngIf="x.uploaded">
-									<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
-									<i label="cloud-upload"></i>
-								</div>
-
-								<div class="status">
-									<button mat-icon-button>
-										<i label="check"></i>
-									</button>
-								</div>
+							<div class="status">
+								<button mat-icon-button>
+									<i label="check"></i>
+								</button>
 							</div>
-						</li>
-					</ul>
-				</div>
+						</div>
+					</li>
+				</ul>
+
+				<div class="counter" *ngIf="data.audiosArray.length > 0" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations?.audios?.title}} {{data.audiosArray.length}}/10</div>
+
+				<ul class="tracks" *ngIf="data.audiosArray">
+					<li *ngFor="let x of data.audiosArray; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+							<div class="image">
+								<button mat-icon-button (click)="playSong(data.audiosArray, x, i, 'default')">
+									<i label="cloud-upload" *ngIf="x.id === 0"></i>
+									<span *ngIf="x.id !== 0">
+										<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
+										<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
+									</span>
+									<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+								</button>
+							</div>
+
+							<div class="text" (click)="playSong(data.audiosArray, x, i, 'default')">
+								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+								</div>
+								<div class="duration">{{x.duration}}</div>
+							</div>
+							
+							<div class="actions" *ngIf="sessionData?.current?.id">
+								<button mat-icon-button (click)="toggleItem('audios', x)">
+									<i label="check"></i>
+								</button>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

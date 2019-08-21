@@ -369,6 +369,7 @@
 		"accountInUse": "Account is in use",
 		"emailOrPasswordIncorrect": "Email or password is incorrect",
 		"isTooShort": "Write something",
+		"isTooLong": "Text is too long",
 		"commentPlaceholder": "Wrire here...",
 		"loadComments": "Load comments",
 		"incorrectCredentials": "The credentials are incorrect",
@@ -376,6 +377,8 @@
 		"fieldsNotMatch": "Fields not match",
 		"more": "more",
 		"addSomeSongsToPlaylist": "Add some songs to playlist",
-		"createPlaylist": "Create playlist"
+		"createPlaylist": "Create playlist",
+		"songNotUploaded": "Can't play song because it's not uploaded yet",
+		"exceededMaxUploads": "You have exceeded the maximum number of uploads"
 	}
 }

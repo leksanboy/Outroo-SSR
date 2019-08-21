@@ -139,44 +139,48 @@
 		 			<mat-tab label="{{translations?.settings?.accounts}}">
 		 				<ul>
 							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
-								<div class="avatar" (click)="setCurrentUser(x)">
-									<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
-								</div>
-
-								<div class="text" (click)="setCurrentUser(x)">
-									<div class="in">
-										<div class="data">
-											<a class="name">{{x.username}}</a>
-											<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										</div>
-										<div class="info">@{{x.username}}</div>
+								<div mat-ripple class="inner">
+									<div class="avatar" (click)="setCurrentUser(x)">
+										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 									</div>
-								</div>
 
-								<div class="actions">
-									<button mat-button [matMenuTriggerFor]="signOut">{{translations?.common?.logOut}}</button>
-									<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
-										<div class="text">
-											{{x.name}}
-											<br>
-											{{translations?.common?.leaveSite}}
+									<div class="text" (click)="setCurrentUser(x)">
+										<div class="in">
+											<div class="data">
+												<a class="name">{{x.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											</div>
+											<div class="info">@{{x.username}}</div>
 										</div>
-										<div class="buttons">
-											<button mat-menu-item>{{translations?.common?.no}}</button>
-											<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
-										</div>
-									</mat-menu>
+									</div>
+
+									<div class="actions">
+										<button mat-button [matMenuTriggerFor]="signOut">{{translations?.common?.logOut}}</button>
+										<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
+											<div class="text">
+												{{x.name}}
+												<br>
+												{{translations?.common?.leaveSite}}
+											</div>
+											<div class="buttons">
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
+											</div>
+										</mat-menu>
+									</div>
 								</div>
 							</li>
 
 							<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
-								<div class="add">
-									<i label="add"></i>
-								</div>
-								<div class="text">
-									<div class="in">
-										<div class="data">{{translations?.common?.addAccount}}</div>
-										<div class="info">{{translations?.common?.setAnotherAccount}}</div>
+								<div mat-ripple class="inner">
+									<div class="add">
+										<i label="add"></i>
+									</div>
+									<div class="text">
+										<div class="in">
+											<div class="data">{{translations?.common?.addAccount}}</div>
+											<div class="info">{{translations?.common?.setAnotherAccount}}</div>
+										</div>
 									</div>
 								</div>
 							</li>

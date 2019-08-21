@@ -369,6 +369,7 @@
 		"accountInUse": "La cuenta ya esta en uso",
 		"emailOrPasswordIncorrect": "El correo electrónico o la contraseña es incorrecta",
 		"isTooShort": "Escribe algo",
+		"isTooLong": "El texto es demasiado largo",
 		"commentPlaceholder": "Escribe aqui...",
 		"loadComments": "Cargar comentarios",
 		"incorrectCredentials": "Las credenciales no son válidas",
@@ -376,6 +377,8 @@
 		"fieldsNotMatch": "Los campos no coinciden",
 		"more": "más",
 		"addSomeSongsToPlaylist": "Añade alguna canción a la lista de reproducción",
-		"createPlaylist": "Crear lista de reproducción"
+		"createPlaylist": "Crear lista de reproducción",
+		"songNotUploaded": "No se puede reproducir la canción por que aún no esta subida",
+		"exceededMaxUploads": "Has excedido el número máximo de cargas"
 	}
 }

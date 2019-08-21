@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 
+import { AlertService } from '../../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../../app/core/services/user/audioData.service';
+import { PlayerService } from '../../../../../app/core/services/player/player.service';
 
 @Component({
 	selector: 'app-add-audios',
@@ -14,53 +17,43 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public sessionData: any;
 	public translations: any;
-	public noData: boolean;
-	public loadingData: boolean;
-	public loadMoreData: boolean;
-	public loadingMoreData: boolean;
+	public audioPlayerData: any = [];
+	public dataSearch: any = [];
+	public dataDefault: any = [];
+	public actionFormSearch: FormGroup;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<NewPublicationAddAudiosComponent>,
+		private _fb: FormBuilder,
 		private sanitizer: DomSanitizer,
+		private alertService: AlertService,
+		private playerService: PlayerService,
 		private audioDataService: AudioDataService
-	) { }
-
-	ngOnInit() {
+	) {
 		this.sessionData = this.data.sessionData;
 		this.translations = this.data.translations;
-		this.data.rowsDefault = 0;
-		this.data.list = this.data.list ? this.data.list : [];
-		this.data.arrayAddedItems = [];
-		this.data.arrayAddedItems = Object.assign([], this.data.array);
-		this.data.arrayAddedItemsCopy = [];
-		this.data.arrayAddedItemsCopy = Object.assign([], this.data.array);
 
-		if (this.data.list.length > 0) {
-			for (const i of this.data.list) {
-				if (i) {
-					i.selected = false;
-				}
-			}
+		// Search
+		this.actionFormSearch = this._fb.group({
+			caption: ['']
+		});
 
-			for (const i of this.data.list) {
-				if (i) {
-					for (const e of this.data.array) {
-						if (e) {
-							if (i.id === e.id) {
-								i.selected = true;
-							}
-						}
-					}
-				}
-			}
+		// Search/Reset
+		this.actionFormSearch.controls['caption'].valueChanges
+			.pipe(
+				debounceTime(400),
+				distinctUntilChanged())
+			.subscribe(val => {
+				(val.length > 0) ? this.search('default') : this.search('clear');
+			});
 
-			this.data.list = this.data.list ? this.data.list : [];
-			this.data.rowsDefault = this.data.rows;
-			this.loadMoreData = this.data.loadMore;
-		} else {
-			this.default(this.data.sessionData.current.id);
-		}
+		// Default
+		this.default('default', this.sessionData.current.id);
+	}
+
+	ngOnInit() {
+		// not in use
 	}
 
 	ngOnDestroy() {
@@ -68,103 +61,251 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(user) {
-		this.data.rowsDefault = 0;
-		this.loadingData = true;
-		this.data.list = [];
-		this.noData = false;
-		this.loadMoreData = false;
-		this.loadingMoreData = false;
+	default(type, user) {
+		if (type === 'default') {
+			this.dataDefault = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false,
+				arrayAddedItems: Object.assign([], (this.data.array ? this.data.array : [])),
+				arrayAddedItemsCopy: Object.assign([], (this.data.array ? this.data.array : []))
+			};
 
-		const data = {
-			user: user,
-			type: 'default',
-			rows: this.data.rowsDefault,
-			cuantity: this.env.cuantity
-		};
-
-		this.audioDataService.default(data)
-			.subscribe((res: any) => {
-				setTimeout(() => {
-					this.loadingData = false;
-
-					if (!res || res.length === 0) {
-						this.noData = true;
-					} else {
-						this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-						this.noData = false;
-						this.data.list = res;
+			if (this.data.list) {
+				for (const i of this.data.list) {
+					if (i) {
+						i.selected = false;
 					}
-				}, 600);
-			});
-	}
+				}
 
-	// Load more
-	loadMore() {
-		this.loadingMoreData = true;
-		this.data.rowsDefault++;
-
-		const data = {
-			type: 'default',
-			rows: this.data.rowsDefault,
-			cuantity: this.env.cuantity
-		};
-
-		this.audioDataService.default(data)
-			.subscribe((res: any) => {
-				setTimeout(() => {
-					this.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-					this.loadingMoreData = false;
-
-					for (const i of res) {
-						if (i) {
-							this.data.list.push(i);
+				for (const i of this.data.list) {
+					if (i) {
+						for (const e of this.data.array) {
+							if (e) {
+								if (i.up_name) {
+									if (i.up_name === e.up_name) {
+										i.selected = true;
+									}
+								} else {
+									if (i.name === e.name) {
+										i.selected = true;
+									}
+								}
+							}
 						}
 					}
-				}, 600);
-			});
+				}
+
+				this.dataDefault.list = this.data.list ? this.data.list : [];
+				this.dataDefault.row = this.data.row;
+			} else {
+				const data = {
+					user: user,
+					type: 'default',
+					rows: this.dataDefault.rows,
+					cuantity: this.env.cuantity
+				};
+
+				this.audioDataService.default(data)
+					.subscribe((res: any) => {
+						this.dataDefault.loadingData = false;
+
+						if (!res || res.length === 0) {
+							this.dataDefault.noData = true;
+						} else {
+							this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+							for (const i in res) {
+								if (i) {
+									this.dataDefault.list.push(res[i]);
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataDefault.noMore = true;
+						}
+					}, error => {
+						this.dataDefault.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			}
+		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
+			this.dataDefault.loadingMoreData = true;
+			this.dataDefault.rows++;
+
+			const data = {
+				user: this.sessionData.current.id,
+				type: 'default',
+				rows: this.dataDefault.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.default(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataDefault.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataDefault.list.push(res[i]);
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataDefault.noMore = true;
+						}
+					}, 600);
+				}, error => {
+					this.dataDefault.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
 	}
 
-	// Select/unselect
+	// Search
+	search(type) {
+		if (type === 'default') {
+			this.data.active = 'search';
+			this.dataSearch = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false
+			};
+
+			const data = {
+				caption: this.actionFormSearch.get('caption').value,
+				rows: this.dataSearch.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.search(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.dataSearch.loadingData = false;
+
+						if (!res || res.length === 0) {
+							this.dataSearch.noData = true;
+						} else {
+							this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.list.push(res[i]);
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.noMore = true;
+						}
+					}, 600);
+				}, error => {
+					this.dataSearch.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more' && !this.dataSearch.noMore && !this.dataSearch.loadingMoreData) {
+			this.dataSearch.loadingMoreData = true;
+			this.dataSearch.rows++;
+
+			const data = {
+				caption: this.actionFormSearch.get('caption').value,
+				rows: this.dataSearch.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.search(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataSearch.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.list.push(res[i]);
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.noMore = true;
+						}
+					}, 600);
+				}, error => {
+					this.dataSearch.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'clear') {
+			this.data.active = 'default';
+			this.actionFormSearch.get('caption').setValue('');
+		}
+	}
+
+	// Play item song
+	playSong(data, item, key, type) {
+		if (!this.sessionData) {
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
+		} else {
+			if (item.id === 0) {
+				this.alertService.warning(this.translations.common.songNotUploaded);
+			} else {
+				if (this.audioPlayerData.key === key &&
+					this.audioPlayerData.type === type &&
+					this.audioPlayerData.item.song === item.song
+				) { // Play/Pause current
+					item.playing = !item.playing;
+					this.playerService.setPlayTrack(this.audioPlayerData);
+				} else { // Play new one
+					this.audioPlayerData.list = data;
+					this.audioPlayerData.item = item;
+					this.audioPlayerData.key = key;
+					this.audioPlayerData.user = this.sessionData.current.id;
+					this.audioPlayerData.username = this.sessionData.current.username;
+					this.audioPlayerData.location = 'newPublication';
+					this.audioPlayerData.type = type;
+					this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+
+					this.playerService.setData(this.audioPlayerData);
+					item.playing = true;
+				}
+			}
+		}
+	}
+
+	// Select/Unselect
 	toggleItem(item) {
 		if (item.selected) {
-			for (const i in this.data.arrayAddedItems) {
+			for (const i in this.dataDefault.arrayAddedItems) {
 				if (i) {
-					if (this.data.arrayAddedItems[i].id === item.id) {
-						this.data.arrayAddedItems.splice(i, 1);
+					if (item.up_name) {
+						if (this.dataDefault.arrayAddedItems[i].up_name === item.up_name) {
+							this.dataDefault.arrayAddedItems.splice(i, 1);
+						}
+					} else {
+						if (this.dataDefault.arrayAddedItems[i].name === item.name) {
+							this.dataDefault.arrayAddedItems.splice(i, 1);
+						}
 					}
 				}
 			}
 
 			item.selected = false;
 		} else {
-			this.data.arrayAddedItems.push(item);
+			this.dataDefault.arrayAddedItems.push(item);
 			item.selected = true;
 		}
-	}
-
-	// Save
-	submit(event) {
-		const data = {
-			array: this.data.arrayAddedItems,
-			list: this.data.list,
-			rows: this.data.rowsDefault,
-			loadMore: this.loadMoreData
-		};
-
-		this.dialogRef.close(data);
-	}
-
-	// Close
-	close() {
-		const data = {
-			array: this.data.arrayAddedItemsCopy,
-			list: this.data.list,
-			rows: this.data.rowsDefault,
-			loadMore: this.loadMoreData
-		};
-
-		this.dialogRef.close(data);
 	}
 
 	// Upload files
@@ -184,23 +325,29 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			for (let i = 0; i < event.currentTarget.files.length; i++) {
 				const file = event.currentTarget.files[i];
 				file.title = file.name.replace('.mp3', '');
-				file.id = '000' + this.data.counterUploaded++;
 				file.uploaded = true;
+				file.id = 0;
 
-				if (/^audio\/\w+$/.test(file.type)) {
-					file.category = 'audio';
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.list.push(file);
+				if (this.dataDefault.countUploads === 10) {
+					this.alertService.error(this.translations.common.exceededMaxUploads);
 				} else {
-					file.status = 'error';
-					this.data.list.unshift(file);
+					this.dataDefault.countUploads++;
+
+					if (/^audio\/\w+$/.test(file.type)) {
+						file.category = 'audio';
+
+						if (file.size >= 20000000) {
+							file.sizeBig = convertToMb(file.size);
+							file.status = 'error';
+						} else {
+							this.uploadFiles(2, file);
+						}
+
+						this.dataDefault.list.unshift(file);
+					} else {
+						file.status = 'error';
+						this.dataDefault.list.unshift(file);
+					}
 				}
 			}
 		} else if (type === 2) { // Upload one by one
@@ -219,12 +366,16 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 				fl.status = 'completed';
 				fl.up_name = response.name;
 				fl.up_type = response.type ? response.type : '';
+				fl.original_title = response.original_title ? response.original_title : '';
 				fl.up_original_title = response.original_title ? response.original_title : '';
+				fl.original_artist = response.original_artist ? response.original_artist : '';
 				fl.up_original_artist = response.original_artist ? response.original_artist : '';
-				fl.up_genre = response.genre ? response.genre : '';
+				fl.image = response.image ? response.image : '';
 				fl.up_image = response.image ? response.image : '';
+				fl.up_genre = response.genre ? response.genre : '';
 				fl.up_duration = response.duration ? response.duration : '';
 
+				// Add to array
 				self.toggleItem(fl);
 			};
 
@@ -277,5 +428,31 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 
 			ajaxCall(newFile, newFormdata, newAjax);
 		}
+	}
+
+	// Save
+	submit(event) {
+		const data = {
+			array: this.dataDefault.arrayAddedItems,
+			list: this.dataDefault.list,
+			rows: this.dataDefault.rows,
+			loadMore: this.dataDefault.loadMoreData,
+			countUploads: this.dataDefault.countUploads
+		};
+
+		this.dialogRef.close(data);
+	}
+
+	// Close
+	close() {
+		const data = {
+			array: this.dataDefault.arrayAddedItemsCopy,
+			list: this.dataDefault.list,
+			rows: this.dataDefault.rows,
+			loadMore: this.dataDefault.loadMoreData,
+			countUploads: this.dataDefault.countUploads
+		};
+
+		this.dialogRef.close(data);
 	}
 }

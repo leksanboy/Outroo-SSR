@@ -40,26 +40,28 @@ export class NewReportComponent implements OnInit {
 		this.submitLoading = true;
 
 		if (this.actionForm.get('content').value.trim().length > 0) {
-			const data = {
-				pageId: this.data.item.id,
-				pageType: this.data.item.type,
-				content: this.actionForm.get('content').value
-			};
+			if (this.actionForm.get('content').value.trim().length <= 1000) {
+				const data = {
+					pageId: this.data.item.id,
+					pageType: this.data.item.type,
+					content: this.actionForm.get('content').value
+				};
 
-			this.userDataService.report(data)
-				.subscribe(res => {
-					this.dialogRef.close(res);
-					this.submitLoading = false;
-					this.alertService.success(this.translations.common.sentSuccessfully);
-				}, error => {
-					this.submitLoading = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
+				this.userDataService.report(data)
+					.subscribe(res => {
+						this.dialogRef.close(res);
+						this.submitLoading = false;
+						this.alertService.success(this.translations.common.sentSuccessfully);
+					}, error => {
+						this.submitLoading = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			} else {
+				this.alertService.error(this.translations.common.isTooLong);
+			}
 		} else {
 			this.submitLoading = false;
-
-			// show error message
-			this.alertService.error(this.translations.common.completeAllFields);
+			this.alertService.error(this.translations.common.isTooShort);
 		}
 	}
 

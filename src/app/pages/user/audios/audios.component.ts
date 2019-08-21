@@ -4,8 +4,8 @@ import { Location, DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { environment } from '../../../../environments/environment';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
@@ -57,7 +57,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public activeLanguage: any;
 	public actionFormSearch: FormGroup;
 	public hideAd: boolean;
-	public audio = new Audio();
+	// public audio = new Audio();
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -66,6 +66,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		public dialog: MatDialog,
 		private location: Location,
 		private titleService: Title,
+		private ssrService: SsrService,
 		private sanitizer: DomSanitizer,
 		private alertService: AlertService,
 		private playerService: PlayerService,
@@ -73,7 +74,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
 	) {
 		// Session
@@ -1037,7 +1037,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				translations: this.translations,
 				item: item,
 				audioPlayerData: this.audioPlayerData,
-				path: this.data.path
+				path: this.env.pathAudios
 			}
 		};
 
@@ -1086,7 +1086,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		switch (type) {
 			case('edit'):
 				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
-				item.path = this.data.path;
+				item.path = this.env.pathAudios;
 				item.index = index;
 
 				const config = {

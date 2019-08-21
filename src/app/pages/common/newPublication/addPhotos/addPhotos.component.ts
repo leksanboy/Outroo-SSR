@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../../environments/environment';
 
+import { AlertService } from '../../../../../app/core/services/alert/alert.service';
+
 @Component({
 	selector: 'app-add-photos',
 	templateUrl: './addPhotos.component.html'
@@ -16,17 +18,20 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<NewPublicationAddPhotosComponent>,
+		private alertService: AlertService,
 		private sanitizer: DomSanitizer
-	) { }
+	) {
+		console.log("Ph constructor");
 
-	ngOnInit() {
 		this.translations = this.data.translations;
 		this.sessionData = this.data.sessionData;
 		this.data.list = this.data.list ? this.data.list : [];
-		this.data.arrayAddedItems = [];
-		this.data.arrayAddedItems = Object.assign([], this.data.array);
-		this.data.arrayAddedItemsCopy = [];
-		this.data.arrayAddedItemsCopy = Object.assign([], this.data.array);
+		this.data.arrayAddedItems = Object.assign([], (this.data.array ? this.data.array : []));
+		this.data.arrayAddedItemsCopy = Object.assign([], (this.data.array ? this.data.array : []));
+	}
+
+	ngOnInit() {
+		console.log("Ph init");
 
 		if (this.data.list.length > 0) {
 			for (const i of this.data.list) {
@@ -39,8 +44,10 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 				if (i) {
 					for (const e of this.data.array) {
 						if (e) {
-							if (i.id === e.id) {
-								i.selected = true;
+							if (i.up_name) {
+								if (i.up_name === e.up_name) {
+									i.selected = true;
+								}
 							}
 						}
 					}
@@ -48,6 +55,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			}
 
 			this.data.list = this.data.list ? this.data.list : [];
+			console.log("this.data", this.data);
 		}
 	}
 
@@ -55,13 +63,15 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 		this.submit(null);
 	}
 
-	// Select/unselect
+	// Select/Unselect
 	toggleItem(item) {
 		if (item.selected) {
 			for (const i in this.data.arrayAddedItems) {
 				if (i) {
-					if (this.data.arrayAddedItems[i].id === item.id) {
-						this.data.arrayAddedItems.splice(i, 1);
+					if (item.up_name) {
+						if (this.data.arrayAddedItems[i].up_name === item.up_name) {
+							this.data.arrayAddedItems.splice(i, 1);
+						}
 					}
 				}
 			}
@@ -71,26 +81,8 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			this.data.arrayAddedItems.push(item);
 			item.selected = true;
 		}
-	}
 
-	// Save
-	submit(event) {
-		const data = {
-			array: this.data.arrayAddedItems,
-			list: this.data.list
-		};
-
-		this.dialogRef.close(data);
-	}
-
-	// Close
-	close() {
-		const data = {
-			array: this.data.arrayAddedItemsCopy,
-			list: this.data.list
-		};
-
-		this.dialogRef.close(data);
+		console.log("arrayAddedItems:", this.data.arrayAddedItems);
 	}
 
 	// Upload files
@@ -110,43 +102,50 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			for (let i = 0; i < event.currentTarget.files.length; i++) {
 				const file = event.currentTarget.files[i];
 				file.title = file.name;
-				file.id = '000' + this.data.counterUploaded++;
+				file.id = 0;
 				file.uploaded = true;
 				file.mimetype = file.type;
 
-				if (/^image\/\w+$/.test(file.type)) {
-					file.category = 'image';
-					const reader = new FileReader();
-					reader.readAsDataURL(file);
-					reader.addEventListener('load', function(e) {
-						file.thumbnail = e.target;
-						file.thumbnail = file.thumbnail.result;
-					});
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.list.unshift(file);
-				} else if (/^video\/\w+$/.test(file.type)) {
-					file.category = 'video';
-					file.thumbnail = URL.createObjectURL(file);
-					file.thumbnail = this.sanitizer.bypassSecurityTrustUrl(file.thumbnail);
-
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						file.status = 'error';
-					} else {
-						this.uploadFiles(2, file);
-					}
-
-					this.data.list.unshift(file);
+				if (this.data.countUploads === 10) {
+					this.alertService.error(this.translations.common.exceededMaxUploads);
 				} else {
-					file.status = 'error';
-					this.data.list.unshift(file);
+					this.data.countUploads++;
+
+					if (/^image\/\w+$/.test(file.type)) {
+						file.category = 'image';
+						const reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.addEventListener('load', function(e) {
+							file.thumbnail = e.target;
+							file.thumbnail = file.thumbnail.result;
+						});
+
+						if (file.size >= 20000000) {
+							file.sizeBig = convertToMb(file.size);
+							file.status = 'error';
+						} else {
+							this.uploadFiles(2, file);
+						}
+
+						this.data.list.unshift(file);
+					} else if (/^video\/\w+$/.test(file.type)) {
+						file.category = 'video';
+						file.thumbnail = URL.createObjectURL(file);
+						file.thumbnail = this.sanitizer.bypassSecurityTrustUrl(file.thumbnail);
+
+						if (file.size >= 20000000) {
+							file.sizeBig = convertToMb(file.size);
+							file.status = 'error';
+						} else {
+							this.data.countUploads++;
+							this.uploadFiles(2, file);
+						}
+
+						this.data.list.unshift(file);
+					} else {
+						file.status = 'error';
+						this.data.list.unshift(file);
+					}
 				}
 			}
 		} else if (type === 2) { // Upload one by one
@@ -219,5 +218,27 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 
 			ajaxCall(newFile, newFormdata, newAjax);
 		}
+	}
+
+	// Save
+	submit(event) {
+		const data = {
+			array: this.data.arrayAddedItems,
+			list: this.data.list,
+			countUploads: this.data.countUploads
+		};
+
+		this.dialogRef.close(data);
+	}
+
+	// Close
+	close() {
+		const data = {
+			array: this.data.arrayAddedItemsCopy,
+			list: this.data.list,
+			countUploads: this.data.countUploads
+		};
+
+		this.dialogRef.close(data);
 	}
 }

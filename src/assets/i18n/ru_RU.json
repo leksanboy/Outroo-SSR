@@ -369,6 +369,7 @@
 		"accountInUse": "Текущий аккаунт используется",
 		"emailOrPasswordIncorrect": "Неверный адрес электронной почты или пароль",
 		"isTooShort": "Напиши что-нибудь",
+		"isTooLong": "Текст слишком длинный",
 		"commentPlaceholder": "Пишите здесь...",
 		"loadComments": "Загрузить комментарии",
 		"incorrectCredentials": "Учетные данные не действительны",
@@ -376,6 +377,8 @@
 		"fieldsNotMatch": "Поля не совпадают",
 		"more": "еще",
 		"addSomeSongsToPlaylist": "Добавите несколько песен в плейлист",
-		"createPlaylist": "Создать плейлист"
+		"createPlaylist": "Создать плейлист",
+		"songNotUploaded": "Невозможно воспроизвести песню, потому что она еще не загружена",
+		"exceededMaxUploads": "Вы превысили максимальное количество загрузок"
 	}
 }

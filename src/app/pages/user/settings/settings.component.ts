@@ -436,30 +436,33 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		if (params.username.trim().length === 0 || !regex.test(params.username)) {
 			this.alertService.error(this.translations.settings.usernameRequirements);
 		} else {
-			this.submitPersonalLoading = true;
+			if (dataAbout.original.trim().length <= 1000) {
+				this.submitPersonalLoading = true;
 
-			this.userDataService.updateData(params)
-				.subscribe(res => {
-					setTimeout(() => {
+				this.userDataService.updateData(params)
+					.subscribe(res => {
+						setTimeout(() => {
+							this.submitPersonalLoading = false;
+							this.sessionData = this.userDataService.getSessionData();
+							this.sessionService.setData(this.sessionData);
+
+							// Get translations
+							this.userDataService.getTranslations(this.sessionData.current.language)
+								.subscribe(data => {
+									this.translations = data;
+
+									// Alert Message
+									this.alertService.success(this.translations.common.savedSuccessfully);
+								});
+						}, 1000);
+					}, error => {
 						this.submitPersonalLoading = false;
-						this.sessionData = this.userDataService.getSessionData();
-						this.sessionService.setData(this.sessionData);
-
-						// Get translations
-						this.userDataService.getTranslations(this.sessionData.current.language)
-							.subscribe(data => {
-								this.translations = data;
-
-								// Alert Message
-								this.alertService.success(this.translations.common.savedSuccessfully);
-							});
-					}, 1000);
-				}, error => {
-					this.submitPersonalLoading = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			} else {
+				this.alertService.error(this.translations.common.isTooLong);
+			}
 		}
-
 	}
 
 	// Save password data

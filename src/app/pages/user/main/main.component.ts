@@ -749,29 +749,33 @@ export class MainComponent implements OnInit, OnDestroy {
 
 			return newData;
 		} else if (type === 'create') {
-			if (item.newCommentData.original.trim().length === 0) {
-				this.alertService.warning(this.translations.common.isTooShort);
+			if (item.newCommentData.original.trim().length > 0) {
+				if (item.newCommentData.original.trim().length <= 1000) {
+					const formatedData = this.newComment('transformBeforeSend', null, item);
+					const dataCreate = {
+						type: 'create',
+						id: item.id,
+						receiver: item.user.id,
+						comment: formatedData.content,
+						comment_original: formatedData.original,
+						mentions: formatedData.mentions
+					};
+
+					this.publicationsDataService.comment(dataCreate)
+						.subscribe((res: any) => {
+							item.comments.list.unshift(res);
+							item.countComments++;
+							item.noData = false;
+
+							this.newComment('clear', null, item);
+						}, error => {
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
+						});
+				} else {
+					this.alertService.error(this.translations.common.isTooLong);
+				}
 			} else {
-				const formatedData = this.newComment('transformBeforeSend', null, item);
-				const dataCreate = {
-					type: 'create',
-					id: item.id,
-					receiver: item.user.id,
-					comment: formatedData.content,
-					comment_original: formatedData.original,
-					mentions: formatedData.mentions
-				};
-
-				this.publicationsDataService.comment(dataCreate)
-					.subscribe((res: any) => {
-						item.comments.list.unshift(res);
-						item.countComments++;
-						item.noData = false;
-
-						this.newComment('clear', null, item);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
+				this.alertService.warning(this.translations.common.isTooShort);
 			}
 		}
 	}

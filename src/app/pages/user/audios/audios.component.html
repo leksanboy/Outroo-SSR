@@ -111,7 +111,7 @@
 								
 								<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removeType === 'remove'}">
 									<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + data.path + 'covers/' + x.image + ')'}"></div>
+										<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 
 										<div class="category" *ngIf="x.private">
 											<i label="lock" matTooltip="Private playlist"></i>
@@ -155,9 +155,10 @@
 											<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
 												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'default')"></i>
 												<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'default')"></i>
-												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+												<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
+
 										<div class="text" (click)="playSong(dataDefault.list, x, i, 'default')">
 											<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 												<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -238,7 +239,7 @@
 											<button mat-icon-button (click)="playSong(dataAround.list, x, i, 'around')">
 												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'around')"></i>
 												<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'around')"></i>
-												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+												<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
 
@@ -307,7 +308,7 @@
 							<div class="playlists" *ngIf="dataTop.playlists && dataTop.list">
 								<div class="box" *ngFor="let x of dataTop.playlists; let i=index;">
 									<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + data.path + 'covers/' + x.image + ')'}"></div>
+										<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 									</div>
 
 									<div class="panel">
@@ -336,7 +337,7 @@
 											<button mat-icon-button (click)="playSong(dataTop.list, x, i, 'top')">
 												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'top')"></i>
 												<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'top')"></i>
-												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+												<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
 										
@@ -409,7 +410,7 @@
 											<button mat-icon-button (click)="playSong(dataFresh.list, x, i, 'fresh')">
 												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh')"></i>
 												<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh')"></i>
-												<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+												<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 											</button>
 										</div>
 										
@@ -478,13 +479,13 @@
 
 				<span *ngIf="data.active == 'search'">
 					<ul class="tracks" *ngIf="dataSearch.list.length">
-						<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh', default: !x.image}">
+						<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'search', default: !x.image}">
 							<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 								<div class="image">
 									<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
 										<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'search')"></i>
 										<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'search')"></i>
-										<img *ngIf="x.image" [src]="data.path + 'thumbnails/' + x.image"/>
+										<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 									</button>
 								</div>
 								

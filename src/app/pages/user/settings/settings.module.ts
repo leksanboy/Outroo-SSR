@@ -13,6 +13,7 @@ import {
 	MatProgressSpinnerModule,
 	MatSelectModule,
 	MatSlideToggleModule,
+	MatRippleModule,
 	MatTabsModule,
 	MatTooltipModule
 } from '@angular/material';
@@ -51,6 +52,7 @@ const routes: Routes = [
 		MatProgressSpinnerModule,
 		MatSelectModule,
 		MatSlideToggleModule,
+		MatRippleModule,
 		MatTabsModule,
 		MatTooltipModule
 	],

@@ -1,15 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location, DOCUMENT } from '@angular/common';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { environment } from '../../../../environments/environment';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
+import { PlayerService } from '../../../../app/core/services/player/player.service';
 
 import { NewPublicationAddPhotosComponent } from './addPhotos/addPhotos.component';
 import { NewPublicationAddAudiosComponent } from './addAudios/addAudios.component';
@@ -38,6 +39,7 @@ export class NewPublicationComponent implements OnInit {
 		eventTarget: '',
 		lastTypedWord: []
 	};
+	public audioPlayerData: any = [];
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -48,6 +50,7 @@ export class NewPublicationComponent implements OnInit {
 		private location: Location,
 		private sanitizer: DomSanitizer,
 		private alertService: AlertService,
+		private playerService: PlayerService,
 		private userDataService: UserDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService
@@ -100,14 +103,15 @@ export class NewPublicationComponent implements OnInit {
 	openPhotos(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addPhotos');
 		const config = {
-			disableClose: false,
+			disableClose: true,
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations,
 				array: this.data.photosArray,
 				list: this.data.photosList,
 				rows: this.data.photosRows,
-				loadMore: this.data.photosLoadMore
+				loadMore: this.data.photosLoadMore,
+				countUploads: (this.data.photosCountUploads ? this.data.photosCountUploads : 0),
 			}
 		};
 
@@ -119,20 +123,23 @@ export class NewPublicationComponent implements OnInit {
 			this.data.photosList = res.list;
 			this.data.photosRows = res.rows;
 			this.data.photosLoadMore = res.loadMore;
+			this.data.photosCountUploads = res.countUploads;
 		});
 	}
 
 	openAudios(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addAudios');
 		const config = {
-			disableClose: false,
+			disableClose: true,
 			data: {
+				active: 'default',
 				sessionData: this.sessionData,
 				translations: this.translations,
 				array: this.data.audiosArray,
 				list: this.data.audiosList,
 				rows: this.data.audiosRows,
-				loadMore: this.data.audiosLoadMore
+				loadMore: this.data.audiosLoadMore,
+				countUploads: (this.data.audiosCountUploads ? this.data.audiosCountUploads : 0)
 			}
 		};
 
@@ -144,7 +151,38 @@ export class NewPublicationComponent implements OnInit {
 			this.data.audiosList = res.list;
 			this.data.audiosRows = res.rows;
 			this.data.audiosLoadMore = res.loadMore;
+			this.data.audiosCountUploads = res.countUploads;
 		});
+	}
+
+	playSong(data, item, key, type) {
+		if (!this.sessionData) {
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
+		} else {
+			if (item.id === 0) {
+				this.alertService.warning(this.translations.common.songNotUploaded);
+			} else {
+				if (this.audioPlayerData.key === key &&
+					this.audioPlayerData.type === type &&
+					this.audioPlayerData.item.song === item.song
+				) { // Play/Pause current
+					item.playing = !item.playing;
+					this.playerService.setPlayTrack(this.audioPlayerData);
+				} else { // Play new one
+					this.audioPlayerData.list = data;
+					this.audioPlayerData.item = item;
+					this.audioPlayerData.key = key;
+					this.audioPlayerData.user = this.sessionData.current.id;
+					this.audioPlayerData.username = this.sessionData.current.username;
+					this.audioPlayerData.location = 'newPublication';
+					this.audioPlayerData.type = type;
+					this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+
+					this.playerService.setData(this.audioPlayerData);
+					item.playing = true;
+				}
+			}
+		}
 	}
 
 	toggleItem(type, item) {
@@ -152,33 +190,46 @@ export class NewPublicationComponent implements OnInit {
 			if (item.selected) {
 				for (const i in this.data.photosArray) {
 					if (i) {
-						if (this.data.photosArray[i].id === item.id) {
-							this.data.photosArray.splice(i, 1);
+						if (item.up_name) {
+							if (this.data.photosArray[i].up_name === item.up_name) {
+								this.data.photosArray.splice(i, 1);
+								item.selected = false;
+							}
 						}
 					}
 				}
-
-				item.selected = false;
 			} else {
 				this.data.photosArray.push(item);
 				item.selected = true;
 			}
+
+			console.log("this.data.photosArray", this.data.photosArray);
 		} else if (type === 'audios') {
 			if (item.selected) {
 				for (const i in this.data.audiosArray) {
 					if (i) {
-						if (this.data.audiosArray[i].id === item.id) {
-							this.data.audiosArray.splice(i, 1);
+						if (item.up_name) {
+							if (this.data.audiosArray[i].up_name === item.up_name) {
+								this.data.audiosArray.splice(i, 1);
+								item.selected = false;
+							}
+						} else {
+							if (this.data.audiosArray[i].name === item.name) {
+								this.data.audiosArray.splice(i, 1);
+								item.selected = false;
+							}
 						}
 					}
 				}
-
-				item.selected = false;
 			} else {
 				this.data.audiosArray.push(item);
 				item.selected = true;
 			}
+
+			console.log("this.data.audiosArray", this.data.audiosArray);
 		}
+
+		console.log("this.data", this.data);
 	}
 
 	writingChanges(innerText) {
@@ -399,7 +450,7 @@ export class NewPublicationComponent implements OnInit {
 			for (const i of this.data.audiosArray) {
 				if (i) {
 					const a = {
-						id: 				i.uploaded ? i.id : i.photo,
+						id: 				i.uploaded ? i.id : i.song,
 						song: 				i.uploaded ? '' : i.song,
 						name: 				i.uploaded ? i.up_name : i.name,
 						original_title: 	i.uploaded ? i.up_original_title : i.title,
@@ -414,23 +465,27 @@ export class NewPublicationComponent implements OnInit {
 				}
 			}
 
-			const data = {
-				content: 			formatedData.content,
-				contentOriginal: 	this.publicationData.original,
-				mentions: 			formatedData.mentions,
-				hashtags: 			formatedData.hashtags,
-				photos: 			(photosArray.length > 0 ? photosArray : ''),
-				audios: 			(audiosArray.length > 0 ? audiosArray : '')
-			};
+			if (this.publicationData.original.length <= 3000) {
+				const data = {
+					content: 			formatedData.content,
+					contentOriginal: 	this.publicationData.original,
+					mentions: 			formatedData.mentions,
+					hashtags: 			formatedData.hashtags,
+					photos: 			(photosArray.length > 0 ? photosArray : ''),
+					audios: 			(audiosArray.length > 0 ? audiosArray : '')
+				};
 
-			this.publicationsDataService.createPublication(data)
-				.subscribe(res => {
-					this.dialogRef.close(res);
-					this.submitLoading = false;
-				}, error => {
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-					this.submitLoading = false;
-				});
+				this.publicationsDataService.createPublication(data)
+					.subscribe(res => {
+						this.dialogRef.close(res);
+						this.submitLoading = false;
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+						this.submitLoading = false;
+					});
+			} else {
+				this.alertService.error(this.translations.common.textIsToLong);
+			}
 		} else {
 			this.alertService.error(this.translations.main.addSomeContent);
 		}

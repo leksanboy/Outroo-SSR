@@ -472,6 +472,51 @@ body{
 						width: 42px;
 						margin: 0;
 
+						span{
+							justify-content: center;
+							align-items: center;
+							position: relative;
+							display: flex;
+							height: 100%;
+							width: 100%;
+
+							.progress{
+								background-color: transparentize($fontBlackColor, .75);
+								border-radius: 50%;
+								position: relative;
+								height: 36px;
+								width: 36px;
+								z-index: 1;
+
+								mat-progress-spinner{
+									height: 36px !important;
+									width: 36px !important;
+
+									svg{
+										filter: drop-shadow($shadowText1);
+										height: 36px !important;
+										width: 36px !important;
+
+										circle{
+											stroke: $whiteColor !important;
+											stroke-width: 5px !important;
+										}
+									}
+								}
+
+								.value{
+									text-shadow: $shadowText1;
+									position: absolute;
+									text-align: center;
+									color: $whiteColor;
+									line-height: 36px;
+									font-size: 10px;
+									width: 100%;
+									top: 0;
+								}
+							}
+						}
+
 						img{
 							position: absolute;
 							height: 100%;
@@ -3172,6 +3217,7 @@ body{
 
 						.searchBoxMentions{
 							background-color: $whiteColor;
+							box-shadow: $shadowBox2;
 							margin: 10px 0 0 18px;
 							border-radius: 5px;
 							position: fixed;
@@ -3230,6 +3276,7 @@ body{
 											line-height: 18px;
 											font-size: 14px;
 											height: 18px;
+											padding: 0;
 										}
 
 										.name{
@@ -3277,11 +3324,15 @@ body{
 						}
 					}
 
+					.searchBox{
+						padding: 12px 18px 0;
+					}
+
 					ul.photos{
 						box-sizing: border-box;
+						padding: 0 18px 12px;
 						float: left;
 						width: 100%;
-						padding: 0;
 						margin: 0;
 
 						li{
@@ -3421,12 +3472,21 @@ body{
 							}
 						}
 					}
+
+					ul.tracks{
+						li{
+							.inner{
+								padding: 2px 6px 2px 18px;
+							}
+						}
+					}
 				}
 
 				.buttons{
 					justify-content: space-between;
 
 					.files{
+						margin: 0 0 0 -6px;
 						display: flex;
 
 						button{
@@ -3436,8 +3496,15 @@ body{
 							width: 36px;
 							margin: 0;
 
-							i{
-								background-color: $blackColor;
+							span{
+								justify-content: center;
+								align-items: center;
+								display: flex;
+								width: 100%;
+
+								i{
+									background-color: $blackColor;
+								}
 							}
 						}
 					}
@@ -5178,7 +5245,6 @@ body{
 										float: left;
 
 										.name{
-											text-shadow: $shadowText1;
 											width: calc(100% - 12px);
 											text-overflow: ellipsis;
 											box-sizing: border-box;
@@ -6138,124 +6204,139 @@ body{
 
 						li{
 							box-sizing: border-box;
-							position: relative;
-							padding: 4px 18px;
 							list-style: none;
 							margin: 0 0 4px;
-							cursor: pointer;
-							display: flex;
-							float: left;
+							padding: 0 6px;
 							width: 100%;
 
-							.avatar{
+							.inner{
 								box-sizing: border-box;
-								border-radius: 50%;
-								overflow: hidden;
+								border-radius: 5px;
+								padding: 4px 12px;
 								cursor: pointer;
-								min-width: 40px;
-								margin: 4px 0;
-								height: 40px;
-								width: 40px;
-
-								img{
-									background-color: $fontBlackColor;
-									border-radius: 50%;
-									height: 100%;
-									width: 100%;
-								}
-							}
-
-							.add{
-								background-color: $fontBlackColor;
-								box-sizing: border-box;
-								border-radius: 50%;
-								overflow: hidden;
-								min-width: 40px;
-								margin: 4px 0;
-								height: 40px;
-								width: 40px;
-
-								img{
-									border-radius: 50%;
-									height: 100%;
-									width: 100%;
-								}
-
-								i{
-									background-color: $whiteColor;
-									margin: 8px;
-								}
-							}
-
-							.text{
-								box-sizing: border-box;
-								align-items: center;
-								padding: 0 12px;
 								display: flex;
 								width: 100%;
 
-								.in{
-									width: 100%;
+								&:hover{
+									background-color: transparentize($greyColor, .85);
+								}
 
-									.data{
-										align-items: center;
-										display: flex;
+								.avatar{
+									box-sizing: border-box;
+									border-radius: 50%;
+									overflow: hidden;
+									cursor: pointer;
+									min-width: 40px;
+									margin: 4px 0;
+									height: 40px;
+									width: 40px;
 
-										.name{
-											text-overflow: ellipsis;
-											word-break: break-all;
-											white-space: nowrap;
-											font-weight: bold;
-											overflow: hidden;
-											max-width: 75%;
-										}
-									}
-
-									.info{
-										word-break: break-word;
-										color: $greyColor;
-										padding: 2px 0 0;
-										font-size: 14px;
+									img{
+										background-color: $fontBlackColor;
+										border-radius: 50%;
+										height: 100%;
 										width: 100%;
 									}
 								}
-							}
 
-							.actions{
-								height: 48px;
+								.add{
+									background-color: $fontBlackColor;
+									box-sizing: border-box;
+									border-radius: 50%;
+									overflow: hidden;
+									min-width: 40px;
+									margin: 4px 0;
+									height: 40px;
+									width: 40px;
 
-								button{
-									border: 1px solid currentColor;
-									text-transform: uppercase;
-									margin: 10px 0 0 6px;
-									color: currentColor;
-									font-weight: bold;
-									line-height: 28px;
-									font-size: 12px;
-									padding: 0 8px;
-									min-width: 0;
-									height: 28px;
-								}
-							}
+									img{
+										border-radius: 50%;
+										height: 100%;
+										width: 100%;
+									}
 
-							&.active{
-								.avatar{
-									border: 2px solid $blueColor;
-									box-sizing: inherit;
-									margin: 2px 0;
-									padding: 2px;
+									i{
+										background-color: $whiteColor;
+										margin: 8px;
+									}
 								}
 
 								.text{
+									box-sizing: border-box;
+									align-items: center;
+									padding: 0 12px;
+									display: flex;
+									width: 100%;
+
 									.in{
+										width: 100%;
+
 										.data{
+											align-items: center;
+											display: flex;
+
 											.name{
-												color: $blueColor;
+												text-overflow: ellipsis;
+												word-break: break-all;
+												white-space: nowrap;
+												font-weight: bold;
+												overflow: hidden;
+												max-width: 75%;
+
+												i{
+													margin: -6px 0 -6px 0;
+												}
 											}
 										}
 
 										.info{
-											color: transparentize($blueColor, .5);
+											word-break: break-word;
+											color: $greyColor;
+											padding: 2px 0 0;
+											font-size: 14px;
+											width: 100%;
+										}
+									}
+								}
+
+								.actions{
+									height: 48px;
+
+									button{
+										border: 1px solid currentColor;
+										text-transform: uppercase;
+										margin: 10px 0 0 6px;
+										color: currentColor;
+										font-weight: bold;
+										line-height: 28px;
+										font-size: 12px;
+										padding: 0 8px;
+										min-width: 0;
+										height: 28px;
+									}
+								}
+							}
+
+							&.active{
+								.inner{
+									.avatar{
+										border: 2px solid $blueColor;
+										box-sizing: inherit;
+										margin: 2px 0;
+										padding: 2px;
+									}
+
+									.text{
+										.in{
+											.data{
+												.name{
+													color: $blueColor;
+												}
+											}
+
+											.info{
+												color: transparentize($blueColor, .5);
+											}
 										}
 									}
 								}
@@ -7445,7 +7526,7 @@ body{
 					display: none;
 				}
 
-				.bodyCreatePublication{
+				&.bodyCreatePublication{
 					.buttons{
 						display: block;
 
@@ -7455,7 +7536,7 @@ body{
 					}
 				}
 
-				.bodyPublications{
+				&.bodyPublications{
 					padding: 0 0 24px;
 					display: block;
 
@@ -7496,7 +7577,7 @@ body{
 					}
 				}
 
-				.bodyMessage{
+				&.bodyMessage{
 					.container{
 						ul.conversationList{
 							li.publication{
