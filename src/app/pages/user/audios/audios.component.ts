@@ -752,19 +752,27 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					file.title = file.name.replace('.mp3', '');
 					file.status = 'clear';
 
-					if (file.size >= 20000000) {
-						file.sizeBig = convertToMb(file.size);
-						this.dataFiles.saveDisabled = true;
-					}
-
-					if (/^audio\/\w+$/.test(file.type)) {
-						file.category = 'audio';
+					if (this.dataFiles.countUploads === 10) {
+						this.alertService.error(this.translations.common.exceededMaxUploads);
 					} else {
-						file.category = 'unknown';
-						this.dataFiles.saveDisabled = true;
-					}
+						if (/^audio\/\w+$/.test(file.type)) {
+							file.category = 'audio';
 
-					this.dataFiles.list.push(file);
+							if (file.size >= 20000000) {
+								file.sizeBig = convertToMb(file.size);
+								file.status = 'error';
+								this.dataFiles.saveDisabled = true;
+							}
+
+							this.dataFiles.list.unshift(file);
+						} else {
+							file.category = 'unknown';
+							file.status = 'error';
+							this.dataFiles.saveDisabled = true;
+
+							this.dataFiles.list.unshift(file);
+						}
+					}
 				}
 			}
 		} else if (type === 2) { // Cancel
@@ -1040,6 +1048,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				path: this.env.pathAudios
 			}
 		};
+
+		console.log("showPlaylist", config);
 
 		const dialogRef = this.dialog.open(ShowPlaylistComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {

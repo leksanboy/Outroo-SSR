@@ -286,25 +286,29 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 
 	// Select/Unselect
 	toggleItem(item) {
-		if (item.selected) {
-			for (const i in this.dataDefault.arrayAddedItems) {
-				if (i) {
-					if (item.up_name) {
-						if (this.dataDefault.arrayAddedItems[i].up_name === item.up_name) {
-							this.dataDefault.arrayAddedItems.splice(i, 1);
-						}
-					} else {
-						if (this.dataDefault.arrayAddedItems[i].name === item.name) {
-							this.dataDefault.arrayAddedItems.splice(i, 1);
+		if (item.category !== 'unknown') {
+			if (item.selected) {
+				for (const i in this.dataDefault.arrayAddedItems) {
+					if (i) {
+						if (item.up_name) {
+							if (this.dataDefault.arrayAddedItems[i].up_name === item.up_name) {
+								this.dataDefault.arrayAddedItems.splice(i, 1);
+							}
+						} else {
+							if (this.dataDefault.arrayAddedItems[i].name === item.name) {
+								this.dataDefault.arrayAddedItems.splice(i, 1);
+							}
 						}
 					}
 				}
-			}
 
-			item.selected = false;
+				item.selected = false;
+			} else {
+				this.dataDefault.arrayAddedItems.push(item);
+				item.selected = true;
+			}
 		} else {
-			this.dataDefault.arrayAddedItems.push(item);
-			item.selected = true;
+			this.alertService.error(this.translations.common.invalidFile);
 		}
 	}
 
@@ -322,31 +326,34 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 		};
 
 		if (type === 1) { // Add files
-			for (let i = 0; i < event.currentTarget.files.length; i++) {
-				const file = event.currentTarget.files[i];
-				file.title = file.name.replace('.mp3', '');
-				file.uploaded = true;
-				file.id = 0;
+			for (const file of event.currentTarget.files) {
+				if (file) {
+					file.title = file.name.replace('.mp3', '');
+					file.uploaded = true;
+					file.id = 0;
 
-				if (this.dataDefault.countUploads === 10) {
-					this.alertService.error(this.translations.common.exceededMaxUploads);
-				} else {
-					this.dataDefault.countUploads++;
-
-					if (/^audio\/\w+$/.test(file.type)) {
-						file.category = 'audio';
-
-						if (file.size >= 20000000) {
-							file.sizeBig = convertToMb(file.size);
-							file.status = 'error';
-						} else {
-							this.uploadFiles(2, file);
-						}
-
-						this.dataDefault.list.unshift(file);
+					if (this.dataDefault.countUploads === 10) {
+						this.alertService.error(this.translations.common.exceededMaxUploads);
 					} else {
-						file.status = 'error';
-						this.dataDefault.list.unshift(file);
+						this.dataDefault.countUploads++;
+
+						if (/^audio\/\w+$/.test(file.type)) {
+							file.category = 'audio';
+
+							if (file.size >= 20000000) {
+								file.sizeBig = convertToMb(file.size);
+								file.status = 'error';
+							} else {
+								this.uploadFiles(2, file);
+							}
+
+							this.dataDefault.list.unshift(file);
+						} else {
+							file.category = 'unknown';
+							file.status = 'error';
+
+							this.dataDefault.list.unshift(file);
+						}
 					}
 				}
 			}

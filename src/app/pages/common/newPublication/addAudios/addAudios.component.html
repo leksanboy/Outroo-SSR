@@ -38,7 +38,7 @@
 				<div class="button">
 					<button mat-raised-button (click)="uploadFile.click()">
 						<div class="left" [ngClass]="{'warning': dataDefault.list.length > 9}">
-							<i label="cloud"></i>
+							<i label="cloud-upload"></i>
 						</div>
 						<div class="right">
 							<div class="top">
@@ -61,11 +61,13 @@
 							<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
 								<span *ngIf="x.id === 0">
 									<i label="cloud-upload" *ngIf="x.status === 'completed'"></i>
+									<i label="cloud-off" *ngIf="x.status === 'error'"></i>
 									<div class="progress" *ngIf="x.status === 'progress'">
 										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
 										<div class="value">{{x.progress}}%</div>
 									</div>
 								</span>
+
 								<span *ngIf="x.id !== 0">
 									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
 									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
@@ -79,7 +81,18 @@
 								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 							</div>
-							<div class="duration">{{x.duration}}</div>
+							<div class="duration">
+								{{x.duration}}
+
+								<div class="status" *ngIf="x.id === 0">
+									<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
+										{{x.sizeBig}}
+									</div>
+									<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
+										{{translations?.common?.invalidFile}}
+									</div>
+								</div>
+							</div>
 						</div>
 						
 						<div class="actions" *ngIf="sessionData?.current?.id">

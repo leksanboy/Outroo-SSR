@@ -21,8 +21,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 		private alertService: AlertService,
 		private sanitizer: DomSanitizer
 	) {
-		console.log("Ph constructor");
-
 		this.translations = this.data.translations;
 		this.sessionData = this.data.sessionData;
 		this.data.list = this.data.list ? this.data.list : [];
@@ -31,8 +29,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		console.log("Ph init");
-
 		if (this.data.list.length > 0) {
 			for (const i of this.data.list) {
 				if (i) {
@@ -55,7 +51,6 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 			}
 
 			this.data.list = this.data.list ? this.data.list : [];
-			console.log("this.data", this.data);
 		}
 	}
 
@@ -65,24 +60,26 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 
 	// Select/Unselect
 	toggleItem(item) {
-		if (item.selected) {
-			for (const i in this.data.arrayAddedItems) {
-				if (i) {
-					if (item.up_name) {
-						if (this.data.arrayAddedItems[i].up_name === item.up_name) {
-							this.data.arrayAddedItems.splice(i, 1);
+		if (item.category !== 'unknown') {
+			if (item.selected) {
+				for (const i in this.data.arrayAddedItems) {
+					if (i) {
+						if (item.up_name) {
+							if (this.data.arrayAddedItems[i].up_name === item.up_name) {
+								this.data.arrayAddedItems.splice(i, 1);
+							}
 						}
 					}
 				}
+
+				item.selected = false;
+			} else {
+				this.data.arrayAddedItems.push(item);
+				item.selected = true;
 			}
-
-			item.selected = false;
 		} else {
-			this.data.arrayAddedItems.push(item);
-			item.selected = true;
+			this.alertService.error(this.translations.common.invalidFile);
 		}
-
-		console.log("arrayAddedItems:", this.data.arrayAddedItems);
 	}
 
 	// Upload files
@@ -137,13 +134,14 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 							file.sizeBig = convertToMb(file.size);
 							file.status = 'error';
 						} else {
-							this.data.countUploads++;
 							this.uploadFiles(2, file);
 						}
 
 						this.data.list.unshift(file);
 					} else {
+						file.category = 'unknown';
 						file.status = 'error';
+
 						this.data.list.unshift(file);
 					}
 				}

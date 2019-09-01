@@ -54,6 +54,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public showUserBox: boolean;
 	public showCloseSession: boolean;
 	public showChangeSession: boolean;
+	public showChangeTheme: boolean;
 	public showChangeSessionOnMenu: boolean;
 	public showChangeLanguage: boolean;
 	public signingBox: boolean;
@@ -128,15 +129,18 @@ export class ActiveSessionComponent implements AfterViewInit {
 			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
 				this.userDataService.noSessionData();
 				// console.log('No tengo session y no puedo acceder a settings, notifications, news, home');
-			} else {
-				// console.log('No tengo session pero puedo ver ciertas paginas :::> [', this.router.url, ']');
 			}
 		} else {
-			// Add dark theme
-			if (this.sessionData.current.theme) {
-				this.document.body.classList.add('blackTheme');
-			} else {
+			// Set theme
+			if (this.sessionData.current.theme === 0) {
 				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.remove('blueTheme');
+			} else if (this.sessionData.current.theme === 1) {
+				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.add('blueTheme');
+			} else if (this.sessionData.current.theme === 2) {
+				this.document.body.classList.remove('blueTheme');
+				this.document.body.classList.add('blackTheme');
 			}
 
 			// Load default audios
@@ -405,7 +409,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Set come from user button
 	setComeFromUserButton() {
-		console.log("setComeFromUserButton-->TRUE");
+		// console.log("setComeFromUserButton-->TRUE");
 
 		setTimeout(() => {
 			this.sessionService.setComeFromUserButton(true);
@@ -963,8 +967,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
-					console.log('createPlaylist:', res);
-
 					if (res) {
 						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
@@ -1099,11 +1101,16 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Set session
 	setCurrentUser(data) {
 		if (this.sessionData.current.id !== data.id) {
-			// Dark/White theme
-			if (data.theme) {
-				this.document.body.classList.add('blackTheme');
-			} else {
+			// Set theme
+			if (data.theme === 0) {
 				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.remove('blueTheme');
+			} else if (data.theme === 1) {
+				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.add('blueTheme');
+			} else if (data.theme === 2) {
+				this.document.body.classList.remove('blueTheme');
+				this.document.body.classList.add('blackTheme');
 			}
 
 			// Get translations
@@ -1143,6 +1150,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	closeSession(data) {
 		if (this.sessionData.sessions.length === 1) {
 			this.document.body.classList.remove('blackTheme');
+			this.document.body.classList.remove('blueTheme');
 			this.userDataService.logout();
 			this.playPlayer('stop', null);
 			this.router.navigate(['logout']);
@@ -1158,32 +1166,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Set different account and check if is not set and deleted
 			this.setCurrentUser(this.sessionData.sessions[0]);
 		}
-	}
-
-	// Dark theme
-	changeTheme() {
-		this.sessionData.current.theme = !this.sessionData.current.theme;
-
-		if (this.sessionData.current.theme) {
-			this.document.body.classList.add('blackTheme');
-		} else {
-			this.document.body.classList.remove('blackTheme');
-		}
-
-		const data = {
-			id: this.sessionData.current.id,
-			theme: this.sessionData.current.theme
-		};
-
-		this.userDataService.updateTheme(data)
-			.subscribe(res => {
-				setTimeout(() => {
-					this.sessionData = this.userDataService.getSessionData();
-					this.sessionService.setDataTheme(this.sessionData);
-				}, 1000);
-			}, error => {
-				this.alertService.error(this.translations.common.anErrorHasOcurred);
-			});
 	}
 
 	// Change language
@@ -1208,6 +1190,42 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
+	}
+
+	// Dark theme
+	changeTheme(value) {
+		// Set theme
+		if (value === 0) {
+			this.document.body.classList.remove('blackTheme');
+			this.document.body.classList.remove('blueTheme');
+		} else if (value === 1) {
+			this.document.body.classList.remove('blackTheme');
+			this.document.body.classList.add('blueTheme');
+		} else if (value === 2) {
+			this.document.body.classList.remove('blueTheme');
+			this.document.body.classList.add('blackTheme');
+		}
+
+		// Close user box
+		this.showChangeTheme = false;
+		this.showUserBox = false;
+
+		const data = {
+			id: this.sessionData.current.id,
+			theme: value
+		};
+
+		this.userDataService.updateTheme(data)
+			.subscribe(res => {
+				setTimeout(() => {
+					this.sessionData = this.userDataService.getSessionData();
+					this.sessionService.setDataTheme(this.sessionData);
+
+					this.alertService.success(this.translations.common.themeEnabled);
+				}, 1000);
+			}, error => {
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
+			});
 	}
 
 	// Report inapropiate content

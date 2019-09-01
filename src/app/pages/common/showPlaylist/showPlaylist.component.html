@@ -25,10 +25,10 @@
 					<i class="icon50 white" label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
 				</div>
 				
-				<a class="subtitle" routerLink="/{{data.current.user.username}}">
+				<!-- <a class="subtitle" routerLink="/{{data.current.user.username}}">
 					@{{data.current.user.username}}
 					<i class="icon50 blue" label="official" *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-				</a>
+				</a> -->
 				
 				<div class="button">
 					<button mat-button (click)="playTrack('play')">

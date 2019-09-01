@@ -14,7 +14,8 @@
 		"removeCover": "Remove cover",
 		"addCoverToPlaylist": "Add cover to playlist (can be empty)",
 		"uploadOrSearch": "Upload or search some songs",
-		"goAudios": "Go to my songs"
+		"goAudios": "Go to my songs",
+		"privatePlaylist": "Private playlist"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",
@@ -33,7 +34,7 @@
 		"title": "Profile",
 		"noData": "No publications",
 		"newPublication": "Create new publication",
-		"newPublicationSubtitle": "Songs / Gif / Photos / Videos",
+		"newPublicationSubtitle": "Songs, Gif, Photos, Videos",
 		"registerText": {
 			"one": "Register on Outroo",
 			"two": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates."

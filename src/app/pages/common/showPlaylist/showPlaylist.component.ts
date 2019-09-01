@@ -26,6 +26,8 @@ export class ShowPlaylistComponent implements OnInit {
 		private sessionService: SessionService,
 		private audioDataService: AudioDataService
 	) {
+		console.log("data:", data);
+	
 		this.sessionData = data.sessionData;
 		this.userData = data.userData;
 		this.translations = data.translations;

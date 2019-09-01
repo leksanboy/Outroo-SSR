@@ -331,7 +331,7 @@
 				<div class="hidden" *ngIf="showUserBox" (click)="showUserBoxWeb()"></div>
 				
 				<div class="box">
-					<div class="top" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
+					<div class="top" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage && !showChangeTheme">
 						<div class="image">
 							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
@@ -347,7 +347,7 @@
 					</div>
 
 					<div class="bottom">
-						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage">
+						<div class="outerBox" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage && !showChangeTheme">
 							<div class="item" mat-ripple (click)="setComeFromUserButton(); showUserBox = false;" routerLink="/{{sessionData?.current?.username}}">
 								<i label="person"></i>
 								<div class="text">{{translations?.common?.myAccount}}</div>
@@ -365,10 +365,10 @@
 								<i label="keyboard-arrow-right"></i>
 							</div>
 
-							<div class="item" mat-ripple (click)="changeTheme()">
+							<div class="item" mat-ripple (click)="showChangeTheme=!showChangeTheme">
 								<i label="moon"></i>
 								<div class="text">{{translations?.common?.darkTheme}}</div>
-								<mat-slide-toggle [checked]="sessionData?.current?.theme"></mat-slide-toggle>
+								<i label="keyboard-arrow-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/settings">
@@ -427,10 +427,34 @@
 							</div>
 
 							<div class="changeLanguages">
-								<div class="item" mat-ripple *ngFor="let x of sessionData?.current?.languages" (click)="changeLanguage(x)">
-									<i label="check" *ngIf="x?.id == sessionData?.current?.language"></i>
-									<i class="empty" *ngIf="x?.id != sessionData?.current?.language"></i>
+								<div class="item" mat-ripple *ngFor="let x of sessionData?.current?.languages" [ngClass]="{'active': x?.id === sessionData?.current?.language}" (click)="changeLanguage(x)">
+									<i label="check" class="blue" *ngIf="x?.id === sessionData?.current?.language"></i>
+									<i class="empty" *ngIf="x?.id !== sessionData?.current?.language"></i>
 									<div class="text">{{x.caption}}</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="innerBox" *ngIf="showChangeTheme">
+							<div class="back" (click)="showChangeTheme=false">
+								<button mat-icon-button>
+									<i label="back"></i>
+								</button>
+								{{translations?.common?.darkTheme}}
+							</div>
+
+							<div class="setThemes">
+								<div class="item" [ngClass]="{'active': sessionData.current.theme === 0}" mat-ripple (click)="changeTheme(0)">
+									<div class="color white" mat-list-avatar></div>
+									<div class="text">{{translations?.settings?.themes?.white}}</div>
+								</div>
+								<div class="item" [ngClass]="{'active': sessionData.current.theme === 1}" mat-ripple (click)="changeTheme(1)">
+									<div class="color blue" mat-list-avatar></div>
+									<div class="text">{{translations?.settings?.themes?.blue}}</div>
+								</div>
+								<div class="item" [ngClass]="{'active': sessionData.current.theme === 2}" mat-ripple (click)="changeTheme(2)">
+									<div class="color black" mat-list-avatar></div>
+									<div class="text">{{translations?.settings?.themes?.black}}</div>
 								</div>
 							</div>
 						</div>

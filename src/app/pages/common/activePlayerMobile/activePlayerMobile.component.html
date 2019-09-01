@@ -12,8 +12,8 @@
 			<div class="top">
 				<div class="panel">
 					<div class="text">
-						<div class="title" [style.color]="audioPlayerData?.current?.color">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
 						<div class="artist">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
+						<div class="title" [style.color]="audioPlayerData?.current?.color">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
 					</div>
 
 					<div class="add" *ngIf="audioPlayerData?.current?.initialized">

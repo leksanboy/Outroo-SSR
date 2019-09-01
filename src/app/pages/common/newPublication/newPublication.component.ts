@@ -202,8 +202,6 @@ export class NewPublicationComponent implements OnInit {
 				this.data.photosArray.push(item);
 				item.selected = true;
 			}
-
-			console.log("this.data.photosArray", this.data.photosArray);
 		} else if (type === 'audios') {
 			if (item.selected) {
 				for (const i in this.data.audiosArray) {
@@ -225,11 +223,7 @@ export class NewPublicationComponent implements OnInit {
 				this.data.audiosArray.push(item);
 				item.selected = true;
 			}
-
-			console.log("this.data.audiosArray", this.data.audiosArray);
 		}
-
-		console.log("this.data", this.data);
 	}
 
 	writingChanges(innerText) {
@@ -487,7 +481,7 @@ export class NewPublicationComponent implements OnInit {
 				this.alertService.error(this.translations.common.textIsToLong);
 			}
 		} else {
-			this.alertService.error(this.translations.main.addSomeContent);
+			this.alertService.warning(this.translations.main.addSomeContent);
 		}
 	}
 

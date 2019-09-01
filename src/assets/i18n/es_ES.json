@@ -14,7 +14,8 @@
 		"removeCover": "Eliminar portada",
 		"addCoverToPlaylist": "Añadir portada (opcional)",
 		"uploadOrSearch": "Sube o busca alguna canción",
-		"goAudios": "Ir a mis canciones"
+		"goAudios": "Ir a mis canciones",
+		"privatePlaylist": "Playlist privado"
 	},
 	"bookmarks": {
 		"title": "Guardados",
@@ -33,7 +34,7 @@
 		"title": "Perfil",
 		"noData": "No hay publicaciones",
 		"newPublication": "Crear publicación",
-		"newPublicationSubtitle": "Canciones / Gif / Fotos / Videos",
+		"newPublicationSubtitle": "Canciones, Gif, Fotos, Videos",
 		"registerText": {
 			"one": "Registrate en Outroo",
 			"two": "Conéctate con nuevos amigos y escucha la mejor música. Comparte increíbles canciones, fotos, gifs y videos, envía mensajes y recibe actualizaciones."
@@ -377,7 +378,7 @@
 		"fieldsNotMatch": "Los campos no coinciden",
 		"more": "más",
 		"addSomeSongsToPlaylist": "Añade alguna canción a la lista de reproducción",
-		"createPlaylist": "Crear lista de reproducción",
+		"createPlaylist": "Crear playlist",
 		"songNotUploaded": "No se puede reproducir la canción por que aún no esta subida",
 		"exceededMaxUploads": "Has excedido el número máximo de cargas"
 	}

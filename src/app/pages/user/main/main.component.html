@@ -48,13 +48,6 @@
 						</div>
 					</div>
 
-					<!-- <div class="settings" *ngIf="userData?.id == sessionData?.current?.id">
-						<button mat-button type="button" routerLink="/settings">
-							<i class="icon65 grey" label="settings"></i>
-							{{translations?.settings?.title}}
-						</button>
-					</div> -->
-
 					<div class="social">
 						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
 							<li routerLink="/{{userData?.username}}/songs">
@@ -116,7 +109,7 @@
 						<div class="button">
 							<button mat-raised-button (click)="newPublication('new', null)">
 								<div class="left">
-									<i label="cloud"></i>
+									<i label="add"></i>
 								</div>
 								<div class="right">
 									<div class="top">
