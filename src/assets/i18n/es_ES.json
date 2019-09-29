@@ -15,7 +15,8 @@
 		"addCoverToPlaylist": "Añadir portada (opcional)",
 		"uploadOrSearch": "Sube o busca alguna canción",
 		"goAudios": "Ir a mis canciones",
-		"privatePlaylist": "Playlist privado"
+		"privatePlaylist": "Playlist privado",
+		"playlistTitle": "Título de la playlist"
 	},
 	"bookmarks": {
 		"title": "Guardados",
@@ -380,6 +381,10 @@
 		"addSomeSongsToPlaylist": "Añade alguna canción a la lista de reproducción",
 		"createPlaylist": "Crear playlist",
 		"songNotUploaded": "No se puede reproducir la canción por que aún no esta subida",
-		"exceededMaxUploads": "Has excedido el número máximo de cargas"
+		"exceededMaxUploads": "Has excedido el número máximo de cargas",
+		"addedMoreElementsThanAllowed": "Has agregado más elementos de los permitidos",
+		"containsInvalidFiles": "Contiene archivos no validos",
+		"cropper": "Recortador de imagen",
+		"publicationNotExists": "La publicación no existe o ha sido eliminada"
 	}
 }

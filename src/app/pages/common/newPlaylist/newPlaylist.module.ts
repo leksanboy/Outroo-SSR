@@ -7,6 +7,8 @@ import {
 	MatButtonToggleModule,
 	MatDialogModule,
 	MatProgressSpinnerModule,
+	MatMenuModule,
+	MatDividerModule,
 	MatTooltipModule,
 	MatRippleModule,
 	MatInputModule
@@ -31,6 +33,8 @@ const routes: Routes = [
 		MatButtonToggleModule,
 		MatDialogModule,
 		MatProgressSpinnerModule,
+		MatMenuModule,
+		MatDividerModule,
 		MatTooltipModule,
 		MatRippleModule,
 		MatInputModule

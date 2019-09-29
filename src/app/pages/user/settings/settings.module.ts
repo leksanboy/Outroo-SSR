@@ -15,6 +15,7 @@ import {
 	MatSlideToggleModule,
 	MatRippleModule,
 	MatTabsModule,
+	MatCheckboxModule,
 	MatTooltipModule
 } from '@angular/material';
 
@@ -54,6 +55,7 @@ const routes: Routes = [
 		MatSlideToggleModule,
 		MatRippleModule,
 		MatTabsModule,
+		MatCheckboxModule,
 		MatTooltipModule
 	],
 	declarations: [

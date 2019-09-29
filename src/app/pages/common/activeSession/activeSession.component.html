@@ -445,15 +445,21 @@
 
 							<div class="setThemes">
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 0}" mat-ripple (click)="changeTheme(0)">
-									<div class="color white" mat-list-avatar></div>
+									<div class="color white" mat-list-avatar>
+										<i label="check" class="blue" *ngIf="sessionData.current.theme === 0"></i>
+									</div>
 									<div class="text">{{translations?.settings?.themes?.white}}</div>
 								</div>
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 1}" mat-ripple (click)="changeTheme(1)">
-									<div class="color blue" mat-list-avatar></div>
+									<div class="color blue" mat-list-avatar>
+										<i label="check" class="blue" *ngIf="sessionData.current.theme === 1"></i>
+									</div>
 									<div class="text">{{translations?.settings?.themes?.blue}}</div>
 								</div>
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 2}" mat-ripple (click)="changeTheme(2)">
-									<div class="color black" mat-list-avatar></div>
+									<div class="color black" mat-list-avatar>
+										<i label="check" class="blue" *ngIf="sessionData.current.theme === 2"></i>
+									</div>
 									<div class="text">{{translations?.settings?.themes?.black}}</div>
 								</div>
 							</div>

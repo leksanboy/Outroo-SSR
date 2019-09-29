@@ -20,6 +20,8 @@ import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
+import * as _ from 'lodash';
+
 declare var global: any;
 
 @Component({
@@ -48,7 +50,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		list: [],
 		reload: false,
 		actions: true,
-		saveDisabled: false,
 		counter: 0,
 		max: 30
 	};
@@ -745,12 +746,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		};
 
 		if (type === 1) { // Add files
-			this.dataFiles.saveDisabled = false;
-
 			for (const file of event.currentTarget.files) {
 				if (file) {
 					file.title = file.name.replace('.mp3', '');
-					file.status = 'clear';
+					file.status = 'pending';
 
 					if (this.dataFiles.countUploads === 10) {
 						this.alertService.error(this.translations.common.exceededMaxUploads);
@@ -761,14 +760,12 @@ export class AudiosComponent implements OnInit, OnDestroy {
 							if (file.size >= 20000000) {
 								file.sizeBig = convertToMb(file.size);
 								file.status = 'error';
-								this.dataFiles.saveDisabled = true;
 							}
 
 							this.dataFiles.list.unshift(file);
 						} else {
 							file.category = 'unknown';
 							file.status = 'error';
-							this.dataFiles.saveDisabled = true;
 
 							this.dataFiles.list.unshift(file);
 						}
@@ -779,80 +776,83 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			this.dataFiles.list = [];
 		} else if (type === 3) { // Remove 1 by 1
 			this.dataFiles.list.splice(event, 1);
-
-			for (const i in this.dataFiles.list) {
-				if (this.dataFiles.list[i].category === 'unknown' || this.dataFiles.list[i].sizeBig) {
-					this.dataFiles.saveDisabled = true;
-					return true;
-				} else {
-					this.dataFiles.saveDisabled = false;
-				}
-			}
 		} else if (type === 4) { // Save & Upload
-			this.dataFiles.actions = false;
-			const self = this;
+			if (this.dataFiles.list.length > this.dataFiles.max) {
+				this.alertService.success(this.translations.common.addedMoreElementsThanAllowed);
+			} else {
+				let checkUnknown = _.find(this.dataFiles.list, { 'category': 'unknown' });
 
-			const progressHandler = function(ev, file) {
-				file.status = 'progress';
-				const percent = Math.round((ev.loaded / ev.total) * 100);
-				file.progress = Math.max(0, Math.min(100, percent));
-			};
+				if (checkUnknown) {
+					this.alertService.error(this.translations.common.containsInvalidFiles);
+				} else {
+					this.dataFiles.actions = false;
+					const self = this;
 
-			const counterHandler = function() {
-				self.dataFiles.counter = self.dataFiles.counter + 1;
-				self.dataFiles.reload = (self.dataFiles.list.length === self.dataFiles.counter) ? true : false;
-			};
+					const progressHandler = function(ev, file) {
+						file.status = 'progress';
+						const percent = Math.round((ev.loaded / ev.total) * 100);
+						file.progress = Math.max(0, Math.min(100, percent));
+					};
 
-			const completeHandler = function(ev, file) {
-				file.status = 'completed';
-				counterHandler();
-			};
+					const counterHandler = function() {
+						self.dataFiles.counter = self.dataFiles.counter + 1;
+						self.dataFiles.reload = (self.dataFiles.list.length === self.dataFiles.counter) ? true : false;
+					};
 
-			const errorHandler = function(ev, file) {
-				file.status = 'error';
-				counterHandler();
-			};
+					const completeHandler = function(ev, file) {
+						file.status = 'completed';
+						counterHandler();
+					};
 
-			const abortHandler = function(ev, file) {
-				file.status = 'error';
-				counterHandler();
-			};
+					const errorHandler = function(ev, file) {
+						file.status = 'error';
+						counterHandler();
+					};
 
-			const ajaxCall = function(file, formdata, ajax) {
-				formdata.append('fileUpload', file);
-				formdata.append('category', file.category);
-				formdata.append('title', file.title);
+					const abortHandler = function(ev, file) {
+						file.status = 'error';
+						counterHandler();
+					};
 
-				ajax.upload.addEventListener('progress', function(ev) {
-					progressHandler(ev, file);
-				}, false);
+					const ajaxCall = function(file, formdata, ajax) {
+						formdata.append('fileUpload', file);
+						formdata.append('category', file.category);
+						formdata.append('title', file.title);
 
-				ajax.addEventListener('load', function(ev) {
-					completeHandler(ev, file);
-				}, false);
+						ajax.upload.addEventListener('progress', function(ev) {
+							progressHandler(ev, file);
+						}, false);
 
-				ajax.addEventListener('error', function(ev) {
-					errorHandler(ev, file);
-				}, false);
+						ajax.addEventListener('load', function(ev) {
+							completeHandler(ev, file);
+						}, false);
 
-				ajax.addEventListener('abort', function(ev) {
-					abortHandler(ev, file);
-				}, false);
+						ajax.addEventListener('error', function(ev) {
+							errorHandler(ev, file);
+						}, false);
 
-				ajax.open('POST', './assets/api/audios/uploadFiles.php');
-				ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
-				ajax.send(formdata);
-			};
+						ajax.addEventListener('abort', function(ev) {
+							abortHandler(ev, file);
+						}, false);
 
-			for (const i in this.dataFiles.list) {
-				if (i) {
-					this.dataFiles.list[i].status = 'progress';
+						ajax.open('POST', './assets/api/audios/uploadFiles.php');
+						ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
+						ajax.send(formdata);
+					};
 
-					const file = this.dataFiles.list[i],
-					formdata = new FormData(),
-					ajax = new XMLHttpRequest();
+					for (const i in this.dataFiles.list) {
+						if (i) {
+							if (!(this.dataFiles.list[i].category === 'unknown' || this.dataFiles.list[i].sizeBig)) {
+								this.dataFiles.list[i].status = 'progress';
 
-					ajaxCall(file, formdata, ajax);
+								const file = this.dataFiles.list[i],
+								formdata = new FormData(),
+								ajax = new XMLHttpRequest();
+
+								ajaxCall(file, formdata, ajax);
+							}
+						}
+					}
 				}
 			}
 		} else if (type === 5) { // Reload

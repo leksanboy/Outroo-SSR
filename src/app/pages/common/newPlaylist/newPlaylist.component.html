@@ -1,4 +1,4 @@
-<div class="dialogBox bodyCreatePlaylist">
+<div class="dialogBox bodyPlaylist">
 	<div mat-dialog-title class="header">
 		<div class="left">
 			<button mat-icon-button (click)="close()">
@@ -13,12 +13,42 @@
 		<div class="right">
 			<button mat-button type="submit" (click)="submit()" [disabled]="submitLoading">
 				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-				{{translations?.common?.create}}
+				{{data.type === 'edit' ? translations?.common?.submit : translations?.common?.create}}
 			</button>
 		</div>
 	</div>
 
 	<div mat-dialog-content class="content">
+		<div class="info">
+			<div class="left">
+				<div class="image" [matMenuTriggerFor]="imageOptions">
+					<img [src]="data.newImage ? data.newImage : (data?.current?.image ? (data?.current?.path + 'covers/' + data?.current?.image) : '')">
+
+					<div class="upload">
+						<i class="icon200 white" label="photo-camera"></i>
+					</div>
+				</div>
+				<input type="file" hidden (change)="openImage('upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
+
+				<mat-menu #imageOptions="matMenu" [overlapTrigger]="false">
+					<button mat-menu-item (click)="avatarFile.click()">{{translations?.settings?.uploadPhoto}}</button>
+					<button mat-menu-item (click)="openImage('remove', $event)">{{translations?.settings?.removePhoto}}</button>
+					<mat-divider></mat-divider>
+					<button mat-menu-item>{{translations?.common?.cancel}}</button>
+				</mat-menu>
+			</div>
+
+			<div class="right">
+				<form [formGroup]="actionForm">
+					<mat-form-field>
+						<input matInput placeholder="{{translations?.audios?.playlistTitle}}" #Title maxlength="1000" formControlName="title">
+					</mat-form-field>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div mat-dialog-content class="content">
 		<form [formGroup]="actionForm">
 			<div class="cover">
 				<img [src]="data.newImage" *ngIf="data.newImage" #imageSrc>
@@ -29,7 +59,6 @@
 						<input type="file" hidden (change)="upload(1, $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #uploadFile>
 						<div class="actions">
 							<button mat-raised-button type="button" (click)="uploadFile.click()">
-								<!-- <i label="file-upload"></i> -->
 								{{translations?.common?.upload}}
 							</button>
 						</div>
@@ -81,7 +110,7 @@
 		    	</mat-form-field>
 		    </div>
 		</form>
-	</div>
+	</div> -->
 
 	<div mat-dialog-actions class="buttons">
 		<button mat-raised-button type="button" (click)="close()">
@@ -89,7 +118,7 @@
 		</button>
 		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
 			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-			{{translations?.common?.create}}
+			{{data.type === 'edit' ? translations?.common?.submit : translations?.common?.create}}
 		</button>
 	</div>
 </div>

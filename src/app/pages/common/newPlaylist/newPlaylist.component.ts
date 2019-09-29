@@ -1,11 +1,16 @@
+import { Location, DOCUMENT } from '@angular/common';
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
+import { SessionService } from '../../../../app/core/services/session/session.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+
+import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 
 declare var Cropper: any;
 
@@ -18,7 +23,7 @@ export class NewPlaylistComponent implements OnInit {
 
 	public sessionData: any = [];
 	public translations: any = [];
-	public environment: any = environment;
+	public env: any = environment;
 	public cropperData: any;
 	public flipHrz: boolean;
 	public flipVrt: boolean;
@@ -30,9 +35,14 @@ export class NewPlaylistComponent implements OnInit {
 		public dialogRef: MatDialogRef<NewPlaylistComponent>,
 		private sanitizer: DomSanitizer,
 		private _fb: FormBuilder,
+		public dialog: MatDialog,
+		private location: Location,
 		private alertService: AlertService,
+		private sessionService: SessionService,
+		private userDataService: UserDataService,
 		private audioDataService: AudioDataService
 	) {
+		console.log('data', data);
 		this.sessionData = data.sessionData;
 		this.translations = data.translations;
 		this.data.current = data.item ? data.item : null;
@@ -52,63 +62,43 @@ export class NewPlaylistComponent implements OnInit {
 		// not in use
 	}
 
-	imageLoad() {
-		this.cropperData = new Cropper(this.inputImage.nativeElement, {
-			viewMode: 0,
-			aspectRatio: 1 / 1,
-			dragMode: 'move',
-			modal: true,
-			guides: true,
-			highlight: true,
-			background: true,
-			autoCrop: true,
-			autoCropArea: 0.7,
-			responsive: true
-		});
-	}
+	// Change avatar
+	openImage(action, event) {
+		if (action === 'upload') {
+			let file = event.target.files[0];
 
-	upload(type, event) {
-		let file = event.target.files[0];
+			if (/^image\/\w+$/.test(file.type)) {
+				file = URL.createObjectURL(file);
+				let image = this.sanitizer.bypassSecurityTrustUrl(file);
 
-		if (/^image\/\w+$/.test(file.type)) {
-			file = URL.createObjectURL(file);
-			this.data.newImage = this.sanitizer.bypassSecurityTrustUrl(file);
+				const config = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						translations: this.translations,
+						image: image,
+						comeFrom: 'playlist'
+					}
+				};
 
-			setTimeout(() => {
-				this.imageLoad();
-			}, 100);
-		} else {
-			this.alertService.error(this.translations.common.invalidFile);
+				const dialogRef = this.dialog.open(NewAvatarComponent, config);
+				dialogRef.afterClosed().subscribe(res => {
+					// New
+					this.data.newImage = res;
+
+					// Edit
+					if (this.data.current) {
+						this.data.current .image = res;
+					}
+
+					console.log('data::', this.data);
+				});
+			} else {
+				this.alertService.error(this.translations.common.invalidFile);
+			}
+		} else if (action === 'remove') {
+			this.data.newImage = '';
 		}
-	}
-
-	cropperFunctions(type) {
-		switch (type) {
-			case 'zoomIn':
-				this.cropperData.zoom(0.1);
-				break;
-			case 'zoomOut':
-				this.cropperData.zoom(-0.1);
-				break;
-			case 'rotateLeft':
-				this.cropperData.rotate(-90);
-				break;
-			case 'rotateRight':
-				this.cropperData.rotate(90);
-				break;
-			case 'flipHorizontal':
-				this.flipHrz = !this.flipHrz;
-				this.flipHrz ? this.cropperData.scaleX(-1) : this.cropperData.scaleX(1);
-				break;
-			case 'flipVertical':
-				this.flipVrt = !this.flipVrt;
-				this.flipVrt ? this.cropperData.scaleY(-1) : this.cropperData.scaleY(1);
-				break;
-		}
-	}
-
-	removeCover() {
-		this.data.image = null;
 	}
 
 	submit() {
@@ -116,20 +106,6 @@ export class NewPlaylistComponent implements OnInit {
 			case 'create':
 				if (this.actionForm.get('title').value.trim().length > 0) {
 					this.submitLoading = true;
-
-					if (this.data.newImage) {
-						const imageB64 = this.cropperData.getCroppedCanvas({
-							width: 240,
-							height: 240,
-							// fillColor: '#fff',
-							imageSmoothingEnabled: false,
-							imageSmoothingQuality: 'high'
-						}).toDataURL('image/jpeg');
-
-						this.data.newImage = imageB64;
-					} else {
-						this.data.newImage = '';
-					}
 
 					const data = {
 						type: 'create',
@@ -143,7 +119,6 @@ export class NewPlaylistComponent implements OnInit {
 							this.dialogRef.close(res);
 						});
 				} else {
-					// show error message
 					this.alertService.error(this.translations.common.completeAllFields);
 				}
 				break;
@@ -151,22 +126,6 @@ export class NewPlaylistComponent implements OnInit {
 				if (this.actionForm.get('title').value.trim().length > 0) {
 					this.submitLoading = true;
 
-					// Crop new image
-					if (this.data.newImage) {
-						const imageB64 = this.cropperData.getCroppedCanvas({
-							width: 240,
-							height: 240,
-							fillColor: '#fff',
-							imageSmoothingEnabled: false,
-							imageSmoothingQuality: 'high'
-						}).toDataURL('image/jpeg');
-
-						this.data.newImage = imageB64;
-					} else {
-						this.data.newImage = '';
-					}
-
-					// Data
 					let data;
 					if (this.data.newImage) {
 						data = {
@@ -204,7 +163,6 @@ export class NewPlaylistComponent implements OnInit {
 							this.dialogRef.close(res);
 						});
 				} else {
-					// show error message
 					this.alertService.error(this.translations.common.completeAllFields);
 				}
 				break;

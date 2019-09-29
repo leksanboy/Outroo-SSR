@@ -17,6 +17,7 @@ export class NewAvatarComponent implements OnInit {
 	public environment: any = environment;
 	public sessionData: any = [];
 	public translations: any = [];
+	public image: boolean;
 	public cropperData: any;
 	public flipHrz: boolean;
 	public flipVrt: boolean;
@@ -30,6 +31,7 @@ export class NewAvatarComponent implements OnInit {
 	) {
 		this.sessionData = data.sessionData;
 		this.translations = data.translations;
+		this.image = data.image;
 	}
 
 	ngOnInit() {
@@ -77,30 +79,42 @@ export class NewAvatarComponent implements OnInit {
 				this.dialogRef.close(null);
 				break;
 			case 'crop':
-				const imageBase64 = this.cropperData.getCroppedCanvas({
-					width: 400,
-					height: 400,
-					// fillColor: '#fff',
-					imageSmoothingEnabled: false,
-					imageSmoothingQuality: 'high'
-				}).toDataURL('image/jpeg');
+				if (this.data.comeFrom === 'avatar') {
+					const imageBase64 = this.cropperData.getCroppedCanvas({
+						width: 400,
+						height: 400,
+						// fillColor: '#fff',
+						imageSmoothingEnabled: false,
+						imageSmoothingQuality: 'high'
+					}).toDataURL('image/jpeg');
 
-				this.submitLoading = true;
+					this.submitLoading = true;
 
-				const d = {
-					image: imageBase64
-				};
+					const d = {
+						image: imageBase64
+					};
 
-				this.userDataService.updateAvatar(d)
-					.subscribe(res => {
-						setTimeout(() => {
+					this.userDataService.updateAvatar(d)
+						.subscribe(res => {
+							setTimeout(() => {
+								this.submitLoading = false;
+								this.dialogRef.close(res);
+							}, 1000);
+						}, error => {
 							this.submitLoading = false;
-							this.dialogRef.close(res);
-						}, 1000);
-					}, error => {
-						this.submitLoading = false;
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
+						});
+				} else if (this.data.comeFrom === 'playlist') {
+					const imageBase64 = this.cropperData.getCroppedCanvas({
+						width: 400,
+						height: 400,
+						imageSmoothingEnabled: false,
+						imageSmoothingQuality: 'high'
+					}).toDataURL('image/jpeg');
+
+					this.submitLoading = true;
+					this.dialogRef.close(imageBase64);
+				}
 				break;
 		}
 	}

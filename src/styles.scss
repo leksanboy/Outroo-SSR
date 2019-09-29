@@ -25,7 +25,6 @@ Version: 1.0.2
 
 /*Page width*/
 $pageMaxWidth: 600px;
-$modalWidth: 720px;
 
 /*Icon width on bottom icons*/
 $iconWidth: 1px;
@@ -841,6 +840,7 @@ body{
 					color: $greyColor;
 					cursor: pointer;
 					font-size: 14px;
+					max-width: 80%;
 					width: 100%;
 				}
 			}
@@ -1063,6 +1063,7 @@ body{
 				width: 42px;
 
 				button{
+					border-radius: 5px;
 					overflow: hidden;
 					height: 42px;
 					width: 42px;
@@ -1932,6 +1933,12 @@ body{
 		width: 100%;
 		float: left;
 
+		&.audios{
+			border-bottom: 1px solid transparentize($greyColor, .5);
+			border-top: 1px solid transparentize($greyColor, .5);
+			margin: 0 0 12px;
+		}
+
 		.button{
 			box-sizing: border-box;
 			padding: 0 18px;
@@ -1987,31 +1994,55 @@ body{
 			}
 		}
 
+		.info{
+			box-sizing: border-box;
+			padding: 6px 18px;
+			width: 100%;
+
+			.title{
+				font-weight: bold;
+				font-size: 18px;
+			}
+
+			.subtitle{
+				color: $greyColor;
+				font-size: 13px;
+			}
+		}
+
 		ul.tracks{
 			li{
 				.inner{
 					padding: 2px 6px 2px 18px;
+
+					.text{
+						.duration{
+							padding: 0 12px 0 0;
+						}
+					}
 				}
 			}
 		}
 
 		.buttons{
 			box-sizing: border-box;
-			padding: 0px 12px 24px;
+			padding: 0 12px;
 			display: flex;
 			float: left;
 			width: 100%;
 			margin: 0;
 
 			.group{
+				padding: 12px 0;
 				display: flex;
 				width: 100%;
 			}
 
 			button{
-				background: $redColor;
+				background: $blackColor;
 				color: $whiteColor;
-				margin: 0 6px;
+				margin: 0 6px 12px;
+				line-height: 32px;
 				width: 100%;
 
 				&:last-child{
@@ -2734,7 +2765,7 @@ body{
 			}
 
 			.content{
-				width: $modalWidth;
+				width: 666px;
 			}
 
 			.buttons{
@@ -2799,6 +2830,10 @@ body{
 				}
 			}
 
+			.noData{
+				padding: 48px 48px 96px;
+			}
+
 			/*cropper*/
 			&.bodyCreateAvatar{
 				.content{
@@ -2839,100 +2874,6 @@ body{
 								background-color: $blackColor;
 							}
 						}
-					}
-				}
-			}
-
-			/*create audios*/
-			&.bodyCreatePlaylist{
-				.content{
-					padding: 0 0 24px;
-
-					.cover{
-						background-color: $greyColor;
-						margin: 0 auto 12px;
-						max-height: 460px;
-						min-height: 240px;
-						width: 100%;
-
-						img{
-							max-height: 100%;
-							max-width: 100%;
-						}
-
-						.default{
-							width: 100%;
-
-							.image{
-								filter: grayscale(100%);
-								position: absolute;
-								height: 240px;
-								width: 100%;
-								opacity: .5;
-
-								.img{
-									background-position: center 35%;
-									background-repeat: no-repeat;
-									transform: translate(0px);
-									box-sizing: border-box;
-									background-size: cover;
-									display: inline-block;
-									height: 100%;
-									width: 100%;
-								}
-							}
-
-							.text{
-								padding: 86px 0 24px;
-								text-align: center;
-								width: 100%;
-							}
-
-							.actions{
-								box-sizing: border-box;
-								padding: 24px 12px;
-								text-align: center;
-								width: 100%;
-								float: left;
-
-								button{
-									background: $blackColor;
-									color: $whiteColor;
-									margin: 0 4px;
-								}
-							}
-						}
-
-						.cropper-container{
-							margin: 0 auto;
-						}
-					}
-
-					.panel{
-						justify-content: center;
-						align-items: center;
-						max-width: 360px;
-						margin: 0 auto;
-						display: flex;
-						width: 100%;
-
-						button{
-							border-radius: 0;
-							background: none;
-							box-shadow: none;
-							min-width: 0;
-							width: 100%;
-							padding: 0;
-							margin: 0;
-						}
-					}
-
-					.box{
-						box-sizing: border-box;
-						padding: 0 12px;
-						width: 100%;
-						float: left;
-						margin: 0;
 					}
 				}
 			}
@@ -3656,6 +3597,111 @@ body{
 				}
 			}
 
+			/*show playlist*/
+			&.bodyPlaylist{
+				width: 100%;
+
+				.content{
+					.info{
+						box-sizing: border-box;
+						padding: 18px;
+						display: flex;
+						width: 100%;
+
+						.left{
+							.image{
+								background-color: $greyColor;
+								border-radius: 5px;
+								position: relative;
+								overflow: hidden;
+								height: 144px;
+								width: 144px;
+								float: left;
+
+								img{
+									width: 100%;
+								}
+
+								.upload{
+									justify-content: center;
+									align-items: center;
+									position: absolute;
+									display: flex;
+									height: 100%;
+									width: 100%;
+									top: 0;
+								}
+
+								&:hover .upload{
+									background: transparentize($blueColor, .5);
+									cursor: pointer;
+								}
+							}
+						}
+
+						.right{
+							width: calc(100% - 144px);
+							box-sizing: border-box;
+							padding: 0 0 0 18px;
+
+							.title{
+								-webkit-box-orient: vertical;
+								text-overflow: ellipsis;
+								word-break: break-word;
+								-webkit-line-clamp: 3;
+								display: -webkit-box;
+								font-weight: bold;
+								overflow: hidden;
+								max-height: 84px;
+								font-size: 24px;
+								max-width: 100%;
+								margin: 8px 0 0;
+							}
+
+							.subtitle{
+								color: $blueColor;
+								font-weight: bold;
+								text-align: left;
+								display: block;
+								width: 100%;
+
+								i{
+									margin: 7px 0 -7px -7px;
+								}
+							}
+
+							.button{
+								width: 100%;
+
+								button{
+									background-color: $blueColor;
+									border-radius: 24px;
+									color: $whiteColor;
+									margin: 12px 0 0;
+									font-size: 13px;
+									float: left;
+
+									span{
+										align-items: center;
+										display: flex;
+
+										i{
+											margin: 0 0 0 -8px;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					.container{
+						padding: 0 0 12px;
+						width: 100%;
+						float: left;
+					}
+				}
+			}
+
 			/*show publication*/
 			.bodyPublications{
 				min-height: 360px;
@@ -3866,185 +3912,6 @@ body{
 					img{
 						width: 100%;
 					}
-				}
-			}
-
-			/*show playlist*/
-			.bodyPlaylist{
-				padding: 0 0 24px;
-				min-height: 360px;
-				width: 100%;
-
-				.cover{
-					position: relative;
-					height: 320px;
-					width: 100%;
-					float: left;
-
-					.image{
-						position: absolute;
-						height: 320px;
-						width: 100%;
-
-						.img{
-							background-position: center 65%;
-							background-repeat: no-repeat;
-							transform: translate(0px);
-							box-sizing: border-box;
-							background-size: cover;
-							display: inline-block;
-							height: 100%;
-							width: 100%;
-						}
-					}
-
-					.box{
-						position: absolute;
-						height: 100%;
-						width: 100%;
-						bottom: 0;
-
-						.inner{
-							position: absolute;
-							width: 100%;
-							bottom: 0;
-
-							.top{
-								text-align: center;
-								width: 100%;
-								float: left;
-
-								.title{
-									-webkit-box-orient: vertical;
-									text-shadow: $shadowText1;
-									text-overflow: ellipsis;
-									box-sizing: border-box;
-									word-break: break-word;
-									-webkit-line-clamp: 2;
-									display: -webkit-box;
-									text-align: center;
-									font-weight: bold;
-									overflow: hidden;
-									font-size: 32px;
-									padding: 0 24px;
-									width: 100%;
-								}
-
-								.subtitle{
-									
-								}
-
-								.replays{
-									font-size: 15px;
-								}
-							}
-
-							.bottom{
-								justify-content: center;
-								padding: 18px 0 24px;
-								align-items: center;
-								display: flex;
-								width: 100%;
-								float: left;
-
-								button{
-									background-color: $blackColor;
-									color: currentColor;
-									box-shadow: none;
-
-									&[disabled]{
-										background: transparent !important;
-									}
-
-									&:hover{
-										box-shadow: none;
-										background: none;
-									}
-
-									&.playPause{
-										border: 3px solid currentColor;
-										border-radius: 50% !important;
-										box-sizing: border-box;
-										height: 56px;
-										width: 56px;
-									}
-
-									&.prev,
-									&.next{
-										margin: 4px 18px;
-									}
-								}
-							}
-						}
-					}
-				}
-
-				.head{
-					box-sizing: border-box;
-					padding: 18px;
-					display: flex;
-					width: 100%;
-
-					.left{
-						float: left;
-
-						.image{
-							border-radius: 5px;
-							overflow: hidden;
-							height: 144px;
-							width: 144px;
-							float: left;
-
-							.img{
-								background-position: center 65%;
-								background-repeat: no-repeat;
-								transform: translate(0px);
-								box-sizing: border-box;
-								background-size: cover;
-								display: inline-block;
-								height: 100%;
-								width: 100%;
-							}
-						}
-					}
-
-					.right{
-						width: calc(100% - 144px);
-						box-sizing: border-box;
-						padding: 4px 0 0 18px;
-						float: left;
-
-						.title{
-							-webkit-box-orient: vertical;
-							text-overflow: ellipsis;
-							word-break: break-word;
-							-webkit-line-clamp: 3;
-							display: -webkit-box;
-							font-weight: bold;
-							overflow: hidden;
-							max-height: 84px;
-							font-size: 24px;
-							max-width: 100%;
-						}
-
-						.button{
-							float: left;
-
-							button{
-								border-color: $blackColor;
-								color: $whiteColor;
-								margin: 12px 0 0;
-								float: left;
-							}
-						}
-					}
-				}
-
-				.content{
-					position: relative;
-					width: 100%;
-					float: left;
-					z-index: 1;
 				}
 			}
 		}
@@ -4736,9 +4603,12 @@ body{
 									width: 100%;
 
 									.color{
+										justify-content: center;
+										align-items: center;
 										border-radius: 50%;
 										display: inherit;
 										min-width: 28px;
+										display: flex;
 										margin: 0 6px;
 										height: 28px;
 										width: 28px;
@@ -5029,6 +4899,7 @@ body{
 
 				.panel{
 					position: relative;
+					padding: 0 0 18px;
 					overflow: hidden;
 					width: 100%;
 
@@ -5288,7 +5159,7 @@ body{
 				}
 
 				.content{
-					border-top: 1px solid transparentize($greyColor, .75);
+					// border-top: 1px solid transparentize($greyColor, .75);
 					max-width: $pageMaxWidth;
 					margin: 0 auto;
 
@@ -5649,18 +5520,16 @@ body{
 							display: inline-block;
 							margin: 0 12px 0 0;
 							list-style: none;
-							max-width: 207px;
-							width: 40vw;
+							width: 150px;
 
 							.image{
 								background-color: $greyColor;
 								box-sizing: border-box;
 								position: relative;
 								border-radius: 12px;
-								max-height: 100px;
 								overflow: hidden;
 								cursor: pointer;
-								height: 56vw;
+								height: 150px;
 								width: 100%;
 								float: left;
 
@@ -5679,10 +5548,10 @@ body{
 							.panel{
 								box-sizing: border-box;
 								position: relative;
-								padding: 0 0 6px;
 								display: flex;
 								width: 100%;
 								float: left;
+								padding: 0;
 
 								.title{
 									text-overflow: ellipsis;
@@ -5690,9 +5559,8 @@ body{
 									white-space: nowrap;
 									padding: 0 0 0 4px;
 									line-height: 40px;
-									font-weight: bold;
 									overflow: hidden;
-									font-size: 13px;
+									font-size: 15px;
 									cursor: pointer;
 									width: 100%;
 								}
@@ -5720,9 +5588,6 @@ body{
 							}
 
 							&.new{
-								max-width: 100px;
-								float: left;
-
 								.image{
 									border: 2px solid currentColor;
 									background-color: transparent;
@@ -5747,9 +5612,6 @@ body{
 							}
 
 							&.upload{
-								max-width: 100px;
-								float: left;
-
 								.image{
 									background-color: $blackColor;
 
@@ -5771,6 +5633,11 @@ body{
 										top: 0;
 									}
 								}
+							}
+
+							&.remove{
+								filter: grayscale(100%);
+								opacity: .5;
 							}
 						}
 					}
@@ -5837,11 +5704,10 @@ body{
 								width: 100%;
 
 								img{
-									height: 100%;
 									width: 100%;
 								}
 
-								.layer{
+								.upload{
 									justify-content: center;
 									align-items: center;
 									position: absolute;
@@ -5852,7 +5718,7 @@ body{
 									top: 0;
 								}
 
-								&:hover .layer{
+								&:hover .upload{
 									background: transparentize($blueColor, .5);
 									cursor: pointer;
 								}
@@ -6033,6 +5899,46 @@ body{
 							}
 						}
 
+						mat-checkbox{
+							border: 1px solid $greyColor;
+							box-sizing: border-box;
+							border-radius: 5px;
+							margin: 18px 0 0;
+							display: flex;
+							padding: 12px;
+							width: 100%;
+							float: left;
+
+							label{
+								.mat-checkbox-inner-container{
+									.mat-checkbox-frame{
+										border: 2px solid $greyColor;
+									}
+								}
+							}
+
+							&:not(.mat-checkbox-disabled){
+								label{
+									.mat-checkbox-inner-container{
+										.mat-checkbox-ripple .mat-ripple-element{
+											background-color: $blueColor;
+										}
+									}
+								}
+							}
+
+							&.mat-checkbox-checked{
+								label{
+									.mat-checkbox-inner-container{
+										.mat-checkbox-ripple .mat-ripple-element,
+										.mat-checkbox-background{
+											background-color: $blueColor;
+										}
+									}
+								}
+							}
+						}
+
 						.buttons{
 							text-align: center;
 							margin: 24px 0;
@@ -6113,7 +6019,7 @@ body{
 								}
 
 								.add{
-									background-color: $fontBlackColor;
+									background-color: $blackColor;
 									box-sizing: border-box;
 									border-radius: 50%;
 									overflow: hidden;
@@ -6246,7 +6152,8 @@ body{
 	}
 
 	/*Black theme on user pages*/
-	&.blackTheme{
+	&.blackTheme,
+	&.blueTheme{
 		background-color: $blackColor;
 		color: $whiteColor;
 
@@ -6348,6 +6255,17 @@ body{
 					color: $fontBlackColor;
 				}
 			}
+
+			.buttons{
+				button{
+					background: $whiteColor;
+					color: $blackColor;
+
+					&:last-child{
+						background: $blueColor;
+					}
+				}
+			}
 		}
 
 		/*Box comments*/
@@ -6431,17 +6349,19 @@ body{
 
 					ul{
 						li{
-							.avatar{
-								img{
-									background-color: $whiteColor;
+							.inner{
+								.avatar{
+									img{
+										background-color: $whiteColor;
+									}
 								}
-							}
 
-							.add{
-								background-color: $whiteColor;
+								.add{
+									background-color: $whiteColor;
 
-								i{
-									background-color: $fontBlackColor;
+									i{
+										background-color: $blackColor;
+									}
 								}
 							}
 						}
@@ -6472,6 +6392,25 @@ body{
 				.panel .dataBox .actions button{
 					background-color: $whiteColor;
 					color: $fontBlackColor;
+				}
+			}
+
+			/*Audios*/
+			.pageAudios{
+				.content{
+					.playlists{
+						.box{
+							&.upload{
+								.image{
+									background-color: $whiteColor;
+
+									.text{
+										color: $blackColor;
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -6623,40 +6562,9 @@ body{
 	/*Blue theme on user pages*/
 	&.blueTheme{
 		background-color: $navyThemeColor;
-		color: $whiteColor;
-
-		a{
-			color: $whiteColor;
-		}
-
-		ul.notifications{
-			li .inner .operations span button{
-				background-color: $whiteColor;
-				color: $fontBlackColor;
-
-				&.active{
-					border: 1px solid $whiteColor;
-					background-color: transparent;
-					color: $whiteColor;
-				}
-
-				&.border{
-					border: 1px solid $whiteColor;
-					color: $whiteColor;
-				}
-			}
-		}
 
 		.mat-menu-panel{
 			background: $navyThemeColor;
-
-			button{
-				color: $whiteColor;
-				
-				&.mat-menu-item-submenu-trigger::after{
-					color: $whiteColor;
-				}
-			}
 		}
 
 		/*Notifications box*/
@@ -6670,16 +6578,6 @@ body{
 		.userBox{
 			.box{
 				background-color: $navyThemeColor !important;
-
-				.bottom{
-					.innerBox{
-						.switchAccounts{
-							.item .add i{
-								background-color: $navyThemeColor !important;
-							}
-						}
-					}
-				}
 			}
 		}
 
@@ -6688,165 +6586,11 @@ body{
 			background-color: $navyThemeColor;
 		}
 
-		/*Serch*/
-		.searchBox{
-			.box{
-				.inner{
-					input{
-						color: $whiteColor;
-					}
-				}
-			}
-		}
-
-		/*Tabs*/
-		.mat-tab-group{
-			.mat-tab-header{
-				border-bottom: 1px solid transparentize($whiteColor, .75);
-				color: $whiteColor;
-
-				.mat-tab-label{
-					color: $whiteColor;
-				}
-
-				.mat-tab-header-pagination-chevron{
-					border-color:  transparentize($whiteColor, .15);
-				}
-			}
-		}
-
-		/*Upload files*/
-		.uploadFilesBox{
-			.button{
-				button{
-					background: $whiteColor;
-					color: $fontBlackColor;
-				}
-			}
-		}
-
-		/*Box comments*/
-		.boxComments{
-			.loadComments{
-				button{
-					background-color: $whiteColor;
-					color: $blackColor;
-					line-height: 24px;
-					padding: 0 12px;
-					margin: 12px 0;
-				}
-			}
-		}
-
-		/*Load more*/
-		.loadMore{
-			button{
-				border: 1px solid $whiteColor;
-
-				i{
-					background-color: $whiteColor;
-				}
-			}
-		}
-
 		/*Content pages*/
 		.innerBodyUser{
 			.header{
 				.head{
 					background-color: $navyThemeColor;
-					box-shadow: $shadowBox0;
-
-					.left,
-					.right{
-						button{
-							color: $whiteColor;
-						}
-					}
-
-					.center{
-						.logo{
-							background-color: $whiteColor;
-						}
-					}
-				}
-
-				.menuBox{
-					.inner{
-						.item{
-							&.userMini{
-								.add{
-									i{
-										background-color: $blackColor;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			.pageSettings{
-				.content{
-					.form{
-						.buttons{
-							button{
-								background: $whiteColor;
-								color: $fontBlackColor;
-
-								mat-progress-spinner{
-									svg{
-										circle{
-											stroke: $fontBlackColor;
-										}
-									}
-								}
-							}
-						}
-					}
-
-					ul{
-						li{
-							.avatar{
-								img{
-									background-color: $whiteColor;
-								}
-							}
-
-							.add{
-								background-color: $whiteColor;
-
-								i{
-									background-color: $fontBlackColor;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			.pageFollowing{
-				.content{
-					ul li .actions button{
-						background-color: $whiteColor;
-						color: $fontBlackColor;
-
-						&.active{
-							border: 1px solid $whiteColor;
-							background-color: transparent;
-							color: $whiteColor;
-						}
-
-						&.pending{
-							background-color: $blueColor;
-						}
-					}
-				}
-			}
-
-			.pageUser{
-				.panel .dataBox .actions button{
-					background-color: $whiteColor;
-					color: $fontBlackColor;
 				}
 			}
 		}
@@ -6879,14 +6623,6 @@ body{
 								background-color: $navyThemeColor;
 							}
 						}
-
-						&.selected{ 
-							color: $whiteColor;
-
-							.avatar{
-								border-color: $whiteColor;
-							}
-						}
 					}
 				}
 			}
@@ -6894,68 +6630,7 @@ body{
 
 		/*Audio Player web*/
 		.audioPlayerWeb{
-			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $navyThemeColor;
-			box-shadow: $shadowBoxBottom;
-			color: $whiteColor;
-
-			.player{
-				.center{
-					.top{
-						button{
-							i{
-								background-color: $whiteColor;
-							}
-
-							&.playPause{
-								background: $whiteColor;
-
-								i{
-									background-color: $navyThemeColor;
-								}
-							}
-						}
-					}
-				}
-
-				.right{
-					.playlist{
-						button{
-							i{
-								background-color: $whiteColor;
-							}
-						}
-					}
-
-					.volume{
-						button{
-							i{
-								background-color: $whiteColor;
-							}
-						}
-
-						mat-slider{
-							.mat-slider-wrapper{
-								.mat-slider-track-wrapper{
-									.mat-slider-track-background{
-										background-color: transparentize($whiteColor, .85);
-									}
-
-									.mat-slider-track-fill{
-										background-color: $whiteColor;
-									}
-								}
-
-								.mat-slider-thumb-container{
-									.mat-slider-thumb{
-										background-color: $whiteColor;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
 
 			.playlistBox{
 				background-color: $navyThemeColor;
@@ -6969,25 +6644,10 @@ body{
 
 		.sessionsPanelMobile{
 			background-color: $navyThemeColor;
-			color: $whiteColor;
-
-			.grabber{
-				background-color: transparentize($whiteColor, .25);
-			}
 		}
 
 		.mobilePlayer{
 			background-color: $navyThemeColor;
-			color: $whiteColor;
-
-			.grabber{
-				background-color: transparentize($whiteColor, .25);
-			}
-
-			.goTo button{
-				background-color: $whiteColor;
-				color: $blackColor;
-			}
 
 			.box .player{
 				background: linear-gradient(0, $navyThemeColor 50%, $navyThemeColor 75%, transparent 100%);

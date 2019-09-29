@@ -49,7 +49,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private routingStateService: RoutingStateService,
+		private routingStateService: RoutingStateService
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -267,91 +267,47 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	// Change avatar/background
-	openAvatar(type, action, event) {
-		switch (type) {
-			case 'avatar':
-				if (action === 'upload') {
-					let file = event.target.files[0];
+	// Change avatar
+	openImage(action, event) {
+		if (action === 'upload') {
+			let file = event.target.files[0];
 
-					if (/^image\/\w+$/.test(file.type)) {
-						file = URL.createObjectURL(file);
-						this.sessionData.current.avatarCropper = this.sanitizer.bypassSecurityTrustUrl(file);
-						this.location.go('/settings#avatar');
+			if (/^image\/\w+$/.test(file.type)) {
+				file = URL.createObjectURL(file);
+				let image = this.sanitizer.bypassSecurityTrustUrl(file);
+				this.location.go('/settings#avatar');
 
-						const config = {
-							disableClose: false,
-							data: {
-								sessionData: this.sessionData,
-								translations: this.translations,
-								comeFrom: 'avatar'
-							}
-						};
-
-						const dialogRef = this.dialog.open(NewAvatarComponent, config);
-						dialogRef.afterClosed().subscribe((res: string) => {
-							this.location.go('/settings');
-
-							if (res) {
-								this.sessionData = res;
-								this.sessionService.setData(this.sessionData);
-								this.alertService.success(this.translations.common.savedSuccessfully);
-							}
-						});
-					} else {
-						this.alertService.error(this.translations.common.invalidFile);
+				const config = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						translations: this.translations,
+						image: image,
+						comeFrom: 'avatar'
 					}
-				} else if (action === 'remove') {
-					this.sessionData.current.newAvatar = '';
-					this.userDataService.updateAvatar(this.sessionData.current)
-						.subscribe(res => {
-							this.sessionData = res;
-							this.sessionService.setData(this.sessionData);
-							this.alertService.success(this.translations.common.savedSuccessfully);
-						});
-				}
-				break;
-			case 'background':
-				if (action === 'upload') {
-					let file = event.target.files[0];
+				};
 
-					if (/^image\/\w+$/.test(file.type)) {
-						file = URL.createObjectURL(file);
-						this.sessionData.current.backgroundCropper = this.sanitizer.bypassSecurityTrustUrl(file);
-						this.location.go('/settings#background');
+				const dialogRef = this.dialog.open(NewAvatarComponent, config);
+				dialogRef.afterClosed().subscribe((res: string) => {
+					this.location.go('/settings');
 
-						const config = {
-							disableClose: false,
-							data: {
-								sessionData: this.sessionData,
-								translations: this.translations,
-								comeFrom: 'background'
-							}
-						};
-
-						const dialogRef = this.dialog.open(NewAvatarComponent, config);
-						dialogRef.afterClosed().subscribe((res: string) => {
-							this.location.go('/settings');
-
-							if (res) {
-								this.sessionData = res;
-								this.sessionService.setData(this.sessionData);
-								this.alertService.success(this.translations.common.savedSuccessfully);
-							}
-						});
-					} else {
-						this.alertService.error(this.translations.common.invalidFile);
+					if (res) {
+						this.sessionData = res;
+						this.sessionService.setData(this.sessionData);
+						this.alertService.success(this.translations.common.savedSuccessfully);
 					}
-				} else if (action === 'remove') {
-					this.sessionData.current.newBackground = '';
-					this.userDataService.updateBackground(this.sessionData.current)
-						.subscribe(res => {
-							this.sessionData = this.userDataService.getSessionData();
-							this.sessionService.setData(this.sessionData);
-							this.alertService.success(this.translations.common.savedSuccessfully);
-						});
-				}
-				break;
+				});
+			} else {
+				this.alertService.error(this.translations.common.invalidFile);
+			}
+		} else if (action === 'remove') {
+			this.sessionData.current.newAvatar = '';
+			this.userDataService.updateAvatar(this.sessionData.current)
+				.subscribe(res => {
+					this.sessionData = res;
+					this.sessionService.setData(this.sessionData);
+					this.alertService.success(this.translations.common.savedSuccessfully);
+				});
 		}
 	}
 

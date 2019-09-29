@@ -8,7 +8,8 @@
 		$sql = "SELECT id, 
 						title, 
 						image, 
-						private
+						private,
+						user
 				FROM z_audios_playlist
 				WHERE user = $user 
 					AND is_deleted = 0 
@@ -50,11 +51,13 @@
 			if ($row['user'])
 				$row['user'] = userUsernameNameAvatar($row['user']);
 			
-			if ($session === $user)
-				$data[] = $row;
-			else
-				if (!$row['private'])
-					$data[] = $row;
+			// if ($session === $user)
+			// 	$data[] = $row;
+			// else
+			// 	if (!$row['private'])
+			// 		$data[] = $row;
+
+			$data[] = $row;
 		}
 
 		echo json_encode($data);

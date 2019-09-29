@@ -6,7 +6,7 @@
 			</button>
 
 			<div class="text">
-				{{translations?.settings?.avatar}}
+				{{translations?.common?.cropper}}
 			</div>
 		</div>
 
@@ -20,9 +20,7 @@
 
 	<div mat-dialog-content class="content">
 		<div class="image">
-			<img *ngIf="data.comeFrom == 'avatar'" (load)="imageLoad()" [src]="sessionData.current.avatarCropper ? sessionData.current.avatarCropper : environment.avatar" #imageSrc>
-			
-			<img *ngIf="data.comeFrom == 'background'" (load)="imageLoad()" [src]="sessionData.current.backgroundCropper ? sessionData.current.backgroundCropper : environment.background" #imageSrc>
+			<img (load)="imageLoad()" [src]="image ? image : environment.avatar" #imageSrc>
 		</div>
 
 		<div class="panel">

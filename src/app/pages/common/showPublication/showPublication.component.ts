@@ -57,6 +57,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService
 	) {
+		console.log('data::', data);
+
 		this.translations = this.data.translations;
 		this.sessionData = this.data.sessionData;
 		this.userData = this.data.userData;

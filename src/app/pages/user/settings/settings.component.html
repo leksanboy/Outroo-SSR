@@ -15,18 +15,18 @@
 		 			<mat-tab label="{{translations?.settings?.editProfile}}">
 		 				<div class="avatarBackground">
 							<div class="avatar">
-								<div class="image" [matMenuTriggerFor]="avatarOptions">
+								<div class="image" [matMenuTriggerFor]="imageOptions">
 									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 
-									<div class="layer">
+									<div class="upload">
 										<i class="icon200 white" label="photo-camera"></i>
 									</div>
 								</div>
-								<input type="file" hidden (change)="openAvatar('avatar', 'upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
+								<input type="file" hidden (change)="openImage('upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
 
-								<mat-menu #avatarOptions="matMenu" [overlapTrigger]="false">
+								<mat-menu #imageOptions="matMenu" [overlapTrigger]="false">
 									<button mat-menu-item (click)="avatarFile.click()">{{translations?.settings?.uploadPhoto}}</button>
-									<button mat-menu-item (click)="openAvatar('avatar', 'remove', $event)">{{translations?.settings?.removePhoto}}</button>
+									<button mat-menu-item (click)="openImage('remove', $event)">{{translations?.settings?.removePhoto}}</button>
 									<mat-divider></mat-divider>
 									<button mat-menu-item>{{translations?.common?.cancel}}</button>
 								</mat-menu>
@@ -72,9 +72,11 @@
 									</div>
 								</div>
 
-								<div class="private">
+								<!-- <div class="private">
 									<mat-slide-toggle formControlName="private">{{translations?.common?.privateAccount}}</mat-slide-toggle>
-								</div>
+								</div> -->
+
+								<mat-checkbox formControlName="private">{{translations?.common?.privateAccount}}</mat-checkbox>
 
 								<div class="buttons">
 									<button mat-raised-button type="submit" [disabled]="submitPersonalLoading">

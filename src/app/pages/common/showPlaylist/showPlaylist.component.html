@@ -1,4 +1,4 @@
-<div class="dialogBox">
+<div class="dialogBox bodyPlaylist">
 	<div mat-dialog-title class="header">
 		<div class="left">
 			<button mat-icon-button (click)="close()">
@@ -11,34 +11,35 @@
 		</div>
 	</div>
 
-	<div mat-dialog-content class="bodyPlaylist">
-		<div class="head">
+	<div mat-dialog-content class="content">
+		<div class="info">
 			<div class="left">
 				<div class="image" [style.background-image]="data.current.color">
-					<div class="img" [ngStyle]="{'background-image': 'url(' + data.path + 'covers/' + data.current.image + ')'}"></div>
+					<img [src]="data.path + 'covers/' + data.current.image" *ngIf="data.current.image">
 				</div>
 			</div>
 
 			<div class="right">
 				<div class="title" [style.color]="data.current.color">
 					{{data.current.title}}
-					<i class="icon50 white" label="lock" matTooltip="Private playlist" *ngIf="data.current.private"></i>
 				</div>
 				
-				<!-- <a class="subtitle" routerLink="/{{data.current.user.username}}">
+				<a class="subtitle" routerLink="/{{data.current.user.username}}">
 					@{{data.current.user.username}}
 					<i class="icon50 blue" label="official" *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-				</a> -->
+				</a>
 				
 				<div class="button">
 					<button mat-button (click)="playTrack('play')">
+						<i label="pause" *ngIf="data.playing" class="icon85 white"></i>
+						<i label="play" *ngIf="!data.playing" class="icon85 white"></i>
 						{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
 					</button>
 				</div>
 			</div>
 		</div>
 
-		<div class="content">
+		<div class="container">
 			<ul class="tracks" *ngIf="data.list.length > 0">
 				<li *ngFor="let x of data.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
 					<div class="inner" *ngIf="!x.contentTypeAd">

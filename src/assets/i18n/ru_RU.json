@@ -15,7 +15,8 @@
 		"addCoverToPlaylist": "Добавить обложку в плейлист (необязательно)",
 		"uploadOrSearch": "Загрузить или найти песни",
 		"goAudios": "Перейти к моим песням",
-		"privatePlaylist": "Приватный плейлист"
+		"privatePlaylist": "Приватный плейлист",
+		"playlistTitle": "Название плейлиста"
 	},
 	"bookmarks": {
 		"title": "Закладки",
@@ -380,6 +381,10 @@
 		"addSomeSongsToPlaylist": "Добавите несколько песен в плейлист",
 		"createPlaylist": "Создать плейлист",
 		"songNotUploaded": "Невозможно воспроизвести песню, потому что она еще не загружена",
-		"exceededMaxUploads": "Вы превысили максимальное количество загрузок"
+		"exceededMaxUploads": "Вы превысили максимальное количество загрузок",
+		"addedMoreElementsThanAllowed": "Вы добавили больше элементов чем разрешено",
+		"containsInvalidFiles": "Содержит недопустимые файлы",
+		"cropper": "кроппер изображения",
+		"publicationNotExists": "Публикация не существует или была удалена"
 	}
 }

@@ -27,6 +27,7 @@
 		$insertedId = $conn->insert_id;
 
 		$res = getPlaylist($insertedId);
+		$res['user'] = userUsernameNameAvatar($session);
 		echo json_encode($res);
 		
 		$conn->close();

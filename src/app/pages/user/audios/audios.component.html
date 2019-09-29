@@ -75,7 +75,7 @@
 											</div>
 											<span *ngIf="userData?.id == sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
-													<i class="icon65" label="more"></i>
+													<i class="icon85" label="more"></i>
 												</button>
 											</span>
 											<span *ngIf="userData?.id != sessionData?.current?.id">
@@ -97,13 +97,23 @@
 								</div>
 							</div>
 
-							<div class="uploadFilesBox" *ngIf="userData?.id == sessionData?.current?.id">
+							<div class="uploadFilesBox audios" *ngIf="userData?.id == sessionData?.current?.id && dataFiles.list.length > 0">
+								<div class="info">
+									<div class="title">
+										{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}	
+									</div>
+									<div class="subtitle">
+										{{translations?.audios?.maxSizePerFile}}
+									</div>
+								</div>
+
 								<ul class="tracks" *ngIf="dataFiles.list.length > 0">
 									<li *ngFor="let x of dataFiles.list; let i = index;" [ngClass]="{default: !x.image}">
 										<div mat-ripple class="inner">
 											<div class="image">
 												<button mat-icon-button>
-													<i label="cloud-upload" *ngIf="x.status === 'completed'"></i>
+													<i label="cloud-upload" *ngIf="x.status === 'pending'"></i>
+													<i label="check" *ngIf="x.status === 'completed'"></i>
 													<i label="cloud-off" *ngIf="x.status === 'error'"></i>
 													<div class="progress" *ngIf="x.status === 'progress'">
 														<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
@@ -133,7 +143,7 @@
 												</div>
 											</div>
 											
-											<div class="actions">
+											<div class="actions" *ngIf="x.status === 'pending' || x.status === 'error'">
 												<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations?.common?.remove}}">
 													<i label="clear"></i>
 												</button>
@@ -147,7 +157,7 @@
 										<button mat-raised-button (click)="uploadFiles(2, $event)">
 											{{translations?.common?.cancel}}
 										</button>
-										<button mat-raised-button [disabled]="dataFiles.list.length > dataFiles.max || dataFiles.saveDisabled" (click)="uploadFiles(4, $event)">
+										<button mat-raised-button (click)="uploadFiles(4, $event)">
 											{{translations?.common?.upload}}
 										</button>
 									</div>
