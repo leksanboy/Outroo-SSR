@@ -1,4 +1,4 @@
-<div class="dialogBox bodyCreatePublication">
+<div class="dialogBox">
 	<div mat-dialog-title class="header">
 		<div class="left">
 			<button mat-icon-button (click)="close()" [disabled]="dataDefault.arrayAddedItems.length > 10">
@@ -18,155 +18,157 @@
 		</div>
 	</div>
 
-	<div mat-dialog-content class="content">
-		<div class="searchBox">
-			<div class="box">
-				<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
-					<div class="inner">
-						<i class="icon85 grey" label="search"></i>
-						<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
-						<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-							<i class="icon85 grey" label="close"></i>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-		<span *ngIf="data.active == 'default'">
-			<div class="uploadFilesBox">
-				<div class="button">
-					<button mat-raised-button (click)="uploadFile.click()">
-						<div class="left" [ngClass]="{'warning': dataDefault.list.length > 9}">
-							<i label="cloud-upload"></i>
+	<div mat-dialog-content class="bodyCreatePublication">
+		<div class="container">
+			<div class="searchBox">
+				<div class="box">
+					<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
+						<div class="inner">
+							<i class="icon85 grey" label="search"></i>
+							<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
+							<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
+								<i class="icon85 grey" label="close"></i>
+							</button>
 						</div>
-						<div class="right">
-							<div class="top">
-								{{translations?.audios?.chooseFiles}}
-							</div>
-							<div class="bottom">
-								{{translations?.audios?.maxSizePerFile}}
-							</div>
-						</div>
-					</button>
-
-					<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
+					</form>
 				</div>
 			</div>
 
-			<ul class="tracks" *ngIf="dataDefault.list">
-				<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
-					<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
-						<div class="image">
-							<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
-								<span *ngIf="x.id === 0">
-									<i label="cloud-upload" *ngIf="x.status === 'completed'"></i>
-									<i label="cloud-off" *ngIf="x.status === 'error'"></i>
-									<div class="progress" *ngIf="x.status === 'progress'">
-										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
-										<div class="value">{{x.progress}}%</div>
-									</div>
-								</span>
-
-								<span *ngIf="x.id !== 0">
-									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
-									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
-								</span>
-								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
-							</button>
-						</div>
-
-						<div class="text" (click)="playSong(dataDefault.list, x, i, 'default')">
-							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+			<span *ngIf="data.active == 'default'">
+				<div class="uploadFilesBox">
+					<div class="button">
+						<button mat-raised-button (click)="uploadFile.click()">
+							<div class="left" [ngClass]="{'warning': dataDefault.list.length > 9}">
+								<i label="cloud-upload"></i>
 							</div>
-							<div class="duration">
-								{{x.duration}}
+							<div class="right">
+								<div class="top">
+									{{translations?.audios?.chooseFiles}}
+								</div>
+								<div class="bottom">
+									{{translations?.audios?.maxSizePerFile}}
+								</div>
+							</div>
+						</button>
 
-								<div class="status" *ngIf="x.id === 0">
-									<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
-										{{x.sizeBig}}
-									</div>
-									<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
-										{{translations?.common?.invalidFile}}
+						<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
+					</div>
+				</div>
+
+				<ul class="tracks" *ngIf="dataDefault.list">
+					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+							<div class="image">
+								<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
+									<span *ngIf="x.id === 0">
+										<i label="cloud-upload" *ngIf="x.status === 'completed'"></i>
+										<i label="cloud-off" *ngIf="x.status === 'error'"></i>
+										<div class="progress" *ngIf="x.status === 'progress'">
+											<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
+											<div class="value">{{x.progress}}%</div>
+										</div>
+									</span>
+
+									<span *ngIf="x.id !== 0">
+										<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
+										<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
+									</span>
+									<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+								</button>
+							</div>
+
+							<div class="text" (click)="playSong(dataDefault.list, x, i, 'default')">
+								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+								</div>
+								<div class="duration">
+									{{x.duration}}
+
+									<div class="status" *ngIf="x.id === 0">
+										<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
+											{{x.sizeBig}}
+										</div>
+										<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
+											{{translations?.common?.invalidFile}}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						
-						<div class="actions" *ngIf="sessionData?.current?.id">
-							<button mat-icon-button (click)="toggleItem(x)">
-								<i label="add" *ngIf="!x.selected"></i>
-								<i label="check" *ngIf="x.selected"></i>
-							</button>
-						</div>
-					</div>
-				</li>
-			</ul>
-
-			<div class="loadingData" *ngIf="dataDefault.loadingData">
-				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-			</div>
-
-			<div class="noData" *ngIf="dataDefault.noData">
-				<div class="image"><i class="icon200" label="music"></i></div>
-				<div class="description">{{translations?.audios?.noData}}</div>
-			</div>
-
-			<div class="loadMore" *ngIf="dataDefault.loadMoreData">
-				<button mat-fab (click)="default('more', null)" *ngIf="!dataDefault.loadingMoreData">
-					<i label="add"></i>
-				</button>
-				<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
-			</div>
-		</span>
-
-		<span *ngIf="data.active == 'search'">
-			<ul class="tracks" *ngIf="dataSearch.list.length">
-				<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search', default: !x.image}">
-					<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
-						<div class="image">
-							<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
-								<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
-								<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
-								<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
-							</button>
-						</div>
-						
-						<div class="text" (click)="playSong(dataSearch.list, x, i, 'search')">
-							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+							
+							<div class="actions" *ngIf="sessionData?.current?.id">
+								<button mat-icon-button (click)="toggleItem(x)">
+									<i label="add" *ngIf="!x.selected"></i>
+									<i label="check" *ngIf="x.selected"></i>
+								</button>
 							</div>
-							<div class="duration">{{x.duration}}</div>
 						</div>
-						
-						<div class="actions" *ngIf="sessionData?.current?.id">
-							<button mat-icon-button (click)="toggleItem(x)">
-								<i label="add" *ngIf="!x.selected"></i>
-								<i label="check" *ngIf="x.selected"></i>
-							</button>
+					</li>
+				</ul>
+
+				<div class="loadingData" *ngIf="dataDefault.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
+
+				<div class="noData" *ngIf="dataDefault.noData">
+					<div class="image"><i class="icon200" label="music"></i></div>
+					<div class="description">{{translations?.audios?.noData}}</div>
+				</div>
+
+				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
+					<button mat-fab (click)="default('more', null)" *ngIf="!dataDefault.loadingMoreData">
+						<i label="add"></i>
+					</button>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+				</div>
+			</span>
+
+			<span *ngIf="data.active == 'search'">
+				<ul class="tracks" *ngIf="dataSearch.list.length">
+					<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search', default: !x.image}">
+						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+							<div class="image">
+								<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
+									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
+									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
+									<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+								</button>
+							</div>
+							
+							<div class="text" (click)="playSong(dataSearch.list, x, i, 'search')">
+								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+								</div>
+								<div class="duration">{{x.duration}}</div>
+							</div>
+							
+							<div class="actions" *ngIf="sessionData?.current?.id">
+								<button mat-icon-button (click)="toggleItem(x)">
+									<i label="add" *ngIf="!x.selected"></i>
+									<i label="check" *ngIf="x.selected"></i>
+								</button>
+							</div>
 						</div>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
 
-			<div class="loadingData" *ngIf="dataSearch.loadingData">
-				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-			</div>
+				<div class="loadingData" *ngIf="dataSearch.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
 
-			<div class="noData" *ngIf="dataSearch.noData">
-				<div class="image"><i class="icon200" label="search"></i></div>
-				<div class="description">{{translations?.common?.noSearchResults}}</div>
-			</div>
-			
-			<div class="loadMore" *ngIf="dataSearch.loadMoreData">
-				<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
-					<i label="add"></i>
-				</button>
-				<mat-progress-spinner mode="indeterminate" *ngIf="dataSearch.loadingMoreData"></mat-progress-spinner>
-			</div>
-		</span>
+				<div class="noData" *ngIf="dataSearch.noData">
+					<div class="image"><i class="icon200" label="search"></i></div>
+					<div class="description">{{translations?.common?.noSearchResults}}</div>
+				</div>
+				
+				<div class="loadMore" *ngIf="dataSearch.loadMoreData">
+					<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
+						<i label="add"></i>
+					</button>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataSearch.loadingMoreData"></mat-progress-spinner>
+				</div>
+			</span>
+		</div>
 	</div>
 </div>

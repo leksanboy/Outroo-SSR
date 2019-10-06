@@ -1,4 +1,4 @@
-<div class="dialogBox bodyCreateAvatar">
+<div class="dialogBox">
 	<div mat-dialog-title class="header">
 		<div class="left">
 			<button mat-icon-button (click)="close()">
@@ -18,30 +18,32 @@
 		</div>
 	</div>
 
-	<div mat-dialog-content class="content">
-		<div class="image">
-			<img (load)="imageLoad()" [src]="image ? image : environment.avatar" #imageSrc>
-		</div>
+	<div mat-dialog-content class="bodyCreateAvatar">
+		<div class="container">
+			<div class="image">
+				<img (load)="imageLoad()" [src]="image ? image : environment.avatar" #imageSrc>
+			</div>
 
-		<div class="panel">
-			<button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
-				<i label="zoom-in"></i>
-			</button>
-			<button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
-				<i label="zoom-out"></i>
-			</button>
-			<button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
-				<i label="rotate-left"></i>
-			</button>
-			<button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
-				<i label="rotate-right"></i>
-			</button>
-			<button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
-				<i label="swap-horiz"></i>
-			</button>
-			<button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
-				<i label="swap-vert"></i>
-			</button>
+			<div class="panel">
+				<button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
+					<i label="zoom-in"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
+					<i label="zoom-out"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
+					<i label="rotate-left"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
+					<i label="rotate-right"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
+					<i label="swap-horiz"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
+					<i label="swap-vert"></i>
+				</button>
+			</div>
 		</div>
 	</div>
 

@@ -212,8 +212,8 @@
 														<i class="icon75 grey" label="more"></i>
 													</button>
 													<mat-menu #optionsComments="matMenu">
-														<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>
-														<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c.user.id === sessionData.current.id || dataDefault?.data?.user?.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
+														<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c.user.id === sessionData.current.id || dataDefault?.data?.user?.id === sessionData.current.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 													</mat-menu>
 												</div>
 											</div>

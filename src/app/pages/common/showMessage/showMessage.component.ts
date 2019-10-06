@@ -285,7 +285,7 @@ export class ShowMessageComponent implements OnInit, OnDestroy {
 			return newData;
 		} else if (type === 'create') {
 			if (item.newCommentData.original.trim().length === 0) {
-				this.alertService.success(this.translations.common.isTooShort);
+				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
 				const formatedData = this.newComment('transformBeforeSend', null, item);
 				const dataCreate = {

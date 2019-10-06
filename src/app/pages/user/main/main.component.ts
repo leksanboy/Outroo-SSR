@@ -782,6 +782,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Comments Options
 	commentsOptions(type, item, comment) {
+		console.log('item::', item);
+
 		switch (type) {
 			case 'addRemove':
 				comment.addRemove = !comment.addRemove;

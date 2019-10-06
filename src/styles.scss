@@ -1784,7 +1784,9 @@ body{
 					button{
 						background-color: transparent;
 						text-transform: uppercase;
+						justify-content: center;
 						line-height: 24px;
+						display: flex;
 						min-width: 0;
 						height: 24px;
 						width: 24px;
@@ -2764,7 +2766,7 @@ body{
 				}
 			}
 
-			.content{
+			.container{
 				width: 666px;
 			}
 
@@ -2810,6 +2812,123 @@ body{
 						background-color: $greyColor;
 					}
 				}
+
+				&.chat{
+					width: 100%;
+
+					.new{
+						background: transparentize($greyColor, .75);
+						box-sizing: border-box;
+						position: relative;
+						border-radius: 5px;
+						margin: 0 12px;
+						display: flex;
+						padding: 6px;
+						width: 100%;
+						float: left;
+
+						.avatar{
+							box-sizing: border-box;
+							border-radius: 50%;
+							overflow: hidden;
+							min-width: 24px;
+							margin: 3px 0;
+							height: 24px;
+							width: 24px;
+
+							img{
+								height: 100%;
+								width: 100%;
+							}
+						}
+
+						.richComment{
+							width: calc(100% - 48px);
+							box-sizing: border-box;
+							position: relative;
+							min-height: 30px;
+
+							.highlights{
+								box-sizing: border-box;
+								display: inline-block;
+								word-wrap: break-word;
+								white-space: pre-wrap;
+								pointer-events: none;
+								position: absolute;
+								color: transparent;
+								padding: 4px 12px;
+								overflow: hidden;
+								width: 100%;
+
+								.placeholder{
+									color: $greyColor;
+								}
+							}
+
+							.origin{
+								box-sizing: border-box;
+								display: inline-block;
+								word-wrap: break-word;
+								white-space: pre-wrap;
+								padding: 4px 12px;
+								min-height: 24px;
+								overflow: hidden;
+								outline: none;
+								width: 100%;
+							}
+						}
+
+						.actions{
+							margin: 3px 0;
+							height: 24px;
+							width: 24px;
+
+							button{
+								background-color: transparent;
+								text-transform: uppercase;
+								justify-content: center;
+								line-height: 24px;
+								display: flex;
+								min-width: 0;
+								height: 24px;
+								width: 24px;
+								margin: 0;
+							}
+						}
+					}
+				}
+
+				&.post{
+					justify-content: space-between;
+
+					.files{
+						margin: 0 0 0 -6px;
+						display: flex;
+
+						button{
+							border-radius: 50% !important;
+							background-color: transparent;
+							height: 36px;
+							width: 36px;
+							margin: 0;
+
+							span{
+								justify-content: center;
+								align-items: center;
+								display: flex;
+								width: 100%;
+
+								i{
+									background-color: $blackColor;
+								}
+							}
+						}
+					}
+
+					.actions{
+						display: block;
+					}
+				}
 			}
 
 			.loadMore{
@@ -2835,8 +2954,10 @@ body{
 			}
 
 			/*cropper*/
-			&.bodyCreateAvatar{
-				.content{
+			.bodyCreateAvatar{
+				.container{
+					width: 666px;
+
 					.image{
 						max-height: 480px;
 						min-height: 240px;
@@ -2879,8 +3000,10 @@ body{
 			}
 
 			/*create publication*/
-			&.bodyCreatePublication{
-				.content{
+			.bodyCreatePublication{
+				.container{
+					width: 666px;
+
 					.form{
 						box-sizing: border-box;
 						width: 100%;
@@ -3199,519 +3322,374 @@ body{
 						}
 					}
 				}
+			}
 
-				.buttons{
-					justify-content: space-between;
+			/*show playlist*/
+			.bodyPlaylist{
+				.info{
+					box-sizing: border-box;
+					padding: 18px;
+					display: flex;
+					width: 666px;
 
-					.files{
-						margin: 0 0 0 -6px;
-						display: flex;
+					.left{
+						.image{
+							background-color: $greyColor;
+							border-radius: 5px;
+							position: relative;
+							overflow: hidden;
+							height: 144px;
+							width: 144px;
+							float: left;
 
-						button{
-							border-radius: 50% !important;
-							background-color: transparent;
-							height: 36px;
-							width: 36px;
-							margin: 0;
+							img{
+								width: 100%;
+							}
 
-							span{
+							.upload{
 								justify-content: center;
 								align-items: center;
+								position: absolute;
 								display: flex;
+								height: 100%;
 								width: 100%;
+								top: 0;
+							}
 
-								i{
-									background-color: $blackColor;
-								}
+							&:hover .upload{
+								background: transparentize($blueColor, .5);
+								cursor: pointer;
 							}
 						}
 					}
 
-					.actions{
-						display: block;
-					}
-				}
-			}
-
-			/*report*/
-			&.bodyReport{
-				.content{
-					padding: 0 0 24px;
-
-					.form{
+					.right{
+						width: calc(100% - 144px);
 						box-sizing: border-box;
-						padding: 0 18px;
-						width: 100%;
-						float: left;
-						margin: 0;
+						padding: 0 0 0 18px;
+
+						.title{
+							-webkit-box-orient: vertical;
+							text-overflow: ellipsis;
+							word-break: break-word;
+							-webkit-line-clamp: 3;
+							display: -webkit-box;
+							font-weight: bold;
+							overflow: hidden;
+							max-height: 84px;
+							font-size: 24px;
+							max-width: 100%;
+							margin: 8px 0 0;
+						}
+
+						.subtitle{
+							color: $blueColor;
+							font-weight: bold;
+							text-align: left;
+							display: block;
+							width: 100%;
+
+							i{
+								margin: 7px 0 -7px -7px;
+							}
+						}
+
+						.button{
+							width: 100%;
+
+							button{
+								background-color: $blueColor;
+								border-radius: 24px;
+								color: $whiteColor;
+								margin: 12px 0 0;
+								font-size: 13px;
+								float: left;
+
+								span{
+									align-items: center;
+									display: flex;
+
+									i{
+										margin: 0 0 0 -8px;
+									}
+								}
+							}
+						}
 					}
+				}
+
+				.container{
+					padding: 0 0 12px;
+					float: left;
 				}
 			}
 
-			/*set new session*/
-			&.bodySession{
-				.content{
-					padding: 0 0 24px;
-
-					.form{
-						box-sizing: border-box;
-						padding: 0 18px;
-						width: 100%;
-						float: left;
-						margin: 0;
-					}
-				}
-			}
-
-			/*share & chat*/
-			&.bodyMessage{
-				.content{
+			/*chat*/
+			.bodyMessage{
+				.container{
 					overflow-x: hidden;
-					padding: 18px 0 0;
-					min-height: 360px;
 
-					.container{
+					ul.conversationList{
+						padding: 12px 0;
+						float: left;
 						width: 100%;
+						margin: 0;
 
-						ul.conversationList{
-							padding: 12px 0;
+						li{
+							box-sizing: border-box;
+							position: relative;
+							list-style: none;
+							margin: 0 0 4px;
+							display: flex;
 							float: left;
 							width: 100%;
-							margin: 0;
+							padding: 0;
 
-							li{
-								box-sizing: border-box;
-								position: relative;
-								list-style: none;
-								margin: 0 0 4px;
-								display: flex;
-								float: left;
-								width: 100%;
-								padding: 0;
+							.box{
+								padding: 0 18px;
+								max-width: 60%;
 
-								.box{
-									padding: 0 18px;
-									max-width: 60%;
+								.top{
+									padding: 4px 6px 4px 0;
+									display: flex;
+									width: 100%;
 
-									.top{
-										padding: 4px 6px 4px 0;
-										display: flex;
-										width: 100%;
+									.avatar{
+										box-sizing: border-box;
+										border-radius: 50%;
+										overflow: hidden;
+										min-width: 18px;
+										height: 18px;
+										width: 14px;
+										margin: 0;
 
-										.avatar{
-											box-sizing: border-box;
-											border-radius: 50%;
-											overflow: hidden;
-											min-width: 18px;
-											height: 18px;
-											width: 14px;
-											margin: 0;
-
-											img{
-												height: 100%;
-												width: 100%;
-											}
-										}
-
-										.name{
-											padding: 0 0 0 6px;
-											line-height: 18px;
-											height: 18px;
-
-											.username{
-												text-overflow: ellipsis;
-												word-break: break-all;
-												white-space: nowrap;
-												overflow: hidden;
-												max-width: 128px;
-												font-weight: 700;
-												font-size: 14px;
-												float: left;
-											}
+										img{
+											height: 100%;
+											width: 100%;
 										}
 									}
 
-									.bottom{
-										border: 1px solid transparentize($greyColor, .5);
-										display: inline-block;
-										border-radius: 24px;
-										position: relative;
-										overflow: hidden;
-										margin: 4px 0 0;
-										width: 100%;
+									.name{
+										padding: 0 0 0 6px;
+										line-height: 18px;
+										height: 18px;
 
-										.innerContent{
+										.username{
+											text-overflow: ellipsis;
+											word-break: break-all;
+											white-space: nowrap;
+											overflow: hidden;
+											max-width: 128px;
+											font-weight: 700;
+											font-size: 14px;
+											float: left;
+										}
+									}
+								}
+
+								.bottom{
+									border: 1px solid transparentize($greyColor, .5);
+									display: inline-block;
+									border-radius: 24px;
+									position: relative;
+									overflow: hidden;
+									margin: 4px 0 0;
+									width: 100%;
+
+									.innerContent{
+										max-width: 100%;
+										display: flex;
+
+										.text{
+											box-sizing: border-box;
 											display: flex;
 											width: 100%;
 											float: left;
 
-											.text{
+											.content{
 												box-sizing: border-box;
-												display: flex;
-												width: 100%;
-												float: left;
-
-												.content{
-													box-sizing: border-box;
-													word-break: break-word;
-													white-space: pre-line;
-													display: inline-block;
-													padding: 12px 12px 0;
-													line-height: 18px;
-
-													.subcontent{
-														color: $greyColor;
-														font-size: 12px;
-													}
-												}
-											}
-
-											.actions{
-												position: absolute;
-												display: none;
-												margin: 3px 0;
-												height: 36px;
-												width: 36px;
-												margin: 3px;
-												right: 0;
-
-												button{
-													border-radius: 50% !important;
-													height: 36px !important;
-													width: 36px !important;
-													margin: 0;
-
-													span{
-														display: inherit;
-
-														i{
-															margin: 12px 0;
-														}
-													}
-												}
+												word-break: break-word;
+												white-space: pre-line;
+												display: inline-block;
+												padding: 12px 12px 0;
+												line-height: 18px;
 											}
 										}
 
-										.date{
-											padding: 4px 18px 6px 0;
-											box-sizing: border-box;
-											text-align: right;
-											color: $greyColor;
-											font-size: 12px;
-											max-width: 100%;
-											float: right;
-										}
-
-										&.remove{
-											filter: grayscale(100%);
-											opacity: .5;
-										}
-									}
-								}
-
-								&.me{
-									.box{
-										.bottom{
-											.text{
-												.content{
-													padding: 12px 42px 0 12px;
-												}
-											}
-
-											.post{
-												box-sizing: border-box;
-												padding: 0 0 2px;
-												cursor: pointer;
-												display: block;
-												width: 100%;
-												float: left;
-
-												.user{
-													box-sizing: border-box;
-													padding: 12px;
-													display: flex;
-													width: 100%;
-													float: left;
-
-													.avatar{
-														box-sizing: border-box;
-														border-radius: 50%;
-														overflow: hidden;
-														min-width: 32px;
-														height: 32px;
-														width: 32px;
-
-														img{
-															height: 100%;
-															width: 100%;
-														}
-													}
-
-													.name{
-														text-overflow: ellipsis;
-														box-sizing: border-box;
-														white-space: nowrap;
-														line-height: 32px;
-														overflow: hidden;
-														padding: 0 12px;
-														height: 32px;
-														width: 100%;
-													}
-
-													.arrow{
-														float: left;
-													}
-												}
-
-												.textContainer{
-													word-break: break-word;
-													box-sizing: border-box;
-													padding: 12px 12px 0;
-													font-size: 13px;
-													width: 100%;
-													float: left;
-												}
-
-												.audios{
-													width: 100%;
-													float: left;
-												}
-											}
-										}
-									}
-								}
-
-								&.me{
-									flex-direction: row-reverse;
-
-									.box{
-										.bottom{
-											background-color: $whiteColor;
-											color: $blackColor;
-											border: none;
-
-											.actions{
-												display: block;
-											}
-										}
-									}
-								}
-							}
-						}
-
-						ul.usersList{
-							float: left;
-							width: 100%;
-							padding: 0;
-							margin: 0;
-
-							li{
-								box-sizing: border-box;
-								position: relative;
-								padding: 4px 18px;
-								list-style: none;
-								margin: 0 0 4px;
-								display: flex;
-								float: left;
-								width: 100%;
-
-								.avatar{
-									box-sizing: border-box;
-									border-radius: 50%;
-									overflow: hidden;
-									min-width: 40px;
-									margin: 4px 0;
-									height: 40px;
-									width: 40px;
-
-									img{
-										height: 100%;
-										width: 100%;
-									}
-								}
-
-								.avatarsGroup{
-									min-width: 40px;
-									margin: 4px 0;
-									height: 40px;
-									width: 40px;
-
-									&.group{
-										.avatar{
-											border: 2px solid $blackColor;
-											margin: 2px 0 0 6px;
+										.actions{
 											position: absolute;
-											min-width: 36px;
+											display: none;
 											height: 36px;
 											width: 36px;
-											z-index: 2;
+											margin: 0;
+											right: 0;
 
-											&:last-child{
-												min-width: 32px;
-												margin: 4px 0;
-												border: none;
-												height: 32px;
-												width: 32px;
-												z-index: 1;
-											}
+											button{
+												border-radius: 50% !important;
+												height: 36px !important;
+												width: 36px !important;
+												justify-content: center;
+												align-items: center;
+												display: flex;
+												margin: 0;
 
-											&:hover{
-												color: inherit;
+												span{
+													display: inherit;
+
+													i{
+														margin: 0;
+													}
+												}
 											}
 										}
 									}
-								}
 
-								.text{
-									box-sizing: border-box;
-									padding: 6px 12px;
-									width: 100%;
-
-									.username{
-										word-break: break-all;
-										position: relative;
-										font-weight: bold;
-										line-height: 18px;
-										height: 18px;
-									}
-
-									.name{
-										word-break: break-word;
+									.date{
+										box-sizing: border-box;
+										padding: 6px 12px;
 										color: $greyColor;
-										padding: 2px 0 0;
-										font-size: 14px;
+										font-size: 11px;
+										max-width: 100%;
+									}
+
+									&.remove{
+										filter: grayscale(100%);
+										opacity: .5;
 									}
 								}
+							}
 
-								.actions{
-									box-sizing: border-box;
-									height: 48px;
+							&.me{
+								flex-direction: row-reverse;
 
-									i{
-										margin: 12px 0 0;
+								.box{
+									.top{
+										justify-content: flex-end;
+									}
+
+									.bottom{
+										background: transparentize($greyColor, .75);
+										border-color: transparent;
+
+										.innerContent{
+											.text{
+												.content{
+													padding: 12px 36px 0 12px;
+												}
+											}
+										}
+
+										.actions{
+											display: block;
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-			}
 
-			/*show playlist*/
-			&.bodyPlaylist{
-				width: 100%;
-
-				.content{
-					.info{
-						box-sizing: border-box;
-						padding: 18px;
-						display: flex;
+					ul.usersList{
+						float: left;
 						width: 100%;
+						padding: 0;
+						margin: 0;
 
-						.left{
-							.image{
-								background-color: $greyColor;
-								border-radius: 5px;
-								position: relative;
+						li{
+							box-sizing: border-box;
+							position: relative;
+							padding: 4px 18px;
+							list-style: none;
+							margin: 0 0 4px;
+							display: flex;
+							float: left;
+							width: 100%;
+
+							.avatar{
+								box-sizing: border-box;
+								border-radius: 50%;
 								overflow: hidden;
-								height: 144px;
-								width: 144px;
-								float: left;
+								min-width: 40px;
+								margin: 4px 0;
+								height: 40px;
+								width: 40px;
 
 								img{
-									width: 100%;
-								}
-
-								.upload{
-									justify-content: center;
-									align-items: center;
-									position: absolute;
-									display: flex;
 									height: 100%;
 									width: 100%;
-									top: 0;
-								}
-
-								&:hover .upload{
-									background: transparentize($blueColor, .5);
-									cursor: pointer;
-								}
-							}
-						}
-
-						.right{
-							width: calc(100% - 144px);
-							box-sizing: border-box;
-							padding: 0 0 0 18px;
-
-							.title{
-								-webkit-box-orient: vertical;
-								text-overflow: ellipsis;
-								word-break: break-word;
-								-webkit-line-clamp: 3;
-								display: -webkit-box;
-								font-weight: bold;
-								overflow: hidden;
-								max-height: 84px;
-								font-size: 24px;
-								max-width: 100%;
-								margin: 8px 0 0;
-							}
-
-							.subtitle{
-								color: $blueColor;
-								font-weight: bold;
-								text-align: left;
-								display: block;
-								width: 100%;
-
-								i{
-									margin: 7px 0 -7px -7px;
 								}
 							}
 
-							.button{
-								width: 100%;
+							.avatarsGroup{
+								min-width: 40px;
+								margin: 4px 0;
+								height: 40px;
+								width: 40px;
 
-								button{
-									background-color: $blueColor;
-									border-radius: 24px;
-									color: $whiteColor;
-									margin: 12px 0 0;
-									font-size: 13px;
-									float: left;
+								&.group{
+									.avatar{
+										border: 2px solid $blackColor;
+										margin: 2px 0 0 6px;
+										position: absolute;
+										min-width: 36px;
+										height: 36px;
+										width: 36px;
+										z-index: 2;
 
-									span{
-										align-items: center;
-										display: flex;
+										&:last-child{
+											min-width: 32px;
+											margin: 4px 0;
+											border: none;
+											height: 32px;
+											width: 32px;
+											z-index: 1;
+										}
 
-										i{
-											margin: 0 0 0 -8px;
+										&:hover{
+											color: inherit;
 										}
 									}
 								}
 							}
-						}
-					}
 
-					.container{
-						padding: 0 0 12px;
-						width: 100%;
-						float: left;
+							.text{
+								box-sizing: border-box;
+								padding: 6px 12px;
+								width: 100%;
+
+								.username{
+									word-break: break-all;
+									position: relative;
+									font-weight: bold;
+									line-height: 18px;
+									height: 18px;
+								}
+
+								.name{
+									word-break: break-word;
+									color: $greyColor;
+									padding: 2px 0 0;
+									font-size: 14px;
+								}
+							}
+
+							.actions{
+								box-sizing: border-box;
+								height: 48px;
+
+								i{
+									margin: 12px 0 0;
+								}
+							}
+						}
 					}
 				}
 			}
 
 			/*show publication*/
 			.bodyPublications{
-				min-height: 360px;
-				margin: 0 auto;
-				width: 100%;
-
 				.container{
 					display: flex;
 					width: 100%;
-					float: left;
 
 					.user{
 						padding: 6px 0 6px 12px;
@@ -3789,7 +3767,7 @@ body{
 						}
 
 						.photos{
-							background: $greyColor;
+							background: $blackColor;
 							position: relative;
 							float: left;
 							width: 100%;
@@ -3797,7 +3775,7 @@ body{
 							img,
 							video{
 								min-height: 120px;
-								max-height: 65vh;
+								max-height: 75vh;
 								min-width: 120px;
 								max-width: 100%;
 								display: block;
@@ -3889,25 +3867,42 @@ body{
 
 			/*show likes*/
 			.bodyLikes{
-				padding: 0 0 24px;
-				min-height: 180px;
-				width: 100%;
-
 				.container{
-					padding: 12px 0 0;
-					width: 100%;
+					padding: 12px 0 6px 0;
 					float: left;
-					margin: 0;
+				}
+			}
+
+			/*set new session*/
+			.bodySessions{
+				.container{
+					.form{
+						box-sizing: border-box;
+						padding: 0 18px;
+						width: 100%;
+						float: left;
+						margin: 0;
+					}
+				}
+			}
+
+			/*report*/
+			.bodyReport{
+				.container{
+					.form{
+						box-sizing: border-box;
+						padding: 0 18px;
+						width: 100%;
+						float: left;
+						margin: 0;
+					}
 				}
 			}
 
 			/*show avatar*/
 			.bodyAvatar{
-				width: 360px;
-
 				.container{
-					width: 100%;
-					float: left;
+					width: 360px;
 
 					img{
 						width: 100%;
@@ -7039,15 +7034,23 @@ body{
 					}
 				}
 
-				.content{
-					width: 100%;
+				.container{
+					width: 100% !important;
 				}
 
 				.buttons{
 					display: none;
+
+					&.chat{
+						display: flex;
+					}
 				}
 
-				&.bodyCreatePublication{
+				.bodyCreateAvatar{
+					
+				}
+
+				.bodyCreatePublication{
 					.buttons{
 						display: block;
 
@@ -7057,10 +7060,7 @@ body{
 					}
 				}
 
-				&.bodyPublications{
-					padding: 0 0 24px;
-					display: block;
-
+				.bodyPublications{
 					.container{
 						display: block;
 
@@ -7098,16 +7098,9 @@ body{
 					}
 				}
 
-				&.bodyMessage{
-					.container{
-						ul.conversationList{
-							li.publication{
-								.box{
-									max-width: 80% !important;
-									width: 80% !important;
-								}
-							}
-						}
+				.bodyPlaylist{
+					.info{
+						width: 100%;
 					}
 				}
 			}

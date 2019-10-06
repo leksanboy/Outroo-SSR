@@ -27,9 +27,6 @@
 							<a class="avatar" routerLink="/{{x.user.username}}">
 								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 							</a>
-							<div class="name">
-								<span class="username">{{x.user.username}}</span>
-							</div>
 						</div>
 
 						<div class="bottom" [ngClass]="{'remove': x.addRemoveSession}">
@@ -65,7 +62,7 @@
 		</div>
 	</div>
 
-	<div mat-dialog-actions class="buttons newChatComment">
+	<div mat-dialog-actions class="buttons chat">
 		<div class="new">
 			<div class="avatar">
 				<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
