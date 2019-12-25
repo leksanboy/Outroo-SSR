@@ -57,8 +57,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService
 	) {
-		console.log('data::', data);
-
 		this.translations = this.data.translations;
 		this.sessionData = this.data.sessionData;
 		this.userData = this.data.userData;
@@ -541,8 +539,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Comments Options
 	commentsOptions(type, item, comment) {
-		console.log('item::', item);
-
 		switch (type) {
 			case 'addRemove':
 				comment.addRemove = !comment.addRemove;

@@ -5,12 +5,14 @@
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$username = $data['username'];
 	$password = explode('-', $data['password']); // Login page & confirm email auto login
-	if ($password[1]) // Came from validation email
+	if ($password[1]) { // Came from validation email
 		$password = $password[0];
-	else // login page
+	} else { // login page
 		$password = md5($data['password']);
+	}
 
 	// Log in and return session data
+	$cond = strrpos($username, '@') ? 'email' : 'username';
 	$sql = "SELECT id, 
 					username, 
 					name, 
@@ -24,7 +26,7 @@
 					private, 
 					reset_password as rp
 			FROM z_users
-			WHERE email = '$username' 
+			WHERE ".$cond." = '$username' 
 				AND password = '$password'";
 	$result = $conn->query($sql)->fetch_assoc();
 

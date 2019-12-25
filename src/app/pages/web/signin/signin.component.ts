@@ -75,31 +75,25 @@ export class SigninComponent implements OnInit {
 	}
 
 	submit(ev: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
 
-		if (this.actionForm.get('email').value.trim().length > 0 &&
-			this.actionForm.get('password').value.trim().length > 0 &&
-			this.recaptcha
-		) {
-			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
+		if (form.email.trim().length > 0 && form.password.trim().length > 0) {
+			this.userDataService.login(form.email, form.password)
 				.subscribe(
 					res => {
 						this.router.navigate([this.env.defaultPage]);
 					},
 					error => {
 						this.submitLoading = false;
+						this.recaptcha = false;
 
 						// show error message
 						this.alertService.error(this.translations.common.emailOrPasswordIncorrect);
-
-						// reset reCaptcha
-						this.recaptcha = false;
 					}
 				);
 		} else {
 			this.submitLoading = false;
-
-			// show error message
 			this.alertService.error(this.translations.common.completeAllFields);
 		}
 	}

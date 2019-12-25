@@ -217,13 +217,14 @@
 		"title": "Sign In",
 		"description": "Enter your email and password to access.",
 		"email": "Email",
-		"password": "Password"
+		"password": "Password",
+		"usernameEmail": "Username / email"
 	},
 	"signUp":{
 		"title": "Sign Up",
 		"description": "Create an account to be part of our family.",
 		"username": "Username",
-		"name": "Name",
+		"name": "Full name",
 		"email": "Email",
 		"password": "Password",
 		"privacyText": {
@@ -369,7 +370,7 @@
 		"invalidUrl": "The URL in not valid",
 		"sentSuccessfully": "Sent successfully",
 		"accountInUse": "Account is in use",
-		"emailOrPasswordIncorrect": "Email or password is incorrect",
+		"emailOrPasswordIncorrect": "Password is not correct",
 		"isTooShort": "Write something",
 		"isTooLong": "Text is too long",
 		"commentPlaceholder": "Wrire here...",

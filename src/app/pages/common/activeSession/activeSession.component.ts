@@ -191,6 +191,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionService.getData()
 				.subscribe(data => {
 					this.sessionData = data;
+					this.deniedAccessOnlySession = true;
 
 					// Get translations
 					this.getTranslations(data.current.language);
@@ -967,10 +968,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
-					console.log('create pl::', res);
-
 					if (res) {
-						console.log('this.sessionData pl::', this.sessionData);
 						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 						this.sessionService.setDataPlaylists(this.sessionData);

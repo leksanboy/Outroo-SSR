@@ -2,7 +2,7 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$username = checkUsername($data['username']);
+	$username = $data['username'];
 	$name = htmlspecialchars($data['name'], ENT_QUOTES);
 	$email = $data['email'];
 	$password = md5($data['password']);
@@ -10,12 +10,14 @@
 	$date = time();
 	$generatedHash = generateRandomString(23);
 
+	echo checkUsername($username);
+
 	if (checkUsername($username)) {
 		var_dump(http_response_code(403));
 	} else {
 		if (isset($username) && isset($name) && isset($email) && isset($password)) {
 			$sql = "INSERT INTO z_users (username, name, email, password, verification_code, language, creation_date, ip_address_create)
-					VALUES ('$username', '$name', '$email', '$password', '$generatedHash', $lang, '$date', '$ipAddress')";
+					VALUES ('$username', '$name', '$email', '$password', '$generatedHash', '$lang', '$date', '$ipAddress')";
 			$result = $conn->query($sql);
 			$insertedUser = $conn->insert_id;
 
@@ -35,7 +37,7 @@
 
 			$conn->close();
 		} else {
-			var_dump(http_response_code(403));
+			var_dump(http_response_code(404));
 		}
 	}
 ?>

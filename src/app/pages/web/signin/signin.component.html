@@ -14,12 +14,12 @@
 				<div class="form">
 					<form autocomplete="off" novalidate [formGroup]="actionForm" (ngSubmit)="submit($event);">
 						<mat-form-field>
-							<input type="email" matInput placeholder="{{translations?.signIn?.email}}" #Email maxlength="100" formControlName="email">
+							<input type="email" matInput placeholder="{{translations?.signIn?.usernameEmail}}" #Email maxlength="100" formControlName="email">
 							<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
 						</mat-form-field>
 
 						<mat-form-field>
-							<input type="password" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100" formControlName="password">
+							<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100" formControlName="password">
 							<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 								<i class="icon75 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 							</button>

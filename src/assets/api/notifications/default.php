@@ -30,7 +30,6 @@
 				)
 			ORDER BY n.date DESC 
 			LIMIT $more, $cuantity";
-
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {

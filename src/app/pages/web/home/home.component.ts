@@ -189,19 +189,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	submit(event: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
 		this.errorMessage = false;
 
-		if (this.actionForm.get('email').value.trim().length > 0 &&
-			this.actionForm.get('password').value.trim().length > 0
-		) {
-			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
+		if (form.email.trim().length > 0 && form.password.trim().length > 0) {
+			this.userDataService.login(form.email, form.password)
 				.subscribe(
 					res => {
 						this.router.navigate([this.env.defaultPage]);
 					},
 					error => {
 						this.submitLoading = false;
+
+						// show error message
 						this.errorMessage = true;
 						this.errorMessageContent = this.translations.common.emailOrPasswordIncorrect;
 					}

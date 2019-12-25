@@ -139,7 +139,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		// Check button back
 		this.activeComeFromUserButton = this.sessionService.getComeFromUserButton()
 			.subscribe(data => {
-				console.log("comeFromUserButton:", data);
 				this.comeFromUserButton = data;
 			});
 
@@ -782,8 +781,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	// Comments Options
 	commentsOptions(type, item, comment) {
-		console.log('item::', item);
-
 		switch (type) {
 			case 'addRemove':
 				comment.addRemove = !comment.addRemove;

@@ -38,7 +38,7 @@
 
 				<form [formGroup]="actionForm" (ngSubmit)="submit($event)">
 					<mat-form-field appearance="outline" class="homeBox">
-						<mat-label>{{translations?.signIn?.email}}</mat-label>
+						<mat-label>{{translations?.signIn?.usernameEmail}}</mat-label>
 						<input autofocus type="email" matInput #Email maxlength="100" formControlName="email">
 					</mat-form-field>
 

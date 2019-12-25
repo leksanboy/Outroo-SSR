@@ -42,7 +42,6 @@ export class NewPlaylistComponent implements OnInit {
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService
 	) {
-		console.log('data', data);
 		this.sessionData = data.sessionData;
 		this.translations = data.translations;
 		this.data.current = data.item ? data.item : null;
@@ -90,8 +89,6 @@ export class NewPlaylistComponent implements OnInit {
 					if (this.data.current) {
 						this.data.current .image = res;
 					}
-
-					console.log('data::', this.data);
 				});
 			} else {
 				this.alertService.error(this.translations.common.invalidFile);

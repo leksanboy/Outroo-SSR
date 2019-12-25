@@ -156,6 +156,7 @@ export class SignupComponent implements OnInit {
 
 	verifyReCaptcha(data) {
 		this.recaptcha = data ? true : false;
+		return this.recaptcha;
 	}
 
 	submit(ev: Event) {
@@ -181,11 +182,12 @@ export class SignupComponent implements OnInit {
 					error => {
 						this.submitLoading = false;
 
-						// show error message
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-
 						// reset reCaptcha
 						this.recaptcha = false;
+						this.verifyReCaptcha(false);
+
+						// show error message
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					}
 				);
 		} else {

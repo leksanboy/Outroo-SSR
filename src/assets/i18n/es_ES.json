@@ -97,7 +97,7 @@
 	},
 	"settings": {
 		"title": "Ajustes",
-		"username": "Nombre de usuario",
+		"username": "Usuario",
 		"name": "Nombre",
 		"language": "Idioma",
 		"uploadPhoto": "Subir foto",
@@ -106,7 +106,7 @@
 		"aboutPlaceholder": "Descripción de tu biografia",
 		"oldPassword": "Contraseña antigua",
 		"newPassword": "Contraseña nueva",
-		"confirmNewPassword": "Confirmar contraseña nuueva",
+		"confirmNewPassword": "Confirmar contraseña nueva",
 		"editProfile": "Editar",
 		"changePassword": "Contraseña",
 		"accounts": "Cuentas",
@@ -217,13 +217,14 @@
 		"title": "Iniciar sesión",
 		"description": "Intoduce tu correo electrónico y la contraseña para entar.",
 		"email": "Correo electrónico",
-		"password": "Contraseña"
+		"password": "Contraseña",
+		"usernameEmail": "Usuario / correo electrónico"
 	},
 	"signUp":{
 		"title": "Registrarse",
 		"description": "Crear cuenta para ser parte de nuestra familia.",
 		"username": "Nombre de usuario",
-		"name": "Nombre",
+		"name": "Nombre completo",
 		"email": "Correo electrónico",
 		"password": "Contraseña",
 		"privacyText": {
@@ -369,7 +370,7 @@
 		"invalidUrl": "La URL no es valida",
 		"sentSuccessfully": "Enviado correctamente",
 		"accountInUse": "La cuenta ya esta en uso",
-		"emailOrPasswordIncorrect": "El correo electrónico o la contraseña es incorrecta",
+		"emailOrPasswordIncorrect": "La contraseña no es correcta",
 		"isTooShort": "Escribe algo",
 		"isTooLong": "El texto es demasiado largo",
 		"commentPlaceholder": "Escribe aqui...",

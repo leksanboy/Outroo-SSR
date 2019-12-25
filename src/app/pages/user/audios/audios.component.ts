@@ -209,14 +209,12 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		setTimeout(() => {
 			const g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
-			console.log("g:", g);
 
 			if (g === 1) {
 				this.hideAd = true;
 			}
 		}, 100);
 
-		console.log("ad:", ad);
 		return ad;
 	}
 
@@ -1048,8 +1046,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				path: this.env.pathAudios
 			}
 		};
-
-		console.log("showPlaylist", config);
 
 		const dialogRef = this.dialog.open(ShowPlaylistComponent, config);
 		dialogRef.afterClosed().subscribe((res: string) => {

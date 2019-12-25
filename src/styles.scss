@@ -6152,6 +6152,19 @@ body{
 		background-color: $blackColor;
 		color: $whiteColor;
 
+		/*Modal box*/
+		mat-dialog-container{
+			background: $darkThemeColor !important;
+
+			.dialogBox{
+				color: $whiteColor;
+
+				a{
+					color: $whiteColor;
+				}
+			}
+		}
+
 		a{
 			color: $whiteColor;
 		}
@@ -6557,6 +6570,11 @@ body{
 	/*Blue theme on user pages*/
 	&.blueTheme{
 		background-color: $navyThemeColor;
+
+		/*Modal box*/
+		mat-dialog-container{
+			background: $navyThemeColor !important;
+		}
 
 		.mat-menu-panel{
 			background: $navyThemeColor;
@@ -7044,15 +7062,13 @@ body{
 					&.chat{
 						display: flex;
 					}
-				}
 
-				.bodyCreateAvatar{
-					
-				}
-
-				.bodyCreatePublication{
-					.buttons{
+					&.post{
 						display: block;
+
+						.files{
+							display: flex;
+						}
 
 						.actions{
 							display: none;

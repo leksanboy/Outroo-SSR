@@ -23,11 +23,11 @@
 			<div class="form">
 				<form [formGroup]="actionForm">
 					<mat-form-field>
-						<input matInput type="email" placeholder="{{translations?.settings?.email}}" maxlength="100" formControlName="email">
+						<input matInput type="email" placeholder="{{translations?.signIn?.usernameEmail}}" maxlength="100" formControlName="email">
 					</mat-form-field>
 
 					<mat-form-field>
-						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.settings?.password}}" #Password maxlength="100" formControlName="password">
+						<input type="{{showPassword ? 'text' : 'password'}}" matInput placeholder="{{translations?.signIn?.password}}" #Password maxlength="100" formControlName="password">
 						<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 							<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
