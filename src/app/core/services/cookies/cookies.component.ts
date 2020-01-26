@@ -70,6 +70,10 @@ export class CookiesComponent implements OnInit, OnDestroy {
 		} else if (type === 'close') {
 			this.userDataService.cookies('set');
 			this.status = false;
+
+			// cookies
+			let date = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+			document.cookie = 'Outroo=' + JSON.stringify(Date.now()) + ';path=/;domain=' + this.env.urlCookie + ';expires=' + date.toUTCString() + ';promo_shown=1;SameSite=Lax;Secure;';
 		}
 	}
 

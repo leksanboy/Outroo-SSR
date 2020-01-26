@@ -2,6 +2,7 @@
 export const environment = {
 	production: true,
 	url: 'https://outroo.com/',
+	urlCookie: '.outroo.com',
 	name: 'Outroo',
 	copyright: '© ' + new Date().getFullYear() + ' Outroo',
 	cuantity: 30,
@@ -18,5 +19,6 @@ export const environment = {
 	emailPattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 	urlRegex: /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g,
 	defaultPage: 'news',
-	contentLengthLimit: 300
+	contentLengthLimit: 300,
+	maxFileSize: 50000000 // 50Mb
 };

@@ -2068,6 +2068,8 @@ body{
 		}
 
 		.description{
+	    text-transform: uppercase;
+	    font-weight: bold;
 			font-size: 13px;
 		}
 	}
@@ -4959,6 +4961,7 @@ body{
 											word-wrap: break-word;
 											position: relative;
 											font-weight: bold;
+											line-height: 40px;
 											font-size: 20px;
 											display: block;
 
@@ -4966,20 +4969,24 @@ body{
 												margin: 6px 0 -6px 0;
 											}
 										}
-										
+
 										.username{
 											word-wrap: break-word;
 											color: $blueColor;
+											margin: -8px 0 0;
 											font-size: 15px;
-											padding: 4px 0;
 											float: left;
 											width: 100%;
+											padding: 0;
 										}
 									}
 
 									.button{
-										margin: -8px 0 0;
 										display: flex;
+
+										button{
+
+										}
 									}
 								}
 
@@ -6161,6 +6168,31 @@ body{
 
 				a{
 					color: $whiteColor;
+				}
+
+				.buttons{
+					button{
+						background: $whiteColor;
+						color: $blackColor;
+
+						mat-progress-spinner{
+							svg{
+								circle{
+									stroke: $blackColor !important;
+								}
+							}
+						}
+					}
+
+					.files{
+						button{
+							span{
+								i{
+									background-color: $whiteColor;
+								}
+							}
+						}
+					}
 				}
 			}
 		}

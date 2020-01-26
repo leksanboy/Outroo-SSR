@@ -191,7 +191,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionService.getData()
 				.subscribe(data => {
 					this.sessionData = data;
-					this.deniedAccessOnlySession = true;
+					this.deniedAccessOnlySession = data ? false : true;
 
 					// Get translations
 					this.getTranslations(data.current.language);

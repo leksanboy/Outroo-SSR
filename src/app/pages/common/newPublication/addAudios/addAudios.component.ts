@@ -340,7 +340,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 						if (/^audio\/\w+$/.test(file.type)) {
 							file.category = 'audio';
 
-							if (file.size >= 20000000) {
+							if (file.size >= this.env.maxFileSize) {
 								file.sizeBig = convertToMb(file.size);
 								file.status = 'error';
 							} else {

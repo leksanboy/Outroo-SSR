@@ -117,7 +117,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 							file.thumbnail = file.thumbnail.result;
 						});
 
-						if (file.size >= 20000000) {
+						if (file.size >= this.env.maxFileSize) {
 							file.sizeBig = convertToMb(file.size);
 							file.status = 'error';
 						} else {
@@ -130,7 +130,7 @@ export class NewPublicationAddPhotosComponent implements OnInit, OnDestroy {
 						file.thumbnail = URL.createObjectURL(file);
 						file.thumbnail = this.sanitizer.bypassSecurityTrustUrl(file.thumbnail);
 
-						if (file.size >= 20000000) {
+						if (file.size >= this.env.maxFileSize) {
 							file.sizeBig = convertToMb(file.size);
 							file.status = 'error';
 						} else {
