@@ -33,6 +33,7 @@ $iconWidth: 1px;
 $spriteAudios: url('assets/images/sprite_audios.png');
 $spriteImages: url('assets/images/sprite_images.png');
 $logoTextImage: url('assets/images/logo_text.png');
+$noPostsImage: url('assets/images/icons/no_posts.png');
 
 /*Colors*/
 $headerWhiteColor: #fafafa;
@@ -137,6 +138,10 @@ body{
 
 		&.icon200{
 			transform: scale(2);
+		}
+
+		&.icon300{
+			transform: scale(3);
 		}
 
 		&.blue{
@@ -257,7 +262,7 @@ body{
 		}
 
 		&[label="reply"]{
-			mask-position: 0 -522px;
+			mask-position: 0 -696px;
 		}
 
 		&[label="lock"]{
@@ -395,6 +400,18 @@ body{
 		&[label="official"]{
 			mask-position: 0 -96px;
 		}
+	}
+
+	i[label="no-posts"]{
+		background-color: currentColor;
+		mask-image: $noPostsImage;
+		mask-repeat: no-repeat;
+		mask-size: 156px 156px;
+		display: inline-block;
+		mask-position: 0 0;
+		min-width: 156px;
+		height: 156px;
+		width: 156px;
 	}
 
 	span{
@@ -1943,7 +1960,7 @@ body{
 
 		.button{
 			box-sizing: border-box;
-			padding: 0 18px;
+			padding: 0 18px 12px;
 			width: 100%;
 
 			button{
@@ -3121,18 +3138,7 @@ body{
 					}
 
 					.uploadFilesBox{
-						margin: 12px 0;
-
-						.button{
-							button{
-								background: $blackColor;
-
-								.left i,
-								.right .top{
-									color: $whiteColor;
-								}
-							}
-						}
+						margin: 12px 0 0;
 					}
 
 					.filesBox{
@@ -4896,7 +4902,6 @@ body{
 
 				.panel{
 					position: relative;
-					padding: 0 0 18px;
 					overflow: hidden;
 					width: 100%;
 
@@ -4905,7 +4910,7 @@ body{
 						margin: 0 auto;
 
 						.user{
-							padding: 16px 0 6px 18px;
+							padding: 0 0 0 18px;
 							box-sizing: border-box;
 							position: relative;
 							display: flex;
@@ -4962,7 +4967,7 @@ body{
 											position: relative;
 											font-weight: bold;
 											line-height: 40px;
-											font-size: 20px;
+											font-size: 18px;
 											display: block;
 
 											i{
@@ -4984,8 +4989,23 @@ body{
 									.button{
 										display: flex;
 
-										button{
+										.actions{
+											padding: 6px 0 0;
+											display: flex;
 
+											button{
+												border: 1px solid currentColor;
+												border-radius: 5px;
+												margin: 0 0 0 12px;
+												line-height: 28px;
+												height: 28px;
+
+												span{
+													justify-content: center;
+													align-items: center;
+													display: flex;
+												}
+											}
 										}
 									}
 								}
@@ -5129,39 +5149,10 @@ body{
 								}
 							}
 						}
-
-						.actions{
-							box-sizing: border-box;
-							padding: 12px;
-							display: flex;
-							width: 100%;
-							float: left;
-
-							button{
-								background-color: $fontBlackColor;
-								text-transform: uppercase;
-								text-overflow: ellipsis;
-								color: $whiteColor;
-								line-height: 26px;
-								font-weight: bold;
-								overflow: hidden;
-								font-size: 13px;
-								padding: 0 8px;
-								margin: 0 6px;
-								height: 32px;
-								width: 100%;
-
-								&.active{
-									background-color: $blueColor;
-									color: $whiteColor;
-								}
-							}
-						}
 					}
 				}
 
 				.content{
-					// border-top: 1px solid transparentize($greyColor, .75);
 					max-width: $pageMaxWidth;
 					margin: 0 auto;
 
@@ -5176,7 +5167,7 @@ body{
 						margin: 0;
 
 						li{
-							border-bottom: 1px solid transparentize($greyColor, .75);
+							border-top: 1px solid transparentize($greyColor, .75);
 							box-sizing: border-box;
 							position: relative;
 							padding: 0 0 12px;
@@ -6428,12 +6419,12 @@ body{
 				}
 			}
 
-			.pageUser{
-				.panel .dataBox .actions button{
-					background-color: $whiteColor;
-					color: $fontBlackColor;
-				}
-			}
+			// .pageUser{
+			// 	.panel .dataBox .actions button{
+			// 		background-color: $whiteColor;
+			// 		color: $fontBlackColor;
+			// 	}
+			// }
 
 			/*Audios*/
 			.pageAudios{
@@ -8068,14 +8059,6 @@ body{
 				}
 
 				.pageUser{
-					.panel{
-						.dataBox{
-							.user{
-								padding-top: 24px;
-							}
-						}
-					}
-
 					.content{
 						ul{
 							li{

@@ -400,7 +400,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 						setTimeout(() => {
 							this.submitPersonalLoading = false;
 							this.sessionData = this.userDataService.getSessionData();
-							console.log('settings - this.sessionData:', this.sessionData);
 							this.sessionService.setData(this.sessionData);
 
 							// Get translations

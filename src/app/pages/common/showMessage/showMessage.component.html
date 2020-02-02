@@ -57,7 +57,7 @@
 				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 			</div>
 			<div class="noData" *ngIf="dataDefault.noData && !dataDefault.loadingData">
-				{{translations?.common?.noData}}
+				<div class="description">{{translations?.common?.noData}}</div>
 			</div>
 		</div>
 	</div>

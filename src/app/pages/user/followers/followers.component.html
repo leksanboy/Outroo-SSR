@@ -90,7 +90,6 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								<div class="image"><i class="icon200" label="group"></i></div>
 								<div class="description">{{translations?.followers?.noData}}</div>
 							</div>
 							
@@ -104,7 +103,7 @@
 
 						<span *ngIf="!((userData.private && userData.status == 'following') || !userData.private || userData.status == 'following' || (userData.id == sessionData.current.id))">
 							<div class="noData">
-								{{translations?.common?.privateAccount}}
+								<div class="description">{{translations?.common?.privateAccount}}</div>
 							</div>
 						</span>
 					</span>
@@ -172,7 +171,6 @@
 						</div>
 
 						<div class="noData" *ngIf="dataSearch.noData">
-							<div class="image"><i class="icon200" label="search"></i></div>
 							<div class="description">{{translations?.common?.noSearchResults}}</div>
 						</div>
 						
@@ -187,7 +185,7 @@
 
 				<span *ngIf="deniedAccessOnlySession">
 					<div class="noData">
-						{{translations?.common?.createAnAccountToSeeContent}}
+						<div class="description">{{translations?.common?.createAnAccountToSeeContent}}</div>
 					</div>
 				</span>
 			</div>

@@ -240,7 +240,6 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault.noData">
-								<div class="image"><i class="icon200" label="music"></i></div>
 								<div class="description">{{translations?.audios?.noData}}</div>
 							</div>
 
@@ -314,7 +313,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataAround.noData">
-								{{translations?.audios?.noData}}
+								<div class="description">{{translations?.audios?.noData}}</div>
 							</div>
 
 							<div class="loadMore" *ngIf="dataAround.loadMoreData">
@@ -412,7 +411,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTop.noData">
-								{{translations?.audios?.noData}}
+								<div class="description">{{translations?.audios?.noData}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataTop.loadMoreData">
@@ -485,7 +484,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataFresh.noData">
-								{{translations?.audios?.noData}}
+								<div class="description">{{translations?.audios?.noData}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataFresh.loadMoreData">
@@ -560,7 +559,6 @@
 					</div>
 
 					<div class="noData" *ngIf="dataSearch.noData">
-						<div class="image"><i class="icon200" label="search"></i></div>
 						<div class="description">{{translations?.common?.noSearchResults}}</div>
 					</div>
 					

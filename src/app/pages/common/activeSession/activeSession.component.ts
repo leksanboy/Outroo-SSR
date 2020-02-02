@@ -126,9 +126,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionData.current = [];
 			this.deniedAccessOnlySession = true;
 
+			// No tengo session y no puedo acceder a settings, notifications, news, home
 			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
 				this.userDataService.noSessionData();
-				// console.log('No tengo session y no puedo acceder a settings, notifications, news, home');
 			}
 		} else {
 			// Set theme
@@ -410,8 +410,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Set come from user button
 	setComeFromUserButton() {
-		// console.log("setComeFromUserButton-->TRUE");
-
 		setTimeout(() => {
 			this.sessionService.setComeFromUserButton(true);
 		}, 100);
@@ -794,11 +792,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 		navigator.mediaSession.metadata = new MediaMetadata({
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
-			artwork: [
-				{
-					src: this.audioPlayerData.current.image
-				}
-			]
+			album: this.audioPlayerData.username,
+			artwork: [{
+				src: this.env.url + this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
+			}]
 		});
 	}
 

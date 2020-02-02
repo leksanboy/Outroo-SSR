@@ -314,7 +314,7 @@
 						</div>
 
 						<div class="noData" *ngIf="!dataNotifications.list && !dataNotifications.loadingData">
-							{{translations?.notifications?.noData}}
+							<div class="description">{{translations?.notifications?.noData}}</div>
 						</div>
 						
 						<div class="forward" (click)="showNotificationsBoxWeb()" routerLink="/notifications">
@@ -659,16 +659,16 @@
 					<div class="artist">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
 				</div>
 
-				<!-- <div class="add" *ngIf="audioPlayerData?.current?.initialized">
-					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveSession', audioPlayerData?.current?.item, audioPlayerData?.current?.key)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
+				<div class="add" *ngIf="audioPlayerData?.current?.initialized">
+					<button mat-mini-fab (click)="itemSongOptions('addRemoveSession', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
 						<i label="add" *ngIf="audioPlayerData?.current?.item?.addRemoveSession"></i>
 						<i label="check" *ngIf="!audioPlayerData?.current?.item?.addRemoveSession"></i>
 					</button>
-					<button mat-mini-fab (click)="itemAudiosOptions('addRemoveUser', audioPlayerData?.current?.item, audioPlayerData?.current?.key)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
+					<button mat-mini-fab (click)="itemSongOptions('addRemoveUser', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
 						<i label="add" *ngIf="!audioPlayerData?.current?.item?.addRemoveUser"></i>
 						<i label="check" *ngIf="audioPlayerData?.current?.item?.addRemoveUser"></i>
 					</button>
-				</div> -->
+				</div>
 			</div>
 			<div class="center">
 				<div class="top">
@@ -780,7 +780,6 @@
 			    </ul>
 
 			    <div class="noData" *ngIf="audioPlayerData?.noData">
-					<div class="image"><i class="icon200" label="music"></i></div>
 					<div class="description">{{translations?.audios?.noData}}</div>
 				</div>
 			</div>

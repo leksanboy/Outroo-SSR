@@ -28,7 +28,50 @@
 								</div>
 
 								<div class="button">
-									<button mat-icon-button type="button" routerLink="/settings" *ngIf="userData?.id == sessionData?.current?.id">
+									<div class="actions" *ngIf="(userData?.id != sessionData?.current?.id) && sessionData?.current?.id">
+										<button mat-icon-button type="button" (click)="sendMessage()">
+											<i label="reply"></i>
+										</button>
+
+										<button mat-icon-button type="button" *ngIf="userData?.followingStatus === 'unfollow'" (click)="followUnfollow('follow', userData)">
+											<!-- {{translations?.common?.follow}} -->
+											<i label="add"></i>
+										</button>
+										
+										<button mat-icon-button *ngIf="userData?.followingStatus === 'pending'" [matMenuTriggerFor]="cancelRequest">
+											<!-- {{translations?.common?.pending}} -->
+											<i label="person"></i>
+										</button>
+										
+										<button mat-icon-button *ngIf="userData?.followingStatus === 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
+											<!-- {{translations?.common?.following}} -->
+											<i label="check"></i>
+										</button>
+										
+										<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
+											<div class="text">
+												{{translations?.common?.cancelRequest}}
+											</div>
+											<div class="buttons">
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="followUnfollow('unfollow', userData)">{{translations?.common?.yes}}</button>
+											</div>
+										</mat-menu>
+										
+										<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
+											<div class="text">
+												{{translations?.common?.stopFollowing}}
+												<br>
+												{{userData?.username}}?
+											</div>
+											<div class="buttons">
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="followUnfollow('unfollow', userData)">{{translations?.common?.yes}}</button>
+											</div>
+										</mat-menu>
+									</div>
+
+									<button mat-icon-button type="button" routerLink="/settings" *ngIf="userData?.id === sessionData?.current?.id">
 										<i class="icon85" label="settings"></i>
 									</button>
 
@@ -49,7 +92,7 @@
 					</div>
 
 					<div class="social">
-						<ul *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
+						<ul *ngIf="((userData?.private && userData?.followingStatus === 'following') || !userData?.private || userData?.followingStatus === 'following' || (userData?.id === sessionData?.current?.id))">
 							<li routerLink="/{{userData?.username}}/songs">
 								<button mat-button>
 									<div class="text">
@@ -89,7 +132,7 @@
 									</div>
 								</button>
 							</li>
-							<li routerLink="/saved" *ngIf="sessionData?.current?.id == userData?.id">
+							<li routerLink="/saved" *ngIf="sessionData?.current?.id === userData?.id">
 								<button mat-button>
 									<div class="text">
 										{{userData?.countBookmarks}}
@@ -105,7 +148,7 @@
 						</ul>
 					</div>
 
-					<div class="uploadFilesBox" *ngIf="userData?.id == sessionData?.current?.id">
+					<div class="uploadFilesBox" *ngIf="userData?.id === sessionData?.current?.id">
 						<div class="button">
 							<button mat-raised-button (click)="newPublication('new', null)">
 								<div class="left">
@@ -123,20 +166,20 @@
 						</div>
 					</div>
 
-					<div class="actions" *ngIf="(userData?.id != sessionData?.current?.id) && sessionData?.current?.id">
+					<!-- <div class="actions" *ngIf="(userData?.id != sessionData?.current?.id) && sessionData?.current?.id">
 						<button mat-raised-button (click)="sendMessage()">
 							{{translations?.common?.sendMessage}}
 						</button>
 
-						<button mat-raised-button *ngIf="userData?.followingStatus == 'unfollow'" (click)="followUnfollow('follow', userData)">
+						<button mat-raised-button *ngIf="userData?.followingStatus === 'unfollow'" (click)="followUnfollow('follow', userData)">
 							{{translations?.common?.follow}}
 						</button>
 						
-						<button mat-raised-button *ngIf="userData?.followingStatus == 'pending'" [matMenuTriggerFor]="cancelRequest">
+						<button mat-raised-button *ngIf="userData?.followingStatus === 'pending'" [matMenuTriggerFor]="cancelRequest">
 							{{translations?.common?.pending}}
 						</button>
 						
-						<button mat-raised-button *ngIf="userData?.followingStatus == 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
+						<button mat-raised-button *ngIf="userData?.followingStatus === 'following'" class="active" [matMenuTriggerFor]="stopFollowing">
 							{{translations?.common?.following}}
 						</button>
 						
@@ -161,11 +204,11 @@
 								<button mat-menu-item (click)="followUnfollow('unfollow', userData)">{{translations?.common?.yes}}</button>
 							</div>
 						</mat-menu>
-					</div>
+					</div> -->
 				</div>
 			</div>
 
-			<div class="content" *ngIf="((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
+			<div class="content" *ngIf="((userData?.private && userData?.followingStatus === 'following') || !userData?.private || userData?.followingStatus === 'following' || (userData?.id === sessionData?.current?.id))">
 				<ul *ngIf="dataDefault?.list">
 					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x?.addRemoveSession}">
 						<div class="head">
@@ -187,11 +230,11 @@
 								</button>
 								
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id === sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-									<mat-divider *ngIf="x?.user?.id == sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<mat-divider *ngIf="x?.user?.id === sessionData?.current?.id"></mat-divider>
+									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id === sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 								
 								<mat-menu #menuShareSocial="matMenu">
@@ -204,7 +247,7 @@
 						
 						<div class="body">
 							<div class="photos" *ngIf="x?.photos">
-								<span *ngIf="x?.photos.length == 1">
+								<span *ngIf="x?.photos.length === 1">
 									<img *ngIf="x?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x?.photos[0].name">
 
 									<video *ngIf="x?.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x?.photos[0].name}}">
@@ -257,12 +300,12 @@
 
 							<div class="audios" *ngIf="x?.audios">
 								<ul class="tracks">
-									<li *ngFor="let a of x?.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData?.postId == x?.id, default: !a.image}">
+									<li *ngFor="let a of x?.audios; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.type === 'publication' && audioPlayerData?.postId === x?.id, default: !a.image}">
 										<div class="inner">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(x, a, i, 'publication')">
-													<i label="play" *ngIf="!a.playing || !(audioPlayerData?.postId == x?.id)"></i>
-													<i label="pause" *ngIf="a.playing && (audioPlayerData?.postId == x?.id)"></i>
+													<i label="play" *ngIf="!a.playing || !(audioPlayerData?.postId === x?.id)"></i>
+													<i label="pause" *ngIf="a.playing && (audioPlayerData?.postId === x?.id)"></i>
 													<img *ngIf="a.image" [src]="env.pathAudios + 'thumbnails/' + a.image"/>
 												</button>
 											</div>
@@ -423,7 +466,9 @@
 				</div>
 				
 				<div class="noData" *ngIf="dataDefault?.noData">
-					<div class="image"><i class="icon200" label="cloud-upload"></i></div>
+					<div class="image">
+						<i label="no-posts"></i>
+					</div>
 					<div class="description">{{translations?.main?.noData}}</div>
 				</div>
 				
@@ -435,15 +480,13 @@
 				</div>
 			</div>
 
-			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus == 'following') || !userData?.private || userData?.followingStatus == 'following' || (userData?.id == sessionData?.current?.id))">
-				<div class="image"><i class="icon200" label="person"></i></div>
+			<div class="noData" *ngIf="!((userData?.private && userData?.followingStatus === 'following') || !userData?.private || userData?.followingStatus === 'following' || (userData?.id === sessionData?.current?.id))">
 				<div class="description">{{translations?.common?.privateAccount}}</div>
 			</div>
 		</div>
 
 		<div class="pageUser" *ngIf="!userExists">
 			<div class="noData">
-				<div class="image"><i class="icon200" label="person"></i></div>
 				<div class="description">{{translations?.main?.userNotFound}}</div>
 			</div>
 		</div>

@@ -92,7 +92,9 @@
 			<div class="loadingData" *ngIf="data.loadingData">
 				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 			</div>
-			<div class="noData" *ngIf="data.noData">{{translations?.audios?.noData}}</div>
+			<div class="noData" *ngIf="data.noData">
+				<div class="description">{{translations?.audios?.noData}}</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -53,7 +53,7 @@
 					</div>
 					
 					<div class="noData" *ngIf="dataDefault.noData">
-						{{translations?.news?.noData}}
+						<div class="description">{{translations?.news?.noData}}</div>
 					</div>
 					
 					<div class="loadMore" *ngIf="dataDefault.loadMoreData">
@@ -113,7 +113,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTop.noData">
-								{{translations?.common?.noSearchResults}}
+								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 						</mat-tab>
 
@@ -144,7 +144,6 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPeople.noData">
-								<div class="image"><i class="icon200" label="search"></i></div>
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
@@ -184,7 +183,6 @@
 							</div>
 
 							<div class="noData" *ngIf="dataPosts.noData">
-								<div class="image"><i class="icon200" label="search"></i></div>
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
@@ -222,7 +220,6 @@
 							</div>
 
 							<div class="noData" *ngIf="dataTag.noData">
-								<div class="image"><i class="icon200" label="search"></i></div>
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 							
@@ -271,7 +268,6 @@
 					</div>
 
 					<div class="noData" *ngIf="dataHashtag.noData">
-						<div class="image"><i class="icon200" label="search"></i></div>
 						<div class="description">{{translations?.common?.noSearchResults}}</div>
 					</div>
 					

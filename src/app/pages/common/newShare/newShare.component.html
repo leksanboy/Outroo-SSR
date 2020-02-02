@@ -74,7 +74,9 @@
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataUsers.noData">{{translations?.common?.noData}}</div>
+				<div class="noData" *ngIf="dataUsers.noData">
+					<div class="description">{{translations?.common?.noData}}</div>
+				</div>
 			</span>
 
 			<span *ngIf="data.active == 'search'">
@@ -101,7 +103,9 @@
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataSearch.noData">{{translations?.common?.noSearchResults}}</div>
+				<div class="noData" *ngIf="dataSearch.noData">
+					<div class="description">{{translations?.common?.noSearchResults}}</div>
+				</div>
 				
 				<div class="loadMore" *ngIf="dataSearch.loadMoreData">
 					<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">

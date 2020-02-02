@@ -47,17 +47,16 @@
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['private'] = $row['private'] ? true : false;
 			$row['idPlaylist'] = $row['id'];
-			
 			if ($row['user'])
 				$row['user'] = userUsernameNameAvatar($row['user']);
 			
-			// if ($session === $user)
-			// 	$data[] = $row;
-			// else
-			// 	if (!$row['private'])
-			// 		$data[] = $row;
+			if ($session === $user)
+				$data[] = $row;
+			else
+				if (!$row['private'])
+					$data[] = $row;
 
-			$data[] = $row;
+			// $data[] = $row;
 		}
 
 		echo json_encode($data);

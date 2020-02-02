@@ -251,7 +251,7 @@
 								</div>
 
 								<div class="noData" *ngIf="dataDefault?.data?.noData">
-									{{translations?.common?.noComments}}
+									<div class="description">{{translations?.common?.noComments}}</div>
 								</div>
 								
 								<div class="loadMore" *ngIf="dataDefault?.data?.loadMoreData">
@@ -263,7 +263,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault?.data?.disabledComments">
-								{{translations?.common?.commentsDisabled}}
+								<div class="description">{{translations?.common?.commentsDisabled}}</div>
 							</div>
 
 							<div class="loadComments" *ngIf="!dataDefault?.data?.disabledComments && !dataDefault?.data?.loaded">
@@ -280,7 +280,6 @@
 				</div>
 
 				<div class="noData" *ngIf="dataDefault.noData">
-					<div class="image"><i class="icon200" label="cloud-upload"></i></div>
 					<div class="description">{{translations?.post?.noData}}</div>
 				</div> 
 			</div>

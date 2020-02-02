@@ -38,6 +38,7 @@
 							<button mat-menu-item (click)="itemOptions('report', dataDefault?.data)">{{translations?.common?.report}}</button>
 							<mat-divider *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id"></mat-divider>
 							<button mat-menu-item (click)="itemOptions('remove', dataDefault?.data)" *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id">{{dataDefault?.data?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+							<button mat-menu-item (click)="itemOptions('close', dataDefault?.data)">{{translations?.common?.close}}</button>
 						</mat-menu>
 						
 						<mat-menu #menuShareSocial="matMenu">
@@ -274,7 +275,7 @@
 							</div>
 
 							<div class="noData" *ngIf="dataDefault?.data?.noData">
-								{{translations?.common?.noComments}}
+								<div class="description">{{translations?.common?.noComments}}</div>
 							</div>
 							
 							<div class="loadMore" *ngIf="dataDefault?.data?.loadMoreData">
@@ -286,7 +287,7 @@
 						</div>
 
 						<div class="noData" *ngIf="dataDefault?.data?.disabledComments">
-							{{translations?.common?.commentsDisabled}}
+							<div class="description">{{translations?.common?.commentsDisabled}}</div>
 						</div>
 
 						<div class="loadComments" *ngIf="!dataDefault?.data?.disabledComments && !dataDefault?.data?.loaded">
@@ -301,7 +302,7 @@
 
 		<div class="container" *ngIf="dataDefault?.notExists">
 			<div class="noData">
-				{{translations?.common?.publicationNotExists}}
+				<div class="description">{{translations?.common?.publicationNotExists}}</div>
 			</div>
 		</div>
 	</div>

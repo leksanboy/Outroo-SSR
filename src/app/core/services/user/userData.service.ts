@@ -221,7 +221,6 @@ export class UserDataService {
 	getSessionData() {
 		if (this.ssrService.isBrowser && this.window.localStorage) {
 			const data = this.window.localStorage.getItem('userData');
-			console.log('getSessionData:', data);
 			return JSON.parse(data);
 		}
 	}
