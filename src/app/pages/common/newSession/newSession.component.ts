@@ -44,9 +44,13 @@ export class NewSessionComponent implements OnInit {
 		if (this.actionForm.get('email').value.trim().length > 0 &&
 			this.actionForm.get('password').value.trim().length > 0
 		) {
-			for (const i of this.sessionData.sessions) {
-				if (i) {
-					if (this.actionForm.get('email').value === i.email) {
+			for (let session of this.sessionData.sessions) {
+				if (this.actionForm.get('email').value.indexOf('@') !== -1) { // email
+					if (this.actionForm.get('email').value === session.email) {
+						this.inUse = true;
+					}
+				} else { // username
+					if (this.actionForm.get('email').value === session.username) {
 						this.inUse = true;
 					}
 				}

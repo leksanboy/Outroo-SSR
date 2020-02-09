@@ -178,6 +178,12 @@ export class ShowPlaylistComponent implements OnInit {
 		}
 	}
 
+	// Create new playlist
+	createPlaylist() {
+		const data = 'create';
+		this.sessionService.setDataCreatePlaylist(data);
+	}
+
 	// Close
 	close() {
 		this.dialogRef.close();

@@ -70,14 +70,16 @@
 								</button>
 							</span>
 							<mat-menu #options="matMenu">
-								<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? 'Add' : 'Remove'}}</button>
-								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">Add to playlist</button>
+								<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData.current.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 								<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
 								<mat-divider *ngIf="userData.id == sessionData.current.id"></mat-divider>
-								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? 'Add' : 'Remove'}}</button>
+								<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData.current.id">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 							</mat-menu>
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item *ngFor="let p of sessionData.current.playlists" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
+								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+								<mat-divider *ngIf="sessionData.current.playlists.length"></mat-divider>
+								<button mat-menu-item *ngFor="let p of sessionData.current.playlists" [ngClass]="{'hidden': p.id === data.current.id}" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
 							</mat-menu>
 						</div>
 					</div>

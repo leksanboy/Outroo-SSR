@@ -90,6 +90,10 @@ body{
 		color: $greyColor;
 	}
 
+	.hidden{
+		display: none;
+	}
+
 	.rippleButton{
 		width: 100px;
 		height: 48px;
@@ -6913,6 +6917,7 @@ body{
 
 							.slider{
 								position: relative;
+								cursor: pointer;
 								width: 100%;
 
 								mat-slider{
