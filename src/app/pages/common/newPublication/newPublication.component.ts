@@ -103,7 +103,7 @@ export class NewPublicationComponent implements OnInit {
 	openPhotos(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addPhotos');
 		const config = {
-			disableClose: true,
+			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
 				translations: this.translations,
@@ -130,7 +130,7 @@ export class NewPublicationComponent implements OnInit {
 	openAudios(event: Event) {
 		this.location.go('/' + this.sessionData.current.username + '#newPublication#addAudios');
 		const config = {
-			disableClose: true,
+			disableClose: false,
 			data: {
 				active: 'default',
 				sessionData: this.sessionData,

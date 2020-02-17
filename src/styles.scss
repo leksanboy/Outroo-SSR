@@ -61,16 +61,16 @@ $shadowIcon1: 0 1px 2px rgba(0,0,0,0.24);
 
 /*Keyframes*/
 @keyframes scale{
-	0% 		{ /*null*/							}
-	100% 	{ transform: scale(1.2); 			}
+	0% 		{ /*null*/						}
+	100% 	{ transform: scale(1.2); 		}
 }
 
 @keyframes heartbeat{
-	0% 		{ transform: scale(.75, 	.75);	}
-	16% 	{ transform: scale(1, 	1); 		}
-	33% 	{ transform: scale(.75, 	.75);	}
-	49% 	{ transform: scale(1, 	1); 		}
-	100% 	{ transform: scale(.75, 	.75);	}
+	0% 		{ transform: scale(.75, .75);	}
+	16% 	{ transform: scale(1, 1); 		}
+	33% 	{ transform: scale(.75, .75);	}
+	49% 	{ transform: scale(1, 1); 		}
+	100% 	{ transform: scale(.75, .75);	}
 }
 
 /*General styles*/
@@ -90,7 +90,7 @@ body{
 		color: $greyColor;
 	}
 
-	.hidden{
+	.hiddenItem{
 		display: none;
 	}
 
@@ -1956,12 +1956,6 @@ body{
 		width: 100%;
 		float: left;
 
-		&.audios{
-			border-bottom: 1px solid transparentize($greyColor, .5);
-			border-top: 1px solid transparentize($greyColor, .5);
-			margin: 0 0 12px;
-		}
-
 		.button{
 			box-sizing: border-box;
 			padding: 0 18px 12px;
@@ -2070,6 +2064,22 @@ body{
 
 				&:last-child{
 					background: $blueColor;
+				}
+			}
+		}
+
+		&.audios{
+    		padding: 12px 0 0;
+			margin: 12px 0;
+			background: repeating-linear-gradient(-45deg,
+													transparent,
+													transparent 10px,
+													transparentize($greyColor, .75) 10px,
+													transparentize($greyColor, .75) 20px);
+
+			.info{
+				.title{
+					font-size: 24px;
 				}
 			}
 		}

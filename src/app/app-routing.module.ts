@@ -35,8 +35,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [ RouterModule.forRoot(routes, {initialNavigation: 'enabled'}) ],
-	exports: [ RouterModule ],
-	providers: [ LangResolver, LoginResolver, SessionResolver, UserResolver ]
+	imports: 	[ RouterModule.forRoot(routes, {initialNavigation: 'enabled'}) 	],
+	exports: 	[ RouterModule ],
+	providers: 	[ LangResolver, LoginResolver, SessionResolver, UserResolver 	]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

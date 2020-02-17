@@ -92,7 +92,7 @@
 						<div class="form">
 							<form [formGroup]="actionFormPasswordData" (ngSubmit)="submitPassword()">
 								<mat-form-field>
-									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.oldPassword}}" #OldPassword maxlength="100" formControlName="oldPassword">
+									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.oldPassword}}" #OldPassword maxlength="100" formControlName="oldPassword" name="current-password" autocomplete="on">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
@@ -103,7 +103,7 @@
 								</mat-form-field>
 
 								<mat-form-field>
-									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.newPassword}}" #NewPassword maxlength="100" formControlName="newPassword">
+									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.newPassword}}" #NewPassword maxlength="100" formControlName="newPassword" name="new-password" autocomplete="on">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
@@ -116,7 +116,7 @@
 								</mat-form-field>
 
 								<mat-form-field>
-									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.confirmNewPassword}}" #ConfirmPassword maxlength="100" formControlName="confirmPassword">
+									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.confirmNewPassword}}" #ConfirmPassword maxlength="100" formControlName="confirmPassword" name="confirm-password" autocomplete="on">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>

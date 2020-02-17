@@ -16,7 +16,7 @@
 			<div class="left" [ngClass]="{'remove': dataDefault?.data?.addRemoveSession}">
 				<div class="user">
 					<a class="avatar" routerLink="/{{userData?.username}}">
-						<img [src]="userData?.avatar ? userData?.avatarUrl : env?.avatar"/>
+						<img [src]="userData?.avatar ? userData?.avatarUrl : env.avatar"/>
 					</a>
 
 					<div class="username">
@@ -51,10 +51,10 @@
 
 				<div class="photos" *ngIf="dataDefault?.data?.photos">
 					<span *ngIf="dataDefault?.data?.photos.length == 1">
-						<img *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('image') !== -1" [src]="env?.pathPhotos + dataDefault?.data?.photos[0].name">
+						<img *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + dataDefault?.data?.photos[0].name">
 
-						<video *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1" #videoPlayer width="100%" height="auto" poster="{{env?.pathVideos + 'thumbnails/' + dataDefault?.data?.photos[0].name}}">
-							<source src="{{env?.pathVideos + dataDefault?.data?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+						<video *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1" #videoPlayer width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + dataDefault?.data?.photos[0].name}}">
+							<source src="{{env.pathVideos + dataDefault?.data?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
 						</video>
 
 						<span *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1">
@@ -69,10 +69,10 @@
 							<div class="swiper-slide" *ngFor="let p of dataDefault?.data?.photos">
 								<div class="slide">
 									<div class="image">
-										<div class="img" *ngIf="p?.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env?.pathPhotos + p?.name + ')'}"></div>
+										<div class="img" *ngIf="p?.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p?.name + ')'}"></div>
 										
-										<video *ngIf="p?.mimetype.indexOf('video') !== -1" width="100%" height="auto" poster="{{env?.pathVideos + 'thumbnails/' + p?.name}}" preload="yes" controls="true">
-											<source src="{{env?.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
+										<video *ngIf="p?.mimetype.indexOf('video') !== -1" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p?.name}}" preload="yes" controls="true">
+											<source src="{{env.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
 										</video>
 
 										<span *ngIf="p?.mimetype.indexOf('video') !== -1">
@@ -102,7 +102,7 @@
 					<div class="panel">
 						<div class="user">
 							<a class="avatar" routerLink="/{{userData?.username}}">
-								<img [src]="userData?.avatar ? userData?.avatarUrl : env?.avatar"/>
+								<img [src]="userData?.avatar ? userData?.avatarUrl : env.avatar"/>
 							</a>
 
 							<div class="username">
@@ -144,7 +144,7 @@
 											<button mat-icon-button (click)="playSong(dataDefault?.data, a, i, 'publication')">
 												<i label="play" *ngIf="!a?.playing || !(audioPlayerData?.postId == dataDefault?.data?.id)"></i>
 												<i label="pause" *ngIf="a?.playing && (audioPlayerData?.postId == dataDefault?.data?.id)"></i>
-												<img *ngIf="a?.image" [src]="env?.pathAudios + 'thumbnails/' + a?.image"/>
+												<img *ngIf="a?.image" [src]="env.pathAudios + 'thumbnails/' + a?.image"/>
 											</button>
 										</div>
 
@@ -225,7 +225,7 @@
 
 							<div class="new" *ngIf="sessionData?.current?.id">
 								<div class="avatar">
-									<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env?.avatar"/>
+									<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 								</div>
 								<div class="richComment">
 									<div class="highlights" [innerHTML]="dataDefault?.data?.newCommentData?.transformed"></div>
@@ -242,7 +242,7 @@
 								<li *ngFor="let c of dataDefault?.data?.comments?.list" [ngClass]="{'remove': c?.addRemove}">
 									<div class="top">
 										<a class="avatar" routerLink="/{{c?.user?.username}}">
-											<img [src]="c?.user?.avatar ? c?.user?.avatarUrl : env?.avatar"/>
+											<img [src]="c?.user?.avatar ? c?.user?.avatarUrl : env.avatar"/>
 										</a>
 
 										<div class="username">

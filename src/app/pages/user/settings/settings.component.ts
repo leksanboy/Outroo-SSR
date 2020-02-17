@@ -289,7 +289,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 				const dialogRef = this.dialog.open(NewAvatarComponent, config);
 				dialogRef.afterClosed().subscribe((res: string) => {
-					this.location.go('/settings');
+					this.location.go(this.router.url);
 
 					if (res) {
 						this.sessionData = res;

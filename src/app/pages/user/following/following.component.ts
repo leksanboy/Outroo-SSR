@@ -83,6 +83,11 @@ export class FollowingComponent implements OnInit, OnDestroy {
 			this.deniedAccessOnlySession = true;
 		}
 
+		// Denied
+		if (this.userData.private && this.userData.followingStatus !== 'following') {
+			this.deniedAccessOnlySession = true;
+		}
+
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
 			.subscribe(data => {
@@ -97,13 +102,15 @@ export class FollowingComponent implements OnInit, OnDestroy {
 			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.data.active === 'default') {
-					if (this.dataDefault.list.length > 0) {
-						this.default('more', null);
-					}
-				} else if (this.data.active === 'search') {
-					if (this.dataSearch.list.length > 0) {
-						this.search('more');
+				if (!this.deniedAccessOnlySession) {
+					if (this.data.active === 'default') {
+						if (this.dataDefault.list.length > 0) {
+							this.default('more', null);
+						}
+					} else if (this.data.active === 'search') {
+						if (this.dataSearch.list.length > 0) {
+							this.search('more');
+						}
 					}
 				}
 			}

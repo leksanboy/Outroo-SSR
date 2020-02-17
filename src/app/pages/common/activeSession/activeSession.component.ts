@@ -46,7 +46,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public translations: any = [];
 	public dataNotifications: any = [];
 	public navMenu: boolean;
-	public deniedAccessOnlySession: boolean;
+	public deniedAccess = 'session';
 	public showPlayer: boolean;
 	public showSessions: boolean;
 	public showPlaylist: boolean;
@@ -88,6 +88,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		},
 		list: []
 	};
+	public ssrServiceBrowser: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -105,6 +106,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private bottomSheet: MatBottomSheet,
 		private ssrService: SsrService
 	) {
+		this.ssrServiceBrowser = this.ssrService.isBrowser;
+
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
 
@@ -124,13 +127,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (!this.sessionData) {
 			this.sessionData = [];
 			this.sessionData.current = [];
-			this.deniedAccessOnlySession = true;
+			this.deniedAccess = 'none';
 
 			// No tengo session y no puedo acceder a settings, notifications, news, home
 			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
 				this.userDataService.noSessionData();
 			}
 		} else {
+			this.deniedAccess = 'session';
+
 			// Set theme
 			if (this.sessionData.current.theme === 0) {
 				this.document.body.classList.remove('blackTheme');
@@ -191,7 +196,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.sessionService.getData()
 				.subscribe(data => {
 					this.sessionData = data;
-					this.deniedAccessOnlySession = data ? false : true;
+					this.deniedAccess = data ? 'session' : 'none';
 
 					// Get translations
 					this.getTranslations(data.current.language);

@@ -56,6 +56,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
 	public activeLanguage: any;
+	public deniedAccessOnlySession: boolean;
 	public actionFormSearch: FormGroup;
 	public hideAd: boolean;
 	// public audio = new Audio();
@@ -91,7 +92,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			// Set Google analytics
 			const url = 'songs';
 			const title = this.userData.name + ' - ' + this.translations.audios.title;
-			const userId = this.sessionData.current.id;
+			const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
 			this.userDataService.analytics(url, title, userId);
 
 			// Set title
@@ -108,6 +109,11 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			// Load default
 			this.data.selectedIndex = 0;
 			this.default('default', this.userData.id);
+		}
+
+		// Denied
+		if (this.userData.private && this.userData.followingStatus !== 'following') {
+			this.deniedAccessOnlySession = true;
 		}
 
 		// Playlists
@@ -141,32 +147,34 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.data.active === 'default') {
-					switch (this.data.selectedIndex) {
-						case 0:
-							if (this.dataDefault.list.length > 0) {
-								this.default('more', null);
-							}
-							break;
-						case 1:
-							if (this.dataAround.list.length > 0) {
-								this.around('more');
-							}
-							break;
-						case 2:
-							if (this.dataTop.list.length > 0) {
-								this.top('more');
-							}
-							break;
-						case 3:
-							if (this.dataFresh.list.length > 0) {
-								this.fresh('more');
-							}
-							break;
-					}
-				} else if (this.data.active === 'search') {
-					if (this.dataSearch.list.length > 0) {
-						this.search('more');
+				if (!this.deniedAccessOnlySession) {
+					if (this.data.active === 'default') {
+						switch (this.data.selectedIndex) {
+							case 0:
+								if (this.dataDefault.list.length > 0) {
+									this.default('more', null);
+								}
+								break;
+							case 1:
+								if (this.dataAround.list.length > 0) {
+									this.around('more');
+								}
+								break;
+							case 2:
+								if (this.dataTop.list.length > 0) {
+									this.top('more');
+								}
+								break;
+							case 3:
+								if (this.dataFresh.list.length > 0) {
+									this.fresh('more');
+								}
+								break;
+						}
+					} else if (this.data.active === 'search') {
+						if (this.dataSearch.list.length > 0) {
+							this.search('more');
+						}
 					}
 				}
 			}
@@ -1048,8 +1056,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		};
 
 		const dialogRef = this.dialog.open(ShowPlaylistComponent, config);
-		dialogRef.afterClosed().subscribe((res: string) => {
-			this.location.go('/' + this.userData.username + '/songs');
+		dialogRef.beforeClosed().subscribe((res: string) => {
+			// Set url
+			this.location.go(this.router.url);
 		});
 	}
 
@@ -1107,7 +1116,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 				const dialogRef = this.dialog.open(NewPlaylistComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
-					this.location.go('/' + this.userData.username + '/audios');
+					this.location.go(this.router.url);
 
 					if (res) {
 						const data = {

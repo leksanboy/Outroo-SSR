@@ -1,6 +1,6 @@
 <div class="innerBodyUser">
-	<div class="header">
-		<span *ngIf="!deniedAccessOnlySession">
+	<div class="header" *ngIf="ssrServiceBrowser && translations">
+		<span *ngIf="deniedAccess === 'session'">
 			<div class="head">
 				<div class="left">
 					<button mat-mini-fab (click)="navMenu=!navMenu">
@@ -574,7 +574,7 @@
 			</div>
 		</span>
 
-		<span *ngIf="deniedAccessOnlySession">
+		<span *ngIf="deniedAccess === 'none'">
 			<div class="head">
 				<div class="center">
 					<div class="logo" routerLink="/"></div>
@@ -595,214 +595,207 @@
 	</div>
 </div>
 
-<span *ngIf="!deniedAccessOnlySession">
-	<!-- Bottom nav user buttons-->
-	<div class="bottomNav">
-		<ul>
-			<li>
-				<button mat-icon-button (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
-					<div class="home">
-						<div class="roof"></div>
-					</div>
-				</button>
-			</li>
-			<li>
-				<button mat-icon-button (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
-					<div class="search"></div>
-				</button>
-			</li>
-			<li>
-				<button mat-icon-button (click)="showMobilePlayer('toggle')" (press)="showMobilePlayer('toggle')">
-					<div class='miniEqualizer' [ngClass]="{'active' : audioPlayerData?.playing}" [style.borderColor]="audioPlayerData?.current?.color" *ngIf="!audioPlayerData?.loadingToPlay">
-						<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-						<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-						<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-						<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-						<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-					</div>
-
-					<span class="loader" *ngIf="audioPlayerData?.loadingToPlay">
-						<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-					</span>
-				</button>
-			</li>
-			<li>
-				<button mat-icon-button (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
-					<div class="notifications">
-						<div class="clapper"></div>
-						<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
-							{{sessionData?.current?.countPendingNotifications}}
-						</div>
-					</div>
-				</button>
-			</li>
-			<li>
-				<button mat-icon-button (click)="setComeFromUserButton(); scrollTop();" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
-					<div class="avatar">
-						<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-					</div>
-				</button>
-			</li>
-		</ul>
-	</div>
-
-	<!-- Web audio player -->
-	<div class="audioPlayerWeb">
-		<div class="player">
-			<div class="left">
-				<div class="image" *ngIf="audioPlayerData?.current?.image">
-					<img [src]="audioPlayerData?.current?.image"/>
-				</div>
-
-				<div class="text">
-					<div class="title">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
-					<div class="artist">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
-				</div>
-
-				<div class="add" *ngIf="audioPlayerData?.current?.initialized">
-					<button mat-mini-fab (click)="itemSongOptions('addRemoveSession', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
-						<i label="add" *ngIf="audioPlayerData?.current?.item?.addRemoveSession"></i>
-						<i label="check" *ngIf="!audioPlayerData?.current?.item?.addRemoveSession"></i>
-					</button>
-					<button mat-mini-fab (click)="itemSongOptions('addRemoveUser', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
-						<i label="add" *ngIf="!audioPlayerData?.current?.item?.addRemoveUser"></i>
-						<i label="check" *ngIf="audioPlayerData?.current?.item?.addRemoveUser"></i>
-					</button>
-				</div>
+<!-- Web audio player -->
+<div class="audioPlayerWeb" *ngIf="deniedAccess === 'session'">
+	<div class="player">
+		<div class="left">
+			<div class="image" *ngIf="audioPlayerData?.current?.image">
+				<img [src]="audioPlayerData?.current?.image"/>
 			</div>
-			<div class="center">
-				<div class="top">
-					<button mat-mini-fab (click)="playPlayer('shuffle', '')" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list?.length <= 1}">
-						<i></i>
-					</button>
 
-					<button mat-mini-fab (click)="playPlayer('prev', '')" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-						<i [style.background]="audioPlayerData?.current?.color"></i>
-					</button>
-
-					<button mat-fab (click)="playPlayer('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color">
-						<i class="play" *ngIf="!audioPlayerData?.playing"></i>
-						<i class="pause" *ngIf="audioPlayerData?.playing"></i>
-					</button>
-
-					<button mat-mini-fab (click)="playPlayer('next', '')" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-						<i [style.background]="audioPlayerData?.current?.color"></i>
-					</button>
-
-					<button mat-mini-fab (click)="playPlayer('repeat', '')" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">
-						<i></i>
-					</button>
-				</div>
-
-				<div class="bottom">
-					<div class="progress">
-						<div class="current">{{audioPlayerData?.current?.time}}</div>
-						<div class="slider">
-							<canvas id="audioAnalyser"></canvas>
-							<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)" [disabled]="audioPlayerData?.list.length == 0"></mat-slider>
-						</div>
-						<div class="total">{{audioPlayerData?.current?.duration}}</div>
-					</div>
-				</div>
+			<div class="text">
+				<div class="title">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
+				<div class="artist">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
 			</div>
-			<div class="right">
-				<div class="playlist">
-					<button mat-mini-fab (click)="showPlaylistWeb()">
-						<i label="playlist" [ngClass]="{active: showPlaylist}"></i>
-					</button>
-				</div>
-				<div class="volume">
-					<button mat-mini-fab (click)="volumeBar('mute', $event)">
-						<i label="volume" [ngClass]="{active: audioPlayerData?.volume?.mute}"></i>
-					</button>
-					<mat-slider min="0" max="100" [value]="audioPlayerData?.volume?.value" (input)="volumeBar('progress', $event)" (change)="volumeBar('save', $event)"></mat-slider>
+
+			<div class="add" *ngIf="audioPlayerData?.current?.initialized">
+				<button mat-mini-fab (click)="itemSongOptions('addRemoveSession', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
+					<i label="add" *ngIf="audioPlayerData?.current?.item?.addRemoveSession"></i>
+					<i label="check" *ngIf="!audioPlayerData?.current?.item?.addRemoveSession"></i>
+				</button>
+				<button mat-mini-fab (click)="itemSongOptions('addRemoveUser', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
+					<i label="add" *ngIf="!audioPlayerData?.current?.item?.addRemoveUser"></i>
+					<i label="check" *ngIf="audioPlayerData?.current?.item?.addRemoveUser"></i>
+				</button>
+			</div>
+		</div>
+		<div class="center">
+			<div class="top">
+				<button mat-mini-fab (click)="playPlayer('shuffle', '')" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list?.length <= 1}">
+					<i></i>
+				</button>
+
+				<button mat-mini-fab (click)="playPlayer('prev', '')" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
+					<i [style.background]="audioPlayerData?.current?.color"></i>
+				</button>
+
+				<button mat-fab (click)="playPlayer('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color">
+					<i class="play" *ngIf="!audioPlayerData?.playing"></i>
+					<i class="pause" *ngIf="audioPlayerData?.playing"></i>
+				</button>
+
+				<button mat-mini-fab (click)="playPlayer('next', '')" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
+					<i [style.background]="audioPlayerData?.current?.color"></i>
+				</button>
+
+				<button mat-mini-fab (click)="playPlayer('repeat', '')" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">
+					<i></i>
+				</button>
+			</div>
+
+			<div class="bottom">
+				<div class="progress">
+					<div class="current">{{audioPlayerData?.current?.time}}</div>
+					<div class="slider">
+						<canvas id="audioAnalyser"></canvas>
+						<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)" [disabled]="audioPlayerData?.list.length == 0"></mat-slider>
+					</div>
+					<div class="total">{{audioPlayerData?.current?.duration}}</div>
 				</div>
 			</div>
 		</div>
+		<div class="right">
+			<div class="playlist">
+				<button mat-mini-fab (click)="showPlaylistWeb()">
+					<i label="playlist" [ngClass]="{active: showPlaylist}"></i>
+				</button>
+			</div>
+			<div class="volume">
+				<button mat-mini-fab (click)="volumeBar('mute', $event)">
+					<i label="volume" [ngClass]="{active: audioPlayerData?.volume?.mute}"></i>
+				</button>
+				<mat-slider min="0" max="100" [value]="audioPlayerData?.volume?.value" (input)="volumeBar('progress', $event)" (change)="volumeBar('save', $event)"></mat-slider>
+			</div>
+		</div>
+	</div>
 
-		<div class="playlistBox" *ngIf="showPlaylist">
-			<div class="data">
-				<ul class="tracks" *ngIf="audioPlayerData?.list">
-					<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, default: !x.image, remove: x.addRemoveSession}">
-						<div class="inner" *ngIf="!x.contentTypeAd">
-							<div class="image">
-								<button mat-icon-button (click)="playSong(audioPlayerData?.list, x, i, audioPlayerData?.type)">
-									<i label="play" *ngIf="!x?.playing"></i>
-									<i label="pause" *ngIf="x?.playing"></i>
-									<img *ngIf="x.image" [src]="audioPlayerData?.path + 'thumbnails/' + x.image"/>
+	<div class="playlistBox" *ngIf="showPlaylist">
+		<div class="data">
+			<ul class="tracks" *ngIf="audioPlayerData?.list">
+				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, default: !x.image, remove: x.addRemoveSession}">
+					<div class="inner" *ngIf="!x.contentTypeAd">
+						<div class="image">
+							<button mat-icon-button (click)="playSong(audioPlayerData?.list, x, i, audioPlayerData?.type)">
+								<i label="play" *ngIf="!x?.playing"></i>
+								<i label="pause" *ngIf="x?.playing"></i>
+								<img *ngIf="x.image" [src]="audioPlayerData?.path + 'thumbnails/' + x.image"/>
+							</button>
+						</div>
+						<div class="text" (click)="playSong(audioPlayerData?.list, x, i, audioPlayerData?.type)">
+							<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+								<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+								<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+							</div>
+							<div class="duration">{{(audioPlayerData?.current?.key == i) ? (x.countdown ? x.countdown : x.duration) : x.duration}}</div>
+						</div>
+						<div class="actions">
+							<span *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
+								<button mat-icon-button [matMenuTriggerFor]="appMenu">
+									<i class="icon85 grey" label="more"></i>
 								</button>
-							</div>
-							<div class="text" (click)="playSong(audioPlayerData?.list, x, i, audioPlayerData?.type)">
-								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
-								</div>
-								<div class="duration">{{(audioPlayerData?.current?.key == i) ? (x.countdown ? x.countdown : x.duration) : x.duration}}</div>
-							</div>
-							<div class="actions">
-								<span *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">
-									<button mat-icon-button [matMenuTriggerFor]="appMenu">
-										<i class="icon85 grey" label="more"></i>
-									</button>
+							</span>
+
+							<span *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
+								<button mat-icon-button [matMenuTriggerFor]="appMenu">
+									<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+									<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+								</button>
+							</span>
+
+							<mat-menu #appMenu="matMenu">
+								<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+								<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
+								<mat-divider *ngIf="audioPlayerData?.current?.user === sessionData?.current?.id"></mat-divider>
+								<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+							</mat-menu>
+
+							<mat-menu #menuPlaylists="matMenu">
+								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+								<span *ngFor="let p of sessionData?.current?.playlists">
+									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 								</span>
+							</mat-menu>
 
-								<span *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">
-									<button mat-icon-button [matMenuTriggerFor]="appMenu">
-										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
-										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
-									</button>
-								</span>
-
-								<mat-menu #appMenu="matMenu">
-									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="audioPlayerData?.current?.user != sessionData?.current?.id || audioPlayerData?.current?.type != 'default'">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
-									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
-									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-									<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-									<mat-divider *ngIf="audioPlayerData?.current?.user === sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
-								</mat-menu>
-
-								<mat-menu #menuPlaylists="matMenu">
-									<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
-									<span *ngFor="let p of sessionData?.current?.playlists">
-										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
-									</span>
-								</mat-menu>
-
-								<mat-menu #menuShareSocial="matMenu">
-									<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
-									<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
-									<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
-								</mat-menu>
-							</div>
+							<mat-menu #menuShareSocial="matMenu">
+								<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
+								<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+								<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
+							</mat-menu>
 						</div>
-					</li>
-			    </ul>
+					</div>
+				</li>
+		    </ul>
 
-			    <div class="noData" *ngIf="audioPlayerData?.noData">
-					<div class="description">{{translations?.audios?.noData}}</div>
-				</div>
+		    <div class="noData" *ngIf="audioPlayerData?.noData">
+				<div class="description">{{translations?.audios?.noData}}</div>
 			</div>
 		</div>
 	</div>
-</span>
+</div>
+
+<!-- Bottom nav user buttons-->
+<div class="bottomNav">
+	<ul *ngIf="deniedAccess === 'session'">
+		<li>
+			<button mat-icon-button (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
+				<div class="home">
+					<div class="roof"></div>
+				</div>
+			</button>
+		</li>
+		<li>
+			<button mat-icon-button (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
+				<div class="search"></div>
+			</button>
+		</li>
+		<li>
+			<button mat-icon-button (click)="showMobilePlayer('toggle')" (press)="showMobilePlayer('toggle')">
+				<div class='miniEqualizer' [ngClass]="{'active' : audioPlayerData?.playing}" [style.borderColor]="audioPlayerData?.current?.color" *ngIf="!audioPlayerData?.loadingToPlay">
+					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+				</div>
+
+				<span class="loader" *ngIf="audioPlayerData?.loadingToPlay">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</span>
+			</button>
+		</li>
+		<li>
+			<button mat-icon-button (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
+				<div class="notifications">
+					<div class="clapper"></div>
+					<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+						{{sessionData?.current?.countPendingNotifications}}
+					</div>
+				</div>
+			</button>
+		</li>
+		<li>
+			<button mat-icon-button (click)="setComeFromUserButton(); scrollTop();" (press)="showSessionPanelFromBottom()" routerLink="/{{sessionData?.current?.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
+				<div class="avatar">
+					<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+				</div>
+			</button>
+		</li>
+	</ul>
+
+	<div class="inner" *ngIf="deniedAccess === 'none'">
+		<div class="logo" routerLink="/"></div>
+		<div class="buttons">
+			<button mat-button routerLink="/signin">
+				{{translations?.common?.signIn}}
+			</button>
+			<button mat-button routerLink="/signup">
+				{{translations?.common?.signUp}}
+			</button>
+		</div>
+	</div>
+</div>
 
 <!-- Audio -->
 <audio #audioPlayerHtml src=""></audio>
-
-<!-- Bottom anv signin/signup-->
-<span *ngIf="deniedAccessOnlySession">
-	<div class="bottomNav">
-		<div class="inner">
-			<div class="logo" routerLink="/"></div>
-			<div class="buttons">
-				<button mat-button routerLink="/signin">
-					{{translations?.common?.signIn}}
-				</button>
-				<button mat-button routerLink="/signup">
-					{{translations?.common?.signUp}}
-				</button>
-			</div>
-		</div>
-	</div>
-</span>

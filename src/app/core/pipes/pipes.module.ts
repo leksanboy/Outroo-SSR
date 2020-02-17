@@ -19,4 +19,4 @@ import { TruncatePipe } from './truncate.pipe';
 		TruncatePipe
 	]
 })
-export class PipesModule { }
+export class PipesModule {}
