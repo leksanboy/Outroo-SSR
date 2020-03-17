@@ -1,24 +1,58 @@
+// #!groovy
+
+// pipeline {
+// 		agent any
+// 			environment {
+// 				 PATH='/usr/local/bin:/usr/bin:/bin'
+// 			}
+
+// 		stages {
+// 			stage('NPM Setup') {
+// 			steps {
+// 				sh 'npm install'
+// 			}
+// 	 	}
+
+// 	 	stage('Stage Web Build') {
+// 			steps {
+// 				sh 'ng b --prod'
+// 			}
+// 		}
+//  	}
+// }
+
 #!groovy
 
-pipeline {
-		agent any
-			environment {
-				 PATH='/usr/local/bin:/usr/bin:/bin'
-			}
+properties(
+  [
+    [$class: 'BuildDiscarderProperty', strategy:
+      [$class: 'LogRotator', artifactDaysToKeepStr: '14', artifactNumToKeepStr: '5', daysToKeepStr: '30', numToKeepStr: '60']
+    ],
+    pipelineTriggers(
+      [
+        pollSCM('H/15 * * * *'),
+        cron('@daily'),
+      ]
+    )
+  ]
+)
+node {
+    stage('Checkout') {
+        //disable to recycle workspace data to save time/bandwidth
+        deleteDir()
+        checkout scm
+    }
 
-		stages {
-			stage('NPM Setup') {
-			steps {
+    stage('NPM Install') {
+      withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
 				sh 'npm install'
 			}
-	 	}
-
-	 	stage('Stage Web Build') {
-			steps {
-				sh 'ng b --prod'
-			}
 		}
- 	}
+
+    stage('Deploy') {
+        milestone()
+        echo "Deploying..."
+    }
 }
 
 // properties(
