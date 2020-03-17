@@ -214,6 +214,7 @@
 
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<mat-divider *ngIf="sessionData?.current?.playlists.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 													</span>
@@ -287,6 +288,7 @@
 
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<mat-divider *ngIf="sessionData?.current?.playlists.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 													</span>
@@ -385,6 +387,7 @@
 												
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<mat-divider *ngIf="sessionData?.current?.playlists.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 													</span>
@@ -458,6 +461,7 @@
 												
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<mat-divider *ngIf="sessionData?.current?.playlists.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 													</span>
@@ -533,6 +537,7 @@
 										
 										<mat-menu #menuPlaylists="matMenu">
 											<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+											<mat-divider *ngIf="sessionData?.current?.playlists.length > 0"></mat-divider>
 											<span *ngFor="let p of sessionData?.current?.playlists">
 												<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 											</span>
