@@ -51,7 +51,7 @@ export class ShowPlaylistComponent implements OnInit {
 					this.data.info = res.info;
 					this.data.list = res.list;
 
-					if (res.info.length === 0) {
+					if (res.list.length === 0) {
 						this.data.noData = true;
 					}
 				}

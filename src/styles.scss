@@ -1196,6 +1196,102 @@ body{
 		}
 	}
 
+	.playlist{
+		width: 100%;
+
+		.info{
+			box-sizing: border-box;
+			padding: 18px;
+			display: flex;
+			width: 100%;
+
+			.left{
+				.image{
+					background-color: $greyColor;
+					border-radius: 5px;
+					position: relative;
+					overflow: hidden;
+					height: 144px;
+					width: 144px;
+					float: left;
+
+					img{
+						width: 100%;
+					}
+
+					.upload{
+						justify-content: center;
+						align-items: center;
+						position: absolute;
+						display: flex;
+						height: 100%;
+						width: 100%;
+						top: 0;
+					}
+
+					&:hover .upload{
+						background: transparentize($blueColor, .5);
+						cursor: pointer;
+					}
+				}
+			}
+
+			.right{
+				width: calc(100% - 144px);
+				box-sizing: border-box;
+				padding: 0 0 0 18px;
+
+				.title{
+					-webkit-box-orient: vertical;
+					text-overflow: ellipsis;
+					word-break: break-word;
+					-webkit-line-clamp: 3;
+					display: -webkit-box;
+					font-weight: bold;
+					overflow: hidden;
+					max-height: 84px;
+					font-size: 24px;
+					max-width: 100%;
+					margin: 8px 0 0;
+				}
+
+				.subtitle{
+					color: $blueColor;
+					font-weight: bold;
+					text-align: left;
+					display: block;
+					width: 100%;
+
+					i{
+						margin: 7px 0 -7px -7px;
+					}
+				}
+
+				.button{
+					width: 100%;
+
+					button{
+						background-color: $blueColor;
+						border-radius: 24px;
+						color: $whiteColor;
+						margin: 12px 0 0;
+						font-size: 13px;
+						float: left;
+
+						span{
+							align-items: center;
+							display: flex;
+
+							i{
+								margin: 0 0 0 -8px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.stats{
 		box-sizing: border-box;
 		padding: 6px 18px 24px;
@@ -3346,7 +3442,7 @@ body{
 
 			/*show playlist*/
 			.bodyPlaylist{
-				.info{
+				/* .info{
 					box-sizing: border-box;
 					padding: 18px;
 					display: flex;
@@ -3436,7 +3532,7 @@ body{
 							}
 						}
 					}
-				}
+				} */
 
 				.container{
 					padding: 0 0 12px;
@@ -7147,12 +7243,6 @@ body{
 								}
 							}
 						}
-					}
-				}
-
-				.bodyPlaylist{
-					.info{
-						width: 100%;
 					}
 				}
 			}

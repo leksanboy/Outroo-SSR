@@ -1068,8 +1068,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				userData: this.userData,
 				translations: this.translations,
 				item: item,
-				audioPlayerData: this.audioPlayerData,
-				path: this.env.pathAudios
+				audioPlayerData: this.audioPlayerData
 			}
 		};
 
