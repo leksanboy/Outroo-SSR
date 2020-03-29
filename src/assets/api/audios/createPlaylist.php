@@ -4,6 +4,7 @@
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
 	$id = $data['id'];
+	$name = generateRandomString(23);
 	$title = htmlspecialchars($data['title'], ENT_QUOTES);
 	$type = $data['type'];
 	$subtype = $data['subtype'];
@@ -21,8 +22,8 @@
 	}
 
 	if ($type === 'create') {
-		$sql = "INSERT INTO z_audios_playlist (user, title, image, ip_address)
-				VALUES ($session, '$title', '$imageNameJpg', '$ipAddress')";
+		$sql = "INSERT INTO z_audios_playlist (name, user, title, image, ip_address)
+				VALUES ('$name', $session, '$title', '$imageNameJpg', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
 

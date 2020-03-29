@@ -20,13 +20,13 @@
 			</div>
 
 			<div class="right">
-				<div class="title" [style.color]="data.current.color">
-					{{data.current.title}}
+				<div class="title">
+					{{data?.info?.title}}
 				</div>
 				
-				<a class="subtitle" routerLink="/{{data.current.user.username}}">
-					@{{data.current.user.username}}
-					<i class="icon50 blue" label="official" *ngIf="data.current.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+				<a class="subtitle" routerLink="/{{data?.info?.user?.username}}">
+					@{{data?.info?.user?.username}}
+					<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 				</a>
 				
 				<div class="button">

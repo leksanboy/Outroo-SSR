@@ -1,14 +1,13 @@
 /*
 Project: Outroo,
 Author: Sasá Rafalsky,
-Version: 1.0.2
+Version: 1.0.0
 */
 
 /*Material default styles*/
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .material-icons{
-	-webkit-font-feature-settings: 'liga';
 	-webkit-font-smoothing: antialiased;
 	font-family: 'Material Icons';
 	letter-spacing: normal;
@@ -1199,13 +1198,12 @@ body{
 
 	.stats{
 		box-sizing: border-box;
-		padding: 6px 12px 24px;
+		padding: 6px 18px 24px;
 		float: left;
 		width: 100%;
 
 		.title{
-			text-transform: uppercase;
-			padding: 0 6px 4px;
+			padding: 0 0 2px;
 			font-size: 13px;
 		}
 
@@ -1227,7 +1225,7 @@ body{
 
 			.divider{
 				background-color: $greyColor;
-				margin: 0 6px 0 12px;
+				margin: 0 12px;
 				height: 24px;
 				width: 1px;
 			}
@@ -2073,9 +2071,9 @@ body{
 			margin: 12px 0;
 			background: repeating-linear-gradient(-45deg,
 													transparent,
-													transparent 10px,
-													transparentize($greyColor, .75) 10px,
-													transparentize($greyColor, .75) 20px);
+													transparent 6px,
+													transparentize($greyColor, .85) 6px,
+													transparentize($greyColor, .85) 12px);
 
 			.info{
 				.title{
@@ -7400,9 +7398,9 @@ body{
 										}
 
 										@keyframes grow#{$i}{
-											@for $j from 0 through 10{
-												#{$j * 10}%{
-													height: #{random(16)}px;
+											@for $j from 0 through 10 {
+												#{$j * 10}% {
+													height: #{random(16)}px
 												}
 											}
 										}

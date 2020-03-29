@@ -10,7 +10,7 @@
 		"maxSizePerFile": "Canciones · Tamaño maximo por archivo 20 Mb",
 		"play": "Reproducir",
 		"pause": "Pausar",
-		"playlist": "Lista de reproducción",
+		"playlist": "Playlist",
 		"removeCover": "Eliminar portada",
 		"addCoverToPlaylist": "Añadir portada (opcional)",
 		"uploadOrSearch": "Sube o busca alguna canción",
@@ -130,6 +130,13 @@
 		"title": "Canción",
 		"stats": "Estadisticas",
 		"noData": "La canción no existe o ha sido eliminada.",
+		"replays": "reproducciones",
+		"timesAdded": "veces añadido"
+	},
+	"playlist": {
+		"title": "Playlist",
+		"stats": "Estadisticas",
+		"noData": "Playlist no existe o ha sido eliminada.",
 		"replays": "reproducciones",
 		"timesAdded": "veces añadido"
 	},
@@ -316,7 +323,7 @@
 		"refresh": "Recargar",
 		"upload": "Subir",
 		"errorOnUpload": "Error en la subida",
-		"invalidFile": "Archivo no valido",
+		"invalidFile": "No valido",
 		"fileSizeToBig": "El tamaña del archivo es demasiado grande",
 		"verifiedAccount": "Cuenta verificada",
 		"restore": "Restaurar",

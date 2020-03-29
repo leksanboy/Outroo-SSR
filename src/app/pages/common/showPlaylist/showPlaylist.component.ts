@@ -29,6 +29,7 @@ export class ShowPlaylistComponent implements OnInit {
 		this.sessionData = data.sessionData;
 		this.userData = data.userData;
 		this.translations = data.translations;
+		this.data.info = [];
 		this.data.list = [];
 		this.data.current = data.item;
 		this.data.loadingData = true;
@@ -40,14 +41,19 @@ export class ShowPlaylistComponent implements OnInit {
 			id: this.data.current.id
 		};
 
-		this.audioDataService.defaultPlaylistSongs(params)
+		this.audioDataService.getPlaylist(params)
 			.subscribe((res: any) => {
 				this.data.loadingData = false;
 
-				if (!res || res.length === 0) {
+				if (!res || res.length === 0 || res.info.length === 0) {
 					this.data.noData = true;
 				} else {
-					this.data.list = res;
+					this.data.info = res.info;
+					this.data.list = res.list;
+
+					if (res.info.length === 0) {
+						this.data.noData = true;
+					}
 				}
 			});
 

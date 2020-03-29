@@ -56,8 +56,9 @@
 		$minutes = floor(($timeInSeconds / 60) % 60). ':';
 		$seconds = substr('00' . $timeInSeconds % 60, -2);
 
-		if ($hours === '0:')
+		if ($hours === '0:') {
 			$hours = '';
+		}
 
 		return $hours.$minutes.$seconds;
 	}
@@ -68,8 +69,9 @@
 		$charactersLength = strlen($characters);
 		$randomString = '';
 
-		for ($i = 0; $i < $length; $i++)
+		for ($i = 0; $i < $length; $i++) {
 			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
 
 		return $randomString;
 	}
@@ -377,13 +379,14 @@
 	function getPlaylist($id){
 		global $conn;
 
-		$sql = "SELECT id, title, image, private
+		$sql = "SELECT id, name, user, title, image, private
 				FROM z_audios_playlist
 				WHERE id = $id";
 		$result = $conn->query($sql);
 
 		$data = array();
 		while($row = $result->fetch_assoc()) {
+			$row['user'] = userUsernameNameAvatar($row['user']);
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['private'] = $row['private'] ? true : false;
 			$row['idPlaylist'] = $row['id'];
@@ -454,6 +457,18 @@
 		$result['imageSrc'] = 'assets/media/audios/thumbnails/'.$result['image'];
 
 		return $result;
+	}
+
+	// Get id by name
+	function getPlaylistIdByName($name){
+		global $conn;
+
+		$sql = "SELECT id
+				FROM z_audios_playlist
+				WHERE name = '$name'";
+		$result = $conn->query($sql)->fetch_assoc();
+
+		return $result['id'];
 	}
 
 	////////////

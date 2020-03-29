@@ -5,9 +5,10 @@
 
 	// Playlists for list or combo
 	if ($type === 'default') {
-		$sql = "SELECT id, 
-						title, 
-						image, 
+		$sql = "SELECT id,
+						name,
+						title,
+						image,
 						private,
 						user
 				FROM z_audios_playlist
@@ -16,9 +17,10 @@
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
 	} else if ($type === 'session') {
-		$sql = "SELECT id, 
-						title, 
-						image, 
+		$sql = "SELECT id,
+						name,
+						title,
+						image,
 						private
 				FROM z_audios_playlist
 				WHERE user = $session 
@@ -26,10 +28,11 @@
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
 	} else if ($type === 'top') {
-		$sql = "SELECT id, 
-						title, 
-						image, 
-						private, 
+		$sql = "SELECT id,
+						name,
+						title,
+						image,
+						private,
 						user 
 				FROM z_audios_playlist
 				WHERE is_deleted = 0 
@@ -50,13 +53,13 @@
 			if ($row['user'])
 				$row['user'] = userUsernameNameAvatar($row['user']);
 			
-			if ($session === $user)
+			if ($session === $user) {
 				$data[] = $row;
-			else
-				if (!$row['private'])
+			} else {
+				if (!$row['private']) {
 					$data[] = $row;
-
-			// $data[] = $row;
+				}
+			}
 		}
 
 		echo json_encode($data);

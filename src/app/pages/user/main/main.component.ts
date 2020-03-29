@@ -357,6 +357,20 @@ export class MainComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// User options
+	userOptions(type, item) {
+		switch (type) {
+			case 'copyLink':
+				const urlExtension = this.env.url + item.username;
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'report':
+				item.type = 'user';
+				this.sessionService.setDataReport(item);
+				break;
+		}
+	}
+
 	// Item options
 	itemOptions(type, item) {
 		switch (type) {

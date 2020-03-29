@@ -23,6 +23,7 @@ const routes: Routes = [
 		path: 'news/:name',					loadChildren: './pages/user/news/news.module#NewsModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'p/:name',					loadChildren: './pages/user/post/post.module#PostModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 's/:name',					loadChildren: './pages/user/song/song.module#SongModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
+		path: 'pl/:name',					loadChildren: './pages/user/playlist/playlist.module#PlaylistModule',						resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'notifications',				loadChildren: './pages/user/notifications/notifications.module#NotificationsModule',		resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'saved',						loadChildren: './pages/user/bookmarks/bookmarks.module#BookmarksModule',					resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'settings',					loadChildren: './pages/user/settings/settings.module#SettingsModule',						resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {

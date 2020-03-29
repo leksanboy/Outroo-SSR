@@ -19,14 +19,14 @@
 				WHERE id = $id 
 					AND user = $session";
 		$conn->query($sql);
-	
+
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	} else if ($location === 'user') { // Add/Remove
 		if (!$insertedPlaylist) {
-			$sql = "INSERT INTO z_audios_playlist (user, title, image, ip_address)
-					VALUES ($session, '$title', '$imageName', '$ipAddress')";
+			$sql = "INSERT INTO z_audios_playlist (original_id, user, title, image, ip_address)
+					VALUES ($id, $session, '$title', '$imageName', '$ipAddress')";
 			$conn->query($sql);
 			$insertedId = $conn->insert_id;	
 

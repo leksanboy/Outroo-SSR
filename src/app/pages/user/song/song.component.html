@@ -14,9 +14,13 @@
 				<div class="stats" *ngIf="!dataDefault.noData">
 					<div class="title">{{translations?.song?.stats}}</div>
 					<div class="texts">
-						<i label="play"></i>{{dataDefault.data.replays}}<span class="text">{{translations?.song?.replays}}</span>
+						{{dataDefault.data.replays}}
+						<span class="text">{{translations?.song?.replays}}</span>
 						<div class="divider"></div>
-						<i label="add"></i>{{dataDefault.data.timesAdded}}<span class="text">{{translations?.song?.timesAdded}}</span>
+						{{dataDefault.data.timesAdded}}
+						<span class="text">{{translations?.song?.timesAdded}}</span>
+						<div class="divider"></div>
+						<a class="text" routerLink="/{{dataDefault.data.user.username}}">@{{dataDefault.data.user.username}}</a>
 					</div>
 				</div>
 
@@ -53,6 +57,7 @@
 							
 							<mat-menu #menuPlaylists="matMenu">
 								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+								<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 								<span *ngFor="let p of sessionData?.current?.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', dataDefault.data, p)">{{p.title}}</button>
 								</span>

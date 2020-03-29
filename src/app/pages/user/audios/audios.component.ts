@@ -1033,6 +1033,24 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Share on social media
+	shareOnPlaylist(type, item) {
+		switch (type) {
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
 	// Create new playlist
 	createPlaylist() {
 		const data = 'create';

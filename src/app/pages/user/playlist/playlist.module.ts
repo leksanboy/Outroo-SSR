@@ -17,12 +17,12 @@ import {
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
 // Main
-import { SongComponent } from './song.component';
+import { PlaylistComponent } from './playlist.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: SongComponent
+		component: PlaylistComponent
 	}
 ];
 
@@ -43,7 +43,7 @@ const routes: Routes = [
 		MatTooltipModule
 	],
 	declarations: [
-		SongComponent
+		PlaylistComponent
 	]
 })
-export class SongModule { }
+export class PlaylistModule { }

@@ -2,12 +2,13 @@
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$name = $_GET['name'].'.mp3';
 
-	$sql = "SELECT id, 
-					name, 
-					title, 
-					original_title, 
-					original_artist, 
-					duration, 
+	$sql = "SELECT id,
+					user,
+					name,
+					title,
+					original_title,
+					original_artist,
+					duration,
 					image
 			FROM z_audios
 			WHERE name = '$name' 
@@ -18,6 +19,7 @@
 		$data = array();
 		while($row = $result->fetch_assoc()) {
 			$row['song'] = $row['id'];
+			$row['user'] = userUsernameNameAvatar($row['user']);
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);

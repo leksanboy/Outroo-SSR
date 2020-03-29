@@ -133,6 +133,13 @@
 		"replays": "replays",
 		"timesAdded": "times added"
 	},
+	"playlist": {
+		"title": "Playlist",
+		"stats": "Stats",
+		"noData": "Playlist does not exist or has been removed.",
+		"replays": "replays",
+		"timesAdded": "times added"
+	},
 	"about":{
 		"title": "About us",
 		"description": "Outroo is the best.",
@@ -316,7 +323,7 @@
 		"refresh": "Refresh",
 		"upload": "Upload",
 		"errorOnUpload": "Error on upload",
-		"invalidFile": "Invalid file",
+		"invalidFile": "Invalid",
 		"fileSizeToBig": "File size is to big",
 		"verifiedAccount": "Verified account",
 		"restore": "Restore",

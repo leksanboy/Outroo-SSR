@@ -85,9 +85,10 @@ export class AudioDataService {
 			}));
 	}
 
-	defaultPlaylistSongs(data: any) {
-		const url = this.env.url + 'assets/api/audios/defaultPlaylistSongs.php';
-		let params =	'&id=' + data.id;
+	getPlaylist(data: any) {
+		const url = this.env.url + 'assets/api/audios/getPlaylist.php';
+		let params =	(data.id ? '&id=' + data.id : '') +
+						(data.name ? '&name=' + data.name : '');
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())

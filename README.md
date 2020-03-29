@@ -10,6 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 <!-- [For GoogleCloudPlatform] -->
 npm run build:ssr
+rm -rf dist/browser/assets/
 
 <!-- [compile & run on localhost] -->
 npm run build:ssr && npm run serve:ssr
