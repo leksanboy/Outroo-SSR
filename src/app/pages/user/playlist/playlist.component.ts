@@ -24,6 +24,7 @@ declare var global: any;
 export class PlaylistComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public window: any = global;
+	public userData: any = [];
 	public sessionData: any = [];
 	public translations: any = [];
 	public audioPlayerData: any = [];
@@ -51,6 +52,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
+		this.userData = this.sessionData ? this.sessionData.current : [];
 
 		// Translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -156,7 +158,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	// Play song
+	// Play item song
 	playSong(data, item, key, type) {
 		if (!this.sessionData) {
 			this.alertService.success(this.translations.common.createAnAccountToListenSong);
@@ -164,44 +166,98 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 			if (this.audioPlayerData.key === key &&
 				this.audioPlayerData.type === type &&
 				this.audioPlayerData.item.song === item.song
-			) {
+			) { // Play/Pause current
 				item.playing = !item.playing;
+				this.dataDefault.playing = !this.dataDefault.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
-				this.audioPlayerData.list = [data];
+				this.audioPlayerData.list = data;
 				this.audioPlayerData.item = item;
 				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username;
-				this.audioPlayerData.location = 'song';
+				this.audioPlayerData.user = this.userData.id;
+				this.audioPlayerData.username = this.userData.username;
+				this.audioPlayerData.location = 'playlist';
 				this.audioPlayerData.type = type;
+				this.audioPlayerData.selectedIndex = this.dataDefault.selectedIndex;
 
-				this.playerService.setData(this.audioPlayerData);
 				item.playing = true;
+				this.dataDefault.playing = true;
+				this.playerService.setData(this.audioPlayerData);
+			}
+		}
+	}
+
+	// Play/Pause
+	playTrack(type) {
+		if (!this.sessionData) {
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
+		} else {
+			if (this.dataDefault.list.length > 0) {
+				if (type === 'play') {
+					this.playSong(this.dataDefault.list,
+								(this.audioPlayerData.item ? this.audioPlayerData.item : this.dataDefault.list[0]),
+								(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
+								'default');
+				} else if (type === 'prev') {
+					const prevKey = (this.audioPlayerData.key === 0) ? (this.dataDefault.list.length - 1) : (this.audioPlayerData.key - 1);
+					this.audioPlayerData.key = prevKey;
+					this.playerService.setData(this.audioPlayerData);
+				} else if (type === 'next') {
+					const nextKey = (this.audioPlayerData.key === this.dataDefault.list.length - 1) ? 0 : (this.audioPlayerData.key + 1);
+					this.audioPlayerData.key = nextKey;
+					this.playerService.setData(this.audioPlayerData);
+				}
+			} else {
+				this.alertService.warning(this.translations.common.addSomeSongsToPlaylist);
 			}
 		}
 	}
 
 	// Item options
-	itemSongOptions(type, item, playlist) {
+	itemOptions(type, item, playlist) {
 		switch (type) {
+			case('addRemoveSession'):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
+
+				const dataARS = {
+					type: item.removeType,
+					subtype: 'session',
+					location: 'playlist',
+					id: item.id
+				};
+
+				this.audioDataService.addRemove(dataARS)
+					.subscribe(res => {
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			break;
 			case('addRemoveUser'):
-				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
 				const dataARO = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
-					item: item.id
+					item: item.song
 				};
 
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
-						item.insertedId = res;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
+						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-				break;
+			break;
 			case('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
@@ -215,31 +271,23 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+						text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-				break;
+			break;
 			case('report'):
-				item.type = 'audio';
+				item.type = 'playlist';
 				this.sessionService.setDataReport(item);
-				break;
+			break;
 		}
 	}
 
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
-			case 'message':
-				item.comeFrom = 'shareSong';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'copyLink':
-				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
-				urlExtension.toString();
-				this.sessionService.setDataCopy(urlExtension);
-				break;
-		}
+	// Create new playlist
+	createPlaylist() {
+		const data = 'create';
+		this.sessionService.setDataCreatePlaylist(data);
 	}
 }

@@ -16,7 +16,7 @@ declare var global: any;
 	templateUrl: './activePlayerMobile.component.html'
 })
 export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterViewInit {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -214,11 +214,11 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
-				const url = this.environment.url + 's/' + item.name.slice(0, -4);
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
 				this.window.open(url, '_blank');
 				break;
 			case 'copyLink':
-				const urlExtension = this.environment.url + 's/' + item.name.slice(0, -4);
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}

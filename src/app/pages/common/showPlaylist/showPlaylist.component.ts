@@ -12,7 +12,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 	templateUrl: './showPlaylist.component.html'
 })
 export class ShowPlaylistComponent implements OnInit {
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 	public userData: any = [];
 	public audioPlayerData: any = [];

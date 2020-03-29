@@ -7,7 +7,7 @@ import { environment } from '../../../../environments/environment';
 	templateUrl: './showAvatar.component.html'
 })
 export class ShowAvatarComponent {
-	public environment: any = environment;
+	public env: any = environment;
 	public userData: any = [];
 	public translations: any = [];
 

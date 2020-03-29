@@ -41,9 +41,9 @@
 							
 							<div class="button">
 								<button mat-button (click)="playTrack('play')">
-									<i label="pause" *ngIf="data.playing" class="icon85 white"></i>
-									<i label="play" *ngIf="!data.playing" class="icon85 white"></i>
-									{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
+									<i label="pause" *ngIf="dataDefault.playing" class="icon85 white"></i>
+									<i label="play" *ngIf="!dataDefault.playing" class="icon85 white"></i>
+									{{dataDefault.playing ? translations?.audios?.pause : translations?.audios?.play}}
 								</button>
 							</div>
 						</div>

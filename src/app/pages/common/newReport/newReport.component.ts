@@ -11,7 +11,7 @@ import { UserDataService } from '../../../core/services/user/userData.service';
 	templateUrl: './newReport.component.html'
 })
 export class NewReportComponent implements OnInit {
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 	public translations: any = [];
 	public actionForm: FormGroup;

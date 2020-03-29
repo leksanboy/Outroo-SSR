@@ -14,7 +14,7 @@ declare var Cropper: any;
 export class NewAvatarComponent implements OnInit {
 	@ViewChild('imageSrc') input: ElementRef;
 
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 	public translations: any = [];
 	public image: boolean;

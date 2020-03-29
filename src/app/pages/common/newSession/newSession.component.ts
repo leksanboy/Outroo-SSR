@@ -11,7 +11,7 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 	templateUrl: './newSession.component.html'
 })
 export class NewSessionComponent implements OnInit {
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 	public translations: any = [];
 	public actionForm: FormGroup;

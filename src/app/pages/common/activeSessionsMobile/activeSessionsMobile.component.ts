@@ -9,7 +9,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 	templateUrl: './activeSessionsMobile.component.html'
 })
 export class ActiveSessionsMobileComponent {
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 
 	constructor(

@@ -20,7 +20,7 @@ declare var global: any;
 	providers: [ DateTimePipe, SafeHtmlPipe, TruncatePipe ]
 })
 export class NewShareComponent implements OnInit, OnDestroy {
-	public environment: any = environment;
+	public env: any = environment;
 	public window: any = global;
 	public translations: any = [];
 	public sessionData: any = [];
@@ -109,7 +109,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 			user: this.sessionData.current.username,
 			type: 'following',
 			rows: this.dataUsers.rows,
-			cuantity: environment.cuantity
+			cuantity: this.env.cuantity
 		};
 
 		this.followsDataService.default(data)
@@ -119,7 +119,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 				if (!res) {
 					this.dataUsers.noData = true;
 				} else {
-					this.dataUsers.loadMoreData = res ? (res.length < environment.cuantity ? false : true) : false;
+					this.dataUsers.loadMoreData = res ? (res.length < this.env.cuantity ? false : true) : false;
 					this.dataUsers.noData = false;
 					this.dataUsers.list = res;
 				}
@@ -145,7 +145,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 			const data = {
 				caption: this.actionFormSearch.get('caption').value,
-				cuantity: environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.searchFollowing(data)
@@ -157,7 +157,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 							this.dataSearch.noData = true;
 							this.dataSearch.noMore = true;
 						} else {
-							this.dataSearch.loadMoreData = res ? ((res.length < environment.cuantity) ? false : true) : false;
+							this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
 							this.dataSearch.noData = false;
 
 							// validate added
@@ -171,7 +171,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 							this.dataSearch.list = res;
 
-							if (res.length < environment.cuantity) {
+							if (res.length < this.env.cuantity) {
 								this.dataSearch.noMore = true;
 							}
 						}
@@ -184,13 +184,13 @@ export class NewShareComponent implements OnInit, OnDestroy {
 			const data = {
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
-				cuantity: environment.cuantity
+				cuantity: this.env.cuantity
 			};
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
 					setTimeout(() => {
-						this.dataSearch.loadMoreData = res ? ((res.length < environment.cuantity) ? false : true) : false;
+						this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
 						this.dataSearch.loadingMoreData = false;
 
 						// Push items
@@ -202,7 +202,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						if (res.length < environment.cuantity) {
+						if (res.length < this.env.cuantity) {
 							this.dataSearch.noMore = true;
 						}
 					}, 600);

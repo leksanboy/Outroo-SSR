@@ -14,7 +14,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 })
 export class ShowLikesComponent implements OnInit {
 	@ViewChild('videoPlayer') videoPlayer: any;
-	public environment: any = environment;
+	public env: any = environment;
 	public sessionData: any = [];
 	public userData: any = [];
 	public translations: any = [];
@@ -73,7 +73,7 @@ export class ShowLikesComponent implements OnInit {
 			const data = {
 				id: item.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity * 3
+				cuantity: this.env.cuantity * 3
 			};
 
 			this.dataDefault.service.likes(data)
@@ -83,12 +83,12 @@ export class ShowLikesComponent implements OnInit {
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;
 						this.dataDefault.list = res;
 					}
 
-					if (!res || res.length < this.environment.cuantity) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
 					}
 				}, error => {
@@ -102,13 +102,13 @@ export class ShowLikesComponent implements OnInit {
 			const data = {
 				id: this.dataDefault.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.environment.cuantity * 3
+				cuantity: this.env.cuantity * 3
 			};
 
 			this.dataDefault.service.likes(data)
 				.subscribe(res => {
 					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.environment.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.loadingMoreData = false;
 
 						// Push items
@@ -120,7 +120,7 @@ export class ShowLikesComponent implements OnInit {
 							}
 						}
 
-						if (!res || res.length < this.environment.cuantity) {
+						if (!res || res.length < this.env.cuantity) {
 							this.dataDefault.noMore = true;
 						}
 					}, 600);
