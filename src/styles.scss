@@ -1059,10 +1059,10 @@ body{
 	}
 
 	.song{
+		padding: 18px 0 0;
 		display: flex;
 		border: none;
 		width: 100%;
-		padding: 0;
 		margin: 0;
 
 		.songInner{
@@ -1198,6 +1198,7 @@ body{
 
 	.playlist{
 		width: 100%;
+		float: left;
 
 		.info{
 			box-sizing: border-box;
@@ -1294,7 +1295,7 @@ body{
 
 	.stats{
 		box-sizing: border-box;
-		padding: 6px 18px 24px;
+		padding: 6px 18px 12px;
 		float: left;
 		width: 100%;
 
