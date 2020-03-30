@@ -19,31 +19,33 @@
 	</div>
 
 	<div mat-dialog-content class="bodyPlaylist">
-		<div class="info">
-			<div class="left">
-				<div class="image" [matMenuTriggerFor]="imageOptions">
-					<img [src]="data.newImage ? data.newImage : (data?.current?.image ? (data?.current?.path + 'covers/' + data?.current?.image) : '')">
+		<div class="playlist">
+			<div class="info">
+				<div class="left">
+					<div class="image" [matMenuTriggerFor]="imageOptions">
+						<img [src]="data.newImage ? data.newImage : (data?.current?.image ? (data?.current?.path + 'covers/' + data?.current?.image) : '')">
 
-					<div class="upload">
-						<i class="icon200 white" label="photo-camera"></i>
+						<div class="upload">
+							<i class="icon200 white" label="photo-camera"></i>
+						</div>
 					</div>
+					<input type="file" hidden (change)="openImage('upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
+
+					<mat-menu #imageOptions="matMenu" [overlapTrigger]="false">
+						<button mat-menu-item (click)="avatarFile.click()">{{translations?.settings?.uploadPhoto}}</button>
+						<button mat-menu-item (click)="openImage('remove', $event)">{{translations?.settings?.removePhoto}}</button>
+						<mat-divider></mat-divider>
+						<button mat-menu-item>{{translations?.common?.cancel}}</button>
+					</mat-menu>
 				</div>
-				<input type="file" hidden (change)="openImage('upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>
 
-				<mat-menu #imageOptions="matMenu" [overlapTrigger]="false">
-					<button mat-menu-item (click)="avatarFile.click()">{{translations?.settings?.uploadPhoto}}</button>
-					<button mat-menu-item (click)="openImage('remove', $event)">{{translations?.settings?.removePhoto}}</button>
-					<mat-divider></mat-divider>
-					<button mat-menu-item>{{translations?.common?.cancel}}</button>
-				</mat-menu>
-			</div>
-
-			<div class="right">
-				<form [formGroup]="actionForm">
-					<mat-form-field>
-						<input matInput placeholder="{{translations?.audios?.playlistTitle}}" #Title maxlength="1000" formControlName="title">
-					</mat-form-field>
-				</form>
+				<div class="right">
+					<form [formGroup]="actionForm">
+						<mat-form-field>
+							<input matInput placeholder="{{translations?.audios?.playlistTitle}}" #Title maxlength="1000" formControlName="title">
+						</mat-form-field>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

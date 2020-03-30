@@ -7,12 +7,15 @@ import { AudioDataService } from '../../../../app/core/services/user/audioData.s
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
+declare var global: any;
+
 @Component({
 	selector: 'app-show-playlist',
 	templateUrl: './showPlaylist.component.html'
 })
 export class ShowPlaylistComponent implements OnInit {
 	public env: any = environment;
+	public window: any = global;
 	public sessionData: any = [];
 	public userData: any = [];
 	public audioPlayerData: any = [];
@@ -189,6 +192,24 @@ export class ShowPlaylistComponent implements OnInit {
 				item.type = 'playlist';
 				this.sessionService.setDataReport(item);
 			break;
+		}
+	}
+
+	// Share on social media
+	shareOn(type, item) {
+		switch (type) {
+			case 'message':
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
 		}
 	}
 

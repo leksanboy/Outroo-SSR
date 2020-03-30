@@ -285,6 +285,24 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Share on social media
+	shareOn(type, item) {
+		switch (type) {
+			case 'message':
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
 	// Create new playlist
 	createPlaylist() {
 		const data = 'create';
