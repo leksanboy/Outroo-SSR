@@ -299,6 +299,7 @@
 		],
 		"submit": "Guardar",
 		"close": "Cerrar",
+		"clone": "Clonar",
 		"post": "Publicar",
 		"send": "Enviar",
 		"yes": "Si",
@@ -393,6 +394,8 @@
 		"addedMoreElementsThanAllowed": "Has agregado más elementos de los permitidos",
 		"containsInvalidFiles": "Contiene archivos no validos",
 		"cropper": "Recortador de imagen",
-		"publicationNotExists": "La publicación no existe o ha sido eliminada"
+		"publicationNotExists": "La publicación no existe o ha sido eliminada",
+		"clonedPlaylistSuccessfully": "La playlist se ha clonado correctamente en tu lista de playlits",
+		"followingPlaylistSuccessfully": "Ahora estás siguiendo esta playlist"
 	}
 }

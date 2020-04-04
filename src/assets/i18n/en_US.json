@@ -299,6 +299,7 @@
 		],
 		"submit": "Submit",
 		"close": "Close",
+		"clone": "Clone",
 		"post": "Post",
 		"send": "Send",
 		"yes": "Yes",
@@ -393,6 +394,8 @@
 		"addedMoreElementsThanAllowed": "You has added more elements than allowed",
 		"containsInvalidFiles": "Contains invalid files",
 		"cropper": "Image cropper",
-		"publicationNotExists": "The publication does not exist or has been deleted"
+		"publicationNotExists": "The publication does not exist or has been deleted",
+		"clonedPlaylistSuccessfully": "Playlist was cloned successfully into your playlists",
+		"followingPlaylistSuccessfully": "Now you are following this playlist"
 	}
 }

@@ -299,6 +299,7 @@
 		],
 		"submit": "Сохранить",
 		"close": "Закрыть",
+		"clone": "Клонировать",
 		"post": "Отправить",
 		"send": "Отправить",
 		"yes": "Да",
@@ -393,6 +394,8 @@
 		"addedMoreElementsThanAllowed": "Вы добавили больше элементов чем разрешено",
 		"containsInvalidFiles": "Содержит недопустимые файлы",
 		"cropper": "кроппер изображения",
-		"publicationNotExists": "Публикация не существует или была удалена"
+		"publicationNotExists": "Публикация не существует или была удалена",
+		"clonedPlaylistSuccessfully": "Плейлист успешно клонирован в ваши плейлисты",
+		"followPlaylistSuccessfully": "Теперь вы подписаны на этот плейлист"
 	}
 }
