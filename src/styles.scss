@@ -1527,6 +1527,11 @@ body{
 		}
 	}
 
+	/* Divider */
+	mat-divider{
+		border-top-color: transparentize($greyColor, .5);
+	}
+
 	/*Contenteditable placeholder*/
 	[contenteditable=true]{
 		&:empty:before{
@@ -1559,10 +1564,6 @@ body{
 				text-transform: inherit;
 				line-height: 40px;
 				height: 40px;
-			}
-
-			mat-divider{
-				border-top-color: transparentize($greyColor, .5);
 			}
 		}
 
@@ -1616,6 +1617,7 @@ body{
 				color: currentColor;
 				text-align: center;
 				font-weight: bold;
+				font-size: 12px;
 			}
 		}
 	}
@@ -2828,6 +2830,11 @@ body{
 						height: 40px;
 						width: 40px;
 						margin: 8px;
+
+						span{
+							justify-content: center;
+							display: flex;
+						}
 					}
 
 					.text{
@@ -3061,17 +3068,17 @@ body{
 
 			.loadMore{
 				button{
-					border: 1px solid currentColor !important;
+					border: 1px solid $blackColor;
 
 					i{
-						background-color: currentColor !important;
+						background-color: $blackColor;
 					}
 				}
 
 				mat-progress-spinner{
 					svg{
 						circle{
-							stroke: currentColor !important;
+							stroke: $blackColor;
 						}
 					}
 				}
@@ -3272,14 +3279,6 @@ body{
 
 					.searchBox{
 						padding: 12px 18px;
-
-						.box{
-							.inner{
-								input{
-									color: $blackColor;
-								}
-							}
-						}
 					}
 
 					ul.photos{
@@ -4983,12 +4982,12 @@ body{
 											word-wrap: break-word;
 											position: relative;
 											font-weight: bold;
-											line-height: 40px;
-											font-size: 18px;
+											line-height: 44px;
+											font-size: 24px;
 											display: block;
 
 											i{
-												margin: 6px 0 -6px 0;
+												margin: 5px 0 -5px -5px;
 											}
 										}
 
@@ -5079,6 +5078,7 @@ body{
 							float: left;
 
 							ul{
+								justify-content: space-evenly;
 								box-sizing: border-box;
 								display: flex;
 								width: 100%;
@@ -5091,14 +5091,14 @@ body{
 									border-radius: 5px;
 									text-align: center;
 									list-style: none;
-									float: left;
-									width: 100%;
+									// float: left;
+									// width: 100%;
 									padding: 0;
 									margin: 0;
 
 									button{
+										padding: 4px 6px;
 										font-size: 12px;
-										padding: 4px 0;
 										min-width: 0;
 										height: 100%;
 										width: 100%;
@@ -5107,17 +5107,17 @@ body{
 										.text{
 											flex-direction: column;
 											text-align: center;
-											line-height: 20px;
+											line-height: 18px;
 											font-weight: bold;
-											font-size: 18px;
+											font-size: 15px;
 											display: flex;
 											height: 36px;
 
 											.inner{
-												width: calc(100% - 12px - 2px);
-												justify-content: center;
+												// width: calc(100% - 12px - 2px);
+												// justify-content: center;
+												// margin: 0 auto;
 												align-items: center;
-												margin: 0 auto;
 												display: flex;
 												opacity: .5;
 
@@ -5951,6 +5951,8 @@ body{
 
 						.buttons{
 							text-align: center;
+							font-weight: bold;
+							font-size: 12px;
 							margin: 24px 0;
 							width: 100%;
 							float: left;
@@ -6178,6 +6180,47 @@ body{
 					color: $whiteColor;
 				}
 
+				.bodyCreatePublication{
+					.container{
+						.filesBox{
+							.counter{
+								background-color: $whiteColor;
+								color: $blackColor;
+							}
+						}
+					}
+				}
+
+				.bodyCreateAvatar{
+					.container{
+						.panel{
+							button{
+								i{
+									background-color: $whiteColor;
+								}
+							}
+						}
+					}
+				}
+
+				.loadMore{
+					button{
+						border: 1px solid $whiteColor;
+	
+						i{
+							background-color: $whiteColor;
+						}
+					}
+	
+					mat-progress-spinner{
+						svg{
+							circle{
+								stroke: $whiteColor;
+							}
+						}
+					}
+				}
+
 				.buttons{
 					button{
 						background: $whiteColor;
@@ -6186,7 +6229,7 @@ body{
 						mat-progress-spinner{
 							svg{
 								circle{
-									stroke: $blackColor !important;
+									stroke: $blackColor;
 								}
 							}
 						}
@@ -6223,6 +6266,27 @@ body{
 				&.border{
 					border: 1px solid $whiteColor;
 					color: $whiteColor;
+				}
+			}
+		}
+
+		ul.followers{
+			li{
+				.actions{
+					button{
+						background-color: $whiteColor;
+						color: $fontBlackColor;
+
+						&.active{
+							border: 1px solid $whiteColor;
+							background-color: transparent;
+							color: $whiteColor;
+						}
+
+						&.pending{
+							background-color: $blueColor;
+						}
+					}
 				}
 			}
 		}
@@ -6376,6 +6440,24 @@ body{
 				}
 			}
 
+			.pageAudios{
+				.content{
+					.playlists{
+						.box{
+							&.upload{
+								.image{
+									background-color: $whiteColor;
+
+									.text{
+										color: $blackColor;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
 			.pageSettings{
 				.content{
 					.form{
@@ -6409,51 +6491,6 @@ body{
 
 									i{
 										background-color: $blackColor;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			.pageFollowing{
-				.content{
-					ul li .actions button{
-						background-color: $whiteColor;
-						color: $fontBlackColor;
-
-						&.active{
-							border: 1px solid $whiteColor;
-							background-color: transparent;
-							color: $whiteColor;
-						}
-
-						&.pending{
-							background-color: $blueColor;
-						}
-					}
-				}
-			}
-
-			// .pageUser{
-			// 	.panel .dataBox .actions button{
-			// 		background-color: $whiteColor;
-			// 		color: $fontBlackColor;
-			// 	}
-			// }
-
-			/*Audios*/
-			.pageAudios{
-				.content{
-					.playlists{
-						.box{
-							&.upload{
-								.image{
-									background-color: $whiteColor;
-
-									.text{
-										color: $blackColor;
 									}
 								}
 							}
@@ -6611,41 +6648,14 @@ body{
 	&.blueTheme{
 		background-color: $navyThemeColor;
 
-		/*Modal box*/
-		mat-dialog-container{
+		mat-dialog-container,
+		.mat-menu-panel,
+		.notificationsBox .box,
+		.userBox .box,
+		.cookiesBox,
+		.innerBodyUser .header .head,
+		.sessionsPanelMobile{
 			background: $navyThemeColor !important;
-		}
-
-		.mat-menu-panel{
-			background: $navyThemeColor;
-		}
-
-		/*Notifications box*/
-		.notificationsBox{
-			.box{
-				background-color: $navyThemeColor !important;
-			}
-		}
-
-		/*User box*/
-		.userBox{
-			.box{
-				background-color: $navyThemeColor !important;
-			}
-		}
-
-		/*Cookies*/
-		.cookiesBox{
-			background-color: $navyThemeColor;
-		}
-
-		/*Content pages*/
-		.innerBodyUser{
-			.header{
-				.head{
-					background-color: $navyThemeColor;
-				}
-			}
 		}
 
 		/*Mobile bottom nav*/
@@ -6695,10 +6705,7 @@ body{
 			}
 		}
 
-		.sessionsPanelMobile{
-			background-color: $navyThemeColor;
-		}
-
+		/*Audio Player mobile*/
 		.mobilePlayer{
 			background-color: $navyThemeColor;
 
