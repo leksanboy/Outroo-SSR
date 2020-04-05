@@ -41,7 +41,7 @@ export class ShowPlaylistComponent implements OnInit {
 
 	ngOnInit() {
 		const params = {
-			id: this.data.current.id
+			id: this.data.current.o_id ? this.data.current.o_id : this.data.current.id
 		};
 
 		this.audioDataService.getPlaylist(params)

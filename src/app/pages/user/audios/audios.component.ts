@@ -1059,7 +1059,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Show playlist
 	showPlaylist(item) {
-		this.location.go('/' + this.userData.username + '/songs#showPlaylist');
+		this.location.go('/pl/' + item.name);
 
 		const config = {
 			disableClose: false,
@@ -1147,10 +1147,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				break;
 			case('publicPrivate'):
 				item.private = !item.private;
-				item.type = item.private ? 'private' : 'public';
+				item.privateType = item.private ? 'private' : 'public';
 
 				const dataPPS = {
-					type: item.type,
+					type: item.privateType,
 					id: item.id
 				};
 
@@ -1175,7 +1175,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
-				item.removed = !item.addRemoveUser ? false : true;
 
 				const dataARO = {
 					type: item.removeType,
@@ -1192,14 +1191,15 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						item.idPlaylist = res;
 						item.insertedPlaylist =  item.insertedPlaylist ? item.insertedPlaylist : res;
 						this.updatePlaylist('addRemoveUser', item);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case('addRemoveUserTop'):
-				item.addRemoveUserTop = !item.addRemoveUserTop;
-				item.removeType = item.addRemoveUserTop ? 'add' : 'remove';
-				item.removed = !item.addRemoveUserTop ? false : true;
+			case('follow'):
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
-				const dataAROT = {
+				const dataF = {
 					type: item.removeType,
 					location: 'user',
 					id: item.id,
@@ -1209,12 +1209,11 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					insertedPlaylist : item.insertedPlaylist
 				};
 
-				this.audioDataService.addRemovePlaylist(dataAROT)
+				this.audioDataService.followPlaylist(dataF)
 					.subscribe((res: any) => {
-						item.idPlaylist = res;
-						item.insertedPlaylist =  item.insertedPlaylist ? item.insertedPlaylist : res;
-						this.updatePlaylist('addRemoveUser', item);
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
 					});
+
 				break;
 			case('report'):
 				item.type = 'audioPlaylist';

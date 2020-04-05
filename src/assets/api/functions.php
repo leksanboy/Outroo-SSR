@@ -379,21 +379,33 @@
 	function getPlaylist($id){
 		global $conn;
 
-		$sql = "SELECT id, name, user, title, image, private
+		$sql = "SELECT id,
+						original_id as o_id,
+						type,
+						name,
+						user,
+						title,
+						image,
+						private
 				FROM z_audios_playlist
 				WHERE id = $id";
-		$result = $conn->query($sql);
+		$result = $conn->query($sql)->fetch_assoc();
 
-		$data = array();
-		while($row = $result->fetch_assoc()) {
-			$row['user'] = userUsernameNameAvatar($row['user']);
-			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-			$row['private'] = $row['private'] ? true : false;
-			$row['idPlaylist'] = $row['id'];
-			$data = $row;
+		$result['user'] = userUsernameNameAvatar($result['user']);
+		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
+		$result['private'] = $result['private'] ? true : false;
+		$result['idPlaylist'] = $result['id'];
+
+		if ($result['type'] === 'follow') {
+			$o_result = getPlaylist($result['o_id']);
+
+			$result['name'] = $o_result['name'];
+			$result['title'] = $o_result['title'];
+			$result['image'] = $o_result['image'];
+			$result['idPlaylist'] = $o_result['idPlaylist'];
 		}
 
-		return $data;
+		return $result;
 	}
 
 	// Get playlists

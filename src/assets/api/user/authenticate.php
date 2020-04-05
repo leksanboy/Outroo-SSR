@@ -11,7 +11,7 @@
 		$password = md5($data['password']);
 	}
 
-	// Log in and return session data
+	// Login and get session data
 	$cond = strrpos($username, '@') ? 'email' : 'username';
 	$sql = "SELECT id, 
 					username, 
@@ -45,7 +45,12 @@
 		$result['countBookmarks'] 		= countUserBookmarks($result['id']);
 
 		// Set user activity
-		$result['authorization'] 	= userLoginActivity($result['id']);
+		$result['authorization'] 		= userLoginActivity($result['id']);
+
+		// Get playlists
+		$result['playlists'] 			= getPlaylists($row['id']);
+
+		/* --- Set info --- */
 
 		// Get Device
 		$device = $_SERVER['HTTP_USER_AGENT'];
@@ -57,14 +62,14 @@
 		$location = json_decode(file_get_contents("https://ipinfo.io/$ipAddress/json"));
 		$location = $location->city ? ($location->city.', '.$location->region) : 'Unable to locate '.$ipAddress;
 
-		// Date/set date by location
+		// Set date by location
 		$zone = date_default_timezone_get();
 		$date = date('l jS\, F Y h:i:s A').' ('.$zone.')';
 
 		// Send email
 		emailNewLogin($result['username'], $result['email'], $result['rp'], $device , $location, $date);
 
-		// Data
+		// Return data
 		echo json_encode($result);
 	} else {
 		var_dump(http_response_code(403));

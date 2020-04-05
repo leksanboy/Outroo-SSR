@@ -403,18 +403,18 @@ body{
 		&[label="official"]{
 			mask-position: 0 -96px;
 		}
-	}
 
-	i[label="no-posts"]{
-		background-color: currentColor;
-		mask-image: $noPostsImage;
-		mask-repeat: no-repeat;
-		mask-size: 156px 156px;
-		display: inline-block;
-		mask-position: 0 0;
-		min-width: 156px;
-		height: 156px;
-		width: 156px;
+		&[label="no-posts"]{
+			background-color: currentColor;
+			mask-image: $noPostsImage;
+			mask-repeat: no-repeat;
+			mask-size: 156px 156px;
+			display: inline-block;
+			mask-position: 0 0;
+			min-width: 156px;
+			height: 156px;
+			width: 156px;
+		}
 	}
 
 	span{
@@ -5584,7 +5584,7 @@ body{
 									.category{
 										justify-content: center;
 										align-items: center;
-										padding: 0 0 0 6px;
+										padding: 0 0 0 12px;
 										display: flex;
 										height: 40px;
 										width: 18px;

@@ -6,13 +6,13 @@
 		$id = getPlaylistIdByName($name);
 	}
 
-	$sql = "SELECT s.id, 
-					a.id as song, 
-					a.name, 
-					a.title, 
-					a.original_title, 
-					a.original_artist, 
-					a.duration, 
+	$sql = "SELECT s.id,
+					a.id as song,
+					a.name,
+					a.title,
+					a.original_title,
+					a.original_artist,
+					a.duration,
 					a.image
 			FROM z_audios_playlist_songs s
 				INNER JOIN z_audios a ON a.id = s.song

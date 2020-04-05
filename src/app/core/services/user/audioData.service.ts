@@ -117,6 +117,16 @@ export class AudioDataService {
 			}));
 	}
 
+	followPlaylist(data: any) {
+		const url = this.env.url + 'assets/api/audios/followPlaylist.php';
+		const params = data;
+
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
+
 	publicPrivate(data: any) {
 		const url = this.env.url + 'assets/api/audios/publicPrivate.php';
 		const params = data;

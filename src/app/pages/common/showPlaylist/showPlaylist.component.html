@@ -73,12 +73,12 @@
 								</span>
 	
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id != sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData.id !== sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
-									<mat-divider *ngIf="userData.id == sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
+									<mat-divider *ngIf="userData.id === sessionData?.current?.id && !(data.current.type === 'follow')"></mat-divider>
+									<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData.id === sessionData?.current?.id && !(data.current.type === 'follow')">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 								</mat-menu>
 	
 								<mat-menu #menuPlaylists="matMenu">

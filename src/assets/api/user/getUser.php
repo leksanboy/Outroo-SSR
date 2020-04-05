@@ -37,11 +37,14 @@
 
 				if ($session) {
 					$row['followingStatus'] = checkFollowingStatus($session, $row['id']);
-											  setVisitor($session, $row['id']);
+					
+					// Set who vist my page
+					setVisitor($session, $row['id']);
 				}
 
-				if ($session === $row['id'])
+				if ($session === $row['id']) {
 					$row['playlists'] 		= getPlaylists($row['id']);
+				}
 				
 				$data = $row;
 			}
