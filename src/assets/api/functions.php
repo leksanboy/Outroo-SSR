@@ -429,6 +429,32 @@
 		return $data;
 	}
 
+	// Get playlists for select
+	function getPlaylistsSelect($user){
+		global $conn;
+
+		$sql = "SELECT id,
+						type,
+						title,
+						private
+				FROM z_audios_playlist
+				WHERE user = $user 
+					AND is_deleted = 0
+				ORDER BY date DESC";
+		$result = $conn->query($sql);
+
+		$data = array();
+		while($row = $result->fetch_assoc()) {
+			if ($row['type'] !== 'follow') {
+				$row['private'] = $row['private'] ? true : false;
+				$row['idPlaylist'] = $row['id'];
+				$data[] = $row;
+			}
+		}
+
+		return $data;
+	}
+
 	// Count replays
 	function counSongReplays($id){
 		global $conn;

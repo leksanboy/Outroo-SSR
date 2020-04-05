@@ -43,7 +43,7 @@
 				}
 
 				if ($session === $row['id']) {
-					$row['playlists'] 		= getPlaylists($row['id']);
+					$row['playlists'] 		= getPlaylistsSelect($row['id']);
 				}
 				
 				$data = $row;

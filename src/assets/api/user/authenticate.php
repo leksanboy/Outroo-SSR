@@ -48,7 +48,7 @@
 		$result['authorization'] 		= userLoginActivity($result['id']);
 
 		// Get playlists
-		$result['playlists'] 			= getPlaylists($row['id']);
+		$result['playlists'] 			= getPlaylistsSelect($result['id']);
 
 		/* --- Set info --- */
 
