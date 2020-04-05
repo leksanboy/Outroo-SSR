@@ -96,21 +96,6 @@
 
 						<div class="innerContent">
 							<div class="textContainer" *ngIf="dataDefault.data?.content" [innerHTML]="dataDefault.data?.content | safeHtml"></div>
-
-							<!-- <div class="urlVideo" *ngIf="dataDefault.data?.urlVideo && dataDefault.data?.photos">
-								<div class="embedResponsive">
-									<div class="image" (click)="dataDefault.data?.urlVideo?.showVideo=!dataDefault.data?.urlVideo?.showVideo" *ngIf="!dataDefault.data?.urlVideo?.showVideo">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + dataDefault.data?.urlVideo?.thumbnail + ')'}"></div>
-										<div class="play">
-											<i label="play"></i>
-										</div>
-										<div class="type">
-											{{dataDefault.data.urlVideo.type}}
-										</div>
-									</div>
-									<span [innerHtml]="dataDefault.data?.urlVideo?.iframe | safeHtml" *ngIf="dataDefault.data?.urlVideo?.showVideo"></span>
-								</div>
-							</div> -->
 						</div>
 
 						<div class="audios" *ngIf="dataDefault.data?.audios">

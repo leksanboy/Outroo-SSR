@@ -155,7 +155,7 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.data = res;
-					this.showComments('showHide', this.dataDefault.data);
+					// this.showComments('showHide', this.dataDefault.data);
 
 					// Meta
 					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
