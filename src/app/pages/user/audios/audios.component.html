@@ -30,7 +30,7 @@
 						<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
 							<mat-tab label="{{translations?.audios?.songs}}">
 								<div class="playlists" *ngIf="!dataDefault.loadingData && (sessionData?.current?.id)">
-									<div class="box upload" (click)="uploadFile.click()" *ngIf="userData?.id == sessionData?.current?.id">
+									<div class="box upload" (click)="uploadFile.click()" *ngIf="userData?.id === sessionData?.current?.id">
 										<div mat-ripple class="image">
 											<div class="text">
 												<i label="cloud-upload"></i>
@@ -46,7 +46,7 @@
 										<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
 									</div>
 
-									<div class="box new" (click)="createPlaylist()" *ngIf="userData?.id == sessionData?.current?.id">
+									<div class="box new" (click)="createPlaylist()" *ngIf="userData?.id === sessionData?.current?.id">
 										<div mat-ripple class="image">
 											<div class="text">
 												<i label="add"></i>
@@ -71,7 +71,7 @@
 											</div>
 
 											<div class="actions">
-												<div class="category" *ngIf="x.type === 'follow'">
+												<div class="category" *ngIf="userData?.id === sessionData?.current?.id && x.type === 'follow'">
 													<i label="music" class="icon75 blue" matTooltip="{{translations?.common?.followingPlaylistSuccessfully}}"></i>
 												</div>
 
@@ -79,13 +79,13 @@
 													<i label="lock" class="icon75 grey" matTooltip="{{translations?.audios?.privatePlaylist}}"></i>
 												</div>
 
-												<span *ngIf="userData?.id == sessionData?.current?.id">
+												<span *ngIf="userData?.id === sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
 														<i class="icon85" label="more"></i>
 													</button>
 												</span>
 
-												<span *ngIf="userData?.id != sessionData?.current?.id">
+												<span *ngIf="userData?.id !== sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
 														<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 														<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
@@ -99,7 +99,7 @@
 													<button mat-menu-item (click)="itemPlaylistOptions('publicPrivate', x, i)" *ngIf="userData?.id === sessionData?.current?.id">{{!x.private ? translations?.common?.doPrivate : translations?.common?.doPublic}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger" *ngIf="!x.private">{{translations?.common?.share}}</button>
 													<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
-													<mat-divider *ngIf="userData?.id == sessionData?.current?.id"></mat-divider>
+													<mat-divider *ngIf="userData?.id === sessionData?.current?.id"></mat-divider>
 													<button mat-menu-item (click)="itemPlaylistOptions('addRemoveSession', x, i)" *ngIf="userData?.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 												</mat-menu>
 
@@ -113,7 +113,7 @@
 									</div>
 								</div>
 
-								<div class="uploadFilesBox audios" *ngIf="userData?.id == sessionData?.current?.id && dataFiles.list.length > 0">
+								<div class="uploadFilesBox audios" *ngIf="userData?.id === sessionData?.current?.id && dataFiles.list.length > 0">
 									<div class="info">
 										<div class="title">
 											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}	
@@ -186,12 +186,12 @@
 								</div>
 
 								<ul class="tracks" *ngIf="dataDefault.list">
-									<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+									<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'default', default: !x.image, remove: x.addRemoveSession}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
-													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'default')"></i>
-													<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'default')"></i>
+													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'default')"></i>
+													<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'default')"></i>
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
@@ -205,26 +205,26 @@
 											</div>
 											
 											<div class="actions" *ngIf="sessionData?.current?.id">
-												<span *ngIf="userData?.id == sessionData?.current?.id">
+												<span *ngIf="userData?.id === sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
 														<i class="icon85 grey" label="more"></i>
 													</button>
 												</span>
-												
-												<span *ngIf="userData?.id != sessionData?.current?.id">
+
+												<span *ngIf="userData?.id !== sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">
 														<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 														<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 													</button>
 												</span>
-												
+
 												<mat-menu #appMenu="matMenu">
-													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id != sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 													<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-													<mat-divider *ngIf="userData?.id == sessionData?.current?.id"></mat-divider>
-													<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+													<mat-divider *ngIf="userData?.id === sessionData?.current?.id"></mat-divider>
+													<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 												</mat-menu>
 
 												<mat-menu #menuPlaylists="matMenu">
@@ -270,12 +270,12 @@
 
 							<mat-tab label="{{translations?.audios?.aroundYou}}">
 								<ul class="tracks" *ngIf="dataAround.list">
-									<li *ngFor="let x of dataAround.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'around', default: !x.image}">
+									<li *ngFor="let x of dataAround.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'around', default: !x.image}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataAround.list, x, i, 'around')">
-													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'around')"></i>
-													<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'around')"></i>
+													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'around')"></i>
+													<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'around')"></i>
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
@@ -287,7 +287,7 @@
 												</div>
 												<div class="duration">{{x.duration}}</div>
 											</div>
-											
+
 											<div class="actions" *ngIf="sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
@@ -378,12 +378,12 @@
 								</div>
 
 								<ul class="tracks" *ngIf="dataTop.list">
-									<li *ngFor="let x of dataTop.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'top', default: !x.image}">
+									<li *ngFor="let x of dataTop.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', default: !x.image}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataTop.list, x, i, 'top')">
-													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'top')"></i>
-													<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'top')"></i>
+													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'top')"></i>
+													<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'top')"></i>
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
@@ -459,12 +459,12 @@
 
 							<mat-tab label="{{translations?.audios?.fresh}}">
 								<ul class="tracks" *ngIf="dataFresh.list">
-									<li *ngFor="let x of dataFresh.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh', default: !x.image}">
+									<li *ngFor="let x of dataFresh.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'fresh', default: !x.image}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataFresh.list, x, i, 'fresh')">
-													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh')"></i>
-													<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'fresh')"></i>
+													<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'fresh')"></i>
+													<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'fresh')"></i>
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
@@ -482,14 +482,14 @@
 													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 													<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 												</button>
-												
+
 												<mat-menu #appMenu="matMenu">
 													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 													<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
 												</mat-menu>
-												
+
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
@@ -522,7 +522,7 @@
 								<div class="noData" *ngIf="dataFresh.noData">
 									<div class="description">{{translations?.audios?.noData}}</div>
 								</div>
-								
+
 								<div class="loadMore" *ngIf="dataFresh.loadMoreData">
 									<button mat-fab (click)="fresh('more')" *ngIf="!dataFresh.loadingMoreData">
 										<i label="add"></i>
@@ -535,16 +535,16 @@
 
 					<span *ngIf="data.active === 'search'">
 						<ul class="tracks" *ngIf="dataSearch.list.length">
-							<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'audios' && audioPlayerData.type == 'search', default: !x.image}">
+							<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'search', default: !x.image}">
 								<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 									<div class="image">
 										<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
-											<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'audios' && audioPlayerData.type == 'search')"></i>
-											<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'audios' && audioPlayerData.type == 'search')"></i>
+											<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
+											<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
 											<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 										</button>
 									</div>
-									
+
 									<div class="text" (click)="playSong(dataSearch.list, x, i, 'search')">
 										<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 											<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -552,20 +552,20 @@
 										</div>
 										<div class="duration">{{x.duration}}</div>
 									</div>
-									
+
 									<div class="actions" *ngIf="sessionData?.current?.id">
 										<button mat-icon-button [matMenuTriggerFor]="appMenu">
 											<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 											<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 										</button>
-										
+
 										<mat-menu #appMenu="matMenu">
 											<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 											<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
 										</mat-menu>
-										
+
 										<mat-menu #menuPlaylists="matMenu">
 											<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
 											<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
@@ -598,7 +598,7 @@
 						<div class="noData" *ngIf="dataSearch.noData">
 							<div class="description">{{translations?.common?.noSearchResults}}</div>
 						</div>
-						
+
 						<div class="loadMore" *ngIf="dataSearch.loadMoreData">
 							<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
 								<i label="add"></i>
