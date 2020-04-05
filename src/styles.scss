@@ -1344,6 +1344,7 @@ body{
 		float: left;
 	}
 
+	/* Hidden input for copy link */
 	.hiddenInputForCopyLink{
 		position: fixed;
 		opacity: 0;
@@ -1528,8 +1529,8 @@ body{
 	}
 
 	/* Divider */
-	mat-divider{
-		border-top-color: transparentize($greyColor, .5);
+	.mat-divider{
+		border-top-color: transparentize($greyColor, .5) !important;
 	}
 
 	/*Contenteditable placeholder*/
@@ -4982,19 +4983,20 @@ body{
 											word-wrap: break-word;
 											position: relative;
 											font-weight: bold;
-											line-height: 44px;
+											margin: 4px 0 0 0;
+											line-height: 24px;
 											font-size: 24px;
 											display: block;
 
 											i{
-												margin: 5px 0 -5px -5px;
+												margin: 6px 0 -6px 0;
 											}
 										}
 
 										.username{
 											word-wrap: break-word;
 											color: $blueColor;
-											margin: -8px 0 0;
+											margin: 4px 0 0;
 											font-size: 15px;
 											float: left;
 											width: 100%;
@@ -5951,8 +5953,6 @@ body{
 
 						.buttons{
 							text-align: center;
-							font-weight: bold;
-							font-size: 12px;
 							margin: 24px 0;
 							width: 100%;
 							float: left;
@@ -5961,6 +5961,8 @@ body{
 								background: $blackColor;
 								color: $whiteColor;
 								line-height: 32px;
+								font-weight: bold;
+								font-size: 12px;
 
 								mat-progress-spinner{
 									height: 16px !important;
@@ -7408,9 +7410,9 @@ body{
 										}
 
 										@keyframes grow#{$i}{
-											@for $j from 0 through 10 {
-												#{$j * 10}% {
-													height: #{random(16)}px
+											@for $h from 0 through 10 {
+												#{$h * 10%} {
+													height: #{random(16)}px;
 												}
 											}
 										}
@@ -8135,7 +8137,8 @@ body{
 					background-color: $blackColor;
 					color: $whiteColor;
 					line-height: 24px;
-					font-size: 11px;
+					font-weight: bold;
+					font-size: 10px;
 					height: 24px;
 				}
 			}
