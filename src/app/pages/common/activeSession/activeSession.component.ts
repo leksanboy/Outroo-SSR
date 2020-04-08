@@ -1136,6 +1136,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.showChangeSession = false;
 			this.showUserBox = false;
 
+			// Get notifications
+			this.defaultNotifications(this.sessionData.current);
+
 			// Go to main page
 			this.router.navigate([data.username]);
 
@@ -1152,11 +1155,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Close session
 	closeSession(data) {
 		if (this.sessionData.sessions.length === 1) {
+			this.playPlayer('stop', null);
+			this.router.navigate(['logout']);
+
 			this.document.body.classList.remove('blackTheme');
 			this.document.body.classList.remove('blueTheme');
 			this.userDataService.logout();
-			this.playPlayer('stop', null);
-			this.router.navigate(['logout']);
 		} else {
 			for (const i in this.sessionData.sessions) {
 				if (i) {

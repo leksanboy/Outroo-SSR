@@ -314,7 +314,7 @@
 							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 						</div>
 
-						<div class="noData" *ngIf="!dataNotifications.list && !dataNotifications.loadingData">
+						<div class="noData" *ngIf="dataNotifications.list.length === 0 && !dataNotifications.loadingData">
 							<div class="description">{{translations?.notifications?.noData}}</div>
 						</div>
 						
@@ -622,6 +622,7 @@
 				</button>
 			</div>
 		</div>
+
 		<div class="center">
 			<div class="top">
 				<button mat-mini-fab (click)="playPlayer('shuffle', '')" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list?.length <= 1}">
@@ -657,6 +658,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="right">
 			<div class="playlist">
 				<button mat-mini-fab (click)="showPlaylistWeb()">
@@ -710,7 +712,7 @@
 								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 								<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-								<mat-divider *ngIf="audioPlayerData?.current?.user === sessionData?.current?.id"></mat-divider>
+								<mat-divider *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'"></mat-divider>
 								<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData?.current?.user == sessionData?.current?.id && audioPlayerData?.current?.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 							</mat-menu>
 

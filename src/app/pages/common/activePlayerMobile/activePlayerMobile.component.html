@@ -1,10 +1,12 @@
 <div class="mobilePlayer">
-	<div class="grabber" (click)="close()"></div>
-	
-	<div class="goTo">
-		<button mat-raised-button type="button" routerLink="/{{sessionData.current.username}}/songs" (click)="close()">
-			{{translations?.audios?.goAudios}}
-		</button>
+	<div class="topBar">
+		<div class="grabber" (click)="close()"></div>
+		
+		<div class="goTo">
+			<button mat-raised-button type="button" routerLink="/{{sessionData.current.username}}/songs" (click)="close()">
+				{{translations?.audios?.goAudios}}
+			</button>
+		</div>
 	</div>
 
 	<div class="box">
@@ -103,7 +105,7 @@
 								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 								<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-								<mat-divider *ngIf="audioPlayerData?.current?.user === sessionData.current.id"></mat-divider>
+								<mat-divider *ngIf="audioPlayerData?.current?.user == sessionData.current.id && audioPlayerData?.current?.type == 'default'"></mat-divider>
 								<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="audioPlayerData?.current?.user == sessionData.current.id && audioPlayerData?.current?.type == 'default'">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 							</mat-menu>
 

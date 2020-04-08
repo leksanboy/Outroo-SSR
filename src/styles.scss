@@ -2186,7 +2186,7 @@ body{
 	/*No data*/
 	.noData{
 		box-sizing: border-box;
-		padding: 156px 48px;
+		padding: 96px 48px;
 		text-align: center;
 		font-size: 24px;
 		float: left;
@@ -2426,7 +2426,9 @@ body{
 
 					.buttons{
 						text-align: center;
+						font-weight: bold;
 						margin: 24px 0 0;
+						font-size: 12px;
 						width: 100%;
 						float: left;
 
@@ -4884,6 +4886,8 @@ body{
 							button{
 								background: $blueColor;
 								color: $whiteColor;
+								font-weight: bold;
+								font-size: 12px;
 
 								mat-progress-spinner{
 									height: 16px !important;
@@ -6631,13 +6635,15 @@ body{
 			background-color: $darkThemeColor;
 			color: $whiteColor;
 
-			.grabber{
-				background-color: transparentize($whiteColor, .25);
-			}
+			.topBar{
+				.grabber{
+					background-color: transparentize($whiteColor, .25);
+				}
 
-			.goTo button{
-				background-color: $whiteColor;
-				color: $blackColor;
+				.goTo button{
+					border: 1px solid $whiteColor;
+					color: $whiteColor;
+				}
 			}
 
 			.box .player{
@@ -8119,27 +8125,32 @@ body{
 			min-height: 360px;
 			width: 100%;
 
-			.grabber{
-				background-color: transparentize($blackColor, .25);
-				border-radius: 4px;
-				margin: 12px auto;
-				width: 36px;
-				height: 4px;
-			}
-
-			.goTo{
-				justify-content: center;
-				margin: 0 0 12px;
-				display: flex;
+			.topBar{
+				padding: 0 0 12px;
 				width: 100%;
 
-				button{
-					background-color: $blackColor;
-					color: $whiteColor;
-					line-height: 24px;
-					font-weight: bold;
-					font-size: 10px;
-					height: 24px;
+				.grabber{
+					background-color: transparentize($blackColor, .25);
+					border-radius: 4px;
+					margin: 12px auto;
+					width: 36px;
+					height: 4px;
+				}
+	
+				.goTo{
+					justify-content: center;
+					display: flex;
+					width: 100%;
+	
+					button{
+						background-color: transparent;
+						border: 1px solid $blackColor;
+						color: $blackColor;
+						line-height: 22px;
+						font-weight: bold;
+						font-size: 10px;
+						height: 24px;
+					}
 				}
 			}
 
@@ -8432,7 +8443,7 @@ body{
 					margin: 0;
 
 					ul{
-						padding: 12px 0 260px;
+						padding: 0 0 260px;
 						position: relative;
 						display: block;
 						width: 100%;
