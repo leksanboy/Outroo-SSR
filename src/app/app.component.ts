@@ -13,6 +13,7 @@ import { RoutingStateService } from './core/services/route/state.service';
 export class AppComponent implements OnDestroy {
 	public activeSessionStatus: boolean;
 	public activeRouter: any;
+	public ssrServiceBrowser: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -22,6 +23,8 @@ export class AppComponent implements OnDestroy {
 		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
 	) {
+		this.ssrServiceBrowser = this.ssrService.isBrowser;
+
 		// Set null for get new data
 		if (this.ssrService.isBrowser) {
 			this.userDataService.setLocalStotage('newsPage', null);

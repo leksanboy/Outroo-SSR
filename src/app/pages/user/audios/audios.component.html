@@ -30,7 +30,26 @@
 						<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
 							<mat-tab label="{{translations?.audios?.songs}}">
 								<div class="playlists" *ngIf="!dataDefault.loadingData && (sessionData?.current?.id)">
-									<div class="box upload" (click)="uploadFile.click()" *ngIf="userData?.id === sessionData?.current?.id">
+									<div class="boxUploadNew" *ngIf="userData?.id === sessionData?.current?.id">
+										<div class="inner">
+											<div class="upload" (click)="uploadFile.click()">
+												<div class="icon" mat-ripple>
+													<i label="cloud-upload"></i>
+												</div>
+												<div class="text">{{translations?.audios?.songs}}</div>
+												<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
+											</div>
+
+											<div class="new" (click)="createPlaylist()">
+												<div class="icon" mat-ripple>
+													<i label="add"></i>
+												</div>
+												<div class="text">{{translations?.audios?.playlist}}</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- <div class="box upload" (click)="uploadFile.click()" *ngIf="userData?.id === sessionData?.current?.id">
 										<div mat-ripple class="image">
 											<div class="text">
 												<i label="cloud-upload"></i>
@@ -58,7 +77,7 @@
 												{{translations?.common?.createPlaylist}}
 											</div>
 										</div>
-									</div>
+									</div> -->
 									
 									<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removed}">
 										<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">

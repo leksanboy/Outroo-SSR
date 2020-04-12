@@ -22,10 +22,10 @@
 					CASE
 						WHEN n.page_url = 'publications' THEN 
 							EXISTS (SELECT 1 FROM z_publications WHERE id = n.page_id and is_deleted = 0)
-						WHEN n.page_url = 'photos' THEN 
-							EXISTS (SELECT 1 FROM z_photos_favorites WHERE id = n.page_id and is_deleted = 0)
 						WHEN n.page_url = 'audios' THEN 
 							EXISTS (SELECT 1 FROM z_audios WHERE id = n.page_id and is_deleted = 0)
+						WHEN n.page_url = 'followers' THEN 
+							EXISTS (SELECT 1 FROM z_following WHERE receiver = n.receiver and is_deleted = 0)
 					END
 				)
 			ORDER BY n.date DESC 
@@ -49,21 +49,26 @@
 				$row['private'] = checkUserPrivacy($row['sender']);
 			}
 
+			/*
 			// Photos
 			if ($row['url'] === 'photos')
 				$row['contentData'] = getIdNameContentMediaCommentFromPhotoById($row['page'], $row['comment']);
+			*/
 
 			// Publications
-			if ($row['url'] === 'publications')
+			if ($row['url'] === 'publications') {
 				$row['contentData'] = getIdNameContentMediaCommentFromPublicationById($row['page'], $row['comment']);
+			}
 
 			// Audios
-			if ($row['url'] === 'audios')
+			if ($row['url'] === 'audios') {
 				$row['contentData'] = getSongById($row['page']);
+			}
 
 			// Message
-			if ($row['url'] === 'message')
+			if ($row['url'] === 'message') {
 				$row['contentData'] = getMessageById($row['page']);
+			}
 
 			$data[] = $row;
 		}

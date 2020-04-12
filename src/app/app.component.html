@@ -1,7 +1,7 @@
 <app-alert></app-alert>
 
-<app-active-session *ngIf="activeSessionStatus"></app-active-session>
+<app-active-session *ngIf="ssrServiceBrowser && activeSessionStatus"></app-active-session>
 
-<router-outlet></router-outlet>
+<router-outlet *ngIf="ssrServiceBrowser"></router-outlet>
 
 <app-cookies></app-cookies>

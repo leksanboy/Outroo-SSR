@@ -15,6 +15,7 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 
+import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
 import { NewPublicationComponent } from '../../../../app/pages/common/newPublication/newPublication.component';
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 import { NewReportComponent } from '../../../../app/pages/common/newReport/newReport.component';
@@ -88,7 +89,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		},
 		list: []
 	};
-	public ssrServiceBrowser: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -101,13 +101,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 		private userDataService: UserDataService,
 		private platformLocation: PlatformLocation,
 		private audioDataService: AudioDataService,
+		private followsDataService: FollowsDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
 		private bottomSheet: MatBottomSheet,
 		private ssrService: SsrService
 	) {
-		this.ssrServiceBrowser = this.ssrService.isBrowser;
-
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
 
@@ -418,6 +417,62 @@ export class ActiveSessionComponent implements AfterViewInit {
 		setTimeout(() => {
 			this.sessionService.setComeFromUserButton(true);
 		}, 100);
+	}
+
+	// Follow / Unfollow
+	followUnfollow(type, item) {
+		if (type === 'accept') {
+			// When other send you a request
+			item.type = 'startFollowing';
+			item.statusF = 'accept';
+
+			const data = {
+				type: item.statusF,
+				private: item.private,
+				sender: item.user.id
+			};
+
+			// Check following status
+			this.followsDataService.followUnfollow(data)
+				.subscribe((res: any) => {
+					item.statusFollowing = res;
+				});
+		} else if (type === 'decline') {
+			// When other send you a request
+			item.type = 'startFollowing';
+			item.statusFollowing = 'declined';
+			item.statusF = 'decline';
+
+			const data = {
+				type: item.statusF,
+				private: item.private,
+				sender: item.user.id
+			};
+
+			this.followsDataService.followUnfollow(data).subscribe();
+		} else if (type === 'follow') {
+			// When you start following someone who follow you
+			item.statusFollowing = item.private ? 'pending' : 'following';
+
+			const data = {
+				type: item.statusFollowing,
+				private: item.private,
+				receiver: item.user.id
+			};
+
+			this.followsDataService.followUnfollow(data).subscribe();
+		} else if (type === 'unfollow') {
+			// Stop following
+			item.statusFollowing = 'unfollow';
+
+			const data = {
+				type: item.statusFollowing,
+				private: item.private,
+				receiver: item.user.id
+			};
+
+			this.followsDataService.followUnfollow(data).subscribe();
+		}
 	}
 
 	// Default audios

@@ -913,6 +913,7 @@ body{
 				text-overflow: ellipsis;
 				word-break: break-all;
 				white-space: nowrap;
+				padding: 0 6px 0 0;
 				font-weight: bold;
 				overflow: hidden;
 				max-width: 75%;
@@ -5656,6 +5657,67 @@ body{
 								opacity: .5;
 							}
 						}
+
+						.boxUploadNew{
+							box-sizing: border-box;
+							display: inline-block;
+							margin: 0 12px 0 0;
+							list-style: none;
+							width: 150px;
+
+							.inner{
+								box-sizing: border-box;
+								border-radius: 12px;
+								position: relative;
+								margin: 0 0 40px 0;
+								overflow: hidden;
+								cursor: pointer;
+								height: 150px;
+								width: 100%;
+								float: left;
+
+								.upload,
+								.new{
+									border: 2px solid $blackColor;
+									background-color: $blackColor;
+									height: calc(50% - 6px);
+									box-sizing: border-box;
+									border-radius: 12px;
+									align-items: center;
+									margin: 0 0 6px;
+									display: flex;
+									width: 100%;
+									float: left;
+		
+									.icon{
+										justify-content: center;
+										padding: 0 0 0 18px;
+										align-items: center;
+										color: $whiteColor;
+										display: flex;
+									}
+
+									.text{
+										text-transform: uppercase;
+										padding: 0 0 0 12px;
+										color: $whiteColor;
+										font-weight: bold;
+										font-size: 10px;
+									}
+								}
+
+								.new{
+									background-color: transparent;
+									border: 2px solid $blackColor;
+									margin: 6px 0 0;
+
+									.icon,
+									.text{
+										color: $blackColor;
+									}
+								}
+							}
+						}
 					}
 
 					.scrolling-wrapper{
@@ -6456,6 +6518,31 @@ body{
 
 									.text{
 										color: $blackColor;
+									}
+								}
+							}
+						}
+
+						.boxUploadNew{
+							.inner{
+								.upload,
+								.new{
+									border: 2px solid $whiteColor;
+									background-color: $whiteColor;
+		
+									.icon,
+									.text{
+										color: $blackColor;
+									}
+								}
+
+								.new{
+									background-color: transparent;
+									border: 2px solid $whiteColor;
+
+									.icon,
+									.text{
+										color: $whiteColor;
 									}
 								}
 							}

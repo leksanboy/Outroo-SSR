@@ -1,5 +1,5 @@
 <div class="innerBodyUser">
-	<div class="header" *ngIf="ssrServiceBrowser && translations">
+	<div class="header" *ngIf="translations">
 		<span *ngIf="deniedAccess === 'session'">
 			<div class="head">
 				<div class="left">
@@ -742,7 +742,7 @@
 </div>
 
 <!-- Bottom nav user buttons-->
-<div class="bottomNav">
+<div class="bottomNav" *ngIf="translations">
 	<ul *ngIf="deniedAccess === 'session'">
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">

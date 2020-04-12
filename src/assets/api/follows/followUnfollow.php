@@ -22,16 +22,17 @@
 
 		// Notification data
 		$notification = array(
+			'id' 		=> $receiver,
 			'url' 		=> 'followers',
 			'type' 		=> 'startFollowingPrivate',
 			'sender' 	=> $sender,
-			'receiver' 	=> $receiver,
-			'id' 		=> $receiver
+			'receiver' 	=> $receiver
 		);
 
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver)  {
 			generateNotification($notification);
+		}
 
 		var_dump(http_response_code(204));
 		
@@ -54,16 +55,17 @@
 
 		// Notification data
 		$notification = array(
+			'id' 		=> $receiver,
 			'url' 		=> 'followers',
 			'type' 		=> 'startFollowing',
 			'sender' 	=> $sender,
-			'receiver' 	=> $receiver,
-			'id' 		=> $receiver
+			'receiver' 	=> $receiver
 		);
 		
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
+		}
 
 		var_dump(http_response_code(204));
 		$conn->close();
@@ -80,6 +82,7 @@
 
 		// Notification data
 		$notification = array(
+			'id' 		=> $receiver,
 			'url' 		=> 'followers',
 			'type' 		=> 'stopFollowing',
 			'sender' 	=> $sender,
@@ -87,8 +90,9 @@
 		);
 		
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
+		}
 
 		var_dump(http_response_code(204));
 		$conn->close();
@@ -105,16 +109,17 @@
 
 		// Notification data
 		$notification = array(
+			'id' 		=> $receiver,
 			'url' 		=> 'followers',
 			'type' 		=> 'acceptRequest',
 			'sender' 	=> $sender,
-			'receiver' 	=> $receiver,
-			'id' 		=> $receiver
+			'receiver' 	=> $receiver
 		);
 		
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
+		}
 
 		$followingStatus = checkFollowingStatus($receiver, $sender);
 		echo json_encode($followingStatus);
@@ -133,6 +138,7 @@
 
 		// Notification data
 		$notification = array(
+			'id' 		=> $receiver,
 			'url' 		=> 'followers',
 			'type' 		=> 'declineRequest',
 			'sender' 	=> $sender,
@@ -140,8 +146,9 @@
 		);
 		
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
+		}
 
 		var_dump(http_response_code(204));
 		
