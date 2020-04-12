@@ -59,6 +59,7 @@
 											<button mat-button class="active" (click)="followUnfollow('accept', x)">
 												{{translations?.notifications?.accept}}
 											</button>
+
 											<button mat-button class="border" (click)="followUnfollow('decline', x)">
 												{{translations?.notifications?.decline}}
 											</button>
@@ -78,6 +79,7 @@
 												<div class="text">
 													{{translations?.common?.cancelRequest}}
 												</div>
+
 												<div class="buttons">
 													<button mat-menu-item>{{translations?.common?.no}}</button>
 													<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
@@ -94,6 +96,7 @@
 													<br>
 													{{x.user.username}}?
 												</div>
+
 												<div class="buttons">
 													<button mat-menu-item>{{translations?.common?.no}}</button>
 													<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
@@ -336,11 +339,13 @@
 						<div class="image">
 							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
+
 						<div class="data">
 							<div class="name">
 								{{sessionData?.current?.name}}
 								<i class="icon65 blue" label="official" *ngIf="sessionData?.current?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</div>
+
 							<div class="user">
 								@{{sessionData?.current?.username}}
 							</div>
@@ -453,12 +458,14 @@
 									</div>
 									<div class="text">{{translations?.settings?.themes?.white}}</div>
 								</div>
+
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 1}" mat-ripple (click)="changeTheme(1)">
 									<div class="color blue" mat-list-avatar>
 										<i label="check" class="blue" *ngIf="sessionData.current.theme === 1"></i>
 									</div>
 									<div class="text">{{translations?.settings?.themes?.blue}}</div>
 								</div>
+
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 2}" mat-ripple (click)="changeTheme(2)">
 									<div class="color black" mat-list-avatar>
 										<i label="check" class="blue" *ngIf="sessionData.current.theme === 2"></i>
@@ -480,10 +487,12 @@
 								<div class="text">
 									{{translations?.common?.leaveSite}}
 								</div>
+
 								<div class="buttons">
 									<button mat-menu-item (click)="showCloseSession=false">
 										{{translations?.common?.no}}
 									</button>
+
 									<button mat-menu-item (click)="showCloseSession=false; closeSession(sessionData?.current);">
 										{{translations?.common?.yes}}
 									</button>
@@ -500,14 +509,17 @@
 						<div class="avatar" mat-list-avatar>
 							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
+
 						<div class="text">
 							<div class="data">
 								{{sessionData?.current?.name}}
 							</div>
+
 							<div class="info">
 								@{{sessionData?.current?.username}}
 							</div>
 						</div>
+
 						<div class="button">
 							<i label="arrow-drop-up" *ngIf="showChangeSessionOnMenu"></i>
 							<i label="arrow-drop-down" *ngIf="!showChangeSessionOnMenu"></i>
@@ -519,12 +531,15 @@
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x)">
 								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 							</div>
+
 							<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
 							<i label="exit" [matMenuTriggerFor]="signOut"></i>
+
 							<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 								<div class="text">
 									{{translations?.common?.leaveSite}}
 								</div>
+
 								<div class="buttons">
 									<button mat-menu-item>{{translations?.common?.no}}</button>
 									<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
@@ -545,22 +560,27 @@
 							<i label="person"></i>
 							<div class="text">{{translations?.main?.title}}</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
 							<i label="home"></i>
 							<div class="text">{{translations?.feed?.title}}</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
 							<i label="search"></i>
 							<div class="text">{{translations?.news?.title}}</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/songs" routerLinkActive="selected">
 							<i label="music"></i>
 							<div class="text">{{translations?.audios?.title}}</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
 							<i label="bookmarks"></i>
 							<div class="text">{{translations?.bookmarks?.title}}</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
 							<i label="notifications"></i>
 							<div class="text">{{translations?.notifications?.title}}</div>
@@ -568,6 +588,7 @@
 								{{sessionData?.current?.countPendingNotifications}}
 							</div>
 						</div>
+
 						<div mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
 							<i label="settings"></i>
 							<div class="text">{{translations?.settings?.title}}</div>
@@ -588,6 +609,7 @@
 						<button mat-button routerLink="/signin">
 							{{translations?.common?.signIn}}
 						</button>
+
 						<button mat-button routerLink="/signup">
 							{{translations?.common?.signUp}}
 						</button>
@@ -792,10 +814,12 @@
 
 	<div class="inner" *ngIf="deniedAccess === 'none'">
 		<div class="logo" routerLink="/"></div>
+
 		<div class="buttons">
 			<button mat-button routerLink="/signin">
 				{{translations?.common?.signIn}}
 			</button>
+
 			<button mat-button routerLink="/signup">
 				{{translations?.common?.signUp}}
 			</button>

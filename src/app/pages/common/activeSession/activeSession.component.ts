@@ -43,9 +43,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	public env: any = environment;
 	public window: any = global;
-	public sessionData: any = [];
-	public translations: any = [];
-	public dataNotifications: any = [];
+	public sessionData: any;
+	public translations: any;
+	public dataNotifications: any;
 	public navMenu: boolean;
 	public deniedAccess = 'session';
 	public showPlayer: boolean;
