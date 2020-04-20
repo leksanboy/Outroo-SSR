@@ -53,6 +53,8 @@ export class MainComponent implements OnInit, OnDestroy {
 	public dataDefault: any;
 	public searchBoxMentions: boolean;
 	public comeFromUserButton: boolean;
+	public showAccounts: boolean;
+	public recommendedUsers: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -199,6 +201,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
 		this.activeComeFromUserButton.unsubscribe();
+		this.recommendedUsers = false;
 	}
 
 	// Go back
@@ -230,6 +233,38 @@ export class MainComponent implements OnInit, OnDestroy {
 		};
 
 		this.sessionService.setDataShowAvatar(data);
+	}
+
+	openNewSession() {
+		this.showAccounts = false;
+
+		const data = {
+			type: 'create'
+		};
+
+		this.sessionService.setDataAddAccount(data);
+	}
+
+	setCurrentUser(user) {
+		this.showAccounts = false;
+
+		const data = {
+			type: 'set',
+			data: user
+		};
+
+		this.sessionService.setDataAddAccount(data);
+	}
+
+	closeSession(user) {
+		this.showAccounts = false;
+
+		const data = {
+			type: 'close',
+			data: user
+		};
+
+		this.sessionService.setDataAddAccount(data);
 	}
 
 	// New publication

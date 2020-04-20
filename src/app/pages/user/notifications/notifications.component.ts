@@ -74,12 +74,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(title);
 
 			// Load default
-			const localStotageData = this.userDataService.getLocalStotage('notificationsPage');
+			this.default('default');
+
+			/* const localStotageData = this.userDataService.getLocalStotage('notificationsPage');
 			if (localStotageData) {
 				this.dataDefault = localStotageData;
 			} else {
 				this.default('default');
-			}
+			} */
 		} else {
 			this.userDataService.noSessionData();
 		}

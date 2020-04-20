@@ -564,7 +564,7 @@ body{
 					.titleArtist{
 						flex-direction: column;
 						box-sizing: border-box;
-						padding: 0 0 0 12px;
+						padding: 0 6px 0 12px;
 						text-align: left;
 						overflow: hidden;
 						max-width: 80%;
@@ -667,19 +667,19 @@ body{
 		}
 	}
 
-	ul.notifications{
-		padding: 6px 0;
+	ul.followers{
 		float: left;
 		width: 100%;
+		padding: 0;
 		margin: 0;
 
 		li{
-			padding: 4px 0 4px 18px;
 			box-sizing: border-box;
 			position: relative;
+			padding: 4px 18px;
 			list-style: none;
+			margin: 0 0 12px;
 			transition: .15s;
-			margin: 0 0 4px;
 			display: flex;
 			float: left;
 			width: 100%;
@@ -688,13 +688,114 @@ body{
 				box-sizing: border-box;
 				border-radius: 50%;
 				overflow: hidden;
-				min-width: 40px;
-				margin: 4px 0;
-				height: 40px;
-				width: 40px;
+				min-width: 48px;
+				height: 48px;
+				width: 48px;
 
 				img{
-					height: 100%;
+					width: 100%;
+				}
+			}
+
+			.texts{
+				box-sizing: border-box;
+				overflow: hidden;
+				width: 100%;
+				padding: 6px 12px;
+
+				.text{
+					line-height: 18px;
+					font-size: 14px;
+					width: 100%;
+					float: left;
+
+					a{
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+						float: left;
+						max-width: 80%;
+					}
+
+					i{
+						margin: -6px 0;
+					}
+					
+					&:first-child{
+						font-weight: bold;
+					}
+
+					&:last-child{
+						color: $greyColor;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+						max-width: 80%;
+					}
+				}
+			}
+
+			.actions{
+				button{
+					background-color: $fontBlackColor;
+					text-transform: uppercase;
+					margin: 10px 0 0 6px;
+					color: $whiteColor;
+					font-weight: bold;
+					line-height: 28px;
+					font-size: 11px;
+					padding: 0 8px;
+					min-width: 0;
+					height: 28px;
+
+					&:first-child{
+						margin-left: 0;
+					}
+
+					&.active{
+						border: 1px solid $fontBlackColor;
+						background-color: transparent;
+						color: $fontBlackColor;
+					}
+
+					&.pending{
+						background-color: $blueColor;
+					}
+				}
+			}
+
+			&:hover{
+				background-color: transparentize($greyColor, .9);
+			}
+		}
+	}
+
+	ul.notifications{
+		float: left;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+
+		li{
+			box-sizing: border-box;
+			position: relative;
+			padding: 4px 0 4px 18px;
+			list-style: none;
+			margin: 0 0 12px;
+			transition: .15s;
+			display: flex;
+			float: left;
+			width: 100%;
+
+			.avatar{
+				box-sizing: border-box;
+				border-radius: 50%;
+				overflow: hidden;
+				min-width: 48px;
+				height: 48px;
+				width: 48px;
+
+				img{
 					width: 100%;
 				}
 			}
@@ -703,38 +804,79 @@ body{
 				display: flex;
 				width: 100%;
 
-				.text{
+				.texts{
 					box-sizing: border-box;
+					overflow: hidden;
 					width: 100%;
-
-					.container{
-						word-break: break-word;
-						padding: 0 0 0 12px;
-						color: $greyColor;
-						cursor: pointer;
+					padding: 6px 0 6px 12px;
+	
+					.text{
+						line-height: 18px;
 						font-size: 14px;
 						width: 100%;
+						float: left;
+	
+						a{
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							overflow: hidden;
+							float: left;
+							max-width: 80%;
+						}
+	
+						i{
+							margin: -3px -6px -3px 0;
+							float: left;
+						}
+
+						.date{
+							float: left;
+							font-size: 12px;
+							font-weight: normal;
+							color: $greyColor;
+							padding: 0 0 0 6px;
+						}
 
 						.song{
-							border: 1px solid transparentize($greyColor, .5);
+							background-color: transparentize($greyColor, .75);
 							border-radius: 5px;
 							margin: 4px 0 0;
+							padding: 0;
+							max-width: 80%;
 
 							.songInner{
-								padding: 6px 0 6px 6px;
+								padding: 6px;
 								margin: 0;
 
-								.songText .titleArtist .title,
-								.songText .titleArtist .artist{
-									white-space: inherit;
+								.songImage button i{
+									margin: 0;
+									float: inherit;
+								}
+
+								.textActions button{
+									display: flex;
+									justify-content: center;
+									align-items: center;
+
+									i{
+										margin: 0;
+										float: inherit;
+									}
 								}
 							}
+						}
+						
+						&:first-child{
+							font-weight: bold;
+						}
+	
+						&:last-child{
+							color: $greyColor;
 						}
 					}
 				}
 
 				.operations{
-					padding: 2px 0 0;
 					display: flex;
 					height: 48px;
 
@@ -742,13 +884,13 @@ body{
 						display: inherit;
 
 						button{
-							background-color: $fontBlackColor;
-							text-transform: uppercase;
-							margin: 6px 0 0 6px;
+							background-color: $blackColor;
+							box-sizing: border-box;
+							margin: 10px 0 0 6px;
 							color: $whiteColor;
 							font-weight: bold;
 							line-height: 28px;
-							font-size: 12px;
+							font-size: 11px;
 							padding: 0 8px;
 							min-width: 0;
 							height: 28px;
@@ -758,14 +900,14 @@ body{
 							}
 
 							&.active{
-								border: 1px solid $fontBlackColor;
+								border: 1px solid $blackColor;
 								background-color: transparent;
-								color: $fontBlackColor;
+								color: $blackColor;
 							}
 
 							&.border{
-								border: 1px solid $fontBlackColor;
-								color: $fontBlackColor;
+								border: 1px solid $blackColor;
+								color: $blackColor;
 							}
 
 							&.pending{
@@ -798,6 +940,10 @@ body{
 					.actions{
 						button{
 							border-radius: 50% !important;
+							margin: 4px 0;
+							display: flex;
+							align-items: center;
+							justify-content: center;
 						}
 					}
 				}
@@ -814,86 +960,6 @@ body{
 			&.remove{
 				filter: grayscale(100%);
 				opacity: .5;
-			}
-		}
-	}
-
-	ul.followers{
-		float: left;
-		width: 100%;
-		padding: 0;
-		margin: 0;
-
-		li{
-			box-sizing: border-box;
-			align-items: center;
-			position: relative;
-			padding: 4px 18px;
-			list-style: none;
-			margin: 0 0 4px;
-			display: flex;
-			float: left;
-			width: 100%;
-
-			.avatar{
-				box-sizing: border-box;
-				border-radius: 50%;
-				overflow: hidden;
-				min-width: 40px;
-				margin: 4px 0;
-				height: 40px;
-				width: 40px;
-
-				img{
-					height: 100%;
-					width: 100%;
-				}
-			}
-
-			.text{
-				box-sizing: border-box;
-				width: 100%;
-
-				.container{
-					word-break: break-word;
-					padding: 0 0 0 12px;
-					color: $greyColor;
-					cursor: pointer;
-					font-size: 14px;
-					max-width: 80%;
-					width: 100%;
-				}
-			}
-
-			.actions{
-				height: 48px;
-
-				button{
-					background-color: $fontBlackColor;
-					text-transform: uppercase;
-					margin: 10px 0 0 6px;
-					color: $whiteColor;
-					font-weight: bold;
-					line-height: 28px;
-					font-size: 12px;
-					padding: 0 8px;
-					min-width: 0;
-					height: 28px;
-
-					&:first-child{
-						margin-left: 0;
-					}
-
-					&.active{
-						border: 1px solid $fontBlackColor;
-						background-color: transparent;
-						color: $fontBlackColor;
-					}
-
-					&.pending{
-						background-color: $blueColor;
-					}
-				}
 			}
 		}
 	}
@@ -920,7 +986,7 @@ body{
 			}
 
 			i{
-				margin: -6px 0 -6px 0;
+				margin: -6px 0 -6px -6px;
 			}
 
 			.date{
@@ -1082,6 +1148,7 @@ body{
 
 			.songImage{
 				width: 42px;
+				height: 42px;
 
 				button{
 					border-radius: 5px;
@@ -1156,7 +1223,6 @@ body{
 					text-align: right;
 					font-size: 14px;
 					max-width: 75px;
-					width: 75px;
 				}
 			}
 
@@ -1593,6 +1659,7 @@ body{
 					text-transform: uppercase;
 					text-align: center;
 					font-weight: bold;
+					font-size: 12px;
 				}
 			}
 		}
@@ -2833,7 +2900,7 @@ body{
 						border-radius: 50% !important;
 						height: 40px;
 						width: 40px;
-						margin: 8px;
+						margin: 8px 6px;
 
 						span{
 							justify-content: center;
@@ -4699,7 +4766,7 @@ body{
 
 				button{
 					border-radius: 50% !important;
-					margin: 0 8px;
+					margin: 0 6px;
 					float: left;
 				}
 
@@ -4931,17 +4998,132 @@ body{
 						max-width: $pageMaxWidth;
 						margin: 0 auto;
 
+						.head{
+							/* border-bottom: 1px solid transparentize($greyColor, .5); */
+							justify-content: space-between;
+							box-sizing: border-box;
+							line-height: 56px;
+							position: relative;
+							height: 56px;
+							width: 100%;
+
+							button{
+								border-radius: 50% !important;
+								margin: 8px 6px;
+								z-index: 1;
+
+								&.l{
+									float: left;
+								}
+
+								&.r{
+									float: right;
+								}
+							}
+
+							.text{
+								justify-content: center;
+								align-items: center;
+								position: absolute;
+								font-weight: bold;
+								display: flex;
+								width: 100%;
+
+								span{
+									align-items: center;
+									display: flex;
+
+									&.active{
+										cursor: pointer;
+									}
+
+									i{
+										margin: 0 -12px 0 0;
+									}
+								}
+							}
+						}
+
+						.accounts{
+							border-bottom: 1px solid transparentize($greyColor, .5);
+							padding: 12px 0;
+							width: 100%;
+
+							.item{
+								box-sizing: border-box;
+								flex-direction: row;
+								align-items: center;
+								position: relative;
+								line-height: 48px;
+								cursor: pointer;
+								padding: 0 12px;
+								display: flex;
+								height: 48px;
+								width: 100%;
+
+								.avatar{
+									border-radius: 50%;
+									display: inherit;
+									min-width: 28px;
+									margin: 0 6px;
+									height: 28px;
+									width: 28px;
+
+									img{
+										background-color: currentColor;
+										border-radius: 50%;
+										height: 100%;
+										width: 100%;
+									}
+								}
+
+								.add{
+									background-color: currentColor;
+									border-radius: 50%;
+									display: inherit;
+									min-width: 28px;
+									margin: 0 6px;
+									height: 28px;
+									width: 28px;
+
+									i{
+										background-color: $whiteColor;
+										margin: 2px;
+									}
+								}
+
+								.text{
+									box-sizing: border-box;
+									padding: 0 0 0 12px;
+									width: 100%;
+								}
+
+								&.active{
+									.avatar{
+										border: 2px solid $blueColor;
+										border-radius: 50%;
+										margin: 0 2px;
+										padding: 2px;
+									}
+
+									.text{
+										color: $blueColor;
+									}
+								}
+
+								&:hover{
+									background: transparentize($greyColor, .9);
+								}
+							}
+						}
+
 						.user{
-							padding: 0 0 0 18px;
+							padding: 18px 0 0 18px;
 							box-sizing: border-box;
 							position: relative;
 							display: flex;
 							width: 100%;
 							float: left;
-
-							&.noBack{
-								padding-top: 18px;
-							}
 
 							.left{
 								width: 86px;
@@ -4967,113 +5149,86 @@ body{
 							.right{
 								width: calc(100% - 86px);
 
-								.top{
+								.text{
 									padding: 4px 0 4px 18px;
 									box-sizing: border-box;
-									display: flex;
 									width: 100%;
 									float: left;
 
-									.text{
-										width: calc(100% - 36px);
+									.name{
+										width: calc(100% - 12px);
+										text-overflow: ellipsis;
+										box-sizing: border-box;
+										word-wrap: break-word;
 										position: relative;
 										font-weight: bold;
-										min-height: 44px;
+										font-size: 24px;
+										display: block;
+										margin: 0;
+
+										i{
+											margin: 6px 0 -6px 0;
+										}
+									}
+
+									.about{
+										box-sizing: border-box;
+										word-break: break-word;
+										text-align: left;
+										font-size: 14px;
+										margin: 4px 0 0;
 										float: left;
-
-										.name{
-											width: calc(100% - 12px);
-											text-overflow: ellipsis;
-											box-sizing: border-box;
-											word-wrap: break-word;
-											position: relative;
-											font-weight: bold;
-											margin: 4px 0 0 0;
-											line-height: 24px;
-											font-size: 24px;
-											display: block;
-
-											i{
-												margin: 6px 0 -6px 0;
-											}
+										width: 100%;
+		
+										a:hover{
+											text-decoration: underline;
 										}
-
-										.username{
-											word-wrap: break-word;
-											color: $blueColor;
-											margin: 4px 0 0;
-											font-size: 15px;
-											float: left;
-											width: 100%;
-											padding: 0;
-										}
-									}
-
-									.button{
-										display: flex;
-
-										.actions{
-											padding: 6px 0 0;
-											display: flex;
-
-											button{
-												border: 1px solid currentColor;
-												border-radius: 5px;
-												margin: 0 0 0 12px;
-												line-height: 28px;
-												height: 28px;
-
-												span{
-													justify-content: center;
-													align-items: center;
-													display: flex;
-												}
-											}
-										}
-									}
-								}
-
-								.bottom{
-									box-sizing: border-box;
-									word-break: break-word;
-									line-height: 18px;
-									text-align: left;
-									font-size: 14px;
-									padding: 0 18px;
-									float: left;
-									width: 100%;
-
-									a:hover{
-										text-decoration: underline;
 									}
 								}
 							}
 						}
 
-						.settings{
+						.actions{
+							justify-content: center;
 							box-sizing: border-box;
 							padding: 12px 18px 0;
 							display: flex;
 							width: 100%;
 							float: left;
 
-							button{
-								background-color: transparent;
-								border: 1px solid $greyColor;
-								color: $greyColor;
-								line-height: 28px;
-								font-size: 12px;
-								height: 28px;
-								width: 100%;
+							.inner{
+								width: calc(100% - 86px * 2 - 18px * 2);
+								justify-content: center;
+								display: flex;
+								
+								button{
+									border: 1px solid currentColor;
+									background-color: transparent;
+									color: currentColor;
+									border-radius: 5px;
+									line-height: 28px;
+									box-shadow: none;
+									font-size: 12px;
+									padding: 0 18px;
+									height: 28px;
+									width: 100%;
+	
+									span{
+										justify-content: center;
+										align-items: center;
+										display: flex;
+									}
+	
+									&:active{
+										background-color: transparentize($greyColor, .85);
+									}
 
-								span{
-									justify-content: center;
-									align-items: center;
-									display: flex;
-								}
-
-								&:active{
-									background-color: transparentize($greyColor, .85);
+									&.icon{
+										margin: 0 0 0 8px;
+										min-width: 28px;
+										width: 28px;
+										padding: 0;
+									}
 								}
 							}
 						}
@@ -5098,20 +5253,48 @@ body{
 									border-radius: 5px;
 									text-align: center;
 									list-style: none;
-									// float: left;
-									// width: 100%;
 									padding: 0;
 									margin: 0;
 
 									button{
+										flex-direction: column;
+										color: currentColor;
+										text-align: center;
+										line-height: 18px;
 										padding: 4px 6px;
 										font-size: 12px;
+										display: flex;
 										min-width: 0;
 										height: 100%;
 										width: 100%;
 										margin: 0;
 
+										.count{
+											font-weight: bold;
+											font-size: 15px;
+
+											i{
+												mask-size: 24px calc(24px * 15);
+												min-width: 12px;
+												height: 12px;
+												width: 12px;
+												margin: 0;
+
+												&[label="bookmark"]{
+													mask-position: -12px -72px;
+												}
+											}
+										}
+
 										.text{
+											text-transform: capitalize;
+											text-overflow: ellipsis;
+											overflow: hidden;
+											font-size: 12px;
+											opacity: .5;
+										}
+
+										/* .text{
 											flex-direction: column;
 											text-align: center;
 											line-height: 18px;
@@ -5120,10 +5303,19 @@ body{
 											display: flex;
 											height: 36px;
 
+											i{
+												mask-size: 24px calc(24px * 15);
+												margin: 0 2px 0 0;
+												min-width: 12px;
+												height: 12px;
+												width: 12px;
+
+												&[label="bookmark"]{
+													mask-position: -12px -72px;
+												}
+											}
+
 											.inner{
-												// width: calc(100% - 12px - 2px);
-												// justify-content: center;
-												// margin: 0 auto;
 												align-items: center;
 												display: flex;
 												opacity: .5;
@@ -5134,6 +5326,7 @@ body{
 													min-width: 12px;
 													height: 12px;
 													width: 12px;
+													display: none;
 
 													&[label="photo-camera"]{
 														mask-position: -12px -288px;
@@ -5164,11 +5357,104 @@ body{
 													font-size: 10px;
 												}
 											}
-										}
+										} */
 									}
 
 									&:last-child{
 										border-right: none;
+									}
+								}
+							}
+						}
+
+						.recommendedUsers{
+							margin: 12px 0 0;
+							padding: 0 18px;
+							width: 100%;
+							float: left;
+
+							.title{
+								color: $greyColor;
+								font-size: 13px;
+								padding: 12px 0;
+							}
+
+							ul{
+								-webkit-overflow-scrolling: touch;
+								box-sizing: border-box;
+								white-space: nowrap;
+								overflow-y: hidden;
+								overflow-x: auto;
+								padding: 0 0 18px;
+								float: left;
+								width: 100%;
+								margin: 0;
+		
+								li{
+									display: inline-block;
+									margin: 0 8px 0 0;
+									list-style: none;
+									width: 128px;
+									padding: 0;
+
+									.inner{
+										box-sizing: border-box;
+										width: 100%;
+										display: flex;
+										flex-direction: column;
+										justify-content: center;
+										align-items: center;
+										border: 1px solid transparentize($greyColor, .5);
+										border-radius: 5px;
+										padding: 12px;
+
+										.avatar{
+											width: 64px;
+											height: 64px;
+											border-radius: 50%;
+											overflow: hidden;
+
+											img{
+												width: 100%;
+											}
+										}
+
+										.texts{
+											text-align: center;
+											margin: 12px 0 6px;
+											text-overflow: ellipsis;
+											box-sizing: border-box;
+											white-space: nowrap;
+											overflow: hidden;
+											width: 100%;
+
+											.text{
+												&:first-child{
+													font-weight: bold;
+													font-size: 13px;
+												}
+
+												&:last-child{
+													font-size: 11px;
+													color: $greyColor;
+												}
+											}
+										}
+
+										.button{
+											button{
+												background-color: $blueColor;
+												text-transform: uppercase;
+												color: $whiteColor;
+												font-weight: bold;
+												line-height: 28px;
+												font-size: 11px;
+												padding: 0 8px;
+												min-width: 0;
+												height: 28px;
+												box-shadow: none;
+											}
+										}
 									}
 								}
 							}
@@ -5303,6 +5589,18 @@ body{
 
 								.body{
 									pointer-events: none;
+								}
+							}
+						}
+					}
+				}
+
+				&.home{
+					.content{
+						ul{
+							li{
+								&:first-child{
+									border: none;
 								}
 							}
 						}
@@ -5699,10 +5997,14 @@ body{
 
 									.text{
 										text-transform: uppercase;
+										text-overflow: ellipsis;
 										padding: 0 0 0 12px;
+										white-space: nowrap;
 										color: $whiteColor;
 										font-weight: bold;
-										font-size: 10px;
+										overflow: hidden;
+										font-size: 11px;
+										max-width: 60%;
 									}
 								}
 
@@ -5826,9 +6128,11 @@ body{
 
 									label{
 										border: 2px solid transparent;
+										text-transform: uppercase;
 										box-sizing: border-box;
 										border-radius: 12px;
 										font-weight: bold;
+										font-size: 12px;
 										padding: 12px;	
 										width: 100%;
 
@@ -6168,7 +6472,7 @@ body{
 										color: currentColor;
 										font-weight: bold;
 										line-height: 28px;
-										font-size: 12px;
+										font-size: 11px;
 										padding: 0 8px;
 										min-width: 0;
 										height: 28px;
@@ -6503,6 +6807,16 @@ body{
 									}
 								}
 							}
+						}
+					}
+				}
+			}
+
+			.pageUser{
+				.panel{
+					.dataBox{
+						.accounts .item .add i{
+							background-color: $blackColor;
 						}
 					}
 				}
@@ -8177,6 +8491,16 @@ body{
 				}
 
 				.pageUser{
+					.panel{
+						.dataBox{
+							.actions{
+								.inner.multiple{
+									width: 100%;
+								}
+							}
+						}
+					}
+
 					.content{
 						ul{
 							li{

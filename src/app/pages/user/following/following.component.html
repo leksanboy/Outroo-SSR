@@ -34,15 +34,13 @@
 										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 									</a>
 
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 										</div>
 
-										<div class="container">
+										<div class="text">
 											{{x.user.name}}
 										</div>
 									</div>
@@ -56,6 +54,10 @@
 											{{translations?.common?.pending}}
 										</button>
 
+										<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
+											{{translations?.common?.following}}
+										</button>
+
 										<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 											<div class="text">
 												{{translations?.common?.cancelRequest}}
@@ -65,10 +67,6 @@
 												<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 											</div>
 										</mat-menu>
-
-										<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
-											{{translations?.common?.following}}
-										</button>
 
 										<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 											<div class="text">
@@ -115,15 +113,13 @@
 									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 
-								<div class="text">
-									<div class="username">
-										<div class="data">
-											<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										</div>
+								<div class="texts">
+									<div class="text">
+										<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 									</div>
 
-									<div class="container">
+									<div class="text">
 										{{x.user.name}}
 									</div>
 								</div>
@@ -137,6 +133,10 @@
 										{{translations?.common?.pending}}
 									</button>
 
+									<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
+										{{translations?.common?.following}}
+									</button>
+
 									<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
 											{{translations?.common?.cancelRequest}}
@@ -146,10 +146,6 @@
 											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
-
-									<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
-										{{translations?.common?.following}}
-									</button>
 
 									<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">

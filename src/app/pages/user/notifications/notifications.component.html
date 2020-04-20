@@ -18,18 +18,20 @@
 						</a>
 
 						<div class="inner" *ngIf="x.url === 'followers'">
-							<div class="text">
-								<div class="username">
-									<div class="data">
-										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										<div class="date">{{x?.date | timeago}}</div>
-									</div>
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
-								
-								<div class="container">
-									<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations?.notifications?.startFollowingYou}}</span>
-									<span *ngIf="x.type == 'acceptRequest'">{{translations?.notifications?.acceptFollowingRequest}}</span>
+
+								<div class="text">
+									<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">
+										{{translations?.notifications?.startFollowingYou}}
+									</span>
+									<span *ngIf="x.type == 'acceptRequest'">
+										{{translations?.notifications?.acceptFollowingRequest}}
+									</span>
 								</div>
 							</div>
 
@@ -39,7 +41,7 @@
 									<button mat-button class="active" (click)="followUnfollow('accept', x)">
 										{{translations?.notifications?.accept}}
 									</button>
-									<button mat-button class="border" (click)="followUnfollow('decline', x)">
+									<button mat-button class="active" (click)="followUnfollow('decline', x)">
 										{{translations?.notifications?.decline}}
 									</button>
 								</span>
@@ -54,6 +56,10 @@
 										{{translations?.common?.follow}}
 									</button>
 
+									<button mat-button *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
+										{{translations?.common?.following}}
+									</button>
+
 									<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
 											{{translations?.common?.cancelRequest}}
@@ -63,10 +69,6 @@
 											<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 										</div>
 									</mat-menu>
-
-									<button mat-button *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
-										{{translations?.common?.following}}
-									</button>
 
 									<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 										<div class="text">
@@ -95,33 +97,37 @@
 						</div>
 
 						<div class="inner" *ngIf="x.url === 'publications'">
-							<div class="text">
-								<div class="username">
-									<div class="data">
-										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										<div class="date">{{x?.date | timeago}}</div>
-									</div>
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 
-								<div class="container" (click)="show(x)">
-									<span *ngIf="x.type == 'comment'">
+								<div class="text" (click)="show(x)">
+									<span *ngIf="x.type === 'comment'">
 										{{translations?.notifications?.commentedYourPublication}}
 										<br>
 										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 									</span>
 
-									<span *ngIf="x.type == 'mentionComment'">
+									<span *ngIf="x.type === 'mentionComment'">
 										{{translations?.notifications?.mentionOnCommentOnPublication}}
 										<br>
 										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 									</span>
 									
-									<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPublication}}</span>
+									<span *ngIf="x.type === 'like'">
+										{{translations?.notifications?.likedYourPublication}}
+									</span>
 
-									<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPublication}}</span>
+									<span *ngIf="x.type === 'mention'">
+										{{translations?.notifications?.mentionOnPublication}}
+									</span>
 
-									<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPublication}}</span>
+									<span *ngIf="x.type === 'share'">
+										{{translations?.notifications?.sharedPublication}}
+									</span>
 
 									<span *ngIf="!x.contentData.media">
 										<br>
@@ -149,16 +155,14 @@
 						</div>
 
 						<div class="inner" *ngIf="x.url === 'audios'">
-							<div class="text">
-								<div class="username">
-									<div class="data">
-										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										<div class="date">{{x?.date | timeago}}</div>
-									</div>
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 
-								<div class="container">
+								<div class="text">
 									<span *ngIf="x.type == 'share'">
 										{{translations?.notifications?.sharedAudio}}
 										<br>
@@ -228,16 +232,14 @@
 						</div>
 
 						<div class="inner" *ngIf="x.url === 'message'">
-							<div class="text">
-								<div class="username">
-									<div class="data">
-										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										<div class="date">{{x?.date | timeago}}</div>
-									</div>
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 
-								<div class="container" (click)="show(x)">
+								<div class="text">
 									{{translations?.notifications?.haveNewMessage}}
 									<br>
 									<span [innerHtml]="x.contentData.content | safeHtml"></span>
@@ -258,18 +260,16 @@
 							</div>
 						</div>
 
-						<!-- ITEM for REMOVE if NOT EXISTS -->
+						<!-- item to remove if not exists -->
 						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publications' || x.url === 'audios' || x.url === 'message')">
-							<div class="text">
-								<div class="username">
-									<div class="data">
-										<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-										<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-										<div class="date">{{x?.date | timeago}}</div>
-									</div>
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 
-								<div class="container">
+								<div class="text">
 									{{translations?.common?.remove}}
 								</div>
 							</div>

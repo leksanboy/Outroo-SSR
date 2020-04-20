@@ -115,7 +115,7 @@
 		"email": "Email",
 		"password": "Password",
 		"oldPasswordIncorrect": "Old password is incorrect",
-		"usernameRequirements": "Username can only contain letters, numbers, ('.' dot), (',' comma), ('_' underscore) and ('-' middle dash)",
+		"usernameRequirements": "Username can only contain letters, numbers, ('.' dot), ('_' underscore) and ('-' middle dash)",
 		"passwordsNotMatch": "New password does not match with confirm password",
 		"english": "English",
 		"spanish": "Spanish",
