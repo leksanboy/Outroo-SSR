@@ -7,7 +7,7 @@ Version: 1.0.0
 /*Material default styles*/
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-.material-icons{
+.material-icons {
 	-webkit-font-smoothing: antialiased;
 	font-family: 'Material Icons';
 	letter-spacing: normal;
@@ -49,31 +49,62 @@ $redColor: #E53935;
 $greenColor: #8bc34a;
 
 /*Shadows*/
-$shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02), 0 -4px 5px 0 rgba(0, 0, 0, .01), 0 -1px 10px -2px rgba(0, 0, 0, .006);
-$shadowBox0: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.03), 0 3px 1px -2px rgba(0, 0, 0, 0.045);
-$shadowBox1: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-$shadowBox2: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-$shadowBox3: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-$shadowText1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-$shadowText2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-$shadowIcon1: 0 1px 2px rgba(0,0,0,0.24);
+$shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02),
+0 -4px 5px 0 rgba(0, 0, 0, .01),
+0 -1px 10px -2px rgba(0, 0, 0, .006);
+$shadowBox0: 0 2px 2px 0 rgba(0, 0, 0, 0.06),
+0 1px 5px 0 rgba(0, 0, 0, 0.03),
+0 3px 1px -2px rgba(0, 0, 0, 0.045);
+$shadowBox1: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+0 1px 5px 0 rgba(0, 0, 0, 0.12),
+0 3px 1px -2px rgba(0, 0, 0, 0.2);
+$shadowBox2: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+0 1px 10px 0 rgba(0, 0, 0, 0.12),
+0 2px 4px -1px rgba(0, 0, 0, 0.3);
+$shadowBox3: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+0 1px 18px 0 rgba(0, 0, 0, 0.12),
+0 3px 5px -1px rgba(0, 0, 0, 0.3);
+$shadowText1: 0 1px 3px rgba(0, 0, 0, 0.12),
+0 1px 2px rgba(0, 0, 0, 0.24);
+$shadowText2: 0 3px 6px rgba(0, 0, 0, 0.16),
+0 3px 6px rgba(0, 0, 0, 0.23);
+$shadowIcon1: 0 1px 2px rgba(0, 0, 0, 0.24);
 
 /*Keyframes*/
-@keyframes scale{
-	0% 		{ /*null*/						}
-	100% 	{ transform: scale(1.2); 		}
+@keyframes scale {
+	0% {
+		/*null*/
+	}
+
+	100% {
+		transform: scale(1.2);
+	}
 }
 
-@keyframes heartbeat{
-	0% 		{ transform: scale(.75, .75);	}
-	16% 	{ transform: scale(1, 1); 		}
-	33% 	{ transform: scale(.75, .75);	}
-	49% 	{ transform: scale(1, 1); 		}
-	100% 	{ transform: scale(.75, .75);	}
+@keyframes heartbeat {
+	0% {
+		transform: scale(.75, .75);
+	}
+
+	16% {
+		transform: scale(1, 1);
+	}
+
+	33% {
+		transform: scale(.75, .75);
+	}
+
+	49% {
+		transform: scale(1, 1);
+	}
+
+	100% {
+		transform: scale(.75, .75);
+	}
 }
 
 /*General styles*/
-body{
+body {
 	font-family: -apple-system, BlinkMacSystemFont, Helvetica, Roboto, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
@@ -85,35 +116,35 @@ body{
 	padding: 0;
 	margin: 0;
 
-	[contenteditable=true]:empty:before{
+	[contenteditable=true]:empty:before {
 		color: $greyColor;
 	}
 
-	.hiddenItem{
+	.hiddenItem {
 		display: none;
 	}
 
-	.rippleButton{
+	.rippleButton {
 		width: 100px;
 		height: 48px;
 	}
 
-	*{
+	* {
 		-webkit-tap-highlight-color: transparent !important;
 		outline: none;
 	}
 
-	a{
+	a {
 		color: $fontBlackColor;
 		text-decoration: none;
 		cursor: pointer;
 
-		&:hover{
+		&:hover {
 			color: $blueColor !important;
 		}
 	}
 
-	i{
+	i {
 		mask-size: 48px calc(48px * 15);
 		background-color: currentColor;
 		mask-image: $spriteImages;
@@ -123,288 +154,288 @@ body{
 		height: 24px;
 		width: 24px;
 
-		&.icon50{
+		&.icon50 {
 			transform: scale(0.5);
 		}
 
-		&.icon65{
+		&.icon65 {
 			transform: scale(0.65);
 		}
 
-		&.icon75{
+		&.icon75 {
 			transform: scale(0.75);
 		}
 
-		&.icon85{
+		&.icon85 {
 			transform: scale(0.85);
 		}
 
-		&.icon200{
+		&.icon200 {
 			transform: scale(2);
 		}
 
-		&.icon300{
+		&.icon300 {
 			transform: scale(3);
 		}
 
-		&.blue{
+		&.blue {
 			background-color: $blueColor;
 		}
 
-		&.red{
+		&.red {
 			background-color: $redColor;
 		}
 
-		&.grey{
+		&.grey {
 			background-color: $greyColor;
 		}
 
-		&.white{
+		&.white {
 			background-color: $whiteColor;
 		}
 
-		&[label="back"]{
+		&[label="back"] {
 			mask-position: 0 -240px;
 		}
 
-		&[label="forward"]{
+		&[label="forward"] {
 			mask-position: -24px -240px;
 		}
 
-		&[label="close"]{
+		&[label="close"] {
 			mask-position: -24px -528px;
 		}
 
-		&[label="visibility"]{
+		&[label="visibility"] {
 			mask-position: 0 -216px;
 
-			&.active{
+			&.active {
 				mask-position: -24px -216px;
 			}
 		}
 
-		&[label="send-comment"]{
+		&[label="send-comment"] {
 			mask-position: -24px -120px;
 		}
 
-		&[label="analytics-comments"]{
+		&[label="analytics-comments"] {
 			mask-position: 0 -72px;
 		}
 
-		&[label="analytics-like"]{
+		&[label="analytics-like"] {
 			mask-position: 0 -48px;
 
-			&.active{
+			&.active {
 				background-color: $redColor !important;
 				mask-position: -24px -48px;
 			}
 		}
 
-		&[label="analytics-bookmark"]{
+		&[label="analytics-bookmark"] {
 			mask-position: 0 -144px;
 
-			&.active{
+			&.active {
 				mask-position: -24px -144px;
 			}
 		}
 
-		&[label="exit"]{
+		&[label="exit"] {
 			mask-position: -24px -192px;
 		}
 
-		&[label="add"]{
+		&[label="add"] {
 			mask-position: 0 -552px;
 		}
 
-		&[label="check"]{
+		&[label="check"] {
 			mask-position: 0 -528px;
 		}
 
-		&[label="check-circle"]{
+		&[label="check-circle"] {
 			mask-position: 0 -432px;
 		}
 
-		&[label="uncheck-circle"]{
+		&[label="uncheck-circle"] {
 			mask-position: -24px -432px;
 		}
 
-		&[label="info"]{
+		&[label="info"] {
 			mask-position: 0 -456px;
 		}
 
-		&[label="clear"]{
+		&[label="clear"] {
 			mask-position: -24px -528px;
 		}
 
-		&[label="videocam"]{
+		&[label="videocam"] {
 			mask-position: -24px -168px;
 		}
 
-		&[label="gif"]{
+		&[label="gif"] {
 			mask-position: 0 -168px;
 		}
 
-		&[label="video"]{
+		&[label="video"] {
 			mask-position: -24px -168px;
 		}
 
-		&[label="cloud-off"]{
+		&[label="cloud-off"] {
 			mask-position: -24px -552px;
 		}
 
-		&[label="cloud-upload"]{
+		&[label="cloud-upload"] {
 			mask-position: -24px -72px;
 		}
 
-		&[label="error-outline"]{
+		&[label="error-outline"] {
 			mask-position: -24px -456px;
 		}
 
-		&[label="autorenew"]{
+		&[label="autorenew"] {
 			mask-position: -24px -480px;
 		}
 
-		&[label="reply"]{
+		&[label="reply"] {
 			mask-position: 0 -696px;
 		}
 
-		&[label="lock"]{
+		&[label="lock"] {
 			mask-position: -24px -624px;
 		}
 
-		&[label="keyboard-arrow-left"]{
+		&[label="keyboard-arrow-left"] {
 			mask-position: 0 -408px;
 		}
 
-		&[label="keyboard-arrow-right"]{
+		&[label="keyboard-arrow-right"] {
 			mask-position: -24px -408px;
 		}
 
-		&[label="arrow-drop-down"]{
+		&[label="arrow-drop-down"] {
 			mask-position: 0 -264px;
 		}
 
-		&[label="arrow-drop-up"]{
+		&[label="arrow-drop-up"] {
 			mask-position: -24px -264px;
 		}
 
-		&[label="search"]{
+		&[label="search"] {
 			mask-position: -24px -600px;
 		}
 
-		&[label="playlist"]{
+		&[label="playlist"] {
 			mask-position: 0 -672px;
 
-			&.active{
+			&.active {
 				background-color: $blueColor !important;
 			}
 		}
 
-		&[label="volume"]{
+		&[label="volume"] {
 			mask-position: 0 -312px;
 
-			&.active{
+			&.active {
 				mask-position: -24px -312px;
 			}
 		}
 
-		&[label="play"]{
+		&[label="play"] {
 			mask-position: 0 -288px;
 		}
 
-		&[label="pause"]{
+		&[label="pause"] {
 			mask-position: -24px -288px;
 		}
 
-		&[label="more"]{
+		&[label="more"] {
 			mask-position: 0 -120px;
 		}
 
-		&[label="menu"]{
+		&[label="menu"] {
 			mask-position: 0 -600px;
 		}
 
-		&[label="notifications"]{
+		&[label="notifications"] {
 			mask-position: 0 -624px;
 		}
 
-		&[label="person"]{
+		&[label="person"] {
 			mask-position: 0 -504px;
 		}
 
-		&[label="home"]{
+		&[label="home"] {
 			mask-position: 0 -192px;
 		}
 
-		&[label="group"]{
+		&[label="group"] {
 			mask-position: -24px -504px;
 		}
 
-		&[label="language"]{
+		&[label="language"] {
 			mask-position: -24px -648px;
 		}
 
-		&[label="moon"]{
+		&[label="moon"] {
 			mask-position: -24px -696px;
 		}
 
-		&[label="image"]{
+		&[label="image"] {
 			mask-position: 0 -648px;
 		}
 
-		&[label="photo-camera"]{
+		&[label="photo-camera"] {
 			mask-position: -24px -576px;
 		}
 
-		&[label="music"]{
+		&[label="music"] {
 			mask-position: 0 -576px;
 		}
 
-		&[label="bookmarks"]{
+		&[label="bookmarks"] {
 			mask-position: -24px -144px;
 		}
 
-		&[label="settings"]{
+		&[label="settings"] {
 			mask-position: -24px -96px;
 		}
 
-		&[label="zoom-in"]{
+		&[label="zoom-in"] {
 			mask-position: 0 -336px;
 		}
 
-		&[label="zoom-out"]{
+		&[label="zoom-out"] {
 			mask-position: -24px -336px;
 		}
 
-		&[label="rotate-left"]{
+		&[label="rotate-left"] {
 			mask-position: 0 -360px;
 		}
 
-		&[label="rotate-right"]{
+		&[label="rotate-right"] {
 			mask-position: -24px -360px;
 		}
 
-		&[label="swap-horiz"]{
+		&[label="swap-horiz"] {
 			mask-position: 0 -384px;
 		}
 
-		&[label="swap-vert"]{
+		&[label="swap-vert"] {
 			mask-position: -24px -384px;
 		}
 
-		&[label="chevron-left"]{
+		&[label="chevron-left"] {
 			mask-position: 0 -408px;
 		}
 
-		&[label="chevron-right"]{
+		&[label="chevron-right"] {
 			mask-position: -24px -408px;
 		}
 
-		&[label="official"]{
+		&[label="official"] {
 			mask-position: 0 -96px;
 		}
 
-		&[label="no-posts"]{
+		&[label="no-posts"] {
 			background-color: currentColor;
 			mask-image: $noPostsImage;
 			mask-repeat: no-repeat;
@@ -417,53 +448,53 @@ body{
 		}
 	}
 
-	span{
+	span {
 		background: transparent !important;
 	}
 
 	input,
-	textarea{
+	textarea {
 		font-size: 15px;
 		resize: none;
 
-		&[disabled]{
+		&[disabled] {
 			color: $greyColor !important;
 		}
 	}
 
-	button{
+	button {
 		// border-radius: 5px !important;
 		text-transform: uppercase;
 
-		&[disabled]{
+		&[disabled] {
 			cursor: not-allowed !important;
 			opacity: .75 !important;
 		}
 
 		&.mat-fab,
-		&.mat-mini-fab{
+		&.mat-mini-fab {
 			line-height: 0 !important;
 			display: block !important;
 
-			.mat-button-wrapper{
+			.mat-button-wrapper {
 				padding: 0 !important;
 			}
 		}
 	}
 
-	ul.tracks{
+	ul.tracks {
 		float: left;
 		width: 100%;
 		padding: 0;
 		margin: 0;
 
-		li{
+		li {
 			border: none !important;
 			display: flex;
 			padding: 0;
 			margin: 0;
 
-			.inner{
+			.inner {
 				padding: 2px 0 2px 18px;
 				box-sizing: border-box;
 				align-items: center;
@@ -473,21 +504,21 @@ body{
 				display: flex;
 				width: 100%;
 
-				&:hover{
+				&:hover {
 					background-color: transparentize($greyColor, .9);
 				}
 
-				.image{
+				.image {
 					width: 42px;
 
-					button{
+					button {
 						border-radius: 5px;
 						overflow: hidden;
 						height: 42px;
 						width: 42px;
 						margin: 0;
 
-						span{
+						span {
 							justify-content: center;
 							align-items: center;
 							position: relative;
@@ -495,7 +526,7 @@ body{
 							height: 100%;
 							width: 100%;
 
-							.progress{
+							.progress {
 								background-color: transparentize($fontBlackColor, .75);
 								border-radius: 50%;
 								position: relative;
@@ -503,23 +534,23 @@ body{
 								width: 36px;
 								z-index: 1;
 
-								mat-progress-spinner{
+								mat-progress-spinner {
 									height: 36px !important;
 									width: 36px !important;
 
-									svg{
+									svg {
 										filter: drop-shadow($shadowText1);
 										height: 36px !important;
 										width: 36px !important;
 
-										circle{
+										circle {
 											stroke: $whiteColor !important;
 											stroke-width: 5px !important;
 										}
 									}
 								}
 
-								.value{
+								.value {
 									text-shadow: $shadowText1;
 									position: absolute;
 									text-align: center;
@@ -532,7 +563,7 @@ body{
 							}
 						}
 
-						img{
+						img {
 							position: absolute;
 							height: 100%;
 							width: 100%;
@@ -540,11 +571,11 @@ body{
 							top: 0;
 						}
 
-						.mat-button-ripple-round{
+						.mat-button-ripple-round {
 							border-radius: 0;
 						}
 
-						i{
+						i {
 							background-color: $whiteColor;
 							position: relative;
 							z-index: 1;
@@ -552,7 +583,7 @@ body{
 					}
 				}
 
-				.text{
+				.text {
 					justify-content: space-between;
 					box-sizing: border-box;
 					line-height: 42px;
@@ -561,7 +592,7 @@ body{
 					width: 100%;
 
 					.duration,
-					.titleArtist{
+					.titleArtist {
 						flex-direction: column;
 						box-sizing: border-box;
 						padding: 0 6px 0 12px;
@@ -570,7 +601,7 @@ body{
 						max-width: 80%;
 						display: flex;
 
-						.title{
+						.title {
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							line-height: 15px;
@@ -578,7 +609,7 @@ body{
 							padding: 4px 0;
 						}
 
-						.artist{
+						.artist {
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							color: $greyColor;
@@ -588,18 +619,18 @@ body{
 						}
 					}
 
-					.duration{
+					.duration {
 						padding: 0 18px 0 0;
 						color: $greyColor;
 						text-align: right;
 						font-size: 14px;
 
-						.status{
+						.status {
 							align-items: center;
 							display: flex;
 							height: 100%;
 
-							.size{
+							.size {
 								background-color: $redColor;
 								box-shadow: $shadowBox2;
 								border-radius: 3px;
@@ -617,63 +648,63 @@ body{
 					}
 				}
 
-				.actions{
-					button{
+				.actions {
+					button {
 						border-radius: 50% !important;
 					}
 				}
 			}
 
-			.ad{
+			.ad {
 				box-sizing: border-box;
 				padding: 2px 0 4px 0;
 				width: 100%;
 				float: left;
 
-				.box{
+				.box {
 					width: 100%;
 					float: left;
 				}
 			}
 
-			&.active{
-				.inner{
+			&.active {
+				.inner {
 					background-color: transparentize($fontBlackColor, .95);
 
-					.text{
+					.text {
 						color: $blueColor;
 
-						.titleArtist .artist{
+						.titleArtist .artist {
 							color: transparentize($blueColor, .5);
 						}
 					}
 				}
 			}
 
-			&.default{
-				.image{
-					button{
-						i{
+			&.default {
+				.image {
+					button {
+						i {
 							background-color: currentColor !important;
 						}
 					}
 				}
 			}
 
-			&.remove{
+			&.remove {
 				filter: grayscale(100%);
 				opacity: .5;
 			}
 		}
 	}
 
-	ul.followers{
+	ul.followers {
 		float: left;
 		width: 100%;
 		padding: 0;
 		margin: 0;
 
-		li{
+		li {
 			box-sizing: border-box;
 			position: relative;
 			padding: 4px 18px;
@@ -684,7 +715,7 @@ body{
 			float: left;
 			width: 100%;
 
-			.avatar{
+			.avatar {
 				box-sizing: border-box;
 				border-radius: 50%;
 				overflow: hidden;
@@ -692,24 +723,24 @@ body{
 				height: 48px;
 				width: 48px;
 
-				img{
+				img {
 					width: 100%;
 				}
 			}
 
-			.texts{
+			.texts {
 				box-sizing: border-box;
 				overflow: hidden;
 				width: 100%;
 				padding: 6px 12px;
 
-				.text{
+				.text {
 					line-height: 18px;
 					font-size: 14px;
 					width: 100%;
 					float: left;
 
-					a{
+					a {
 						text-overflow: ellipsis;
 						white-space: nowrap;
 						overflow: hidden;
@@ -717,15 +748,15 @@ body{
 						max-width: 80%;
 					}
 
-					i{
+					i {
 						margin: -6px 0;
 					}
-					
-					&:first-child{
+
+					&:first-child {
 						font-weight: bold;
 					}
 
-					&:last-child{
+					&:last-child {
 						color: $greyColor;
 						text-overflow: ellipsis;
 						white-space: nowrap;
@@ -735,8 +766,8 @@ body{
 				}
 			}
 
-			.actions{
-				button{
+			.actions {
+				button {
 					background-color: $fontBlackColor;
 					text-transform: uppercase;
 					margin: 10px 0 0 6px;
@@ -748,35 +779,35 @@ body{
 					min-width: 0;
 					height: 28px;
 
-					&:first-child{
+					&:first-child {
 						margin-left: 0;
 					}
 
-					&.active{
+					&.active {
 						border: 1px solid $fontBlackColor;
 						background-color: transparent;
 						color: $fontBlackColor;
 					}
 
-					&.pending{
+					&.pending {
 						background-color: $blueColor;
 					}
 				}
 			}
 
-			&:hover{
+			&:hover {
 				background-color: transparentize($greyColor, .9);
 			}
 		}
 	}
 
-	ul.notifications{
+	ul.notifications {
 		float: left;
 		width: 100%;
 		padding: 0;
 		margin: 0;
 
-		li{
+		li {
 			box-sizing: border-box;
 			position: relative;
 			padding: 4px 0 4px 18px;
@@ -787,7 +818,7 @@ body{
 			float: left;
 			width: 100%;
 
-			.avatar{
+			.avatar {
 				box-sizing: border-box;
 				border-radius: 50%;
 				overflow: hidden;
@@ -795,41 +826,41 @@ body{
 				height: 48px;
 				width: 48px;
 
-				img{
+				img {
 					width: 100%;
 				}
 			}
 
-			.inner{
+			.inner {
 				display: flex;
 				width: 100%;
 
-				.texts{
+				.texts {
 					box-sizing: border-box;
 					overflow: hidden;
 					width: 100%;
 					padding: 6px 0 6px 12px;
-	
-					.text{
+
+					.text {
 						line-height: 18px;
 						font-size: 14px;
 						width: 100%;
 						float: left;
-	
-						a{
+
+						a {
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							overflow: hidden;
 							float: left;
 							max-width: 80%;
 						}
-	
-						i{
+
+						i {
 							margin: -3px -6px -3px 0;
 							float: left;
 						}
 
-						.date{
+						.date {
 							float: left;
 							font-size: 12px;
 							font-weight: normal;
@@ -837,53 +868,53 @@ body{
 							padding: 0 0 0 6px;
 						}
 
-						.song{
+						.song {
 							background-color: transparentize($greyColor, .75);
 							border-radius: 5px;
 							margin: 4px 0 0;
 							padding: 0;
 							max-width: 80%;
 
-							.songInner{
+							.songInner {
 								padding: 6px;
 								margin: 0;
 
-								.songImage button i{
+								.songImage button i {
 									margin: 0;
 									float: inherit;
 								}
 
-								.textActions button{
+								.textActions button {
 									display: flex;
 									justify-content: center;
 									align-items: center;
 
-									i{
+									i {
 										margin: 0;
 										float: inherit;
 									}
 								}
 							}
 						}
-						
-						&:first-child{
+
+						&:first-child {
 							font-weight: bold;
 						}
-	
-						&:last-child{
+
+						&:last-child {
 							color: $greyColor;
 						}
 					}
 				}
 
-				.operations{
+				.operations {
 					display: flex;
 					height: 48px;
 
-					span{
+					span {
 						display: inherit;
 
-						button{
+						button {
 							background-color: $blackColor;
 							box-sizing: border-box;
 							margin: 10px 0 0 6px;
@@ -895,28 +926,28 @@ body{
 							min-width: 0;
 							height: 28px;
 
-							&:first-child{
+							&:first-child {
 								margin-left: 0;
 							}
 
-							&.active{
+							&.active {
 								border: 1px solid $blackColor;
 								background-color: transparent;
 								color: $blackColor;
 							}
 
-							&.border{
+							&.border {
 								border: 1px solid $blackColor;
 								color: $blackColor;
 							}
 
-							&.pending{
+							&.pending {
 								background-color: $blueColor;
 							}
 						}
 					}
 
-					.image{
+					.image {
 						border-radius: 5px;
 						overflow: hidden;
 						cursor: pointer;
@@ -924,7 +955,7 @@ body{
 						height: 48px;
 						width: 48px;
 
-						.img{
+						.img {
 							background-position: center 35%;
 							background-repeat: no-repeat;
 							transform: translate(0px);
@@ -937,8 +968,8 @@ body{
 						}
 					}
 
-					.actions{
-						button{
+					.actions {
+						button {
 							border-radius: 50% !important;
 							margin: 4px 0;
 							display: flex;
@@ -949,33 +980,33 @@ body{
 				}
 			}
 
-			&:hover{
+			&:hover {
 				background-color: transparentize($greyColor, .9);
 			}
 
-			&.active{
+			&.active {
 				background-color: transparentize($blueColor, .75);
 			}
 
-			&.remove{
+			&.remove {
 				filter: grayscale(100%);
 				opacity: .5;
 			}
 		}
 	}
 
-	.username{
+	.username {
 		width: calc(100% - 72px);
 		box-sizing: border-box;
 		padding: 0 0 0 12px;
 		display: flex;
 
-		.data{
+		.data {
 			align-items: center;
 			display: flex;
 			width: 100%;
 
-			.name{
+			.name {
 				text-overflow: ellipsis;
 				word-break: break-all;
 				white-space: nowrap;
@@ -985,11 +1016,11 @@ body{
 				max-width: 75%;
 			}
 
-			i{
+			i {
 				margin: -6px 0 -6px -6px;
 			}
 
-			.date{
+			.date {
 				white-space: nowrap;
 				color: $greyColor;
 				font-size: 13px;
@@ -998,7 +1029,7 @@ body{
 		}
 	}
 
-	.publication{
+	.publication {
 		box-sizing: border-box;
 		position: relative;
 		padding: 0 0 12px;
@@ -1009,14 +1040,14 @@ body{
 		width: 100%;
 		margin: 0;
 
-		.head{
+		.head {
 			padding: 6px 0 6px 18px;
 			box-sizing: border-box;
 			display: flex;
 			width: 100%;
 			float: left;
 
-			.avatar{
+			.avatar {
 				box-sizing: border-box;
 				border-radius: 50%;
 				overflow: hidden;
@@ -1025,13 +1056,13 @@ body{
 				height: 32px;
 				width: 32px;
 
-				img{
+				img {
 					height: 100%;
 					width: 100%;
 				}
 			}
 
-			.text{
+			.text {
 				text-overflow: ellipsis;
 				box-sizing: border-box;
 				white-space: nowrap;
@@ -1041,45 +1072,45 @@ body{
 				height: 40px;
 				width: 100%;
 
-				.name{
-					.username{
+				.name {
+					.username {
 						word-break: break-all;
 						font-weight: bold;
 					}
 
-					.date{
+					.date {
 						color: $greyColor;
 						font-size: 13px;
 					}
 				}
 			}
 
-			.actions{
-				button{
+			.actions {
+				button {
 					border-radius: 50% !important;
 				}
 			}
 		}
 
-		.body{
+		.body {
 			box-sizing: border-box;
 			width: 100%;
 			float: left;
 
-			.photos{
+			.photos {
 				width: 100%;
 				float: left;
 
-				img{
+				img {
 					width: 100%;
 				}
 
-				video{
+				video {
 					max-height: 360px;
 					width: 100%;
 				}
 
-				.playPause{
+				.playPause {
 					margin: -43px 0 0 -43px;
 					position: absolute;
 					height: 86px;
@@ -1089,11 +1120,11 @@ body{
 				}
 			}
 
-			.innerContent{
+			.innerContent {
 				box-sizing: border-box;
 				width: 100%;
-				
-				.textContainer{
+
+				.textContainer {
 					word-break: break-word;
 					box-sizing: border-box;
 					padding: 12px 18px 6px;
@@ -1102,37 +1133,37 @@ body{
 				}
 			}
 
-			.audios{
+			.audios {
 				margin: 12px 0 0;
 				width: 100%;
 				float: left;
 
-				ul{
-					li{
+				ul {
+					li {
 						padding: inherit;
 					}
 				}
 			}
 		}
 
-		&.remove{
+		&.remove {
 			filter: grayscale(100%);
 			opacity: .5;
 
-			.body{
+			.body {
 				pointer-events: none;
 			}
 		}
 	}
 
-	.song{
+	.song {
 		padding: 18px 0 0;
 		display: flex;
 		border: none;
 		width: 100%;
 		margin: 0;
 
-		.songInner{
+		.songInner {
 			padding: 2px 0 2px 18px;
 			box-sizing: border-box;
 			align-items: center;
@@ -1142,22 +1173,22 @@ body{
 			display: flex;
 			width: 100%;
 
-			&:hover{
+			&:hover {
 				background-color: transparentize($greyColor, .9);
 			}
 
-			.songImage{
+			.songImage {
 				width: 42px;
 				height: 42px;
 
-				button{
+				button {
 					border-radius: 5px;
 					overflow: hidden;
 					height: 42px;
 					width: 42px;
 					margin: 0;
 
-					img{
+					img {
 						position: absolute;
 						height: 100%;
 						width: 100%;
@@ -1165,11 +1196,11 @@ body{
 						top: 0;
 					}
 
-					.mat-button-ripple-round{
+					.mat-button-ripple-round {
 						border-radius: 0;
 					}
 
-					i{
+					i {
 						background-color: $whiteColor;
 						position: relative;
 						z-index: 1;
@@ -1177,7 +1208,7 @@ body{
 				}
 			}
 
-			.songText{
+			.songText {
 				justify-content: space-between;
 				box-sizing: border-box;
 				line-height: 42px;
@@ -1186,7 +1217,7 @@ body{
 				width: 100%;
 
 				.duration,
-				.titleArtist{
+				.titleArtist {
 					flex-direction: column;
 					box-sizing: border-box;
 					padding: 0 0 0 12px;
@@ -1196,7 +1227,7 @@ body{
 					max-width: 80%;
 					display: flex;
 
-					.title{
+					.title {
 						text-overflow: ellipsis;
 						white-space: nowrap;
 						line-height: 15px;
@@ -1205,7 +1236,7 @@ body{
 						width: 100%;
 					}
 
-					.artist{
+					.artist {
 						text-overflow: ellipsis;
 						white-space: nowrap;
 						color: $greyColor;
@@ -1216,7 +1247,7 @@ body{
 					}
 				}
 
-				.duration{
+				.duration {
 					justify-content: center;
 					padding: 0 6px 0 0;
 					color: $greyColor;
@@ -1226,55 +1257,55 @@ body{
 				}
 			}
 
-			.songActions{
-				button{
+			.songActions {
+				button {
 					border-radius: 50% !important;
 				}
 			}
 		}
 
-		&.active{
-			.songInner{
+		&.active {
+			.songInner {
 				background-color: transparentize($fontBlackColor, .95);
 
-				.songText{
+				.songText {
 					color: $blueColor;
 
-					.titleArtist .artist{
+					.titleArtist .artist {
 						color: transparentize($blueColor, .5);
 					}
 				}
 			}
 		}
 
-		&.default{
-			.songImage{
-				button{
-					i{
+		&.default {
+			.songImage {
+				button {
+					i {
 						background-color: currentColor !important;
 					}
 				}
 			}
 		}
 
-		&.remove{
+		&.remove {
 			filter: grayscale(100%);
 			opacity: .5;
 		}
 	}
 
-	.playlist{
+	.playlist {
 		width: 100%;
 		float: left;
 
-		.info{
+		.info {
 			box-sizing: border-box;
 			padding: 18px;
 			display: flex;
 			width: 100%;
 
-			.left{
-				.image{
+			.left {
+				.image {
 					background-color: $greyColor;
 					border-radius: 5px;
 					position: relative;
@@ -1283,11 +1314,11 @@ body{
 					width: 144px;
 					float: left;
 
-					img{
+					img {
 						width: 100%;
 					}
 
-					.upload{
+					.upload {
 						justify-content: center;
 						align-items: center;
 						position: absolute;
@@ -1297,19 +1328,19 @@ body{
 						top: 0;
 					}
 
-					&:hover .upload{
+					&:hover .upload {
 						background: transparentize($blueColor, .5);
 						cursor: pointer;
 					}
 				}
 			}
 
-			.right{
+			.right {
 				width: calc(100% - 144px);
 				box-sizing: border-box;
 				padding: 0 0 0 18px;
 
-				.title{
+				.title {
 					-webkit-box-orient: vertical;
 					text-overflow: ellipsis;
 					word-break: break-word;
@@ -1323,22 +1354,22 @@ body{
 					margin: 8px 0 0;
 				}
 
-				.subtitle{
+				.subtitle {
 					color: $blueColor;
 					font-weight: bold;
 					text-align: left;
 					display: block;
 					width: 100%;
 
-					i{
+					i {
 						margin: 7px 0 -7px -7px;
 					}
 				}
 
-				.button{
+				.button {
 					width: 100%;
 
-					button{
+					button {
 						background-color: $blueColor;
 						border-radius: 24px;
 						color: $whiteColor;
@@ -1346,11 +1377,11 @@ body{
 						font-size: 13px;
 						float: left;
 
-						span{
+						span {
 							align-items: center;
 							display: flex;
 
-							i{
+							i {
 								margin: 0 0 0 -8px;
 							}
 						}
@@ -1360,34 +1391,34 @@ body{
 		}
 	}
 
-	.stats{
+	.stats {
 		box-sizing: border-box;
 		padding: 6px 18px 12px;
 		float: left;
 		width: 100%;
 
-		.title{
+		.title {
 			padding: 0 0 2px;
 			font-size: 13px;
 		}
 
-		.texts{
+		.texts {
 			align-items: center;
 			font-weight: bold;
 			font-size: 17px;
 			display: flex;
 			width: 100%;
 
-			i{
+			i {
 				margin: 0;
 			}
 
-			.text{
+			.text {
 				padding: 0 0 0 4px;
 				font-size: 13px;
 			}
 
-			.divider{
+			.divider {
 				background-color: $greyColor;
 				margin: 0 12px;
 				height: 24px;
@@ -1399,20 +1430,20 @@ body{
 	/*#, @, url*/
 	.hashtag,
 	.mention,
-	.url{
+	.url {
 		color: $blueColor !important;
 		cursor: pointer;
 	}
 
 	/*reCaptcha*/
-	.reCaptcha{
+	.reCaptcha {
 		margin: 18px 0 0;
 		width: 100%;
 		float: left;
 	}
 
 	/* Hidden input for copy link */
-	.hiddenInputForCopyLink{
+	.hiddenInputForCopyLink {
 		position: fixed;
 		opacity: 0;
 		height: 0;
@@ -1422,30 +1453,30 @@ body{
 	}
 
 	/*Tabs*/
-	.mat-tab-group{
+	.mat-tab-group {
 		width: 100%;
 
-		.mat-tab-label{
+		.mat-tab-label {
 			text-transform: uppercase;
 			height: 56px;
 			min-width: 0;
 		}
 
-		.mat-tab-header{
+		.mat-tab-header {
 			margin: 0 0 12px;
 		}
 
-		.mat-tab-header-pagination{
+		.mat-tab-header-pagination {
 			z-index: 1;
 		}
 
-		.mat-ink-bar{
+		.mat-ink-bar {
 			background-color: $blueColor !important;
 		}
 	}
 
 	/*Input & Select*/
-	.mat-form-field{
+	.mat-form-field {
 		margin: 12px 0 10px;
 		text-align: left;
 		font-size: 15px;
@@ -1454,83 +1485,83 @@ body{
 		float: left;
 		padding: 0;
 
-		.mat-form-field-subscript-wrapper{
+		.mat-form-field-subscript-wrapper {
 			overflow: inherit;
 
-			mat-hint{
+			mat-hint {
 				color: $greyColor;
 				margin: -26px 0 0;
 				font-size: 10px;
 			}
 		}
 
-		input{
+		input {
 			box-sizing: border-box;
 			padding: 0 64px 0 0;
 		}
 
-		mat-select{
-			.mat-select-arrow{
+		mat-select {
+			.mat-select-arrow {
 				color: $greyColor;
 			}
 		}
 
-		&.textarea{
+		&.textarea {
 			margin: 12px 0 -18px;
 			height: inherit;
 
-			textarea{
+			textarea {
 				resize: none;
 			}
 		}
 
-		.mat-input-subscript-wrapper{
+		.mat-input-subscript-wrapper {
 			overflow: inherit;
 			margin-top: 0;
 		}
 
-		.mat-form-field-label{
+		.mat-form-field-label {
 			color: transparentize($greyColor, .13);
 		}
 
-		.mat-select-value{
+		.mat-select-value {
 			color: inherit !important;
 		}
 
-		.mat-form-field-underline{
+		.mat-form-field-underline {
 			background-color: $greyColor;
 
-			.mat-input-ripple{
-				&.mat-form-field-ripple{
+			.mat-input-ripple {
+				&.mat-form-field-ripple {
 					background-color: $blueColor !important;
 				}
 			}
 		}
 
-		button{
+		button {
 			border-radius: 50% !important;
 			margin: 0 40px 0 0;
 
-			&.noLength{
+			&.noLength {
 				margin: 0;
 			}
 		}
 
-		&.mat-focused{
-			.mat-form-field-label{
+		&.mat-focused {
+			.mat-form-field-label {
 				color: $blueColor !important;
 			}
 
-			.mat-select-arrow{
+			.mat-select-arrow {
 				color: $blueColor !important;
 			}
 		}
 
-		i{
+		i {
 			margin: -4px 0 0 -4px;
 		}
 
-		.validators{
+		.validators {
 			box-sizing: border-box;
 			margin: -15px 42px 0;
 			position: absolute;
@@ -1539,77 +1570,77 @@ body{
 			padding: 0;
 			right: 0;
 
-			&.withButton{
+			&.withButton {
 				margin: -15px 6px 0;
 			}
 
-			mat-progress-spinner{
+			mat-progress-spinner {
 				height: 12px !important;
 				width: 12px !important;
 				margin: 3px auto 0;
 
-				svg{
+				svg {
 					height: 12px !important;
 					width: 12px !important;
 
-					circle{
+					circle {
 						stroke: $blueColor !important;
 					}
 				}
 			}
 		}
 
-		&.mat-form-field-appearance-outline{
+		&.mat-form-field-appearance-outline {
 			height: inherit;
 			margin: 0;
 
-			.mat-form-field-wrapper{
+			.mat-form-field-wrapper {
 				padding: 24px 0 0;
 				margin: 0;
 
-				.mat-form-field-flex{
-					.mat-form-field-outline{
+				.mat-form-field-flex {
+					.mat-form-field-outline {
 						color: $greyColor;
 
-						.mat-form-field-outline-start{
+						.mat-form-field-outline-start {
 							border-radius: 10px 0 0 10px;
 						}
 
-						.mat-form-field-outline-end{
+						.mat-form-field-outline-end {
 							border-radius: 0 10px 10px 0;
 						}
 					}
 				}
 			}
 
-			.mat-form-field-suffix{
+			.mat-form-field-suffix {
 				top: 0;
 			}
 		}
 	}
 
 	/*Slide toggle*/
-	.mat-slide-toggle{
-		.mat-slide-toggle-bar{
+	.mat-slide-toggle {
+		.mat-slide-toggle-bar {
 			background-color: $greyColor !important;
 		}
 	}
 
 	/* Divider */
-	.mat-divider{
+	.mat-divider {
 		border-top-color: transparentize($greyColor, .5) !important;
 	}
 
 	/*Contenteditable placeholder*/
-	[contenteditable=true]{
-		&:empty:before{
+	[contenteditable=true] {
+		&:empty:before {
 			content: attr(placeholder);
 			display: block;
 		}
 	}
 
 	/*AdBlock*/
-	.disableAdBlock{
+	.disableAdBlock {
 		background-color: $redColor;
 		text-transform: uppercase;
 		width: calc(100% - 36px);
@@ -1623,11 +1654,11 @@ body{
 	}
 
 	/*Mat-menu*/
-	.mat-menu-panel{
+	.mat-menu-panel {
 		border-radius: 5px !important;
-		
-		.mat-menu-content{
-			button{
+
+		.mat-menu-content {
+			button {
 				border-radius: 0 !important;
 				text-transform: inherit;
 				line-height: 40px;
@@ -1635,13 +1666,13 @@ body{
 			}
 		}
 
-		&.removeBox{
-			.mat-menu-content{
+		&.removeBox {
+			.mat-menu-content {
 				padding: 0 !important;
 				min-width: 180px;
 			}
 
-			.text{
+			.text {
 				box-sizing: border-box;
 				padding: 18px 18px 6px;
 				font-weight: normal;
@@ -1651,11 +1682,11 @@ body{
 				width: 100%;
 			}
 
-			.buttons{
+			.buttons {
 				display: flex;
 				width: 100%;
 
-				button{
+				button {
 					text-transform: uppercase;
 					text-align: center;
 					font-weight: bold;
@@ -1666,8 +1697,8 @@ body{
 	}
 
 	/*Close session box*/
-	.closeSessionBox{
-		.text{
+	.closeSessionBox {
+		.text {
 			box-sizing: border-box;
 			padding: 18px 18px 6px;
 			color: currentColor;
@@ -1677,11 +1708,11 @@ body{
 			width: 100%;
 		}
 
-		.buttons{
+		.buttons {
 			display: flex;
 			width: 100%;
 
-			button{
+			button {
 				text-transform: uppercase;
 				color: currentColor;
 				text-align: center;
@@ -1692,14 +1723,14 @@ body{
 	}
 
 	/*Alert*/
-	.alertBox{
+	.alertBox {
 		position: fixed;
 		z-index: 9999;
 		width: 100%;
 		top: 64px;
 		left: 0;
 
-		.inner{
+		.inner {
 			padding: 18px 36px 18px 18px;
 			max-width: $pageMaxWidth;
 			box-shadow: $shadowBox3;
@@ -1712,28 +1743,28 @@ body{
 			display: flex;
 			width: 96%;
 
-			&.success{
+			&.success {
 				background-color: transparentize($blueColor, .1);
 			}
 
-			&.error{
+			&.error {
 				background-color: transparentize($redColor, .1);
 			}
 
-			&.warning{
+			&.warning {
 				background-color: transparentize($yellowColor, .1);
 			}
 
-			&.publishing{
-				background-color: transparentize($greenColor , .1);
+			&.publishing {
+				background-color: transparentize($greenColor, .1);
 			}
 
-			.text{
+			.text {
 				line-height: 18px;
 				width: 100%;
 			}
 
-			button{
+			button {
 				position: absolute;
 				color: $whiteColor;
 				background: none;
@@ -1746,18 +1777,18 @@ body{
 	}
 
 	/*Search box*/
-	.searchBox{
+	.searchBox {
 		box-sizing: border-box;
 		padding: 0 18px 12px;
 		float: left;
 		width: 100%;
 		margin: 0;
 
-		&.news{
+		&.news {
 			padding: 12px 6px;
 		}
 
-		.box{
+		.box {
 			background: transparentize($greyColor, .75);
 			box-sizing: border-box;
 			border-radius: 5px;
@@ -1765,24 +1796,24 @@ body{
 			width: 100%;
 			float: left;
 
-			.inner{
+			.inner {
 				background-color: transparent;
 				align-items: center;
 				display: flex;
 				width: 100%;
 				float: left;
 
-				i{
+				i {
 					margin: 0 6px;
 				}
 
-				button{
+				button {
 					line-height: 36px;
 					height: 36px;
 					width: 36px;
 				}
 
-				input{
+				input {
 					background: transparent;
 					box-sizing: border-box;
 					color: $fontBlackColor;
@@ -1792,19 +1823,19 @@ body{
 					padding: 0;
 				}
 
-				.chips{
+				.chips {
 					display: block;
 					width: 100%;
 
-					mat-chip-list{
+					mat-chip-list {
 						float: left;
 
-						.mat-chip-list-wrapper{
+						.mat-chip-list-wrapper {
 							align-items: inherit;
 							margin: 0;
 						}
 
-						mat-chip{
+						mat-chip {
 							background: $whiteColor;
 							display: inline-block;
 							margin: 6px 6px 0 0;
@@ -1816,7 +1847,7 @@ body{
 							height: 24px;
 							padding: 0;
 
-							.avatar{
+							.avatar {
 								border-radius: 50%;
 								overflow: hidden;
 								height: 18px;
@@ -1824,19 +1855,19 @@ body{
 								float: left;
 								margin: 3px;
 
-								img{
+								img {
 									height: 100%;
 									width: 100%;
 								}
 							}
 
-							.name{
+							.name {
 								float: left;
 							}
 						}
 					}
 
-					input{
+					input {
 						color: $whiteColor;
 						width: initial;
 						float: left;
@@ -1844,13 +1875,13 @@ body{
 				}
 			}
 
-			.advanced{
+			.advanced {
 				background: $whiteColor;
 				text-align: center;
 				width: 100%;
 				float: left;
 
-				mat-select{
+				mat-select {
 					box-sizing: border-box;
 					margin: 27px 0 -7px;
 					padding: 0 12px;
@@ -1860,18 +1891,18 @@ body{
 					width: 50%;
 					float: left;
 
-					.mat-select-trigger{
+					.mat-select-trigger {
 						font-size: 15px;
 						height: 24px;
 					}
 
-					.mat-select-placeholder.mat-floating-placeholder{
+					.mat-select-placeholder.mat-floating-placeholder {
 						top: -18px;
 						left: 0;
 					}
 				}
 
-				.buttons{
+				.buttons {
 					box-sizing: border-box;
 					text-align: right;
 					padding: 12px;
@@ -1883,17 +1914,17 @@ body{
 	}
 
 	/*Comments box*/
-	.boxComments{
+	.boxComments {
 		box-sizing: border-box;
 		padding: 0 0 0 18px;
 		width: 100%;
 		float: left;
 
-		.comments{
+		.comments {
 			width: 100%;
 			float: left;
 
-			.countComments{
+			.countComments {
 				padding: 4px 0 12px 0;
 				font-weight: bold;
 				font-size: 13px;
@@ -1901,7 +1932,7 @@ body{
 				float: left;
 			}
 
-			.new{
+			.new {
 				background: transparentize($greyColor, .75);
 				width: calc(100% - 6px);
 				box-sizing: border-box;
@@ -1912,7 +1943,7 @@ body{
 				padding: 6px;
 				float: left;
 
-				.avatar{
+				.avatar {
 					box-sizing: border-box;
 					border-radius: 50%;
 					overflow: hidden;
@@ -1921,19 +1952,19 @@ body{
 					height: 24px;
 					width: 24px;
 
-					img{
+					img {
 						height: 100%;
 						width: 100%;
 					}
 				}
 
-				.richComment{
+				.richComment {
 					width: calc(100% - 48px);
 					box-sizing: border-box;
 					position: relative;
 					min-height: 30px;
 
-					.highlights{
+					.highlights {
 						box-sizing: border-box;
 						display: inline-block;
 						word-wrap: break-word;
@@ -1945,12 +1976,12 @@ body{
 						overflow: hidden;
 						width: 100%;
 
-						.placeholder{
+						.placeholder {
 							color: $greyColor;
 						}
 					}
 
-					.origin{
+					.origin {
 						box-sizing: border-box;
 						display: inline-block;
 						word-wrap: break-word;
@@ -1963,12 +1994,12 @@ body{
 					}
 				}
 
-				.actions{
+				.actions {
 					margin: 3px 0;
 					height: 24px;
 					width: 24px;
 
-					button{
+					button {
 						background-color: transparent;
 						text-transform: uppercase;
 						justify-content: center;
@@ -1982,13 +2013,13 @@ body{
 				}
 			}
 
-			ul{
+			ul {
 				float: left;
 				width: 100%;
 				padding: 0;
 				margin: 0;
 
-				li{
+				li {
 					border: none !important;
 					box-sizing: border-box;
 					position: relative;
@@ -1997,14 +2028,14 @@ body{
 					padding: 0;
 					margin: 0;
 
-					.top{
+					.top {
 						box-sizing: border-box;
 						align-items: center;
 						display: flex;
 						width: 100%;
 						padding: 0;
 
-						.avatar{
+						.avatar {
 							box-sizing: border-box;
 							border-radius: 50%;
 							overflow: hidden;
@@ -2012,22 +2043,22 @@ body{
 							height: 24px;
 							width: 24px;
 
-							img{
+							img {
 								height: 100%;
 								width: 100%;
 							}
 						}
 
-						.actions{
+						.actions {
 							margin: 0 0 0 8px;
 
-							button{
+							button {
 								border-radius: 50% !important;
 							}
 						}
 					}
 
-					.bottom{
+					.bottom {
 						box-sizing: border-box;
 						padding: 0 24px 0 36px;
 						word-break: break-all;
@@ -2036,7 +2067,7 @@ body{
 						width: 100%;
 					}
 
-					&.remove{
+					&.remove {
 						filter: grayscale(100%);
 						opacity: .5;
 					}
@@ -2045,22 +2076,22 @@ body{
 		}
 
 		.noData,
-		.loadingData{
+		.loadingData {
 			text-transform: uppercase;
 			color: $greyColor;
 			padding: 12px 0;
 			font-size: 13px;
 		}
 
-		.loadMore{
+		.loadMore {
 			margin: 0;
 		}
 
-		.loadComments{
+		.loadComments {
 			text-align: center;
 			width: 100%;
 
-			button{
+			button {
 				background-color: $blackColor;
 				color: $whiteColor;
 			}
@@ -2068,7 +2099,7 @@ body{
 	}
 
 	/*Buttons (photos & publications) & Likers*/
-	.analytics{
+	.analytics {
 		box-sizing: border-box;
 		position: relative;
 		padding: 0 9px;
@@ -2076,33 +2107,33 @@ body{
 		width: 100%;
 		float: left;
 
-		.buttonBox{
+		.buttonBox {
 			font-weight: bold;
 			line-height: 40px;
 			display: flex;
 			float: left;
 
-			button{
+			button {
 				transition: .2s;
 
-				&:active{
+				&:active {
 					transform: scale(.8);
 				}
 
-				span{
+				span {
 					margin: 6px auto;
 					display: flex;
 					width: 24px;
 				}
 			}
 
-			&.bookmark{
+			&.bookmark {
 				position: absolute;
 				right: 0;
 			}
 		}
 
-		.likers{
+		.likers {
 			text-overflow: ellipsis;
 			box-sizing: border-box;
 			padding: 0 48px 0 12px;
@@ -2117,17 +2148,17 @@ body{
 	}
 
 	/*Upload files*/
-	.uploadFilesBox{
+	.uploadFilesBox {
 		box-sizing: border-box;
 		width: 100%;
 		float: left;
 
-		.button{
+		.button {
 			box-sizing: border-box;
 			padding: 0 18px 12px;
 			width: 100%;
 
-			button{
+			button {
 				border-radius: 12px !important;
 				background: $blackColor;
 				text-transform: inherit;
@@ -2136,10 +2167,10 @@ body{
 				display: flex;
 				width: 100%;
 
-				span{
+				span {
 					margin: auto;
 
-					.left{
+					.left {
 						border-right: 1px solid $greyColor;
 						justify-content: center;
 						padding: 0px 6px 0 0;
@@ -2150,23 +2181,23 @@ body{
 						float: left;
 					}
 
-					.right{
+					.right {
 						padding: 4px 0 0 12px;
 						text-align: left;
 						float: left;
 
-						.top{
+						.top {
 							text-transform: uppercase;
 							font-weight: bold;
 							line-height: 15px;
 							font-size: 15px;
 
-							&.warning{
+							&.warning {
 								color: $redColor;
 							}
 						}
 
-						.bottom{
+						.bottom {
 							color: $greyColor;
 							line-height: 10px;
 							padding: 2px 0 0;
@@ -2177,29 +2208,29 @@ body{
 			}
 		}
 
-		.info{
+		.info {
 			box-sizing: border-box;
 			padding: 6px 18px;
 			width: 100%;
 
-			.title{
+			.title {
 				font-weight: bold;
 				font-size: 18px;
 			}
 
-			.subtitle{
+			.subtitle {
 				color: $greyColor;
 				font-size: 13px;
 			}
 		}
 
-		ul.tracks{
-			li{
-				.inner{
+		ul.tracks {
+			li {
+				.inner {
 					padding: 2px 6px 2px 18px;
 
-					.text{
-						.duration{
+					.text {
+						.duration {
 							padding: 0 12px 0 0;
 						}
 					}
@@ -2207,7 +2238,7 @@ body{
 			}
 		}
 
-		.buttons{
+		.buttons {
 			box-sizing: border-box;
 			padding: 0 12px;
 			display: flex;
@@ -2215,36 +2246,36 @@ body{
 			width: 100%;
 			margin: 0;
 
-			.group{
+			.group {
 				padding: 12px 0;
 				display: flex;
 				width: 100%;
 			}
 
-			button{
+			button {
 				background: $blackColor;
 				color: $whiteColor;
 				margin: 0 6px 12px;
 				line-height: 32px;
 				width: 100%;
 
-				&:last-child{
+				&:last-child {
 					background: $blueColor;
 				}
 			}
 		}
 
-		&.audios{
-    		padding: 12px 0 0;
+		&.audios {
+			padding: 12px 0 0;
 			margin: 12px 0;
 			background: repeating-linear-gradient(-45deg,
-													transparent,
-													transparent 6px,
-													transparentize($greyColor, .85) 6px,
-													transparentize($greyColor, .85) 12px);
+					transparent,
+					transparent 6px,
+					transparentize($greyColor, .85) 6px,
+					transparentize($greyColor, .85) 12px);
 
-			.info{
-				.title{
+			.info {
+				.title {
 					font-size: 24px;
 				}
 			}
@@ -2252,7 +2283,7 @@ body{
 	}
 
 	/*No data*/
-	.noData{
+	.noData {
 		box-sizing: border-box;
 		padding: 96px 48px;
 		text-align: center;
@@ -2260,35 +2291,35 @@ body{
 		float: left;
 		width: 100%;
 
-		.image{
+		.image {
 			padding: 0 0 24px;
 		}
 
-		.description{
-	    text-transform: uppercase;
-	    font-weight: bold;
+		.description {
+			text-transform: uppercase;
+			font-weight: bold;
 			font-size: 13px;
 		}
 	}
 
 	/*Loading data*/
-	.loadingData{
+	.loadingData {
 		box-sizing: border-box;
 		text-align: center;
 		padding: 118px 0;
 		width: 100%;
 		float: left;
 
-		mat-progress-spinner{
+		mat-progress-spinner {
 			height: 36px !important;
 			width: 36px !important;
 			margin: 0 auto;
 
-			svg{
+			svg {
 				height: 36px !important;
 				width: 36px !important;
 
-				circle{
+				circle {
 					stroke: $blueColor !important;
 				}
 			}
@@ -2296,14 +2327,14 @@ body{
 	}
 
 	/*Load more*/
-	.loadMore{
+	.loadMore {
 		box-sizing: border-box;
 		text-align: center;
 		margin: 24px 0;
 		width: 100%;
 		float: left;
 
-		button{
+		button {
 			background-color: transparent !important;
 			border: 1px solid $fontBlackColor;
 			border-radius: 50% !important;
@@ -2313,22 +2344,22 @@ body{
 			height: 48px;
 			width: 48px;
 
-			i{
+			i {
 				background-color: $fontBlackColor;
 				margin: 11px;
 			}
 		}
 
-		mat-progress-spinner{
+		mat-progress-spinner {
 			height: 52px !important;
 			width: 52px !important;
 			margin: 0 auto;
 
-			svg{
+			svg {
 				height: 52px !important;
 				width: 52px !important;
 
-				circle{
+				circle {
 					stroke-width: 3px !important;
 					stroke: currentColor;
 				}
@@ -2337,14 +2368,14 @@ body{
 	}
 
 	/*Home page*/
-	.pageHomeBox{
+	.pageHomeBox {
 		position: absolute;
 		height: 100%;
 		width: 100%;
 		left: 0;
 		top: 0;
 
-		.left{
+		.left {
 			background-color: $greyColor;
 			justify-content: center;
 			align-items: center;
@@ -2355,7 +2386,7 @@ body{
 			float: left;
 			width: 50%;
 
-			.text{
+			.text {
 				box-sizing: border-box;
 				color: $blackColor;
 				font-weight: bold;
@@ -2365,22 +2396,22 @@ body{
 				padding: 0 24px;
 				font-size: 48px;
 
-				.counter{
+				.counter {
 					text-transform: uppercase;
 					display: initial;
 
-					* + *{
+					*+* {
 						margin-top: 0;
 					}
-					
-					.digit-con{
+
+					.digit-con {
 						display: inline-block;
 						vertical-align: top;
 						overflow: hidden;
 						height: 58px;
 						line-height: 58px;
 
-						span{
+						span {
 							position: relative;
 							text-align: center;
 							display: block;
@@ -2392,7 +2423,7 @@ body{
 				}
 			}
 
-			.footer{
+			.footer {
 				justify-content: center;
 				color: $whiteColor;
 				position: absolute;
@@ -2403,12 +2434,12 @@ body{
 				width: 100%;
 				bottom: 0;
 
-				.copyright{
+				.copyright {
 					padding: 0 6px;
 					float: left;
 				}
 
-				.divider{
+				.divider {
 					background-color: transparentize($whiteColor, .5);
 					margin: 0 6px;
 					height: 28px;
@@ -2416,21 +2447,21 @@ body{
 					width: 1px;
 				}
 
-				ul{
+				ul {
 					float: left;
 					padding: 0;
 					margin: 0;
 
-					li{
+					li {
 						display: inline-block;
 						font-weight: bold;
 						list-style: none;
 						padding: 0 6px;
 
-						a{
+						a {
 							color: $whiteColor;
 
-							&:hover{
+							&:hover {
 								text-decoration: underline;
 								color: $whiteColor !important;
 							}
@@ -2440,7 +2471,7 @@ body{
 			}
 		}
 
-		.right{
+		.right {
 			background-color: $blackColor;
 			justify-content: center;
 			align-items: center;
@@ -2452,14 +2483,14 @@ body{
 			float: left;
 			width: 50%;
 
-			.inner{
+			.inner {
 				width: 360px;
 
-				.logo{
+				.logo {
 					text-align: center;
 					padding: 36px 0;
 
-					.image{
+					.image {
 						mask-size: 48px calc(48px * 15);
 						background-color: $whiteColor;
 						mask-image: $spriteImages;
@@ -2471,14 +2502,14 @@ body{
 					}
 				}
 
-				.form{
+				.form {
 					box-sizing: border-box;
 					padding: 0 18px;
 					width: 100%;
 					float: left;
 					margin: 0;
 
-					.error{
+					.error {
 						background-color: $redColor;
 						box-sizing: border-box;
 						text-align: center;
@@ -2492,7 +2523,7 @@ body{
 						float: left;
 					}
 
-					.buttons{
+					.buttons {
 						text-align: center;
 						font-weight: bold;
 						margin: 24px 0 0;
@@ -2500,7 +2531,7 @@ body{
 						width: 100%;
 						float: left;
 
-						button{
+						button {
 							background: $blueColor;
 							color: $whiteColor;
 							height: 32px;
@@ -2508,42 +2539,42 @@ body{
 							font-size: 12px;
 							font-weight: bold;
 
-							mat-progress-spinner{
+							mat-progress-spinner {
 								height: 16px !important;
 								width: 16px !important;
 								margin: 8px 6px 0 0;
 								float: left;
 
-								svg{
+								svg {
 									height: 16px !important;
 									width: 16px !important;
 
-									circle{
+									circle {
 										stroke: $whiteColor !important;
 									}
 								}
 							}
 						}
 
-						.forgot{
+						.forgot {
 							margin: 24px auto 0;
 							width: 100%;
 							float: left;
 
-							a{
+							a {
 								border-radius: 5px;
 								line-height: 18px;
 								color: $greyColor;
 								font-weight: bold;
 								padding: 8px 12px;
 
-								&:hover{
+								&:hover {
 									background-color: transparentize($blueColor, .85);
 								}
 							}
 						}
 
-						.create{
+						.create {
 							background: $greyColor;
 							box-sizing: border-box;
 							border-radius: 10px;
@@ -2554,24 +2585,24 @@ body{
 							width: 100%;
 							float: left;
 
-							a{
+							a {
 								color: $whiteColor;
 								font-weight: bold;
 
-								&:hover{
+								&:hover {
 									color: $whiteColor !important;
 									text-decoration: underline;
 								}
 							}
 
-							&:hover a{
+							&:hover a {
 								text-decoration: underline;
 							}
 						}
 					}
 				}
 
-				.footer{
+				.footer {
 					color: $whiteColor;
 					text-align: center;
 					line-height: 24px;
@@ -2580,23 +2611,23 @@ body{
 					width: 100%;
 					float: left;
 
-					ul{
+					ul {
 						margin: 36px 0 0;
 						display: none;
 						width: 100%;
 						float: left;
 						padding: 0;
 
-						li{
+						li {
 							display: inline-block;
 							font-weight: bold;
 							list-style: none;
 							padding: 0 6px;
 
-							a{
+							a {
 								color: $whiteColor;
 
-								&:hover{
+								&:hover {
 									text-decoration: underline;
 									color: $whiteColor !important;
 								}
@@ -2604,14 +2635,14 @@ body{
 						}
 					}
 
-					.copyright{
+					.copyright {
 						color: transparentize($whiteColor, .5);
 						display: none;
 						width: 100%;
 						float: left;
 					}
 
-					.lang{
+					.lang {
 						justify-content: center;
 						padding: 6px 0 0;
 						cursor: pointer;
@@ -2619,7 +2650,7 @@ body{
 						width: 100%;
 						float: left;
 
-						button{
+						button {
 							text-transform: capitalize;
 							background: $whiteColor;
 							color: $fontBlackColor;
@@ -2630,7 +2661,7 @@ body{
 							height: 32px;
 							font-size: 12px;
 
-							i{
+							i {
 								margin: 0 -6px 0 0;
 							}
 						}
@@ -2639,54 +2670,59 @@ body{
 			}
 		}
 
-		&.yellow{
+		&.yellow {
+
 			.left,
-			.right .inner .form .buttons .create{
+			.right .inner .form .buttons .create {
 				background-color: #FFD200;
 				background-image: linear-gradient(to right, #FFD200, #F7971E);
 			}
 		}
 
-		&.purple{
+		&.purple {
+
 			.left,
-			.right .inner .form .buttons .create{
+			.right .inner .form .buttons .create {
 				background-color: #B721FF;
 				background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
 			}
 		}
 
-		&.blue{
+		&.blue {
+
 			.left,
-			.right .inner .form .buttons .create{
+			.right .inner .form .buttons .create {
 				background-color: #1FA2FF;
 				background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
 			}
 		}
 
-		&.red{
+		&.red {
+
 			.left,
-			.right .inner .form .buttons .create{
+			.right .inner .form .buttons .create {
 				background-color: #b31217;
 				background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
 			}
 		}
 
-		&.green{
+		&.green {
+
 			.left,
-			.right .inner .form .buttons .create{
+			.right .inner .form .buttons .create {
 				background-color: #3CD500;
-				background-image: linear-gradient( 135deg, #FFF720 10%, #3CD500 100%);
+				background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
 
 			}
 		}
 	}
 
 	/*Page loading*/
-	.pageLoading{
+	.pageLoading {
 		padding: calc(50vh - 24px) 0;
 		text-align: center;
 
-		.logo{
+		.logo {
 			animation: heartbeat .6s infinite alternate;
 			mask-size: 48px calc(48px * 15);
 			background-color: $greyColor;
@@ -2700,12 +2736,12 @@ body{
 	}
 
 	/*Bottom nav bar*/
-	.bottomNav{
+	.bottomNav {
 		display: none;
 	}
 
 	/*Cookies*/
-	.cookiesBox{
+	.cookiesBox {
 		background-color: $whiteColor;
 		max-width: calc(50% - 32px);
 		box-shadow: $shadowBox1;
@@ -2717,23 +2753,23 @@ body{
 		bottom: 0;
 		left: 0;
 
-		.inner{
+		.inner {
 			padding: 42px 24px 48px;
 			box-sizing: border-box;
 			width: 100%;
 
-			.close{
+			.close {
 				margin: 10px 10px 0 0;
 				position: absolute;
 				right: 0;
 				top: 0;
 
-				i{
+				i {
 					background-color: $greyColor;
 				}
 			}
 
-			.title{
+			.title {
 				text-transform: uppercase;
 				box-sizing: border-box;
 				padding: 0 18px 12px 0;
@@ -2741,36 +2777,36 @@ body{
 				text-align: left;
 				font-size: 18px;
 				width: 100%;
-			}		
+			}
 
-			.text{
+			.text {
 				word-break: break-word;
 				box-sizing: border-box;
 				padding: 0 18px 0 0;
 				width: 100%;
 
-				a{
+				a {
 					text-decoration: underline;
 					color: currentColor;
 				}
 			}
 		}
 
-		&.home{
+		&.home {
 			background-color: $darkThemeColor;
 			margin: 0 0 16px 16px;
 			color: $whiteColor;
 		}
 
-		&.web{
+		&.web {
 			margin: 0 0 16px 16px;
 		}
 	}
 
 	/*Swiper*/
-	swiper{
-		.swiper-wrapper{
-			.slide{
+	swiper {
+		.swiper-wrapper {
+			.slide {
 				box-sizing: border-box;
 				position: relative;
 				max-height: 600px;
@@ -2780,12 +2816,12 @@ body{
 				float: left;
 				width: 100%;
 
-				.image{
+				.image {
 					position: absolute;
 					height: 100%;
 					width: 100%;
 
-					.img{
+					.img {
 						background-position: center 35%;
 						background-repeat: no-repeat;
 						transform: translate(0px);
@@ -2796,7 +2832,7 @@ body{
 						width: 100%;
 					}
 
-					video{
+					video {
 						background-position: center 35%;
 						background-repeat: no-repeat;
 						max-height: 100% !important;
@@ -2811,10 +2847,10 @@ body{
 			}
 		}
 
-		.swiper-pagination{
+		.swiper-pagination {
 			margin: 0 0 6px;
 
-			.swiper-pagination-bullet{
+			.swiper-pagination-bullet {
 				background-color: $whiteColor !important;
 				height: 6px;
 				width: 6px;
@@ -2822,7 +2858,7 @@ body{
 		}
 
 		.swiperPrev,
-		.swiperNext{
+		.swiperNext {
 			border-radius: 0 5px 5px 0;
 			position: absolute;
 			cursor: pointer;
@@ -2832,9 +2868,9 @@ body{
 			z-index: 1;
 			top: 0;
 
-			i{
+			i {
 				background-color: transparentize($whiteColor, .25);
-				filter: drop-shadow(0px 4px 2px rgba(0,0,0,.5));
+				filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, .5));
 				margin: auto auto auto 6px;
 				position: absolute;
 				bottom: 0;
@@ -2844,35 +2880,35 @@ body{
 			}
 		}
 
-		.swiperNext{
+		.swiperNext {
 			border-radius: 5px 0 0 5px;
 			right: 0;
 
-			i{
+			i {
 				margin: auto 6px auto auto;
 			}
 		}
 	}
 
 	/*Modal box*/
-	mat-dialog-container{
+	mat-dialog-container {
 		background: $whiteColor !important;
 		overflow-x: hidden !important;
 		border-radius: 0 !important;
 		padding: 0 !important;
 
 		.mat-dialog-title,
-		.mat-dialog-actions{
+		.mat-dialog-actions {
 			margin: 0 !important;
 		}
 
-		.mat-dialog-content{
+		.mat-dialog-content {
 			box-sizing: border-box;
 			padding: 0;
 			margin: 0;
 		}
 
-		.dialogBox{
+		.dialogBox {
 			position: relative;
 			color: $blackColor;
 			overflow-x: hidden;
@@ -2882,11 +2918,11 @@ body{
 			width: 100%;
 			float: left;
 
-			a{
+			a {
 				color: $blackColor;
 			}
 
-			.header{
+			.header {
 				border-bottom: 1px solid transparentize($greyColor, .75);
 				justify-content: space-between;
 				position: relative;
@@ -2895,24 +2931,24 @@ body{
 				height: 56px;
 				width: 100%;
 
-				.left{
+				.left {
 					overflow: hidden;
 					display: flex;
 					width: 100%;
 
-					button{
+					button {
 						border-radius: 50% !important;
 						height: 40px;
 						width: 40px;
 						margin: 8px 6px;
 
-						span{
+						span {
 							justify-content: center;
 							display: flex;
 						}
 					}
 
-					.text{
+					.text {
 						width: calc(100% - 56px);
 						text-overflow: ellipsis;
 						box-sizing: border-box;
@@ -2924,14 +2960,14 @@ body{
 					}
 				}
 
-				.right{
+				.right {
 					display: none;
 
-					&.createPublication{
+					&.createPublication {
 						display: block;
 					}
 
-					button{
+					button {
 						text-overflow: ellipsis;
 						background: transparent;
 						box-sizing: border-box;
@@ -2945,42 +2981,42 @@ body{
 						padding: 0 8px;
 						height: 32px;
 
-						mat-progress-spinner{
+						mat-progress-spinner {
 							height: 16px !important;
 							width: 16px !important;
 							margin: 6px 6px 0 0;
 							float: left;
 
-							svg{
+							svg {
 								height: 16px !important;
 								width: 16px !important;
 
-								circle{
+								circle {
 									stroke: $blueColor !important;
 								}
 							}
 						}
 
-						&[disabled]{
+						&[disabled] {
 							color: transparentize($greyColor, .25) !important;
 						}
 
-						&.info{
+						&.info {
 							border: none;
 						}
 					}
 				}
 
-				&.mobile{
+				&.mobile {
 					display: none;
 				}
 			}
 
-			.container{
+			.container {
 				width: 666px;
 			}
 
-			.buttons{
+			.buttons {
 				justify-content: flex-end;
 				box-sizing: border-box;
 				align-items: center;
@@ -2990,7 +3026,7 @@ body{
 				display: flex;
 				width: 100%;
 
-				button{
+				button {
 					background: $blackColor;
 					color: $whiteColor;
 					font-weight: bold;
@@ -3002,31 +3038,31 @@ body{
 					min-width: 0;
 					height: 28px;
 
-					mat-progress-spinner{
+					mat-progress-spinner {
 						height: 16px !important;
 						width: 16px !important;
 						margin: 6px 6px 0 0;
 						float: left;
 
-						svg{
+						svg {
 							height: 16px !important;
 							width: 16px !important;
 
-							circle{
+							circle {
 								stroke: $whiteColor !important;
 							}
 						}
 					}
 
-					&[disabled]{
+					&[disabled] {
 						background-color: $greyColor;
 					}
 				}
 
-				&.chat{
+				&.chat {
 					width: 100%;
 
-					.new{
+					.new {
 						background: transparentize($greyColor, .75);
 						box-sizing: border-box;
 						position: relative;
@@ -3037,7 +3073,7 @@ body{
 						width: 100%;
 						float: left;
 
-						.avatar{
+						.avatar {
 							box-sizing: border-box;
 							border-radius: 50%;
 							overflow: hidden;
@@ -3046,19 +3082,19 @@ body{
 							height: 24px;
 							width: 24px;
 
-							img{
+							img {
 								height: 100%;
 								width: 100%;
 							}
 						}
 
-						.richComment{
+						.richComment {
 							width: calc(100% - 48px);
 							box-sizing: border-box;
 							position: relative;
 							min-height: 30px;
 
-							.highlights{
+							.highlights {
 								box-sizing: border-box;
 								display: inline-block;
 								word-wrap: break-word;
@@ -3070,12 +3106,12 @@ body{
 								overflow: hidden;
 								width: 100%;
 
-								.placeholder{
+								.placeholder {
 									color: $greyColor;
 								}
 							}
 
-							.origin{
+							.origin {
 								box-sizing: border-box;
 								display: inline-block;
 								word-wrap: break-word;
@@ -3088,12 +3124,12 @@ body{
 							}
 						}
 
-						.actions{
+						.actions {
 							margin: 3px 0;
 							height: 24px;
 							width: 24px;
 
-							button{
+							button {
 								background-color: transparent;
 								text-transform: uppercase;
 								justify-content: center;
@@ -3108,89 +3144,89 @@ body{
 					}
 				}
 
-				&.post{
+				&.post {
 					justify-content: space-between;
 
-					.files{
+					.files {
 						margin: 0 0 0 -6px;
 						display: flex;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background-color: transparent;
 							height: 36px;
 							width: 36px;
 							margin: 0;
 
-							span{
+							span {
 								justify-content: center;
 								align-items: center;
 								display: flex;
 								width: 100%;
 
-								i{
+								i {
 									background-color: $blackColor;
 								}
 							}
 						}
 					}
 
-					.actions{
+					.actions {
 						display: block;
 					}
 				}
 			}
 
-			.loadMore{
-				button{
+			.loadMore {
+				button {
 					border: 1px solid $blackColor;
 
-					i{
+					i {
 						background-color: $blackColor;
 					}
 				}
 
-				mat-progress-spinner{
-					svg{
-						circle{
+				mat-progress-spinner {
+					svg {
+						circle {
 							stroke: $blackColor;
 						}
 					}
 				}
 			}
 
-			.noData{
+			.noData {
 				padding: 48px 48px 96px;
 			}
 
 			/*cropper*/
-			.bodyCreateAvatar{
-				.container{
+			.bodyCreateAvatar {
+				.container {
 					width: 666px;
 
-					.image{
+					.image {
 						max-height: 480px;
 						min-height: 240px;
 						max-width: 640px;
 						margin: 0 auto;
 						width: 100%;
 
-						img{
+						img {
 							max-height: 100%;
 							max-width: 100%;
 						}
 
-						.cropper-container{
+						.cropper-container {
 							margin: 0 auto;
 						}
 					}
 
-					.panel{
+					.panel {
 						justify-content: center;
 						display: flex;
 						width: 100%;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background-color: transparent;
 							max-width: 36px;
@@ -3201,7 +3237,7 @@ body{
 							width: 36px;
 							padding: 0;
 
-							i{
+							i {
 								background-color: $blackColor;
 							}
 						}
@@ -3210,21 +3246,21 @@ body{
 			}
 
 			/*create publication*/
-			.bodyCreatePublication{
-				.container{
+			.bodyCreatePublication {
+				.container {
 					width: 666px;
 
-					.form{
+					.form {
 						box-sizing: border-box;
 						width: 100%;
 						float: left;
 
-						.richPublication{
+						.richPublication {
 							box-sizing: border-box;
 							position: relative;
 							width: 100%;
 
-							.highlights{
+							.highlights {
 								box-sizing: border-box;
 								display: inline-block;
 								word-wrap: break-word;
@@ -3236,12 +3272,12 @@ body{
 								overflow: hidden;
 								width: 100%;
 
-								.placeholder{
+								.placeholder {
 									color: $greyColor;
 								}
 							}
 
-							.origin{
+							.origin {
 								box-sizing: border-box;
 								display: inline-block;
 								word-wrap: break-word;
@@ -3254,7 +3290,7 @@ body{
 							}
 						}
 
-						.searchBoxMentions{
+						.searchBoxMentions {
 							background-color: $whiteColor;
 							box-shadow: $shadowBox2;
 							margin: 10px 0 0 18px;
@@ -3263,13 +3299,13 @@ body{
 							width: 240px;
 							z-index: 9;
 
-							ul{
+							ul {
 								padding: 4px 0;
 								float: left;
 								width: 100%;
 								margin: 0;
 
-								li{
+								li {
 									box-sizing: border-box;
 									position: relative;
 									padding: 4px 12px;
@@ -3279,12 +3315,12 @@ body{
 									width: 100%;
 									margin: 0;
 
-									&:hover{
+									&:hover {
 										background: transparentize($blueColor, .85);
 										cursor: pointer;
 									}
 
-									.avatar{
+									.avatar {
 										box-sizing: border-box;
 										border-radius: 50%;
 										overflow: hidden;
@@ -3293,13 +3329,13 @@ body{
 										width: 36px;
 										margin: 0;
 
-										img{
+										img {
 											height: 100%;
 											width: 100%;
 										}
 									}
 
-									.text{
+									.text {
 										text-overflow: ellipsis;
 										box-sizing: border-box;
 										word-break: break-all;
@@ -3311,14 +3347,14 @@ body{
 										width: 100%;
 
 										.username,
-										.name{
+										.name {
 											line-height: 18px;
 											font-size: 14px;
 											height: 18px;
 											padding: 0;
 										}
 
-										.name{
+										.name {
 											color: $greyColor;
 											font-size: 12px;
 										}
@@ -3328,15 +3364,15 @@ body{
 						}
 					}
 
-					.uploadFilesBox{
+					.uploadFilesBox {
 						margin: 12px 0 0;
 					}
 
-					.filesBox{
+					.filesBox {
 						width: 100%;
 						float: left;
 
-						.counter{
+						.counter {
 							background-color: $blackColor;
 							color: $whiteColor;
 							border-radius: 3px;
@@ -3346,24 +3382,24 @@ body{
 							font-size: 12px;
 							float: left;
 
-							&.warning{
+							&.warning {
 								background-color: $redColor;
 							}
 						}
 					}
 
-					.searchBox{
+					.searchBox {
 						padding: 12px 18px;
 					}
 
-					ul.photos{
+					ul.photos {
 						box-sizing: border-box;
 						padding: 0 18px 12px;
 						float: left;
 						width: 100%;
 						margin: 0;
 
-						li{
+						li {
 							background-color: $greyColor;
 							box-sizing: border-box;
 							margin: 0 .5% .5% 0;
@@ -3376,17 +3412,17 @@ body{
 							float: left;
 							width: 33%;
 
-							&:nth-child(3n+3){
+							&:nth-child(3n+3) {
 								margin: 0;
 							}
 
-							.image{
+							.image {
 								position: absolute;
 								height: 100%;
 								width: 100%;
 
 								.img,
-								.vid{
+								.vid {
 									background-position: center 35%;
 									background-repeat: no-repeat;
 									transform: translate(0px);
@@ -3396,14 +3432,14 @@ body{
 									height: 100%;
 									width: 100%;
 
-									video{
+									video {
 										height: 100%;
-										width: 100%;							
+										width: 100%;
 									}
 								}
 							}
 
-							.category{
+							.category {
 								flex-direction: row-reverse;
 								box-sizing: border-box;
 								color: currentColor;
@@ -3415,12 +3451,12 @@ body{
 								bottom: 0;
 								right: 0;
 
-								i{
+								i {
 									background-color: $whiteColor;
 									margin: 0 4px;
 								}
 
-								.size{
+								.size {
 									background-color: $redColor;
 									box-shadow: $shadowBox2;
 									border-radius: 3px;
@@ -3436,7 +3472,7 @@ body{
 								}
 							}
 
-							.status{
+							.status {
 								box-sizing: border-box;
 								text-align: center;
 								position: absolute;
@@ -3446,7 +3482,7 @@ body{
 								left: 50%;
 								top: 50%;
 
-								button{
+								button {
 									border-radius: 50% !important;
 									border: 2px solid $whiteColor;
 									background-color: transparent;
@@ -3456,17 +3492,17 @@ body{
 									width: 36px;
 									margin: 6px;
 
-									span{
+									span {
 										display: flex;
-										
-										i{
+
+										i {
 											background-color: $whiteColor;
 											margin: 4px;
 										}
 									}
 								}
 
-								.progress{
+								.progress {
 									background-color: transparentize($fontBlackColor, .75);
 									border-radius: 50%;
 									position: relative;
@@ -3474,23 +3510,23 @@ body{
 									width: 36px;
 									margin: 6px;
 
-									mat-progress-spinner{
+									mat-progress-spinner {
 										height: 36px !important;
 										width: 36px !important;
 
-										svg{
+										svg {
 											filter: drop-shadow($shadowText1);
 											height: 36px !important;
 											width: 36px !important;
 
-											circle{
+											circle {
 												stroke: $whiteColor !important;
 												stroke-width: 5px !important;
 											}
 										}
 									}
 
-									.value{
+									.value {
 										text-shadow: $shadowText1;
 										position: absolute;
 										text-align: center;
@@ -3505,9 +3541,9 @@ body{
 						}
 					}
 
-					ul.tracks{
-						li{
-							.inner{
+					ul.tracks {
+						li {
+							.inner {
 								padding: 2px 6px 2px 18px;
 							}
 						}
@@ -3516,25 +3552,25 @@ body{
 			}
 
 			/*show playlist*/
-			.bodyPlaylist{
-				.container{
+			.bodyPlaylist {
+				.container {
 					padding: 0 0 12px;
 					float: left;
 				}
 			}
 
 			/*chat*/
-			.bodyMessage{
-				.container{
+			.bodyMessage {
+				.container {
 					overflow-x: hidden;
 
-					ul.conversationList{
+					ul.conversationList {
 						padding: 12px 0;
 						float: left;
 						width: 100%;
 						margin: 0;
 
-						li{
+						li {
 							box-sizing: border-box;
 							position: relative;
 							list-style: none;
@@ -3544,16 +3580,16 @@ body{
 							width: 100%;
 							padding: 0;
 
-							.box{
+							.box {
 								padding: 0 18px;
 								max-width: 60%;
 
-								.top{
+								.top {
 									padding: 4px 6px 4px 0;
 									display: flex;
 									width: 100%;
 
-									.avatar{
+									.avatar {
 										box-sizing: border-box;
 										border-radius: 50%;
 										overflow: hidden;
@@ -3562,18 +3598,18 @@ body{
 										width: 14px;
 										margin: 0;
 
-										img{
+										img {
 											height: 100%;
 											width: 100%;
 										}
 									}
 
-									.name{
+									.name {
 										padding: 0 0 0 6px;
 										line-height: 18px;
 										height: 18px;
 
-										.username{
+										.username {
 											text-overflow: ellipsis;
 											word-break: break-all;
 											white-space: nowrap;
@@ -3586,7 +3622,7 @@ body{
 									}
 								}
 
-								.bottom{
+								.bottom {
 									border: 1px solid transparentize($greyColor, .5);
 									display: inline-block;
 									border-radius: 24px;
@@ -3595,17 +3631,17 @@ body{
 									margin: 4px 0 0;
 									width: 100%;
 
-									.innerContent{
+									.innerContent {
 										max-width: 100%;
 										display: flex;
 
-										.text{
+										.text {
 											box-sizing: border-box;
 											display: flex;
 											width: 100%;
 											float: left;
 
-											.content{
+											.content {
 												box-sizing: border-box;
 												word-break: break-word;
 												white-space: pre-line;
@@ -3615,7 +3651,7 @@ body{
 											}
 										}
 
-										.actions{
+										.actions {
 											position: absolute;
 											display: none;
 											height: 36px;
@@ -3623,7 +3659,7 @@ body{
 											margin: 0;
 											right: 0;
 
-											button{
+											button {
 												border-radius: 50% !important;
 												height: 36px !important;
 												width: 36px !important;
@@ -3632,10 +3668,10 @@ body{
 												display: flex;
 												margin: 0;
 
-												span{
+												span {
 													display: inherit;
 
-													i{
+													i {
 														margin: 0;
 													}
 												}
@@ -3643,7 +3679,7 @@ body{
 										}
 									}
 
-									.date{
+									.date {
 										box-sizing: border-box;
 										padding: 6px 12px;
 										color: $greyColor;
@@ -3651,34 +3687,34 @@ body{
 										max-width: 100%;
 									}
 
-									&.remove{
+									&.remove {
 										filter: grayscale(100%);
 										opacity: .5;
 									}
 								}
 							}
 
-							&.me{
+							&.me {
 								flex-direction: row-reverse;
 
-								.box{
-									.top{
+								.box {
+									.top {
 										justify-content: flex-end;
 									}
 
-									.bottom{
+									.bottom {
 										background: transparentize($greyColor, .75);
 										border-color: transparent;
 
-										.innerContent{
-											.text{
-												.content{
+										.innerContent {
+											.text {
+												.content {
 													padding: 12px 36px 0 12px;
 												}
 											}
 										}
 
-										.actions{
+										.actions {
 											display: block;
 										}
 									}
@@ -3687,13 +3723,13 @@ body{
 						}
 					}
 
-					ul.usersList{
+					ul.usersList {
 						float: left;
 						width: 100%;
 						padding: 0;
 						margin: 0;
 
-						li{
+						li {
 							box-sizing: border-box;
 							position: relative;
 							padding: 4px 18px;
@@ -3703,7 +3739,7 @@ body{
 							float: left;
 							width: 100%;
 
-							.avatar{
+							.avatar {
 								box-sizing: border-box;
 								border-radius: 50%;
 								overflow: hidden;
@@ -3712,20 +3748,20 @@ body{
 								height: 40px;
 								width: 40px;
 
-								img{
+								img {
 									height: 100%;
 									width: 100%;
 								}
 							}
 
-							.avatarsGroup{
+							.avatarsGroup {
 								min-width: 40px;
 								margin: 4px 0;
 								height: 40px;
 								width: 40px;
 
-								&.group{
-									.avatar{
+								&.group {
+									.avatar {
 										border: 2px solid $blackColor;
 										margin: 2px 0 0 6px;
 										position: absolute;
@@ -3734,7 +3770,7 @@ body{
 										width: 36px;
 										z-index: 2;
 
-										&:last-child{
+										&:last-child {
 											min-width: 32px;
 											margin: 4px 0;
 											border: none;
@@ -3743,19 +3779,19 @@ body{
 											z-index: 1;
 										}
 
-										&:hover{
+										&:hover {
 											color: inherit;
 										}
 									}
 								}
 							}
 
-							.text{
+							.text {
 								box-sizing: border-box;
 								padding: 6px 12px;
 								width: 100%;
 
-								.username{
+								.username {
 									word-break: break-all;
 									position: relative;
 									font-weight: bold;
@@ -3763,7 +3799,7 @@ body{
 									height: 18px;
 								}
 
-								.name{
+								.name {
 									word-break: break-word;
 									color: $greyColor;
 									padding: 2px 0 0;
@@ -3771,11 +3807,11 @@ body{
 								}
 							}
 
-							.actions{
+							.actions {
 								box-sizing: border-box;
 								height: 48px;
 
-								i{
+								i {
 									margin: 12px 0 0;
 								}
 							}
@@ -3785,19 +3821,19 @@ body{
 			}
 
 			/*show publication*/
-			.bodyPublications{
-				.container{
+			.bodyPublications {
+				.container {
 					display: flex;
 					width: 100%;
 
-					.user{
+					.user {
 						padding: 6px 0 6px 12px;
 						box-sizing: border-box;
 						display: none;
 						width: 100%;
 						float: left;
 
-						.avatar{
+						.avatar {
 							box-sizing: border-box;
 							border-radius: 50%;
 							overflow: hidden;
@@ -3806,38 +3842,38 @@ body{
 							height: 36px;
 							width: 36px;
 
-							img{
+							img {
 								height: 100%;
 								width: 100%;
 							}
 						}
 
-						.text{
+						.text {
 							box-sizing: border-box;
 							padding: 12px;
 							width: 100%;
 
-							.name{
-								.username{
+							.name {
+								.username {
 									word-break: break-all;
 									font-weight: bold;
 								}
 
-								.date{
+								.date {
 									color: $greyColor;
 									font-size: 13px;
 								}
 							}
 						}
 
-						.actions{
-							button{
+						.actions {
+							button {
 								border-radius: 50% !important;
 							}
 						}
 					}
 
-					.left{
+					.left {
 						-webkit-box-orient: vertical;
 						-webkit-box-pack: center;
 						justify-content: center;
@@ -3854,25 +3890,25 @@ body{
 						padding: 0;
 						margin: 0;
 
-						swiper{
+						swiper {
 							// width: 510px;
 							float: left;
 
-							.swiper-wrapper{
-								.slide{
+							.swiper-wrapper {
+								.slide {
 									max-height: 510px;
 								}
 							}
 						}
 
-						.photos{
+						.photos {
 							background: $blackColor;
 							position: relative;
 							float: left;
 							width: 100%;
 
 							img,
-							video{
+							video {
 								min-height: 120px;
 								max-height: 75vh;
 								min-width: 120px;
@@ -3883,7 +3919,7 @@ body{
 
 							/*Photos*/
 							.prev,
-							.next{
+							.next {
 								border-radius: 0 5px 5px 0;
 								position: absolute;
 								cursor: pointer;
@@ -3894,21 +3930,21 @@ body{
 								z-index: 1;
 								top: 0;
 
-								i{
+								i {
 									margin: auto auto auto 6px;
 								}
 							}
 
-							.next{
+							.next {
 								border-radius: 5px 0 0 5px;
 								right: 0;
 
-								i{
+								i {
 									margin: auto 6px auto auto;
 								}
 							}
 
-							.playPause{
+							.playPause {
 								margin: -43px 0 0 -43px;
 								position: absolute;
 								height: 86px;
@@ -3918,35 +3954,35 @@ body{
 							}
 						}
 
-						&.remove{
+						&.remove {
 							filter: grayscale(100%);
 							opacity: .5;
 						}
 					}
 
-					.right{
+					.right {
 						box-sizing: border-box;
 						width: 360px;
 						height: 100%;
 						float: left;
 
-						.box{
+						.box {
 							max-height: 65vh;
 							overflow: auto;
 							height: 100%;
 
-							.panel{
+							.panel {
 								box-sizing: border-box;
 								padding: 12px 0 0;
 								width: 100%;
 								float: left;
 
-								.user{
+								.user {
 									padding: 0 0 6px 18px;
 									display: flex;
 								}
 
-								.textContainer{
+								.textContainer {
 									word-break: break-word;
 									box-sizing: border-box;
 									padding: 0 18px 12px;
@@ -3954,7 +3990,7 @@ body{
 									float: left;
 								}
 
-								.audios{
+								.audios {
 									width: 100%;
 									float: left;
 								}
@@ -3965,17 +4001,17 @@ body{
 			}
 
 			/*show likes*/
-			.bodyLikes{
-				.container{
+			.bodyLikes {
+				.container {
 					padding: 12px 0 6px 0;
 					float: left;
 				}
 			}
 
 			/*set new session*/
-			.bodySessions{
-				.container{
-					.form{
+			.bodySessions {
+				.container {
+					.form {
 						box-sizing: border-box;
 						padding: 0 18px;
 						width: 100%;
@@ -3986,9 +4022,9 @@ body{
 			}
 
 			/*report*/
-			.bodyReport{
-				.container{
-					.form{
+			.bodyReport {
+				.container {
+					.form {
 						box-sizing: border-box;
 						padding: 0 18px;
 						width: 100%;
@@ -3999,11 +4035,11 @@ body{
 			}
 
 			/*show avatar*/
-			.bodyAvatar{
-				.container{
+			.bodyAvatar {
+				.container {
 					width: 360px;
 
-					img{
+					img {
 						width: 100%;
 					}
 				}
@@ -4012,16 +4048,16 @@ body{
 	}
 
 	/*Dialog background color*/
-	.cdk-overlay-dark-backdrop{
+	.cdk-overlay-dark-backdrop {
 		background: transparentize($fontBlackColor, .25) !important;
 		opacity: .75 !important;
 	}
 
 	/*Bottom-sheet*/
-	.cdk-overlay-pane{
+	.cdk-overlay-pane {
 		max-width: 100% !important;
 
-		.mat-bottom-sheet-container{
+		.mat-bottom-sheet-container {
 			background: transparent;
 			/*max-height: 100vh;*/
 			box-shadow: none;
@@ -4035,13 +4071,13 @@ body{
 	/*------------------------*/
 
 	/*User*/
-	.innerBodyUser{
+	.innerBodyUser {
 		position: relative;
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
 
-		.header{
+		.header {
 			position: fixed;
 			display: block;
 			z-index: 10;
@@ -4050,7 +4086,7 @@ body{
 			left: 0;
 			top: 0;
 
-			.head{
+			.head {
 				border-bottom: 1px solid transparentize($greyColor, .75);
 				background-color: $headerWhiteColor;
 				box-shadow: $shadowBox0;
@@ -4060,27 +4096,27 @@ body{
 				width: 100%;
 				z-index: 9;
 
-				button{
+				button {
 					color: $fontBlackColor;
 					background: none;
 					box-shadow: none;
 					margin: 8px 16px;
 					float: left;
 
-					&:hover{
+					&:hover {
 						box-shadow: none;
 						background: none;
 					}
 				}
 
-				.center{
+				.center {
 					position: absolute;
 					text-align: center;
 					line-height: 56px;
 					width: 100%;
 					z-index: -1;
 
-					.logo{
+					.logo {
 						mask-size: 24px calc(24px * 15);
 						background-color: $blackColor;
 						mask-image: $spriteImages;
@@ -4094,14 +4130,14 @@ body{
 					}
 				}
 
-				.left{
+				.left {
 					float: left;
 				}
 
-				.right{
+				.right {
 					float: right;
 
-					.avatar{
+					.avatar {
 						border-radius: 50% !important;
 						box-shadow: $shadowBox1;
 						margin: 12px 28px 0 0;
@@ -4110,19 +4146,19 @@ body{
 						height: 32px;
 						width: 32px;
 
-						img{
+						img {
 							height: 100%;
 							width: 100%;
 						}
 					}
 
-					.signingPanel{
+					.signingPanel {
 						align-items: center;
 						margin: 0 24px 0 0;
 						display: flex;
 						height: 56px;
 
-						button{
+						button {
 							text-transform: uppercase;
 							color: $blueColor;
 							margin: 0 0 0 6px;
@@ -4133,14 +4169,14 @@ body{
 							height: 28px;
 							min-width: 0;
 
-							&:first-child{
+							&:first-child {
 								background-color: $blueColor;
-								color: $whiteColor;								
+								color: $whiteColor;
 							}
 						}
 					}
 
-					.pending{
+					.pending {
 						background-color: $redColor;
 						margin: 4px 0 0 22px;
 						border-radius: 18px;
@@ -4159,7 +4195,7 @@ body{
 				}
 			}
 
-			.menuBox{
+			.menuBox {
 				position: fixed;
 				height: 48px;
 				width: 100%;
@@ -4167,7 +4203,7 @@ body{
 				left: 0;
 				top: 0;
 
-				.inner{
+				.inner {
 					padding: 56px 8px;
 					position: fixed;
 					height: 100%;
@@ -4176,7 +4212,7 @@ body{
 					left: 0;
 					top: 0;
 
-					.user{
+					.user {
 						box-sizing: border-box;
 						border-radius: 5px;
 						margin: 8px 0 0;
@@ -4185,49 +4221,49 @@ body{
 						width: 100%;
 						float: left;
 
-						.avatar{
+						.avatar {
 							border-radius: 50%;
 							overflow: hidden;
 							min-width: 40px;
 							height: 40px;
 							width: 40px;
 
-							img{
+							img {
 								height: 100%;
 								width: 100%;
 							}
 						}
 
-						.text{
+						.text {
 							box-sizing: border-box;
 							word-break: break-word;
 							padding: 4px 0 0 12px;
 							width: 100%;
 
-							.data{
+							.data {
 								width: 100%;
 							}
 
-							.info{
+							.info {
 								color: $greyColor;
 								font-size: 13px;
 								width: 100%;
 							}
 						}
 
-						.button{
-							i{
+						.button {
+							i {
 								margin: 6px;
 							}
 						}
 
-						&:hover{
+						&:hover {
 							background: transparentize($greyColor, .9);
 							cursor: pointer;
 						}
 					}
 
-					.item{
+					.item {
 						box-sizing: border-box;
 						border-radius: 5px;
 						line-height: 48px;
@@ -4238,11 +4274,11 @@ body{
 						float: left;
 						padding: 0;
 
-						i{
+						i {
 							margin: 12px;
 						}
 
-						.text{
+						.text {
 							text-overflow: ellipsis;
 							box-sizing: border-box;
 							white-space: nowrap;
@@ -4252,7 +4288,7 @@ body{
 							width: 100%;
 						}
 
-						.pending{
+						.pending {
 							background-color: $redColor;
 							margin: 18px 12px 0 0;
 							color: $whiteColor;
@@ -4265,19 +4301,19 @@ body{
 							height: 12px;
 						}
 
-						&:hover{
+						&:hover {
 							background: transparentize($greyColor, .9);
 							cursor: pointer;
 						}
 
-						&.selected{
-							i{
+						&.selected {
+							i {
 								background-color: $redColor !important;
 							}
 						}
 
-						&.userMini{
-							.avatar{
+						&.userMini {
+							.avatar {
 								border-radius: 50%;
 								overflow: hidden;
 								display: inherit;
@@ -4286,14 +4322,14 @@ body{
 								height: 28px;
 								width: 28px;
 
-								img{
+								img {
 									border-radius: 50%;
 									height: 100%;
 									width: 100%;
 								}
 							}
 
-							.add{
+							.add {
 								background-color: currentColor;
 								border-radius: 50%;
 								display: inherit;
@@ -4301,21 +4337,21 @@ body{
 								height: 28px;
 								width: 28px;
 
-								i{
+								i {
 									background-color: $whiteColor;
 									margin: 2px;
 								}
 							}
 
-							&.active{
-								.avatar{
+							&.active {
+								.avatar {
 									border: 2px solid $blueColor;
 									box-sizing: border-box;
 									margin: 12px;
 									padding: 2px;
 								}
 
-								.text{
+								.text {
 									color: $blueColor;
 								}
 							}
@@ -4324,7 +4360,7 @@ body{
 				}
 			}
 
-			.notificationsBox{
+			.notificationsBox {
 				position: fixed;
 				height: 100%;
 				z-index: 99;
@@ -4332,7 +4368,7 @@ body{
 				left: 0;
 				top: 0;
 
-				.hidden{
+				.hidden {
 					position: fixed;
 					height: 100%;
 					width: 100%;
@@ -4340,7 +4376,7 @@ body{
 					top: 0;
 				}
 
-				.box{
+				.box {
 					background-color: $whiteColor;
 					box-shadow: $shadowBox2;
 					margin: 56px 76px 0 0;
@@ -4350,11 +4386,11 @@ body{
 					right: 0;
 					top: 0;
 
-					.innerBox{
+					.innerBox {
 						width: 100%;
 						float: left;
 
-						ul{
+						ul {
 							max-height: 360px;
 							overflow-y: auto;
 							float: left;
@@ -4363,7 +4399,7 @@ body{
 							margin: 0;
 						}
 
-						.forward{
+						.forward {
 							border-top: 1px solid transparentize($greyColor, .5);
 							text-overflow: ellipsis;
 							box-sizing: border-box;
@@ -4376,7 +4412,7 @@ body{
 							height: 56px;
 							width: 100%;
 
-							button{
+							button {
 								border-radius: 50% !important;
 								margin: 8px 12px;
 								float: right;
@@ -4386,7 +4422,7 @@ body{
 				}
 			}
 
-			.userBox{
+			.userBox {
 				position: fixed;
 				height: 100%;
 				z-index: 99;
@@ -4394,7 +4430,7 @@ body{
 				left: 0;
 				top: 0;
 
-				.hidden{
+				.hidden {
 					position: fixed;
 					height: 100%;
 					width: 100%;
@@ -4402,7 +4438,7 @@ body{
 					top: 0;
 				}
 
-				.box{
+				.box {
 					background-color: $whiteColor;
 					box-shadow: $shadowBox2;
 					margin: 56px 24px 0 0;
@@ -4411,25 +4447,25 @@ body{
 					right: 0;
 					top: 0;
 
-					.top{
+					.top {
 						border-bottom: 1px solid transparentize($greyColor, .5);
 						display: flex;
 						width: 100%;
 
-						.image{
+						.image {
 							min-width: 100px;
 							height: 100px;
 							width: 100px;
 							float: left;
 
-							img{
+							img {
 								background-color: currentColor;
 								height: 100%;
 								width: 100%;
 							}
 						}
 
-						.data{
+						.data {
 							box-sizing: border-box;
 							position: relative;
 							padding: 28px 18px;
@@ -4439,7 +4475,7 @@ body{
 							width: 100%;
 
 							.name,
-							.user{
+							.user {
 								text-overflow: ellipsis;
 								box-sizing: border-box;
 								display: inline-block;
@@ -4454,21 +4490,21 @@ body{
 								width: 100%;
 							}
 
-							.user{
+							.user {
 								color: $blueColor;
 								font-size: 14px;
 							}
 						}
 					}
 
-					.bottom{
+					.bottom {
 						width: 100%;
 
-						.outerBox{
+						.outerBox {
 							width: 100%;
 							float: left;
 
-							.item{
+							.item {
 								box-sizing: border-box;
 								flex-direction: row;
 								align-items: center;
@@ -4479,11 +4515,11 @@ body{
 								height: 48px;
 								width: 100%;
 
-								i{
+								i {
 									min-width: 24px;
 									margin: 12px;
 
-									&.empty{
+									&.empty {
 										mask-position: 0 24px;
 										margin: 12px;
 										height: 24px;
@@ -4491,27 +4527,27 @@ body{
 									}
 								}
 
-								.text{
+								.text {
 									box-sizing: border-box;
 									padding: 0 0 0 6px;
 									font-size: 16px;
 									width: 100%;
 								}
 
-								.mat-slide-toggle{
+								.mat-slide-toggle {
 									margin: 0 12px 0 0;
 
-									&.mat-checked:not(.mat-disabled){
-										.mat-slide-toggle-bar{
+									&.mat-checked:not(.mat-disabled) {
+										.mat-slide-toggle-bar {
 											background-color: $greyColor;
 										}
 
-										.mat-slide-toggle-thumb{
+										.mat-slide-toggle-thumb {
 											background-color: currentColor;
 										}
 									}
 
-									.mat-slide-toggle-content{
+									.mat-slide-toggle-content {
 										text-overflow: ellipsis;
 										display: inline-block;
 										white-space: nowrap;
@@ -4522,18 +4558,18 @@ body{
 									}
 								}
 
-								&:hover{
+								&:hover {
 									cursor: pointer;
 									background-color: transparentize($greyColor, .85);
 								}
 							}
 						}
 
-						.innerBox{
+						.innerBox {
 							font-size: 16px;
 							width: 100%;
 
-							.back{
+							.back {
 								border-bottom: 1px solid transparentize($greyColor, .5);
 								text-overflow: ellipsis;
 								box-sizing: border-box;
@@ -4546,14 +4582,14 @@ body{
 								height: 56px;
 								width: 100%;
 
-								button{
+								button {
 									border-radius: 50% !important;
 									margin: 8px 12px;
 									float: left;
 								}
 							}
 
-							.forward{
+							.forward {
 								border-top: 1px solid transparentize($greyColor, .5);
 								text-overflow: ellipsis;
 								box-sizing: border-box;
@@ -4566,15 +4602,15 @@ body{
 								height: 56px;
 								width: 100%;
 
-								button{
+								button {
 									border-radius: 50% !important;
 									margin: 8px 12px;
 									float: right;
 								}
 							}
 
-							.switchAccounts{
-								.item{
+							.switchAccounts {
+								.item {
 									box-sizing: border-box;
 									flex-direction: row;
 									align-items: center;
@@ -4585,7 +4621,7 @@ body{
 									height: 48px;
 									width: 100%;
 
-									.avatar{
+									.avatar {
 										border-radius: 50%;
 										display: inherit;
 										min-width: 28px;
@@ -4593,7 +4629,7 @@ body{
 										height: 28px;
 										width: 28px;
 
-										img{
+										img {
 											background-color: currentColor;
 											border-radius: 50%;
 											height: 100%;
@@ -4601,7 +4637,7 @@ body{
 										}
 									}
 
-									.add{
+									.add {
 										background-color: currentColor;
 										border-radius: 50%;
 										display: inherit;
@@ -4610,40 +4646,40 @@ body{
 										height: 28px;
 										width: 28px;
 
-										i{
+										i {
 											background-color: $whiteColor;
 											margin: 2px;
 										}
 									}
 
-									.text{
+									.text {
 										box-sizing: border-box;
 										padding: 0 0 0 12px;
 										width: 100%;
 									}
 
-									&.active{
-										.avatar{
+									&.active {
+										.avatar {
 											border: 2px solid $blueColor;
 											border-radius: 50%;
 											margin: 0 2px;
 											padding: 2px;
 										}
 
-										.text{
+										.text {
 											color: $blueColor;
 										}
 									}
 
-									&:hover{
+									&:hover {
 										background: transparentize($greyColor, .9);
 										cursor: pointer;
 									}
 								}
 							}
 
-							.changeLanguages{
-								.item{
+							.changeLanguages {
+								.item {
 									box-sizing: border-box;
 									flex-direction: row;
 									align-items: center;
@@ -4654,38 +4690,38 @@ body{
 									height: 48px;
 									width: 100%;
 
-									i{
+									i {
 										min-width: 24px;
 										margin: 0 8px;
 
-										&.empty{
+										&.empty {
 											mask-position: 0 24px;
 											height: 24px;
 											width: 24px;
 										}
 									}
 
-									.text{
+									.text {
 										box-sizing: border-box;
 										padding: 0 0 0 12px;
 										width: 100%;
 									}
 
-									&.active{
-										.text{
+									&.active {
+										.text {
 											color: $blueColor;
 										}
 									}
 
-									&:hover{
+									&:hover {
 										background: transparentize($greyColor, .9);
 										cursor: pointer;
 									}
 								}
 							}
 
-							.setThemes{
-								.item{
+							.setThemes {
+								.item {
 									box-sizing: border-box;
 									flex-direction: row;
 									align-items: center;
@@ -4696,7 +4732,7 @@ body{
 									height: 48px;
 									width: 100%;
 
-									.color{
+									.color {
 										justify-content: center;
 										align-items: center;
 										border-radius: 50%;
@@ -4707,39 +4743,39 @@ body{
 										height: 28px;
 										width: 28px;
 
-										&.white{
+										&.white {
 											background-color: $whiteColor;
 										}
 
-										&.blue{
+										&.blue {
 											background-color: $navyThemeColor;
 										}
 
-										&.black{
+										&.black {
 											background-color: $blackColor;
 										}
 									}
 
-									.text{
+									.text {
 										box-sizing: border-box;
 										padding: 0 0 0 12px;
 										width: 100%;
 									}
 
-									&.active{
-										.color{
+									&.active {
+										.color {
 											border: 2px solid $blueColor;
 											border-radius: 50%;
 											margin: 0 2px;
 											padding: 2px;
 										}
 
-										.text{
+										.text {
 											color: $blueColor;
 										}
 									}
 
-									&:hover{
+									&:hover {
 										background: transparentize($greyColor, .9);
 										cursor: pointer;
 									}
@@ -4751,7 +4787,7 @@ body{
 			}
 		}
 
-		.innerBodyContent{
+		.innerBodyContent {
 			padding: 56px 0 100px;
 			position: relative;
 			overflow: hidden;
@@ -4761,26 +4797,26 @@ body{
 			z-index: 8;
 			top: 0;
 
-			.back{
+			.back {
 				align-items: center;
 				display: flex;
 				height: 56px;
 				width: 100%;
 				float: left;
 
-				button{
+				button {
 					border-radius: 50% !important;
 					margin: 0 6px;
 					float: left;
 				}
 
-				.text{
+				.text {
 					font-size: 18px;
 					float: left;
 				}
 			}
 
-			.pageTitle{
+			.pageTitle {
 				text-overflow: ellipsis;
 				padding: 12px 18px 18px;
 				box-sizing: border-box;
@@ -4792,16 +4828,16 @@ body{
 			}
 
 			/*Web*/
-			.pageWeb{
+			.pageWeb {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
 
-					.title{
+					.title {
 						text-transform: uppercase;
 						box-sizing: border-box;
 						padding: 12px 18px;
@@ -4812,14 +4848,14 @@ body{
 						float: left;
 					}
 
-					.context{
+					.context {
 						word-break: break-word;
 						box-sizing: border-box;
 						padding: 0 18px;
 						width: 100%;
 						float: left;
 
-						.userBox{
+						.userBox {
 							box-sizing: border-box;
 							display: flex;
 							width: 100%;
@@ -4827,7 +4863,7 @@ body{
 							padding: 0;
 							margin: 0;
 
-							.image{
+							.image {
 								border-radius: 50%;
 								overflow: hidden;
 								min-width: 48px;
@@ -4835,13 +4871,13 @@ body{
 								width: 48px;
 								float: left;
 
-								img{
+								img {
 									height: 100%;
 									width: 100%;
 								}
 							}
 
-							.data{
+							.data {
 								box-sizing: border-box;
 								position: relative;
 								padding: 0 12px;
@@ -4849,7 +4885,7 @@ body{
 								width: 100%;
 
 								.name,
-								.user{
+								.user {
 									text-overflow: ellipsis;
 									box-sizing: border-box;
 									display: inline-block;
@@ -4861,7 +4897,7 @@ body{
 									width: 100%;
 								}
 
-								.user{
+								.user {
 									color: $blueColor;
 									font-size: 14px;
 									padding: 0;
@@ -4869,44 +4905,44 @@ body{
 							}
 						}
 
-						.loading{
-							mat-progress-spinner{
+						.loading {
+							mat-progress-spinner {
 								height: 16px !important;
 								width: 16px !important;
 								display: inline-block;
 								margin: 0 0 -2px 0;
 
-								svg{
+								svg {
 									height: 16px !important;
 									width: 16px !important;
 
-									circle{
+									circle {
 										stroke: $fontBlackColor !important;
 									}
 								}
 							}
 						}
 
-						a{
+						a {
 							color: $blueColor;
 						}
 
-						button{
+						button {
 							background: $blueColor;
 							color: $whiteColor;
 							margin: 24px auto;
 
-							mat-progress-spinner{
+							mat-progress-spinner {
 								height: 16px !important;
 								width: 16px !important;
 								margin: 10px 6px 0 0;
 								float: left;
 
-								svg{
+								svg {
 									height: 16px !important;
 									width: 16px !important;
 
-									circle{
+									circle {
 										stroke: $whiteColor !important;
 									}
 								}
@@ -4914,7 +4950,7 @@ body{
 						}
 					}
 
-					.asset{
+					.asset {
 						border: 1px solid transparentize($greyColor, .75);
 						width: calc(100% - 36px);
 						box-sizing: border-box;
@@ -4925,20 +4961,20 @@ body{
 						padding: 24px;
 						float: left;
 
-						img{
+						img {
 							border-radius: 5px;
 							max-width: 100%;
 						}
 					}
 
-					.form{
+					.form {
 						box-sizing: border-box;
 						padding: 0 18px;
 						width: 100%;
 						float: left;
 						margin: 0;
 
-						.terms{
+						.terms {
 							color: $greyColor;
 							margin: 24px 0 0;
 							text-align: left;
@@ -4949,13 +4985,13 @@ body{
 							padding: 0;
 						}
 
-						.buttons{
+						.buttons {
 							text-align: center;
 							margin: 24px 0 0;
 							width: 100%;
 							float: left;
 
-							button{
+							button {
 								background: $blueColor;
 								color: $whiteColor;
 								font-weight: bold;
@@ -4963,23 +4999,23 @@ body{
 								line-height: 32px;
 								height: 32px;
 
-								mat-progress-spinner{
+								mat-progress-spinner {
 									height: 16px !important;
 									width: 16px !important;
 									margin: 8px 6px 0 0;
 									float: left;
 
-									svg{
+									svg {
 										height: 16px !important;
 										width: 16px !important;
 
-										circle{
+										circle {
 											stroke: $whiteColor !important;
 										}
 									}
 								}
 
-								&.forgot{
+								&.forgot {
 									background: transparent;
 									margin: 12px auto 0;
 									color: $greyColor;
@@ -4991,20 +5027,20 @@ body{
 			}
 
 			/*User*/
-			.pageUser{
+			.pageUser {
 				max-width: 100%;
 				margin: 0 auto;
 
-				.panel{
+				.panel {
 					position: relative;
 					overflow: hidden;
 					width: 100%;
 
-					.dataBox{
+					.dataBox {
 						max-width: $pageMaxWidth;
 						margin: 0 auto;
 
-						.head{
+						.head {
 							/* border-bottom: 1px solid transparentize($greyColor, .5); */
 							justify-content: space-between;
 							box-sizing: border-box;
@@ -5013,21 +5049,21 @@ body{
 							height: 56px;
 							width: 100%;
 
-							button{
+							button {
 								border-radius: 50% !important;
 								margin: 8px 6px;
 								z-index: 1;
 
-								&.l{
+								&.l {
 									float: left;
 								}
 
-								&.r{
+								&.r {
 									float: right;
 								}
 							}
 
-							.text{
+							.text {
 								justify-content: center;
 								align-items: center;
 								position: absolute;
@@ -5035,27 +5071,27 @@ body{
 								display: flex;
 								width: 100%;
 
-								span{
+								span {
 									align-items: center;
 									display: flex;
 
-									&.active{
+									&.active {
 										cursor: pointer;
 									}
 
-									i{
+									i {
 										margin: 0 -12px 0 0;
 									}
 								}
 							}
 						}
 
-						.accounts{
+						.accounts {
 							border-bottom: 1px solid transparentize($greyColor, .5);
 							padding: 12px 0;
 							width: 100%;
 
-							.item{
+							.item {
 								box-sizing: border-box;
 								flex-direction: row;
 								align-items: center;
@@ -5067,7 +5103,7 @@ body{
 								height: 48px;
 								width: 100%;
 
-								.avatar{
+								.avatar {
 									border-radius: 50%;
 									display: inherit;
 									min-width: 28px;
@@ -5075,7 +5111,7 @@ body{
 									height: 28px;
 									width: 28px;
 
-									img{
+									img {
 										background-color: currentColor;
 										border-radius: 50%;
 										height: 100%;
@@ -5083,7 +5119,7 @@ body{
 									}
 								}
 
-								.add{
+								.add {
 									background-color: currentColor;
 									border-radius: 50%;
 									display: inherit;
@@ -5092,38 +5128,38 @@ body{
 									height: 28px;
 									width: 28px;
 
-									i{
+									i {
 										background-color: $whiteColor;
 										margin: 2px;
 									}
 								}
 
-								.text{
+								.text {
 									box-sizing: border-box;
 									padding: 0 0 0 12px;
 									width: 100%;
 								}
 
-								&.active{
-									.avatar{
+								&.active {
+									.avatar {
 										border: 2px solid $blueColor;
 										border-radius: 50%;
 										margin: 0 2px;
 										padding: 2px;
 									}
 
-									.text{
+									.text {
 										color: $blueColor;
 									}
 								}
 
-								&:hover{
+								&:hover {
 									background: transparentize($greyColor, .9);
 								}
 							}
 						}
 
-						.user{
+						.user {
 							padding: 18px 0 0 18px;
 							box-sizing: border-box;
 							position: relative;
@@ -5131,10 +5167,10 @@ body{
 							width: 100%;
 							float: left;
 
-							.left{
+							.left {
 								width: 86px;
 
-								.avatar{
+								.avatar {
 									box-shadow: $shadowBox2;
 									box-sizing: border-box;
 									border-radius: 50%;
@@ -5145,23 +5181,23 @@ body{
 									width: 86px;
 									float: left;
 
-									img{
+									img {
 										height: 100%;
 										width: 100%;
 									}
 								}
 							}
 
-							.right{
+							.right {
 								width: calc(100% - 86px);
 
-								.text{
+								.text {
 									padding: 4px 0 4px 18px;
 									box-sizing: border-box;
 									width: 100%;
 									float: left;
 
-									.name{
+									.name {
 										width: calc(100% - 12px);
 										text-overflow: ellipsis;
 										box-sizing: border-box;
@@ -5172,12 +5208,12 @@ body{
 										display: block;
 										margin: 0;
 
-										i{
+										i {
 											margin: 6px 0 -6px 0;
 										}
 									}
 
-									.about{
+									.about {
 										box-sizing: border-box;
 										word-break: break-word;
 										text-align: left;
@@ -5186,7 +5222,7 @@ body{
 										float: left;
 										width: 100%;
 
-										a:hover{
+										a:hover {
 											text-decoration: underline;
 										}
 									}
@@ -5194,7 +5230,7 @@ body{
 							}
 						}
 
-						.actions{
+						.actions {
 							justify-content: center;
 							box-sizing: border-box;
 							padding: 12px 18px 0;
@@ -5202,12 +5238,12 @@ body{
 							width: 100%;
 							float: left;
 
-							.inner{
+							.inner {
 								width: calc(100% - 86px * 2 - 18px * 2);
 								justify-content: center;
 								display: flex;
 
-								button{
+								button {
 									border: 1px solid transparentize($greyColor, .25);
 									background-color: transparent;
 									color: currentColor;
@@ -5219,31 +5255,31 @@ body{
 									height: 32px;
 									width: 100%;
 
-									span{
+									span {
 										justify-content: center;
 										align-items: center;
 										display: flex;
 									}
 
-									&:active{
+									&:active {
 										background-color: transparentize($greyColor, .9);
 									}
 
-									&.icon{
+									&.icon {
 										margin: 0 0 0 8px;
 										min-width: 32px;
 										width: 32px;
 										padding: 0;
 
-										mat-progress-spinner{
+										mat-progress-spinner {
 											height: 12px !important;
 											width: 12px !important;
 
-											svg{
+											svg {
 												height: 12px !important;
 												width: 12px !important;
 
-												circle{
+												circle {
 													stroke: transparentize($greyColor, .25);
 												}
 											}
@@ -5253,13 +5289,13 @@ body{
 							}
 						}
 
-						.social{
+						.social {
 							box-sizing: border-box;
 							padding: 12px 18px;
 							width: 100%;
 							float: left;
 
-							ul{
+							ul {
 								justify-content: space-evenly;
 								box-sizing: border-box;
 								display: flex;
@@ -5268,7 +5304,7 @@ body{
 								padding: 0;
 								margin: 0;
 
-								li{
+								li {
 									box-sizing: border-box;
 									border-radius: 5px;
 									text-align: center;
@@ -5276,7 +5312,7 @@ body{
 									padding: 0;
 									margin: 0;
 
-									button{
+									button {
 										flex-direction: column;
 										color: currentColor;
 										text-align: center;
@@ -5289,24 +5325,24 @@ body{
 										width: 100%;
 										margin: 0;
 
-										.count{
+										.count {
 											font-weight: bold;
 											font-size: 15px;
 
-											i{
+											i {
 												mask-size: 24px calc(24px * 15);
 												min-width: 12px;
 												height: 12px;
 												width: 12px;
 												margin: 0;
 
-												&[label="bookmark"]{
+												&[label="bookmark"] {
 													mask-position: -12px -72px;
 												}
 											}
 										}
 
-										.text{
+										.text {
 											text-transform: capitalize;
 											text-overflow: ellipsis;
 											overflow: hidden;
@@ -5380,26 +5416,26 @@ body{
 										} */
 									}
 
-									&:last-child{
+									&:last-child {
 										border-right: none;
 									}
 								}
 							}
 						}
 
-						.recommendedUsers{
+						.recommendedUsers {
 							margin: 12px 0 0;
 							width: 100%;
 							float: left;
 							padding: 0;
 
-							.title{
+							.title {
 								color: $greyColor;
 								font-size: 13px;
 								padding: 12px 18px;
 							}
 
-							ul{
+							ul {
 								-webkit-overflow-scrolling: touch;
 								box-sizing: border-box;
 								white-space: nowrap;
@@ -5409,15 +5445,15 @@ body{
 								float: left;
 								width: 100%;
 								margin: 0;
-		
-								li{
+
+								li {
 									display: inline-block;
 									margin: 0 8px 0 0;
 									list-style: none;
 									width: 128px;
 									padding: 0;
 
-									.inner{
+									.inner {
 										box-sizing: border-box;
 										width: 100%;
 										display: flex;
@@ -5429,7 +5465,7 @@ body{
 										padding: 12px;
 										position: relative;
 
-										.close{
+										.close {
 											width: 24px;
 											height: 24px;
 											position: absolute;
@@ -5437,42 +5473,42 @@ body{
 											right: 0;
 										}
 
-										.avatar{
+										.avatar {
 											width: 64px;
 											height: 64px;
 											border-radius: 50%;
 											overflow: hidden;
 
-											img{
+											img {
 												width: 100%;
 											}
 										}
 
-										.texts{
+										.texts {
 											text-align: center;
 											margin: 12px 0;
 											width: 100%;
 
-											.text{
+											.text {
 												text-overflow: ellipsis;
 												box-sizing: border-box;
 												white-space: nowrap;
 												overflow: hidden;
 
-												&:first-child{
+												&:first-child {
 													font-weight: bold;
 													font-size: 13px;
 												}
 
-												&:last-child{
+												&:last-child {
 													font-size: 11px;
 													color: $greyColor;
 												}
 											}
 										}
 
-										.button{
-											button{
+										.button {
+											button {
 												background-color: $blueColor;
 												text-transform: uppercase;
 												color: $whiteColor;
@@ -5492,21 +5528,21 @@ body{
 					}
 				}
 
-				.content{
+				.content {
 					max-width: $pageMaxWidth;
 					margin: 0 auto;
 
-					&.home{
+					&.home {
 						border: none;
 					}
 
-					ul{
+					ul {
 						float: left;
 						width: 100%;
 						padding: 0;
 						margin: 0;
 
-						li{
+						li {
 							border-top: 1px solid transparentize($greyColor, .75);
 							box-sizing: border-box;
 							position: relative;
@@ -5518,14 +5554,14 @@ body{
 							width: 100%;
 							margin: 0;
 
-							.head{
+							.head {
 								padding: 6px 0 6px 18px;
 								box-sizing: border-box;
 								display: flex;
 								width: 100%;
 								float: left;
 
-								.avatar{
+								.avatar {
 									box-sizing: border-box;
 									border-radius: 50%;
 									overflow: hidden;
@@ -5534,38 +5570,38 @@ body{
 									height: 32px;
 									width: 32px;
 
-									img{
+									img {
 										height: 100%;
 										width: 100%;
 									}
 								}
 
-								.actions{
-									button{
+								.actions {
+									button {
 										border-radius: 50% !important;
 									}
 								}
 							}
 
-							.body{
+							.body {
 								box-sizing: border-box;
 								width: 100%;
 								float: left;
 
-								.photos{
+								.photos {
 									width: 100%;
 									float: left;
 
-									img{
+									img {
 										width: 100%;
 									}
 
-									video{
+									video {
 										max-height: 360px;
 										width: 100%;
 									}
 
-									.playPause{
+									.playPause {
 										margin: -43px 0 0 -43px;
 										position: absolute;
 										height: 86px;
@@ -5575,49 +5611,49 @@ body{
 									}
 								}
 
-								.innerContent{
+								.innerContent {
 									box-sizing: border-box;
 									padding: 12px 18px 6px;
 									width: 100%;
 									float: left;
-									
-									.textContainer{
+
+									.textContainer {
 										word-break: break-word;
 										box-sizing: border-box;
 										display: contents;
 									}
 
-									.more{
+									.more {
 										color: $greyColor;
 										cursor: pointer;
 										outline: none;
 									}
 								}
 
-								.audios{
+								.audios {
 									margin: 12px 0 0;
 									width: 100%;
 									float: left;
 
-									ul{
-										li{
+									ul {
+										li {
 											padding: inherit;
 										}
 									}
 								}
 							}
 
-							.ad{
+							.ad {
 								background: none;
 								padding: 36px 0;
 								border: none;
 							}
 
-							&.remove{
+							&.remove {
 								filter: grayscale(100%);
 								opacity: .5;
 
-								.body{
+								.body {
 									pointer-events: none;
 								}
 							}
@@ -5625,11 +5661,11 @@ body{
 					}
 				}
 
-				&.home{
-					.content{
-						ul{
-							li{
-								&:first-child{
+				&.home {
+					.content {
+						ul {
+							li {
+								&:first-child {
 									border: none;
 								}
 							}
@@ -5639,27 +5675,27 @@ body{
 			}
 
 			/*News*/
-			.pageNews{
+			.pageNews {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
 
-					.line{
+					.line {
 						position: relative;
 						width: 100%;
 						float: left;
 
-						ul.publications{
+						ul.publications {
 							float: left;
 							width: 100%;
 							padding: 0;
 							margin: 0;
 
-							li{
+							li {
 								background-color: $greyColor;
 								box-sizing: border-box;
 								margin: 0 .5% .5% 0;
@@ -5674,12 +5710,12 @@ body{
 								float: left;
 								width: 33%;
 
-								.image{
+								.image {
 									position: absolute;
 									height: 100%;
 									width: 100%;
 
-									.img{
+									.img {
 										background-position: center 35%;
 										background-repeat: no-repeat;
 										transform: translate(0px);
@@ -5691,7 +5727,7 @@ body{
 									}
 								}
 
-								.category{
+								.category {
 									position: absolute;
 									height: 24px;
 									width: 24px;
@@ -5700,23 +5736,23 @@ body{
 									right: 0;
 								}
 
-								&:nth-child(3n+3){
+								&:nth-child(3n+3) {
 									margin: 0;
 								}
 
-								&.remove{
+								&.remove {
 									filter: grayscale(100%);
 									opacity: .5;
 								}
 							}
 						}
 
-						&.ad{
-							ul{
+						&.ad {
+							ul {
 								display: none;
 							}
 
-							.adContent{
+							.adContent {
 								background: transparent;
 								box-sizing: border-box;
 								max-height: 100%;
@@ -5725,7 +5761,7 @@ body{
 								width: 100%;
 								float: left;
 
-								.box{
+								.box {
 									width: 100%;
 									float: left;
 								}
@@ -5733,15 +5769,15 @@ body{
 						}
 					}
 
-					ul.people{
-						li{
-							.type{
+					ul.people {
+						li {
+							.type {
 								align-items: center;
 								display: flex;
 								width: 100%;
 							}
 
-							.tag{
+							.tag {
 								border: 1px solid currentColor;
 								color: currentColor;
 								text-align: center;
@@ -5759,11 +5795,11 @@ body{
 			}
 
 			/*Following - Followers*/
-			.pageFollowing{
+			.pageFollowing {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
@@ -5772,22 +5808,22 @@ body{
 
 			/*Photos & Videos*/
 			.pageBookmarks,
-			.pagePhotos{
+			.pagePhotos {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
 
-					ul{
+					ul {
 						float: left;
 						width: 100%;
 						padding: 0;
 						margin: 0;
 
-						li{
+						li {
 							background-color: $greyColor;
 							box-sizing: border-box;
 							margin: 0 .5% .5% 0;
@@ -5802,12 +5838,12 @@ body{
 							float: left;
 							width: 33%;
 
-							.image{
+							.image {
 								position: absolute;
 								height: 100%;
 								width: 100%;
 
-								.img{
+								.img {
 									background-position: center 35%;
 									background-repeat: no-repeat;
 									transform: translate(0px);
@@ -5819,7 +5855,7 @@ body{
 								}
 							}
 
-							.type{
+							.type {
 								position: absolute;
 								height: 24px;
 								width: 24px;
@@ -5828,11 +5864,11 @@ body{
 								right: 0;
 							}
 
-							&:nth-child(3n+3){
+							&:nth-child(3n+3) {
 								margin: 0;
 							}
 
-							&.remove{
+							&.remove {
 								filter: grayscale(100%);
 								opacity: .5;
 							}
@@ -5842,16 +5878,16 @@ body{
 			}
 
 			/*Audios*/
-			.pageAudios{
+			.pageAudios {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
 
-					.playlists{
+					.playlists {
 						-webkit-overflow-scrolling: touch;
 						box-sizing: border-box;
 						white-space: nowrap;
@@ -5860,14 +5896,14 @@ body{
 						padding: 0 18px;
 						width: 100%;
 
-						.box{
+						.box {
 							box-sizing: border-box;
 							display: inline-block;
 							margin: 0 12px 0 0;
 							list-style: none;
 							width: 150px;
 
-							.image{
+							.image {
 								background-color: $greyColor;
 								box-sizing: border-box;
 								position: relative;
@@ -5878,7 +5914,7 @@ body{
 								width: 100%;
 								float: left;
 
-								.img{
+								.img {
 									background-position: center 65%;
 									background-repeat: no-repeat;
 									transform: translate(0);
@@ -5890,7 +5926,7 @@ body{
 								}
 							}
 
-							.panel{
+							.panel {
 								box-sizing: border-box;
 								position: relative;
 								display: flex;
@@ -5898,7 +5934,7 @@ body{
 								float: left;
 								padding: 0;
 
-								.title{
+								.title {
 									text-overflow: ellipsis;
 									box-sizing: border-box;
 									white-space: nowrap;
@@ -5910,13 +5946,13 @@ body{
 									width: 100%;
 								}
 
-								.actions{
+								.actions {
 									margin: 0 -18px 0 0;
 									display: flex;
 									height: 40px;
 									float: left;
 
-									.category{
+									.category {
 										justify-content: center;
 										align-items: center;
 										padding: 0 0 0 12px;
@@ -5928,16 +5964,16 @@ body{
 								}
 							}
 
-							&:last-child{
+							&:last-child {
 								margin: 0;
 							}
 
-							&.new{
-								.image{
+							&.new {
+								.image {
 									border: 2px solid currentColor;
 									background-color: transparent;
 
-									.text{
+									.text {
 										justify-content: space-between;
 										box-sizing: border-box;
 										position: absolute;
@@ -5956,11 +5992,11 @@ body{
 								}
 							}
 
-							&.upload{
-								.image{
+							&.upload {
+								.image {
 									background-color: $blackColor;
 
-									.text{
+									.text {
 										justify-content: space-between;
 										box-sizing: border-box;
 										color: $whiteColor;
@@ -5980,20 +6016,20 @@ body{
 								}
 							}
 
-							&.remove{
+							&.remove {
 								filter: grayscale(100%);
 								opacity: .5;
 							}
 						}
 
-						.boxUploadNew{
+						.boxUploadNew {
 							box-sizing: border-box;
 							display: inline-block;
 							margin: 0 12px 0 0;
 							list-style: none;
 							width: 150px;
 
-							.inner{
+							.inner {
 								box-sizing: border-box;
 								border-radius: 12px;
 								position: relative;
@@ -6005,7 +6041,7 @@ body{
 								float: left;
 
 								.upload,
-								.new{
+								.new {
 									border: 2px solid $blackColor;
 									background-color: $blackColor;
 									height: calc(50% - 6px);
@@ -6016,8 +6052,8 @@ body{
 									display: flex;
 									width: 100%;
 									float: left;
-		
-									.icon{
+
+									.icon {
 										justify-content: center;
 										padding: 0 0 0 18px;
 										align-items: center;
@@ -6025,7 +6061,7 @@ body{
 										display: flex;
 									}
 
-									.text{
+									.text {
 										text-transform: uppercase;
 										text-overflow: ellipsis;
 										padding: 0 0 0 12px;
@@ -6038,13 +6074,13 @@ body{
 									}
 								}
 
-								.new{
+								.new {
 									background-color: transparent;
 									border: 2px solid $blackColor;
 									margin: 6px 0 0;
 
 									.icon,
-									.text{
+									.text {
 										color: $blackColor;
 									}
 								}
@@ -6052,7 +6088,7 @@ body{
 						}
 					}
 
-					.scrolling-wrapper{
+					.scrolling-wrapper {
 						-webkit-overflow-scrolling: touch;
 						white-space: nowrap;
 						overflow-y: hidden;
@@ -6060,7 +6096,7 @@ body{
 						margin: 12px 0;
 						width: 100%;
 
-						.card{
+						.card {
 							display: inline-block;
 							background: grey;
 							margin: 0 6px;
@@ -6072,11 +6108,11 @@ body{
 			}
 
 			/*Notifications - Messages*/
-			.pageNotifications{
+			.pageNotifications {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
@@ -6084,28 +6120,28 @@ body{
 			}
 
 			/*Settings*/
-			.pageSettings{
+			.pageSettings {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
-					margin:  0 0 24px;
+				.content {
+					margin: 0 0 24px;
 					width: 100%;
 					float: left;
 
-					.avatarBackground{
+					.avatarBackground {
 						box-sizing: border-box;
 						padding: 12px 18px 6px;
 						width: 100%;
 						margin: 0;
 
-						.avatar{
+						.avatar {
 							position: relative;
 							margin: 0 auto;
 							height: 120px;
 							width: 120px;
 
-							.image{
+							.image {
 								box-shadow: $shadowBox2;
 								border-radius: 50%;
 								overflow: hidden;
@@ -6113,11 +6149,11 @@ body{
 								height: 100%;
 								width: 100%;
 
-								img{
+								img {
 									width: 100%;
 								}
 
-								.upload{
+								.upload {
 									justify-content: center;
 									align-items: center;
 									position: absolute;
@@ -6128,7 +6164,7 @@ body{
 									top: 0;
 								}
 
-								&:hover .upload{
+								&:hover .upload {
 									background: transparentize($blueColor, .5);
 									cursor: pointer;
 								}
@@ -6136,50 +6172,50 @@ body{
 						}
 					}
 
-					.form{
+					.form {
 						box-sizing: border-box;
 						padding: 0 18px;
 						width: 100%;
 						float: left;
 						margin: 0;
 
-						.theme{
+						.theme {
 							margin: 24px 0 12px;
 							width: 100%;
 							float: left;
 
-							mat-radio-group{
+							mat-radio-group {
 								display: flex;
 								float: left;
 								width: 100%;
 
-								mat-radio-button{
+								mat-radio-button {
 									width: 32%;
 
-									label{
+									label {
 										border: 2px solid transparent;
 										text-transform: uppercase;
 										box-sizing: border-box;
 										border-radius: 12px;
 										font-weight: bold;
 										font-size: 12px;
-										padding: 12px;	
+										padding: 12px;
 										width: 100%;
 
-										.mat-radio-container{
-											.mat-radio-outer-circle{
+										.mat-radio-container {
+											.mat-radio-outer-circle {
 												border-color: transparentize($greyColor, .5);
 											}
 
-											.mat-radio-ripple{
-												.mat-ripple-element{
+											.mat-radio-ripple {
+												.mat-ripple-element {
 													background-color: transparent;
 												}
 											}
 										}
 									}
 
-									.mat-radio-label-content{
+									.mat-radio-label-content {
 										text-overflow: ellipsis;
 										word-break: break-all;
 										white-space: nowrap;
@@ -6187,21 +6223,21 @@ body{
 										max-width: 75%;
 									}
 
-									&.mat-radio-checked{
-										label{
+									&.mat-radio-checked {
+										label {
 											border-color: $blueColor;
 
-											.mat-radio-container{
-												.mat-radio-inner-circle{
+											.mat-radio-container {
+												.mat-radio-inner-circle {
 													background-color: $blueColor;
 												}
 
-												.mat-radio-outer-circle{
+												.mat-radio-outer-circle {
 													border-color: transparentize($greyColor, .5);
 												}
 
-												.mat-radio-ripple{
-													.mat-ripple-element{
+												.mat-radio-ripple {
+													.mat-ripple-element {
 														background-color: transparent;
 													}
 												}
@@ -6209,26 +6245,26 @@ body{
 										}
 									}
 
-									&.white{
+									&.white {
 										margin: 0 2% 0 0;
 
-										label{
+										label {
 											background-color: $whiteColor;
 											color: $blackColor;
 										}
 									}
 
-									&.blue{
+									&.blue {
 										margin: 0 2% 0 0;
 
-										label{
+										label {
 											background-color: $navyThemeColor;
 											color: $whiteColor;
 										}
 									}
 
-									&.black{
-										label{
+									&.black {
+										label {
 											background-color: $blackColor;
 											color: $whiteColor;
 										}
@@ -6237,7 +6273,7 @@ body{
 							}
 						}
 
-						.private{
+						.private {
 							margin: 14px 0 0;
 							text-align: left;
 							font-size: 15px;
@@ -6246,27 +6282,27 @@ body{
 							float: left;
 							padding: 0;
 
-							mat-slide-toggle{
-								&.mat-checked{
-									.mat-slide-toggle-bar{
+							mat-slide-toggle {
+								&.mat-checked {
+									.mat-slide-toggle-bar {
 										background-color: transparentize($blueColor, .5) !important;
 									}
 
-									.mat-slide-toggle-thumb{
+									.mat-slide-toggle-thumb {
 										background-color: $blueColor;
 									}
 								}
 							}
 						}
 
-						.richAbout{
+						.richAbout {
 							border-bottom: 1px solid $greyColor;
 							box-sizing: border-box;
 							position: relative;
 							width: 100%;
 							float: left;
 
-							.label{
+							.label {
 								margin: 12px 0 6px 0;
 								color: $greyColor;
 								font-size: 12px;
@@ -6274,12 +6310,12 @@ body{
 								float: left;
 							}
 
-							.inner{
+							.inner {
 								position: relative;
 								width: 100%;
 								float: left;
 
-								.highlights{
+								.highlights {
 									box-sizing: border-box;
 									display: inline-block;
 									word-wrap: break-word;
@@ -6292,12 +6328,12 @@ body{
 									min-height: 24px;
 									width: 100%;
 
-									.placeholder{
+									.placeholder {
 										color: transparentize($greyColor, .5);
 									}
 								}
 
-								.origin{
+								.origin {
 									box-sizing: border-box;
 									display: inline-block;
 									word-wrap: break-word;
@@ -6311,7 +6347,7 @@ body{
 							}
 						}
 
-						mat-checkbox{
+						mat-checkbox {
 							border: 1px solid $greyColor;
 							box-sizing: border-box;
 							border-radius: 5px;
@@ -6321,29 +6357,30 @@ body{
 							width: 100%;
 							float: left;
 
-							label{
-								.mat-checkbox-inner-container{
-									.mat-checkbox-frame{
+							label {
+								.mat-checkbox-inner-container {
+									.mat-checkbox-frame {
 										border: 2px solid $greyColor;
 									}
 								}
 							}
 
-							&:not(.mat-checkbox-disabled){
-								label{
-									.mat-checkbox-inner-container{
-										.mat-checkbox-ripple .mat-ripple-element{
+							&:not(.mat-checkbox-disabled) {
+								label {
+									.mat-checkbox-inner-container {
+										.mat-checkbox-ripple .mat-ripple-element {
 											background-color: $blueColor;
 										}
 									}
 								}
 							}
 
-							&.mat-checkbox-checked{
-								label{
-									.mat-checkbox-inner-container{
+							&.mat-checkbox-checked {
+								label {
+									.mat-checkbox-inner-container {
+
 										.mat-checkbox-ripple .mat-ripple-element,
-										.mat-checkbox-background{
+										.mat-checkbox-background {
 											background-color: $blueColor;
 										}
 									}
@@ -6351,36 +6388,36 @@ body{
 							}
 						}
 
-						.buttons{
+						.buttons {
 							text-align: center;
 							margin: 24px 0;
 							width: 100%;
 							float: left;
 
-							button{
+							button {
 								background: $blackColor;
 								color: $whiteColor;
 								line-height: 32px;
 								font-weight: bold;
 								font-size: 12px;
 
-								mat-progress-spinner{
+								mat-progress-spinner {
 									height: 16px !important;
 									width: 16px !important;
 									margin: 8px 6px 0 0;
 									float: left;
 
-									svg{
+									svg {
 										height: 16px !important;
 										width: 16px !important;
 
-										circle{
+										circle {
 											stroke: $whiteColor;
 										}
 									}
 								}
 
-								&.forgot{
+								&.forgot {
 									background: transparent;
 									margin: 12px auto 0;
 									color: $greyColor;
@@ -6389,20 +6426,20 @@ body{
 						}
 					}
 
-					ul{
+					ul {
 						float: left;
 						width: 100%;
 						padding: 0;
 						margin: 0;
 
-						li{
+						li {
 							box-sizing: border-box;
 							list-style: none;
 							margin: 0 0 4px;
 							padding: 0 6px;
 							width: 100%;
 
-							.inner{
+							.inner {
 								box-sizing: border-box;
 								border-radius: 5px;
 								padding: 4px 12px;
@@ -6410,11 +6447,11 @@ body{
 								display: flex;
 								width: 100%;
 
-								&:hover{
+								&:hover {
 									background-color: transparentize($greyColor, .85);
 								}
 
-								.avatar{
+								.avatar {
 									box-sizing: border-box;
 									border-radius: 50%;
 									overflow: hidden;
@@ -6424,7 +6461,7 @@ body{
 									height: 40px;
 									width: 40px;
 
-									img{
+									img {
 										background-color: $fontBlackColor;
 										border-radius: 50%;
 										height: 100%;
@@ -6432,7 +6469,7 @@ body{
 									}
 								}
 
-								.add{
+								.add {
 									background-color: $blackColor;
 									box-sizing: border-box;
 									border-radius: 50%;
@@ -6442,33 +6479,33 @@ body{
 									height: 40px;
 									width: 40px;
 
-									img{
+									img {
 										border-radius: 50%;
 										height: 100%;
 										width: 100%;
 									}
 
-									i{
+									i {
 										background-color: $whiteColor;
 										margin: 8px;
 									}
 								}
 
-								.text{
+								.text {
 									box-sizing: border-box;
 									align-items: center;
 									padding: 0 12px;
 									display: flex;
 									width: 100%;
 
-									.in{
+									.in {
 										width: 100%;
 
-										.data{
+										.data {
 											align-items: center;
 											display: flex;
 
-											.name{
+											.name {
 												text-overflow: ellipsis;
 												word-break: break-all;
 												white-space: nowrap;
@@ -6477,12 +6514,12 @@ body{
 												max-width: 75%;
 											}
 
-											i{
+											i {
 												margin: -6px 0 -6px 0;
 											}
 										}
 
-										.info{
+										.info {
 											word-break: break-word;
 											color: $greyColor;
 											padding: 2px 0 0;
@@ -6492,10 +6529,10 @@ body{
 									}
 								}
 
-								.actions{
+								.actions {
 									height: 48px;
 
-									button{
+									button {
 										border: 1px solid currentColor;
 										text-transform: uppercase;
 										margin: 10px 0 0 6px;
@@ -6510,24 +6547,24 @@ body{
 								}
 							}
 
-							&.active{
-								.inner{
-									.avatar{
+							&.active {
+								.inner {
+									.avatar {
 										border: 2px solid $blueColor;
 										box-sizing: inherit;
 										margin: 2px 0;
 										padding: 2px;
 									}
 
-									.text{
-										.in{
-											.data{
-												.name{
+									.text {
+										.in {
+											.data {
+												.name {
 													color: $blueColor;
 												}
 											}
 
-											.info{
+											.info {
 												color: transparentize($blueColor, .5);
 											}
 										}
@@ -6540,11 +6577,11 @@ body{
 			}
 
 			/*Song*/
-			.pageSong{
+			.pageSong {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
@@ -6552,11 +6589,11 @@ body{
 			}
 
 			/*Publication*/
-			.pagePublication{
+			.pagePublication {
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
 
-				.content{
+				.content {
 					width: 100%;
 					float: left;
 					margin: 0;
@@ -6567,25 +6604,25 @@ body{
 
 	/*Black theme on user pages*/
 	&.blackTheme,
-	&.blueTheme{
+	&.blueTheme {
 		background-color: $blackColor;
 		color: $whiteColor;
 
 		/*Modal box*/
-		mat-dialog-container{
+		mat-dialog-container {
 			background: $darkThemeColor !important;
 
-			.dialogBox{
+			.dialogBox {
 				color: $whiteColor;
 
-				a{
+				a {
 					color: $whiteColor;
 				}
 
-				.bodyCreatePublication{
-					.container{
-						.filesBox{
-							.counter{
+				.bodyCreatePublication {
+					.container {
+						.filesBox {
+							.counter {
 								background-color: $whiteColor;
 								color: $blackColor;
 							}
@@ -6593,11 +6630,11 @@ body{
 					}
 				}
 
-				.bodyCreateAvatar{
-					.container{
-						.panel{
-							button{
-								i{
+				.bodyCreateAvatar {
+					.container {
+						.panel {
+							button {
+								i {
 									background-color: $whiteColor;
 								}
 							}
@@ -6605,42 +6642,42 @@ body{
 					}
 				}
 
-				.loadMore{
-					button{
+				.loadMore {
+					button {
 						border: 1px solid $whiteColor;
-	
-						i{
+
+						i {
 							background-color: $whiteColor;
 						}
 					}
-	
-					mat-progress-spinner{
-						svg{
-							circle{
+
+					mat-progress-spinner {
+						svg {
+							circle {
 								stroke: $whiteColor;
 							}
 						}
 					}
 				}
 
-				.buttons{
-					button{
+				.buttons {
+					button {
 						background: $whiteColor;
 						color: $blackColor;
 
-						mat-progress-spinner{
-							svg{
-								circle{
+						mat-progress-spinner {
+							svg {
+								circle {
 									stroke: $blackColor;
 								}
 							}
 						}
 					}
 
-					.files{
-						button{
-							span{
-								i{
+					.files {
+						button {
+							span {
+								i {
 									background-color: $whiteColor;
 								}
 							}
@@ -6650,42 +6687,42 @@ body{
 			}
 		}
 
-		a{
+		a {
 			color: $whiteColor;
 		}
 
-		ul.notifications{
-			li .inner .operations span button{
+		ul.notifications {
+			li .inner .operations span button {
 				background-color: $whiteColor;
 				color: $fontBlackColor;
 
-				&.active{
+				&.active {
 					border: 1px solid $whiteColor;
 					background-color: transparent;
 					color: $whiteColor;
 				}
 
-				&.border{
+				&.border {
 					border: 1px solid $whiteColor;
 					color: $whiteColor;
 				}
 			}
 		}
 
-		ul.followers{
-			li{
-				.actions{
-					button{
+		ul.followers {
+			li {
+				.actions {
+					button {
 						background-color: $whiteColor;
 						color: $fontBlackColor;
 
-						&.active{
+						&.active {
 							border: 1px solid $whiteColor;
 							background-color: transparent;
 							color: $whiteColor;
 						}
 
-						&.pending{
+						&.pending {
 							background-color: $blueColor;
 						}
 					}
@@ -6693,34 +6730,34 @@ body{
 			}
 		}
 
-		.mat-menu-panel{
+		.mat-menu-panel {
 			background: $darkThemeColor;
 
-			button{
+			button {
 				color: $whiteColor;
-				
-				&.mat-menu-item-submenu-trigger::after{
+
+				&.mat-menu-item-submenu-trigger::after {
 					color: $whiteColor;
 				}
 			}
 		}
 
 		/*Notifications box*/
-		.notificationsBox{
-			.box{
+		.notificationsBox {
+			.box {
 				background-color: $darkThemeColor !important;
 			}
 		}
 
 		/*User box*/
-		.userBox{
-			.box{
+		.userBox {
+			.box {
 				background-color: $darkThemeColor !important;
 
-				.bottom{
-					.innerBox{
-						.switchAccounts{
-							.item .add i{
+				.bottom {
+					.innerBox {
+						.switchAccounts {
+							.item .add i {
 								background-color: $darkThemeColor !important;
 							}
 						}
@@ -6730,15 +6767,15 @@ body{
 		}
 
 		/*Cookies*/
-		.cookiesBox{
+		.cookiesBox {
 			background-color: $darkThemeColor;
 		}
 
 		/*Serch*/
-		.searchBox{
-			.box{
-				.inner{
-					input{
+		.searchBox {
+			.box {
+				.inner {
+					input {
 						color: $whiteColor;
 					}
 				}
@@ -6746,36 +6783,36 @@ body{
 		}
 
 		/*Tabs*/
-		.mat-tab-group{
-			.mat-tab-header{
+		.mat-tab-group {
+			.mat-tab-header {
 				border-bottom: 1px solid transparentize($whiteColor, .75);
 				color: $whiteColor;
 
-				.mat-tab-label{
+				.mat-tab-label {
 					color: $whiteColor;
 				}
 
-				.mat-tab-header-pagination-chevron{
-					border-color:  transparentize($whiteColor, .15);
+				.mat-tab-header-pagination-chevron {
+					border-color: transparentize($whiteColor, .15);
 				}
 			}
 		}
 
 		/*Upload files*/
-		.uploadFilesBox{
-			.button{
-				button{
+		.uploadFilesBox {
+			.button {
+				button {
 					background: $whiteColor;
 					color: $fontBlackColor;
 				}
 			}
 
-			.buttons{
-				button{
+			.buttons {
+				button {
 					background: $whiteColor;
 					color: $blackColor;
 
-					&:last-child{
+					&:last-child {
 						background: $blueColor;
 					}
 				}
@@ -6783,9 +6820,9 @@ body{
 		}
 
 		/*Box comments*/
-		.boxComments{
-			.loadComments{
-				button{
+		.boxComments {
+			.loadComments {
+				button {
 					background-color: $whiteColor;
 					color: $blackColor;
 					line-height: 24px;
@@ -6796,43 +6833,43 @@ body{
 		}
 
 		/*Load more*/
-		.loadMore{
-			button{
+		.loadMore {
+			button {
 				border: 1px solid $whiteColor;
 
-				i{
+				i {
 					background-color: $whiteColor;
 				}
 			}
 		}
 
 		/*Content pages*/
-		.innerBodyUser{
-			.header{
-				.head{
+		.innerBodyUser {
+			.header {
+				.head {
 					background-color: $blackColor;
 					box-shadow: $shadowBox0;
 
 					.left,
-					.right{
-						button{
+					.right {
+						button {
 							color: $whiteColor;
 						}
 					}
 
-					.center{
-						.logo{
+					.center {
+						.logo {
 							background-color: $whiteColor;
 						}
 					}
 				}
 
-				.menuBox{
-					.inner{
-						.item{
-							&.userMini{
-								.add{
-									i{
+				.menuBox {
+					.inner {
+						.item {
+							&.userMini {
+								.add {
+									i {
 										background-color: $blackColor;
 									}
 								}
@@ -6842,50 +6879,51 @@ body{
 				}
 			}
 
-			.pageUser{
-				.panel{
-					.dataBox{
-						.accounts .item .add i{
+			.pageUser {
+				.panel {
+					.dataBox {
+						.accounts .item .add i {
 							background-color: $blackColor;
 						}
 					}
 				}
 			}
 
-			.pageAudios{
-				.content{
-					.playlists{
-						.box{
-							&.upload{
-								.image{
+			.pageAudios {
+				.content {
+					.playlists {
+						.box {
+							&.upload {
+								.image {
 									background-color: $whiteColor;
 
-									.text{
+									.text {
 										color: $blackColor;
 									}
 								}
 							}
 						}
 
-						.boxUploadNew{
-							.inner{
+						.boxUploadNew {
+							.inner {
+
 								.upload,
-								.new{
+								.new {
 									border: 2px solid $whiteColor;
 									background-color: $whiteColor;
-		
+
 									.icon,
-									.text{
+									.text {
 										color: $blackColor;
 									}
 								}
 
-								.new{
+								.new {
 									background-color: transparent;
 									border: 2px solid $whiteColor;
 
 									.icon,
-									.text{
+									.text {
 										color: $whiteColor;
 									}
 								}
@@ -6895,17 +6933,17 @@ body{
 				}
 			}
 
-			.pageSettings{
-				.content{
-					.form{
-						.buttons{
-							button{
+			.pageSettings {
+				.content {
+					.form {
+						.buttons {
+							button {
 								background: $whiteColor;
 								color: $fontBlackColor;
 
-								mat-progress-spinner{
-									svg{
-										circle{
+								mat-progress-spinner {
+									svg {
+										circle {
 											stroke: $fontBlackColor;
 										}
 									}
@@ -6914,19 +6952,19 @@ body{
 						}
 					}
 
-					ul{
-						li{
-							.inner{
-								.avatar{
-									img{
+					ul {
+						li {
+							.inner {
+								.avatar {
+									img {
 										background-color: $whiteColor;
 									}
 								}
 
-								.add{
+								.add {
 									background-color: $whiteColor;
 
-									i{
+									i {
 										background-color: $blackColor;
 									}
 								}
@@ -6938,38 +6976,38 @@ body{
 		}
 
 		/*Mobile bottom nav*/
-		.bottomNav{
+		.bottomNav {
 			background-color: $blackColor;
 
-			ul{
-				li{
-					button{
-						.home{
-							.roof{
-								&:before{
+			ul {
+				li {
+					button {
+						.home {
+							.roof {
+								&:before {
 									border-bottom-color: $blackColor;
 								}
 
-								&:after{
+								&:after {
 									background-color: $blackColor;
 								}
 							}
 						}
 
-						.notifications{
-							&:after{
+						.notifications {
+							&:after {
 								border-bottom-color: $blackColor;
 							}
 
-							.clapper:after{
+							.clapper:after {
 								background-color: $blackColor;
 							}
 						}
 
-						&.selected{ 
+						&.selected {
 							color: $whiteColor;
 
-							.avatar{
+							.avatar {
 								border-color: $whiteColor;
 							}
 						}
@@ -6979,24 +7017,24 @@ body{
 		}
 
 		/*Audio Player web*/
-		.audioPlayerWeb{
+		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $blackColor;
 			box-shadow: $shadowBoxBottom;
 			color: $whiteColor;
 
-			.player{
-				.center{
-					.top{
-						button{
-							i{
+			.player {
+				.center {
+					.top {
+						button {
+							i {
 								background-color: $whiteColor;
 							}
 
-							&.playPause{
+							&.playPause {
 								background: $whiteColor;
 
-								i{
+								i {
 									background-color: $fontBlackColor;
 								}
 							}
@@ -7004,36 +7042,36 @@ body{
 					}
 				}
 
-				.right{
-					.playlist{
-						button{
-							i{
+				.right {
+					.playlist {
+						button {
+							i {
 								background-color: $whiteColor;
 							}
 						}
 					}
 
-					.volume{
-						button{
-							i{
+					.volume {
+						button {
+							i {
 								background-color: $whiteColor;
 							}
 						}
 
-						mat-slider{
-							.mat-slider-wrapper{
-								.mat-slider-track-wrapper{
-									.mat-slider-track-background{
+						mat-slider {
+							.mat-slider-wrapper {
+								.mat-slider-track-wrapper {
+									.mat-slider-track-background {
 										background-color: transparentize($whiteColor, .85);
 									}
 
-									.mat-slider-track-fill{
+									.mat-slider-track-fill {
 										background-color: $whiteColor;
 									}
 								}
 
-								.mat-slider-thumb-container{
-									.mat-slider-thumb{
+								.mat-slider-thumb-container {
+									.mat-slider-thumb {
 										background-color: $whiteColor;
 									}
 								}
@@ -7043,48 +7081,48 @@ body{
 				}
 			}
 
-			.playlistBox{
+			.playlistBox {
 				background-color: $darkThemeColor;
 				color: $whiteColor;
 
-				&:after{
+				&:after {
 					border: 8px solid $darkThemeColor;
 				}
 			}
 		}
 
-		.sessionsPanelMobile{
+		.sessionsPanelMobile {
 			background-color: $darkThemeColor;
 			color: $whiteColor;
 
-			.grabber{
+			.grabber {
 				background-color: transparentize($whiteColor, .25);
 			}
 		}
 
-		.mobilePlayer{
+		.mobilePlayer {
 			background-color: $darkThemeColor;
 			color: $whiteColor;
 
-			.topBar{
-				.grabber{
+			.topBar {
+				.grabber {
 					background-color: transparentize($whiteColor, .25);
 				}
 
-				.goTo button{
+				.goTo button {
 					border: 1px solid $whiteColor;
 					color: $whiteColor;
 				}
 			}
 
-			.box .player{
+			.box .player {
 				background: linear-gradient(0, $darkThemeColor 50%, $darkThemeColor 75%, transparent 100%);
 			}
 		}
 	}
 
 	/*Blue theme on user pages*/
-	&.blueTheme{
+	&.blueTheme {
 		background-color: $navyThemeColor;
 
 		mat-dialog-container,
@@ -7093,35 +7131,35 @@ body{
 		.userBox .box,
 		.cookiesBox,
 		.innerBodyUser .header .head,
-		.sessionsPanelMobile{
+		.sessionsPanelMobile {
 			background: $navyThemeColor !important;
 		}
 
 		/*Mobile bottom nav*/
-		.bottomNav{
+		.bottomNav {
 			background-color: $navyThemeColor;
 
-			ul{
-				li{
-					button{
-						.home{
-							.roof{
-								&:before{
+			ul {
+				li {
+					button {
+						.home {
+							.roof {
+								&:before {
 									border-bottom-color: $navyThemeColor;
 								}
 
-								&:after{
+								&:after {
 									background-color: $navyThemeColor;
 								}
 							}
 						}
 
-						.notifications{
-							&:after{
+						.notifications {
+							&:after {
 								border-bottom-color: $navyThemeColor;
 							}
 
-							.clapper:after{
+							.clapper:after {
 								background-color: $navyThemeColor;
 							}
 						}
@@ -7131,24 +7169,24 @@ body{
 		}
 
 		/*Audio Player web*/
-		.audioPlayerWeb{
+		.audioPlayerWeb {
 			background-color: $navyThemeColor;
 
-			.playlistBox{
+			.playlistBox {
 				background-color: $navyThemeColor;
 				color: $whiteColor;
 
-				&:after{
+				&:after {
 					border: 8px solid $navyThemeColor;
 				}
 			}
 		}
 
 		/*Audio Player mobile*/
-		.mobilePlayer{
+		.mobilePlayer {
 			background-color: $navyThemeColor;
 
-			.box .player{
+			.box .player {
 				background: linear-gradient(0, $navyThemeColor 50%, $navyThemeColor 75%, transparent 100%);
 			}
 		}
@@ -7156,15 +7194,15 @@ body{
 }
 
 /*DESKTOP*/
-@media (min-width: 761px){
-	body{
+@media (min-width: 761px) {
+	body {
 		padding: 0 0 32px;
 
-		.audioPlayerMobile{
+		.audioPlayerMobile {
 			display: none;
 		}
 
-		.audioPlayerWeb{
+		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $whiteColor;
 			box-shadow: $shadowBoxBottom;
@@ -7174,24 +7212,24 @@ body{
 			z-index: 99;
 			bottom: 0;
 
-			.player{
+			.player {
 				justify-content: space-between;
 				margin: 0 auto;
 				display: flex;
 				height: 100%;
 				width: 100%;
 
-				button{
+				button {
 					border-radius: 50% !important;
 					background: none;
 					box-shadow: none;
 				}
 
-				.left{
+				.left {
 					display: flex;
 					width: 100%;
 
-					.image{
+					.image {
 						margin: 12px 0 0 18px;
 						border-radius: 5px;
 						overflow: hidden;
@@ -7199,13 +7237,13 @@ body{
 						height: 62px;
 						width: 62px;
 
-						img{
+						img {
 							height: 100%;
 							width: 100%;
 						}
 					}
 
-					.text{
+					.text {
 						box-sizing: border-box;
 						padding: 24px 0 0 18px;
 						text-align: left;
@@ -7214,7 +7252,7 @@ body{
 						height: 86px;
 						float: left;
 
-						.title{
+						.title {
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							font-weight: bold;
@@ -7222,7 +7260,7 @@ body{
 							padding: 2px 0;
 						}
 
-						.artist{
+						.artist {
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							color: $greyColor;
@@ -7231,73 +7269,73 @@ body{
 						}
 					}
 
-					.add{
+					.add {
 						padding: 21px 0 0 12px;
 						float: left;
 					}
 				}
 
-				.center{
+				.center {
 					height: 86px;
 
-					.top{
+					.top {
 						justify-content: center;
 						align-items: center;
 						width: $pageMaxWidth;
 						padding: 8px 0 0;
 						display: flex;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background: none;
 							box-shadow: none;
 
-							i{
+							i {
 								background-color: $fontBlackColor;
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
 							}
 
-							&.mat-accent{
+							&.mat-accent {
 								color: #09f;
 							}
 
-							&.playPause{
+							&.playPause {
 								background: $fontBlackColor;
 								transition: .2s;
 								height: 52px;
 								width: 52px;
 								margin: 2px;
 
-								&:active{
+								&:active {
 									transform: scale(.8);
 								}
 
-								i{
+								i {
 									background-color: $whiteColor;
 									mask-size: 16px 48px;
 									margin: 18px;
 									height: 16px;
 									width: 16px;
 
-									&.play{
+									&.play {
 										mask-position: 0 0;
 									}
 
-									&.pause{
+									&.pause {
 										mask-position: 0 -16px;
 									}
 								}
 							}
 
 							&.prev,
-							&.next{
+							&.next {
 								margin: 4px 6px 4px 18px;
 								height: 48px;
 								width: 48px;
 
-								i{
+								i {
 									mask-position: 0 -56px;
 									mask-size: 28px 84px;
 									min-width: 14px;
@@ -7308,21 +7346,21 @@ body{
 								}
 							}
 
-							&.next{
+							&.next {
 								margin: 4px 18px 4px 6px;
 
-								i{
+								i {
 									mask-position: -14px -56px;
 								}
 							}
 
 							&.shuffle,
-							&.repeat{
+							&.repeat {
 								margin: 4px 0;
 								height: 48px;
 								width: 48px;
 
-								i{
+								i {
 									mask-position: 0 -70px;
 									mask-size: 28px 84px;
 									min-width: 14px;
@@ -7332,23 +7370,23 @@ body{
 									width: 14px;
 								}
 
-								&.active{
-									i{
+								&.active {
+									i {
 										background: $blueColor;
 									}
 								}
 							}
 
-							&.repeat{
-								i{
+							&.repeat {
+								i {
 									mask-position: -14px -70px;
 								}
 							}
 
-							&.disabled{
+							&.disabled {
 								pointer-events: none;
-								
-								i{
+
+								i {
 									background-color: $greyColor !important;
 									opacity: .5;
 								}
@@ -7356,52 +7394,52 @@ body{
 						}
 					}
 
-					.bottom{
+					.bottom {
 						margin: -4px 0 0;
 						width: 100%;
 
-						.progress{
+						.progress {
 							box-sizing: border-box;
 							display: flex;
 							width: 100%;
 							float: left;
 
 							.current,
-							.total{
+							.total {
 								text-align: center;
 								padding: 4px 8px;
 								font-size: 12px;
 								min-width: 36px;
 							}
 
-							.slider{
+							.slider {
 								position: relative;
 								cursor: pointer;
 								width: 100%;
 
-								mat-slider{
+								mat-slider {
 									height: 24px;
 									width: 100%;
 									padding: 0;
 									margin: 0;
 
-									.mat-slider-wrapper{
+									.mat-slider-wrapper {
 										top: 11px;
 										right: 0;
 										left: 0;
 
-										.mat-slider-track-wrapper{
-											.mat-slider-track-background{
+										.mat-slider-track-wrapper {
+											.mat-slider-track-background {
 												background-color: transparentize($greyColor, .5);
 											}
 
-											.mat-slider-track-fill{
+											.mat-slider-track-fill {
 												background-color: currentColor;
 											}
 										}
 
-										.mat-slider-thumb-container{
-											.mat-slider-thumb{
+										.mat-slider-thumb-container {
+											.mat-slider-thumb {
 												background-color: currentColor;
 												bottom: -6px;
 												height: 12px;
@@ -7412,7 +7450,7 @@ body{
 									}
 								}
 
-								#audioAnalyser{
+								#audioAnalyser {
 									margin: 0 .5px 13px;
 									position: absolute;
 									height: 32px;
@@ -7426,46 +7464,46 @@ body{
 					}
 				}
 
-				.right{
+				.right {
 					justify-content: flex-end;
 					box-sizing: border-box;
 					display: flex;
 					width: 100%;
 
-					.playlist{
+					.playlist {
 						padding: 23px 12px;
 						width: 40px;
 					}
 
-					.volume{
+					.volume {
 						padding: 23px 24px 23px 0;
 						max-width: 240px;
 						display: flex;
 
-						mat-slider{
+						mat-slider {
 							margin: 8px 0 0;
 							height: 24px;
 							width: 120px;
 							min-width: 0;
 							padding: 0;
 
-							.mat-slider-wrapper{
+							.mat-slider-wrapper {
 								top: 11px;
 								right: 0;
 								left: 0;
 
-								.mat-slider-track-wrapper{
-									.mat-slider-track-background{
+								.mat-slider-track-wrapper {
+									.mat-slider-track-background {
 										background-color: transparentize($fontBlackColor, .85);
 									}
 
-									.mat-slider-track-fill{
+									.mat-slider-track-fill {
 										background-color: $fontBlackColor;
 									}
 								}
 
-								.mat-slider-thumb-container{
-									.mat-slider-thumb{
+								.mat-slider-thumb-container {
+									.mat-slider-thumb {
 										background-color: $fontBlackColor;
 									}
 								}
@@ -7475,7 +7513,7 @@ body{
 				}
 			}
 
-			.playlistBox{
+			.playlistBox {
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
 				color: $fontBlackColor;
@@ -7486,7 +7524,7 @@ body{
 				bottom: 0;
 				right: 0;
 
-				&:after{
+				&:after {
 					content: '';
 					box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.14);
 					border: 8px solid $whiteColor;
@@ -7498,7 +7536,7 @@ body{
 					width: 0;
 				}
 
-				.data{
+				.data {
 					max-height: 480px;
 					overflow-y: auto;
 					padding: 12px 0;
@@ -7508,96 +7546,96 @@ body{
 			}
 		}
 
-		.playlist{
+		.playlist {
 			width: 666px;
 		}
 	}
 }
 
 /*MOBILE*/
-@media (max-width: 760px){
-	body{
-		mat-dialog-container{
+@media (max-width: 760px) {
+	body {
+		mat-dialog-container {
 			border-radius: 0 !important;
 			max-width: 100% !important;
 			position: absolute;
 			left: 0;
 			top: 0;
 
-			.mat-dialog-content{
+			.mat-dialog-content {
 				max-height: calc(100vh - 168px) !important;
 			}
 
-			.dialogBox{
+			.dialogBox {
 				overflow-y: auto;
 				max-height: 100%;
 				width: 100%;
 
-				.header{
-					&.mobile{
+				.header {
+					&.mobile {
 						display: flex;
 					}
 
-					.right{
+					.right {
 						display: block;
 					}
 				}
 
-				.container{
+				.container {
 					width: 100% !important;
 				}
 
-				.buttons{
+				.buttons {
 					display: none;
 
-					&.chat{
+					&.chat {
 						display: flex;
 					}
 
-					&.post{
+					&.post {
 						display: block;
 
-						.files{
+						.files {
 							display: flex;
 						}
 
-						.actions{
+						.actions {
 							display: none;
 						}
 					}
 				}
 
-				.bodyPublications{
-					.container{
+				.bodyPublications {
+					.container {
 						display: block;
 
-						.left{
+						.left {
 							width: 100%;
 							float: left;
 
-							.user{
+							.user {
 								display: flex;
 							}
 
-							.image{
-								img{
+							.image {
+								img {
 									min-height: 120px;
 								}
 
-								video{
+								video {
 									width: 100%;
 								}
 							}
 						}
 
-						.right{
+						.right {
 							width: 100%;
 
-							.box{
+							.box {
 								overflow: initial;
 								height: initial;
 
-								.panel .user{
+								.panel .user {
 									display: none;
 								}
 							}
@@ -7607,51 +7645,52 @@ body{
 			}
 		}
 
-		.disableAdBlock{
+		.disableAdBlock {
 			background-color: $greyColor;
 			border-radius: 0;
 			width: 100%;
 			margin: 0;
 		}
 
-		.alertBox{
+		.alertBox {
 			margin: 0;
 			top: 0;
 
-			.inner{
+			.inner {
 				text-align: center;
 				border-radius: 0;
 				padding: 18px;
 				width: 100%;
 				margin: 0;
 
-				button{
+				button {
 					display: none !important;
 				}
 			}
 		}
 
-		.cookiesBox{
+		.cookiesBox {
 			margin: 0 0 48px 0;
 			max-width: 100%;
 
-			&.home{
+			&.home {
 				margin: 0;
 			}
 		}
 
-		.pageHomeBox{
-			.left{
+		.pageHomeBox {
+			.left {
 				display: none;
 			}
 
-			.right{
+			.right {
 				width: 100%;
 
-				.inner{
-					.footer{
+				.inner {
+					.footer {
+
 						ul,
-						.copyright{
+						.copyright {
 							display: block;
 						}
 					}
@@ -7659,7 +7698,7 @@ body{
 			}
 		}
 
-		.bottomNav{
+		.bottomNav {
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $headerWhiteColor;
 			box-shadow: $shadowBoxBottom;
@@ -7673,36 +7712,36 @@ body{
 			right: 0;
 			left: 0;
 
-			ul{
+			ul {
 				display: flex;
 				width: 100%;
 				padding: 0;
 				margin: 0;
 
-				li{
+				li {
 					display: inline-block;
 					text-align: center;
 					list-style: none;
 					width: 100%;
 
-					button{
+					button {
 						color: currentColor;
 						border-radius: 0;
 						height: 48px;
 						width: 100%;
 
-						.mat-button-ripple-round{
+						.mat-button-ripple-round {
 							border-radius: 0;
 						}
 
-						.home{
+						.home {
 							box-sizing: border-box;
 							position: relative;
 							margin: auto;
 							height: 24px;
 							width: 24px;
 
-							&:before{
+							&:before {
 								content: '';
 								border: solid $iconWidth currentColor;
 								border-radius: 0 0 0 3px;
@@ -7715,7 +7754,7 @@ body{
 								left: 1px;
 							}
 
-							&:after{
+							&:after {
 								content: '';
 								border: solid $iconWidth currentColor;
 								border-radius: 0 0 3px 0;
@@ -7728,7 +7767,7 @@ body{
 								bottom: 0;
 							}
 
-							.roof{
+							.roof {
 								border-bottom: 12px solid currentColor;
 								border-right: 14px solid transparent;
 								border-left: 14px solid transparent;
@@ -7738,7 +7777,7 @@ body{
 								width: 0;
 								top: 1px;
 
-								&:before{
+								&:before {
 									content: '';
 									border-bottom: 11px solid $whiteColor;
 									border-right: 13px solid transparent;
@@ -7751,7 +7790,7 @@ body{
 									width: 0;
 								}
 
-								&:after{
+								&:after {
 									content: '';
 									border-bottom: 1px solid currentColor;
 									background-color: $whiteColor;
@@ -7765,13 +7804,13 @@ body{
 							}
 						}
 
-						.search{
+						.search {
 							position: relative;
 							margin: auto;
 							height: 24px;
 							width: 24px;
 
-							&:before{
+							&:before {
 								content: '';
 								border: solid $iconWidth currentColor;
 								box-sizing: border-box;
@@ -7783,7 +7822,7 @@ body{
 								top: 2px;
 							}
 
-							&:after{
+							&:after {
 								content: '';
 								background-color: currentColor;
 								transform: rotate(-45deg);
@@ -7795,7 +7834,7 @@ body{
 							}
 						}
 
-						.miniEqualizer{
+						.miniEqualizer {
 							border: $iconWidth solid currentColor;
 							box-sizing: border-box;
 							align-items: center;
@@ -7811,42 +7850,42 @@ body{
 							left: 0;
 							top: 0;
 
-							.bar{
+							.bar {
 								background-color: currentColor;
 								border-radius: 1px;
 								min-height: 2px;
 								margin: 0 0.5px;
 								width: 2px;
 
-								&:nth-child(1){
+								&:nth-child(1) {
 									height: 6px;
 								}
 
-								&:nth-child(2){
+								&:nth-child(2) {
 									height: 14px;
 								}
 
-								&:nth-child(3){
+								&:nth-child(3) {
 									height: 6px;
 								}
 
-								&:nth-child(4){
+								&:nth-child(4) {
 									height: 10px;
 								}
 
-								&:nth-child(5){
+								&:nth-child(5) {
 									height: 6px;
 								}
 							}
 
-							&.active{
-								.bar{
-									@for $i from 0 through 5{
-										&:nth-child(#{$i}){
+							&.active {
+								.bar {
+									@for $i from 0 through 5 {
+										&:nth-child(#{$i}) {
 											animation: grow#{$i} #{random(700) + 1500}ms alternate infinite;
 										}
 
-										@keyframes grow#{$i}{
+										@keyframes grow#{$i} {
 											@for $h from 0 through 10 {
 												#{$h * 10%} {
 													height: #{random(16)}px;
@@ -7858,31 +7897,31 @@ body{
 							}
 						}
 
-						.loader{
-							mat-progress-spinner{
+						.loader {
+							mat-progress-spinner {
 								height: 24px !important;
 								width: 24px !important;
 								margin: 0 auto;
 
-								svg{
+								svg {
 									height: 24px !important;
 									width: 24px !important;
 
-									circle{
+									circle {
 										stroke: transparentize($greyColor, .5) !important;
 									}
 								}
 							}
 						}
 
-						.notifications{
+						.notifications {
 							box-sizing: border-box;
 							position: relative;
 							margin: auto;
 							height: 24px;
 							width: 24px;
 
-							&:before{
+							&:before {
 								content: '';
 								border: solid $iconWidth currentColor;
 								border-radius: 14px 14px 0 0;
@@ -7895,7 +7934,7 @@ body{
 								top: 3px;
 							}
 
-							&:after{
+							&:after {
 								content: '';
 								border-bottom: solid $iconWidth $whiteColor;
 								border-top: solid $iconWidth currentColor;
@@ -7905,7 +7944,7 @@ body{
 								left: 2px;
 							}
 
-							.clapper{
+							.clapper {
 								border: solid $iconWidth currentColor;
 								position: absolute;
 								border-radius: 50%;
@@ -7914,7 +7953,7 @@ body{
 								left: 8px;
 								bottom: 0;
 
-								&:before{
+								&:before {
 									content: '';
 									border: solid $iconWidth currentColor;
 									box-sizing: border-box;
@@ -7926,7 +7965,7 @@ body{
 									top: -16px;
 								}
 
-								&:after{
+								&:after {
 									content: '';
 									background-color: $whiteColor;
 									position: absolute;
@@ -7937,7 +7976,7 @@ body{
 								}
 							}
 
-							.pending{
+							.pending {
 								background-color: $redColor;
 								margin: -8px 0 0 5px;
 								position: absolute;
@@ -7956,7 +7995,7 @@ body{
 							}
 						}
 
-						.avatar{
+						.avatar {
 							color: transparent;
 							border: $iconWidth solid currentColor;
 							border-radius: 50%;
@@ -7965,7 +8004,7 @@ body{
 							height: 26px;
 							width: 26px;
 
-							img{
+							img {
 								background-color: transparentize($greyColor, .5);
 								border-radius: 50%;
 								overflow: hidden;
@@ -7974,53 +8013,54 @@ body{
 							}
 						}
 
-						&.selected{
+						&.selected {
 							color: $blackColor;
 
-							.home{
+							.home {
+
 								&:before,
-								&:after{
+								&:after {
 									background-color: currentColor;
 								}
 
-								.roof{
-									&:after{
+								.roof {
+									&:after {
 										background-color: currentColor;
 									}
 
-									&:before{
+									&:before {
 										border-bottom-color: currentColor;
 									}
 								}
 							}
 
-							.search{
-								&:before{
+							.search {
+								&:before {
 									border-width: 2px;
 								}
 
-								&:after{
+								&:after {
 									width: 2px;
 								}
 							}
 
-							.notifications{
-								&:before{
+							.notifications {
+								&:before {
 									background-color: currentColor;
 								}
 
-								.clapper{
+								.clapper {
 									background-color: currentColor;
 									border-color: $whiteColor;
 
 									&:before,
-									&:after{
+									&:after {
 										background-color: currentColor;
 									}
 								}
 							}
 
-							.avatar{
+							.avatar {
 								border-color: $blackColor;
 							}
 						}
@@ -8028,7 +8068,7 @@ body{
 				}
 			}
 
-			.inner{
+			.inner {
 				justify-content: space-between;
 				align-items: center;
 				padding: 0 18px;
@@ -8036,7 +8076,7 @@ body{
 				height: 48px;
 				width: 100%;
 
-				.logo{
+				.logo {
 					background-color: $blackColor;
 					mask-image: $logoTextImage;
 					mask-repeat: no-repeat;
@@ -8048,10 +8088,10 @@ body{
 					margin: 0;
 				}
 
-				.buttons{
+				.buttons {
 					display: flex;
 
-					button{
+					button {
 						background-color: $blueColor;
 						color: $whiteColor;
 						font-weight: bold;
@@ -8062,7 +8102,7 @@ body{
 						min-width: 0;
 						height: 30px;
 
-						&:last-child{
+						&:last-child {
 							background-color: transparent;
 							border: 1px solid $blueColor;
 							color: $blueColor;
@@ -8073,11 +8113,11 @@ body{
 			}
 		}
 
-		.audioPlayerWeb{
+		.audioPlayerWeb {
 			display: none;
 		}
 
-		.audioPlayerMobile{
+		.audioPlayerMobile {
 			position: fixed;
 			z-index: 1000;
 			height: 100%;
@@ -8085,7 +8125,7 @@ body{
 			left: 0;
 			top: 0;
 
-			.box{
+			.box {
 				border-top: 1px solid transparentize($greyColor, .75);
 				background-color: $blackColor;
 				box-sizing: border-box;
@@ -8098,26 +8138,26 @@ body{
 				float: left;
 				bottom: 0;
 
-				.player{
+				.player {
 					background: linear-gradient(0, transparentize($blackColor, .05) 60%, transparentize($blackColor, .05) 75%, transparentize($blackColor, .15) 90%, transparent);
 					position: fixed;
 					width: 100%;
 					z-index: 9;
 					bottom: 0;
 
-					.top{
+					.top {
 						box-sizing: border-box;
 						padding: 12px 24px 0;
 						margin: 0 0 -12px;
 						width: 100%;
 						float: left;
 
-						.panel{
+						.panel {
 							justify-content: space-between;
 							display: flex;
 							width: 100%;
 
-							.text{
+							.text {
 								box-sizing: border-box;
 								padding: 12px 36px 0;
 								text-align: center;
@@ -8125,7 +8165,7 @@ body{
 								width: 100%;
 								float: left;
 
-								.title{
+								.title {
 									text-overflow: ellipsis;
 									white-space: nowrap;
 									font-weight: bold;
@@ -8135,7 +8175,7 @@ body{
 									font-size: 24px;
 								}
 
-								.artist{
+								.artist {
 									text-overflow: ellipsis;
 									white-space: nowrap;
 									overflow: hidden;
@@ -8143,12 +8183,12 @@ body{
 								}
 							}
 
-							.add{
+							.add {
 								margin: 32px 18px 0 0;
 								position: absolute;
 								right: 0;
 
-								button{
+								button {
 									position: relative;
 									background: none;
 									box-shadow: none;
@@ -8159,41 +8199,41 @@ body{
 									z-index: 9;
 									margin: 0;
 
-									i{
+									i {
 										background-color: $whiteColor;
 									}
 								}
 							}
 						}
 
-						.progress{
+						.progress {
 							box-sizing: border-box;
 							width: 100%;
 							float: left;
 
-							mat-slider{
+							mat-slider {
 								height: 36px;
 								width: 100%;
 								padding: 0;
 								margin: 0;
 
-								.mat-slider-wrapper{
+								.mat-slider-wrapper {
 									top: 18px;
 									right: 0;
 									left: 0;
 
-									.mat-slider-track-wrapper{
-										.mat-slider-track-background{
+									.mat-slider-track-wrapper {
+										.mat-slider-track-background {
 											background-color: transparentize($whiteColor, .85);
 										}
 
-										.mat-slider-track-fill{
+										.mat-slider-track-fill {
 											background-color: $whiteColor;
 										}
 									}
 
-									.mat-slider-thumb-container{
-										.mat-slider-thumb{
+									.mat-slider-thumb-container {
+										.mat-slider-thumb {
 											background-color: $whiteColor;
 											border: none;
 											height: 12px;
@@ -8201,7 +8241,7 @@ body{
 											right: -6px;
 											width: 12px;
 
-											&:active{
+											&:active {
 												transform: scale(2);
 											}
 										}
@@ -8210,7 +8250,7 @@ body{
 							}
 						}
 
-						.duration{
+						.duration {
 							color: transparentize($whiteColor, .5);
 							margin: -6px 0 0;
 							font-size: 12px;
@@ -8219,18 +8259,18 @@ body{
 							width: 100%;
 
 							.current,
-							.total{
+							.total {
 								text-align: left;
 								width: 100%;
 							}
 
-							.total{
+							.total {
 								text-align: right;
 							}
 						}
 					}
 
-					.bottom{
+					.bottom {
 						justify-content: center;
 						padding: 18px 0 12px;
 						align-items: center;
@@ -8238,55 +8278,55 @@ body{
 						width: 100%;
 						float: left;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background: none;
 							box-shadow: none;
 
-							i{
+							i {
 								background-color: $whiteColor;
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
 							}
 
-							&.mat-accent{
+							&.mat-accent {
 								color: #09f;
 							}
 
-							&.playPause{
+							&.playPause {
 								transition: .2s;
 								margin: 0 12px;
 								height: 76px;
 								width: 76px;
 
-								&:active{
+								&:active {
 									transform: scale(.8);
 								}
 
-								i{
+								i {
 									mask-size: 48px 144px;
 									margin: 14px;
 									height: 48px;
 									width: 48px;
 
-									&.play{
+									&.play {
 										mask-position: 0 0;
 									}
 
-									&.pause{
+									&.pause {
 										mask-position: 0 -48px;
 									}
 								}
 							}
 
 							&.prev,
-							&.next{
+							&.next {
 								margin: 4px 6px 4px 24px;
 								height: 48px;
 								width: 48px;
 
-								i{
+								i {
 									mask-position: 0 -96px;
 									mask-size: 48px 144px;
 									margin: 12px;
@@ -8295,21 +8335,21 @@ body{
 								}
 							}
 
-							&.next{
+							&.next {
 								margin: 4px 24px 4px 6px;
 
-								i{
+								i {
 									mask-position: -24px -96px;
 								}
 							}
 
 							&.shuffle,
-							&.repeat{
+							&.repeat {
 								margin: 4px 0;
 								height: 24px;
 								width: 24px;
 
-								i{
+								i {
 									mask-position: 0 -100px;
 									mask-size: 40px 120px;
 									height: 20px;
@@ -8317,23 +8357,23 @@ body{
 									margin: 2px;
 								}
 
-								&.active{
-									i{
+								&.active {
+									i {
 										background: $blueColor;
 									}
 								}
 							}
 
-							&.repeat{
-								i{
+							&.repeat {
+								i {
 									mask-position: -20px -100px;
 								}
 							}
 
-							&.disabled{
+							&.disabled {
 								pointer-events: none;
-								
-								i{
+
+								i {
 									background-color: $greyColor !important;
 									opacity: .5;
 								}
@@ -8341,7 +8381,7 @@ body{
 						}
 					}
 
-					.close{
+					.close {
 						justify-content: center;
 						align-items: center;
 						display: flex;
@@ -8349,21 +8389,21 @@ body{
 						float: left;
 						padding: 0;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background: none;
 							box-shadow: none;
 							height: 48px;
 							width: 48px;
 
-							i{
+							i {
 								background-color: $greyColor;
 							}
 						}
 					}
 				}
 
-				.data{
+				.data {
 					-webkit-overflow-scrolling: touch;
 					display: inline-block;
 					padding: 12px 0 546px;
@@ -8372,7 +8412,7 @@ body{
 					overflow-y: auto;
 					width: 100%;
 
-					ul{
+					ul {
 						position: relative;
 						display: block;
 						width: 100%;
@@ -8380,7 +8420,7 @@ body{
 						padding: 0;
 						margin: 0;
 
-						li{
+						li {
 							color: $whiteColor;
 						}
 					}
@@ -8388,7 +8428,7 @@ body{
 			}
 		}
 
-		.sessionsPanelMobile{
+		.sessionsPanelMobile {
 			border-top: 1px solid transparentize($greyColor, .5);
 			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
@@ -8396,7 +8436,7 @@ body{
 			width: 100%;
 			float: left;
 
-			.grabber{
+			.grabber {
 				background-color: transparentize($blackColor, .25);
 				border-radius: 4px;
 				margin: 12px auto;
@@ -8404,13 +8444,13 @@ body{
 				height: 4px;
 			}
 
-			ul{
+			ul {
 				padding: 12px 0;
 				float: left;
 				width: 100%;
 				margin: 0;
 
-				li{
+				li {
 					box-sizing: border-box;
 					position: relative;
 					user-select: none;
@@ -8422,7 +8462,7 @@ body{
 					float: left;
 					width: 100%;
 
-					.avatar{
+					.avatar {
 						box-sizing: border-box;
 						border-radius: 50%;
 						overflow: hidden;
@@ -8432,47 +8472,47 @@ body{
 						height: 40px;
 						width: 40px;
 
-						img{
+						img {
 							border-radius: 50%;
 							height: 100%;
 							width: 100%;
 						}
 					}
 
-					&.active{
-						.avatar{
+					&.active {
+						.avatar {
 							border: 2px solid $blueColor;
 							box-sizing: inherit;
 							margin: 2px 0;
 							padding: 2px;
 						}
 
-						.text{
-							.name{
+						.text {
+							.name {
 								color: $blueColor;
 							}
 
-							.user{
+							.user {
 								color: transparentize($blueColor, .25);
 							}
 						}
 
-						.actions{
+						.actions {
 							display: block;
 						}
 					}
 
-					.text{
+					.text {
 						box-sizing: border-box;
 						font-weight: bold;
 						padding: 6px 12px;
 						width: 100%;
 
-						.name{
+						.name {
 							word-break: break-all;
 						}
 
-						.user{
+						.user {
 							word-break: break-word;
 							white-space: pre-line;
 							color: $greyColor;
@@ -8481,11 +8521,11 @@ body{
 						}
 					}
 
-					.actions{
+					.actions {
 						display: none;
 						height: 48px;
 
-						i{
+						i {
 							background-color: $blueColor;
 							margin: 12px 8px;
 						}
@@ -8494,54 +8534,55 @@ body{
 			}
 		}
 
-		.innerBodyUser{
-			.header{
+		.innerBodyUser {
+			.header {
+
 				.head,
 				.notificationsBox,
 				.userBox,
-				.menuBox{
+				.menuBox {
 					display: none !important;
 				}
 			}
 
-			.innerBodyContent{
+			.innerBodyContent {
 				padding: 0 0 100px;
 				position: inherit;
 				overflow: scroll;
 				height: 100%;
 
-				.pagePhotos{
-					.content{
-						ul{
-							&.noPadding{
+				.pagePhotos {
+					.content {
+						ul {
+							&.noPadding {
 								padding: 0;
 							}
 						}
 					}
 				}
 
-				.pageUser{
-					.panel{
-						.dataBox{
-							.actions{
-								.inner.multiple{
+				.pageUser {
+					.panel {
+						.dataBox {
+							.actions {
+								.inner.multiple {
 									width: 100%;
 								}
 							}
 						}
 					}
 
-					.content{
-						ul{
-							li{
+					.content {
+						ul {
+							li {
 								background: transparent;
 								margin: 0;
 
-								&:last-child{
+								&:last-child {
 									border: none;
 								}
 
-								.ad{
+								.ad {
 									padding: 0;
 								}
 							}
@@ -8549,15 +8590,15 @@ body{
 					}
 				}
 
-				.pageNews{
-					.content .line.ad .adContent{
+				.pageNews {
+					.content .line.ad .adContent {
 						margin: 0 0 .5%;
 					}
 				}
 			}
 		}
 
-		.mobilePlayer{
+		.mobilePlayer {
 			border-top: 1px solid transparentize($greyColor, .5);
 			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
@@ -8566,24 +8607,24 @@ body{
 			min-height: 360px;
 			width: 100%;
 
-			.topBar{
+			.topBar {
 				padding: 0 0 12px;
 				width: 100%;
 
-				.grabber{
+				.grabber {
 					background-color: transparentize($blackColor, .25);
 					border-radius: 4px;
 					margin: 12px auto;
 					width: 36px;
 					height: 4px;
 				}
-	
-				.goTo{
+
+				.goTo {
 					justify-content: center;
 					display: flex;
 					width: 100%;
-	
-					button{
+
+					button {
 						background-color: transparent;
 						border: 1px solid $blackColor;
 						color: $blackColor;
@@ -8595,18 +8636,18 @@ body{
 				}
 			}
 
-			.box{
+			.box {
 				position: relative;
 				width: 100%;
 
-				.player{
+				.player {
 					background: linear-gradient(0, $whiteColor 50%, $whiteColor 75%, transparentize($whiteColor, 1) 100%);
 					position: fixed;
 					width: 100%;
 					z-index: 99;
 					bottom: 0;
 
-					.top{
+					.top {
 						box-sizing: border-box;
 						padding: 24px 18px 0;
 						position: relative;
@@ -8614,12 +8655,12 @@ body{
 						width: 100%;
 						float: left;
 
-						.panel{
+						.panel {
 							justify-content: space-between;
 							display: flex;
 							width: 100%;
 
-							.text{
+							.text {
 								box-sizing: border-box;
 								padding: 12px 24px 0;
 								text-align: center;
@@ -8628,7 +8669,7 @@ body{
 								width: 100%;
 								float: left;
 
-								.artist{
+								.artist {
 									text-overflow: ellipsis;
 									white-space: nowrap;
 									overflow: hidden;
@@ -8636,7 +8677,7 @@ body{
 									font-size: 13px;
 								}
 
-								.title{
+								.title {
 									text-overflow: ellipsis;
 									white-space: nowrap;
 									overflow: hidden;
@@ -8645,12 +8686,12 @@ body{
 								}
 							}
 
-							.add{
+							.add {
 								margin: 36px 8px 0 0;
 								position: absolute;
 								right: 0;
 
-								button{
+								button {
 									color: currentColor;
 									position: relative;
 									background: none;
@@ -8662,41 +8703,41 @@ body{
 									z-index: 9;
 									margin: 0;
 
-									i{
+									i {
 										background-color: currentColor;
 									}
 								}
 							}
 						}
 
-						.progress{
+						.progress {
 							box-sizing: border-box;
 							width: 100%;
 							float: left;
 
-							mat-slider{
+							mat-slider {
 								height: 36px;
 								width: 100%;
 								padding: 0;
 								margin: 0;
 
-								.mat-slider-wrapper{
+								.mat-slider-wrapper {
 									top: 18px;
 									right: 0;
 									left: 0;
 
-									.mat-slider-track-wrapper{
-										.mat-slider-track-background{
+									.mat-slider-track-wrapper {
+										.mat-slider-track-background {
 											background-color: transparentize($greyColor, .5);
 										}
 
-										.mat-slider-track-fill{
+										.mat-slider-track-fill {
 											background-color: currentColor;
 										}
 									}
 
-									.mat-slider-thumb-container{
-										.mat-slider-thumb{
+									.mat-slider-thumb-container {
+										.mat-slider-thumb {
 											background-color: currentColor;
 											border: none;
 											height: 12px;
@@ -8704,7 +8745,7 @@ body{
 											right: -6px;
 											width: 12px;
 
-											&:active{
+											&:active {
 												transform: scale(2);
 											}
 										}
@@ -8713,7 +8754,7 @@ body{
 							}
 						}
 
-						.duration{
+						.duration {
 							color: currentColor;
 							margin: -6px 0 0;
 							font-size: 12px;
@@ -8722,18 +8763,18 @@ body{
 							width: 100%;
 
 							.current,
-							.total{
+							.total {
 								text-align: left;
 								width: 100%;
 							}
 
-							.total{
+							.total {
 								text-align: right;
 							}
 						}
 					}
 
-					.bottom{
+					.bottom {
 						justify-content: center;
 						padding: 6px 0 12px;
 						align-items: center;
@@ -8742,56 +8783,56 @@ body{
 						width: 100%;
 						float: left;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background: none;
 							box-shadow: none;
 
-							i{
+							i {
 								background-color: currentColor;
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
 							}
 
-							&.mat-accent{
+							&.mat-accent {
 								color: currentColor;
 							}
 
-							&.playPause{
+							&.playPause {
 								transition: .2s;
 								margin: 0 12px;
 								height: 76px;
 								width: 76px;
 
-								&:active{
+								&:active {
 									transform: scale(.8);
 								}
 
-								i{
+								i {
 									mask-size: 48px 144px;
 									margin: 14px;
 									height: 48px;
 									width: 48px;
 
-									&.play{
+									&.play {
 										mask-position: 0 0;
 									}
 
-									&.pause{
+									&.pause {
 										mask-position: 0 -48px;
 									}
 								}
 							}
 
 							&.prev,
-							&.next{
+							&.next {
 								margin: 4px 6px 4px 24px;
 								height: 48px;
 								width: 48px;
 								width: 48px;
 
-								i{
+								i {
 									mask-position: 0 -96px;
 									mask-size: 48px 144px;
 									max-width: 24px;
@@ -8802,21 +8843,21 @@ body{
 								}
 							}
 
-							&.next{
+							&.next {
 								margin: 4px 24px 4px 6px;
 
-								i{
+								i {
 									mask-position: -24px -96px;
 								}
 							}
 
 							&.shuffle,
-							&.repeat{
+							&.repeat {
 								margin: 4px 0;
 								height: 24px;
 								width: 24px;
 
-								i{
+								i {
 									mask-position: 0 -100px;
 									mask-size: 40px 120px;
 									max-width: 20px;
@@ -8826,23 +8867,23 @@ body{
 									margin: 2px;
 								}
 
-								&.active{
-									i{
+								&.active {
+									i {
 										background: $blueColor;
 									}
 								}
 							}
 
-							&.repeat{
-								i{
+							&.repeat {
+								i {
 									mask-position: -20px -100px;
 								}
 							}
 
-							&.disabled{
+							&.disabled {
 								pointer-events: none;
-								
-								i{
+
+								i {
 									background-color: $greyColor !important;
 									opacity: .5;
 								}
@@ -8850,7 +8891,7 @@ body{
 						}
 					}
 
-					.close{
+					.close {
 						justify-content: center;
 						align-items: center;
 						display: flex;
@@ -8858,21 +8899,21 @@ body{
 						float: left;
 						padding: 0;
 
-						button{
+						button {
 							border-radius: 50% !important;
 							background: none;
 							box-shadow: none;
 							height: 48px;
 							width: 48px;
 
-							i{
+							i {
 								background-color: $greyColor;
 							}
 						}
 					}
 				}
 
-				.data{
+				.data {
 					-webkit-overflow-scrolling: touch;
 					display: inline-block;
 					position: relative;
@@ -8883,7 +8924,7 @@ body{
 					padding: 0;
 					margin: 0;
 
-					ul{
+					ul {
 						padding: 0 0 260px;
 						position: relative;
 						display: block;
@@ -8896,23 +8937,23 @@ body{
 		}
 
 		/*When is iPhone X (+36px)*/
-		&.iphoneXClass{
-			.cookiesBox{
+		&.iphoneXClass {
+			.cookiesBox {
 				margin: 0 0 84px 0;
 			}
 
-			.bottomNav{
+			.bottomNav {
 				height: 84px !important;
 			}
 
-			.sessionsPanelMobile{
+			.sessionsPanelMobile {
 				padding: 0 0 36px 0;
 			}
 
-			.mobilePlayer{
+			.mobilePlayer {
 				padding: 0 0 36px 0;
 
-				.box .player{
+				.box .player {
 					padding: 0 0 36px 0;
 				}
 			}
