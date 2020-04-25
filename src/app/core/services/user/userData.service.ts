@@ -225,7 +225,7 @@ export class UserDataService {
 		}
 	}
 
-	getUserData(id: any) {
+	getUserData(id) {
 		const url = this.env.url + 'assets/api/user/getUser.php';
 		let params = '&id=' + id;
 		params = params.replace('&', '?');
@@ -434,5 +434,16 @@ export class UserDataService {
 				return null;
 			}
 		}
+	}
+
+	getRecommended(data) {
+		const url = this.env.url + 'assets/api/user/getRecommended.php';
+		let params = '&user=' + data.user;
+		params = params.replace('&', '?');
+
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
 	}
 }

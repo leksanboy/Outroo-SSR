@@ -48,36 +48,6 @@
 											</div>
 										</div>
 									</div>
-
-									<!-- <div class="box upload" (click)="uploadFile.click()" *ngIf="userData?.id === sessionData?.current?.id">
-										<div mat-ripple class="image">
-											<div class="text">
-												<i label="cloud-upload"></i>
-											</div>
-										</div>
-
-										<div class="panel">
-											<div class="title" matTooltip="{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}} | {{translations?.audios?.maxSizePerFile}}">
-												{{translations?.audios?.chooseFiles}}
-											</div>
-										</div>
-
-										<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
-									</div>
-
-									<div class="box new" (click)="createPlaylist()" *ngIf="userData?.id === sessionData?.current?.id">
-										<div mat-ripple class="image">
-											<div class="text">
-												<i label="add"></i>
-											</div>
-										</div>
-
-										<div class="panel">
-											<div class="title" matTooltip="{{translations?.common?.createPlaylist}}">
-												{{translations?.common?.createPlaylist}}
-											</div>
-										</div>
-									</div> -->
 									
 									<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removed}">
 										<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
@@ -247,7 +217,7 @@
 												</mat-menu>
 
 												<mat-menu #menuPlaylists="matMenu">
-													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
@@ -321,7 +291,7 @@
 												</mat-menu>
 
 												<mat-menu #menuPlaylists="matMenu">
-													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
@@ -430,7 +400,7 @@
 												</mat-menu>
 												
 												<mat-menu #menuPlaylists="matMenu">
-													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
@@ -510,7 +480,7 @@
 												</mat-menu>
 
 												<mat-menu #menuPlaylists="matMenu">
-													<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 													<span *ngFor="let p of sessionData?.current?.playlists">
 														<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
@@ -586,7 +556,7 @@
 										</mat-menu>
 
 										<mat-menu #menuPlaylists="matMenu">
-											<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+											<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 											<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 											<span *ngFor="let p of sessionData?.current?.playlists">
 												<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>

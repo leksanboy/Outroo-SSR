@@ -9,7 +9,7 @@
 						</button>
 
 						<div class="text">
-							<span class="active" (click)="showAccounts = !showAccounts" *ngIf="(userData?.id === sessionData?.current?.id)">
+							<span class="active" (click)="showAccounts = !showAccounts" *ngIf="userData?.id === sessionData?.current?.id">
 								{{userData?.username}}
 								<i label="arrow-drop-up" *ngIf="showAccounts"></i>
 								<i label="arrow-drop-down" *ngIf="!showAccounts"></i>
@@ -29,7 +29,7 @@
 						</mat-menu>
 					</div>
 
-					<div class="accounts" *ngIf="showAccounts">
+					<div class="accounts" *ngIf="(userData?.id === sessionData?.current?.id) && showAccounts">
 						<div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x?.id}">
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x); showChangeSession=false;">
 								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
@@ -122,88 +122,34 @@
 								<i class="icon50" label="send-comment"></i>
 							</button>
 
-							<button mat-raised-button class="icon" (click)="recommendedUsers = !recommendedUsers">
-								<i label="arrow-drop-up" *ngIf="recommendedUsers"></i>
-								<i label="arrow-drop-down" *ngIf="!recommendedUsers"></i>
+							<button mat-raised-button class="icon" (click)="getRecommendedUsers()">
+								<mat-progress-spinner mode="indeterminate" *ngIf="recommendedUsers.loading"></mat-progress-spinner>
+								<i label="arrow-drop-up" *ngIf="recommendedUsers.show && !recommendedUsers.loading"></i>
+								<i label="arrow-drop-down" *ngIf="!recommendedUsers.show && !recommendedUsers.loading"></i>
 							</button>
 						</div>
 					</div>
 
-					<div class="recommendedUsers" *ngIf="recommendedUsers">
-						<div class="title">Recommended for you</div>
+					<div class="recommendedUsers" *ngIf="(userData?.id !== sessionData?.current?.id) && !recommendedUsers.loading && recommendedUsers.show">
+						<div class="title">
+							{{translations?.common?.recommendedForYou}}
+						</div>
 
 						<ul>
-							<li>
-								<div class="inner">
+							<li *ngFor="let x of recommendedUsers.list; let i = index;" [ngClass]="{'remove': x?.dismiss}">
+								<div class="inner" routerLink="/{{x.user.username}}">
+									<div class="close" (click)="dismissRecommended(x, i)">
+										<i class="icon65 grey" label="close"></i>
+									</div>
 									<div class="avatar">
-										<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+										<img [src]="x?.user?.avatar ? x?.user?.avatarUrl : env.avatar"/>
 									</div>
-									<div class="texts">
-										<div class="text">@sasa</div>
-										<div class="text">Sasa Rafalsky</div>
-									</div>
+									<a class="texts">
+										<div class="text">{{x?.user?.username}}</div>
+										<div class="text">{{x?.user?.name}}</div>
+									</a>
 									<div class="button">
-										<button mat-raised-button>Follow</button>
-									</div>
-								</div>
-							</li>
-
-							<li>
-								<div class="inner">
-									<div class="avatar">
-										<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-									</div>
-									<div class="texts">
-										<div class="text">@sasa</div>
-										<div class="text">Sasa Rafalsky</div>
-									</div>
-									<div class="button">
-										<button mat-raised-button>Follow</button>
-									</div>
-								</div>
-							</li>
-
-							<li>
-								<div class="inner">
-									<div class="avatar">
-										<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-									</div>
-									<div class="texts">
-										<div class="text">@sasa</div>
-										<div class="text">Sasa Rafalsky</div>
-									</div>
-									<div class="button">
-										<button mat-raised-button>Follow</button>
-									</div>
-								</div>
-							</li>
-
-							<li>
-								<div class="inner">
-									<div class="avatar">
-										<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-									</div>
-									<div class="texts">
-										<div class="text">@sasa</div>
-										<div class="text">Sasa Rafalsky</div>
-									</div>
-									<div class="button">
-										<button mat-raised-button>Follow</button>
-									</div>
-								</div>
-							</li>
-
-							<li>
-								<div class="inner">
-									<div class="avatar">
-										<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-									</div>
-									<div class="texts">
-										<div class="text">@sasa</div>
-										<div class="text">Sasa Rafalsky</div>
-									</div>
-									<div class="button">
-										<button mat-raised-button>Follow</button>
+										<button mat-raised-button>Follow me</button>
 									</div>
 								</div>
 							</li>

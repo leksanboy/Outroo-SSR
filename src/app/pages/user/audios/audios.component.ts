@@ -1008,6 +1008,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
+			case('createPlaylist'):
+				const dataCP = 'create';
+				this.sessionService.setDataCreatePlaylist(dataCP);	
+				break;
 			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);

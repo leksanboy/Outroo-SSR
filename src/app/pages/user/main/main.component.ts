@@ -54,7 +54,12 @@ export class MainComponent implements OnInit, OnDestroy {
 	public searchBoxMentions: boolean;
 	public comeFromUserButton: boolean;
 	public showAccounts: boolean;
-	public recommendedUsers: boolean;
+	public recommendedUsers = {
+		loading: false,
+		noData: true,
+		show: false,
+		list: []
+	};
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -135,6 +140,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
 					// Get publications
 					this.default('default', this.userData.username);
+
+					// Reset
+					this.showAccounts = false;
+					this.recommendedUsers.show = false;
 				}
 			});
 
@@ -201,7 +210,9 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
 		this.activeComeFromUserButton.unsubscribe();
-		this.recommendedUsers = false;
+		
+		this.showAccounts = false;
+		this.recommendedUsers.show = false;
 	}
 
 	// Go back
@@ -891,5 +902,44 @@ export class MainComponent implements OnInit, OnDestroy {
 		endPosition = endPosition === -1 ? content.length : endPosition;
 
 		return content.substring(startPosition + 1, endPosition);
+	}
+
+	// Recommended users
+	getRecommendedUsers() {
+		this.recommendedUsers.show = !this.recommendedUsers.show;
+		this.recommendedUsers.loading = true;
+
+		console.log('this.recommendedUsers:', this.recommendedUsers);
+
+		if (this.recommendedUsers.show && this.recommendedUsers.list.length === 0) {
+			const data = {
+				user: this.userData.id
+			};
+
+			this.userDataService.getRecommended(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.recommendedUsers.loading = false;
+					}, 600);
+
+					if (!res || res.length === 0) {
+						this.recommendedUsers.noData = true;
+					} else {
+						this.recommendedUsers.noData = false;
+						this.recommendedUsers.list = res;
+					}
+				}, error => {
+					this.recommendedUsers.loading = false;
+				});
+		} else {
+			this.recommendedUsers.loading = false;
+		}
+	}
+
+	dismissRecommended(item, index) {
+		item.dismiss = true;
+		console.log('item:', item);
+
+		this.recommendedUsers.list.splice(index, 1);
 	}
 }

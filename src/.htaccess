@@ -8,9 +8,26 @@
 	Header set Connection keep-alive
 
 	Header set X-Content-Type-Options nosniff
-	Header always set Access-Control-Allow-Origin "*"
-	Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
-	Header always set Access-Control-Allow-Headers "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+	Header set Access-Control-Allow-Origin "*"
+	Header set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+	Header set Access-Control-Allow-Headers "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+
+	# FilesMatch
+	<FilesMatch "\.(txt|xml|js|css|gz)$">
+		Header set Cache-Control "max-age=2592000"
+	</FilesMatch>
+
+	<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|mp4|m4v|ogg|webm|aac)$">
+		Header set Cache-Control "max-age=2592000"
+	</FilesMatch>
+
+	<FilesMatch "\.(jpg|jpeg|png|gif|swf|webp)$">
+		Header set Cache-Control "max-age=2592000"
+	</FilesMatch>
+
+	<FilesMatch "\.(gz)$">
+		Header append Vary: Accept-Encoding
+	</FilesMatch>
 </IfModule>
 FileETag None
 
@@ -38,24 +55,6 @@ FileETag None
 
 	<FilesMatch "\.(jpg|jpeg|png|gif|swf|webp|svg)$">
 		ExpiresDefault A2592000
-	</FilesMatch>
-</IfModule>
-
-<IfModule mod_headers.c>
-	<FilesMatch "\.(txt|xml|js)$">
-		Header set Cache-Control "max-age=2592000"
-	</FilesMatch>
-
-	<FilesMatch "\.(css)$">
-		Header set Cache-Control "max-age=2592000"
-	</FilesMatch>
-
-	<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|mp4|m4v|ogg|webm|aac)$">
-		Header set Cache-Control "max-age=2592000"
-	</FilesMatch>
-
-	<FilesMatch "\.(jpg|jpeg|png|gif|swf|webp)$">
-		Header set Cache-Control "max-age=2592000"
 	</FilesMatch>
 </IfModule>
 
@@ -126,22 +125,6 @@ FileETag None
 
 
 # ----------------------------------------------------------------------
-# | Connection 															|
-# ----------------------------------------------------------------------
-
-
-<IfModule mod_headers.c>
-	<FilesMatch "\.(js|css|xml|gz)$">
-		Header append Vary: Accept-Encoding
-	</FilesMatch>
-</IfModule>
-
-<ifModule mod_headers.c>
-	Header set Connection keep-alive
-</ifModule>
-
-
-# ----------------------------------------------------------------------
 # | Mod_Rewrite 														|
 # ----------------------------------------------------------------------
 
@@ -170,7 +153,7 @@ FileETag None
 # ----------------------------------------------------------------------
 
 # ·> Deny access any folder "assets/**/*"
-Options -Indexes
+#Options -Indexes
 
 # ·> Returns 403, if you access .php file in url
 #RewriteEngine On

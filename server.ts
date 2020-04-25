@@ -11,12 +11,10 @@ import { ngExpressEngine } from '@nguniversal/express-engine'; 			        // Exp
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import { renderModuleFactory } from '@angular/platform-server';			        // Import module map for lazy loading
-// Interfaces
-import { ValueProvider } from '@angular/core';
+
+import { ValueProvider } from '@angular/core';                                  // Interfaces
 
 // const asyncForEach = require('./node/utils/asyncForEach');
-
-
 // const IS_RELEASE = true;				// robots.txt
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
@@ -57,8 +55,7 @@ app.engine('html', (_, options, callback) => {
             <ValueProvider> { provide: `REQUEST_MODE`, useValue: `USER-REQUEST` },
             <ValueProvider> { provide: `REDIRECT_CONFIG`, useValue: RC }
         ]
-    })
-    .then((html: string) => {
+    }).then((html: string) => {
         if (RC.config.need) {
             console.log(`REDIRECT_CONFIG: `, RC.config);
             options.res.redirect(RC.config.code, RC.config.url);

@@ -396,6 +396,7 @@
 		"cropper": "Image cropper",
 		"publicationNotExists": "The publication does not exist or has been deleted",
 		"clonedPlaylistSuccessfully": "Playlist was cloned successfully into your playlists",
-		"followingPlaylistSuccessfully": "Now you are following this playlist"
+		"followingPlaylistSuccessfully": "Now you are following this playlist",
+		"recommendedForYou": "Recommended for you"
 	}
 }

@@ -2503,11 +2503,15 @@ body{
 						button{
 							background: $blueColor;
 							color: $whiteColor;
+							height: 32px;
+							line-height: 32px;
+							font-size: 12px;
+							font-weight: bold;
 
 							mat-progress-spinner{
 								height: 16px !important;
 								width: 16px !important;
-								margin: 10px 6px 0 0;
+								margin: 8px 6px 0 0;
 								float: left;
 
 								svg{
@@ -2531,8 +2535,7 @@ body{
 								line-height: 18px;
 								color: $greyColor;
 								font-weight: bold;
-								padding: 9px;
-								height: 18px;
+								padding: 8px 12px;
 
 								&:hover{
 									background-color: transparentize($blueColor, .85);
@@ -2625,7 +2628,8 @@ body{
 							margin: 12px 0 0;
 							box-shadow: none;
 							height: 32px;
-							
+							font-size: 12px;
+
 							i{
 								margin: 0 -6px 0 0;
 							}
@@ -4791,7 +4795,7 @@ body{
 			.pageWeb{
 				max-width: $pageMaxWidth;
 				margin: 0 auto;
-				
+
 				.content{
 					width: 100%;
 					float: left;
@@ -4956,11 +4960,13 @@ body{
 								color: $whiteColor;
 								font-weight: bold;
 								font-size: 12px;
+								line-height: 32px;
+								height: 32px;
 
 								mat-progress-spinner{
 									height: 16px !important;
 									width: 16px !important;
-									margin: 10px 6px 0 0;
+									margin: 8px 6px 0 0;
 									float: left;
 
 									svg{
@@ -4981,7 +4987,7 @@ body{
 							}
 						}
 					}
-				}	
+				}
 			}
 
 			/*User*/
@@ -5179,7 +5185,7 @@ body{
 										margin: 4px 0 0;
 										float: left;
 										width: 100%;
-		
+
 										a:hover{
 											text-decoration: underline;
 										}
@@ -5200,34 +5206,48 @@ body{
 								width: calc(100% - 86px * 2 - 18px * 2);
 								justify-content: center;
 								display: flex;
-								
+
 								button{
-									border: 1px solid currentColor;
+									border: 1px solid transparentize($greyColor, .25);
 									background-color: transparent;
 									color: currentColor;
 									border-radius: 5px;
-									line-height: 28px;
+									line-height: 32px;
 									box-shadow: none;
 									font-size: 12px;
 									padding: 0 18px;
-									height: 28px;
+									height: 32px;
 									width: 100%;
-	
+
 									span{
 										justify-content: center;
 										align-items: center;
 										display: flex;
 									}
-	
+
 									&:active{
-										background-color: transparentize($greyColor, .85);
+										background-color: transparentize($greyColor, .9);
 									}
 
 									&.icon{
 										margin: 0 0 0 8px;
-										min-width: 28px;
-										width: 28px;
+										min-width: 32px;
+										width: 32px;
 										padding: 0;
+
+										mat-progress-spinner{
+											height: 12px !important;
+											width: 12px !important;
+
+											svg{
+												height: 12px !important;
+												width: 12px !important;
+
+												circle{
+													stroke: transparentize($greyColor, .25);
+												}
+											}
+										}
 									}
 								}
 							}
@@ -5369,14 +5389,14 @@ body{
 
 						.recommendedUsers{
 							margin: 12px 0 0;
-							padding: 0 18px;
 							width: 100%;
 							float: left;
+							padding: 0;
 
 							.title{
 								color: $greyColor;
 								font-size: 13px;
-								padding: 12px 0;
+								padding: 12px 18px;
 							}
 
 							ul{
@@ -5385,7 +5405,7 @@ body{
 								white-space: nowrap;
 								overflow-y: hidden;
 								overflow-x: auto;
-								padding: 0 0 18px;
+								padding: 0 18px 18px;
 								float: left;
 								width: 100%;
 								margin: 0;
@@ -5404,9 +5424,18 @@ body{
 										flex-direction: column;
 										justify-content: center;
 										align-items: center;
-										border: 1px solid transparentize($greyColor, .5);
+										border: 1px solid transparentize($greyColor, .75);
 										border-radius: 5px;
 										padding: 12px;
+										position: relative;
+
+										.close{
+											width: 24px;
+											height: 24px;
+											position: absolute;
+											top: 0;
+											right: 0;
+										}
 
 										.avatar{
 											width: 64px;
@@ -5421,14 +5450,15 @@ body{
 
 										.texts{
 											text-align: center;
-											margin: 12px 0 6px;
-											text-overflow: ellipsis;
-											box-sizing: border-box;
-											white-space: nowrap;
-											overflow: hidden;
+											margin: 12px 0;
 											width: 100%;
 
 											.text{
+												text-overflow: ellipsis;
+												box-sizing: border-box;
+												white-space: nowrap;
+												overflow: hidden;
+
 												&:first-child{
 													font-weight: bold;
 													font-size: 13px;
