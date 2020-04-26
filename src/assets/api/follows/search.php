@@ -4,14 +4,14 @@
 	$session = sessionId();
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT id, 
-					about, 
-					official, 
-					private 
-			FROM z_users 
-			WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%') 
-				AND is_deleted = 0 
-			ORDER by username ASC, name ASC 
+	$sql = "SELECT id,
+					about,
+					official,
+					private
+			FROM z_users
+			WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%')
+				AND is_deleted = 0
+			ORDER by username ASC, name ASC
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
 

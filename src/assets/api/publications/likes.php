@@ -4,10 +4,10 @@
 	$session = sessionId();
 	$id = $_GET['id'];
 
-	$sql = "SELECT u.id, 
+	$sql = "SELECT u.id,
 					u.private
 			FROM z_publications_likes p
-				INNER JOIN z_users u ON p.user = u.id 
+				INNER JOIN z_users u ON p.user = u.id
 			WHERE publication = $id
 			ORDER BY date DESC
 			LIMIT $more, $cuantity";
@@ -27,6 +27,6 @@
 	} else {
 		var_dump(http_response_code(204));
 	}
-	
+
 	$conn->close();
 ?>

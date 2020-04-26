@@ -9,11 +9,11 @@
 	searchPublicationAnalytics($session, $caption, 'top');
 
 	// Users
-	$sqlUsers = "SELECT id, about, official, private 
-				FROM z_users 
-				WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%') 
-					AND is_deleted = 0 
-				ORDER by username ASC, name ASC 
+	$sqlUsers = "SELECT id, about, official, private
+				FROM z_users
+				WHERE (username LIKE '%$caption%' OR name LIKE '%$caption%')
+					AND is_deleted = 0
+				ORDER by username ASC, name ASC
 				LIMIT $more, $cuantity";
 	$resultUsers = $conn->query($sqlUsers);
 
@@ -32,13 +32,13 @@
 	// Hashtags
 	$sqlHashtags = "SELECT id, hashtags
 			FROM z_publications
-			WHERE hashtags LIKE '%$caption%' 
+			WHERE hashtags LIKE '%$caption%'
 				AND (
-						(length(photos) > 0 AND is_deleted = 0) OR  
-						(length(url_video) > 0 AND is_deleted = 0) OR 
+						(length(photos) > 0 AND is_deleted = 0) OR
+						(length(url_video) > 0 AND is_deleted = 0) OR
 						((length(photos) > 0 AND length(url_video) > 0) AND is_deleted = 0)
 					)
-			ORDER BY date DESC 
+			ORDER BY date DESC
 			LIMIT $more, $cuantity";
 	$resultHashtags = $conn->query($sqlHashtags);
 
@@ -46,7 +46,7 @@
 	if ($resultHashtags->num_rows > 0) {
 		while($row = $resultHashtags->fetch_assoc()) {
 			$row['caption'] = json_decode($row['hashtags']);
-			
+
 			foreach ($row['caption'] as &$h) {
 				if (strpos(strtolower($h), strtolower($caption)) !== false) {
 					$tag = array(

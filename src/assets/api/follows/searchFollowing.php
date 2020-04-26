@@ -5,14 +5,14 @@
 	$user = $_GET['user'];
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT u.id, 
-					u.about, 
-					u.official, 
+	$sql = "SELECT u.id,
+					u.about,
+					u.official,
 					u.private
 			FROM z_following f
 				INNER JOIN z_users u ON f.receiver = u.id
-			WHERE f.sender = $user 
-				AND (u.username LIKE '%$caption%' OR u.name LIKE '%$caption%') 
+			WHERE f.sender = $user
+				AND (u.username LIKE '%$caption%' OR u.name LIKE '%$caption%')
 				AND f.is_deleted = 0
 			ORDER by u.username ASC, u.name ASC
 			LIMIT $more, $cuantity";

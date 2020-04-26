@@ -5245,14 +5245,12 @@ body {
 							float: left;
 
 							.inner {
-								//width: calc(100% - 86px * 2 - 18px * 2);
 								justify-content: center;
 								display: flex;
 
 								button {
-									border: 1px solid transparentize($greyColor, .25);
-									background-color: transparent;
-									color: currentColor;
+									background-color: $blueColor;
+									color: $whiteColor;
 									border-radius: 5px;
 									line-height: 32px;
 									box-shadow: none;
@@ -5267,11 +5265,21 @@ body {
 										display: flex;
 									}
 
-									&:active {
-										background-color: transparentize($greyColor, .9);
+									&.settings,
+									&.following {
+										border: 1px solid transparentize($greyColor, .25);
+										background-color: transparent;
+										color: currentColor;
+									}
+
+									&.pending {
+										background-color: $blueColor;
 									}
 
 									&.icon {
+										border: 1px solid transparentize($greyColor, .25);
+										background-color: transparent;
+										color: currentColor;
 										margin: 0 0 0 8px;
 										min-width: 32px;
 										width: 32px;
@@ -5357,71 +5365,6 @@ body {
 											opacity: .5;
 											width: 100%;
 										}
-
-										/* .text{
-											flex-direction: column;
-											text-align: center;
-											line-height: 18px;
-											font-weight: bold;
-											font-size: 15px;
-											display: flex;
-											height: 36px;
-
-											i{
-												mask-size: 24px calc(24px * 15);
-												margin: 0 2px 0 0;
-												min-width: 12px;
-												height: 12px;
-												width: 12px;
-
-												&[label="bookmark"]{
-													mask-position: -12px -72px;
-												}
-											}
-
-											.inner{
-												align-items: center;
-												display: flex;
-												opacity: .5;
-
-												i{
-													mask-size: 24px calc(24px * 15);
-													margin: 0 2px 0 0;
-													min-width: 12px;
-													height: 12px;
-													width: 12px;
-													display: none;
-
-													&[label="photo-camera"]{
-														mask-position: -12px -288px;
-													}
-
-													&[label="music"]{
-														mask-position: 0 -288px;
-													}
-
-													&[label="person"]{
-														mask-position: 0 -252px;
-													}
-
-													&[label="group"]{
-														mask-position: -12px -252px;
-													}
-
-													&[label="bookmark"]{
-														mask-position: -12px -72px;
-													}
-												}
-
-												.name{
-													text-transform: uppercase;
-													text-overflow: ellipsis;
-													color: currentColor;
-													overflow: hidden;
-													font-size: 10px;
-												}
-											}
-										} */
 									}
 
 									&:last-child {
@@ -5496,6 +5439,7 @@ body {
 										.texts {
 											text-align: center;
 											margin: 12px 0;
+											height: 30px;
 											width: 100%;
 
 											.text {
@@ -5517,17 +5461,28 @@ body {
 										}
 
 										.button {
+											width: 100%;
+
 											button {
 												background-color: $blueColor;
-												text-transform: uppercase;
+												text-transform: capitalize;
 												color: $whiteColor;
 												font-weight: bold;
 												line-height: 28px;
-												font-size: 11px;
-												padding: 0 8px;
+												font-size: 12px;
 												min-width: 0;
+												width: 100%;
+												padding: 0;
 												height: 28px;
 												box-shadow: none;
+
+												&.following {
+													background-color: #2e2e2e;
+												}
+
+												&.pending {
+													background-color: $blueColor;
+												}
 											}
 										}
 									}

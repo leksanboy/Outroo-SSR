@@ -25,7 +25,7 @@ export class HeadersService {
 	getHeaders() {
 		if (this.ssrService.isBrowser) {
 			const userData: any = JSON.parse(this.window.localStorage.getItem('userData'));
-			const authorization = userData ? userData.current.authorization : '';
+			const authorization = userData ? userData.current.authorization : 'empty';
 			const headers = new HttpHeaders().set('Authorization', authorization).set('Content-Type', 'application/json');
 
 			// const authorizationValidator = this.clicksPerSecond() ? authorization : '';

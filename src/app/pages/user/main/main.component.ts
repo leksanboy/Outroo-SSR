@@ -221,17 +221,17 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Follow / Unfollow
-	followUnfollow(type, user) {
+	followUnfollow(type, item) {
 		if (type === 'follow') {
-			user.followingStatus = user.private ? 'pending' : 'following';
+			item.status = item.private ? 'pending' : 'following';
 		} else if (type === 'unfollow') {
-			user.followingStatus = 'unfollow';
+			item.status = 'unfollow';
 		}
 
 		const data = {
-			type: user.followingStatus,
-			private: user.private,
-			receiver: user.id
+			type: item.status,
+			private: item.private,
+			receiver: item.user ? item.user.id : item.id
 		};
 
 		this.followsDataService.followUnfollow(data).subscribe();

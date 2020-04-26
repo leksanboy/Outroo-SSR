@@ -11,6 +11,22 @@
 			if ($name === 'Authorization') {
 				$auth = $value;
 			}
+
+			if ($name === 'Sec-Fetch-Dest') {
+				$secFetchDest = $value;
+			}
+
+			if ($name === 'Sec-Fetch-Mode') {
+				$secFetchMode = $value;
+			}
+		}
+
+		/* Return error | when try access by url with params  */
+		if ($secFetchDest === 'document' && $secFetchMode === 'navigate') {
+			http_response_code(401);
+			echo " ( ._.) Sorry";
+
+			return "Error";
 		}
 
 		if (isset($auth)) {
@@ -19,10 +35,11 @@
 					WHERE authorization = '$auth'";
 			$result = $conn->query($sql)->fetch_assoc();
 
-			if ($result['user'])
+			if ($result['user']) {
 				$result = $result['user'];
-			else
+			} else {
 				$result = 0;
+			}
 		} else {
 			$result = 0;
 		}
@@ -256,8 +273,8 @@
 		if ($sender !== $receiver) {
 			$sql = "SELECT status
 					FROM z_following
-					WHERE sender = $sender 
-						AND receiver = $receiver 
+					WHERE sender = $sender
+						AND receiver = $receiver
 						AND is_deleted = 0";
 			$result = $conn->query($sql)->fetch_assoc();
 

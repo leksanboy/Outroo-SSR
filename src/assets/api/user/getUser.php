@@ -36,7 +36,7 @@
 				$row['countBookmarks'] 		= countUserBookmarks($row['id']);
 
 				if ($session) {
-					$row['followingStatus'] = checkFollowingStatus($session, $row['id']);
+					$row['status'] = checkFollowingStatus($session, $row['id']);
 
 					// Set who vist my page
 					setVisitor($session, $row['id']);

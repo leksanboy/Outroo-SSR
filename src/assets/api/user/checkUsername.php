@@ -1,5 +1,5 @@
 <?php include "../db.php";
-	$inUse = array("outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy", 
+	$inUse = array("outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy",
 					"user", "audios", "bookmarks", "saved", "followers", "following", "home", "main", "news",
 					"notifications", "photos", "settings",
 					"index", "web", "about", "confirm-email", "error", "forgot-password", "logout", "privacy", "terms",

@@ -101,9 +101,9 @@
 		$sender = $data['sender'];
 
 		$sql = "UPDATE z_following
-				SET status = 0, 
-					ip_address = '$ipAddress' 
-				WHERE sender = '$sender' 
+				SET status = 0,
+					ip_address = '$ipAddress'
+				WHERE sender = '$sender'
 					AND receiver = '$receiver'";
 		$result = $conn->query($sql);
 
@@ -115,24 +115,24 @@
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver) {
 			generateNotification($notification);
 		}
 
-		$followingStatus = checkFollowingStatus($receiver, $sender);
-		echo json_encode($followingStatus);
-		
+		$status = checkFollowingStatus($receiver, $sender);
+		echo json_encode($status);
+
 		$conn->close();
 	} else if ($type === 'decline') { // Decline request
 		$receiver = sessionId();
 		$sender = $data['sender'];
 
 		$sql = "UPDATE z_following
-				SET is_deleted = 1, 
-					ip_address = '$ipAddress' 
-				WHERE sender = $sender 
+				SET is_deleted = 1,
+					ip_address = '$ipAddress'
+				WHERE sender = $sender
 					AND receiver = $receiver";
 		$result = $conn->query($sql);
 

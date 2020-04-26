@@ -45,7 +45,7 @@
 
 			// Followers
 			if ($row['url'] === 'followers') {
-				$row['statusFollowing'] = checkFollowingStatus($session, $row['sender']);
+				$row['status'] = checkFollowingStatus($session, $row['sender']);
 				$row['private'] = checkUserPrivacy($row['sender']);
 			}
 

@@ -4,6 +4,6 @@
 
 	// Check if I'm following
 	$data = checkFollowingStatus($sender, $receiver);
-	
+
 	echo json_encode($data);
 ?>

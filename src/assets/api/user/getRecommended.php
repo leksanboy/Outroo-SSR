@@ -16,6 +16,8 @@
                     CASE
 						WHEN u.id <> $session THEN
 							NOT EXISTS (SELECT 1 FROM z_users_dismiss_recommended WHERE sender = $session and receiver = u.id and is_deleted = 0)
+                            AND
+							NOT EXISTS (SELECT 1 FROM z_following WHERE sender = $session and receiver = u.id and is_deleted = 0)
 					END
                 )
             ORDER BY RAND()
@@ -34,10 +36,7 @@
 
         echo json_encode($data);
     } else {
-        /* if ($result->num_rows === 0) {
-            // Traigo gente top | Crear consulta
-            var_dump(http_response_code(201));
-        } else { */
+        // Traigo gente top | Crear consulta
 
         var_dump(http_response_code(204));
     }
