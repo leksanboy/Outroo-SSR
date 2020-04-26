@@ -2,7 +2,7 @@
 	<div class="innerBodyContent">
 		<div class="pageNews">
 			<div class="content">
-				<div class="searchBox news" *ngIf="data.active == 'default' || data.active == 'search'">
+				<div class="searchBox news" *ngIf="data.active === 'default' || data.active === 'search'">
 				 	<div class="box">
 						<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 							<div class="inner">
@@ -16,20 +16,20 @@
 					</div>
 				</div>
 
-				<span *ngIf="data.active == 'default'">
+				<span *ngIf="data.active === 'default'">
 					<span *ngIf="dataDefault.list">
 						<div class="line" *ngFor="let line of dataDefault.list" [ngClass]="{'ad': line.contentTypeAd}">
 							<ul class="publications" *ngIf="!line.contentTypeAd">
 								<li mat-ripple *ngFor="let x of line">
 									<a class="image" (click)="show(x)">
-										<span *ngIf="x.type == 'photo'">
+										<span *ngIf="x.type === 'photo'">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 											<div class="category">
 												<i label="videocam" *ngIf="x.photos.mimetype.indexOf('video') !== -1"></i>
 												<i label="gif" *ngIf="x.photos.mimetype.indexOf('image/gif') !== -1"></i>
 											</div>
 										</span>
-										<span *ngIf="x.type == 'url'">
+										<span *ngIf="x.type === 'url'">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
 											<div class="category">
 												<i label="videocam"></i>
@@ -64,47 +64,43 @@
 					</div>
 				</span>
 
-				<span *ngIf="data.active == 'search'">
+				<span *ngIf="data.active === 'search'">
 					<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
 						<mat-tab label="{{translations?.news?.top}}">
-							<ul class="followers people" *ngIf="dataTop.list">
+							<ul class="followers" *ngIf="dataTop.list">
 								<li *ngFor="let x of dataTop.list; let i=index;">
-									<div class="type" *ngIf="x.type == 'user'">
+									<span *ngIf="x.type === 'user'">
 										<a class="avatar" routerLink="/{{x.user.username}}">
 											<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 										</a>
 
-										<div class="text">
-											<div class="username">
-												<div class="data">
-													<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-													<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												</div>
+										<div class="texts">
+											<div class="text">
+												<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 											</div>
 
-											<div class="container">
+											<div class="text">
 												{{x.user.name}}
 											</div>
 										</div>
-									</div>
+									</span>
 
-									<div class="type" *ngIf="x.type == 'hashtag'" (click)="setHashtag('set', x)">
-										<div class="tag">
-											#
-										</div>
+									<span *ngIf="x.type === 'hashtag'" (click)="setHashtag('set', x)">
+										<a class="avatar">
+											<div class="hashtag">#</div>
+										</a>
 
-										<div class="text">
-											<div class="username">
-												<div class="data">
-													<a class="name">{{x.caption}}</a>
-												</div>
+										<div class="texts">
+											<div class="text">
+												<a>{{x.caption}}</a>
 											</div>
 
-											<div class="container">
+											<div class="text">
 												{{x.count}} {{translations?.news?.posts}}
 											</div>
 										</div>
-									</div>
+									</span>
 								</li>
 							</ul>
 
@@ -124,15 +120,13 @@
 										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 									</a>
 
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 										</div>
 
-										<div class="container">
+										<div class="text">
 											{{x.user.name}}
 										</div>
 									</div>
@@ -146,7 +140,7 @@
 							<div class="noData" *ngIf="dataPeople.noData">
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
-							
+
 							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
 								<button mat-fab (click)="people('more')" *ngIf="!dataPeople.loadingMoreData">
 									<i label="add"></i>
@@ -160,10 +154,10 @@
 								<ul class="publications" *ngIf="!line.contentTypeAd">
 									<li mat-ripple *ngFor="let x of line">
 										<a class="image" (click)="show(x, i)">
-											<span *ngIf="x.type == 'photo'">
+											<span *ngIf="x.type === 'photo'">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 											</span>
-											<span *ngIf="x.type == 'url'">
+											<span *ngIf="x.type === 'url'">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
 											</span>
 										</a>
@@ -185,7 +179,7 @@
 							<div class="noData" *ngIf="dataPosts.noData">
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
-							
+
 							<div class="loadMore" *ngIf="dataPosts.loadMoreData">
 								<button mat-fab (click)="tag('more')" *ngIf="!dataPosts.loadingMoreData">
 									<i label="add"></i>
@@ -195,20 +189,18 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.tag}}">
-							<ul class="followers people" *ngIf="dataTop.list">
+							<ul class="followers" *ngIf="dataTop.list">
 								<li *ngFor="let x of dataTag.list; let i=index;" (click)="setHashtag('set', x)">
-									<div class="tag">
-										#
-									</div>
+									<a class="avatar">
+										<div class="hashtag">#</div>
+									</a>
 
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name">{{x.caption}}</a>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a>{{x.caption}}</a>
 										</div>
 
-										<div class="container">
+										<div class="text">
 											{{x.count}} {{translations?.news?.posts}}
 										</div>
 									</div>
@@ -222,7 +214,7 @@
 							<div class="noData" *ngIf="dataTag.noData">
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
-							
+
 							<div class="loadMore" *ngIf="dataTag.loadMoreData">
 								<button mat-fab (click)="tag('more')" *ngIf="!dataTag.loadingMoreData">
 									<i label="add"></i>
@@ -233,7 +225,7 @@
 					</mat-tab-group>
 				</span>
 
-				<span *ngIf="data.active == 'hashtag'">
+				<span *ngIf="data.active === 'hashtag'">
 					<div class="back" (click)="setHashtag('close', null)">
 						<button mat-icon-button>
 							<i label="back"></i>
@@ -245,10 +237,10 @@
 						<ul class="publications" *ngIf="!line.contentTypeAd">
 							<li mat-ripple *ngFor="let x of line">
 								<a class="image" (click)="show(x, i)">
-									<span *ngIf="x.type == 'photo'">
+									<span *ngIf="x.type === 'photo'">
 										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 									</span>
-									<span *ngIf="x.type == 'url'">
+									<span *ngIf="x.type === 'url'">
 										<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
 									</span>
 								</a>
@@ -270,7 +262,7 @@
 					<div class="noData" *ngIf="dataHashtag.noData">
 						<div class="description">{{translations?.common?.noSearchResults}}</div>
 					</div>
-					
+
 					<div class="loadMore" *ngIf="dataHashtag.loadMoreData">
 						<button mat-fab (click)="setHashtag('more', null)" *ngIf="!dataHashtag.loadingMoreData">
 							<i label="add"></i>

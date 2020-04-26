@@ -3,10 +3,10 @@
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
-	$id = $data['id'];
+	$user = $data['user'];
 
-	$sql = "INSERT INTO z_audios_replays (user, song, ip_address)
-			VALUES ($session, $id, '$ipAddress')";
+	$sql = "INSERT INTO z_users_dismiss_recommended (sender, receiver, ip_address)
+			VALUES ($session, $user, '$ipAddress')";
 	$result = $conn->query($sql);
 
 	var_dump(http_response_code(204));

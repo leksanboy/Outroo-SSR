@@ -54,7 +54,7 @@
 						'type' 		=> 'hashtag',
 						'count' 	=> hashtagCount($h)
 					);
-					
+
 					$dataHashtags[] = $tag;
 				}
 			}

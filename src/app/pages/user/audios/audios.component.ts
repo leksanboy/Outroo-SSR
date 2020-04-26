@@ -1163,7 +1163,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			case('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
-				item.removed = item.addRemoveSession ? false : true;
+				item.removed = item.addRemoveSession ? true : false;
 
 				const dataARS = {
 					type: item.removeType,

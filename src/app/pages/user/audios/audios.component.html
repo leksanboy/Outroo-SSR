@@ -48,7 +48,7 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removed}">
 										<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
@@ -105,7 +105,7 @@
 								<div class="uploadFilesBox audios" *ngIf="userData?.id === sessionData?.current?.id && dataFiles.list.length > 0">
 									<div class="info">
 										<div class="title">
-											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}	
+											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}
 										</div>
 										<div class="subtitle">
 											{{translations?.audios?.maxSizePerFile}}
@@ -192,7 +192,7 @@
 												</div>
 												<div class="duration">{{x.duration}}</div>
 											</div>
-											
+
 											<div class="actions" *ngIf="sessionData?.current?.id">
 												<span *ngIf="userData?.id === sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="appMenu">

@@ -4,17 +4,17 @@
 
 	if ($user) {
 		$sql = "SELECT id,
-						username, 
-						name, 
-						avatar, 
-						background, 
-						email, 
-						about, 
-						about_original as aboutOriginal, 
-						language, 
-						theme, 
-						official, 
-						private 
+						username,
+						name,
+						avatar,
+						background,
+						email,
+						about,
+						about_original as aboutOriginal,
+						language,
+						theme,
+						official,
+						private
 				FROM z_users
 				WHERE id = $user";
 		$result = $conn->query($sql);
@@ -37,7 +37,7 @@
 
 				if ($session) {
 					$row['followingStatus'] = checkFollowingStatus($session, $row['id']);
-					
+
 					// Set who vist my page
 					setVisitor($session, $row['id']);
 				}
@@ -45,10 +45,10 @@
 				if ($session === $row['id']) {
 					$row['playlists'] 		= getPlaylistsSelect($row['id']);
 				}
-				
+
 				$data = $row;
 			}
-			
+
 			echo json_encode($data);
 		} else {
 			var_dump(http_response_code(204));

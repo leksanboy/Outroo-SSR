@@ -112,16 +112,14 @@ export class UserDataService {
 
 	analytics(page, title, userId) {
 		if (this.ssrService.isBrowser) {
-			ga('create', 'UA-90068205-1', 'auto');
-			// ga('set', 'page', page);
-			// ga('send', 'pageview');
+			/* ga('create', 'UA-90068205-1', 'auto');
 
 			ga('send', {
 				'hitType': 'pageview',
 				'page': page,
 				'title': title,
 				'userId': userId
-			});
+			}); */
 		}
 	}
 
@@ -442,6 +440,16 @@ export class UserDataService {
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
+
+	dismissRecommended(data) {
+		const url = this.env.url + 'assets/api/user/dismissRecommended.php';
+		const params = data;
+
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));

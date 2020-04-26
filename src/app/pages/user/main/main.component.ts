@@ -941,5 +941,11 @@ export class MainComponent implements OnInit, OnDestroy {
 		console.log('item:', item);
 
 		this.recommendedUsers.list.splice(index, 1);
+
+		const data = {
+			user: item.user.id
+		};
+
+		this.userDataService.dismissRecommended(data).subscribe();
 	}
 }

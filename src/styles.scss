@@ -715,6 +715,10 @@ body {
 			float: left;
 			width: 100%;
 
+			span{
+				display: inherit;
+			}
+
 			.avatar {
 				box-sizing: border-box;
 				border-radius: 50%;
@@ -724,6 +728,18 @@ body {
 				width: 48px;
 
 				img {
+					width: 100%;
+				}
+
+				.hashtag{
+					background-color: #2e2e2e;
+					justify-content: center;
+					align-items: center;
+					text-align: center;
+					display: flex;
+					line-height: 100%;
+					font-size: 24px;
+					height: 100%;
 					width: 100%;
 				}
 			}
@@ -768,25 +784,24 @@ body {
 
 			.actions {
 				button {
-					background-color: $fontBlackColor;
-					text-transform: uppercase;
+					background-color: $blueColor;
+					text-transform: capitalize;
 					margin: 10px 0 0 6px;
 					color: $whiteColor;
 					font-weight: bold;
 					line-height: 28px;
-					font-size: 11px;
-					padding: 0 8px;
+					font-size: 12px;
 					min-width: 0;
+					width: 96px;
+					padding: 0;
 					height: 28px;
 
 					&:first-child {
 						margin-left: 0;
 					}
 
-					&.active {
-						border: 1px solid $fontBlackColor;
-						background-color: transparent;
-						color: $fontBlackColor;
+					&.following {
+						background-color: #2e2e2e;
 					}
 
 					&.pending {
@@ -911,39 +926,29 @@ body {
 					display: flex;
 					height: 48px;
 
-					span {
-						display: inherit;
+					button {
+						background-color: $blueColor;
+						text-transform: capitalize;
+						margin: 10px 0 0 6px;
+						color: $whiteColor;
+						font-weight: bold;
+						line-height: 28px;
+						font-size: 12px;
+						min-width: 0;
+						width: 96px;
+						padding: 0;
+						height: 28px;
 
-						button {
-							background-color: $blackColor;
-							box-sizing: border-box;
-							margin: 10px 0 0 6px;
-							color: $whiteColor;
-							font-weight: bold;
-							line-height: 28px;
-							font-size: 11px;
-							padding: 0 8px;
-							min-width: 0;
-							height: 28px;
+						&:first-child {
+							margin-left: 0;
+						}
 
-							&:first-child {
-								margin-left: 0;
-							}
+						&.following {
+							background-color: #2e2e2e;
+						}
 
-							&.active {
-								border: 1px solid $blackColor;
-								background-color: transparent;
-								color: $blackColor;
-							}
-
-							&.border {
-								border: 1px solid $blackColor;
-								color: $blackColor;
-							}
-
-							&.pending {
-								background-color: $blueColor;
-							}
+						&.pending {
+							background-color: $blueColor;
 						}
 					}
 
@@ -975,6 +980,9 @@ body {
 							display: flex;
 							align-items: center;
 							justify-content: center;
+							width: 40px;
+							height: 40px;
+							background-color: transparent;
 						}
 					}
 				}
@@ -1490,7 +1498,7 @@ body {
 
 			mat-hint {
 				color: $greyColor;
-				margin: -26px 0 0;
+				margin: -8px 0 0;
 				font-size: 10px;
 			}
 		}
@@ -1530,6 +1538,7 @@ body {
 
 		.mat-form-field-underline {
 			background-color: $greyColor;
+			bottom: 0;
 
 			.mat-input-ripple {
 				&.mat-form-field-ripple {
@@ -1590,6 +1599,7 @@ body {
 			}
 		}
 
+		&.mat-form-field-appearance-legacy,
 		&.mat-form-field-appearance-outline {
 			height: inherit;
 			margin: 0;
@@ -2904,7 +2914,7 @@ body {
 
 		.mat-dialog-content {
 			box-sizing: border-box;
-			padding: 0;
+			padding: 0 0 4px;
 			margin: 0;
 		}
 
@@ -3668,12 +3678,8 @@ body {
 												display: flex;
 												margin: 0;
 
-												span {
-													display: inherit;
-
-													i {
-														margin: 0;
-													}
+												i {
+													margin: 0;
 												}
 											}
 										}
@@ -5239,7 +5245,7 @@ body {
 							float: left;
 
 							.inner {
-								width: calc(100% - 86px * 2 - 18px * 2);
+								//width: calc(100% - 86px * 2 - 18px * 2);
 								justify-content: center;
 								display: flex;
 
@@ -5328,6 +5334,7 @@ body {
 										.count {
 											font-weight: bold;
 											font-size: 15px;
+											width: 100%;
 
 											i {
 												mask-size: 24px calc(24px * 15);
@@ -5348,6 +5355,7 @@ body {
 											overflow: hidden;
 											font-size: 12px;
 											opacity: .5;
+											width: 100%;
 										}
 
 										/* .text{
@@ -5471,6 +5479,7 @@ body {
 											position: absolute;
 											top: 0;
 											right: 0;
+											cursor: pointer;
 										}
 
 										.avatar {
@@ -5521,6 +5530,10 @@ body {
 												box-shadow: none;
 											}
 										}
+									}
+
+									&:last-child{
+										margin: 0;
 									}
 								}
 							}
@@ -6689,45 +6702,6 @@ body {
 
 		a {
 			color: $whiteColor;
-		}
-
-		ul.notifications {
-			li .inner .operations span button {
-				background-color: $whiteColor;
-				color: $fontBlackColor;
-
-				&.active {
-					border: 1px solid $whiteColor;
-					background-color: transparent;
-					color: $whiteColor;
-				}
-
-				&.border {
-					border: 1px solid $whiteColor;
-					color: $whiteColor;
-				}
-			}
-		}
-
-		ul.followers {
-			li {
-				.actions {
-					button {
-						background-color: $whiteColor;
-						color: $fontBlackColor;
-
-						&.active {
-							border: 1px solid $whiteColor;
-							background-color: transparent;
-							color: $whiteColor;
-						}
-
-						&.pending {
-							background-color: $blueColor;
-						}
-					}
-				}
-			}
 		}
 
 		.mat-menu-panel {
@@ -8562,15 +8536,15 @@ body {
 				}
 
 				.pageUser {
-					.panel {
-						.dataBox {
-							.actions {
-								.inner.multiple {
-									width: 100%;
-								}
-							}
-						}
-					}
+					// .panel {
+					// 	.dataBox {
+					// 		.actions {
+					// 			.inner.multiple {
+					// 				width: 100%;
+					// 			}
+					// 		}
+					// 	}
+					// }
 
 					.content {
 						ul {
