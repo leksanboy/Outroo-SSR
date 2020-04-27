@@ -15,7 +15,7 @@
 	// Create new array and insert photo & video files on table
 	if ($photos) {
 		$photosArray = array();
-		
+
 		foreach($photos as $row){
 			if ($row['uploaded'])
 				$insertedPhoto = uploadPhotosPublication($session,

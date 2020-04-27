@@ -38,8 +38,7 @@
 								<div class="theme">
 									<mat-radio-group formControlName="theme" name="theme">
 										<mat-radio-button [value]="0" class="white">{{translations?.settings?.themes?.white}}</mat-radio-button>
-										<mat-radio-button [value]="1" class="blue">{{translations?.settings?.themes?.blue}}</mat-radio-button>
-										<mat-radio-button [value]="2" class="black">{{translations?.settings?.themes?.black}}</mat-radio-button>
+										<mat-radio-button [value]="1" class="black">{{translations?.settings?.themes?.black}}</mat-radio-button>
 									</mat-radio-group>
 								</div>
 
@@ -72,10 +71,6 @@
 									</div>
 								</div>
 
-								<!-- <div class="private">
-									<mat-slide-toggle formControlName="private">{{translations?.common?.privateAccount}}</mat-slide-toggle>
-								</div> -->
-
 								<mat-checkbox formControlName="private">{{translations?.common?.privateAccount}}</mat-checkbox>
 
 								<div class="buttons">
@@ -87,7 +82,7 @@
 							</form>
 						</div>
 		 			</mat-tab>
-		 			
+
 		 			<mat-tab label="{{translations?.settings?.changePassword}}">
 						<div class="form">
 							<form [formGroup]="actionFormPasswordData" (ngSubmit)="submitPassword()">

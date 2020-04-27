@@ -32,63 +32,63 @@
 				<div class="box">
 					<div class="innerBox">
 						<ul class="notifications" *ngIf="dataNotifications.list">
-							<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status == 0, 'remove': x.addRemoveSession}">
+							<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status === 0, 'remove': x.addRemoveSession}">
 								<a class="avatar" routerLink="/{{x.user.username}}">
 									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
 
 								<div class="inner" *ngIf="x.url === 'followers'">
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												<div class="date">{{x?.date | timeago}}</div>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											<div class="date">{{x?.date | timeago}}</div>
 										</div>
-										
-										<div class="container">
-											<span *ngIf="x.type == 'startFollowing' || x.type == 'startFollowingPrivate' || x.type == 'startFollowingPrivateAccepted'">{{translations?.notifications?.startFollowingYou}}</span>
-											<span *ngIf="x.type == 'acceptRequest'">{{translations?.notifications?.acceptFollowingRequest}}</span>
+
+										<div class="text">
+											<span *ngIf="x.type === 'startFollowing' || x.type === 'startFollowingPrivate' || x.type === 'startFollowingPrivateAccepted'">
+												{{translations?.notifications?.startFollowingYou}}
+											</span>
+											<span *ngIf="x.type === 'acceptRequest'">
+												{{translations?.notifications?.acceptFollowingRequest}}
+											</span>
 										</div>
 									</div>
 
 									<div class="operations">
 										<!-- Request from others -->
-										<span *ngIf="sessionData.current.id == x.receiver && x.type == 'startFollowingPrivate'">
+										<span *ngIf="sessionData.current.id === x.receiver && x.type === 'startFollowingPrivate'">
 											<button mat-button class="active" (click)="followUnfollow('accept', x)">
 												{{translations?.notifications?.accept}}
 											</button>
-
-											<button mat-button class="border" (click)="followUnfollow('decline', x)">
+											<button mat-button class="active" (click)="followUnfollow('decline', x)">
 												{{translations?.notifications?.decline}}
 											</button>
 										</span>
 
 										<!-- Mine Requests -->
-										<span *ngIf="x.type != 'startFollowingPrivate'">
-											<button mat-button class="pending" *ngIf="sessionData.current.id != 'x.receiver' && x.statusFollowing == 'pending'" [matMenuTriggerFor]="cancelRequest">
+										<span *ngIf="x.type !== 'startFollowingPrivate'">
+											<button mat-button *ngIf="x.statusFollowing === 'unfollow'" (click)="followUnfollow('follow', x)">
+												{{translations?.common?.follow}}
+											</button>
+
+											<button mat-button class="pending" *ngIf="sessionData.current.id !== 'x.receiver' && x.statusFollowing === 'pending'" [matMenuTriggerFor]="cancelRequest">
 												{{translations?.common?.pending}}
 											</button>
 
-											<button mat-button class="active" *ngIf="x.statusFollowing == 'unfollow'" (click)="followUnfollow('follow', x)">
-												{{translations?.common?.follow}}
+											<button mat-button class="following" *ngIf="x.statusFollowing === 'following'" [matMenuTriggerFor]="stopFollowing">
+												{{translations?.common?.following}}
 											</button>
 
 											<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
 												<div class="text">
 													{{translations?.common?.cancelRequest}}
 												</div>
-
 												<div class="buttons">
 													<button mat-menu-item>{{translations?.common?.no}}</button>
 													<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 												</div>
 											</mat-menu>
-
-											<button mat-button *ngIf="x.statusFollowing == 'following'" [matMenuTriggerFor]="stopFollowing">
-												{{translations?.common?.following}}
-											</button>
 
 											<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 												<div class="text">
@@ -96,7 +96,6 @@
 													<br>
 													{{x.user.username}}?
 												</div>
-
 												<div class="buttons">
 													<button mat-menu-item>{{translations?.common?.no}}</button>
 													<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
@@ -108,7 +107,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-											
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -118,33 +117,37 @@
 								</div>
 
 								<div class="inner" *ngIf="x.url === 'publications'">
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												<div class="date">{{x?.date | timeago}}</div>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											<div class="date">{{x?.date | timeago}}</div>
 										</div>
 
-										<div class="container" (click)="show(x)">
-											<span *ngIf="x.type == 'comment'">
+										<div class="text" (click)="show(x)">
+											<span *ngIf="x.type === 'comment'">
 												{{translations?.notifications?.commentedYourPublication}}
 												<br>
 												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 											</span>
 
-											<span *ngIf="x.type == 'mentionComment'">
+											<span *ngIf="x.type === 'mentionComment'">
 												{{translations?.notifications?.mentionOnCommentOnPublication}}
 												<br>
 												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 											</span>
-											
-											<span *ngIf="x.type == 'like'">{{translations?.notifications?.likedYourPublication}}</span>
 
-											<span *ngIf="x.type == 'mention'">{{translations?.notifications?.mentionOnPublication}}</span>
+											<span *ngIf="x.type === 'like'">
+												{{translations?.notifications?.likedYourPublication}}
+											</span>
 
-											<span *ngIf="x.type == 'share'">{{translations?.notifications?.sharedPublication}}</span>
+											<span *ngIf="x.type === 'mention'">
+												{{translations?.notifications?.mentionOnPublication}}
+											</span>
+
+											<span *ngIf="x.type === 'share'">
+												{{translations?.notifications?.sharedPublication}}
+											</span>
 
 											<span *ngIf="!x.contentData.media">
 												<br>
@@ -162,7 +165,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-											
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -172,25 +175,23 @@
 								</div>
 
 								<div class="inner" *ngIf="x.url === 'audios'">
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												<div class="date">{{x?.date | timeago}}</div>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											<div class="date">{{x?.date | timeago}}</div>
 										</div>
 
-										<div class="container">
-											<span *ngIf="x.type == 'share'">
+										<div class="text">
+											<span *ngIf="x.type === 'share'">
 												{{translations?.notifications?.sharedAudio}}
 												<br>
-												<div class="song" [ngClass]="{active: audioPlayerData.key == 0 && audioPlayerData.location == 'notifications' && audioPlayerData.type == i, default: !x.contentData.image}">
+												<div class="song" [ngClass]="{active: audioPlayerData.key === 0 && audioPlayerData.location === 'notifications' && audioPlayerData.type === i, default: !x.contentData.image}">
 													<div mat-ripple class="songInner">
 														<div class="songImage">
 															<button mat-icon-button (click)="playSong(x.contentData, x.contentData, 0, i)">
-																<i label="play" *ngIf="!x.contentData.playing || !(audioPlayerData.location == 'notifications' && audioPlayerData.type == i)"></i>
-																<i label="pause" *ngIf="x.contentData.playing && (audioPlayerData.location == 'notifications' && audioPlayerData.type == i)"></i>
+																<i label="play" *ngIf="!x.contentData.playing || !(audioPlayerData.location === 'notifications' && audioPlayerData.type === i)"></i>
+																<i label="pause" *ngIf="x.contentData.playing && (audioPlayerData.location === 'notifications' && audioPlayerData.type === i)"></i>
 																<img *ngIf="x.contentData.image" [src]="x.contentData.imageSrc"/>
 															</button>
 														</div>
@@ -202,22 +203,22 @@
 															</div>
 															<div class="duration">{{x.contentData.duration}}</div>
 														</div>
-														
+
 														<div class="textActions" *ngIf="sessionData.current.id">
 															<button mat-icon-button [matMenuTriggerFor]="appMenu">
 																<i class="icon75 blue" label="check" *ngIf="x.contentData.addRemoveUser"></i>
 																<i class="icon75 grey" label="more" *ngIf="!x.contentData.addRemoveUser"></i>
 															</button>
-															
+
 															<mat-menu #appMenu="matMenu">
 																<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x.contentData, null)">{{!x.contentData.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 																<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 																<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 																<button mat-menu-item (click)="itemSongOptions('report', x.contentData, null)">{{translations?.common?.report}}</button>
 															</mat-menu>
-															
+
 															<mat-menu #menuPlaylists="matMenu">
-																<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+																<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 																<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 																<span *ngFor="let p of sessionData.current.playlists">
 																	<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x.contentData, p)">{{p.title}}</button>
@@ -241,7 +242,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-											
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -251,16 +252,14 @@
 								</div>
 
 								<div class="inner" *ngIf="x.url === 'message'">
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												<div class="date">{{x?.date | timeago}}</div>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											<div class="date">{{x?.date | timeago}}</div>
 										</div>
 
-										<div class="container" (click)="show(x)">
+										<div class="text">
 											{{translations?.notifications?.haveNewMessage}}
 											<br>
 											<span [innerHtml]="x.contentData.content | safeHtml"></span>
@@ -272,7 +271,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-											
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -281,18 +280,16 @@
 									</div>
 								</div>
 
-								<!-- ITEM for REMOVE if NOT EXISTS -->
+								<!-- item to remove if not exists -->
 								<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publications' || x.url === 'audios' || x.url === 'message')">
-									<div class="text">
-										<div class="username">
-											<div class="data">
-												<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-												<div class="date">{{x?.date | timeago}}</div>
-											</div>
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											<div class="date">{{x?.date | timeago}}</div>
 										</div>
 
-										<div class="container">
+										<div class="text">
 											{{translations?.common?.remove}}
 										</div>
 									</div>
@@ -302,7 +299,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-											
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -320,7 +317,7 @@
 						<div class="noData" *ngIf="dataNotifications.list.length === 0 && !dataNotifications.loadingData">
 							<div class="description">{{translations?.notifications?.noData}}</div>
 						</div>
-						
+
 						<div class="forward" (click)="showNotificationsBoxWeb()" routerLink="/notifications">
 							{{translations?.notifications?.goToNotifications}}
 							<button mat-icon-button>
@@ -460,15 +457,8 @@
 								</div>
 
 								<div class="item" [ngClass]="{'active': sessionData.current.theme === 1}" mat-ripple (click)="changeTheme(1)">
-									<div class="color blue" mat-list-avatar>
-										<i label="check" class="blue" *ngIf="sessionData.current.theme === 1"></i>
-									</div>
-									<div class="text">{{translations?.settings?.themes?.blue}}</div>
-								</div>
-
-								<div class="item" [ngClass]="{'active': sessionData.current.theme === 2}" mat-ripple (click)="changeTheme(2)">
 									<div class="color black" mat-list-avatar>
-										<i label="check" class="blue" *ngIf="sessionData.current.theme === 2"></i>
+										<i label="check" class="blue" *ngIf="sessionData.current.theme === 1"></i>
 									</div>
 									<div class="text">{{translations?.settings?.themes?.black}}</div>
 								</div>

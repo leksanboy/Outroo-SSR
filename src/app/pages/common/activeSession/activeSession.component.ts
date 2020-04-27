@@ -138,12 +138,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Set theme
 			if (this.sessionData.current.theme === 0) {
 				this.document.body.classList.remove('blackTheme');
-				this.document.body.classList.remove('blueTheme');
 			} else if (this.sessionData.current.theme === 1) {
-				this.document.body.classList.remove('blackTheme');
-				this.document.body.classList.add('blueTheme');
-			} else if (this.sessionData.current.theme === 2) {
-				this.document.body.classList.remove('blueTheme');
 				this.document.body.classList.add('blackTheme');
 			}
 
@@ -1162,12 +1157,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Set theme
 			if (data.theme === 0) {
 				this.document.body.classList.remove('blackTheme');
-				this.document.body.classList.remove('blueTheme');
 			} else if (data.theme === 1) {
-				this.document.body.classList.remove('blackTheme');
-				this.document.body.classList.add('blueTheme');
-			} else if (data.theme === 2) {
-				this.document.body.classList.remove('blueTheme');
 				this.document.body.classList.add('blackTheme');
 			}
 
@@ -1214,7 +1204,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.router.navigate(['logout']);
 
 			this.document.body.classList.remove('blackTheme');
-			this.document.body.classList.remove('blueTheme');
 			this.userDataService.logout();
 		} else {
 			for (const i in this.sessionData.sessions) {
@@ -1259,12 +1248,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		// Set theme
 		if (value === 0) {
 			this.document.body.classList.remove('blackTheme');
-			this.document.body.classList.remove('blueTheme');
 		} else if (value === 1) {
-			this.document.body.classList.remove('blackTheme');
-			this.document.body.classList.add('blueTheme');
-		} else if (value === 2) {
-			this.document.body.classList.remove('blueTheme');
 			this.document.body.classList.add('blackTheme');
 		}
 

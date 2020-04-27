@@ -121,9 +121,8 @@
 		"spanish": "Spanish",
 		"russian": "Russian",
 		"themes": {
-			"white": "Default",
-			"blue": "Light dark theme",
-			"black": "Dark theme"
+			"white": "Light",
+			"black": "Dark"
 		}
 	},
 	"song": {

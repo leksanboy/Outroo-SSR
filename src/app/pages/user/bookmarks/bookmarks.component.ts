@@ -68,12 +68,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(title);
 
 			// Load default
-			const localStotageData = this.userDataService.getLocalStotage('bookmarksPage');
-			if (localStotageData) {
-				this.dataDefault = localStotageData;
-			} else {
-				this.default('default');
-			}
+			this.default('default');
 		} else {
 			this.userDataService.noSessionData();
 		}

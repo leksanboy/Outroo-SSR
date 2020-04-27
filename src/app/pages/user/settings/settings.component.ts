@@ -123,12 +123,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(val => {
 				if (val === 0) {
 					this.document.body.classList.remove('blackTheme');
-					this.document.body.classList.remove('blueTheme');
 				} else if (val === 1) {
-					this.document.body.classList.remove('blackTheme');
-					this.document.body.classList.add('blueTheme');
-				} else if (val === 2) {
-					this.document.body.classList.remove('blueTheme');
 					this.document.body.classList.add('blackTheme');
 				}
 

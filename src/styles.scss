@@ -926,6 +926,10 @@ body {
 					display: flex;
 					height: 48px;
 
+					span {
+						display: flex;
+					}
+
 					button {
 						background-color: $blueColor;
 						text-transform: capitalize;
@@ -1379,11 +1383,13 @@ body {
 
 					button {
 						background-color: $blueColor;
-						border-radius: 24px;
 						color: $whiteColor;
 						margin: 12px 0 0;
-						font-size: 13px;
+						font-size: 12px;
+						text-transform: capitalize;
 						float: left;
+						height: 28px;
+						line-height: 28px;
 
 						span {
 							align-items: center;
@@ -5239,7 +5245,7 @@ body {
 						.actions {
 							justify-content: center;
 							box-sizing: border-box;
-							padding: 12px 18px 0;
+							padding: 18px 18px 0;
 							display: flex;
 							width: 100%;
 							float: left;
@@ -5250,14 +5256,17 @@ body {
 
 								button {
 									background-color: $blueColor;
+									text-transform: capitalize;
 									color: $whiteColor;
-									border-radius: 5px;
-									line-height: 32px;
+									line-height: 36px;
+									font-weight: bold;
 									box-shadow: none;
 									font-size: 12px;
 									padding: 0 18px;
-									height: 32px;
+									height: 36px;
+									min-width: 144px;
 									width: 100%;
+									border-radius: 5px;
 
 									span {
 										justify-content: center;
@@ -5281,20 +5290,20 @@ body {
 										background-color: transparent;
 										color: currentColor;
 										margin: 0 0 0 8px;
-										min-width: 32px;
-										width: 32px;
+										min-width: 36px;
+										width: 36px;
 										padding: 0;
 
 										mat-progress-spinner {
-											height: 12px !important;
-											width: 12px !important;
+											height: 16px !important;
+											width: 16px !important;
 
 											svg {
-												height: 12px !important;
-												width: 12px !important;
+												height: 16px !important;
+												width: 16px !important;
 
 												circle {
-													stroke: transparentize($greyColor, .25);
+													stroke: currentColor;
 												}
 											}
 										}
@@ -6158,7 +6167,7 @@ body {
 								width: 100%;
 
 								mat-radio-button {
-									width: 32%;
+									width: calc(50% - 6px);
 
 									label {
 										border: 2px solid transparent;
@@ -6214,7 +6223,7 @@ body {
 									}
 
 									&.white {
-										margin: 0 2% 0 0;
+										margin: 0 6px 0 0;
 
 										label {
 											background-color: $whiteColor;
@@ -6222,16 +6231,9 @@ body {
 										}
 									}
 
-									&.blue {
-										margin: 0 2% 0 0;
-
-										label {
-											background-color: $navyThemeColor;
-											color: $whiteColor;
-										}
-									}
-
 									&.black {
+										margin: 0 0 0 6px;
+
 										label {
 											background-color: $blackColor;
 											color: $whiteColor;
@@ -6571,8 +6573,7 @@ body {
 	}
 
 	/*Black theme on user pages*/
-	&.blackTheme,
-	&.blueTheme {
+	&.blackTheme {
 		background-color: $blackColor;
 		color: $whiteColor;
 
@@ -7046,77 +7047,6 @@ body {
 
 			.box .player {
 				background: linear-gradient(0, $darkThemeColor 50%, $darkThemeColor 75%, transparent 100%);
-			}
-		}
-	}
-
-	/*Blue theme on user pages*/
-	&.blueTheme {
-		background-color: $navyThemeColor;
-
-		mat-dialog-container,
-		.mat-menu-panel,
-		.notificationsBox .box,
-		.userBox .box,
-		.cookiesBox,
-		.innerBodyUser .header .head,
-		.sessionsPanelMobile {
-			background: $navyThemeColor !important;
-		}
-
-		/*Mobile bottom nav*/
-		.bottomNav {
-			background-color: $navyThemeColor;
-
-			ul {
-				li {
-					button {
-						.home {
-							.roof {
-								&:before {
-									border-bottom-color: $navyThemeColor;
-								}
-
-								&:after {
-									background-color: $navyThemeColor;
-								}
-							}
-						}
-
-						.notifications {
-							&:after {
-								border-bottom-color: $navyThemeColor;
-							}
-
-							.clapper:after {
-								background-color: $navyThemeColor;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		/*Audio Player web*/
-		.audioPlayerWeb {
-			background-color: $navyThemeColor;
-
-			.playlistBox {
-				background-color: $navyThemeColor;
-				color: $whiteColor;
-
-				&:after {
-					border: 8px solid $navyThemeColor;
-				}
-			}
-		}
-
-		/*Audio Player mobile*/
-		.mobilePlayer {
-			background-color: $navyThemeColor;
-
-			.box .player {
-				background: linear-gradient(0, $navyThemeColor 50%, $navyThemeColor 75%, transparent 100%);
 			}
 		}
 	}
@@ -8491,16 +8421,6 @@ body {
 				}
 
 				.pageUser {
-					// .panel {
-					// 	.dataBox {
-					// 		.actions {
-					// 			.inner.multiple {
-					// 				width: 100%;
-					// 			}
-					// 		}
-					// 	}
-					// }
-
 					.content {
 						ul {
 							li {

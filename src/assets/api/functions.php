@@ -3,6 +3,23 @@
 	// COMMON //
 	////////////
 
+	function arrayRemoveDuplicates($array, $key) {
+		$temp_array = array();
+		$key_array = array();
+		$i = 0;
+
+		foreach($array as $val) {
+			if (!in_array($val[$key], $key_array)) {
+				$key_array[$i] = $val[$key];
+				$temp_array[$i] = $val;
+			}
+
+			$i++;
+		}
+
+		return $temp_array;
+	}
+
 	// Get user id from headers Authorization
 	function sessionId(){
 		global $conn;
@@ -1071,7 +1088,7 @@
 
 	// 	$sql = "SELECT user
 	// 			FROM z_chat_users
-	// 			WHERE chat = $id 
+	// 			WHERE chat = $id
 	// 				AND is_deleted = 0
 	// 			ORDER BY date DESC
 	// 			LIMIT 100";
@@ -1101,7 +1118,7 @@
 
 	// 	$sql = "SELECT content, date, type
 	// 			FROM z_chat_conversation
-	// 			WHERE chat = $id 
+	// 			WHERE chat = $id
 	// 				AND is_deleted = 0
 	// 			ORDER BY date DESC
 	// 			LIMIT 1";

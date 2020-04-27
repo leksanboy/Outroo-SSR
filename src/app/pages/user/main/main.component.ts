@@ -347,6 +347,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
+
+						/* Show recommended user if no publications */
+						this.getRecommendedUsers();
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;

@@ -36,7 +36,7 @@
 							</div>
 							<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
 							<i label="exit" [matMenuTriggerFor]="signOut"></i>
-							
+
 							<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 								<div class="text">
 									{{translations?.common?.leaveSite}}
@@ -135,7 +135,7 @@
 							{{translations?.common?.recommendedForYou}}
 						</div>
 
-						<ul>
+						<ul *ngIf="recommendedUsers.list.length > 0">
 							<li *ngFor="let x of recommendedUsers.list; let i = index;" [ngClass]="{'remove': x?.dismiss}">
 								<div class="inner">
 									<div class="close" (click)="dismissRecommended(x, i)">
@@ -189,6 +189,10 @@
 								</div>
 							</li>
 						</ul>
+
+						<div class="noData" *ngIf="recommendedUsers.list.length === 0">
+							<div class="description">{{translations?.common?.noData}}</div>
+						</div>
 					</div>
 
 					<div class="social">
@@ -332,7 +336,7 @@
 									</div>
 
 									<div class="swiper-pagination"></div>
-									
+
 									<div class="swiperNext" mat-ripple>
 										<i label="keyboard-arrow-right"></i>
 									</div>
@@ -405,14 +409,14 @@
 										<i label="analytics-comments"></i>
 									</button>
 								</div>
-								
+
 								<div class="buttonBox">
 									<button mat-icon-button (click)="likeUnlike(x)">
 										<i label="analytics-like" [ngClass]="{'active' : x?.liked}"></i>
 									</button>
 									{{x?.countLikes}}
 								</div>
-								
+
 								<a class="likers" *ngIf="x?.countLikes > 0" (click)="showLikes(x)">
 									<span *ngFor="let l of x?.likers; let isLast = last">
 										{{l.username}}{{isLast ? '' : ', '}}
@@ -463,7 +467,7 @@
 														<div class="date">{{c?.date | timeago}}</div>
 													</div>
 												</div>
-												
+
 												<div class="actions" *ngIf="sessionData?.current?.id">
 													<button mat-icon-button [matMenuTriggerFor]="optionsComments">
 														<i class="icon75 grey" label="more"></i>
@@ -488,7 +492,7 @@
 									<div class="noData" *ngIf="x?.noData">
 										<div class="description">{{translations?.common?.noComments}}</div>
 									</div>
-									
+
 									<div class="loadMore" *ngIf="x?.loadMoreData">
 										<button mat-fab (click)="defaultComments('more', x)" *ngIf="!x?.loadingMoreData">
 											<i label="add"></i>

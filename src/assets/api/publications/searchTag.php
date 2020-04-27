@@ -11,13 +11,13 @@
 	// Publications
 	$sql = "SELECT id, hashtags
 			FROM z_publications
-			WHERE hashtags LIKE '%$caption%' 
+			WHERE hashtags LIKE '%$caption%'
 				AND (
-						(length(photos) > 0 AND is_deleted = 0) OR  
-						(length(url_video) > 0 AND is_deleted = 0) OR 
+						(length(photos) > 0 AND is_deleted = 0) OR
+						(length(url_video) > 0 AND is_deleted = 0) OR
 						((length(photos) > 0 AND length(url_video) > 0) AND is_deleted = 0)
 					)
-			ORDER BY date DESC 
+			ORDER BY date DESC
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
 
@@ -26,14 +26,14 @@
 
 		while($row = $result->fetch_assoc()) {
 			$row['caption'] = json_decode($row['hashtags']);
-			
+
 			foreach ($row['caption'] as &$h) {
 				if (strpos(strtolower($h), strtolower($caption)) !== false) {
 					$tag = array(
 						'caption' 	=> $h,
 						'count' 	=> hashtagCount($h)
 					);
-					
+
 					$dataHashtags[] = $tag;
 				}
 			}

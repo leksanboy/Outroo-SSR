@@ -121,8 +121,7 @@
 		"spanish": "Español",
 		"russian": "Ruso",
 		"themes": {
-			"white": "Predeterminado",
-			"blue": "Claro oscuro",
+			"white": "Claro",
 			"black": "Oscuro"
 		}
 	},
