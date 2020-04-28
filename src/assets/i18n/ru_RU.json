@@ -68,7 +68,7 @@
 	"notifications": {
 		"title": "Уведомления",
 		"startFollowingYou": "Начал следовать за вами",
-		"acceptFollowingRequest": "Принят ваш запрос",
+		"acceptFollowingRequest": "Принял ваш запрос",
 		"stopFollowing": "Прекратить следовать",
 		"accept": "Принять",
 		"decline": "Отклонить",

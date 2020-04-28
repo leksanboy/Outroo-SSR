@@ -35,18 +35,19 @@ $logoTextImage: url('assets/images/logo_text.png');
 $noPostsImage: url('assets/images/icons/no_posts.png');
 
 /*Colors*/
-$headerWhiteColor: #fafafa;
-$modalDialogColor: #141518;
-$fontBlackColor: #14181d;
-$yellowColor: #ff9800;
-$blackColor: #000000;
-$darkThemeColor: #141518;
-$navyThemeColor: #15212c;
 $whiteColor: #FFFFFF;
-$greyColor: #9E9E9E;
+$blackColor: #000000;
 $blueColor: #0C98F5;
 $redColor: #E53935;
 $greenColor: #8bc34a;
+$greyColor: #9E9E9E;
+$yellowColor: #ff9800;
+
+$headerWhiteColor: #fafafa;
+$modalDialogColor: #0e0d0f;
+
+$darkThemeColor: #0e0d0f;
+$navyThemeColor: #15212c;
 
 /*Shadows*/
 $shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02),
@@ -109,9 +110,9 @@ body {
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	background-color: $whiteColor;
-	color: $fontBlackColor;
+	color: $blackColor;
 	font-weight: normal;
-	transition: .3s;
+	transition: .25s;
 	font-size: 15px;
 	padding: 0;
 	margin: 0;
@@ -135,7 +136,7 @@ body {
 	}
 
 	a {
-		color: $fontBlackColor;
+		color: $blackColor;
 		text-decoration: none;
 		cursor: pointer;
 
@@ -527,7 +528,7 @@ body {
 							width: 100%;
 
 							.progress {
-								background-color: transparentize($fontBlackColor, .75);
+								background-color: transparentize($blackColor, .75);
 								border-radius: 50%;
 								position: relative;
 								height: 36px;
@@ -669,7 +670,7 @@ body {
 
 			&.active {
 				.inner {
-					background-color: transparentize($fontBlackColor, .95);
+					background-color: transparentize($blackColor, .95);
 
 					.text {
 						color: $blueColor;
@@ -854,7 +855,7 @@ body {
 					box-sizing: border-box;
 					overflow: hidden;
 					width: 100%;
-					padding: 6px 0 6px 12px;
+					padding: 6px 6px 6px 12px;
 
 					.text {
 						line-height: 18px;
@@ -926,8 +927,13 @@ body {
 					display: flex;
 					height: 48px;
 
-					span {
+					span.acceptDecline {
 						display: flex;
+						justify-content: center;
+
+						button:last-child{
+							background-color: #2e2e2e;
+						}
 					}
 
 					button {
@@ -1278,7 +1284,7 @@ body {
 
 		&.active {
 			.songInner {
-				background-color: transparentize($fontBlackColor, .95);
+				background-color: transparentize($blackColor, .95);
 
 				.songText {
 					color: $blueColor;
@@ -1719,8 +1725,7 @@ body {
 			padding: 18px 18px 6px;
 			color: currentColor;
 			text-align: center;
-			line-height: 15px;
-			font-size: 18px;
+			font-size: 15px;
 			width: 100%;
 		}
 
@@ -1832,7 +1837,7 @@ body {
 				input {
 					background: transparent;
 					box-sizing: border-box;
-					color: $fontBlackColor;
+					color: $blackColor;
 					border: none;
 					height: 36px;
 					width: 100%;
@@ -2352,7 +2357,7 @@ body {
 
 		button {
 			background-color: transparent !important;
-			border: 1px solid $fontBlackColor;
+			border: 1px solid $blackColor;
 			border-radius: 50% !important;
 			box-shadow: none !important;
 			background: transparent;
@@ -2361,7 +2366,7 @@ body {
 			width: 48px;
 
 			i {
-				background-color: $fontBlackColor;
+				background-color: $blackColor;
 				margin: 11px;
 			}
 		}
@@ -2543,16 +2548,17 @@ body {
 						text-align: center;
 						font-weight: bold;
 						margin: 24px 0 0;
-						font-size: 12px;
+						font-size: 13px;
 						width: 100%;
 						float: left;
 
 						button {
 							background: $blueColor;
 							color: $whiteColor;
-							height: 32px;
-							line-height: 32px;
-							font-size: 12px;
+							height: 36px;
+							line-height: 36px;
+							text-transform: capitalize;
+							font-size: 14px;
 							font-weight: bold;
 
 							mat-progress-spinner {
@@ -2669,13 +2675,13 @@ body {
 						button {
 							text-transform: capitalize;
 							background: $whiteColor;
-							color: $fontBlackColor;
+							color: $blackColor;
 							padding: 0 8px 0 0;
 							line-height: 32px;
 							margin: 12px 0 0;
 							box-shadow: none;
 							height: 32px;
-							font-size: 12px;
+							font-size: 13px;
 
 							i {
 								margin: 0 -6px 0 0;
@@ -3049,10 +3055,11 @@ body {
 					line-height: 28px;
 					margin: 0 0 0 8px;
 					box-shadow: none;
-					font-size: 12px;
+					font-size: 13px;
 					padding: 0 8px;
 					min-width: 0;
 					height: 28px;
+					text-transform: inherit;
 
 					mat-progress-spinner {
 						height: 16px !important;
@@ -3519,7 +3526,7 @@ body {
 								}
 
 								.progress {
-									background-color: transparentize($fontBlackColor, .75);
+									background-color: transparentize($blackColor, .75);
 									border-radius: 50%;
 									position: relative;
 									height: 36px;
@@ -4061,7 +4068,7 @@ body {
 
 	/*Dialog background color*/
 	.cdk-overlay-dark-backdrop {
-		background: transparentize($fontBlackColor, .25) !important;
+		background: transparentize($blackColor, .25) !important;
 		opacity: .75 !important;
 	}
 
@@ -4103,13 +4110,14 @@ body {
 				background-color: $headerWhiteColor;
 				box-shadow: $shadowBox0;
 				position: absolute;
+				transition: .25s;
 				height: 56px;
 				float: left;
 				width: 100%;
 				z-index: 9;
 
 				button {
-					color: $fontBlackColor;
+					color: $blackColor;
 					background: none;
 					box-shadow: none;
 					margin: 8px 16px;
@@ -4171,7 +4179,6 @@ body {
 						height: 56px;
 
 						button {
-							text-transform: uppercase;
 							color: $blueColor;
 							margin: 0 0 0 6px;
 							font-weight: bold;
@@ -4180,6 +4187,7 @@ body {
 							padding: 0 12px;
 							height: 28px;
 							min-width: 0;
+							text-transform: inherit;
 
 							&:first-child {
 								background-color: $blueColor;
@@ -4407,7 +4415,7 @@ body {
 							overflow-y: auto;
 							float: left;
 							width: 100%;
-							padding: 0;
+							padding: 12px 0 0;
 							margin: 0;
 						}
 
@@ -4929,7 +4937,7 @@ body {
 									width: 16px !important;
 
 									circle {
-										stroke: $fontBlackColor !important;
+										stroke: $blackColor !important;
 									}
 								}
 							}
@@ -4943,6 +4951,9 @@ body {
 							background: $blueColor;
 							color: $whiteColor;
 							margin: 24px auto;
+							text-transform: capitalize;
+							font-size: 14px;
+							font-weight: bold;
 
 							mat-progress-spinner {
 								height: 16px !important;
@@ -5006,10 +5017,11 @@ body {
 							button {
 								background: $blueColor;
 								color: $whiteColor;
+								line-height: 36px;
+								height: 36px;
+								text-transform: capitalize;
+								font-size: 14px;
 								font-weight: bold;
-								font-size: 12px;
-								line-height: 32px;
-								height: 32px;
 
 								mat-progress-spinner {
 									height: 16px !important;
@@ -5261,18 +5273,12 @@ body {
 									line-height: 36px;
 									font-weight: bold;
 									box-shadow: none;
-									font-size: 12px;
+									font-size: 14px;
 									padding: 0 18px;
 									height: 36px;
 									min-width: 144px;
 									width: 100%;
 									border-radius: 5px;
-
-									span {
-										justify-content: center;
-										align-items: center;
-										display: flex;
-									}
 
 									&.settings,
 									&.following {
@@ -5294,6 +5300,12 @@ body {
 										width: 36px;
 										padding: 0;
 
+										span {
+											justify-content: center;
+											align-items: center;
+											display: flex;
+										}
+
 										mat-progress-spinner {
 											height: 16px !important;
 											width: 16px !important;
@@ -5314,7 +5326,7 @@ body {
 
 						.social {
 							box-sizing: border-box;
-							padding: 12px 18px;
+							padding: 18px 18px 12px;
 							width: 100%;
 							float: left;
 
@@ -6367,9 +6379,10 @@ body {
 							button {
 								background: $blackColor;
 								color: $whiteColor;
-								line-height: 32px;
+								line-height: 36px;
 								font-weight: bold;
-								font-size: 12px;
+								font-size: 14px;
+								border-radius: 5px;
 
 								mat-progress-spinner {
 									height: 16px !important;
@@ -6432,7 +6445,7 @@ body {
 									width: 40px;
 
 									img {
-										background-color: $fontBlackColor;
+										background-color: $blackColor;
 										border-radius: 50%;
 										height: 100%;
 										width: 100%;
@@ -6733,7 +6746,7 @@ body {
 			.button {
 				button {
 					background: $whiteColor;
-					color: $fontBlackColor;
+					color: $blackColor;
 				}
 			}
 
@@ -6869,12 +6882,12 @@ body {
 						.buttons {
 							button {
 								background: $whiteColor;
-								color: $fontBlackColor;
+								color: $blackColor;
 
 								mat-progress-spinner {
 									svg {
 										circle {
-											stroke: $fontBlackColor;
+											stroke: $blackColor;
 										}
 									}
 								}
@@ -6952,6 +6965,7 @@ body {
 			background-color: $blackColor;
 			box-shadow: $shadowBoxBottom;
 			color: $whiteColor;
+			transition: .25s;
 
 			.player {
 				.center {
@@ -6965,7 +6979,7 @@ body {
 								background: $whiteColor;
 
 								i {
-									background-color: $fontBlackColor;
+									background-color: $blackColor;
 								}
 							}
 						}
@@ -7065,7 +7079,7 @@ body {
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $whiteColor;
 			box-shadow: $shadowBoxBottom;
-			color: $fontBlackColor;
+			color: $blackColor;
 			position: fixed;
 			width: 100%;
 			z-index: 99;
@@ -7150,7 +7164,7 @@ body {
 							box-shadow: none;
 
 							i {
-								background-color: $fontBlackColor;
+								background-color: $blackColor;
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
@@ -7161,7 +7175,7 @@ body {
 							}
 
 							&.playPause {
-								background: $fontBlackColor;
+								background: $blackColor;
 								transition: .2s;
 								height: 52px;
 								width: 52px;
@@ -7353,17 +7367,17 @@ body {
 
 								.mat-slider-track-wrapper {
 									.mat-slider-track-background {
-										background-color: transparentize($fontBlackColor, .85);
+										background-color: transparentize($blackColor, .85);
 									}
 
 									.mat-slider-track-fill {
-										background-color: $fontBlackColor;
+										background-color: $blackColor;
 									}
 								}
 
 								.mat-slider-thumb-container {
 									.mat-slider-thumb {
-										background-color: $fontBlackColor;
+										background-color: $blackColor;
 									}
 								}
 							}
@@ -7375,7 +7389,7 @@ body {
 			.playlistBox {
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
-				color: $fontBlackColor;
+				color: $blackColor;
 				margin: 0 24px 76px;
 				border-radius: 5px;
 				position: fixed;
@@ -7562,6 +7576,7 @@ body {
 			background-color: $headerWhiteColor;
 			box-shadow: $shadowBoxBottom;
 			user-select: none;
+			transition: .25s;
 			position: fixed;
 			display: flex;
 			height: 48px;
@@ -7588,6 +7603,7 @@ body {
 						border-radius: 0;
 						height: 48px;
 						width: 100%;
+						transition: .25;
 
 						.mat-button-ripple-round {
 							border-radius: 0;
@@ -7923,6 +7939,10 @@ body {
 								border-color: $blackColor;
 							}
 						}
+
+						&:active {
+							transform: scale(.8);
+						}
 					}
 				}
 			}
@@ -7960,6 +7980,7 @@ body {
 						padding: 0 8px;
 						min-width: 0;
 						height: 30px;
+						text-transform: inherit;
 
 						&:last-child {
 							background-color: transparent;
@@ -8291,7 +8312,7 @@ body {
 			border-top: 1px solid transparentize($greyColor, .5);
 			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
-			color: $fontBlackColor;
+			color: $blackColor;
 			width: 100%;
 			float: left;
 
@@ -8395,7 +8416,6 @@ body {
 
 		.innerBodyUser {
 			.header {
-
 				.head,
 				.notificationsBox,
 				.userBox,
@@ -8451,7 +8471,7 @@ body {
 			border-top: 1px solid transparentize($greyColor, .5);
 			background-color: $whiteColor;
 			border-radius: 15px 15px 0 0;
-			color: $fontBlackColor;
+			color: $blackColor;
 			position: relative;
 			min-height: 360px;
 			width: 100%;

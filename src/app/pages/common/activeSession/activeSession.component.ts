@@ -419,10 +419,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (type === 'accept') {
 			// When other send you a request
 			item.type = 'startFollowing';
-			item.statusF = 'accept';
+			item.statusType = 'accept';
 
 			const data = {
-				type: item.statusF,
+				type: item.statusType,
 				private: item.private,
 				sender: item.user.id
 			};
@@ -430,16 +430,16 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Check following status
 			this.followsDataService.followUnfollow(data)
 				.subscribe((res: any) => {
-					item.statusFollowing = res;
+					item.status = res;
 				});
 		} else if (type === 'decline') {
 			// When other send you a request
 			item.type = 'startFollowing';
-			item.statusFollowing = 'declined';
-			item.statusF = 'decline';
+			item.status = 'declined';
+			item.statusType = 'decline';
 
 			const data = {
-				type: item.statusF,
+				type: item.statusType,
 				private: item.private,
 				sender: item.user.id
 			};
@@ -447,10 +447,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.followsDataService.followUnfollow(data).subscribe();
 		} else if (type === 'follow') {
 			// When you start following someone who follow you
-			item.statusFollowing = item.private ? 'pending' : 'following';
+			item.status = item.private ? 'pending' : 'following';
 
 			const data = {
-				type: item.statusFollowing,
+				type: item.status,
 				private: item.private,
 				receiver: item.user.id
 			};
@@ -458,10 +458,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.followsDataService.followUnfollow(data).subscribe();
 		} else if (type === 'unfollow') {
 			// Stop following
-			item.statusFollowing = 'unfollow';
+			item.status = 'unfollow';
 
 			const data = {
-				type: item.statusFollowing,
+				type: item.status,
 				private: item.private,
 				receiver: item.user.id
 			};
@@ -544,7 +544,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					for (const i of res) {
 						if (i) {
 							setTimeout(() => {
-								i.status = 1;
+								i.is_seen = 1;
 							}, 1800);
 						}
 					}

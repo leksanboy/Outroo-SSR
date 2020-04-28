@@ -32,7 +32,7 @@
 				<div class="box">
 					<div class="innerBox">
 						<ul class="notifications" *ngIf="dataNotifications.list">
-							<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.status === 0, 'remove': x.addRemoveSession}">
+							<li mat-ripple *ngFor="let x of dataNotifications.list; let i = index;" [ngClass]="{'active': x.is_seen === 0, 'remove': x.addRemoveSession}">
 								<a class="avatar" routerLink="/{{x.user.username}}">
 									<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 								</a>
@@ -57,7 +57,7 @@
 
 									<div class="operations">
 										<!-- Request from others -->
-										<span *ngIf="sessionData.current.id === x.receiver && x.type === 'startFollowingPrivate'">
+										<span class="acceptDecline" *ngIf="sessionData.current.id === x.receiver && x.type === 'startFollowingPrivate'">
 											<button mat-button class="active" (click)="followUnfollow('accept', x)">
 												{{translations?.notifications?.accept}}
 											</button>
@@ -68,15 +68,15 @@
 
 										<!-- Mine Requests -->
 										<span *ngIf="x.type !== 'startFollowingPrivate'">
-											<button mat-button *ngIf="x.statusFollowing === 'unfollow'" (click)="followUnfollow('follow', x)">
+											<button mat-button *ngIf="x.status === 'unfollow'" (click)="followUnfollow('follow', x)">
 												{{translations?.common?.follow}}
 											</button>
 
-											<button mat-button class="pending" *ngIf="sessionData.current.id !== 'x.receiver' && x.statusFollowing === 'pending'" [matMenuTriggerFor]="cancelRequest">
+											<button mat-button class="pending" *ngIf="sessionData.current.id !== 'x.receiver' && x.status === 'pending'" [matMenuTriggerFor]="cancelRequest">
 												{{translations?.common?.pending}}
 											</button>
 
-											<button mat-button class="following" *ngIf="x.statusFollowing === 'following'" [matMenuTriggerFor]="stopFollowing">
+											<button mat-button class="following" *ngIf="x.status === 'following'" [matMenuTriggerFor]="stopFollowing">
 												{{translations?.common?.following}}
 											</button>
 

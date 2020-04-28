@@ -8,7 +8,7 @@
 				n.id,
 				n.sender,
 				n.receiver,
-				n.status,
+				n.is_seen,
 				n.date,
 				n.page_id as page,
 				n.page_url as url,
@@ -39,9 +39,11 @@
 			$row['user'] = userUsernameNameAvatar($row['sender']);
 
 			// Upgrade status
-			if ($row['type'] !== 'box')
-				if ($row['status'] == '0')
+			if ($row['type'] !== 'box') {
+				if ($row['is_seen'] === '0') {
 					updateNotificationStatus($row['id']);
+				}
+			}
 
 			// Followers
 			if ($row['url'] === 'followers') {

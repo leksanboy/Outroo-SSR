@@ -160,7 +160,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						for (const i in res) {
 							if (i) {
 								setTimeout(() => {
-									res[i].status = 1;
+									res[i].is_seen = 1;
 								}, 1800);
 							}
 						}
@@ -198,7 +198,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 							for (const i in res) {
 								if (res[i]) {
 									setTimeout(() => {
-										res[i].status = 1;
+										res[i].is_seen = 1;
 									}, 1800);
 
 									this.dataDefault.list.push(res[i]);
@@ -226,10 +226,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		if (type === 'accept') {
 			// When other send you a request
 			item.type = 'startFollowing';
-			item.statusF = 'accept';
+			item.statusType = 'accept';
 
 			const data = {
-				type: item.statusF,
+				type: item.statusType,
 				private: item.private,
 				sender: item.user.id
 			};
@@ -237,16 +237,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			// Check following status
 			this.followsDataService.followUnfollow(data)
 				.subscribe((res: any) => {
-					item.statusFollowing = res;
+					item.status = res;
 				});
 		} else if (type === 'decline') {
 			// When other send you a request
 			item.type = 'startFollowing';
-			item.statusFollowing = 'declined';
-			item.statusF = 'decline';
+			item.status = 'declined';
+			item.statusType = 'decline';
 
 			const data = {
-				type: item.statusF,
+				type: item.statusType,
 				private: item.private,
 				sender: item.user.id
 			};
@@ -254,10 +254,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.followsDataService.followUnfollow(data).subscribe();
 		} else if (type === 'follow') {
 			// When you start following someone who follow you
-			item.statusFollowing = item.private ? 'pending' : 'following';
+			item.status = item.private ? 'pending' : 'following';
 
 			const data = {
-				type: item.statusFollowing,
+				type: item.status,
 				private: item.private,
 				receiver: item.user.id
 			};
@@ -265,10 +265,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			this.followsDataService.followUnfollow(data).subscribe();
 		} else if (type === 'unfollow') {
 			// Stop following
-			item.statusFollowing = 'unfollow';
+			item.status = 'unfollow';
 
 			const data = {
-				type: item.statusFollowing,
+				type: item.status,
 				private: item.private,
 				receiver: item.user.id
 			};

@@ -954,18 +954,18 @@
 					$resultInsert = $conn->query($sqlInsert);
 				} else if ($type === 'stopFollowing') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
 								AND page_url = '$url'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
 				} else if ($type === 'startFollowingPrivate') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_url = '$url' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_url = '$url'
 								AND page_type = 'acceptRequest'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
@@ -975,18 +975,18 @@
 					$result = $conn->query($sql);
 				} else if ($type === 'acceptRequest') {
 					$sql = "UPDATE z_notifications
-							SET page_type = 'startFollowingPrivateAccepted', ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_url = '$url' 
+							SET page_type = 'startFollowingPrivateAccepted', ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_url = '$url'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
 
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $receiver 
-								AND receiver = $sender 
-								AND page_url = '$url' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $receiver
+								AND receiver = $sender
+								AND page_url = '$url'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
 
@@ -995,10 +995,10 @@
 					$resultInsert = $conn->query($sqlInsert);
 				} else if ($type === 'declineRequest') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_url = '$url' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_url = '$url'
 								AND page_type = 'startFollowingPrivate'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);
@@ -1006,72 +1006,72 @@
 				break;
 			case 'publications':
 				if ($type === 'like') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
 				} else if ($type === 'unlike') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_id = $id 
-								AND page_url = '$url' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_id = $id
+								AND page_url = '$url'
 								AND page_type = 'like'";
 					$result = $conn->query($sql);
 				} else if ($type === 'comment') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', $comment, '$ipAddress')";
 					$result = $conn->query($sql);
 				} else if ($type === 'uncomment') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_id = $id 
-								AND page_url = '$url' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_id = $id
+								AND page_url = '$url'
 								AND comment_id = $comment";
 					$result = $conn->query($sql);
 				} else if ($type === 'commentUncommented') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 0, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
-								AND page_id = $id 
-								AND page_url = '$url' 
+							SET is_deleted = 0, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
+								AND page_id = $id
+								AND page_url = '$url'
 								AND comment_id = $comment";
 					$result = $conn->query($sql);
 				} else if ($type === 'mention') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
 				} else if ($type === 'mentionComment') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, comment_id, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', $comment, '$ipAddress')";
 					$result = $conn->query($sql);
 				} else if ($type === 'share') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
 				}
 				break;
 			case 'audios':
-				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 				$result = $conn->query($sql);
 				break;
 			case 'message':
 				if ($type === 'comment') {
-					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address) 
+					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 					$result = $conn->query($sql);
 				} else if ($type === 'add') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 0, ip_address = '$ipAddress' 
+							SET is_deleted = 0, ip_address = '$ipAddress'
 							WHERE page_id = $id";
 					$result = $conn->query($sql);
 				} else if ($type === 'remove') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
+							SET is_deleted = 1, ip_address = '$ipAddress'
 							WHERE page_id = $id";
 				}
 				break;

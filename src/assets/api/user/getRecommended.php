@@ -11,6 +11,7 @@
             WHERE f.sender = $user
                 AND f.is_deleted = 0
                 AND u.id <> $session
+                AND u.id <> $user
                 AND
                 (
                     CASE
@@ -44,6 +45,7 @@
                 FROM z_users u
                 WHERE u.is_deleted = 0
                     AND u.id <> $session
+                    AND u.id <> $user
                     AND
                     (
                         CASE

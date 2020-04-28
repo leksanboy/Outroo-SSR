@@ -31,6 +31,16 @@ export class ActiveSessionsMobileComponent {
 		this.bottomSheetRef.dismiss();
 	}
 
+	openNewSession() {
+		this.close();
+
+		const data = {
+			type: 'create'
+		};
+
+		this.sessionService.setDataAddAccount(data);
+	}
+
 	close() {
 		this.bottomSheetRef.dismiss();
 	}

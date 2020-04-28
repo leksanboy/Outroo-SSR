@@ -15,5 +15,16 @@
 				<i label="check-circle"></i>
 			</div>
 		</li>
+
+		<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+			<div class="avatar">
+				<img [src]="env.avatar"/>
+			</div>
+			<div class="text">
+				<span class="name">{{translations?.common?.addAccount}}</span>
+				<br>
+				<span class="user">{{translations?.common?.setAnotherAccount}}</span>
+			</div>
+		</li>
 	</ul>
 </div>
