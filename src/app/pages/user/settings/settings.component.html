@@ -134,8 +134,8 @@
 		 			</mat-tab>
 
 		 			<mat-tab label="{{translations?.settings?.accounts}}">
-		 				<ul>
-							<li *ngFor="let x of sessionData.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
+		 				<ul class="sessions">
+							<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 								<div mat-ripple class="inner">
 									<div class="avatar" (click)="setCurrentUser(x)">
 										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>

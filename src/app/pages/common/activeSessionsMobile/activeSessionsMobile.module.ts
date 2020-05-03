@@ -5,6 +5,7 @@ import {
 	MatButtonModule,
 	MatButtonToggleModule,
 	MatDialogModule,
+	MatMenuModule,
 	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule
@@ -29,6 +30,7 @@ const routes: Routes = [
 		MatButtonModule,
 		MatButtonToggleModule,
 		MatDialogModule,
+		MatMenuModule,
 		MatProgressSpinnerModule,
 		MatTooltipModule,
 		MatRippleModule

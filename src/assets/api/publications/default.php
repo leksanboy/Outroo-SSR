@@ -11,18 +11,18 @@
 			$user = userId($user);
 		}
 
-		$sql = "SELECT id, 
-						user, 
-						name, 
-						content, 
-						content_original, 
-						url_video as urlVideo, 
-						photos, 
-						audios, 
-						disabled_comments as disabledComments, 
+		$sql = "SELECT id,
+						user,
+						name,
+						content,
+						content_original,
+						url_video as urlVideo,
+						photos,
+						audios,
+						disabled_comments as disabledComments,
 						date
 				FROM z_publications
-				WHERE user = $user 
+				WHERE user = $user
 					AND is_deleted = 0
 				ORDER BY date DESC
 				LIMIT $more, $cuantity";
@@ -76,22 +76,22 @@
 		$session = sessionId();
 		$user = $_GET['user'];
 
-		$sql = "SELECT id, 
-						user, 
-						name, 
-						content, 
-						content_original, 
-						url_video as urlVideo, 
-						photos, 
-						audios, 
-						disabled_comments as disabledComments, 
+		$sql = "SELECT id,
+						user,
+						name,
+						content,
+						content_original,
+						url_video as urlVideo,
+						photos,
+						audios,
+						disabled_comments as disabledComments,
 						date
 				FROM z_publications
 				WHERE (user IN (SELECT
 									CASE
 										WHEN f.sender = $user THEN f.receiver
 									END
-									FROM z_following f WHERE f.sender = $user AND is_deleted = 0)
+									FROM z_following f WHERE f.sender = $user AND status = 0 AND is_deleted = 0)
 						OR user = $user) AND is_deleted = 0
 				ORDER BY id DESC
 				LIMIT $more, $cuantity";

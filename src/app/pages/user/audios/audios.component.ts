@@ -1100,28 +1100,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		this.sessionService.setDataCreatePlaylist(data);
 	}
 
-	// Show playlist
-	showPlaylist(item) {
-		this.location.go('/pl/' + item.name);
-
-		const config = {
-			disableClose: false,
-			data: {
-				sessionData: this.sessionData,
-				userData: this.userData,
-				translations: this.translations,
-				item: item,
-				audioPlayerData: this.audioPlayerData
-			}
-		};
-
-		const dialogRef = this.dialog.open(ShowPlaylistComponent, config);
-		dialogRef.beforeClosed().subscribe((res: string) => {
-			// Set url
-			this.location.go(this.router.url);
-		});
-	}
-
 	// Update playlist
 	updatePlaylist(type, data) {
 		if (type === 'create') {
@@ -1159,12 +1137,32 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Item options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
+			case('show'):
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.userData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
 			case('edit'):
 				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
 				item.path = this.env.pathAudios;
 				item.index = index;
 
-				const config = {
+				const configEdit = {
 					disableClose: false,
 					data: {
 						type: 'edit',
@@ -1174,8 +1172,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}
 				};
 
-				const dialogRef = this.dialog.open(NewPlaylistComponent, config);
-				dialogRef.afterClosed().subscribe((res: any) => {
+				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
+				dialogRefEdit.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
 					if (res) {

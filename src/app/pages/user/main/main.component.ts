@@ -17,6 +17,8 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
+import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -55,6 +57,12 @@ export class MainComponent implements OnInit, OnDestroy {
 	public comeFromUserButton: boolean;
 	public showAccounts: boolean;
 	public recommendedUsers = {
+		loading: false,
+		noData: true,
+		show: false,
+		list: []
+	};
+	public recommendedPlaylists = {
 		loading: false,
 		noData: true,
 		show: false,
@@ -354,10 +362,14 @@ export class MainComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 
+						setTimeout(() => {
+							this.getRecommendedPlaylists();
+						}, 300);
+
 						/* Show recommended user if no publications */
 						setTimeout(() => {
 							this.getRecommendedUsers();
-						}, 600);
+						}, 1200);
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;
@@ -945,6 +957,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Remove from shown list
 	dismissRecommended(item, index) {
 		item.dismiss = true;
 
@@ -955,5 +968,122 @@ export class MainComponent implements OnInit, OnDestroy {
 		};
 
 		this.userDataService.dismissRecommended(data).subscribe();
+	}
+
+	// Recommended playlists
+	getRecommendedPlaylists() {
+		this.recommendedPlaylists.show = !this.recommendedPlaylists.show;
+		this.recommendedPlaylists.loading = true;
+
+		if (this.recommendedPlaylists.show && this.recommendedPlaylists.list.length === 0) {
+			const data = {
+				user: this.userData.id
+			};
+
+			this.audioDataService.getRecommendedPlaylists(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.recommendedPlaylists.loading = false;
+					}, 600);
+
+					if (!res || res.length === 0) {
+						this.recommendedPlaylists.noData = true;
+					} else {
+						this.recommendedPlaylists.noData = false;
+						this.recommendedPlaylists.list = res;
+					}
+				}, error => {
+					this.recommendedPlaylists.loading = false;
+				});
+		} else {
+			this.recommendedPlaylists.loading = false;
+		}
+	}
+
+	// Playlist options
+	itemPlaylistOptions(type, item, index) {
+		switch (type) {
+			case('show'):
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.userData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
+			case('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist : item.idPlaylist,
+					insertedPlaylist : item.insertedPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARO)
+					.subscribe((res: any) => {
+						item.idPlaylist = res;
+						item.insertedPlaylist =  item.insertedPlaylist ? item.insertedPlaylist : res;
+
+						if (dataARO.type === 'add') {
+							this.sessionData.current.playlists.unshift(dataARO);
+						} else {
+							for (const i in this.sessionData.current.playlists) {
+								if (i) {
+									if (this.sessionData.current.playlists[i].id = dataARO.id) {
+										this.sessionData.current.playlists[i] = dataARO;
+									}
+								}
+							}
+						}
+						// Update playslists on selects
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
+					});
+				break;
+			case('follow'):
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
+
+				const dataF = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist : item.idPlaylist,
+					insertedPlaylist : item.insertedPlaylist
+				};
+
+				this.audioDataService.followPlaylist(dataF)
+					.subscribe((res: any) => {
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
+					});
+
+				break;
+			case('report'):
+				item.type = 'audioPlaylist';
+				this.sessionService.setDataReport(item);
+				break;
+		}
 	}
 }

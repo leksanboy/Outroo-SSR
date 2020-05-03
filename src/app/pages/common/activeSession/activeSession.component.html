@@ -9,7 +9,9 @@
 				</div>
 
 				<div class="center">
-					<i label="logo" routerLink="{{sessionData ? '/home' : '/'}}"></i>
+					<div class="logo">
+						<i label="logo" routerLink="{{sessionData ? '/home' : '/'}}"></i>
+					</div>
 				</div>
 
 				<div class="right">
@@ -610,7 +612,7 @@
 </div>
 
 <!-- Web audio player -->
-<div class="audioPlayerWeb" [ngClass]="{mini: audioPlayerData?.mini}" *ngIf="deniedAccess === 'session'">
+<div class="audioPlayerWeb" id="audioPlayerWeb" [ngClass]="{mini: audioPlayerData?.mini}" *ngIf="deniedAccess === 'session'">
 	<div class="player">
 		<div class="left">
 			<div class="image" *ngIf="audioPlayerData?.current?.image">

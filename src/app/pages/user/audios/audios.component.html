@@ -108,14 +108,14 @@
 										<div class="title">{{translations?.audios?.recommendedPlaylists}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.recommended; let i=index;">
-											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.recommended; let i=index;">
+											<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
 
 											<div class="panel">
-												<div class="title" (click)="showPlaylist(x)">
+												<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 													{{x.title}}
 												</div>
 
@@ -139,16 +139,16 @@
 													</mat-menu>
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('recommended')">
+										<li class="seeAll" (click)="seeAll('recommended')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="section">
@@ -156,14 +156,14 @@
 										<div class="title">{{translations?.audios?.ourFavourites}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.favourites; let i=index;">
-											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.favourites; let i=index;">
+											<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
 
 											<div class="panel">
-												<div class="title" (click)="showPlaylist(x)">
+												<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 													{{x.title}}
 												</div>
 
@@ -187,16 +187,16 @@
 													</mat-menu>
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('favourites')">
+										<li class="seeAll" (click)="seeAll('favourites')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="section">
@@ -204,8 +204,8 @@
 										<div class="title">{{translations?.audios?.selectGenre}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.genres; let i=index;">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.genres; let i=index;">
 											<div mat-ripple class="image" (click)="showGenre(x)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
@@ -215,16 +215,16 @@
 													{{x.title}}
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('genres')">
+										<li class="seeAll" (click)="seeAll('genres')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="section">
@@ -306,27 +306,27 @@
 										<div class="title">{{translations?.audios?.ostMovies}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.ost; let i=index;">
-											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.ost; let i=index;">
+											<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
 
 											<div class="panel">
-												<div class="title" (click)="showPlaylist(x)">
+												<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 													{{x.title}}
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('ost')">
+										<li class="seeAll" (click)="seeAll('ost')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="section">
@@ -334,27 +334,27 @@
 										<div class="title">{{translations?.audios?.top100}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.top100; let i=index;">
-											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.top100; let i=index;">
+											<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
 
 											<div class="panel">
-												<div class="title" (click)="showPlaylist(x)">
+												<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 													{{x.title}}
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('top100')">
+										<li class="seeAll" (click)="seeAll('top100')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="section">
@@ -362,14 +362,14 @@
 										<div class="title">{{translations?.audios?.enjoyYourDay}}</div>
 									</div>
 
-									<div class="playlists">
-										<div class="box" *ngFor="let x of dataGeneral?.list?.enjoyWith; let i=index;">
-											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<ul class="playlists">
+										<li *ngFor="let x of dataGeneral?.list?.enjoyWith; let i=index;">
+											<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 											</div>
 
 											<div class="panel">
-												<div class="title" (click)="showPlaylist(x)">
+												<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 													{{x.title}}
 												</div>
 
@@ -393,16 +393,16 @@
 													</mat-menu>
 												</div>
 											</div>
-										</div>
+										</li>
 
-										<div class="seeAll" (click)="seeAll('enjoyWith')">
+										<li class="seeAll" (click)="seeAll('enjoyWith')">
 											<div class="inner">
 												<div class="text">
 													{{translations?.common?.seeAll}}
 												</div>
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 
 								<div class="loadingData" *ngIf="dataGeneral.loadingData">
@@ -415,8 +415,8 @@
 							</mat-tab>
 
 							<mat-tab label="{{userData?.id === sessionData?.current?.id ? translations?.audios?.my : translations?.audios?.songs}}">
-								<div class="playlists" *ngIf="!dataDefault.loadingData && sessionData?.current?.id">
-									<div class="boxUploadNew" *ngIf="userData?.id === sessionData?.current?.id">
+								<ul class="playlists" *ngIf="!dataDefault.loadingData && sessionData?.current?.id">
+									<li class="uploadAndNew" *ngIf="userData?.id === sessionData?.current?.id">
 										<div class="inner">
 											<div class="upload" (click)="uploadFile.click()">
 												<div class="icon" mat-ripple>
@@ -433,15 +433,15 @@
 												<div class="text">{{translations?.audios?.playlist}}</div>
 											</div>
 										</div>
-									</div>
+									</li>
 
-									<div class="box" *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removed}">
-										<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+									<li *ngFor="let x of dataDefault.playlists; let i=index;" [ngClass]="{'remove': x.removed}">
+										<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 										</div>
 
 										<div class="panel">
-											<div class="title" (click)="showPlaylist(x)">
+											<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 												{{x.title}}
 											</div>
 
@@ -485,8 +485,8 @@
 												</mat-menu>
 											</div>
 										</div>
-									</div>
-								</div>
+									</li>
+								</ul>
 
 								<div class="uploadFilesBox audios" *ngIf="userData?.id === sessionData?.current?.id && dataFiles.list.length > 0">
 									<div class="info">
@@ -536,7 +536,7 @@
 
 												<div class="actions" *ngIf="x.status === 'pending' || x.status === 'error'">
 													<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations?.common?.remove}}">
-														<i label="clear"></i>
+														<i label="close"></i>
 													</button>
 												</div>
 											</div>
@@ -718,14 +718,14 @@
 							</mat-tab>
 
 							<mat-tab label="{{translations?.audios?.top}}">
-								<div class="playlists" *ngIf="dataTop.playlists && dataTop.list">
-									<div class="box" *ngFor="let x of dataTop.playlists; let i=index;">
-										<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+								<ul class="playlists" *ngIf="dataTop.playlists && dataTop.list">
+									<li *ngFor="let x of dataTop.playlists; let i=index;">
+										<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
 										</div>
 
 										<div class="panel">
-											<div class="title" (click)="showPlaylist(x)">
+											<div class="title" (click)="itemPlaylistOptions('show', x, i)">
 												{{x.title}}
 											</div>
 
@@ -749,8 +749,8 @@
 												</mat-menu>
 											</div>
 										</div>
-									</div>
-								</div>
+									</li>
+								</ul>
 
 								<ul class="tracks" *ngIf="dataTop.list">
 									<li *ngFor="let x of dataTop.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', default: !x.image}">

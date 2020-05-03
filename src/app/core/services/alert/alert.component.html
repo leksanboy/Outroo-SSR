@@ -1,11 +1,11 @@
 <div *ngFor="let x of alerts" class="alertBox" [@showFromTopAnimation] (click)="close(x)">
-	<div class="inner" [ngClass]="{'success': x.type === 'success', 
-									'error': x.type === 'error', 
+	<div class="inner" [ngClass]="{'success': x.type === 'success',
+									'error': x.type === 'error',
 									'warning': x.type === 'warning',
 									'publishing': x.type === 'publishing'}">
 		<div class="text">{{x.message}}</div>
 		<button mat-mini-fab (click)="close(x)" *ngIf="x.type !== 'publishing'">
-			<i label="clear"></i>
+			<i label="close"></i>
 		</button>
 	</div>
 </div>

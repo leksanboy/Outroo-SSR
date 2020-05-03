@@ -29,7 +29,7 @@
 					</div>
 
 					<div class="accounts" *ngIf="(userData?.id === sessionData?.current?.id) && showAccounts">
-						<div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id === x?.id}">
+						<!-- <div class="item" mat-ripple *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id === x?.id}">
 							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x); showChangeSession=false;">
 								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 							</div>
@@ -52,7 +52,55 @@
 								<i label="add"></i>
 							</div>
 							<div class="text">{{translations?.common?.addAccount}}</div>
-						</div>
+						</div> -->
+						<ul class="sessions">
+							<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
+								<div mat-ripple class="inner">
+									<div class="avatar" (click)="setCurrentUser(x)">
+										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
+									</div>
+
+									<div class="text" (click)="setCurrentUser(x)">
+										<div class="in">
+											<div class="data">
+												<a class="name">{{x.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+											</div>
+											<div class="info">@{{x.username}}</div>
+										</div>
+									</div>
+
+									<div class="actions">
+										<button mat-button [matMenuTriggerFor]="signOut">{{translations?.common?.logOut}}</button>
+										<mat-menu #signOut="matMenu" yPosition="below" xPosition="before" class="removeBox">
+											<div class="text">
+												{{x.name}}
+												<br>
+												{{translations?.common?.leaveSite}}
+											</div>
+											<div class="buttons">
+												<button mat-menu-item>{{translations?.common?.no}}</button>
+												<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
+											</div>
+										</mat-menu>
+									</div>
+								</div>
+							</li>
+
+							<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+								<div mat-ripple class="inner">
+									<div class="add">
+										<i label="add"></i>
+									</div>
+									<div class="text">
+										<div class="in">
+											<div class="data">{{translations?.common?.addAccount}}</div>
+											<div class="info">{{translations?.common?.setAnotherAccount}}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
 					</div>
 
 					<div class="user">
@@ -75,7 +123,7 @@
 						</div>
 					</div>
 
-					<div class="actions">
+					<div class="social">
 						<div class="inner" *ngIf="userData?.id === sessionData?.current?.id">
 							<button mat-icon-button type="button" class="settings" routerLink="/settings">
 								{{translations?.settings?.editProfile}}
@@ -128,12 +176,12 @@
 						</div>
 					</div>
 
-					<div class="recommendedUsers" *ngIf="(userData?.id !== sessionData?.current?.id) && !recommendedUsers.loading && recommendedUsers.show">
-						<div class="title">
+					<mat-expansion-panel [expanded]="(userData?.id !== sessionData?.current?.id) && !recommendedUsers.loading && recommendedUsers.show">
+						<div class="expTitle">
 							{{translations?.common?.recommendedForYou}}
 						</div>
 
-						<ul *ngIf="recommendedUsers.list.length > 0">
+						<ul class="recommendedUsers" *ngIf="recommendedUsers.list.length > 0">
 							<li *ngFor="let x of recommendedUsers.list; let i = index;" [ngClass]="{'remove': x?.dismiss}">
 								<div class="inner">
 									<div class="close" (click)="dismissRecommended(x, i)">
@@ -191,9 +239,9 @@
 						<div class="noData" *ngIf="recommendedUsers.list.length === 0">
 							<div class="description">{{translations?.common?.noData}}</div>
 						</div>
-					</div>
+					</mat-expansion-panel>
 
-					<div class="social">
+					<div class="pages">
 						<ul *ngIf="((userData?.private && userData?.status === 'following') || !userData?.private || userData?.status === 'following' || (userData?.id === sessionData?.current?.id))">
 							<li routerLink="/{{userData?.username}}/songs">
 								<button mat-button>
@@ -260,7 +308,7 @@
 			</div>
 
 			<div class="content" *ngIf="((userData?.private && userData?.status === 'following') || !userData?.private || userData?.status === 'following' || (userData?.id === sessionData?.current?.id))">
-				<ul *ngIf="dataDefault?.list">
+				<ul class="publications" *ngIf="dataDefault?.list">
 					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x?.addRemoveSession}">
 						<div class="head">
 							<a class="avatar" routerLink="/{{x?.user?.username}}">
@@ -516,7 +564,7 @@
 				<div class="loadingData" *ngIf="dataDefault?.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
-				
+
 				<div class="noData" *ngIf="dataDefault?.noData">
 					<div class="image">
 						<i label="no-posts"></i>
@@ -529,6 +577,54 @@
 						<i label="add"></i>
 					</button>
 					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
+				</div>
+
+				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0">
+					<div class="boxTitle">
+						{{translations?.common?.recommendedForYou}}
+					</div>
+
+					<ul class="playlists">
+						<li *ngFor="let x of recommendedPlaylists.list; let i=index;">
+							<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
+								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+							</div>
+
+							<div class="panel">
+								<div class="title" (click)="itemPlaylistOptions('show', x, i)">
+									{{x.title}}
+								</div>
+
+								<div class="actions" *ngIf="sessionData?.current?.id">
+									<button mat-icon-button [matMenuTriggerFor]="appMenu">
+										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+									</button>
+
+									<mat-menu #appMenu="matMenu">
+										<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x, i)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('follow', x, i)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
+									</mat-menu>
+
+									<mat-menu #menuShareSocial="matMenu">
+										<button mat-menu-item (click)="shareOnPlaylist('message', x)">{{translations?.common?.sendMessage}}</button>
+										<button mat-menu-item (click)="shareOnPlaylist('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+										<button mat-menu-item (click)="shareOnPlaylist('copyLink', x)">{{translations?.common?.copyLink}}</button>
+									</mat-menu>
+								</div>
+							</div>
+						</li>
+
+						<li class="seeAll" routerLink="/{{sessionData?.current?.username}}/songs">
+							<div class="inner">
+								<div class="text">
+									{{translations?.common?.seeAll}}
+								</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 

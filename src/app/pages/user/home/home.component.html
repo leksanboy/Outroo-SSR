@@ -1,8 +1,8 @@
-<div class="innerBodyUser">	
+<div class="innerBodyUser">
 	<div class="innerBodyContent">
 		<div class="pageUser home">
 			<div class="content home">
-				<ul *ngIf="dataDefault.list">
+				<ul class="publications" *ngIf="dataDefault.list">
 					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x?.addRemoveSession}">
 						<div class="head">
 							<a class="avatar" routerLink="/{{x?.user?.username}}">
@@ -16,12 +16,12 @@
 									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 							</div>
-							
+
 							<div class="actions" *ngIf="sessionData?.current?.id">
 								<button mat-icon-button [matMenuTriggerFor]="options">
 									<i class="icon85 grey" label="more"></i>
 								</button>
-								
+
 								<mat-menu #options="matMenu">
 									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>

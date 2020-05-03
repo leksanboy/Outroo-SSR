@@ -147,4 +147,15 @@ export class AudioDataService {
 				return res;
 			}));
 	}
+
+	getRecommendedPlaylists(data) {
+		const url = this.env.url + 'assets/api/audios/getRecommendedPlaylists.php';
+		let params = '&user=' + data.user;
+		params = params.replace('&', '?');
+
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
 }
