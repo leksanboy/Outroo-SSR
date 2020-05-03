@@ -11,7 +11,7 @@
 					duration,
 					image
 			FROM z_audios
-			WHERE name = '$name' 
+			WHERE name = '$name'
 				AND is_deleted = 0";
 	$result = $conn->query($sql);
 
@@ -25,7 +25,7 @@
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
 			$row['replays'] = counSongReplays($row['id']);
 			$row['timesAdded'] = counSongTimesAdded($row['id']);
-			$row['imageSrc'] = 'assets/media/audios/thumbnails/'.$row['image'];
+			$row['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$row['image'];
 			$data[] = $row;
 		}
 

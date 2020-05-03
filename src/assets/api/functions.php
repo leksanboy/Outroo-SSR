@@ -207,7 +207,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		if ($result){
-			$result['avatarUrl'] 			= $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+			$result['avatarUrl'] 			= $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 			$result['languages'] 			= getLanguages();
 			$result['theme'] 				= intval($result['theme']);
 			$result['official'] 			= $result['official'] ? true : false;
@@ -228,13 +228,13 @@
 	function userUsernameNameAvatar($id){
 		global $conn;
 
-		$sql = "SELECT id, username, name, avatar, official 
+		$sql = "SELECT id, username, name, avatar, official
 				FROM z_users
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		$result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['avatarUrl'] = $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] = $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		return $result;
 	}
@@ -243,7 +243,7 @@
 	function checkUsername($username){
 		global $conn;
 
-		$inUse = array("outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy", 
+		$inUse = array("outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy",
 						"user", "audios", "bookmarks", "saved", "followers", "following", "home", "main", "news",
 						"notifications", "photos", "settings",
 						"index", "web", "about", "confirm-email", "error", "forgot-password", "logout", "privacy", "terms",
@@ -312,7 +312,7 @@
 
 		$sql = "SELECT id
 				FROM z_following
-				WHERE sender = $id 
+				WHERE sender = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
 
@@ -352,7 +352,7 @@
 
 		$sql = "SELECT id
 				FROM z_audios_favorites
-				WHERE user = $id 
+				WHERE user = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
 
@@ -500,7 +500,7 @@
 
 		return $result;
 	}
-	
+
 	// Count times added
 	function counSongTimesAdded($id){
 		global $conn;
@@ -526,7 +526,7 @@
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
-		$result['imageSrc'] = 'assets/media/audios/thumbnails/'.$result['image'];
+		$result['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$result['image'];
 
 		return $result;
 	}
@@ -652,9 +652,9 @@
 
 		// Media
 		if(strrpos($result['mimetype'], "image") !== false)
-			$result['media'] = ($result['name'] ? './assets/media/photos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://outroo.com/assets/media/photos/thumbnails/'.$result['name'] : null);
 		else if(strrpos($result['mimetype'], "video") !== false)
-			$result['media'] = ($result['name'] ? './assets/media/videos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://outroo.com/assets/media/videos/thumbnails/'.$result['name'] : null);
 		else
 			$result['media'] = null;
 
@@ -862,14 +862,14 @@
 		// Media
 		$result['urlVideo'] = json_decode($result['urlVideo']);
 		$result['photos'] = json_decode($result['photos']);
-		
+
 		if (count($result['photos']) > 0) {
 			$result['media'] = getPhotoData($result['photos'][0]);
 
 			if(strrpos($result['media']['mimetype'], "image") !== false)
-				$result['media'] = ($result['media']['name'] ? './assets/media/photos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/photos/thumbnails/'.$result['media']['name'] : null);
 			else if(strrpos($result['media']['mimetype'], "video") !== false)
-				$result['media'] = ($result['media']['name'] ? './assets/media/videos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/videos/thumbnails/'.$result['media']['name'] : null);
 			else
 				$result['media'] = null;
 		} else {

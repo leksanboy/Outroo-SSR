@@ -14,8 +14,8 @@
 						image,
 						private
 				FROM z_audios_playlist
-				WHERE user = $user 
-					AND is_deleted = 0 
+				WHERE user = $user
+					AND is_deleted = 0
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
 	} else if ($type === 'session') {
@@ -28,8 +28,8 @@
 						image,
 						private
 				FROM z_audios_playlist
-				WHERE user = $session 
-					AND is_deleted = 0 
+				WHERE user = $session
+					AND is_deleted = 0
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
 	} else if ($type === 'top') {
@@ -42,8 +42,8 @@
 						image,
 						private
 				FROM z_audios_playlist
-				WHERE is_deleted = 0 
-				ORDER BY RAND() 
+				WHERE is_deleted = 0
+				ORDER BY RAND()
 					AND date DESC
 				LIMIT 10";
 		$result = $conn->query($sql);
@@ -52,21 +52,20 @@
 	// Result
 	if ($result->num_rows > 0) {
 		$data = array();
-		
+
 		while($row = $result->fetch_assoc()) {
-			$row['user'] = $row['user'] ? userUsernameNameAvatar($row['user']) : null;
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['private'] = $row['private'] ? true : false;
 			$row['idPlaylist'] = $row['id'];
 
 			if ($row['type'] === 'follow') {
 				$f_row = getPlaylist($row['o_id']);
-				
+
 				$row['name'] = $f_row['name'];
 				$row['title'] = $f_row['title'];
 				$row['image'] = $f_row['image'];
 			}
-			
+
 			if ($session === $user) {
 				$data[] = $row;
 			} else {
@@ -80,6 +79,6 @@
 	} else {
 		var_dump(http_response_code(204));
 	}
-	
+
 	$conn->close();
 ?>

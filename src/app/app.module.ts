@@ -38,10 +38,10 @@ import { AppComponent } from './app.component';
 import { PipesModule } from './core/pipes/pipes.module';
 
 // Services
+import { AlertService } from './core/services/alert/alert.service';
 import { ServicesModule } from './core/services/services.module';
 
 // Common Modules
-import { ActiveSessionComponent } from './pages/common/activeSession/activeSession.component';
 import { NewAvatarModule } from './pages/common/newAvatar/newAvatar.module';
 import { NewPlaylistModule } from './pages/common/newPlaylist/newPlaylist.module';
 import { NewPublicationModule } from './pages/common/newPublication/newPublication.module';
@@ -56,19 +56,17 @@ import { ShowPublicationModule } from './pages/common/showPublication/showPublic
 import { ActiveSessionsMobileModule } from './pages/common/activeSessionsMobile/activeSessionsMobile.module';
 import { ActivePlayerMobileModule } from './pages/common/activePlayerMobile/activePlayerMobile.module';
 
-// Alert
-import { AlertService } from './core/services/alert/alert.service';
+// Common Components
 import { AlertComponent } from './core/services/alert/alert.component';
-
-// Cookies
 import { CookiesComponent } from './core/services/cookies/cookies.component';
+import { ActiveSessionComponent } from './pages/common/activeSession/activeSession.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		AlertComponent,
-		ActiveSessionComponent,
-		CookiesComponent
+		CookiesComponent,
+		ActiveSessionComponent
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'outroo-server' }),

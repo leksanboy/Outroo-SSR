@@ -33,14 +33,14 @@
 
 		$conn->close();
 	} else if ($type == 'followers') {
-		$sql = "SELECT u.id, 
-						u.private 
-				FROM z_following f 
-					INNER JOIN z_users u ON f.sender = u.id 
-				WHERE f.receiver = $user 
-					AND f.is_deleted = 0 
-					AND f.status = 0 
-				ORDER by u.username ASC 
+		$sql = "SELECT u.id,
+						u.private
+				FROM z_following f
+					INNER JOIN z_users u ON f.sender = u.id
+				WHERE f.receiver = $user
+					AND f.is_deleted = 0
+					AND f.status = 0
+				ORDER by u.username ASC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 

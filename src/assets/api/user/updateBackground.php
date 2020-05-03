@@ -29,12 +29,12 @@
 					ip_address_update = '$ipAddress'
 				WHERE id = $session";
 	}
-	
+
 	$result = $conn->query($sql);
 
 	// Get user data
 	$userData = userData($session);
 	echo json_encode($userData);
-	
+
 	$conn->close();
 ?>

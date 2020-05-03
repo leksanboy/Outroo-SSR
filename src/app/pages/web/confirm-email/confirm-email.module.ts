@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 import {
 	MatButtonModule,
 	MatButtonToggleModule,
-	MatProgressSpinnerModule } from '@angular/material';
-import { Routes, RouterModule } from '@angular/router';
+	MatProgressSpinnerModule
+} from '@angular/material';
 
 import { ConfirmEmailComponent } from './confirm-email.component';
 

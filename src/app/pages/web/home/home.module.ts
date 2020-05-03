@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	MatButtonModule,
 	MatButtonToggleModule,
 	MatMenuModule,
 	MatProgressSpinnerModule,
-	MatInputModule } from '@angular/material';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+	MatInputModule
+} from '@angular/material';
 
 import { RecaptchaModule } from 'ng-recaptcha';
 

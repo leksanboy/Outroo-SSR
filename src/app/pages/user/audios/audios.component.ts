@@ -37,6 +37,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public audioPlayerData: any = [];
 	public userData: any = [];
 	public dataSearch: any = [];
+	public dataGeneral: any = [];
 	public dataDefault: any = [];
 	public dataAround: any = [];
 	public dataTop: any = [];
@@ -59,7 +60,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public deniedAccessOnlySession: boolean;
 	public actionFormSearch: FormGroup;
 	public hideAd: boolean;
-	// public audio = new Audio();
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -106,9 +106,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				}
 			}
 
-			// Load default
+			// Load general
 			this.data.selectedIndex = 0;
-			this.default('default', this.userData.id);
+			this.general(this.userData.id);
 		}
 
 		// Denied
@@ -151,21 +151,24 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					if (this.data.active === 'default') {
 						switch (this.data.selectedIndex) {
 							case 0:
+								/* General: not in use, alwayys set */
+								break;
+							case 1:
 								if (this.dataDefault.list.length > 0) {
 									this.default('more', null);
 								}
 								break;
-							case 1:
+							case 2:
 								if (this.dataAround.list.length > 0) {
 									this.around('more');
 								}
 								break;
-							case 2:
+							case 3:
 								if (this.dataTop.list.length > 0) {
 									this.top('more');
 								}
 								break;
-							case 3:
+							case 4:
 								if (this.dataFresh.list.length > 0) {
 									this.fresh('more');
 								}
@@ -238,22 +241,58 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Set tab on click
 	setTab(tab) {
 		switch (tab) {
+			case 0:
+				/* General: always set */
+				break;
 			case 1:
+				if (!this.dataDefault.list) {
+					this.default('default', this.userData.id);
+				}
+				break;
+			case 2:
 				if (!this.dataAround.list) {
 					this.around('default');
 				}
 				break;
-			case 2:
+			case 3:
 				if (!this.dataTop.list) {
 					this.top('default');
 				}
 				break;
-			case 3:
+			case 4:
 				if (!this.dataFresh.list) {
 					this.fresh('default');
 				}
 				break;
 		}
+	}
+
+	// General
+	general(user) {
+		const data = {
+			user: user
+		};
+
+		this.audioDataService.general(data)
+			.subscribe((res: any) => {
+				this.dataGeneral.loadingData = false;
+
+				if (!res || res.length === 0) {
+					this.dataGeneral.noData = true;
+				} else {
+					this.dataGeneral.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+					this.dataGeneral.list = res;
+					console.log('dataGeneral:', this.dataGeneral)
+				}
+
+				if (!res || res.length < this.env.cuantity) {
+					this.dataGeneral.noMore = true;
+				}
+			}, error => {
+				this.dataGeneral.loadingData = false;
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
+			});
 	}
 
 	// Default
@@ -1010,7 +1049,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				break;
 			case('createPlaylist'):
 				const dataCP = 'create';
-				this.sessionService.setDataCreatePlaylist(dataCP);	
+				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
 			case('report'):
 				item.type = 'audio';
@@ -1224,5 +1263,15 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataReport(item);
 				break;
 		}
+	}
+
+	// Show genre
+	showGenre(item) {
+		this.alertService.warning('Genre ' + item.title + ' is not available');
+	}
+
+	// See All
+	seeAll(type) {
+		this.alertService.warning('Is not available yet');
 	}
 }

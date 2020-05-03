@@ -11,7 +11,7 @@
 	$fileType = $_FILES["fileUpload"]["type"];
 	$fileTmpLoc = $_FILES["fileUpload"]["tmp_name"];
 	$locationPath = '/var/www/html/assets/media/audios/';
-	
+
     // If not files to update (count files = 0)
 	if (!$fileTmpLoc) exit();
 
@@ -50,7 +50,7 @@
 		$resultFav = $conn->query($sqlFav);
 
 	    var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	}  else {
 		var_dump(http_response_code(400));

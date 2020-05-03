@@ -16,9 +16,6 @@ import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 // Main
 import { BookmarksComponent } from './bookmarks.component';
 
-// Entry (Modules are imported on app.module)
-import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
-
 const routes: Routes = [
 	{
 		path: '',
@@ -40,9 +37,6 @@ const routes: Routes = [
 	],
 	declarations: [
 		BookmarksComponent
-	],
-	entryComponents: [
-		ShowPublicationComponent
 	]
 })
 export class BookmarksModule { }

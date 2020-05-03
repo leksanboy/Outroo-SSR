@@ -28,17 +28,17 @@
 								<img [src]="env.pathAudios + 'covers/' + dataDefault?.info?.image" *ngIf="dataDefault?.info?.image">
 							</div>
 						</div>
-		
+
 						<div class="right">
 							<div class="title">
 								{{dataDefault?.info?.title}}
 							</div>
-							
+
 							<a class="subtitle" routerLink="/{{dataDefault?.info?.user?.username}}">
 								@{{dataDefault?.info?.user?.username}}
 								<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</a>
-							
+
 							<div class="button">
 								<button mat-button (click)="playTrack('play')">
 									<i label="pause" *ngIf="dataDefault.playing" class="icon85 white"></i>

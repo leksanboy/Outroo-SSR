@@ -25,10 +25,6 @@ import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 // Main
 import { SettingsComponent } from './settings.component';
 
-// Entry (Modules are imported on app.module)
-import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
-import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
-
 const routes: Routes = [
 	{
 		path: '',
@@ -60,10 +56,6 @@ const routes: Routes = [
 	],
 	declarations: [
 		SettingsComponent
-	],
-	entryComponents: [
-		NewAvatarComponent,
-		NewSessionComponent
 	]
 })
 export class SettingsModule { }

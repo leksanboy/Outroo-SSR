@@ -14,7 +14,6 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
-import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
 
 declare var global: any;
 

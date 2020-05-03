@@ -3,6 +3,8 @@
 		"title": "Songs",
 		"noData": "No songs",
 		"songs": "Songs",
+		"general": "General",
+		"my": "My",
 		"aroundYou": "Around me",
 		"top": "Top",
 		"fresh": "Fresh",
@@ -16,7 +18,15 @@
 		"uploadOrSearch": "Upload or search some songs",
 		"goAudios": "Go to my songs",
 		"privatePlaylist": "Private playlist",
-		"playlistTitle": "Playlist title"
+		"playlistTitle": "Playlist title",
+		"hitsOfMoment": "Hits of the moment",
+		"recommendedPlaylists": "Recommended playlists",
+		"ourFavourites": "Our favourites",
+		"selectGenre": "Select your genre",
+		"mostPlayed": "Most played at the moment",
+		"ostMovies": "OST Movies/Series",
+		"top100": "Top 100",
+		"enjoyYourDay": "Enjoy your day with ..."
 	},
 	"bookmarks": {
 		"title": "Bookmarks",
@@ -396,6 +406,7 @@
 		"publicationNotExists": "The publication does not exist or has been deleted",
 		"clonedPlaylistSuccessfully": "Playlist was cloned successfully into your playlists",
 		"followingPlaylistSuccessfully": "Now you are following this playlist",
-		"recommendedForYou": "Recommended for you"
+		"recommendedForYou": "Recommended for you",
+		"seeAll": "See all"
 	}
 }

@@ -3,6 +3,8 @@
 		"title": "Canciones",
 		"noData": "No hay canciones",
 		"songs": "Canciones",
+		"general": "General",
+		"my": "Mio",
 		"aroundYou": "Cerca de mi",
 		"top": "Top",
 		"fresh": "Novedades",
@@ -16,7 +18,15 @@
 		"uploadOrSearch": "Sube o busca alguna canción",
 		"goAudios": "Ir a mis canciones",
 		"privatePlaylist": "Playlist privado",
-		"playlistTitle": "Título de la playlist"
+		"playlistTitle": "Título de la playlist",
+		"hitsOfMoment": "Éxitos del momento",
+		"recommendedPlaylists": "Playlists recomendadas",
+		"ourFavourites": "Nuestros favoritos",
+		"selectGenre": "Seleccione género",
+		"mostPlayed": "Más reproducidas en este momento",
+		"ostMovies": "OST Películas / Series",
+		"top100": "Top 100",
+		"enjoyYourDay": "Disfruta tu día con ..."
 	},
 	"bookmarks": {
 		"title": "Guardados",
@@ -396,6 +406,7 @@
 		"publicationNotExists": "La publicación no existe o ha sido eliminada",
 		"clonedPlaylistSuccessfully": "La playlist se ha clonado correctamente en tu lista de playlits",
 		"followingPlaylistSuccessfully": "Ahora estás siguiendo esta playlist",
-		"recommendedForYou": "Recomendaciones para ti"
+		"recommendedForYou": "Recomendaciones para ti",
+		"seeAll": "Ver todo"
 	}
 }

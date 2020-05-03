@@ -13,25 +13,25 @@
 
 	// Login and get session data
 	$cond = strrpos($username, '@') ? 'email' : 'username';
-	$sql = "SELECT id, 
-					username, 
-					name, 
-					avatar, 
-					background, 
-					email, 
-					about, 
-					language, 
-					theme, 
-					official, 
-					private, 
+	$sql = "SELECT id,
+					username,
+					name,
+					avatar,
+					background,
+					email,
+					about,
+					language,
+					theme,
+					official,
+					private,
 					reset_password as rp
 			FROM z_users
-			WHERE ".$cond." = '$username' 
+			WHERE ".$cond." = '$username'
 				AND password = '$password'";
 	$result = $conn->query($sql)->fetch_assoc();
 
 	if ($result){
-		$result['avatarUrl'] 			= $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] 			= $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 		$result['languages'] 			= getLanguages();
 		$result['theme'] 				= intval($result['theme']);
 		$result['official'] 			= $result['official'] ? true : false;

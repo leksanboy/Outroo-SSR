@@ -6,17 +6,17 @@
 	$more = $_GET['rows']*$cuantity;
 
 	if ($type === 'default') {
-		$sql = "SELECT f.id, 
-						f.song, 
-						m.name, 
-						m.title, 
-						m.original_title, 
-						m.original_artist, 
-						m.duration, 
+		$sql = "SELECT f.id,
+						f.song,
+						m.name,
+						m.title,
+						m.original_title,
+						m.original_artist,
+						m.duration,
 						m.image
 				FROM z_audios_favorites f
 					INNER JOIN z_audios m ON m.id = f.song
-				WHERE f.user = $user 
+				WHERE f.user = $user
 					AND f.is_deleted = 0
 				ORDER BY f.date DESC
 				LIMIT $more, $cuantity";
@@ -38,12 +38,12 @@
 
 		$conn->close();
 	} else if ($type === 'around') {
-		$sql = "SELECT id, 
-						name, 
-						title, 
-						original_title, 
-						original_artist, 
-						duration, 
+		$sql = "SELECT id,
+						name,
+						title,
+						original_title,
+						original_artist,
+						duration,
 						image
 				FROM z_audios
 				WHERE is_deleted = 0
@@ -68,22 +68,22 @@
 
 		$conn->close();
 	} else if ($type === 'top') {
-		$dateFrom = date('Y-m-d', strtotime('-1 days'));
-		$dateTo = date('Y-m-d', strtotime('+1 days'));
+		$dateFrom = date('Y-m-d H:i:s', strtotime('-1 days'));
+		$dateTo = date('Y-m-d H:i:s', strtotime('+1 days'));
 
-		$sql = "SELECT a.id, 
-						a.name, 
-						a.title, 
-						a.original_title, 
-						a.original_artist, 
-						a.duration, 
-						a.image, 
+		$sql = "SELECT a.id,
+						a.name,
+						a.title,
+						a.original_title,
+						a.original_artist,
+						a.duration,
+						a.image,
 						COUNT(r.song) AS replays
 				FROM z_audios a
 					INNER JOIN z_audios_replays r on a.id = r.song
-				WHERE (r.date BETWEEN '$dateFrom' AND '$dateTo') 
+				WHERE (r.date BETWEEN '$dateFrom' AND '$dateTo')
 					AND a.is_deleted = 0
-				GROUP BY a.id 
+				GROUP BY a.id
 				ORDER by replays DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
@@ -105,12 +105,12 @@
 
 		$conn->close();
 	} else if ($type === 'fresh') {
-		$sql = "SELECT id, 
-						name, 
-						title, 
-						original_title, 
-						original_artist, 
-						duration, 
+		$sql = "SELECT id,
+						name,
+						title,
+						original_title,
+						original_artist,
+						duration,
 						image
 				FROM z_audios
 				WHERE is_deleted = 0

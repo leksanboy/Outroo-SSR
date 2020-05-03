@@ -19,7 +19,7 @@
 									<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
 
 									<div class="upload">
-										<i class="icon200 white" label="photo-camera"></i>
+										<i class="icon200 white" label="camera"></i>
 									</div>
 								</div>
 								<input type="file" hidden (change)="openImage('upload', $event)" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" #avatarFile>

@@ -20,10 +20,6 @@ import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 // Main
 import { AudiosComponent } from './audios.component';
 
-// Entry (Modules are imported on app.module)
-import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
-import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
-
 const routes: Routes = [
 	{
 		path: '',
@@ -50,10 +46,6 @@ const routes: Routes = [
 	],
 	declarations: [
 		AudiosComponent
-	],
-	entryComponents: [
-		NewPlaylistComponent,
-		ShowPlaylistComponent
 	]
 })
 export class AudiosModule { }

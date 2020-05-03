@@ -30,7 +30,8 @@ $iconWidth: 1px;
 
 /*Images*/
 $spriteAudios: url('assets/images/sprite_audios.png');
-$spriteImages: url('assets/images/sprite_images.png');
+$spriteImages: url('assets/images/sprite_images_2.png');
+$logoImage: url('assets/images/logo.png');
 $logoTextImage: url('assets/images/logo_text.png');
 $noPostsImage: url('assets/images/icons/no_posts.png');
 
@@ -146,7 +147,7 @@ body {
 	}
 
 	i {
-		mask-size: 48px calc(48px * 15);
+		mask-size: calc(24px * 2) calc(24px * 23);
 		background-color: currentColor;
 		mask-image: $spriteImages;
 		mask-repeat: no-repeat;
@@ -195,61 +196,256 @@ body {
 			background-color: $whiteColor;
 		}
 
+		&[label="logo"] {
+			mask-size: 24px 24px;
+			mask-image: $logoImage;
+			mask-position: 0 0;
+		}
+
+		&[label="no-posts"] {
+			mask-image: $noPostsImage;
+			mask-size: 156px 156px;
+			mask-position: 0 0;
+			min-width: 156px;
+			height: 156px;
+			width: 156px;
+		}
+
+		&[label="launch"] {
+			mask-position: -24px calc(-24px * 6);
+		}
+
+		&[label="mini-box"] {
+			mask-position: 0 calc(-24px * 6);
+		}
+
+		&[label="mini-box"] {
+			mask-position: 0 calc(-24px * 6);
+		}
+
 		&[label="back"] {
-			mask-position: 0 -240px;
+			mask-position: 0 0;
 		}
 
 		&[label="forward"] {
-			mask-position: -24px -240px;
+			mask-position: 0 0;
+			transform: scale(-1, -1);
 		}
 
-		&[label="close"] {
-			mask-position: -24px -528px;
-		}
-
-		&[label="visibility"] {
-			mask-position: 0 -216px;
+		&[label="playlist"] {
+			mask-position: 0 calc(-24px * 12);
 
 			&.active {
-				mask-position: -24px -216px;
+				background-color: $blueColor !important;
 			}
 		}
 
+		&[label="volume"] {
+			mask-position: 0 calc(-24px * 3);
+
+			&.active {
+				mask-position: -24px calc(-24px * 3);
+			}
+		}
+
+		&[label="more"] {
+			mask-position: -24px calc(-24px * 9);
+		}
+
+		&[label="official"] {
+			mask-position: -24px calc(-24px * 12);
+		}
+
 		&[label="send-comment"] {
-			mask-position: -24px -120px;
+			mask-position: 0 calc(-24px * 15);
 		}
 
 		&[label="analytics-comments"] {
-			mask-position: 0 -72px;
+			mask-position: 0 calc(-24px * 17);
 		}
 
 		&[label="analytics-like"] {
-			mask-position: 0 -48px;
+			mask-position: 0 calc(-24px * 16);
 
 			&.active {
 				background-color: $redColor !important;
-				mask-position: -24px -48px;
+				mask-position: -24px calc(-24px * 16);
 			}
 		}
 
 		&[label="analytics-bookmark"] {
-			mask-position: 0 -144px;
+			mask-position: 0 calc(-24px * 18);
 
 			&.active {
-				mask-position: -24px -144px;
+				mask-position: -24px calc(-24px * 18);
 			}
 		}
 
+		&[label="bookmarks"] {
+			mask-position: -24px calc(-24px * 18);
+		}
+
+		&[label="arrow-mini"] {
+			mask-position: -24px calc(-24px * 0);
+			transform: rotate(-90deg);
+
+			&.active {
+				transform: rotate(90deg);
+			}
+		}
+
+		&[label="arrow-mini-line"] {
+			mask-position: 0 calc(-24px * 1);
+			transform: rotate(-90deg);
+
+			&.active {
+				transform: rotate(90deg);
+			}
+		}
+
+		&[label="arrow-mini-line-left"] {
+			mask-position: 0 calc(-24px * 1);
+		}
+
+		&[label="arrow-mini-line-right"] {
+			mask-position: 0 calc(-24px * 1);
+			transform: rotate(180deg);
+		}
+
 		&[label="exit"] {
-			mask-position: -24px -192px;
+			mask-position: 0 calc(-24px * 22);
+		}
+
+		&[label="person"] {
+			mask-position: 0 calc(-24px * 4);
+		}
+
+		&[label="home"] {
+			mask-position: -24px calc(-24px * 15);
+		}
+
+		&[label="group"] {
+			mask-position: -24px calc(-24px * 4);
+		}
+
+		&[label="language"] {
+			mask-position: -24px calc(-24px * 7);
+		}
+
+		&[label="theme"] {
+			mask-position: 0 calc(-24px * 8);
+		}
+
+		&[label="music"] {
+			mask-position: -24px calc(-24px * 21);
+		}
+
+		&[label="settings"] {
+			mask-position: -24px calc(-24px * 11);
+		}
+
+		&[label="menu"] {
+			mask-position: 0 calc(-24px * 10);
+		}
+
+		&[label="notifications"] {
+			mask-position: -24px calc(-24px * 10);
+		}
+
+		&[label="search"] {
+			mask-position: 0 calc(-24px * 11);
 		}
 
 		&[label="add"] {
-			mask-position: 0 -552px;
+			mask-position: -24px calc(-24px * 1);
 		}
 
 		&[label="check"] {
-			mask-position: 0 -528px;
+			mask-position: 0 calc(-24px * 5);
+		}
+
+		&[label="close"] {
+			mask-position: -24px calc(-24px * 5);
+		}
+
+		&[label="visibility"] {
+			mask-position: 0 calc(-24px * 2);
+
+			&.active {
+				mask-position: -24px calc(-24px * 2);
+			}
+		}
+
+		&[label="play"] {
+			mask-position: 0 calc(-24px * 13);
+		}
+
+		&[label="pause"] {
+			mask-position: -24px calc(-24px * 13);
+		}
+
+		&[label="explicit"] {
+			mask-position: 0 calc(-24px * 7);
+		}
+
+		&[label="lock"] {
+			mask-position: -24px calc(-24px * 8);
+		}
+
+		&[label="link"] {
+			mask-position: 0 calc(-24px * 9);
+		}
+
+		&[label="zoom-in"] {
+			mask-position: 0 calc(-24px * 19);
+		}
+
+		&[label="zoom-out"] {
+			mask-position: -24px calc(-24px * 19);
+		}
+
+		&[label="rotate-left"] {
+			mask-position: 0 calc(-24px * 20);
+		}
+
+		&[label="rotate-right"] {
+			mask-position: 0 calc(-24px * 20);
+			transform: scale(-1, 1);
+		}
+
+		&[label="swap-horiz"] {
+			mask-position: -24px calc(-24px * 20);
+		}
+
+		&[label="swap-vert"] {
+			mask-position: -24px calc(-24px * 20);
+			transform: rotate(90deg);
+		}
+
+		&[label="cloud-upload"] {
+			mask-position: 0 calc(-24px * 14);
+		}
+
+		&[label="cloud-off"] {
+			mask-position: -24px calc(-24px * 14);
+		}
+
+		&[label="camera"] {
+			mask-position: 0 calc(-24px * 21);
+		}
+
+
+
+
+
+
+
+
+
+
+
+		/* &[label="image"] {
+			mask-position: 0 -648px;
 		}
 
 		&[label="check-circle"] {
@@ -280,14 +476,6 @@ body {
 			mask-position: -24px -168px;
 		}
 
-		&[label="cloud-off"] {
-			mask-position: -24px -552px;
-		}
-
-		&[label="cloud-upload"] {
-			mask-position: -24px -72px;
-		}
-
 		&[label="error-outline"] {
 			mask-position: -24px -456px;
 		}
@@ -300,15 +488,11 @@ body {
 			mask-position: 0 -696px;
 		}
 
-		&[label="lock"] {
-			mask-position: -24px -624px;
-		}
-
-		&[label="keyboard-arrow-left"] {
+		&[label="arrow-mini-line-left"] {
 			mask-position: 0 -408px;
 		}
 
-		&[label="keyboard-arrow-right"] {
+		&[label="arrow-mini-line-right"] {
 			mask-position: -24px -408px;
 		}
 
@@ -320,133 +504,13 @@ body {
 			mask-position: -24px -264px;
 		}
 
-		&[label="search"] {
-			mask-position: -24px -600px;
-		}
-
-		&[label="playlist"] {
-			mask-position: 0 -672px;
-
-			&.active {
-				background-color: $blueColor !important;
-			}
-		}
-
-		&[label="volume"] {
-			mask-position: 0 -312px;
-
-			&.active {
-				mask-position: -24px -312px;
-			}
-		}
-
-		&[label="play"] {
-			mask-position: 0 -288px;
-		}
-
-		&[label="pause"] {
-			mask-position: -24px -288px;
-		}
-
-		&[label="more"] {
-			mask-position: 0 -120px;
-		}
-
-		&[label="menu"] {
-			mask-position: 0 -600px;
-		}
-
-		&[label="notifications"] {
-			mask-position: 0 -624px;
-		}
-
-		&[label="person"] {
-			mask-position: 0 -504px;
-		}
-
-		&[label="home"] {
-			mask-position: 0 -192px;
-		}
-
-		&[label="group"] {
-			mask-position: -24px -504px;
-		}
-
-		&[label="language"] {
-			mask-position: -24px -648px;
-		}
-
-		&[label="moon"] {
-			mask-position: -24px -696px;
-		}
-
-		&[label="image"] {
-			mask-position: 0 -648px;
-		}
-
-		&[label="photo-camera"] {
-			mask-position: -24px -576px;
-		}
-
-		&[label="music"] {
-			mask-position: 0 -576px;
-		}
-
-		&[label="bookmarks"] {
-			mask-position: -24px -144px;
-		}
-
-		&[label="settings"] {
-			mask-position: -24px -96px;
-		}
-
-		&[label="zoom-in"] {
-			mask-position: 0 -336px;
-		}
-
-		&[label="zoom-out"] {
-			mask-position: -24px -336px;
-		}
-
-		&[label="rotate-left"] {
-			mask-position: 0 -360px;
-		}
-
-		&[label="rotate-right"] {
-			mask-position: -24px -360px;
-		}
-
-		&[label="swap-horiz"] {
-			mask-position: 0 -384px;
-		}
-
-		&[label="swap-vert"] {
-			mask-position: -24px -384px;
-		}
-
 		&[label="chevron-left"] {
 			mask-position: 0 -408px;
 		}
 
 		&[label="chevron-right"] {
 			mask-position: -24px -408px;
-		}
-
-		&[label="official"] {
-			mask-position: 0 -96px;
-		}
-
-		&[label="no-posts"] {
-			background-color: currentColor;
-			mask-image: $noPostsImage;
-			mask-repeat: no-repeat;
-			mask-size: 156px 156px;
-			display: inline-block;
-			mask-position: 0 0;
-			min-width: 156px;
-			height: 156px;
-			width: 156px;
-		}
+		} */
 	}
 
 	span {
@@ -931,8 +995,17 @@ body {
 						display: flex;
 						justify-content: center;
 
-						button:last-child{
-							background-color: #2e2e2e;
+						button{
+							text-overflow: ellipsis;
+							word-break: break-all;
+							white-space: nowrap;
+							overflow: hidden;
+							padding: 0 4px;
+							width: 64px;
+
+							&:last-child{
+								background-color: #2e2e2e;
+							}
 						}
 					}
 
@@ -2510,17 +2583,6 @@ body {
 				.logo {
 					text-align: center;
 					padding: 36px 0;
-
-					.image {
-						mask-size: 48px calc(48px * 15);
-						background-color: $whiteColor;
-						mask-image: $spriteImages;
-						mask-repeat: no-repeat;
-						display: inline-block;
-						mask-position: 0 0;
-						height: 48px;
-						width: 48px;
-					}
 				}
 
 				.form {
@@ -2539,7 +2601,7 @@ body {
 						font-weight: bold;
 						margin: 0 0 12px;
 						font-size: 14px;
-						padding: 12px;
+						padding: 18px;
 						width: 100%;
 						float: left;
 					}
@@ -2676,16 +2738,12 @@ body {
 							text-transform: capitalize;
 							background: $whiteColor;
 							color: $blackColor;
-							padding: 0 8px 0 0;
+							padding: 0 4px 0 12px;
 							line-height: 32px;
 							margin: 12px 0 0;
 							box-shadow: none;
 							height: 32px;
 							font-size: 13px;
-
-							i {
-								margin: 0 -6px 0 0;
-							}
 						}
 					}
 				}
@@ -2744,16 +2802,8 @@ body {
 		padding: calc(50vh - 24px) 0;
 		text-align: center;
 
-		.logo {
+		i {
 			animation: heartbeat .6s infinite alternate;
-			mask-size: 48px calc(48px * 15);
-			background-color: $greyColor;
-			mask-image: $spriteImages;
-			mask-repeat: no-repeat;
-			display: inline-block;
-			mask-position: 0 0;
-			height: 48px;
-			width: 48px;
 		}
 	}
 
@@ -4137,16 +4187,16 @@ body {
 					z-index: -1;
 
 					.logo {
-						mask-size: 24px calc(24px * 15);
+						/* mask-size: 24px 24px;
 						background-color: $blackColor;
-						mask-image: $spriteImages;
+						mask-image: $logoImage;
 						mask-repeat: no-repeat;
 						display: inline-block;
-						mask-position: 0 0;
+						mask-position: 0 0; */
 						margin: 16px 0 0;
 						cursor: pointer;
-						height: 24px;
-						width: 24px;
+						/* height: 24px;
+						width: 24px; */
 					}
 				}
 
@@ -4227,7 +4277,7 @@ body {
 					padding: 56px 8px;
 					position: fixed;
 					height: 100%;
-					width: 240px;
+					width: 260px;
 					margin: 0;
 					left: 0;
 					top: 0;
@@ -5065,7 +5115,6 @@ body {
 						margin: 0 auto;
 
 						.head {
-							/* border-bottom: 1px solid transparentize($greyColor, .5); */
 							justify-content: space-between;
 							box-sizing: border-box;
 							line-height: 56px;
@@ -5083,6 +5132,7 @@ body {
 								}
 
 								&.r {
+									margin: 8px 0;
 									float: right;
 								}
 							}
@@ -5214,6 +5264,8 @@ body {
 
 							.right {
 								width: calc(100% - 86px);
+								display: flex;
+								align-items: center;
 
 								.text {
 									padding: 4px 0 4px 18px;
@@ -5364,17 +5416,11 @@ body {
 											font-weight: bold;
 											font-size: 15px;
 											width: 100%;
+											display: flex;
+											justify-content: center;
 
 											i {
-												mask-size: 24px calc(24px * 15);
-												min-width: 12px;
-												height: 12px;
-												width: 12px;
-												margin: 0;
-
-												&[label="bookmark"] {
-													mask-position: -12px -72px;
-												}
+												margin: -2px -4px -4px 0;
 											}
 										}
 
@@ -6075,6 +6121,35 @@ body {
 								}
 							}
 						}
+
+						.seeAll {
+							box-sizing: border-box;
+							display: inline-block;
+							list-style: none;
+							width: 150px;
+							margin: 0;
+
+							.inner {
+								box-sizing: border-box;
+								border-radius: 12px;
+								position: relative;
+								margin: 0 0 40px 0;
+								overflow: hidden;
+								cursor: pointer;
+								height: 150px;
+								width: 100%;
+								float: left;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								border: 2px solid currentColor;
+
+								.text {
+									font-weight: bold;
+									font-size: 15px;
+								}
+							}
+						}
 					}
 
 					.scrolling-wrapper {
@@ -6084,13 +6159,84 @@ body {
 						overflow-x: scroll;
 						margin: 12px 0;
 						width: 100%;
+					}
 
-						.card {
-							display: inline-block;
-							background: grey;
-							margin: 0 6px;
-							height: 100px;
-							width: 100px;
+					.section{
+						box-sizing: border-box;
+						display: flow-root;
+						width: 100%;
+						margin: 0 0 12px;
+						padding: 0 0 12px;
+						border-top: 1px solid transparentize($greyColor, .75);
+
+						.head{
+							width: 100%;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							box-sizing: border-box;
+							padding: 6px 18px;
+							margin: 12px 0;
+
+							.title {
+								font-weight: bold;
+							}
+
+							button {
+								background-color: $blueColor;
+								color: $whiteColor;
+								text-transform: inherit;
+								font-weight: bold;
+								font-size: 12px;
+								cursor: pointer;
+								height: 28px;
+								line-height: 28px;
+							}
+						}
+
+						&:first-child {
+							border: none;
+
+							.head {
+								margin: 0 0 12px;
+							}
+
+							ul.tracks {
+								li {
+									width: 50%;
+									float: left;
+
+									.inner .text .duration {
+										display: none;
+									}
+								}
+							}
+						}
+
+						&:nth-child(2) {
+							.playlists {
+								height: calc(190px * 2);
+								display: flex;
+								flex-direction: column;
+								flex-wrap: wrap;
+
+								/* .box{
+									flex: 0 0 150px;
+								} */
+							}
+						}
+
+						&:last-child {
+							.playlists {
+								height: calc(190px * 3);
+								display: flex;
+								flex-direction: column;
+								flex-wrap: wrap;
+
+								/* .box{
+									flex: 0 0 150px;
+								} */
+							}
 						}
 					}
 				}
@@ -6987,7 +7133,7 @@ body {
 				}
 
 				.right {
-					.playlist {
+					.action {
 						button {
 							i {
 								background-color: $whiteColor;
@@ -7343,8 +7489,8 @@ body {
 					display: flex;
 					width: 100%;
 
-					.playlist {
-						padding: 23px 12px;
+					.action {
+						padding: 23px 4px;
 						width: 40px;
 					}
 
@@ -7386,6 +7532,26 @@ body {
 				}
 			}
 
+			.close {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				button{
+					width: 24px;
+					height: 24px;
+					background-color: transparent;
+					box-shadow: none !important;
+					margin: 2px;
+					z-index: 1;
+
+					&:hover {
+						background-color: transparentize($greyColor, 0.85);
+					}
+				}
+			}
+
 			.playlistBox {
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
@@ -7402,7 +7568,7 @@ body {
 					box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.14);
 					border: 8px solid $whiteColor;
 					transform: rotate(-45deg);
-					margin: -9px 0 0 118px;
+					margin: -9px 0 0 126px;
 					position: absolute;
 					z-index: -1;
 					height: 0;
@@ -7415,6 +7581,66 @@ body {
 					padding: 12px 0;
 					min-height: 0;
 					width: 100%;
+				}
+			}
+
+			&.mini {
+				width: 260px;
+				border: 1px solid transparentize($greyColor, .75);
+				box-shadow: $shadowBox2;
+				margin: 8px;
+				border-radius: 5px;
+				box-sizing: border-box;
+				overflow: hidden;
+
+				.player {
+					justify-content: center;
+
+					.left,
+					.right{
+						display: none;
+					}
+
+					.center {
+						width: 100%;
+
+						.top {
+							width: 100%;
+							padding: 15px 0 0;
+
+							.suffle,
+							.repeat,
+							.prev,
+							.next {
+								margin: 4px 0;
+							}
+						}
+
+						.bottom {
+							margin: 16px 0 0;
+
+							.progress {
+								.current,
+								.total {
+									display: none;
+								}
+
+								.slider {
+									.mat-slider {
+										display: none;
+									}
+
+									#audioAnalyser{
+										margin: 0 .5px;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.close {
+					display: block;
 				}
 			}
 		}

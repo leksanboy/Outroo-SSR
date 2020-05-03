@@ -136,4 +136,15 @@ export class AudioDataService {
 				return res;
 			}));
 	}
+
+	general(data: any) {
+		const url = this.env.url + 'assets/api/audios/general.php';
+		let params = '&user=' + data.user;
+		params = params.replace('&', '?');
+
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
 }

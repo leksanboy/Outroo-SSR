@@ -24,12 +24,12 @@
 					<div class="title">
 						{{data?.info?.title}}
 					</div>
-					
+
 					<a class="subtitle" routerLink="/{{data?.info?.user?.username}}">
 						@{{data?.info?.user?.username}}
 						<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 					</a>
-					
+
 					<div class="button">
 						<button mat-button (click)="playTrack('play')">
 							<i label="pause" *ngIf="data.playing" class="icon85 white"></i>

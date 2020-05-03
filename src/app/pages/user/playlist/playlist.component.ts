@@ -179,6 +179,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.audioPlayerData.location = 'playlist';
 				this.audioPlayerData.type = type;
 				this.audioPlayerData.selectedIndex = this.dataDefault.selectedIndex;
+				this.audioPlayerData.playlist = this.dataDefault.info.id;
 
 				item.playing = true;
 				this.dataDefault.playing = true;

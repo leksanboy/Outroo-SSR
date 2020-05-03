@@ -2,10 +2,16 @@
 # | Disable ETags 														|
 # ----------------------------------------------------------------------
 
-
 <IfModule mod_headers.c>
 	Header unset ETag
 	Header set Connection keep-alive
+
+	# ···
+	# Para que funcione el CORS desde localhost a domain.com
+	# https://tecadmin.net/enable-cors-apache/
+	# sudo a2enmod headers
+	# sudo service apache2 restart
+	# ···
 
 	Header set X-Content-Type-Options nosniff
 	Header set Access-Control-Allow-Origin "*"
@@ -29,13 +35,11 @@
 		Header append Vary: Accept-Encoding
 	</FilesMatch>
 </IfModule>
-FileETag None
 
 
 # ----------------------------------------------------------------------
 # | Caching 															|
 # ----------------------------------------------------------------------
-
 
 <IfModule mod_expires.c>
 	ExpiresActive On
@@ -62,7 +66,6 @@ FileETag None
 # ----------------------------------------------------------------------
 # | Compression GZIP                                                    |
 # ----------------------------------------------------------------------
-
 
 <IfModule mod_deflate.c>
 	<IfModule mod_setenvif.c>
@@ -146,17 +149,3 @@ FileETag None
 	RewriteCond %{THE_REQUEST} index\.html
 	RewriteRule ^index\.html$ http://127.0.0.1:4000/ [R=301,L]
 </IfModule>
-
-
-# ----------------------------------------------------------------------
-# | Deny access to Asset folders/Only acessible for outroo.com 			|
-# ----------------------------------------------------------------------
-
-# ·> Deny access any folder "assets/**/*"
-#Options -Indexes
-
-# ·> Returns 403, if you access .php file in url
-#RewriteEngine On
-#RewriteCond %{HTTP_REFERER} !^https://(www\.)?outroo [NC]
-#RewriteCond %{HTTP_REFERER} !^https://(www\.)?outroo.*$ [NC]
-#RewriteRule \.(php)$ - [F]

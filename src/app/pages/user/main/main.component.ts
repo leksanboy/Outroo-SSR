@@ -210,9 +210,8 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
 		this.activeComeFromUserButton.unsubscribe();
-		
+
 		this.showAccounts = false;
-		this.recommendedUsers.show = false;
 	}
 
 	// Go back
@@ -334,6 +333,13 @@ export class MainComponent implements OnInit, OnDestroy {
 				noMore: false
 			};
 
+			this.recommendedUsers = {
+				loading: false,
+				noData: true,
+				show: false,
+				list: []
+			};
+
 			const data = {
 				type: 'user',
 				user: user,
@@ -349,7 +355,9 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.dataDefault.noData = true;
 
 						/* Show recommended user if no publications */
-						this.getRecommendedUsers();
+						setTimeout(() => {
+							this.getRecommendedUsers();
+						}, 600);
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						this.dataDefault.noData = false;
@@ -912,8 +920,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.recommendedUsers.show = !this.recommendedUsers.show;
 		this.recommendedUsers.loading = true;
 
-		console.log('this.recommendedUsers:', this.recommendedUsers);
-
 		if (this.recommendedUsers.show && this.recommendedUsers.list.length === 0) {
 			const data = {
 				user: this.userData.id
@@ -941,7 +947,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	dismissRecommended(item, index) {
 		item.dismiss = true;
-		console.log('item:', item);
 
 		this.recommendedUsers.list.splice(index, 1);
 

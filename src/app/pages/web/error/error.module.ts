@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { MatButtonModule, MatButtonToggleModule } from '@angular/material';
+import {
+	MatButtonModule,
+	MatButtonToggleModule
+} from '@angular/material';
 
 import { ErrorComponent } from './error.component';
 

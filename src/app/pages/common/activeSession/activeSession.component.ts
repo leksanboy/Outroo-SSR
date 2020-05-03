@@ -50,7 +50,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public deniedAccess = 'session';
 	public showPlayer: boolean;
 	public showSessions: boolean;
-	public showPlaylist: boolean;
 	public showNotificationsBox: boolean;
 	public showUserBox: boolean;
 	public showCloseSession: boolean;
@@ -87,7 +86,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 			addRemoveOther: null,
 			color: null
 		},
-		list: []
+		list: [],
+		mini: false
 	};
 
 	constructor(
@@ -159,7 +159,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get player data
 			this.playerService.getData()
 				.subscribe(data => {
-					this.showPlaylist = true;
+					this.audioPlayerData.playlistBox = true;
 					this.audioPlayerData.noData = false;
 					this.audioPlayerData.postId = data.postId;
 					this.audioPlayerData.list = data.list;
@@ -713,7 +713,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.getColorFromAudioCover(this.audioPlayerData.current.image);
 
 					// Replays +1
-					this.updateReplays(this.audioPlayerData.list[key].song, this.sessionData.current.id);
+					this.updateReplays(this.audioPlayerData.list[key].song, this.sessionData.current.id, this.audioPlayerData.playlist);
 
 					// Set current track
 					this.audioPlayerData.location = this.audioPlayerData.location ? this.audioPlayerData.location : 'user';
@@ -829,10 +829,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Replays +1
-	updateReplays(id, user) {
+	updateReplays(id, user, playlist) {
 		const data = {
 			id: id,
-			user: user
+			user: user,
+			playlist: playlist
 		};
 
 		this.audioDataService.updateReplays(data).subscribe();
@@ -1021,10 +1022,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.location.go(this.router.url);
 
 					if (res) {
-						this.sessionData.current.playlists.unshift(res);
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 						this.sessionService.setDataPlaylists(this.sessionData);
 						this.alertService.success(this.translations.common.createdSuccessfully);
+
+						return res;
 					}
 				});
 			break;
@@ -1098,7 +1100,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Show playlist web
 	showPlaylistWeb() {
 		this.showUserBox = false;
-		this.showPlaylist = !this.showPlaylist;
+		this.audioPlayerData.playlistBox = !this.audioPlayerData.playlistBox;
 	}
 
 	// Show userBox web
@@ -1107,7 +1109,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.showCloseSession = false;
 		this.showChangeSession = false;
 		this.showChangeLanguage = false;
-		this.showPlaylist = false;
+		this.audioPlayerData.playlistBox = false;
 	}
 
 	// Show panel from bottom on mobile
@@ -1386,5 +1388,14 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.document.body.removeChild(selBox);
 
 		this.alertService.success(this.translations.common.copied);
+	}
+
+	doMiniPlayer(type) {
+		if (type === 'collapse') {
+			this.audioPlayerData.mini = true;
+			this.audioPlayerData.playlistBox = false
+		} else if (type === 'expand') {
+			this.audioPlayerData.mini = false;
+		}
 	}
 }

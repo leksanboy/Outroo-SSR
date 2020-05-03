@@ -11,6 +11,7 @@ import {
 	MatTooltipModule
 } from '@angular/material';
 
+// Main
 import { FollowersComponent } from './followers.component';
 
 const routes: Routes = [

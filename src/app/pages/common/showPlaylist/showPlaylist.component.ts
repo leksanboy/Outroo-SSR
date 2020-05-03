@@ -89,6 +89,7 @@ export class ShowPlaylistComponent implements OnInit {
 				this.audioPlayerData.location = 'playlist';
 				this.audioPlayerData.type = type;
 				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+				this.audioPlayerData.playlist = this.data.info.id;
 
 				item.playing = true;
 				this.data.playing = true;

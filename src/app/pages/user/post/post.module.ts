@@ -14,10 +14,13 @@ import {
 	MatTooltipModule
 } from '@angular/material';
 
+// Swiper
 import { SwiperModule } from 'angular2-useful-swiper';
 
+// Pipe
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 
+// Main
 import { PostComponent } from './post.component';
 
 const routes: Routes = [

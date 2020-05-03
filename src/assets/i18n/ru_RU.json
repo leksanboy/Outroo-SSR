@@ -3,6 +3,8 @@
 		"title": "Песни",
 		"noData": "Нет песен",
 		"songs": "Песни",
+		"general": "Главная",
+		"my": "Мои",
 		"aroundYou": "Вокруг меня",
 		"top": "Топ",
 		"fresh": "Свежие",
@@ -16,7 +18,15 @@
 		"uploadOrSearch": "Загрузить или найти песни",
 		"goAudios": "Перейти к моим песням",
 		"privatePlaylist": "Приватный плейлист",
-		"playlistTitle": "Название плейлиста"
+		"playlistTitle": "Название плейлиста",
+		"hitsOfMoment": "Хиты момента",
+		"recommendedPlaylists": "Рекомендуемые плейлисты",
+		"ourFavourites": "Наши фавориты",
+		"selectGenre": "Выберите свой жанр",
+		"mostPlayed": "Самые популярные на данный момент",
+		"ostMovies": "OST Фильмы / Сериалы",
+		"top100": "Топ 100",
+		"enjoyYourDay": "Хорошего вам дня с ..."
 	},
 	"bookmarks": {
 		"title": "Закладки",
@@ -396,6 +406,7 @@
 		"publicationNotExists": "Публикация не существует или была удалена",
 		"clonedPlaylistSuccessfully": "Плейлист успешно клонирован в ваши плейлисты",
 		"followPlaylistSuccessfully": "Теперь вы подписаны на этот плейлист",
-		"recommendedForYou": "Рекомендуемый для вас"
+		"recommendedForYou": "Рекомендуемый для вас",
+		"seeAll": "Увидеть все"
 	}
 }

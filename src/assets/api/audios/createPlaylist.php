@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
-	
+
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
 	$id = $data['id'];
@@ -24,52 +24,58 @@
 	if ($type === 'create') {
 		$sql = "INSERT INTO z_audios_playlist (name, user, title, image, ip_address)
 				VALUES ('$name', $session, '$title', '$imageNameJpg', '$ipAddress')";
-		$result = $conn->query($sql);
+		$conn->query($sql);
 		$insertedId = $conn->insert_id;
 
+		$sqlUpdate = "UPDATE z_audios_playlist
+						SET original_id = '$insertedId',
+							ip_address = '$ipAddress'
+						WHERE id = $id
+							AND user = $session";
+		$conn->query($sqlUpdate);
+
 		$res = getPlaylist($insertedId);
-		$res['user'] = userUsernameNameAvatar($session);
 		echo json_encode($res);
-		
+
 		$conn->close();
 	} else if ($type === 'update') {
 		if ($subtype === 'updateTitle') {
 			$sql = "UPDATE z_audios_playlist
-					SET title = '$title', 
-						ip_address = '$ipAddress' 
-					WHERE id = $id 
+					SET title = '$title',
+						ip_address = '$ipAddress'
+					WHERE id = $id
 						AND user = $session";
 			$result = $conn->query($sql);
 
 			$res = getPlaylist($id);
 			echo json_encode($res);
-			
+
 			$conn->close();
 		} else if ($subtype === 'updateTitleImage') {
 			$sql = "UPDATE z_audios_playlist
-					SET title = '$title', 
-						image = '', 
-						ip_address = '$ipAddress' 
-					WHERE id = $id 
+					SET title = '$title',
+						image = '',
+						ip_address = '$ipAddress'
+					WHERE id = $id
 						AND user = $session";
 			$result = $conn->query($sql);
 
 			$res = getPlaylist($id);
 			echo json_encode($res);
-			
+
 			$conn->close();
 		} else if ($subtype === 'updateNewImage') {
 			$sql = "UPDATE z_audios_playlist
-					SET title = '$title', 
-						image = '$imageNameJpg', 
-						ip_address = '$ipAddress' 
-					WHERE id = $id 
+					SET title = '$title',
+						image = '$imageNameJpg',
+						ip_address = '$ipAddress'
+					WHERE id = $id
 						AND user = $session";
 			$result = $conn->query($sql);
 
 			$res = getPlaylist($id);
 			echo json_encode($res);
-			
+
 			$conn->close();
 		}
 	}

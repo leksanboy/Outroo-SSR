@@ -13,14 +13,14 @@
 		$status = ($type == 'remove') ? 1 : 0;
 
 		$sql = "UPDATE z_audios_favorites
-				SET is_deleted = $status, 
+				SET is_deleted = $status,
 					ip_address = '$ipAddress'
-				WHERE id = $id 
+				WHERE id = $id
 					AND user = $session";
 		$result = $conn->query($sql);
 
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	} else if ($location === 'user') { // Add/Remove
 		if ($type == 'add') {
@@ -30,17 +30,17 @@
 			$insertedId = $conn->insert_id;
 
 			echo $insertedId;
-			
+
 			$conn->close();
 		} else if ($type == 'remove') {
 			$sql = "UPDATE z_audios_favorites
 					SET is_deleted = 1
-					WHERE id = $id 
+					WHERE id = $id
 						AND user = $session";
 			$result = $conn->query($sql);
 
 			var_dump(http_response_code(204));
-			
+
 			$conn->close();
 		}
 	} else if ($location === 'playlist') { // Add/Remove

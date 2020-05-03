@@ -26,7 +26,10 @@ export class HeadersService {
 		if (this.ssrService.isBrowser) {
 			const userData: any = JSON.parse(this.window.localStorage.getItem('userData'));
 			const authorization = userData ? userData.current.authorization : 'empty';
-			const headers = new HttpHeaders().set('Authorization', authorization).set('Content-Type', 'application/json');
+			const headers = new HttpHeaders().set('Authorization', authorization);
+
+			/* headers.set('Content-Type', 'application/json');
+			headers.set('Authorization', authorization); */
 
 			// const authorizationValidator = this.clicksPerSecond() ? authorization : '';
 			// if (!authorizationValidator) {
@@ -35,6 +38,8 @@ export class HeadersService {
 
 			return { headers: headers };
 		}
+
+		return {}
 	}
 
 	clicksPerSecond() {

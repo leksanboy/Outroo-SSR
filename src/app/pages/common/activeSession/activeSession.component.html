@@ -9,7 +9,7 @@
 				</div>
 
 				<div class="center">
-					<div class="logo" routerLink="{{sessionData ? '/home' : '/'}}"></div>
+					<i label="logo" routerLink="{{sessionData ? '/home' : '/'}}"></i>
 				</div>
 
 				<div class="right">
@@ -330,7 +330,7 @@
 
 			<div class="userBox" *ngIf="showUserBox">
 				<div class="hidden" *ngIf="showUserBox" (click)="showUserBoxWeb()"></div>
-				
+
 				<div class="box">
 					<div class="top" *ngIf="!showCloseSession && !showChangeSession && !showChangeLanguage && !showChangeTheme">
 						<div class="image">
@@ -359,19 +359,19 @@
 							<div class="item" mat-ripple (click)="showChangeSession=!showChangeSession">
 								<i label="group"></i>
 								<div class="text">{{translations?.common?.changeAccount}}</div>
-								<i label="keyboard-arrow-right"></i>
+								<i label="arrow-mini-line-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="showChangeLanguage=!showChangeLanguage">
 								<i label="language"></i>
 								<div class="text">{{translations?.common?.changeLanguage}}</div>
-								<i label="keyboard-arrow-right"></i>
+								<i label="arrow-mini-line-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="showChangeTheme=!showChangeTheme">
-								<i label="moon"></i>
+								<i label="theme"></i>
 								<div class="text">{{translations?.common?.darkTheme}}</div>
-								<i label="keyboard-arrow-right"></i>
+								<i label="arrow-mini-line-right"></i>
 							</div>
 
 							<div class="item" mat-ripple (click)="showUserBox = false" routerLink="/settings">
@@ -402,7 +402,7 @@
 									</div>
 									<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
 									<i label="exit" [matMenuTriggerFor]="signOut"></i>
-									
+
 									<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
 										<div class="text">
 											{{translations?.common?.leaveSite}}
@@ -511,8 +511,7 @@
 						</div>
 
 						<div class="button">
-							<i label="arrow-drop-up" *ngIf="showChangeSessionOnMenu"></i>
-							<i label="arrow-drop-down" *ngIf="!showChangeSessionOnMenu"></i>
+							<i label="arrow-mini" [ngClass]="{active: showChangeSessionOnMenu}"></i>
 						</div>
 					</div>
 
@@ -611,7 +610,7 @@
 </div>
 
 <!-- Web audio player -->
-<div class="audioPlayerWeb" *ngIf="deniedAccess === 'session'">
+<div class="audioPlayerWeb" [ngClass]="{mini: audioPlayerData?.mini}" *ngIf="deniedAccess === 'session'">
 	<div class="player">
 		<div class="left">
 			<div class="image" *ngIf="audioPlayerData?.current?.image">
@@ -672,9 +671,14 @@
 		</div>
 
 		<div class="right">
-			<div class="playlist">
+			<div class="action">
+				<button mat-mini-fab (click)="doMiniPlayer('collapse')">
+					<i label="mini-box" class="icon75"></i>
+				</button>
+			</div>
+			<div class="action">
 				<button mat-mini-fab (click)="showPlaylistWeb()">
-					<i label="playlist" [ngClass]="{active: showPlaylist}"></i>
+					<i label="playlist" [ngClass]="{active: audioPlayerData?.playlistBox}"></i>
 				</button>
 			</div>
 			<div class="volume">
@@ -686,7 +690,13 @@
 		</div>
 	</div>
 
-	<div class="playlistBox" *ngIf="showPlaylist">
+	<div class="close">
+		<button mat-mini-fab (click)="doMiniPlayer('expand')">
+			<i label="launch" class="icon50 grey"></i>
+		</button>
+	</div>
+
+	<div class="playlistBox" *ngIf="audioPlayerData?.playlistBox">
 		<div class="data">
 			<ul class="tracks" *ngIf="audioPlayerData?.list">
 				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, default: !x.image, remove: x.addRemoveSession}">

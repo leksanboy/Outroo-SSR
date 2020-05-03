@@ -28,8 +28,394 @@
 
 					<span *ngIf="data.active === 'default'">
 						<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
-							<mat-tab label="{{translations?.audios?.songs}}">
-								<div class="playlists" *ngIf="!dataDefault.loadingData && (sessionData?.current?.id)">
+							<mat-tab label="{{translations?.audios?.general}}">
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.hitsOfMoment}}</div>
+										<button mat-button (click)="seeAll('hits')">{{translations?.common?.seeAll}}</button>
+									</div>
+
+									<ul class="tracks" *ngIf="dataGeneral?.list?.hits">
+										<li *ngFor="let x of dataGeneral?.list?.hits; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'hits', default: !x.image, remove: x.addRemoveSession}">
+											<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+												<div class="image">
+													<button mat-icon-button (click)="playSong(dataGeneral?.list?.hits, x, i, 'hits')">
+														<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'hits')"></i>
+														<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'hits')"></i>
+														<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+													</button>
+												</div>
+
+												<div class="text" (click)="playSong(dataGeneral?.list?.hits, x, i, 'hits')">
+													<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+														<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+														<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+													</div>
+													<div class="duration">{{x.duration}}</div>
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<span *ngIf="userData?.id === sessionData?.current?.id">
+														<button mat-icon-button [matMenuTriggerFor]="appMenu">
+															<i class="icon85 grey" label="more"></i>
+														</button>
+													</span>
+
+													<span *ngIf="userData?.id !== sessionData?.current?.id">
+														<button mat-icon-button [matMenuTriggerFor]="appMenu">
+															<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+															<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+														</button>
+													</span>
+
+													<mat-menu #appMenu="matMenu">
+														<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
+														<mat-divider *ngIf="userData?.id === sessionData?.current?.id"></mat-divider>
+														<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+													</mat-menu>
+
+													<mat-menu #menuPlaylists="matMenu">
+														<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
+														<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
+														<span *ngFor="let p of sessionData?.current?.playlists">
+															<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
+														</span>
+													</mat-menu>
+
+													<mat-menu #menuShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
+													</mat-menu>
+												</div>
+											</div>
+
+											<div class="ad" *ngIf="x.contentTypeAd">
+												<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+												<div class="disableAdBlock" *ngIf="hideAd">
+													{{translations?.common?.disableAdBlock}}
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.recommendedPlaylists}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.recommended; let i=index;">
+											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showPlaylist(x)">
+													{{x.title}}
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<button mat-icon-button [matMenuTriggerFor]="appMenu">
+														<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+														<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+													</button>
+
+													<mat-menu #appMenu="matMenu">
+														<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x, i)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('follow', x, i)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
+													</mat-menu>
+
+													<mat-menu #menuShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOnPlaylist('message', x)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('copyLink', x)">{{translations?.common?.copyLink}}</button>
+													</mat-menu>
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('recommended')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.ourFavourites}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.favourites; let i=index;">
+											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showPlaylist(x)">
+													{{x.title}}
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<button mat-icon-button [matMenuTriggerFor]="appMenu">
+														<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+														<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+													</button>
+
+													<mat-menu #appMenu="matMenu">
+														<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x, i)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('follow', x, i)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
+													</mat-menu>
+
+													<mat-menu #menuShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOnPlaylist('message', x)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('copyLink', x)">{{translations?.common?.copyLink}}</button>
+													</mat-menu>
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('favourites')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.selectGenre}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.genres; let i=index;">
+											<div mat-ripple class="image" (click)="showGenre(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showGenre(x)">
+													{{x.title}}
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('genres')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.mostPlayed}}</div>
+										<button mat-button (click)="seeAll('mostPlayed')">{{translations?.common?.seeAll}}</button>
+									</div>
+
+									<ul class="tracks" *ngIf="dataGeneral?.list?.mostPlayed">
+										<li *ngFor="let x of dataGeneral?.list?.mostPlayed; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'mostPlayed', default: !x.image, remove: x.addRemoveSession}">
+											<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+												<div class="image">
+													<button mat-icon-button (click)="playSong(dataGeneral?.list?.mostPlayed, x, i, 'mostPlayed')">
+														<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'mostPlayed')"></i>
+														<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'mostPlayed')"></i>
+														<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+													</button>
+												</div>
+
+												<div class="text" (click)="playSong(dataGeneral?.list?.mostPlayed, x, i, 'mostPlayed')">
+													<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+														<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+														<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+													</div>
+													<div class="duration">{{x.duration}}</div>
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<span *ngIf="userData?.id === sessionData?.current?.id">
+														<button mat-icon-button [matMenuTriggerFor]="appMenu">
+															<i class="icon85 grey" label="more"></i>
+														</button>
+													</span>
+
+													<span *ngIf="userData?.id !== sessionData?.current?.id">
+														<button mat-icon-button [matMenuTriggerFor]="appMenu">
+															<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+															<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+														</button>
+													</span>
+
+													<mat-menu #appMenu="matMenu">
+														<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
+														<mat-divider *ngIf="userData?.id === sessionData?.current?.id"></mat-divider>
+														<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+													</mat-menu>
+
+													<mat-menu #menuPlaylists="matMenu">
+														<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
+														<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
+														<span *ngFor="let p of sessionData?.current?.playlists">
+															<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
+														</span>
+													</mat-menu>
+
+													<mat-menu #menuShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
+													</mat-menu>
+												</div>
+											</div>
+
+											<div class="ad" *ngIf="x.contentTypeAd">
+												<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+												<div class="disableAdBlock" *ngIf="hideAd">
+													{{translations?.common?.disableAdBlock}}
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.ostMovies}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.ost; let i=index;">
+											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showPlaylist(x)">
+													{{x.title}}
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('ost')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.top100}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.top100; let i=index;">
+											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showPlaylist(x)">
+													{{x.title}}
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('top100')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="section">
+									<div class="head">
+										<div class="title">{{translations?.audios?.enjoyYourDay}}</div>
+									</div>
+
+									<div class="playlists">
+										<div class="box" *ngFor="let x of dataGeneral?.list?.enjoyWith; let i=index;">
+											<div mat-ripple class="image" (click)="showPlaylist(x)" [style.background-image]="x.color">
+												<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+											</div>
+
+											<div class="panel">
+												<div class="title" (click)="showPlaylist(x)">
+													{{x.title}}
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<button mat-icon-button [matMenuTriggerFor]="appMenu">
+														<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+														<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+													</button>
+
+													<mat-menu #appMenu="matMenu">
+														<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x, i)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('follow', x, i)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+														<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+														<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
+													</mat-menu>
+
+													<mat-menu #menuShareSocial="matMenu">
+														<button mat-menu-item (click)="shareOnPlaylist('message', x)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="shareOnPlaylist('copyLink', x)">{{translations?.common?.copyLink}}</button>
+													</mat-menu>
+												</div>
+											</div>
+										</div>
+
+										<div class="seeAll" (click)="seeAll('enjoyWith')">
+											<div class="inner">
+												<div class="text">
+													{{translations?.common?.seeAll}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="loadingData" *ngIf="dataGeneral.loadingData">
+									<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+								</div>
+
+								<div class="noData" *ngIf="dataGeneral.noData">
+									<div class="description">{{translations?.audios?.noData}}</div>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="{{userData?.id === sessionData?.current?.id ? translations?.audios?.my : translations?.audios?.songs}}">
+								<div class="playlists" *ngIf="!dataDefault.loadingData && sessionData?.current?.id">
 									<div class="boxUploadNew" *ngIf="userData?.id === sessionData?.current?.id">
 										<div class="inner">
 											<div class="upload" (click)="uploadFile.click()">
@@ -61,7 +447,7 @@
 
 											<div class="actions">
 												<div class="category" *ngIf="userData?.id === sessionData?.current?.id && x.type === 'follow'">
-													<i label="music" class="icon75 blue" matTooltip="{{translations?.common?.followingPlaylistSuccessfully}}"></i>
+													<i label="link" class="icon85 blue" matTooltip="{{translations?.common?.followingPlaylistSuccessfully}}"></i>
 												</div>
 
 												<div class="category" *ngIf="x.private">
@@ -147,7 +533,7 @@
 														</div>
 													</div>
 												</div>
-												
+
 												<div class="actions" *ngIf="x.status === 'pending' || x.status === 'error'">
 													<button mat-icon-button (click)="uploadFiles(3, i)" matTooltip="{{translations?.common?.remove}}">
 														<i label="clear"></i>
@@ -376,7 +762,7 @@
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
-											
+
 											<div class="text" (click)="playSong(dataTop.list, x, i, 'top')">
 												<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -384,13 +770,13 @@
 												</div>
 												<div class="duration">{{x.duration}}</div>
 											</div>
-											
+
 											<div class="actions" *ngIf="sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 													<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
 												</button>
-												
+
 												<mat-menu #appMenu="matMenu">
 													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
@@ -398,7 +784,7 @@
 													<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger" *ngIf="!x.private">{{translations?.common?.share}}</button>
 													<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
 												</mat-menu>
-												
+
 												<mat-menu #menuPlaylists="matMenu">
 													<button mat-menu-item (click)="itemSongOptions('createPlaylist', null, null)">{{translations?.common?.createPlaylist}}</button>
 													<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
@@ -437,7 +823,7 @@
 								<div class="noData" *ngIf="dataTop.noData">
 									<div class="description">{{translations?.audios?.noData}}</div>
 								</div>
-								
+
 								<div class="loadMore" *ngIf="dataTop.loadMoreData">
 									<button mat-fab (click)="top('more')" *ngIf="!dataTop.loadingMoreData">
 										<i label="add"></i>
@@ -457,7 +843,7 @@
 													<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
 												</button>
 											</div>
-											
+
 											<div class="text" (click)="playSong(dataFresh.list, x, i, 'fresh')">
 												<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
@@ -465,7 +851,7 @@
 												</div>
 												<div class="duration">{{x.duration}}</div>
 											</div>
-											
+
 											<div class="actions" *ngIf="sessionData?.current?.id">
 												<button mat-icon-button [matMenuTriggerFor]="appMenu">
 													<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>

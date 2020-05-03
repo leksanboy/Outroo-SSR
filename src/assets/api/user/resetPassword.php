@@ -5,17 +5,17 @@
 	$code = $data['code'];
 
 	if (isset($code)) {
-		$sql = "SELECT id, 
-						username, 
-						name, 
-						avatar, 
+		$sql = "SELECT id,
+						username,
+						name,
+						avatar,
 						email
 				FROM z_users
 				WHERE reset_password = '$code'";
 		$result = $conn->query($sql)->fetch_assoc();
 
         $result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['avatarUrl'] = $result['avatar'] ? ('./assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] = $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		$array = array(
 			'avatar'	 	=> $result['avatar'],

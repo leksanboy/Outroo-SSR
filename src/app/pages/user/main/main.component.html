@@ -11,8 +11,7 @@
 						<div class="text">
 							<span class="active" (click)="showAccounts = !showAccounts" *ngIf="userData?.id === sessionData?.current?.id">
 								{{userData?.username}}
-								<i label="arrow-drop-up" *ngIf="showAccounts"></i>
-								<i label="arrow-drop-down" *ngIf="!showAccounts"></i>
+								<i label="arrow-mini-line" [ngClass]="{active: showAccounts}"></i>
 							</span>
 							<span *ngIf="!(userData?.id === sessionData?.current?.id)">
 								{{userData?.username}}
@@ -119,13 +118,12 @@
 							</mat-menu>
 
 							<button mat-raised-button class="icon" (click)="sendMessage()">
-								<i class="icon50" label="send-comment"></i>
+								<i class="icon85" label="send-comment"></i>
 							</button>
 
 							<button mat-raised-button class="icon" (click)="getRecommendedUsers()">
 								<mat-progress-spinner mode="indeterminate" *ngIf="recommendedUsers.loading"></mat-progress-spinner>
-								<i label="arrow-drop-up" *ngIf="recommendedUsers.show && !recommendedUsers.loading"></i>
-								<i label="arrow-drop-down" *ngIf="!recommendedUsers.show && !recommendedUsers.loading"></i>
+								<i label="arrow-mini-line" *ngIf="!recommendedUsers.loading" [ngClass]="{active: recommendedUsers.show}"></i>
 							</button>
 						</div>
 					</div>
@@ -230,7 +228,7 @@
 							<li routerLink="/saved" *ngIf="sessionData?.current?.id === userData?.id">
 								<button mat-button>
 									<div class="count">
-										<i label="bookmark"></i>
+										<i label="bookmarks" class="icon50"></i>
 										{{userData?.countBookmarks}}
 									</div>
 									<div class="text">
@@ -338,10 +336,10 @@
 									<div class="swiper-pagination"></div>
 
 									<div class="swiperNext" mat-ripple>
-										<i label="keyboard-arrow-right"></i>
+										<i label="arrow-mini-line-right"></i>
 									</div>
 									<div class="swiperPrev" mat-ripple>
-										<i label="keyboard-arrow-left"></i>
+										<i label="arrow-mini-line-left"></i>
 									</div>
 								</swiper>
 							</div>

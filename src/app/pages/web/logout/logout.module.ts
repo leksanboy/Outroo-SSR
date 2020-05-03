@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 import {
 	MatButtonModule,
-	MatButtonToggleModule } from '@angular/material';
-import { Routes, RouterModule } from '@angular/router';
+	MatButtonToggleModule
+} from '@angular/material';
 
 import { LogoutComponent } from './logout.component';
 
