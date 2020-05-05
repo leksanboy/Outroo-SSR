@@ -137,9 +137,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			// Set theme
 			if (this.sessionData.current.theme === 0) {
-				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.remove('darkTheme');
 			} else if (this.sessionData.current.theme === 1) {
-				this.document.body.classList.add('blackTheme');
+				this.document.body.classList.add('darkTheme');
 			}
 
 			// Load default audios
@@ -1158,9 +1158,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (this.sessionData.current.id !== data.id) {
 			// Set theme
 			if (data.theme === 0) {
-				this.document.body.classList.remove('blackTheme');
+				this.document.body.classList.remove('darkTheme');
 			} else if (data.theme === 1) {
-				this.document.body.classList.add('blackTheme');
+				this.document.body.classList.add('darkTheme');
 			}
 
 			// Get translations
@@ -1204,8 +1204,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		if (this.sessionData.sessions.length === 1) {
 			this.playPlayer('stop', null);
 			this.router.navigate(['logout']);
-
-			this.document.body.classList.remove('blackTheme');
 			this.userDataService.logout();
 		} else {
 			for (const i in this.sessionData.sessions) {
@@ -1249,9 +1247,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 	changeTheme(value) {
 		// Set theme
 		if (value === 0) {
-			this.document.body.classList.remove('blackTheme');
+			this.document.body.classList.remove('darkTheme');
 		} else if (value === 1) {
-			this.document.body.classList.add('blackTheme');
+			this.document.body.classList.add('darkTheme');
 		}
 
 		// Close user box

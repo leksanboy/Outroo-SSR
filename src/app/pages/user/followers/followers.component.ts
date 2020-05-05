@@ -59,6 +59,11 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		// Translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
+		// Search
+		this.actionFormSearch = this._fb.group({
+			caption: ['']
+		});
+
 		// Data
 		if (this.sessionData) {
 			// Set Google analytics
@@ -118,11 +123,6 @@ export class FollowersComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		// Search
-		this.actionFormSearch = this._fb.group({
-			caption: ['']
-		});
-
 		// Search/Reset
 		this.actionFormSearch.controls['caption'].valueChanges
 			.pipe(

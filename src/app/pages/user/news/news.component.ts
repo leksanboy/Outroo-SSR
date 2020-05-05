@@ -69,6 +69,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 		// Translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
+		// Search
+		this.actionFormSearch = this._fb.group({
+			caption: ['']
+		});
+
 		// Data
 		if (this.sessionData) {
 			// Set Google analytics
@@ -82,10 +87,19 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			// Redirected hashtag
 			const urlData: any = this.activatedRoute.snapshot;
+			console.log('urlData:', urlData)
+
 			if (urlData.params.name) {
 				this.data.newSearchCaption = urlData.params.name;
-				this.data.selectedIndex = 2;
+
+				if (urlData.params.type === 'people') {
+					this.data.selectedIndex = 1;
+				} else {
+					this.data.selectedIndex = 0;
+				}
+
 				this.search('default');
+				this.actionFormSearch.get('caption').setValue(urlData.params.name);
 			} else {
 				// Load default
 				const localStotageData = this.userDataService.getLocalStotage('newsPage');
@@ -152,11 +166,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		// Search
-		this.actionFormSearch = this._fb.group({
-			caption: ['']
-		});
-
 		// Search/Reset
 		this.actionFormSearch.controls['caption'].valueChanges
 			.pipe(
@@ -279,6 +288,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.data.active = 'default';
 			this.data.selectedIndex = 0;
 			this.actionFormSearch.get('caption').setValue('');
+			this.location.go('/news');
+
+			if (this.dataDefault.length === 0) {
+				this.default('default');
+			}
 		}
 	}
 

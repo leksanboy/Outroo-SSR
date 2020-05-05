@@ -121,9 +121,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		this.actionFormPersonalData.get('theme').valueChanges
 			.subscribe(val => {
 				if (val === 0) {
-					this.document.body.classList.remove('blackTheme');
+					this.document.body.classList.remove('darkTheme');
 				} else if (val === 1) {
-					this.document.body.classList.add('blackTheme');
+					this.document.body.classList.add('darkTheme');
 				}
 
 				this.alertService.success(this.translations.common.themeEnabled);

@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy, Inject, Element
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Location, DOCUMENT } from '@angular/common';
+import { trigger, transition, animate, style } from '@angular/animations'
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -27,7 +28,18 @@ declare var global: any;
 @Component({
 	selector: 'app-main',
 	templateUrl: './main.component.html',
-	providers: [ TimeagoPipe, SafeHtmlPipe ]
+	providers: [TimeagoPipe, SafeHtmlPipe],
+	animations: [
+		trigger('slideInOut', [
+			transition(':enter', [
+				style({ transform: 'translateX(0%)' }),
+				animate('300ms ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
+			]),
+			transition(':leave', [
+				animate('300ms ease-in', style({ transform: 'translateX(-10%)', opacity: 0 }))
+			])
+		])
+	]
 })
 export class MainComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -535,7 +547,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -550,8 +562,8 @@ export class MainComponent implements OnInit, OnDestroy {
 					.subscribe((res: any) => {
 						item.insertedId = res;
 					});
-			break;
-			case('playlist'):
+				break;
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -564,25 +576,25 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('createPlaylist'):
+				break;
+			case ('createPlaylist'):
 				const data = 'create';
 				this.sessionService.setDataCreatePlaylist(data);
-			break;
-			case('report'):
+				break;
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
-			break;
-			case('share'):
+				break;
+			case ('share'):
 				item.comeFrom = 'share';
 				this.sessionService.setDataNewShare(item);
-			break;
+				break;
 		}
 	}
 
@@ -761,17 +773,17 @@ export class MainComponent implements OnInit, OnDestroy {
 			str = str.replace(/\n/g, '<br>');
 
 			// hashtag
-			str = str.replace(/(#)\w+/g, function(value) {
+			str = str.replace(/(#)\w+/g, function (value) {
 				return '<span class="hashtag">' + value + '</span>';
 			});
 
 			// mention
-			str = str.replace(/(@)\w+/g, function(value) {
+			str = str.replace(/(@)\w+/g, function (value) {
 				return '<span class="mention">' + value + '</span>';
 			});
 
 			// url
-			str = str.replace(this.env.urlRegex, function(value) {
+			str = str.replace(this.env.urlRegex, function (value) {
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -814,18 +826,18 @@ export class MainComponent implements OnInit, OnDestroy {
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
+			newData.content = newData.content.replace(/(#)\w+/g, function (value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
+			newData.content = newData.content.replace(/(@)\w+/g, function (value) {
 				newData.mentions.push(value);
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
+			newData.content = newData.content.replace(this.env.urlRegex, function (value) {
 				return '<a class="url">' + value + '</a>';
 			});
 
@@ -961,13 +973,15 @@ export class MainComponent implements OnInit, OnDestroy {
 	dismissRecommended(item, index) {
 		item.dismiss = true;
 
-		this.recommendedUsers.list.splice(index, 1);
+		setTimeout(() => {
+			this.recommendedUsers.list.splice(index, 1);
 
-		const data = {
-			user: item.user.id
-		};
+			const data = {
+				user: item.user.id
+			};
 
-		this.userDataService.dismissRecommended(data).subscribe();
+			this.userDataService.dismissRecommended(data).subscribe();
+		}, 300);
 	}
 
 	// Recommended playlists
@@ -1003,7 +1017,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Playlist options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
-			case('show'):
+			case ('show'):
 				this.location.go('/pl/' + item.name);
 
 				const configShow = {
@@ -1023,7 +1037,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					this.location.go(this.router.url);
 				});
 				break;
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -1033,14 +1047,14 @@ export class MainComponent implements OnInit, OnDestroy {
 					id: item.id,
 					title: item.title,
 					image: item.image,
-					playlist : item.idPlaylist,
-					insertedPlaylist : item.insertedPlaylist
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
 				};
 
 				this.audioDataService.addRemovePlaylist(dataARO)
 					.subscribe((res: any) => {
 						item.idPlaylist = res;
-						item.insertedPlaylist =  item.insertedPlaylist ? item.insertedPlaylist : res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
 
 						if (dataARO.type === 'add') {
 							this.sessionData.current.playlists.unshift(dataARO);
@@ -1060,7 +1074,7 @@ export class MainComponent implements OnInit, OnDestroy {
 						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case('follow'):
+			case ('follow'):
 				item.followUnfollow = !item.followUnfollow;
 				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
@@ -1070,8 +1084,8 @@ export class MainComponent implements OnInit, OnDestroy {
 					id: item.id,
 					title: item.title,
 					image: item.image,
-					playlist : item.idPlaylist,
-					insertedPlaylist : item.insertedPlaylist
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
 				};
 
 				this.audioDataService.followPlaylist(dataF)
@@ -1080,7 +1094,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					});
 
 				break;
-			case('report'):
+			case ('report'):
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
 				break;

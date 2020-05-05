@@ -262,6 +262,11 @@ body {
 
 		&[label="analytics-comments"] {
 			mask-position: 0 calc(-24px * 17);
+
+			&.active {
+				background-color: currentColor !important;
+				mask-position: -24px calc(-24px * 17);
+			}
 		}
 
 		&[label="analytics-like"] {
@@ -314,6 +319,10 @@ body {
 
 		&[label="exit"] {
 			mask-position: 0 calc(-24px * 22);
+		}
+
+		&[label="person-add"] {
+			mask-position: -24px calc(-24px * 22);
 		}
 
 		&[label="person"] {
@@ -1600,10 +1609,14 @@ body {
 		white-space: nowrap;
 		overflow-y: hidden;
 		overflow-x: auto;
-		padding: 0 18px;
+		padding: 0 18px 18px;
 		float: left;
 		width: 100%;
 		margin: 0;
+
+		.mat-expansion-panel-content {
+			padding: 12px 0 0;
+		}
 
 		li {
 			display: inline-block;
@@ -1697,6 +1710,11 @@ body {
 
 			&:last-child{
 				margin: 0;
+			}
+
+			&.remove {
+				filter: grayscale(100%);
+				opacity: .5;
 			}
 		}
 	}
@@ -2347,7 +2365,7 @@ body {
 	/* Expansion */
 	.mat-expansion-panel {
 		background-color: transparent;
-		box-shadow: none;
+		box-shadow: none !important;
 		margin: 12px 0 0;
 		width: 100%;
 		float: left;
@@ -2729,16 +2747,19 @@ body {
 					margin: 3px 0;
 					height: 24px;
 					width: 24px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 
 					button {
 						background-color: transparent;
 						text-transform: uppercase;
 						justify-content: center;
-						line-height: 24px;
+						line-height: 36px;
 						display: flex;
 						min-width: 0;
-						height: 24px;
-						width: 24px;
+						height: 36px;
+						width: 36px;
 						margin: 0;
 					}
 				}
@@ -2808,7 +2829,6 @@ body {
 
 		.noData,
 		.loadingData {
-			text-transform: uppercase;
 			color: $greyColor;
 			padding: 12px 0;
 			font-size: 13px;
@@ -2855,12 +2875,22 @@ body {
 					margin: 6px auto;
 					display: flex;
 					width: 24px;
+
+					i {
+						transform: scale(1.25);
+					}
 				}
 			}
 
 			&.bookmark {
 				position: absolute;
 				right: 0;
+
+				span {
+					i {
+						transform: none;
+					}
+				}
 			}
 		}
 
@@ -3027,9 +3057,18 @@ body {
 		}
 
 		.description {
-			text-transform: uppercase;
 			font-weight: bold;
 			font-size: 13px;
+		}
+
+		.button {
+			margin: 24px 0 0;
+
+			button {
+				background-color: #2e2e2e;
+				color: $whiteColor;
+				text-transform: inherit;
+			}
 		}
 	}
 
@@ -5507,6 +5546,7 @@ body {
 
 			.back {
 				align-items: center;
+				position: relative;
 				display: flex;
 				height: 56px;
 				width: 100%;
@@ -5521,6 +5561,12 @@ body {
 				.text {
 					font-size: 18px;
 					float: left;
+				}
+
+				.action {
+					margin: 0 12px 0 0;
+					position: absolute;
+					right: 0;
 				}
 			}
 
@@ -5930,12 +5976,12 @@ body {
 										}
 
 										mat-progress-spinner {
-											height: 16px !important;
-											width: 16px !important;
+											height: 14px !important;
+											width: 14px !important;
 
 											svg {
-												height: 16px !important;
-												width: 16px !important;
+												height: 14px !important;
+												width: 14px !important;
 
 												circle {
 													stroke: currentColor;
@@ -5949,7 +5995,7 @@ body {
 
 						.pages {
 							box-sizing: border-box;
-							padding: 18px 18px 12px;
+							padding: 18px;
 							width: 100%;
 							float: left;
 
@@ -6686,9 +6732,13 @@ body {
 	}
 
 	/*Black theme on user pages*/
-	&.blackTheme {
+	&.darkTheme {
 		background-color: $blackColor;
 		color: $whiteColor;
+
+		.mat-ripple-element {
+			background-color: rgba(11, 11, 11, 0.25);
+		}
 
 		a {
 			color: $whiteColor;
@@ -7673,12 +7723,8 @@ body {
 		}
 
 		.cookiesBox {
-			margin: 0 0 48px 0;
+			margin: 0 !important;
 			max-width: 100%;
-
-			&.home {
-				margin: 0;
-			}
 		}
 
 		.pageHomeBox {
@@ -8070,9 +8116,9 @@ body {
 							}
 						}
 
-						&:active {
+						/* &:active {
 							transform: scale(.8);
-						}
+						} */
 					}
 				}
 			}
@@ -8831,7 +8877,9 @@ body {
 		/*When is iPhone X (+36px)*/
 		&.iphoneXClass {
 			.cookiesBox {
-				margin: 0 0 84px 0;
+				.inner{
+					padding: 42px 24px 84px;
+				}
 			}
 
 			.bottomNav {

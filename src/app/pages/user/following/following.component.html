@@ -2,11 +2,14 @@
 	<div class="innerBodyContent">
 		<div class="pageFollowing">
 			<div class="content">
-				<div class="back" (click)="goBack()">
-					<button mat-icon-button>
+				<div class="back">
+					<button mat-icon-button (click)="goBack()">
 						<i label="back"></i>
 					</button>
-					<div class="text">{{translations?.common?.back}}</div>
+					<div class="text" (click)="goBack()">{{translations?.common?.back}}</div>
+					<button mat-icon-button class="action" routerLink="/news/{{userData?.username.charAt(0)}}/people">
+						<i label="person-add"></i>
+					</button>
 				</div>
 
 				<div class="pageTitle">{{translations?.following?.title}}</div>
@@ -168,6 +171,11 @@
 
 						<div class="noData" *ngIf="dataSearch.noData">
 							<div class="description">{{translations?.common?.noSearchResults}}</div>
+							<div class="button">
+								<button mat-raised-button routerLink="/news/{{userData?.username.charAt(0)}}/people">
+									{{translations?.common?.searchFriends}}
+								</button>
+							</div>
 						</div>
 
 						<div class="loadMore" *ngIf="dataSearch.loadMoreData">

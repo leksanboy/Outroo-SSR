@@ -182,7 +182,7 @@
 						</div>
 
 						<ul class="recommendedUsers" *ngIf="recommendedUsers.list.length > 0">
-							<li *ngFor="let x of recommendedUsers.list; let i = index;" [ngClass]="{'remove': x?.dismiss}">
+							<li *ngFor="let x of recommendedUsers.list; let i = index;" [ngClass]="{'remove': x?.dismiss}" [@slideInOut]>
 								<div class="inner">
 									<div class="close" (click)="dismissRecommended(x, i)">
 										<i class="icon65 grey" label="close"></i>
@@ -452,7 +452,7 @@
 							<div class="analytics">
 								<div class="buttonBox">
 									<button mat-icon-button (click)="showComments('showHide', x)">
-										<i label="analytics-comments"></i>
+										<i label="analytics-comments" [ngClass]="{'active' : x?.showCommentsBox}"></i>
 									</button>
 								</div>
 
@@ -494,7 +494,7 @@
 										</div>
 										<div class="actions">
 											<button mat-icon-button type="submit" (click)="newComment('create', $event, x)">
-												<i class="icon75 blue" label="send-comment"></i>
+												<i class="blue" label="send-comment"></i>
 											</button>
 										</div>
 									</div>

@@ -21,6 +21,7 @@ const routes: Routes = [
 		path: 'home',						loadChildren: './pages/user/home/home.module#HomeModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'news',						loadChildren: './pages/user/news/news.module#NewsModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'news/:name',					loadChildren: './pages/user/news/news.module#NewsModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
+		path: 'news/:name/:type',			loadChildren: './pages/user/news/news.module#NewsModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'p/:name',					loadChildren: './pages/user/post/post.module#PostModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 's/:name',					loadChildren: './pages/user/song/song.module#SongModule',									resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
 		path: 'pl/:name',					loadChildren: './pages/user/playlist/playlist.module#PlaylistModule',						resolve: { langResolvedData: LangResolver, sessionResolvedData: SessionResolver }									}, {
