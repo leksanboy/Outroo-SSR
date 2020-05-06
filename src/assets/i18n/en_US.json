@@ -26,7 +26,10 @@
 		"mostPlayed": "Most played at the moment",
 		"ostMovies": "OST Movies/Series",
 		"top100": "Top 100",
-		"enjoyYourDay": "Enjoy your day with ..."
+		"enjoyYourDay": "Enjoy your day with ...",
+		"createOwnPlaylists": "Create your own Playlists",
+		"addBestSong": "Add the best songs you can",
+		"shareCreatedPlaylist": "Share the Playlist with your friends"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",

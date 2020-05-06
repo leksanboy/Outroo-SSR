@@ -32,6 +32,7 @@ declare var global: any;
 export class AudiosComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public window: any = global;
+	public activeRouter: any;
 	public sessionData: any = [];
 	public translations: any = [];
 	public audioPlayerData: any = [];
@@ -68,8 +69,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		public dialog: MatDialog,
 		private location: Location,
 		private titleService: Title,
-		private ssrService: SsrService,
-		private sanitizer: DomSanitizer,
 		private alertService: AlertService,
 		private playerService: PlayerService,
 		private activatedRoute: ActivatedRoute,
@@ -78,51 +77,63 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private audioDataService: AudioDataService,
 		private routingStateService: RoutingStateService,
 	) {
-		// Session
-		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
+		// Set component data
+		this.activeRouter = this.router.events
+			.subscribe(event => {
+				if (event instanceof NavigationEnd) {
+					// Session
+					this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
 
-		// User
-		this.userData = this.activatedRoute.snapshot.data.userResolvedData;
+					// User
+					this.userData = this.activatedRoute.snapshot.data.userResolvedData;
 
-		// Translations
-		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
+					// Translations
+					this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
-		// Data
-		if (this.userData) {
-			// Set Google analytics
-			const url = 'songs';
-			const title = this.userData.name + ' - ' + this.translations.audios.title;
-			const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
-			this.userDataService.analytics(url, title, userId);
+					// Data
+					if (this.userData) {
+						// Set Google analytics
+						const url = 'songs';
+						const title = this.userData.name + ' - ' + this.translations.audios.title;
+						const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
+						this.userDataService.analytics(url, title, userId);
 
-			// Set title
-			this.titleService.setTitle(title);
+						// Set title
+						this.titleService.setTitle(title);
 
-			// Set playlist current playing
-			if (this.sessionData) {
-				if (this.sessionData.current.audioPlayerData &&
-					this.sessionData.current.audioPlayerData.user === this.userData.id) {
-					this.audioPlayerData = this.sessionData.current.audioPlayerData;
+						// Set playlist current playing
+						if (this.sessionData) {
+							if (this.sessionData.current.audioPlayerData && this.sessionData.current.audioPlayerData.user === this.userData.id) {
+								this.audioPlayerData = this.sessionData.current.audioPlayerData;
+							}
+						}
+
+						// Reset
+						this.dataDefault = [];
+
+						// Load general
+						if (this.sessionData.current.id === this.userData.id) {
+							this.data.selectedIndex = 0;
+							this.general(this.userData.id);
+						} else {
+							this.data.selectedIndex = 1;
+							this.default('default', this.userData.id);
+						}
+					}
+
+					// Denied
+					if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
+						this.deniedAccessOnlySession = true;
+					}
 				}
-			}
-
-			// Load general
-			this.data.selectedIndex = 0;
-			this.general(this.userData.id);
-		}
-
-		// Denied
-		if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
-			this.deniedAccessOnlySession = true;
-		}
+			});
 
 		// Playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
 			.subscribe(data => {
-				console.log('data:', data);
-				console.log('this.dataDefault:', this.dataDefault);
-
 				if (this.userData.id === this.sessionData.current.id) {
+					this.sessionData = data;
+
 					if (data.current.playlists[0].id !== this.dataDefault.playlists[0].id) {
 						data.current.playlists[0].color = this.generateRandomColor();
 						this.dataDefault.playlists.unshift(data.current.playlists[0]);
@@ -204,6 +215,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
+		this.activeRouter.unsubscribe();
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
@@ -243,30 +255,32 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Set tab on click
 	setTab(tab) {
-		switch (tab) {
-			case 0:
-				/* General: always set */
-				break;
-			case 1:
-				if (!this.dataDefault.list) {
-					this.default('default', this.userData.id);
-				}
-				break;
-			case 2:
-				if (!this.dataAround.list) {
-					this.around('default');
-				}
-				break;
-			case 3:
-				if (!this.dataTop.list) {
-					this.top('default');
-				}
-				break;
-			case 4:
-				if (!this.dataFresh.list) {
-					this.fresh('default');
-				}
-				break;
+		if (this.sessionData.current.id === this.userData.id) {
+			switch (tab) {
+				case 0:
+					/* General: always set */
+					break;
+				case 1:
+					if (!this.dataDefault.list) {
+						this.default('default', this.userData.id);
+					}
+					break;
+				case 2:
+					if (!this.dataAround.list) {
+						this.around('default');
+					}
+					break;
+				case 3:
+					if (!this.dataTop.list) {
+						this.top('default');
+					}
+					break;
+				case 4:
+					if (!this.dataFresh.list) {
+						this.fresh('default');
+					}
+					break;
+			}
 		}
 	}
 

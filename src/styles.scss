@@ -571,19 +571,16 @@ body {
 			.inner {
 				padding: 2px 0 2px 18px;
 				box-sizing: border-box;
-				align-items: center;
 				flex-direction: row;
 				position: relative;
 				margin: 0 0 4px;
 				display: flex;
+				height: 46px;
 				width: 100%;
-
-				&:hover {
-					background-color: transparentize($greyColor, .9);
-				}
 
 				.image {
 					width: 42px;
+					height: 42px;
 
 					button {
 						border-radius: 3px;
@@ -698,7 +695,7 @@ body {
 						padding: 0 18px 0 0;
 						color: $greyColor;
 						text-align: right;
-						font-size: 14px;
+						font-size: 13px;
 
 						.status {
 							align-items: center;
@@ -739,6 +736,20 @@ body {
 				.box {
 					width: 100%;
 					float: left;
+				}
+			}
+
+			&:hover {
+				.inner {
+					background-color: transparentize($greyColor, .9);
+
+					.image {
+						button {
+							i {
+								display: block;
+							}
+						}
+					}
 				}
 			}
 
@@ -1397,8 +1408,7 @@ body {
 				width: 100%;
 				float: left;
 
-				.upload,
-				.new {
+				.mini {
 					border: 2px solid $blackColor;
 					background-color: $blackColor;
 					height: calc(50% - 6px);
@@ -1429,16 +1439,15 @@ body {
 						font-size: 11px;
 						max-width: 60%;
 					}
-				}
 
-				.new {
-					background-color: transparent;
-					border: 2px solid $blackColor;
-					margin: 6px 0 0;
+					&:last-child {
+						background-color: transparent;
+						margin: 6px 0 0;
 
-					.icon,
-					.text {
-						color: $blackColor;
+						.icon,
+						.text {
+							color: $blackColor;
+						}
 					}
 				}
 			}
@@ -1469,6 +1478,42 @@ body {
 				.text {
 					font-weight: bold;
 					font-size: 15px;
+				}
+			}
+		}
+
+		.noPlaylists {
+			box-sizing: border-box;
+			display: inline-block;
+			list-style: none;
+			width: calc(100% - 150px - 12px);
+			margin: 0;
+
+			.inner {
+				box-sizing: border-box;
+				border-radius: 12px;
+				position: relative;
+				margin: 0 0 40px 0;
+				overflow: hidden;
+				cursor: pointer;
+				height: 150px;
+				width: 100%;
+				float: left;
+				display: flex;
+				justify-content: center;
+				align-items: flex-start;
+				flex-direction: column;
+				padding: 0 18px;
+
+				.text {
+					color: $greyColor;
+					font-size: 15px;
+
+					&:first-child{
+						font-size: 22px;
+						font-weight: bold;
+						padding: 10px 0 4px;
+					}
 				}
 			}
 		}
@@ -1671,6 +1716,13 @@ body {
 						&:first-child {
 							font-weight: bold;
 							font-size: 13px;
+							display: flex;
+							justify-content: center;
+							margin: 0 0 -4px 0;
+
+							i {
+								margin: -1px -12px -10px -2px;
+							}
 						}
 
 						&:last-child {
@@ -1740,7 +1792,7 @@ body {
 			}
 
 			i {
-				margin: -6px 0 -6px -6px;
+				margin: -2px 0 -6px -6px;
 			}
 
 			.date {
@@ -1894,6 +1946,7 @@ body {
 			position: relative;
 			margin: 0 0 4px;
 			display: flex;
+			height: 46px;
 			width: 100%;
 
 			&:hover {
@@ -1911,6 +1964,15 @@ body {
 					width: 42px;
 					margin: 0;
 
+					span {
+						justify-content: center;
+						align-items: center;
+						position: relative;
+						display: flex;
+						height: 100%;
+						width: 100%;
+					}
+
 					img {
 						position: absolute;
 						height: 100%;
@@ -1927,6 +1989,7 @@ body {
 						background-color: $whiteColor;
 						position: relative;
 						z-index: 1;
+						display: none;
 					}
 				}
 			}
@@ -1975,7 +2038,7 @@ body {
 					padding: 0 6px 0 0;
 					color: $greyColor;
 					text-align: right;
-					font-size: 14px;
+					font-size: 13px;
 					max-width: 75px;
 				}
 			}
@@ -1987,25 +2050,37 @@ body {
 			}
 		}
 
+		&:hover {
+			.songInner {
+				background-color: transparentize($greyColor, .9);
+
+				.songImage {
+					button {
+						i {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+
 		&.active {
 			.songInner {
 				background-color: transparentize($blackColor, .95);
+
+				.songImage {
+					button {
+						i {
+							display: block;
+						}
+					}
+				}
 
 				.songText {
 					color: $blueColor;
 
 					.titleArtist .artist {
 						color: transparentize($blueColor, .5);
-					}
-				}
-			}
-		}
-
-		&.default {
-			.songImage {
-				button {
-					i {
-						background-color: currentColor !important;
 					}
 				}
 			}
@@ -2198,6 +2273,12 @@ body {
 
 		.mat-ink-bar {
 			background-color: $blueColor !important;
+		}
+
+		&.hidden{
+			.mat-tab-header {
+				display: none;
+			}
 		}
 	}
 
@@ -2412,6 +2493,20 @@ body {
 				text-transform: inherit;
 				line-height: 40px;
 				height: 40px;
+				display: flex;
+				align-items: center;
+
+				img {
+					width: 20px;
+					height: 20px;
+					border-radius: 3px;
+					overflow: hidden;
+					margin: 0 8px 0 0;
+				}
+
+				&:hover {
+					background: transparentize($greyColor, .9);
+				}
 			}
 		}
 
@@ -2989,14 +3084,15 @@ body {
 				.inner {
 					padding: 2px 6px 2px 18px;
 
+					.image button i {
+						background-color: currentColor;
+						display: block;
+					}
+
 					.text {
 						.duration {
 							padding: 0 12px 0 0;
 						}
-					}
-
-					.image button i {
-						background-color: currentColor;
 					}
 				}
 			}
@@ -6070,19 +6166,21 @@ body {
 					max-width: $pageMaxWidth;
 					margin: 0 auto;
 
-					&.home {
-						border: none;
-					}
-
-					.noData {
-						padding: 24px 48px;
-					}
-
 					.recommendedPlaylists {
 						.boxTitle {
 							color: $greyColor;
 							font-size: 13px;
 							padding: 12px 18px;
+						}
+					}
+
+					&.home {
+						border: none;
+					}
+
+					&.main {
+						.noData {
+							padding: 24px 48px;
 						}
 					}
 				}
@@ -6767,9 +6865,7 @@ body {
 		ul.playlists {
 			.uploadAndNew {
 				.inner {
-
-					.upload,
-					.new {
+					.mini {
 						border: 2px solid $whiteColor;
 						background-color: $whiteColor;
 
@@ -6777,15 +6873,14 @@ body {
 						.text {
 							color: $blackColor;
 						}
-					}
 
-					.new {
-						background-color: transparent;
-						border: 2px solid $whiteColor;
+						&:last-child {
+							background-color: transparent;
 
-						.icon,
-						.text {
-							color: $whiteColor;
+							.icon,
+							.text {
+								color: $whiteColor;
+							}
 						}
 					}
 				}

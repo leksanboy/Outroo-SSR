@@ -13,7 +13,7 @@
 
 	<div mat-dialog-content class="bodyPlaylist">
 		<div class="playlist">
-			<div class="info">
+			<div class="info" *ngIf="!data.loadingData">
 				<div class="left">
 					<div class="image" [style.background-image]="data.current.color">
 						<img [src]="env.pathAudios + 'covers/' + data.current.image" *ngIf="data.current.image">
@@ -85,7 +85,10 @@
 									<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
 									<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
 									<span *ngFor="let p of sessionData?.current?.playlists">
-										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
+										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+											<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+											{{p.title}}
+										</button>
 									</span>
 								</mat-menu>
 

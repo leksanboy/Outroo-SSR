@@ -135,7 +135,10 @@
 												<button mat-menu-item (click)="itemSongOptions('createPlaylist', a, null)">{{translations?.common?.createPlaylist}}</button>
 												<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 												<span *ngFor="let p of sessionData?.current?.playlists">
-													<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">{{p.title}}</button>
+													<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+														<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+														{{p.title}}
+													</button>
 												</span>
 											</mat-menu>
 

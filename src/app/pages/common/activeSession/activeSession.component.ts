@@ -1034,6 +1034,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 							this.audioDataService.addRemove(dataSong).subscribe();
 						}
 
+						if (this.sessionData.current.playlists) {
+							this.sessionData.current.playlists.unshift(res);
+						} else {
+							this.sessionData.current.playlists = [];
+							this.sessionData.current.playlists.push(res);
+						}
+
 						// Set playlist on session data
 						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 						this.sessionService.setDataPlaylists(this.sessionData);

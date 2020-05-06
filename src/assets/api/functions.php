@@ -470,9 +470,10 @@
 		$sql = "SELECT id,
 						type,
 						title,
+						image,
 						private
 				FROM z_audios_playlist
-				WHERE user = $user 
+				WHERE user = $user
 					AND is_deleted = 0
 				ORDER BY date DESC";
 		$result = $conn->query($sql);

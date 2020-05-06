@@ -26,7 +26,10 @@
 		"mostPlayed": "Самые популярные на данный момент",
 		"ostMovies": "OST Фильмы / Сериалы",
 		"top100": "Топ 100",
-		"enjoyYourDay": "Хорошего вам дня с ..."
+		"enjoyYourDay": "Хорошего вам дня с ...",
+		"createOwnPlaylists": "Создавай свои собственные Плейлисты",
+		"addBestSong": "Добавляй только лучшие песни",
+		"shareCreatedPlaylist": "Поделись Плейлистом с друзьями"
 	},
 	"bookmarks": {
 		"title": "Закладки",

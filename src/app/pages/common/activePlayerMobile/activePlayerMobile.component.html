@@ -76,7 +76,7 @@
 							<button mat-icon-button (click)="playSong('item', i)">
 								<i label="play" *ngIf="!x?.playing"></i>
 								<i label="pause" *ngIf="x?.playing"></i>
-								<img *ngIf="x.image" [src]="audioPlayerData?.path + 'thumbnails/' + x.image"/>
+								<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 							</button>
 						</div>
 						<div class="text" (click)="playSong('item', i)">
@@ -113,7 +113,10 @@
 								<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
 								<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
 								<span *ngFor="let p of sessionData?.current?.playlists">
-									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
+									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+										<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+										{{p.title}}
+									</button>
 								</span>
 							</mat-menu>
 

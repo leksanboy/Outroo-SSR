@@ -87,7 +87,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			// Redirected hashtag
 			const urlData: any = this.activatedRoute.snapshot;
-			console.log('urlData:', urlData)
 
 			if (urlData.params.name) {
 				this.data.newSearchCaption = urlData.params.name;

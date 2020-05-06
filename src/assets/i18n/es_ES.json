@@ -26,7 +26,10 @@
 		"mostPlayed": "Más reproducidas en este momento",
 		"ostMovies": "OST Películas / Series",
 		"top100": "Top 100",
-		"enjoyYourDay": "Disfruta tu día con ..."
+		"enjoyYourDay": "Disfruta tu día con ...",
+		"createOwnPlaylists": "Crea tus propias Playlists",
+		"addBestSong": "Añade las mejores canciones",
+		"shareCreatedPlaylist": "Comparte la Playlist con tus amigos y amigas"
 	},
 	"bookmarks": {
 		"title": "Guardados",

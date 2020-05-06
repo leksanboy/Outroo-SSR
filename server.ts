@@ -61,7 +61,6 @@ app.engine('html', (_, options, callback) => {
             options.res.redirect(RC.config.code, RC.config.url);
         } else {
             console.log(`Pre-rendering successful :: ${options.req.url}`);
-            // console.log(html);
             callback(null, postPrerenderMinimize(html));
         }
     }).catch((error: any) => {
