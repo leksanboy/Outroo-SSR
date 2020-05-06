@@ -20,7 +20,7 @@
 						{{dataDefault.data.timesAdded}}
 						<span class="text">{{translations?.song?.timesAdded}}</span>
 						<div class="divider"></div>
-						<a class="text" routerLink="/{{dataDefault.data.user.username}}">@{{dataDefault.data.user.username}}</a>
+						<a class="text" routerLink="/{{dataDefault?.data?.user?.username}}">@{{dataDefault?.data?.user?.username}}</a>
 					</div>
 				</div>
 
@@ -41,22 +41,22 @@
 							</div>
 							<div class="duration">{{dataDefault.data.duration}}</div>
 						</div>
-						
+
 						<div class="songActions" *ngIf="sessionData?.current?.id">
 							<button mat-icon-button [matMenuTriggerFor]="appMenu">
 								<i class="icon85 blue" label="check" *ngIf="dataDefault.data.addRemoveUser"></i>
 								<i class="icon85 grey" label="more" *ngIf="!dataDefault.data.addRemoveUser"></i>
 							</button>
-							
+
 							<mat-menu #appMenu="matMenu">
 								<button mat-menu-item (click)="itemSongOptions('addRemoveUser', dataDefault.data, null); dataDefault.data.addRemoveUser=!dataDefault.data.addRemoveUser">{{!dataDefault.data.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 								<button mat-menu-item (click)="itemSongOptions('report', dataDefault.data, null)">{{translations?.common?.report}}</button>
 							</mat-menu>
-							
+
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+								<button mat-menu-item (click)="itemSongOptions('createPlaylist', dataDefault.data, null)">{{translations?.common?.createPlaylist}}</button>
 								<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 								<span *ngFor="let p of sessionData?.current?.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', dataDefault.data, p)">{{p.title}}</button>

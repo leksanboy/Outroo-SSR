@@ -56,7 +56,7 @@
 				</div>
 
 				<ul class="tracks" *ngIf="dataDefault.list">
-					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
 						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 							<div class="image">
 								<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
@@ -73,7 +73,7 @@
 										<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
 										<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
 									</span>
-									<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 								</button>
 							</div>
 
@@ -124,13 +124,13 @@
 
 			<span *ngIf="data.active == 'search'">
 				<ul class="tracks" *ngIf="dataSearch.list.length">
-					<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search', default: !x.image}">
+					<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search'}">
 						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 							<div class="image">
 								<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
 									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
 									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'search')"></i>
-									<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 								</button>
 							</div>
 							

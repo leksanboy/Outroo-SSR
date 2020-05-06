@@ -51,7 +51,7 @@
 				</div>
 
 				<ul class="tracks" *ngIf="dataDefault?.list?.length > 0">
-					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
 						<div class="inner" *ngIf="!x.contentTypeAd">
 							<div class="image">
 								<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
@@ -84,18 +84,20 @@
 								</span>
 
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('addRemoveUser', x, null)" *ngIf="userData?.id != sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id != sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-									<button mat-menu-item (click)="itemOptions('report', x, null)">{{translations?.common?.report}}</button>
+									<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
 									<mat-divider *ngIf="userData?.id == sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('addRemoveSession', x, null)" *ngIf="userData?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 								</mat-menu>
 
 								<mat-menu #menuPlaylists="matMenu">
-									<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
+									<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
 									<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
-									<button mat-menu-item *ngFor="let p of sessionData?.current?.playlists" [ngClass]="{'hiddenItem': p.id === data?.current?.id}" (click)="itemOptions('playlist', x, p)">{{p.title}}</button>
+									<span *ngFor="let p of sessionData?.current?.playlists">
+										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
+									</span>
 								</mat-menu>
 
 								<mat-menu #menuShareSocial="matMenu">
@@ -105,7 +107,7 @@
 								</mat-menu>
 							</div>
 						</div>
-	
+
 						<div class="ad" *ngIf="x.contentTypeAd">
 							<div class="box" [innerHtml]="x.content"></div>
 							<div class="disableAdBlock" *ngIf="hideAd">{{translations?.common?.disableAdBlock}}</div>
@@ -119,7 +121,7 @@
 
 				<div class="noData" *ngIf="dataDefault.noData">
 					<div class="description">{{translations?.playlist?.noData}}</div>
-				</div> 
+				</div>
 			</div>
 		</div>
 	</div>

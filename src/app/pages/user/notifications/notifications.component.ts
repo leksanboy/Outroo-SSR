@@ -24,7 +24,7 @@ declare var global: any;
 @Component({
 	selector: 'app-notifications',
 	templateUrl: './notifications.component.html',
-	providers: [ TimeagoPipe, SafeHtmlPipe ]
+	providers: [TimeagoPipe, SafeHtmlPipe]
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -343,7 +343,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -361,7 +361,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('playlist'):
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -374,17 +374,21 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('createPlaylist'):
-				const dataCP = 'create';
-				this.sessionService.setDataCreatePlaylist(dataCP);	
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
-			case('report'):
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;

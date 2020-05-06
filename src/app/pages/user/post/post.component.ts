@@ -23,7 +23,7 @@ declare var global: any;
 @Component({
 	selector: 'app-post',
 	templateUrl: './post.component.html',
-	providers: [ TimeagoPipe, SafeHtmlPipe ]
+	providers: [TimeagoPipe, SafeHtmlPipe]
 })
 export class PostComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -172,7 +172,7 @@ export class PostComponent implements OnInit, OnDestroy {
 					// Set Google analytics
 					const url = 'p/' + name;
 					const title = t;
-					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) :  null;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
 					this.userDataService.analytics(url, title, userId);
 				}
 			}, error => {
@@ -284,7 +284,7 @@ export class PostComponent implements OnInit, OnDestroy {
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -299,8 +299,8 @@ export class PostComponent implements OnInit, OnDestroy {
 					.subscribe((res: any) => {
 						item.insertedId = res;
 					});
-			break;
-			case('playlist'):
+				break;
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -313,23 +313,27 @@ export class PostComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('createPlaylist'):
-				const data = 'create';
-				this.sessionService.setDataCreatePlaylist(data);
-			break;
-			case('share'):
+				break;
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('share'):
 				alert('Working on Share with friends');
-			break;
-			case('report'):
+				break;
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
-			break;
+				break;
 		}
 	}
 
@@ -504,17 +508,17 @@ export class PostComponent implements OnInit, OnDestroy {
 			str = str.replace(/\n/g, '<br>');
 
 			// hashtag
-			str = str.replace(/(#)\w+/g, function(value) {
+			str = str.replace(/(#)\w+/g, function (value) {
 				return '<span class="hashtag">' + value + '</span>';
 			});
 
 			// mention
-			str = str.replace(/(@)\w+/g, function(value) {
+			str = str.replace(/(@)\w+/g, function (value) {
 				return '<span class="mention">' + value + '</span>';
 			});
 
 			// url
-			str = str.replace(this.env.urlRegex, function(value) {
+			str = str.replace(this.env.urlRegex, function (value) {
 				return '<span class="url">' + value + '</span>';
 			});
 
@@ -557,18 +561,18 @@ export class PostComponent implements OnInit, OnDestroy {
 			newData.content = newData.content.replace(/\n/g, '<br>');
 
 			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
+			newData.content = newData.content.replace(/(#)\w+/g, function (value) {
 				return '<a class="hashtag">' + value + '</a>';
 			});
 
 			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
+			newData.content = newData.content.replace(/(@)\w+/g, function (value) {
 				newData.mentions.push(value);
 				return '<a class="mention">' + value + '</a>';
 			});
 
 			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
+			newData.content = newData.content.replace(this.env.urlRegex, function (value) {
 				return '<a class="url">' + value + '</a>';
 			});
 

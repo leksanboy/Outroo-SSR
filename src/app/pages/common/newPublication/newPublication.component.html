@@ -66,7 +66,7 @@
 					<div class="counter" *ngIf="data.audiosArray.length > 0" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations?.audios?.title}} {{data.audiosArray.length}}/10</div>
 
 					<ul class="tracks" *ngIf="data.audiosArray">
-						<li *ngFor="let x of data.audiosArray; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', default: !x.image, remove: x.addRemoveSession}">
+						<li *ngFor="let x of data.audiosArray; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
 							<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 								<div class="image">
 									<button mat-icon-button (click)="playSong(data.audiosArray, x, i, 'default')">
@@ -75,7 +75,7 @@
 											<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
 											<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default')"></i>
 										</span>
-										<img *ngIf="x.image" [src]="env.pathAudios + 'thumbnails/' + x.image"/>
+										<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 									</button>
 								</div>
 
@@ -86,7 +86,7 @@
 									</div>
 									<div class="duration">{{x.duration}}</div>
 								</div>
-								
+
 								<div class="actions" *ngIf="sessionData?.current?.id">
 									<button mat-icon-button (click)="toggleItem('audios', x)">
 										<i label="check"></i>

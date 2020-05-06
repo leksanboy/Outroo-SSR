@@ -19,7 +19,7 @@ declare var global: any;
 @Component({
 	selector: 'app-song',
 	templateUrl: './song.component.html',
-	providers: [ SafeHtmlPipe ]
+	providers: [SafeHtmlPipe]
 })
 export class SongComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -141,7 +141,7 @@ export class SongComponent implements OnInit, OnDestroy {
 					// Set Google analytics
 					const url = 's/' + name;
 					const title = t;
-					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) :  null;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
 					this.userDataService.analytics(url, title, userId);
 				}
 			}, error => {
@@ -180,7 +180,7 @@ export class SongComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataARO = {
@@ -197,7 +197,7 @@ export class SongComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('playlist'):
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -216,7 +216,15 @@ export class SongComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('report'):
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;

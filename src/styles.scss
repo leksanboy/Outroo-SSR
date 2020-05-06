@@ -653,6 +653,7 @@ body {
 							background-color: $whiteColor;
 							position: relative;
 							z-index: 1;
+							display: none;
 						}
 					}
 				}
@@ -745,21 +746,19 @@ body {
 				.inner {
 					background-color: transparentize($blackColor, .95);
 
+					.image {
+						button {
+							i {
+								display: block;
+							}
+						}
+					}
+
 					.text {
 						color: $blueColor;
 
 						.titleArtist .artist {
 							color: transparentize($blueColor, .5);
-						}
-					}
-				}
-			}
-
-			&.default {
-				.image {
-					button {
-						i {
-							background-color: currentColor !important;
 						}
 					}
 				}
@@ -2995,6 +2994,10 @@ body {
 							padding: 0 12px 0 0;
 						}
 					}
+
+					.image button i {
+						background-color: currentColor;
+					}
 				}
 			}
 		}
@@ -3014,11 +3017,14 @@ body {
 			}
 
 			button {
-				background: $blackColor;
+				background: #2e2e2e;
 				color: $whiteColor;
 				margin: 0 6px 12px;
-				line-height: 32px;
+				line-height: 28px;
 				width: 100%;
+				text-transform: inherit;
+				font-size: 12px;
+				font-weight: bold;
 
 				&:last-child {
 					background: $blueColor;
@@ -3802,7 +3808,7 @@ body {
 							width: 16px !important;
 
 							circle {
-								stroke: $whiteColor !important;
+								stroke: currentColor !important;
 							}
 						}
 					}
@@ -6842,14 +6848,6 @@ body {
 					button {
 						background: $whiteColor;
 						color: $blackColor;
-
-						mat-progress-spinner {
-							svg {
-								circle {
-									stroke: $blackColor;
-								}
-							}
-						}
 					}
 
 					.files {
@@ -6940,17 +6938,6 @@ body {
 				button {
 					background: $whiteColor;
 					color: $blackColor;
-				}
-			}
-
-			.buttons {
-				button {
-					background: $whiteColor;
-					color: $blackColor;
-
-					&:last-child {
-						background: $blueColor;
-					}
 				}
 			}
 		}

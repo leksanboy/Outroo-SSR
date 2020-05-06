@@ -12,6 +12,7 @@ export const environment = {
 	pathPhotos: 'https://outroo.com/assets/media/photos/',
 	pathVideos: 'https://outroo.com/assets/media/videos/',
 	pathAudios: 'https://outroo.com/assets/media/audios/',
+	defaultSongCover: 'https://outroo.com/assets/images/default_song_cover.png',
 	language: 1,
 	reCaptcha: '6Lc8UokUAAAAAFvc4FVu2WttNqdg1rep7UMx4pJG',
 	authHash: 'xQ3s1RVrSR',

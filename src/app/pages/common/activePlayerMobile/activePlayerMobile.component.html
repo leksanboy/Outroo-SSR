@@ -70,7 +70,7 @@
 
 		<div class="data">
 		    <ul class="tracks" *ngIf="audioPlayerData?.list.length > 0">
-				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, default: !x.image, remove: x.addRemoveSession}">
+				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, remove: x.addRemoveSession}">
 					<div class="inner" *ngIf="!x.contentTypeAd">
 						<div class="image">
 							<button mat-icon-button (click)="playSong('item', i)">
@@ -110,9 +110,9 @@
 							</mat-menu>
 
 							<mat-menu #menuPlaylists="matMenu">
-								<button mat-menu-item (click)="createPlaylist()">{{translations?.common?.createPlaylist}}</button>
-								<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
-								<span *ngFor="let p of sessionData.current.playlists">
+								<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
+								<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
+								<span *ngFor="let p of sessionData?.current?.playlists">
 									<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">{{p.title}}</button>
 								</span>
 							</mat-menu>

@@ -61,7 +61,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 	public signOutCurrent: boolean;
 	public audio: any;
 	public audioPlayerData: any = {
-		path: 'assets/media/audios/',
 		key: 0,
 		repeat: false,
 		shuffle: false,
@@ -211,7 +210,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get session create playlist
 			this.sessionService.getDataCreatePlaylist()
 				.subscribe(data => {
-					this.itemSongOptions('createPlaylist', null, null);
+					this.itemSongOptions('createPlaylist', data.item, null);
 				});
 
 			// Get session add account
@@ -490,7 +489,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.original_title = res[0].original_title ? res[0].original_title : res[0].title;
 					this.audioPlayerData.current.original_artist = res[0].original_artist ? res[0].original_artist : res[0].title;
 					this.audioPlayerData.current.duration = res[0].duration;
-					this.audioPlayerData.current.image = res[0].image ? (this.audioPlayerData.path + 'thumbnails/' + res[0].image) : '';
+					this.audioPlayerData.current.image = res[0].image ? (this.env.pathAudios + 'thumbnails/' + res[0].image) : '';
 
 					this.audioPlayerData.item = res[0];
 					this.audioPlayerData.key = 0;
@@ -707,8 +706,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.original_artist = this.audioPlayerData.list[key].original_artist ? this.audioPlayerData.list[key].original_artist : this.audioPlayerData.list[key].title;
 					this.audioPlayerData.current.original_title = this.audioPlayerData.list[key].original_title ? this.audioPlayerData.list[key].original_title : this.audioPlayerData.list[key].title;
 					this.audioPlayerData.current.duration = this.audioPlayerData.list[key].duration;
-					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.audioPlayerData.path + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
-					this.audio.src = this.audioPlayerData.path + this.audioPlayerData.list[key].name;
+					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.env.pathAudios + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
+					this.audio.src = this.env.pathAudios + this.audioPlayerData.list[key].name;
 					this.audio.load();
 					this.getColorFromAudioCover(this.audioPlayerData.current.image);
 
@@ -958,7 +957,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
+				break;
 			case('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
@@ -982,7 +981,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
+				break;
 			case('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
@@ -1004,8 +1003,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('createPlaylist'):
+				break;
+			case ('createPlaylist'):
 				this.location.go(this.router.url + '#NewPlaylist');
 
 				const config = {
@@ -1022,18 +1021,29 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.location.go(this.router.url);
 
 					if (res) {
-						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
-						this.sessionService.setDataPlaylists(this.sessionData);
 						this.alertService.success(this.translations.common.createdSuccessfully);
 
-						return res;
+						// Add song to playlist
+						if (item) {
+							const dataSong = {
+								type: 'add',
+								location: 'playlist',
+								playlist: res.id,
+								item: item.id
+							};
+							this.audioDataService.addRemove(dataSong).subscribe();
+						}
+
+						// Set playlist on session data
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
 					}
 				});
-			break;
+				break;
 			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
-			break;
+				break;
 		}
 	}
 

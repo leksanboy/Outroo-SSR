@@ -19,7 +19,7 @@ declare var global: any;
 @Component({
 	selector: 'app-playlist',
 	templateUrl: './playlist.component.html',
-	providers: [ SafeHtmlPipe ]
+	providers: [SafeHtmlPipe]
 })
 export class PlaylistComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -148,7 +148,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 					// Set Google analytics
 					const url = 'pl/' + name;
 					const title = t;
-					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) :  null;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
 					this.userDataService.analytics(url, title, userId);
 				}
 			}, error => {
@@ -196,9 +196,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 			if (this.dataDefault.list.length > 0) {
 				if (type === 'play') {
 					this.playSong(this.dataDefault.list,
-								(this.audioPlayerData.item ? this.audioPlayerData.item : this.dataDefault.list[0]),
-								(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
-								'default');
+						(this.audioPlayerData.item ? this.audioPlayerData.item : this.dataDefault.list[0]),
+						(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
+						'default');
 				} else if (type === 'prev') {
 					const prevKey = (this.audioPlayerData.key === 0) ? (this.dataDefault.list.length - 1) : (this.audioPlayerData.key - 1);
 					this.audioPlayerData.key = prevKey;
@@ -215,9 +215,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item, playlist) {
+	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveSession'):
+			case ('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
@@ -231,14 +231,14 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('addRemoveUser'):
+				break;
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -252,14 +252,14 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataARO)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('playlist'):
+				break;
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -272,17 +272,25 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			break;
-			case('report'):
+				break;
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('report'):
 				item.type = 'playlist';
 				this.sessionService.setDataReport(item);
-			break;
+				break;
 		}
 	}
 
@@ -302,11 +310,5 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
-	}
-
-	// Create new playlist
-	createPlaylist() {
-		const data = 'create';
-		this.sessionService.setDataCreatePlaylist(data);
 	}
 }

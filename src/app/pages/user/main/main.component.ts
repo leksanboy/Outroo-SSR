@@ -584,8 +584,12 @@ export class MainComponent implements OnInit, OnDestroy {
 					});
 				break;
 			case ('createPlaylist'):
-				const data = 'create';
-				this.sessionService.setDataCreatePlaylist(data);
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
 			case ('report'):
 				item.type = 'audio';
@@ -973,15 +977,13 @@ export class MainComponent implements OnInit, OnDestroy {
 	dismissRecommended(item, index) {
 		item.dismiss = true;
 
-		setTimeout(() => {
-			this.recommendedUsers.list.splice(index, 1);
+		this.recommendedUsers.list.splice(index, 1);
 
-			const data = {
-				user: item.user.id
-			};
+		const data = {
+			user: item.user.id
+		};
 
-			this.userDataService.dismissRecommended(data).subscribe();
-		}, 300);
+		this.userDataService.dismissRecommended(data).subscribe();
 	}
 
 	// Recommended playlists

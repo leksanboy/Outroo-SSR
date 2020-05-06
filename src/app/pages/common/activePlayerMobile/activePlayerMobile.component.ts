@@ -56,7 +56,7 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 		const self = this;
 
 		// Auto progress bar
-		this.audio.addEventListener('timeupdate', function() {
+		this.audio.addEventListener('timeupdate', function () {
 			const countDown = Math.round(self.audio.duration - self.audio.currentTime);
 			self.audioPlayerData.current.time = self.formatTime(self.audio.currentTime);
 
@@ -84,42 +84,42 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 	// repeat · next · play/pause · prev · shuffle
 	playSong(type, key) {
 		switch (type) {
-			case('item'):
+			case ('item'):
 				this.audioPlayerData.key = key;
 				this.audioPlayerData.buttonType = 'item';
 				this.playerService.setPlayTrack(this.audioPlayerData);
-			break;
-			case('play'):
+				break;
+			case ('play'):
 				this.playSong('item', this.audioPlayerData.key);
-			break;
-			case('prev'):
+				break;
+			case ('prev'):
 				this.audioPlayerData.key = key;
 				this.audioPlayerData.buttonType = 'prev';
 				this.playerService.setPlayTrack(this.audioPlayerData);
-			break;
-			case('next'):
+				break;
+			case ('next'):
 				this.audioPlayerData.key = key;
 				this.audioPlayerData.buttonType = 'next';
 				this.playerService.setPlayTrack(this.audioPlayerData);
-			break;
-			case('shuffle'):
+				break;
+			case ('shuffle'):
 				this.audioPlayerData.shuffle = !this.audioPlayerData.shuffle;
 				this.playerService.setCurrentTrack(this.audioPlayerData);
-			break;
-			case('repeat'):
+				break;
+			case ('repeat'):
 				this.audioPlayerData.repeat = !this.audioPlayerData.repeat;
 				this.playerService.setCurrentTrack(this.audioPlayerData);
-			break;
+				break;
 		}
 	}
 
 	// Time format
 	formatTime(time) {
 		const duration = time,
-		hours = Math.floor(duration / 3600),
-		minutes = Math.floor((duration % 3600) / 60),
-		seconds = Math.floor(duration % 60),
-		result = [];
+			hours = Math.floor(duration / 3600),
+			minutes = Math.floor((duration % 3600) / 60),
+			seconds = Math.floor(duration % 60),
+			result = [];
 
 		if (hours) {
 			result.push(hours);
@@ -134,7 +134,7 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveSession'):
+			case ('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.type = item.addRemoveSession ? 'remove' : 'add';
 
@@ -147,14 +147,14 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = !item.addRemoveSession ? ' has been added successfully' : ' has been removed';
+							text = !item.addRemoveSession ? ' has been added successfully' : ' has been removed';
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
-			break;
-			case('addRemoveUser'):
+				break;
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.type = item.addRemoveUser ? 'add' : 'remove';
 
@@ -170,14 +170,14 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 						item.insertedId = res;
 
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = item.addRemoveUser ? ' has been added successfully' : ' has been removed';
+							text = item.addRemoveUser ? ' has been added successfully' : ' has been removed';
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
-			break;
-			case('playlist'):
+				break;
+			case ('playlist'):
 				item.type = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -194,15 +194,19 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 					}, error => {
 						this.alertService.success('An error has ocurred');
 					});
-			break;
-			case('createPlaylist'):
-				const data = 'create';
-				this.sessionService.setDataCreatePlaylist(data);
-			break;
-			case('report'):
+				break;
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
-			break;
+				break;
 		}
 	}
 

@@ -27,7 +27,7 @@ declare var global: any;
 @Component({
 	selector: 'app-audios',
 	templateUrl: './audios.component.html',
-	providers: [ SafeHtmlPipe ]
+	providers: [SafeHtmlPipe]
 })
 export class AudiosComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -52,7 +52,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		reload: false,
 		actions: true,
 		counter: 0,
-		max: 30
+		max: 100
 	};
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
@@ -119,6 +119,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		// Playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
 			.subscribe(data => {
+				console.log('data:', data);
+				console.log('this.dataDefault:', this.dataDefault);
+
 				if (this.userData.id === this.sessionData.current.id) {
 					if (data.current.playlists[0].id !== this.dataDefault.playlists[0].id) {
 						data.current.playlists[0].color = this.generateRandomColor();
@@ -281,9 +284,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					this.dataGeneral.noData = true;
 				} else {
 					this.dataGeneral.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-
 					this.dataGeneral.list = res;
-					console.log('dataGeneral:', this.dataGeneral)
 				}
 
 				if (!res || res.length < this.env.cuantity) {
@@ -779,15 +780,15 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Upload files
 	uploadFiles(type, event) {
-		const convertToMb = function(bytes) {
+		const convertToMb = function (bytes) {
 			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
 				return '-';
 			}
 
 			const units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-			number = Math.floor(Math.log(bytes) / Math.log(1024));
+				number = Math.floor(Math.log(bytes) / Math.log(1024));
 
-			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(1) +  ' ' + units[number];
+			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(1) + ' ' + units[number];
 		};
 
 		if (type === 1) { // Add files
@@ -833,50 +834,50 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					this.dataFiles.actions = false;
 					const self = this;
 
-					const progressHandler = function(ev, file) {
+					const progressHandler = function (ev, file) {
 						file.status = 'progress';
 						const percent = Math.round((ev.loaded / ev.total) * 100);
 						file.progress = Math.max(0, Math.min(100, percent));
 					};
 
-					const counterHandler = function() {
+					const counterHandler = function () {
 						self.dataFiles.counter = self.dataFiles.counter + 1;
 						self.dataFiles.reload = (self.dataFiles.list.length === self.dataFiles.counter) ? true : false;
 					};
 
-					const completeHandler = function(ev, file) {
+					const completeHandler = function (ev, file) {
 						file.status = 'completed';
 						counterHandler();
 					};
 
-					const errorHandler = function(ev, file) {
+					const errorHandler = function (ev, file) {
 						file.status = 'error';
 						counterHandler();
 					};
 
-					const abortHandler = function(ev, file) {
+					const abortHandler = function (ev, file) {
 						file.status = 'error';
 						counterHandler();
 					};
 
-					const ajaxCall = function(file, formdata, ajax) {
+					const ajaxCall = function (file, formdata, ajax) {
 						formdata.append('fileUpload', file);
 						formdata.append('category', file.category);
 						formdata.append('title', file.title);
 
-						ajax.upload.addEventListener('progress', function(ev) {
+						ajax.upload.addEventListener('progress', function (ev) {
 							progressHandler(ev, file);
 						}, false);
 
-						ajax.addEventListener('load', function(ev) {
+						ajax.addEventListener('load', function (ev) {
 							completeHandler(ev, file);
 						}, false);
 
-						ajax.addEventListener('error', function(ev) {
+						ajax.addEventListener('error', function (ev) {
 							errorHandler(ev, file);
 						}, false);
 
-						ajax.addEventListener('abort', function(ev) {
+						ajax.addEventListener('abort', function (ev) {
 							abortHandler(ev, file);
 						}, false);
 
@@ -891,8 +892,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 								this.dataFiles.list[i].status = 'progress';
 
 								const file = this.dataFiles.list[i],
-								formdata = new FormData(),
-								ajax = new XMLHttpRequest();
+									formdata = new FormData(),
+									ajax = new XMLHttpRequest();
 
 								ajaxCall(file, formdata, ajax);
 							}
@@ -901,7 +902,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				}
 			}
 		} else if (type === 5) { // Reload
-			this.data.selectedIndex = 0;
+			this.data.selectedIndex = 1;
 			this.default('default', this.sessionData.current.id);
 
 			this.dataFiles = {
@@ -917,45 +918,45 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Generate random color
 	generateRandomColor() {
 		const rand = Math.floor(Math.random() * 40) + 0,
-		colorsList = [
-			'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)',
-			'linear-gradient(to right, #43e97b 0%, #38f9d7 100%)',
-			'linear-gradient(to right, #fa709a 0%, #fee140 100%)',
-			'linear-gradient(to right, #6a11cb 0%, #2575fc 100%)',
-			'linear-gradient(to right, #92fe9d 0%, #00c9ff 100%)',
-			'linear-gradient(to right, #ff758c 0%, #ff7eb3 100%)',
-			'linear-gradient(to right bottom, #a18cd1 0%, #fbc2eb 100%)',
-			'linear-gradient(to right bottom, #fbc2eb 0%, #a6c1ee 100%)',
-			'linear-gradient(to right bottom, #30cfd0 0%, #330867 100%)',
-			'linear-gradient(to right bottom, #5ee7df 0%, #b490ca 100%)',
-			'linear-gradient(to right bottom, #cd9cf2 0%, #f6f3ff 100%)',
-			'linear-gradient(to right bottom, #37ecba 0%, #72afd3 100%)',
-			'linear-gradient(to right bottom, #c471f5 0%, #fa71cd 100%)',
-			'linear-gradient(to right bottom, #48c6ef 0%, #6f86d6 100%)',
-			'linear-gradient(to right bottom, #ff0844 0%, #ffb199 100%)',
-			'linear-gradient(to right bottom, #96fbc4 0%, #f9f586 100%)',
-			'linear-gradient(to right bottom, #c71d6f 0%, #d09693 100%)',
-			'linear-gradient(to right bottom, #4481eb 0%, #04befe 100%)',
-			'linear-gradient(to right bottom, #e8198b 0%, #c7eafd 100%)',
-			'linear-gradient(to right bottom, #209cff 0%, #68e0cf 100%)',
-			'linear-gradient(to right bottom, #cc208e 0%, #6713d2 100%)',
-			'linear-gradient(to right bottom, #b224ef 0%, #7579ff 100%)',
-			'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)',
-			'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)',
-			'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
-			'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',
-			'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)',
-			'linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)',
-			'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)',
-			'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)',
-			'linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%)',
-			'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			'linear-gradient(180deg, #2af598 0%, #009efd 100%)',
-			'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
-			'linear-gradient(-60deg, #16a085 0%, #f4d03f 100%)',
-			'linear-gradient(-60deg, #ff5858 0%, #f09819 100%)'
-			// --> https://webgradients.com/
-		];
+			colorsList = [
+				'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)',
+				'linear-gradient(to right, #43e97b 0%, #38f9d7 100%)',
+				'linear-gradient(to right, #fa709a 0%, #fee140 100%)',
+				'linear-gradient(to right, #6a11cb 0%, #2575fc 100%)',
+				'linear-gradient(to right, #92fe9d 0%, #00c9ff 100%)',
+				'linear-gradient(to right, #ff758c 0%, #ff7eb3 100%)',
+				'linear-gradient(to right bottom, #a18cd1 0%, #fbc2eb 100%)',
+				'linear-gradient(to right bottom, #fbc2eb 0%, #a6c1ee 100%)',
+				'linear-gradient(to right bottom, #30cfd0 0%, #330867 100%)',
+				'linear-gradient(to right bottom, #5ee7df 0%, #b490ca 100%)',
+				'linear-gradient(to right bottom, #cd9cf2 0%, #f6f3ff 100%)',
+				'linear-gradient(to right bottom, #37ecba 0%, #72afd3 100%)',
+				'linear-gradient(to right bottom, #c471f5 0%, #fa71cd 100%)',
+				'linear-gradient(to right bottom, #48c6ef 0%, #6f86d6 100%)',
+				'linear-gradient(to right bottom, #ff0844 0%, #ffb199 100%)',
+				'linear-gradient(to right bottom, #96fbc4 0%, #f9f586 100%)',
+				'linear-gradient(to right bottom, #c71d6f 0%, #d09693 100%)',
+				'linear-gradient(to right bottom, #4481eb 0%, #04befe 100%)',
+				'linear-gradient(to right bottom, #e8198b 0%, #c7eafd 100%)',
+				'linear-gradient(to right bottom, #209cff 0%, #68e0cf 100%)',
+				'linear-gradient(to right bottom, #cc208e 0%, #6713d2 100%)',
+				'linear-gradient(to right bottom, #b224ef 0%, #7579ff 100%)',
+				'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)',
+				'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)',
+				'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
+				'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',
+				'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)',
+				'linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)',
+				'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)',
+				'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)',
+				'linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%)',
+				'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+				'linear-gradient(180deg, #2af598 0%, #009efd 100%)',
+				'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
+				'linear-gradient(-60deg, #16a085 0%, #f4d03f 100%)',
+				'linear-gradient(-60deg, #ff5858 0%, #f09819 100%)'
+				// --> https://webgradients.com/
+			];
 
 		return colorsList[rand];
 	}
@@ -990,7 +991,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case('addRemoveSession'):
+			case ('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
@@ -1009,7 +1010,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -1027,7 +1028,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('playlist'):
+			case ('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
@@ -1040,18 +1041,22 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case('createPlaylist'):
-				const dataCP = 'create';
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
 				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
-			case('report'):
+			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
@@ -1096,7 +1101,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Create new playlist
 	createPlaylist() {
-		const data = 'create';
+		const data = {
+			type: 'create',
+			item: null
+		};
 		this.sessionService.setDataCreatePlaylist(data);
 	}
 
@@ -1137,7 +1145,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// Item options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
-			case('show'):
+			case ('show'):
 				this.location.go('/pl/' + item.name);
 
 				const configShow = {
@@ -1157,7 +1165,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					this.location.go(this.router.url);
 				});
 				break;
-			case('edit'):
+			case ('edit'):
 				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
 				item.path = this.env.pathAudios;
 				item.index = index;
@@ -1186,7 +1194,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					}
 				});
 				break;
-			case('publicPrivate'):
+			case ('publicPrivate'):
 				item.private = !item.private;
 				item.privateType = item.private ? 'private' : 'public';
 
@@ -1197,7 +1205,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 				this.audioDataService.publicPrivate(dataPPS).subscribe();
 				break;
-			case('addRemoveSession'):
+			case ('addRemoveSession'):
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
 				item.removed = item.addRemoveSession ? true : false;
@@ -1213,7 +1221,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						this.updatePlaylist('addRemoveSession', null);
 					});
 				break;
-			case('addRemoveUser'):
+			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -1223,20 +1231,20 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					id: item.id,
 					title: item.title,
 					image: item.image,
-					playlist : item.idPlaylist,
-					insertedPlaylist : item.insertedPlaylist
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
 				};
 
 				this.audioDataService.addRemovePlaylist(dataARO)
 					.subscribe((res: any) => {
 						item.idPlaylist = res;
-						item.insertedPlaylist =  item.insertedPlaylist ? item.insertedPlaylist : res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
 						this.updatePlaylist('addRemoveUser', item);
 
 						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case('follow'):
+			case ('follow'):
 				item.followUnfollow = !item.followUnfollow;
 				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
@@ -1246,8 +1254,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					id: item.id,
 					title: item.title,
 					image: item.image,
-					playlist : item.idPlaylist,
-					insertedPlaylist : item.insertedPlaylist
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
 				};
 
 				this.audioDataService.followPlaylist(dataF)
@@ -1256,7 +1264,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					});
 
 				break;
-			case('report'):
+			case ('report'):
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
 				break;
