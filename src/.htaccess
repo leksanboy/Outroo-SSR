@@ -148,4 +148,7 @@
 	RewriteBase /
 	RewriteCond %{THE_REQUEST} index\.html
 	RewriteRule ^index\.html$ http://127.0.0.1:4000/ [R=301,L]
+
+	# Redirect when update GCP
+	ErrorDocument 503 /.maintenance.html
 </IfModule>

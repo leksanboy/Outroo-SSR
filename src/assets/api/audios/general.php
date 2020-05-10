@@ -1,12 +1,27 @@
 <?php include "../db.php";
 	$session = sessionId();
+	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$user = $_GET['user'];
+	$type = $_GET['type'];
+	$cuantity = $_GET['cuantity'];
+	$more = $_GET['rows']*$cuantity;
 
-	function hits(){
+	$params = array(
+		'ipAddress'	=> $ipAddress,
+		'session'	=> $session,
+		'user'		=> $user,
+		'type'		=> $type,
+		'cuantity'	=> $cuantity,
+		'more'		=> $more
+	);
+
+	function hits($params){
 		global $conn;
 
 		$dateFrom = date('Y-m-d H:i:s', strtotime('-5 days'));
 		$dateTo = date('Y-m-d H:i:s', strtotime('+5 days'));
+		$cuantity = $params['cuantity'] == 0 ? 8 : $params['cuantity'];
+		$more = $params['more'];
 
 		$sql = "SELECT a.id,
 						a.name,
@@ -22,7 +37,7 @@
 					AND a.is_deleted = 0
 				GROUP BY a.id
 				ORDER by replays DESC
-				LIMIT 8";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -42,8 +57,13 @@
 		}
 	}
 
-	function recommended(){
+	function recommended($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 13 : $params['cuantity'];
+		$more = $params['more'];
+		$session = $params['session'];
+		$user = $params['user'];
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -58,7 +78,7 @@
 					AND type IS NULL
 				ORDER BY RAND()
 					AND date DESC
-				LIMIT 13";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -92,8 +112,13 @@
 		}
 	}
 
-	function favourites(){
+	function favourites($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
+		$more = $params['more'];
+		$session = $params['session'];
+		$user = $params['user'];
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -108,7 +133,7 @@
 					AND type IS NULL
 				GROUP BY original_id
 				ORDER BY Count(*) DESC
-				LIMIT 6";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -142,15 +167,18 @@
 		}
 	}
 
-	function genres(){
+	function genres($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
+		$more = $params['more'];
 
 		$sql = "SELECT id,
 						title
 				FROM z_audios_genres
 				WHERE is_deleted = 0
 				ORDER BY RAND()
-				LIMIT 6";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -166,11 +194,13 @@
 		}
 	}
 
-	function mostPlayed(){
+	function mostPlayed($params){
 		global $conn;
 
 		$dateFrom = date('Y-m-d H:i:s', strtotime('-2 days'));
 		$dateTo = date('Y-m-d H:i:s', strtotime('+2 days'));
+		$cuantity = $params['cuantity'] == 0 ? 5 : $params['cuantity'];
+		$more = $params['more'];
 
 		$sql = "SELECT a.id,
 						a.name,
@@ -186,7 +216,7 @@
 					AND a.is_deleted = 0
 				GROUP BY a.id
 				ORDER by replays DESC
-				LIMIT 5";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -206,8 +236,11 @@
 		}
 	}
 
-	function ost(){
+	function ost($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
+		$more = $params['more'];
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -221,7 +254,7 @@
 				WHERE type = 'ost'
 					AND is_deleted = 0
 				ORDER BY id ASC
-				LIMIT 6";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -249,8 +282,11 @@
 		}
 	}
 
-	function top100(){
+	function top100($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
+		$more = $params['more'];
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -264,7 +300,7 @@
 				WHERE type = 'top100'
 					AND is_deleted = 0
 				ORDER BY id ASC
-				LIMIT 6";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -292,8 +328,13 @@
 		}
 	}
 
-	function enjoyWith(){
+	function enjoyWith($params){
 		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 20 : $params['cuantity'];
+		$more = $params['more'];
+		$session = $params['session'];
+		$user = $params['user'];
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -308,7 +349,7 @@
 					AND type IS NULL
 				ORDER BY RAND()
 					AND date DESC
-				LIMIT 20";
+				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -342,16 +383,34 @@
 		}
 	}
 
-	$res = array(
-		'hits'			=> hits(),
-		'recommended'	=> recommended(),
-		'favourites'	=> favourites(),
-		'genres'		=> genres(),
-		'mostPlayed'	=> mostPlayed(),
-		'ost'			=> ost(),
-		'top100'		=> top100(),
-		'enjoyWith'		=> enjoyWith()
-	);
+	if ($type === 'general') {
+		$res = array(
+			'hits'			=> hits($params),
+			'recommended'	=> recommended($params),
+			'favourites'	=> favourites($params),
+			'genres'		=> genres($params),
+			'mostPlayed'	=> mostPlayed($params),
+			'ost'			=> ost($params),
+			'top100'		=> top100($params),
+			'enjoyWith'		=> enjoyWith($params)
+		);
 
-	echo json_encode($res);
+		echo json_encode($res);
+	} else if ($type === 'hits') {
+		echo json_encode(hits($params));
+	} else if ($type === 'recommended') {
+		echo json_encode(recommended($params));
+	} else if ($type === 'favourites') {
+		echo json_encode(favourites($params));
+	} else if ($type === 'genres') {
+		echo json_encode(genres($params));
+	} else if ($type === 'mostPlayed') {
+		echo json_encode(mostPlayed($params));
+	} else if ($type === 'ost') {
+		echo json_encode(ost($params));
+	} else if ($type === 'top100') {
+		echo json_encode(top100($params));
+	} else if ($type === 'enjoyWith') {
+		echo json_encode(enjoyWith($params));
+	}
 ?>

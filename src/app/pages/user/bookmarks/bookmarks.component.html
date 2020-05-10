@@ -15,7 +15,7 @@
 					<div class="line" *ngFor="let line of dataDefault.list; let l = index;" [ngClass]="{'ad': line.contentTypeAd}">
 						<ul class="publications" *ngIf="!line.contentTypeAd">
 							<li mat-ripple *ngFor="let x of line; let i = index;" [ngClass]="{'remove': x.addRemoveSession, 'remove': x.marked}">
-								<a class="image" (click)="show(x, l, i)">
+								<a class="image" routerLink="/p/{{x.name}}" target="popup" (click)="show(x, l, i); false;">
 									<span *ngIf="x.type == 'photo'">
 										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 										<div class="category" *ngIf="x.photos.mimetype.indexOf('video') !== -1">
@@ -49,7 +49,7 @@
 				<div class="noData" *ngIf="dataDefault.noData">
 					<div class="description">{{translations?.bookmarks?.noData}}</div>
 				</div>
-				
+
 				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
 					<button mat-fab (click)="default('more')" *ngIf="!dataDefault.loadingMoreData">
 						<i label="add"></i>

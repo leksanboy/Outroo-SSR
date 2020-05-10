@@ -8,12 +8,15 @@ import { FollowsDataService } from '../../../../app/core/services/user/followsDa
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
+declare var global: any;
+
 @Component({
 	selector: 'app-show-likes',
 	templateUrl: './showLikes.component.html'
 })
 export class ShowLikesComponent implements OnInit {
 	@ViewChild('videoPlayer') videoPlayer: any;
+	public window: any = global;
 	public env: any = environment;
 	public sessionData: any = [];
 	public userData: any = [];
@@ -36,7 +39,7 @@ export class ShowLikesComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// not in use
+		this.window.scrollTo(0, 0);
 	}
 
 	// Follow / Unfollow

@@ -19,7 +19,7 @@
 	</div>
 
 	<div mat-dialog-content class="bodyPlaylist">
-		<div class="playlist">
+		<div class="playlist create">
 			<div class="info">
 				<div class="left">
 					<div class="image" [matMenuTriggerFor]="imageOptions">
@@ -42,11 +42,39 @@
 				<div class="right">
 					<form [formGroup]="actionForm">
 						<mat-form-field>
-							<input matInput placeholder="{{translations?.audios?.playlistTitle}}" #Title maxlength="1000" formControlName="title">
+							<input matInput placeholder="{{translations?.audios?.playlistTitle}}" #Title maxlength="100" formControlName="title">
+							<mat-hint align="end">{{Title.value.length}}/100</mat-hint>
+						</mat-form-field>
+
+						<mat-checkbox formControlName="advanced" #Advanced>{{translations?.audios?.showAdvanced}}</mat-checkbox>
+
+						<mat-form-field *ngIf="data.showAdvanced">
+							<mat-label>{{translations?.audios?.selectGenre}}</mat-label>
+							<mat-select formControlName="genre">
+								<mat-option *ngFor="let x of data?.genres" [value]="x.id">
+									{{x.title}}
+						  		</mat-option>
+							</mat-select>
+						</mat-form-field>
+
+						<mat-form-field class="textarea" *ngIf="data.showAdvanced">
+							<textarea matInput
+							placeholder="{{translations?.audios?.description}}"
+							#Description
+							maxlength="1000"
+							formControlName="description"
+							cdkTextareaAutosize
+							#autosize="cdkTextareaAutosize"
+							cdkAutosizeMinRows="1"
+							cdkAutosizeMaxRows="7"></textarea>
+							<mat-hint align="end">{{Description.value.length}}/1000</mat-hint>
 						</mat-form-field>
 					</form>
 				</div>
 			</div>
+
+			<!-- <div class="description" *ngIf="data.showAdvanced">
+			</div> -->
 		</div>
 	</div>
 

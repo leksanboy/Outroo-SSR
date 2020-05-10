@@ -39,8 +39,8 @@
 			$row['user'] = userUsernameNameAvatar($row['sender']);
 
 			// Upgrade status
-			if ($row['type'] !== 'box') {
-				if ($row['is_seen'] === '0') {
+			if ($type !== 'box') {
+				if ($row['is_seen'] == 0) {
 					updateNotificationStatus($row['id']);
 				}
 			}

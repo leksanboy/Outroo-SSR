@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Location } from '@angular/common';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 declare var global: any;
@@ -20,13 +23,23 @@ export class ShowPlaylistComponent implements OnInit {
 	public userData: any = [];
 	public audioPlayerData: any = [];
 	public translations: any = [];
+	public recommendedPlaylists = {
+		loading: false,
+		noData: true,
+		show: false,
+		list: []
+	};
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<ShowPlaylistComponent>,
+		public dialog: MatDialog,
+		private router: Router,
+		private location: Location,
 		private alertService: AlertService,
 		private playerService: PlayerService,
 		private sessionService: SessionService,
+		private userDataService: UserDataService,
 		private audioDataService: AudioDataService
 	) {
 		this.sessionData = data.sessionData;
@@ -40,6 +53,8 @@ export class ShowPlaylistComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.window.scrollTo(0, 0);
+
 		const params = {
 			id: this.data.current.o_id ? this.data.current.o_id : this.data.current.id
 		};
@@ -66,6 +81,9 @@ export class ShowPlaylistComponent implements OnInit {
 			.subscribe(data => {
 				this.audioPlayerData = data;
 			});
+
+		// Get recommended playlists
+		this.getRecommendedPlaylists();
 	}
 
 	// Play item song
@@ -218,6 +236,121 @@ export class ShowPlaylistComponent implements OnInit {
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
+	// Recommended playlists
+	getRecommendedPlaylists() {
+		this.recommendedPlaylists.show = !this.recommendedPlaylists.show;
+		this.recommendedPlaylists.loading = true;
+
+		if (this.recommendedPlaylists.show && this.recommendedPlaylists.list.length === 0) {
+			const data = {
+				user: this.userData.id
+			};
+
+			this.audioDataService.getRecommendedPlaylists(data)
+				.subscribe((res: any) => {
+					this.recommendedPlaylists.loading = false;
+
+					if (!res || res.length === 0) {
+						this.recommendedPlaylists.noData = true;
+					} else {
+						this.recommendedPlaylists.noData = false;
+						this.recommendedPlaylists.list = res;
+					}
+				}, error => {
+					this.recommendedPlaylists.loading = false;
+				});
+		} else {
+			this.recommendedPlaylists.loading = false;
+		}
+	}
+
+	// Playlist options
+	itemPlaylistOptions(type, item, index) {
+		switch (type) {
+			case ('show'):
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.userData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
+			case ('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARO)
+					.subscribe((res: any) => {
+						item.idPlaylist = res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
+
+						if (dataARO.type === 'add') {
+							this.sessionData.current.playlists.unshift(dataARO);
+						} else {
+							for (const i in this.sessionData.current.playlists) {
+								if (i) {
+									if (this.sessionData.current.playlists[i].id = dataARO.id) {
+										this.sessionData.current.playlists[i] = dataARO;
+									}
+								}
+							}
+						}
+						// Update playslists on selects
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
+					});
+				break;
+			case ('follow'):
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
+
+				const dataF = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.followPlaylist(dataF)
+					.subscribe((res: any) => {
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
+					});
+
+				break;
+			case ('report'):
+				item.type = 'audioPlaylist';
+				this.sessionService.setDataReport(item);
 				break;
 		}
 	}

@@ -10,7 +10,6 @@
 						background,
 						email,
 						about,
-						about_original as aboutOriginal,
 						language,
 						theme,
 						official,
@@ -29,7 +28,6 @@
 				$row['private'] 			= $row['private'] ? true : false;
 				$row['name'] 				= html_entity_decode($row['name'], ENT_QUOTES);
 				$row['about'] 				= html_entity_decode($row['about'], ENT_QUOTES);
-				$row['aboutOriginal'] 		= html_entity_decode($row['aboutOriginal'], ENT_QUOTES);
 				$row['countFollowing'] 		= countUserFollowing($row['id']);
 				$row['countFollowers'] 		= countUserFollowers($row['id']);
 				$row['countAudios'] 		= countUserAudios($row['id']);

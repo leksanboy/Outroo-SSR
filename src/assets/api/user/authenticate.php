@@ -38,7 +38,6 @@
 		$result['private'] 				= $result['private'] ? true : false;
 		$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
 		$result['about'] 				= html_entity_decode($result['about'], ENT_QUOTES);
-		$result['aboutOriginal'] 		= html_entity_decode($result['aboutOriginal'], ENT_QUOTES);
 		$result['countFollowing'] 		= countUserFollowing($result['id']);
 		$result['countFollowers'] 		= countUserFollowers($result['id']);
 		$result['countAudios'] 			= countUserAudios($result['id']);

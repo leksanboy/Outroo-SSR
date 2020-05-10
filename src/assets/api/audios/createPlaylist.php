@@ -10,6 +10,8 @@
 	$subtype = $data['subtype'];
 	$image = $data['image'];
 	$imageName = '';
+	$genre = $data['genre'];
+	$description = $data['description'];
 
 	if ($image) {
 		$imageName = generateRandomString(23);
@@ -22,8 +24,8 @@
 	}
 
 	if ($type === 'create') {
-		$sql = "INSERT INTO z_audios_playlist (name, user, title, image, ip_address)
-				VALUES ('$name', $session, '$title', '$imageNameJpg', '$ipAddress')";
+		$sql = "INSERT INTO z_audios_playlist (name, user, title, description, genre, image, ip_address)
+				VALUES ('$name', $session, '$title', '$description', '$genre', '$imageNameJpg', '$ipAddress')";
 		$conn->query($sql);
 		$insertedId = $conn->insert_id;
 
@@ -39,18 +41,21 @@
 
 		$conn->close();
 	} else if ($type === 'update') {
-		if ($subtype === 'updateTitle') {
-			$sql = "UPDATE z_audios_playlist
-					SET title = '$title',
-						ip_address = '$ipAddress'
-					WHERE id = $id
-						AND user = $session";
-			$result = $conn->query($sql);
+		$sql = "UPDATE z_audios_playlist
+				SET title = '$title',
+					description = '$description',
+					genre = '$genre',
+					image = '$imageNameJpg',
+					ip_address = '$ipAddress'
+				WHERE id = $id
+					AND user = $session";
+		$result = $conn->query($sql);
 
-			$res = getPlaylist($id);
-			echo json_encode($res);
+		$res = getPlaylist($id);
+		echo json_encode($res);
 
-			$conn->close();
+		$conn->close();
+		/* if ($subtype === 'updateTitle') {
 		} else if ($subtype === 'updateTitleImage') {
 			$sql = "UPDATE z_audios_playlist
 					SET title = '$title',
@@ -77,6 +82,6 @@
 			echo json_encode($res);
 
 			$conn->close();
-		}
+		} */
 	}
 ?>

@@ -34,7 +34,7 @@
 						</div>
 
 						<div class="form">
-							<form [formGroup]="actionFormPersonalData" (ngSubmit)="submitPersonal()">
+							<form [formGroup]="actionFormPersonalData" (ngSubmit)="submit('personal')">
 								<div class="theme">
 									<mat-radio-group formControlName="theme" name="theme">
 										<mat-radio-button [value]="0" class="white">{{translations?.settings?.themes?.white}}</mat-radio-button>
@@ -45,9 +45,9 @@
 								<mat-form-field>
 									<input matInput placeholder="{{translations?.settings?.username}}" #Username maxlength="100" formControlName="username">
 									<div class="validators">
-										<i class="icon75 blue" label="check" *ngIf="validatorUsername == 'done'"></i>
-										<i class="icon75 red" label="close" *ngIf="validatorUsername == 'bad'"></i>
-										<mat-progress-spinner mode="indeterminate" *ngIf="validatorUsername == 'load'"></mat-progress-spinner>
+										<i class="icon75 blue" label="check" *ngIf="validatorUsername === 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorUsername === 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorUsername === 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{Username.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -63,15 +63,18 @@
 									</mat-select>
 								</mat-form-field>
 
-								<div class="richAbout">
-									<div class="label">{{translations?.settings?.about}}</div>
-									<div class="inner">
-										<div class="highlights" [innerHTML]="sessionData.current.about"></div>
-										<div class="origin" contenteditable="plaintext-only" [innerHTML]="sessionData.current.aboutOriginal" (input)="aboutEdit('writingChanges', $event.target.innerText)"></div>
-									</div>
-								</div>
-
-								<mat-checkbox formControlName="private">{{translations?.common?.privateAccount}}</mat-checkbox>
+								<mat-form-field class="textarea">
+									<textarea matInput
+									placeholder="{{translations?.settings?.about}}"
+									#About
+									maxlength="1000"
+									formControlName="about"
+									cdkTextareaAutosize
+									#autosize="cdkTextareaAutosize"
+									cdkAutosizeMinRows="1"
+									cdkAutosizeMaxRows="7"></textarea>
+									<mat-hint align="end">{{About.value.length}}/1000</mat-hint>
+								</mat-form-field>
 
 								<div class="buttons">
 									<button mat-raised-button type="submit" [disabled]="submitPersonalLoading">
@@ -85,14 +88,14 @@
 
 		 			<mat-tab label="{{translations?.settings?.changePassword}}">
 						<div class="form">
-							<form [formGroup]="actionFormPasswordData" (ngSubmit)="submitPassword()">
+							<form [formGroup]="actionFormPasswordData" (ngSubmit)="submit('password')">
 								<mat-form-field>
 									<input matInput type="{{showPassword ? 'text' : 'password'}}" placeholder="{{translations?.settings?.oldPassword}}" #OldPassword maxlength="100" formControlName="oldPassword" name="current-password" autocomplete="on">
 									<button mat-button matSuffix mat-icon-button type="button" (click)="showPassword=!showPassword" tabindex="-1">
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<i class="icon75 red" label="close" *ngIf="validatorOldPassword == 'bad'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorOldPassword === 'bad'"></i>
 									</div>
 									<mat-hint align="end">{{OldPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -103,9 +106,9 @@
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword == 'done'"></i>
-										<i class="icon75 red" label="close" *ngIf="validatorNewPassword == 'bad'"></i>
-										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword == 'load'"></mat-progress-spinner>
+										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword === 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorNewPassword === 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword === 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{NewPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -116,9 +119,9 @@
 										<i class="icon65 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 									</button>
 									<div class="validators withButton">
-										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword == 'done'"></i>
-										<i class="icon75 red" label="close" *ngIf="validatorNewPassword == 'bad'"></i>
-										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword == 'load'"></mat-progress-spinner>
+										<i class="icon75 blue" label="check" *ngIf="validatorNewPassword === 'done'"></i>
+										<i class="icon75 red" label="close" *ngIf="validatorNewPassword === 'bad'"></i>
+										<mat-progress-spinner mode="indeterminate" *ngIf="validatorNewPassword === 'load'"></mat-progress-spinner>
 									</div>
 									<mat-hint align="end">{{ConfirmPassword.value.length}}/100</mat-hint>
 								</mat-form-field>
@@ -135,7 +138,7 @@
 
 		 			<mat-tab label="{{translations?.settings?.accounts}}">
 		 				<ul class="sessions">
-							<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
+							<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id === x.id}">
 								<div mat-ripple class="inner">
 									<div class="avatar" (click)="setCurrentUser(x)">
 										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
@@ -182,7 +185,40 @@
 								</div>
 							</li>
 					    </ul>
-		 			</mat-tab>
+					 </mat-tab>
+
+					 <mat-tab label="{{translations?.settings?.privacy}}">
+						<div class="privacy">
+							<div class="left">
+								<div class="title">{{translations?.settings?.privateAccount}}</div>
+								<div class="description">
+									{{translations?.settings?.privateAccountDescription}}
+									<a href="/privacy">{{translations?.common?.moreInfo}}</a>.
+								</div>
+							</div>
+							<div class="right">
+								<mat-slide-toggle [checked]="sessionData?.current?.private" (change)="submit('privacy')"></mat-slide-toggle>
+							</div>
+						</div>
+
+						<!-- <div class="privacy">
+							<div class="left">
+								<div class="title">Eliminar cuenta</div>
+								<div class="description">
+									Enviar la petición para elinar la cuenta
+								</div>
+							</div>
+						</div> -->
+
+						<!-- <div class="privacy">
+							<div class="left">
+								<div class="title">Migrar la cuenta de un email a otro</div>
+								<div class="description">
+									Enviar la petición para elinar la cuenta
+								</div>
+							</div>
+						</div> -->
+					 </mat-tab>
 		 		</mat-tab-group>
 			</div>
 		</div>

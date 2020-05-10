@@ -38,10 +38,12 @@ export class NotificationsDataService {
 			}));
 	}
 
-	pending(id: any) {
+	pending(data: any) {
 		const url = this.env.url + 'assets/api/notifications/pending.php';
+		let params =	'&type=' + data.type;
+		params = params.replace('&', '?');
 
-		return this.httpClient.get(url, this.headersService.getHeaders())
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));

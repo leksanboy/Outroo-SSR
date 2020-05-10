@@ -16,29 +16,31 @@
 			<ul class="followers" *ngIf="dataDefault.list">
 				<li *ngFor="let x of dataDefault.list; let i=index;">
 					<a class="avatar" routerLink="/{{x.user.username}}">
-						<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
+						<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 					</a>
 
-					<div class="text">
-						<div class="username">
-							<div class="data">
-								<a class="name" routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-								<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-							</div>
+					<div class="texts">
+						<div class="text">
+							<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+							<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 						</div>
 
-						<div class="container">
+						<div class="text">
 							{{x.user.name}}
 						</div>
 					</div>
 
-					<div class="actions" *ngIf="x.user.id != sessionData.current.id">
-						<button mat-button class="active" *ngIf="x.status == 'unfollow'" (click)="followUnfollow('follow', x)">
+					<div class="actions" *ngIf="x.user.id !== sessionData.current.id">
+						<button mat-button *ngIf="x.status === 'unfollow'" (click)="followUnfollow('follow', x)">
 							{{translations?.common?.follow}}
 						</button>
 
-						<button mat-button class="pending" *ngIf="x.status == 'pending'" [matMenuTriggerFor]="cancelRequest">
+						<button mat-button class="pending" *ngIf="x.status === 'pending'" [matMenuTriggerFor]="cancelRequest">
 							{{translations?.common?.pending}}
+						</button>
+
+						<button mat-button class="following" *ngIf="x.status === 'following'" [matMenuTriggerFor]="stopFollowing">
+							{{translations?.common?.following}}
 						</button>
 
 						<mat-menu #cancelRequest="matMenu" yPosition="below" xPosition="before" class="removeBox">
@@ -50,10 +52,6 @@
 								<button mat-menu-item (click)="followUnfollow('unfollow', x)">{{translations?.common?.yes}}</button>
 							</div>
 						</mat-menu>
-
-						<button mat-button *ngIf="x.status == 'following'" [matMenuTriggerFor]="stopFollowing">
-							{{translations?.common?.following}}
-						</button>
 
 						<mat-menu #stopFollowing="matMenu" yPosition="below" xPosition="before" class="removeBox">
 							<div class="text">
@@ -77,7 +75,7 @@
 			<div class="noData" *ngIf="dataDefault.noData">
 				<div class="description">{{translations?.common?.noLikes}}</div>
 			</div>
-			
+
 			<div class="loadMore" *ngIf="dataDefault.loadMoreData">
 				<button mat-fab (click)="default('more', null)" *ngIf="!dataDefault.loadingMoreData">
 					<i label="add"></i>

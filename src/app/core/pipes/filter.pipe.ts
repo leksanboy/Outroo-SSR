@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
     transform(items: any[], key: any, value: any): any {
-        /* console.log('items:', items);
-        console.log('key:', key);
-        console.log('value:', value); */
+        /* log('items:', items);
+        log('key:', key);
+        log('value:', value); */
 
         if (!items || !key) {
             return items;

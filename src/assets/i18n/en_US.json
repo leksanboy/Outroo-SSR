@@ -18,18 +18,20 @@
 		"uploadOrSearch": "Upload or search some songs",
 		"goAudios": "Go to my songs",
 		"privatePlaylist": "Private playlist",
-		"playlistTitle": "Playlist title",
+		"playlistTitle": "Title",
 		"hitsOfMoment": "Hits of the moment",
 		"recommendedPlaylists": "Recommended playlists",
 		"ourFavourites": "Our favourites",
-		"selectGenre": "Select your genre",
+		"selectGenre": "Select genre",
 		"mostPlayed": "Most played at the moment",
 		"ostMovies": "OST Movies/Series",
 		"top100": "Top 100",
 		"enjoyYourDay": "Enjoy your day with ...",
 		"createOwnPlaylists": "Create your own Playlists",
 		"addBestSong": "Add the best songs you can",
-		"shareCreatedPlaylist": "Share the Playlist with your friends"
+		"shareCreatedPlaylist": "Share the Playlist with your friends",
+		"showAdvanced": "Show advanced",
+		"description": "Description"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",
@@ -123,6 +125,7 @@
 		"editProfile": "Edit profile",
 		"changePassword": "Change password",
 		"accounts": "Accounts",
+		"privacy": "Privacy",
 		"avatar": "Avatar",
 		"changeAvatar": "Change avatar",
 		"email": "Email",
@@ -136,7 +139,9 @@
 		"themes": {
 			"white": "Light",
 			"black": "Dark"
-		}
+		},
+		"privateAccount": "Private account",
+		"privateAccountDescription": "When your account is private, only people you approve can see your photos and videos on Instagram. Your existing followers won't be affected."
 	},
 	"song": {
 		"title": "Song",
@@ -411,6 +416,7 @@
 		"followingPlaylistSuccessfully": "Now you are following this playlist",
 		"recommendedForYou": "Recommended for you",
 		"seeAll": "See all",
-		"searchFriends": "Search friends"
+		"searchFriends": "Search friends",
+		"moreInfo": "More information"
 	}
 }

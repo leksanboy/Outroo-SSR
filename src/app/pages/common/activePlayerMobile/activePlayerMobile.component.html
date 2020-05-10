@@ -1,7 +1,7 @@
 <div class="mobilePlayer">
 	<div class="topBar">
 		<div class="grabber" (click)="close()"></div>
-		
+
 		<div class="goTo">
 			<button mat-raised-button type="button" routerLink="/{{sessionData.current.username}}/songs" (click)="close()">
 				{{translations?.audios?.goAudios}}
@@ -13,9 +13,9 @@
 		<div class="player">
 			<div class="top">
 				<div class="panel">
-					<div class="text">
-						<div class="artist">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
-						<div class="title" [style.color]="audioPlayerData?.current?.color">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
+					<div class="texts">
+						<div class="text" [style.color]="audioPlayerData?.current?.color">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
+						<div class="text">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
 					</div>
 
 					<div class="add" *ngIf="audioPlayerData?.current?.initialized">

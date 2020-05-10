@@ -12,7 +12,7 @@
 				<div class="pageTitle">{{translations?.notifications?.title}}</div>
 
 				<ul class="notifications" *ngIf="dataDefault.list">
-					<li mat-ripple *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'active': x.is_seen === 0, 'remove': x.addRemoveSession}">
+					<li mat-ripple *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'active': x.is_seen == 0, 'remove': x.addRemoveSession}">
 						<a class="avatar" routerLink="/{{x.user.username}}">
 							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
 						</a>
@@ -87,7 +87,7 @@
 									<button mat-icon-button [matMenuTriggerFor]="options">
 										<i class="icon85 grey" label="more"></i>
 									</button>
-									
+
 									<mat-menu #options="matMenu">
 										<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 										<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -104,7 +104,7 @@
 									<div class="date">{{x?.date | timeago}}</div>
 								</div>
 
-								<div class="text" (click)="show(x)">
+								<a class="text" routerLink="/p/{{x?.contentData?.name}}" target="popup" (click)="show(x); false;">
 									<span *ngIf="x.type === 'comment'">
 										{{translations?.notifications?.commentedYourPublication}}
 										<br>
@@ -116,7 +116,7 @@
 										<br>
 										<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
 									</span>
-									
+
 									<span *ngIf="x.type === 'like'">
 										{{translations?.notifications?.likedYourPublication}}
 									</span>
@@ -133,19 +133,19 @@
 										<br>
 										<span [innerHtml]="x.contentData.content | safeHtml"></span>
 									</span>
-								</div>
+								</a>
 							</div>
 
 							<div class="operations">
-								<div class="image" *ngIf="x.contentData.media" (click)="show(x)">
+								<a class="image" routerLink="/p/{{x?.contentData?.name}}" target="popup" (click)="show(x); false;" *ngIf="x.contentData.media">
 									<div class="img" [ngStyle]="{'background-image': 'url(' + x.contentData.media + ')'}"></div>
-								</div>
+								</a>
 
 								<div class="actions">
 									<button mat-icon-button [matMenuTriggerFor]="options">
 										<i class="icon85 grey" label="more"></i>
 									</button>
-									
+
 									<mat-menu #options="matMenu">
 										<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 										<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -251,7 +251,7 @@
 									<button mat-icon-button [matMenuTriggerFor]="options">
 										<i class="icon85 grey" label="more"></i>
 									</button>
-									
+
 									<mat-menu #options="matMenu">
 										<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
 										<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>

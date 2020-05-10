@@ -374,10 +374,6 @@ export class MainComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 
-						setTimeout(() => {
-							this.getRecommendedPlaylists();
-						}, 300);
-
 						/* Show recommended user if no publications */
 						setTimeout(() => {
 							this.getRecommendedUsers();
@@ -393,6 +389,11 @@ export class MainComponent implements OnInit, OnDestroy {
 							}
 						}
 					}
+
+					/* Show recommended playlists */
+					setTimeout(() => {
+						this.getRecommendedPlaylists();
+					}, 300);
 
 					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
@@ -998,9 +999,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.getRecommendedPlaylists(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.recommendedPlaylists.loading = false;
-					}, 600);
+					this.recommendedPlaylists.loading = false;
 
 					if (!res || res.length === 0) {
 						this.recommendedPlaylists.noData = true;

@@ -11,7 +11,10 @@ import {
 	MatDividerModule,
 	MatTooltipModule,
 	MatRippleModule,
-	MatInputModule
+	MatInputModule,
+	MatSelectModule,
+	MatSlideToggleModule,
+	MatCheckboxModule
 } from '@angular/material';
 
 import { NewPlaylistComponent } from './newPlaylist.component';
@@ -37,7 +40,10 @@ const routes: Routes = [
 		MatDividerModule,
 		MatTooltipModule,
 		MatRippleModule,
-		MatInputModule
+		MatInputModule,
+		MatSelectModule,
+		MatSlideToggleModule,
+		MatCheckboxModule
 	],
 	declarations: [
 		NewPlaylistComponent

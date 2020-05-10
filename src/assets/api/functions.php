@@ -201,7 +201,17 @@
 	function userData($id){
 		global $conn;
 
-		$sql = "SELECT id, username, name, avatar, background, email, about, about_original as aboutOriginal, language, theme, official, private
+		$sql = "SELECT id,
+						username,
+						name,
+						avatar,
+						background,
+						email,
+						about,
+						language,
+						theme,
+						official,
+						private
 				FROM z_users
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -214,7 +224,6 @@
 			$result['private'] 				= $result['private'] ? true : false;
 			$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
 			$result['about'] 				= html_entity_decode($result['about'], ENT_QUOTES);
-			$result['aboutOriginal'] 		= html_entity_decode($result['aboutOriginal'], ENT_QUOTES);
 			$result['countFollowing'] 		= countUserFollowing($result['id']);
 			$result['countFollowers'] 		= countUserFollowers($result['id']);
 			$result['countAudios'] 			= countUserAudios($result['id']);
@@ -419,6 +428,8 @@
 						name,
 						user,
 						title,
+						description,
+						genre,
 						image,
 						private
 				FROM z_audios_playlist
@@ -448,7 +459,7 @@
 
 		$sql = "SELECT id, title, private
 				FROM z_audios_playlist
-				WHERE user = $user 
+				WHERE user = $user
 					AND is_deleted = 0
 				ORDER BY date DESC";
 		$result = $conn->query($sql);
@@ -920,7 +931,7 @@
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 
 		$sql = "UPDATE z_notifications
-				SET status = '1', ip_address = '$ipAddress'
+				SET is_seen = 1, ip_address = '$ipAddress'
 				WHERE id = $id";
 		$result = $conn->query($sql);
 

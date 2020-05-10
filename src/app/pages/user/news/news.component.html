@@ -25,14 +25,14 @@
 										<span *ngIf="x.type === 'photo'">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
 											<div class="category">
-												<i label="videocam" *ngIf="x.photos.mimetype.indexOf('video') !== -1"></i>
-												<i label="gif" *ngIf="x.photos.mimetype.indexOf('image/gif') !== -1"></i>
+												<!-- <i label="videocam" *ngIf="x.photos.mimetype.indexOf('video') !== -1"></i> -->
+												<!-- <i label="gif" *ngIf="x.photos.mimetype.indexOf('image/gif') !== -1"></i> -->
 											</div>
 										</span>
 										<span *ngIf="x.type === 'url'">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
 											<div class="category">
-												<i label="videocam"></i>
+												<!-- <i label="videocam"></i> -->
 											</div>
 										</span>
 									</a>

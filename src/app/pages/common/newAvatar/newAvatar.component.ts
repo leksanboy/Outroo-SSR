@@ -83,10 +83,10 @@ export class NewAvatarComponent implements OnInit {
 					const imageBase64 = this.cropperData.getCroppedCanvas({
 						width: 400,
 						height: 400,
-						// fillColor: '#fff',
+						//fillColor: 'transparent',
 						imageSmoothingEnabled: false,
 						imageSmoothingQuality: 'high'
-					}).toDataURL('image/jpeg');
+					}).toDataURL('image/png');
 
 					this.submitLoading = true;
 

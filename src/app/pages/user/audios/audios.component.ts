@@ -41,11 +41,13 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public dataGeneral: any = [];
 	public dataDefault: any = [];
 	public dataAround: any = [];
+	public dataSection: any = [];
 	public dataTop: any = [];
 	public dataFresh: any = [];
 	public data: any = {
-		selectedIndex: 0,
+		content: 'default',
 		active: 'default',
+		selectedIndex: 0,
 		path: 'assets/media/audios/'
 	};
 	public dataFiles: any = {
@@ -90,6 +92,14 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					// Translations
 					this.translations = this.activatedRoute.snapshot.data.langResolvedData;
 
+					// Close all dialogs
+					this.dialog.closeAll();
+
+					// Search form
+					this.actionFormSearch = this._fb.group({
+						caption: ['']
+					});
+
 					// Data
 					if (this.userData) {
 						// Set Google analytics
@@ -109,6 +119,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						}
 
 						// Reset
+						this.search('clear')
 						this.dataDefault = [];
 
 						// Load general
@@ -135,7 +146,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					this.sessionData = data;
 
 					if (data.current.playlists[0].id !== this.dataDefault.playlists[0].id) {
-						data.current.playlists[0].color = this.generateRandomColor();
+						/* data.current.playlists[0].color = this.generateRandomColor(); */
 						this.dataDefault.playlists.unshift(data.current.playlists[0]);
 					}
 				}
@@ -199,11 +210,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		// Search
-		this.actionFormSearch = this._fb.group({
-			caption: ['']
-		});
-
 		// Search/Reset
 		this.actionFormSearch.controls['caption'].valueChanges
 			.pipe(
@@ -287,7 +293,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// General
 	general(user) {
 		const data = {
-			user: user
+			user: user,
+			type: 'general',
+			rows: 0,
+			cuantity: 0
 		};
 
 		this.audioDataService.general(data)
@@ -368,14 +377,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			// Get playlists
 			this.audioDataService.defaultPlaylists(data)
-				.subscribe(res => {
-					for (const i in res) {
-						if (i) {
-							res[i].color = this.generateRandomColor();
-						}
-					}
-
-					this.dataDefault.playlists = res;
+				.subscribe((res: any) => {
+					this.dataDefault.playlists = res.list;
+					this.dataDefault.playlistsCount = (res.count > 10);
 				});
 		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -542,9 +546,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 									// Push ad
 									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										setTimeout(() => {
-											this.dataTop.list.push(this.pushAd());
-										}, 600);
+										this.dataTop.list.push(this.pushAd());
 									}
 								}
 							}
@@ -562,12 +564,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			// Get playlists
 			this.audioDataService.defaultPlaylists(data)
 				.subscribe(res => {
-					for (const i in res) {
-						if (i) {
-							res[i].color = this.generateRandomColor();
-						}
-					}
-
 					this.dataTop.playlists = res;
 				});
 		} else if (type === 'more' && !this.dataTop.noMore && !this.dataTop.loadingMoreData) {
@@ -929,7 +925,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Generate random color
+	/* // Generate random color
 	generateRandomColor() {
 		const rand = Math.floor(Math.random() * 40) + 0,
 			colorsList = [
@@ -973,7 +969,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			];
 
 		return colorsList[rand];
-	}
+	} */
 
 	// Play item song
 	playSong(data, item, key, type) {
@@ -1126,14 +1122,16 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	updatePlaylist(type, data) {
 		if (type === 'create') {
 			if (this.userData.id === this.sessionData.current.id) {
-				data.color = this.generateRandomColor();
+				/* data.color = this.generateRandomColor(); */
 				this.dataDefault.playlists.unshift(data);
 			}
 
 			this.sessionData.current.playlists.unshift(data);
 		} else if (type === 'edit') {
-			this.dataDefault.playlists[data.index].title = data.item.title;
 			this.dataDefault.playlists[data.index].image = data.item.image;
+			this.dataDefault.playlists[data.index].title = data.item.title;
+			this.dataDefault.playlists[data.index].description = data.item.description;
+			this.dataDefault.playlists[data.index].genre = data.item.genre;
 			this.sessionData.current.playlists = this.dataDefault.playlists;
 		} else if (type === 'addRemoveSession') {
 			this.sessionData.current.playlists = this.dataDefault.playlists;
@@ -1292,6 +1290,117 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// See All
 	seeAll(type) {
-		this.alertService.warning('Is not available yet');
+		this.data.content = 'seeAll';
+		this.window.scrollTo(0, 0);
+
+		console.log('type:', type);
+		console.log('data:', this.dataGeneral);
+
+		if (
+			type === 'hits' ||
+			type === 'recommended' ||
+			type === 'favourites' ||
+			type === 'genres' ||
+			type === 'mostPlayed' ||
+			type === 'ost' ||
+			type === 'top100' ||
+			type === 'enjoyWith'
+		) {
+			this.dataSection = {
+				type: type,
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false
+			};
+
+			/* Temporalmente hasta que no se haga bien */
+			if (type === 'genres' || type === 'top100') {
+				this.dataSection.loadingData = false;
+				this.dataSection.noData = false;
+				return;
+			}
+
+			const data = {
+				user: this.userData.id,
+				type: this.dataSection.type,
+				rows: this.dataSection.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.general(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.dataSection.loadingData = false;
+
+						if (!res || res.length === 0) {
+							this.dataSection.noData = true;
+						} else {
+							this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+							for (const i in res) {
+								if (i) {
+									this.dataSection.list.push(res[i]);
+
+									// Push ad
+									if (i === '19') {
+										this.dataSection.list.push(this.pushAd());
+									}
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSection.noMore = true;
+						}
+					}, 600);
+				}, error => {
+					this.dataSection.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more') {
+			this.dataSection.loadingMoreData = true;
+			this.dataSection.rows++;
+
+			const data = {
+				user: this.userData.id,
+				type: this.dataSection.type,
+				rows: this.dataSection.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.general(data)
+				.subscribe((res: any) => {
+					setTimeout(() => {
+						this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataSection.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSection.list.push(res[i]);
+
+									// Push ad
+									if (i === '19') {
+										this.dataSection.list.push(this.pushAd());
+									}
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSection.noMore = true;
+						}
+					}, 600);
+				}, error => {
+					this.dataSection.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'back') {
+			this.data.content = 'default';
+		}
 	}
 }

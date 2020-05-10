@@ -11,12 +11,15 @@
 						name,
 						user,
 						title,
+						description,
+						genre,
 						image,
 						private
 				FROM z_audios_playlist
 				WHERE user = $user
 					AND is_deleted = 0
-				ORDER BY date DESC";
+				ORDER BY date DESC
+				LIMIT 0, 11";
 		$result = $conn->query($sql);
 	} else if ($type === 'session') {
 		$sql = "SELECT id,
@@ -25,6 +28,8 @@
 						name,
 						user,
 						title,
+						description,
+						genre,
 						image,
 						private
 				FROM z_audios_playlist
@@ -39,6 +44,8 @@
 						name,
 						user,
 						title,
+						description,
+						genre,
 						image,
 						private
 				FROM z_audios_playlist
@@ -75,7 +82,16 @@
 			}
 		}
 
-		echo json_encode($data);
+		if ($type === 'default') {
+			$res = array(
+				'list'	=> array_slice($data, 0, 10),
+				'count'	=> $result->num_rows
+			);
+
+			echo json_encode($res);
+		} else {
+			echo json_encode($data);
+		}
 	} else {
 		var_dump(http_response_code(204));
 	}

@@ -103,18 +103,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	// Set forms
-	setForms(form) {
+	setForms(data) {
+		/* ******
+		Edit data
+		****** */
+
 		this.validatorUsername = null;
-		this.validatorNewPassword = null;
-		this.validatorOldPassword = null;
 
 		// Personal data form
 		this.actionFormPersonalData = this._fb.group({
-			theme: [form.theme],
-			username: [form.username, [Validators.required]],
-			name: [form.name, [Validators.required]],
-			language: [form.language, [Validators.required]],
-			private: [form.private]
+			theme: [data.theme],
+			username: [data.username, [Validators.required]],
+			name: [data.name, [Validators.required]],
+			language: [data.language, [Validators.required]],
+			about: [data.about]
 		});
 
 		// Theme
@@ -143,30 +145,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					});
 			});
 
-		// Private account
-		this.actionFormPersonalData.get('private').valueChanges
-			.subscribe(val => {
-				if (val) {
-					this.alertService.success(this.translations.common.privateEnabled);
-				} else {
-					this.alertService.success(this.translations.common.privateDisabled);
-				}
-
-				const data = {
-					private: this.actionFormPersonalData.get('private').value
-				};
-
-				this.userDataService.updatePrivate(data)
-					.subscribe(res => {
-						setTimeout(() => {
-							this.sessionData = this.userDataService.getSessionData();
-							this.sessionService.setData(this.sessionData);
-						}, 1000);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-			});
-
 		// Validate username
 		this.actionFormPersonalData.get('username').valueChanges
 			.subscribe(val => {
@@ -174,9 +152,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			});
 
 		this.actionFormPersonalData.get('username').valueChanges
-			.pipe(
-				debounceTime(400),
-				distinctUntilChanged())
+			.pipe(debounceTime(400), distinctUntilChanged())
 			.subscribe(val => {
 				this.validatorUsername = 'load';
 				const regex = /^[a-zA-Z0-9._-]+$/;
@@ -187,7 +163,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 							res => {
 								setTimeout(() => {
 									if (res) {
-										if (val === form.username) {
+										if (val === data.username) {
 											this.actionFormPersonalData.controls['username'].setErrors(null);
 											this.validatorUsername = 'done';
 										} else {
@@ -206,6 +182,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					this.validatorUsername = 'bad';
 				}
 			});
+
+		/* *****
+		Password
+		***** */
+
+		this.validatorNewPassword = null;
+		this.validatorOldPassword = null;
 
 		// Password data form
 		this.actionFormPasswordData = this._fb.group({
@@ -305,88 +288,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// About edit
-	aboutEdit(type, event) {
-		if (type === 'writingChanges') {
-			let str = event;
-			this.sessionData.current.aboutWriting = event;
-
-			if (str) {
-				// new line
-				str = str.replace(/\n/g, '<br>');
-
-				// hashtag
-				str = str.replace(/(#)\w+/g, function(value) {
-					return '<span class="hashtag">' + value + '</span>';
-				});
-
-				// mention
-				str = str.replace(/(@)\w+/g, function(value) {
-					return '<span class="mention">' + value + '</span>';
-				});
-
-				// url
-				str = str.replace(this.env.urlRegex, function(value) {
-					return '<span class="url">' + value + '</span>';
-				});
-
-				// writing content
-				this.sessionData.current.about = str;
-			}
-
-			// check empty contenteditable
-			this.aboutEdit('checkPlaceholder', event);
-		} else if (type === 'checkPlaceholder') {
-			event = event.trim();
-
-			if (event.length === 0) {
-				this.sessionData.current.about = '<div class="placeholder">' + this.translations.settings.aboutPlaceholder + '</div>';
-			}
-		} else if (type === 'transformBeforeSend') {
-			const newData = {
-				content: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal,
-				original: this.sessionData.current.aboutWriting ? this.sessionData.current.aboutWriting : this.sessionData.current.aboutOriginal
+	// Save data
+	submit(type) {
+		if (type === 'personal') {
+			const form = this.actionFormPersonalData.value;
+			const regex = /^[a-zA-Z0-9._-]+$/;
+			const params = {
+				username: form.username,
+				name: form.name.trim(),
+				language: form.language,
+				about: form.about
 			};
 
-			// new line
-			newData.content = newData.content.replace(/\n/g, '<br>');
-
-			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function(value) {
-				return '<a class="hashtag">' + value + '</a>';
-			});
-
-			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function(value) {
-				return '<a class="mention">' + value + '</a>';
-			});
-
-			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function(value) {
-				return '<a class="url">' + value + '</a>';
-			});
-
-			return newData;
-		}
-	}
-
-	// Save personal data
-	submitPersonal() {
-		const dataAbout = this.aboutEdit('transformBeforeSend', null),
-		form = this.actionFormPersonalData.value,
-		regex = /^[a-zA-Z0-9._-]+$/,
-		params = {
-			username: form.username,
-			name: form.name.trim(),
-			language: form.language,
-			about: dataAbout.content,
-			aboutOriginal: dataAbout.original
-		};
-
-		if (params.username.trim().length === 0 || !regex.test(params.username)) {
-			this.alertService.error(this.translations.settings.usernameRequirements);
-		} else {
-			if (dataAbout.original.trim().length <= 1000) {
+			if (params.username.trim().length === 0 || !regex.test(params.username)) {
+				this.alertService.error(this.translations.settings.usernameRequirements);
+			} else {
 				this.submitPersonalLoading = true;
 
 				this.userDataService.updateData(params)
@@ -409,45 +325,58 @@ export class SettingsComponent implements OnInit, OnDestroy {
 						this.submitPersonalLoading = false;
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
-			} else {
-				this.alertService.error(this.translations.common.isTooLong);
 			}
-		}
-	}
+		} else if (type === 'password') {
+			const form = this.actionFormPasswordData.value;
 
-	// Save password data
-	submitPassword() {
-		const form = this.actionFormPasswordData.value;
+			if (form.oldPassword.trim().length > 0 &&
+				form.newPassword.trim().length > 0 &&
+				form.confirmPassword.trim().length > 0
+			) {
+				if (form.newPassword.trim() !== form.confirmPassword.trim()) {
+					this.alertService.error(this.translations.settings.passwordsNotMatch);
+				} else {
+					this.submitPasswordLoading = false;
 
-		if (form.oldPassword.trim().length > 0 &&
-			form.newPassword.trim().length > 0 &&
-			form.confirmPassword.trim().length > 0
-		) {
-			if (form.newPassword.trim() !== form.confirmPassword.trim()) {
-				this.alertService.error(this.translations.settings.passwordsNotMatch);
-			} else {
-				this.submitPasswordLoading = false;
+					const data = {
+						oldPassword: form.oldPassword,
+						newPassword: form.newPassword
+					};
 
-				const data = {
-					oldPassword: form.oldPassword,
-					newPassword: form.newPassword
-				};
-
-				this.userDataService.updatePassword(data)
-					.subscribe(res => {
-						setTimeout(() => {
-							this.validatorOldPassword = 'done';
+					this.userDataService.updatePassword(data)
+						.subscribe(res => {
+							setTimeout(() => {
+								this.validatorOldPassword = 'done';
+								this.submitPasswordLoading = false;
+								this.alertService.success(this.translations.common.savedSuccessfully);
+							}, 1000);
+						}, error => {
+							this.validatorOldPassword = 'bad';
 							this.submitPasswordLoading = false;
-							this.alertService.success(this.translations.common.savedSuccessfully);
-						}, 1000);
-					}, error => {
-						this.validatorOldPassword = 'bad';
-						this.submitPasswordLoading = false;
-						this.alertService.error(this.translations.settings.oldPasswordIncorrect);
-					});
+							this.alertService.error(this.translations.settings.oldPasswordIncorrect);
+						});
+				}
+			} else {
+				this.alertService.error(this.translations.common.completeAllFields);
 			}
-		} else {
-			this.alertService.error(this.translations.common.completeAllFields);
+		} else if (type === 'privacy') {
+			const data = {
+				private: this.sessionData.current.private ? 0 : 1
+			};
+
+			this.userDataService.updatePrivate(data)
+				.subscribe(res => {
+					this.sessionData = this.userDataService.getSessionData();
+					this.sessionService.setData(this.sessionData);
+
+					if (data.private === 1) {
+						this.alertService.success(this.translations.common.privateEnabled);
+					} else {
+						this.alertService.success(this.translations.common.privateDisabled);
+					}
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 	}
 

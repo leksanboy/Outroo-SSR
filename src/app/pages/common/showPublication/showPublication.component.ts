@@ -86,7 +86,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		// not in use
+		this.window.scrollTo(0, 0);
 	}
 
 	ngOnDestroy() {

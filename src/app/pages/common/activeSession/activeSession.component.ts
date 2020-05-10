@@ -121,7 +121,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			}
 		}
 
-		// Return home if no access
+		// Return to home if no access
 		if (!this.sessionData) {
 			this.sessionData = [];
 			this.sessionData.current = [];
@@ -148,12 +148,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.defaultNotifications(this.sessionData.current.id);
 
 			// Pending notifications
-			this.pendingNotifications();
+			this.pendingNotifications('default');
 
-			// Pending notifications every 10 minutes
+			// Pending notifications every 5 minutes
 			setInterval(() => {
-				this.pendingNotifications();
-			}, 1000 * 60 * 10);
+				this.pendingNotifications('default');
+			}, 1000 * 60 * 5);
 
 			// Get player data
 			this.playerService.getData()
@@ -198,7 +198,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get pending notifications
 			this.sessionService.getPendingNotifications()
 				.subscribe(data => {
-					this.pendingNotifications();
+					this.pendingNotifications('clear');
 				});
 
 			// Get session playlists
@@ -503,16 +503,30 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Pending notifications
-	pendingNotifications() {
-		this.notificationsDataService.pending(this.sessionData.current.id)
-			.subscribe(res => {
-				this.sessionData.current.countPendingNotifications = res;
+	pendingNotifications(type) {
+		if (type === 'default') {
+			const dataP = {
+				type: 'default'
+			};
 
-				// Get data to notifications box
-				if (res > 0) {
-					this.defaultNotifications(this.sessionData.current.id);
+			this.notificationsDataService.pending(dataP)
+				.subscribe(res => {
+					this.sessionData.current.countPendingNotifications = res;
+
+					// Get data to notifications box
+					if (res > 0) {
+						this.defaultNotifications(this.sessionData.current.id);
+					}
+				});
+		} else if (type === 'clear') {
+			this.sessionData.current.countPendingNotifications = 0;
+
+			for (const i of this.dataNotifications.list) {
+				if (i) {
+					i.is_seen = 1;
 				}
-			});
+			}
+		}
 	}
 
 	// Default notifications (last week)
@@ -540,14 +554,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 				if (!res || res.length === 0) {
 					this.dataNotifications.noMore = true;
 				} else {
-					for (const i of res) {
-						if (i) {
-							setTimeout(() => {
-								i.is_seen = 1;
-							}, 1800);
-						}
-					}
-
 					this.dataNotifications.list = res;
 				}
 			}, error => {
@@ -562,6 +568,23 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 		// Count to '0'
 		this.sessionData.current.countPendingNotifications = 0;
+
+		// Update seen
+		if (this.dataNotifications.list.filter(x => x.is_seen == 0).length) {
+			const dataP = {
+				type: 'update'
+			};
+
+			this.notificationsDataService.pending(dataP).subscribe();
+		}
+
+		for (const i of this.dataNotifications.list) {
+			if (i) {
+				setTimeout(() => {
+					i.is_seen = 1;
+				}, 1800);
+			}
+		}
 	}
 
 	// Show photo from url if is one
@@ -574,7 +597,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			this.publicationsDataService.getPost(data)
 				.subscribe((res: any) => {
-					this.location.go(this.router.url + '#publication');
+					this.location.go('/p/' + data.name);
 
 					const config = {
 						disableClose: false,
@@ -1184,10 +1207,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.getTranslations(data.language);
 
 			// Get pending notifications
-			this.notificationsDataService.pending(data.id)
+			/* const dataP = {
+				type: 'default'
+			};
+			this.notificationsDataService.pending(dataP)
 				.subscribe(res => {
 					data.countPendingNotifications = res;
-				});
+				}); */
 
 			// Set data
 			this.sessionData.current = data;
@@ -1202,6 +1228,9 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			// Get notifications
 			this.defaultNotifications(this.sessionData.current);
+
+			// Get pending notifications
+			this.pendingNotifications('default');
 
 			// Go to main page
 			this.router.navigate([data.username]);

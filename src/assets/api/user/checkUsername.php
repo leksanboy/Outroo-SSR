@@ -4,7 +4,8 @@
 					"notifications", "photos", "settings",
 					"index", "web", "about", "confirm-email", "error", "forgot-password", "logout", "privacy", "terms",
 					"reset-password", "signin", "login", "signup", "support", "help", "blog", "press", "developer",
-					"jobs", "core", "pages", "assets", "environments", "ssl-https", "api");
+					"jobs", "core", "pages", "assets", "environments", "ssl-https", "api",
+					".maintenance.html");
 	$username = strtolower($_GET['username']);
 
 	if (in_array($username, $inUse)) {

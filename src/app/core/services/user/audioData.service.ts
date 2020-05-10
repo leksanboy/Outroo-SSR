@@ -139,7 +139,10 @@ export class AudioDataService {
 
 	general(data: any) {
 		const url = this.env.url + 'assets/api/audios/general.php';
-		let params = '&user=' + data.user;
+		let params =	'&user=' + data.user +
+						'&type=' + data.type +
+						'&rows=' + data.rows +
+						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())
@@ -154,6 +157,15 @@ export class AudioDataService {
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
+
+	getGenres() {
+		const url = this.env.url + 'assets/api/audios/getGenres.php';
+
+		return this.httpClient.get(url, this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));

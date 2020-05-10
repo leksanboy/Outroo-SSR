@@ -156,17 +156,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.dataDefault.noData = true;
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-
-						for (const i in res) {
-							if (i) {
-								setTimeout(() => {
-									res[i].is_seen = 1;
-								}, 1800);
-							}
-						}
-
 						this.dataDefault.list = res;
-						this.sessionService.setPendingNotifications('refresh');
+
+						setTimeout(() => {
+							for (const i of this.dataDefault.list) {
+								if (i) {
+									i.is_seen = 1;
+								}
+							}
+
+							this.sessionService.setPendingNotifications('clear');
+						}, 1800);
 					}
 
 					if (!res || res.length < this.env.cuantity) {
@@ -281,9 +281,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Show photo from url if is one
 	show(item) {
-		if (item.url === 'photos') {
-			this.sessionService.setDataShowPhoto(item);
-		} else if (item.url === 'publications') {
+		if (item.url === 'publications') {
 			this.sessionService.setDataShowPublication(item);
 		} else if (item.url === 'message') {
 			this.sessionService.setDataShowMessage(item.user);

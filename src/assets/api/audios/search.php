@@ -3,20 +3,20 @@
 	$more = $_GET['rows']*$cuantity;
 	$caption = $_GET['caption'];
 
-	$sql = "SELECT id, 
-					name, 
+	$sql = "SELECT id,
+					name,
 					title,
 					original_title,
 					original_artist,
 					duration,
-					image 
+					image
 			FROM z_audios
-			WHERE title LIKE '%$caption%' OR 
-					original_title LIKE '%$caption%' OR 
-					original_artist LIKE '%$caption%' 
-			ORDER by title ASC, 
-					original_title ASC, 
-					original_artist ASC 
+			WHERE title LIKE '%$caption%' OR
+					original_title LIKE '%$caption%' OR
+					original_artist LIKE '%$caption%'
+			ORDER by title ASC,
+					original_title ASC,
+					original_artist ASC
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
 
@@ -34,6 +34,6 @@
 	} else {
 		var_dump(http_response_code(204));
 	}
-	
+
 	$conn->close();
 ?>

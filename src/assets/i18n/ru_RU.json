@@ -18,7 +18,7 @@
 		"uploadOrSearch": "Загрузить или найти песни",
 		"goAudios": "Перейти к моим песням",
 		"privatePlaylist": "Приватный плейлист",
-		"playlistTitle": "Название плейлиста",
+		"playlistTitle": "Название",
 		"hitsOfMoment": "Хиты момента",
 		"recommendedPlaylists": "Рекомендуемые плейлисты",
 		"ourFavourites": "Наши фавориты",
@@ -29,7 +29,9 @@
 		"enjoyYourDay": "Хорошего вам дня с ...",
 		"createOwnPlaylists": "Создавай свои собственные Плейлисты",
 		"addBestSong": "Добавляй только лучшие песни",
-		"shareCreatedPlaylist": "Поделись Плейлистом с друзьями"
+		"shareCreatedPlaylist": "Поделись Плейлистом с друзьями",
+		"showAdvanced": "Показать настройки",
+		"description": "Описание"
 	},
 	"bookmarks": {
 		"title": "Закладки",
@@ -123,6 +125,7 @@
 		"editProfile": "Редактировать",
 		"changePassword": "Изменить пароль",
 		"accounts": "Профиля",
+		"privacy": "Конфиденциальность",
 		"avatar": "Аватар",
 		"changeAvatar": "Изменить аватар",
 		"email": "Электронная почта",
@@ -136,7 +139,9 @@
 		"themes": {
 			"white": "Светлая",
 			"black": "Темная"
-		}
+		},
+		"privateAccount": "Закрытый аккаунт",
+		"privateAccountDescription": "Если у вас закрытый аккаунт, ваши фото и видео в Instagram смогут видеть только люди, которых вы одобрите. Это не относится к уже существующим подписчикам."
 	},
 	"song": {
 		"title": "Песня",
@@ -350,7 +355,7 @@
 		"noComments": "Нет комментариев",
 		"commentsDisabled": "Комментарии отключены",
 		"disableAdBlock": "Отключить AdBlock на этой странице",
-		"privateAccount": "Личный аккаунт",
+		"privateAccount": "Закрытый аккаунт",
 		"createAnAccountToSeeContent": "Создать аккаунт, чтобы увидеть этот контент",
 		"createAnAccountToListenSong": "Создать аккаунт для прослушивания песни",
 		"doPublic": "Сделать публичным",
@@ -411,6 +416,7 @@
 		"followPlaylistSuccessfully": "Теперь вы подписаны на этот плейлист",
 		"recommendedForYou": "Рекомендуемые для вас",
 		"seeAll": "Увидеть все",
-		"searchFriends": "Найти друзей"
+		"searchFriends": "Найти друзей",
+		"moreInfo": "Подробнее"
 	}
 }

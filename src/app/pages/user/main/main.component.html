@@ -93,7 +93,7 @@
 									<i class="icon65 blue" label="official" *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 								</div>
 								<div class="about" *ngIf="userData?.about">
-									<span [innerHtml]="userData?.about | safeHtml"></span>
+									<pre>{{userData?.about}}</pre>
 								</div>
 							</div>
 						</div>
@@ -222,46 +222,46 @@
 
 					<div class="pages">
 						<ul *ngIf="((userData?.private && userData?.status === 'following') || !userData?.private || userData?.status === 'following' || (userData?.id === sessionData?.current?.id))">
-							<li routerLink="/{{userData?.username}}/songs">
-								<button mat-button>
-									<div class="count">
+							<li>
+								<a routerLink="/{{userData?.username}}/songs" mat-ripple>
+									<div class="text">
 										{{userData?.countAudios}}
 									</div>
 									<div class="text">
 										{{translations?.audios?.title}}
 									</div>
-								</button>
+								</a>
 							</li>
-							<li routerLink="/{{userData?.username}}/following">
-								<button mat-button>
-									<div class="count">
+							<li>
+								<a routerLink="/{{userData?.username}}/following" mat-ripple>
+									<div class="text">
 										{{userData?.countFollowing}}
 									</div>
 									<div class="text">
 										{{translations?.following?.title}}
 									</div>
-								</button>
+								</a>
 							</li>
-							<li routerLink="/{{userData?.username}}/followers">
-								<button mat-button>
-									<div class="count">
+							<li>
+								<a routerLink="/{{userData?.username}}/followers" mat-ripple>
+									<div class="text">
 										{{userData?.countFollowers}}
 									</div>
 									<div class="text">
 										{{translations?.followers?.title}}
 									</div>
-								</button>
+								</a>
 							</li>
-							<li routerLink="/saved" *ngIf="sessionData?.current?.id === userData?.id">
-								<button mat-button>
-									<div class="count">
+							<li *ngIf="sessionData?.current?.id === userData?.id">
+								<a routerLink="/saved" mat-ripple>
+									<div class="text">
 										<i label="bookmarks" class="icon50"></i>
 										{{userData?.countBookmarks}}
 									</div>
 									<div class="text">
 										{{translations?.bookmarks?.title}}
 									</div>
-								</button>
+								</a>
 							</li>
 						</ul>
 					</div>
@@ -561,21 +561,21 @@
 					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
 				</div>
 
-				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0">
+				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0 && !dataDefault?.loadingData">
 					<div class="boxTitle">
 						{{translations?.common?.recommendedForYou}}
 					</div>
 
 					<ul class="playlists">
 						<li *ngFor="let x of recommendedPlaylists.list; let i=index;">
-							<div mat-ripple class="image" (click)="itemPlaylistOptions('show', x, i)" [style.background-image]="x.color">
+							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
 								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
-							</div>
+							</a>
 
 							<div class="panel">
-								<div class="title" (click)="itemPlaylistOptions('show', x, i)">
+								<a class="title" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 									{{x.title}}
-								</div>
+								</a>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">

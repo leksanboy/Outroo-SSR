@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -48,20 +49,38 @@ export class NewPlaylistComponent implements OnInit {
 
 		if (this.data.type === 'edit') {
 			this.actionForm = this._fb.group({
-				title: [this.data.current.title, [Validators.required]]
+				title: [this.data.current.title, [Validators.required]],
+				advanced: [(this.data.current.genre || this.data.current.description)],
+				genre: [this.data.current.genre],
+				description: [this.data.current.description]
 			});
+			this.data.showAdvanced = (this.data.current.genre || this.data.current.description);
 		} else if (this.data.type === 'create') {
 			this.actionForm = this._fb.group({
-				title: ['', [Validators.required]]
+				title: ['', [Validators.required]],
+				advanced: [''],
+				genre: [''],
+				description: ['']
 			});
 		}
 	}
 
 	ngOnInit() {
-		// not in use
-	}
+		// Advanced
+		this.actionForm.controls['advanced'].valueChanges
+			.pipe(distinctUntilChanged())
+			.subscribe(val => {
+				this.data.showAdvanced = val;
+			});
 
-	// Change avatar
+		// Get genres
+		this.audioDataService.getGenres()
+			.subscribe((res: any) => {
+				this.data.genres = res;
+			});
+}
+
+	// Change image
 	openImage(action, event) {
 		if (action === 'upload') {
 			let file = event.target.files[0];
@@ -82,12 +101,11 @@ export class NewPlaylistComponent implements OnInit {
 
 				const dialogRef = this.dialog.open(NewAvatarComponent, config);
 				dialogRef.afterClosed().subscribe(res => {
-					// New
 					this.data.newImage = res;
 
-					// Edit
+					// Replace current image
 					if (this.data.current) {
-						this.data.current .image = res;
+						this.data.current.image = res;
 					}
 				});
 			} else {
@@ -99,15 +117,19 @@ export class NewPlaylistComponent implements OnInit {
 	}
 
 	submit() {
+		const form = this.actionForm.value;
+
 		switch (this.data.type) {
 			case 'create':
-				if (this.actionForm.get('title').value.trim().length > 0) {
+				if (form.title.trim().length > 0) {
 					this.submitLoading = true;
 
-					const data = {
+					let data = {
 						type: 'create',
-						title: this.actionForm.get('title').value,
-						image: this.data.newImage
+						title: form.title,
+						image: this.data.newImage,
+						genre: form.advanced ? (form.genre ? form.genre : null) : null,
+						description: form.advanced ? (form.description.trim() ? form.description : null) : null
 					};
 
 					this.audioDataService.createPlaylist(data)
@@ -120,43 +142,21 @@ export class NewPlaylistComponent implements OnInit {
 				}
 				break;
 			case 'edit':
-				if (this.actionForm.get('title').value.trim().length > 0) {
+				if (form.title.trim().length > 0) {
 					this.submitLoading = true;
 
-					let data;
-					if (this.data.newImage) {
-						data = {
-							type: 'update',
-							subtype: 'updateNewImage',
-							id: this.data.current.id,
-							title: this.actionForm.get('title').value,
-							color: this.data.current.color,
-							image: this.data.newImage
-						};
-					} else {
-						if (this.data.current.image) {
-							data = {
-								type: 'update',
-								subtype: 'updateTitle',
-								id: this.data.current.id,
-								title: this.actionForm.get('title').value,
-								color: this.data.current.color
-							};
-						} else {
-							data = {
-								type: 'update',
-								subtype: 'updateTitleImage',
-								id: this.data.current.id,
-								title: this.actionForm.get('title').value,
-								color: this.data.current.color
-							};
-						}
-					}
+					let data = {
+						type: 'update',
+						id: this.data.current.id,
+						image: this.data.newImage ? this.data.newImage : null,
+						title: form.title,
+						genre: form.advanced ? (form.genre ? form.genre : null) : null,
+						description: form.advanced ? (form.description.trim() ? form.description : null) : null
+					};
 
 					this.audioDataService.createPlaylist(data)
 						.subscribe((res: any) => {
 							this.submitLoading = false;
-							res.index = this.data.current.index;
 							this.dialogRef.close(res);
 						});
 				} else {

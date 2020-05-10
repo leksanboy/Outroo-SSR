@@ -234,7 +234,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
 		this.publicationsDataService.getPost(data)
 			.subscribe((res: any) => {
-				this.location.go(this.router.url + '#publication');
+				this.location.go('/p/' + item.name);
 
 				res.bookmark = item.marked ? item.bookmark : res.bookmark;
 
