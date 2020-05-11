@@ -11,6 +11,7 @@
 	$fileType = $_FILES["fileUpload"]["type"];
 	$fileTmpLoc = $_FILES["fileUpload"]["tmp_name"];
 	$locationPath = '/var/www/html/assets/media/audios/';
+	$explicit = $_POST['explicit'] ? 1 : 0;
 
     // If not files to update (count files = 0)
 	if (!$fileTmpLoc) exit();
@@ -39,8 +40,8 @@
         $genre = $info['tags']['id3v2']['genre'][0];
 
         // Insert file
-		$sql = "INSERT INTO z_audios (user, name, mimetype, title, original_title, original_artist, genre, image, duration, ip_address)
-				VALUES ($session, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', '$duration', '$ipAddress')";
+		$sql = "INSERT INTO z_audios (user, name, mimetype, title, original_title, original_artist, genre, image, explicit, duration, ip_address)
+				VALUES ($session, '$fileNameMp3', '$fileType', '$fileTitle', '$originalTitle', '$originalArtist', '$genre', '$image', $explicit, '$duration', '$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
 

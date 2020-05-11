@@ -11,7 +11,8 @@ import {
 	MatMenuModule,
 	MatProgressSpinnerModule,
 	MatTabsModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatCheckboxModule
 } from '@angular/material';
 
 // Pipe
@@ -42,7 +43,8 @@ const routes: Routes = [
 		MatMenuModule,
 		MatProgressSpinnerModule,
 		MatTabsModule,
-		MatTooltipModule
+		MatTooltipModule,
+		MatCheckboxModule
 	],
 	declarations: [
 		AudiosComponent

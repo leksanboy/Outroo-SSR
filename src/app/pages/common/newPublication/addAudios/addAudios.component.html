@@ -133,15 +133,18 @@
 									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 								</button>
 							</div>
-							
+
 							<div class="text" (click)="playSong(dataSearch.list, x, i, 'search')">
 								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 								</div>
-								<div class="duration">{{x.duration}}</div>
+								<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 							</div>
-							
+
 							<div class="actions" *ngIf="sessionData?.current?.id">
 								<button mat-icon-button (click)="toggleItem(x)">
 									<i label="add" *ngIf="!x.selected"></i>

@@ -66,7 +66,7 @@
 	// Notificate mentioned friends on publication
 	foreach($mentionsNotificate as $row){
 		$rcv = userId(substr($row, 1));
-	
+
 		if ($rcv) {
 			$notification = array(
 				'url' 		=> 'publications',
@@ -82,6 +82,6 @@
 
 	$inserted = getPublication($insertedId);
 	echo json_encode($inserted);
-	
+
 	$conn->close();
 ?>

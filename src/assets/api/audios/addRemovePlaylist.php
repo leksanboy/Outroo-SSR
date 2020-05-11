@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
-	
+
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
 	$id = $data['id'];
@@ -12,11 +12,11 @@
 
 	if ($location === 'session') { // Update on session page
 		$status = ($type == 'remove') ? 1 : 0;
-	
+
 		$sql = "UPDATE z_audios_playlist
-				SET is_deleted = $status, 
-					ip_address = '$ipAddress' 
-				WHERE id = $id 
+				SET is_deleted = $status,
+					ip_address = '$ipAddress'
+				WHERE id = $id
 					AND user = $session";
 		$conn->query($sql);
 
@@ -28,33 +28,33 @@
 			$sql = "INSERT INTO z_audios_playlist (original_id, user, title, image, ip_address)
 					VALUES ($id, $session, '$title', '$imageName', '$ipAddress')";
 			$conn->query($sql);
-			$insertedId = $conn->insert_id;	
+			$insertedId = $conn->insert_id;
 
 			// Get songs from one playlist and insert on another
-			$sqlSongs = "INSERT INTO z_audios_playlist_songs (playlist, song, ip_address) 
-							SELECT $insertedId, 
-									s.song, 
-									'$ipAddress' 
-							FROM z_audios_playlist_songs s 
-							WHERE s.playlist = $id 
+			$sqlSongs = "INSERT INTO z_audios_playlist_songs (playlist, song, ip_address)
+							SELECT $insertedId,
+									s.song,
+									'$ipAddress'
+							FROM z_audios_playlist_songs s
+							WHERE s.playlist = $id
 								AND s.is_deleted = 0";
 			$conn->query($sqlSongs);
 
 			echo json_encode($insertedId);
-			
+
 			$conn->close();
 		} else {
 			$status = ($type == 'remove') ? 1 : 0;
 
 			$sql = "UPDATE z_audios_playlist
-					SET is_deleted = $status, 
-						ip_address = '$ipAddress' 
-					WHERE id = $insertedPlaylist 
+					SET is_deleted = $status,
+						ip_address = '$ipAddress'
+					WHERE id = $insertedPlaylist
 						AND user = $session";
 			$conn->query($sql);
 
 			echo json_encode($insertedPlaylist);
-			
+
 			$conn->close();
 		}
 	}

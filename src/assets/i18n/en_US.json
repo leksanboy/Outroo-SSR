@@ -9,7 +9,8 @@
 		"top": "Top",
 		"fresh": "Fresh",
 		"chooseFiles": "Choose songs",
-		"maxSizePerFile": "Audio files · Max size per file 20 Mb",
+		"maxSizePerFile": "Max size per file 20 Mb",
+		"infringeCopyright": "Audio file must not infringe copyright and related rights",
 		"play": "Play",
 		"pause": "Pause",
 		"playlist": "Playlist",
@@ -417,6 +418,7 @@
 		"recommendedForYou": "Recommended for you",
 		"seeAll": "See all",
 		"searchFriends": "Search friends",
-		"moreInfo": "More information"
+		"moreInfo": "More information",
+		"explicit": "Explicit content"
 	}
 }

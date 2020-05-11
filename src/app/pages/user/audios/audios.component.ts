@@ -875,6 +875,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						formdata.append('category', file.category);
 						formdata.append('title', file.title);
 
+						if (file.explicit) {
+							formdata.append('explicit', file.explicit);
+						}
+
 						ajax.upload.addEventListener('progress', function (ev) {
 							progressHandler(ev, file);
 						}, false);

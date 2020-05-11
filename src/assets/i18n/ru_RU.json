@@ -9,7 +9,8 @@
 		"top": "Топ",
 		"fresh": "Свежие",
 		"chooseFiles": "Выберите песни",
-		"maxSizePerFile": "Аудио файлы · Макс. размер на файл 20 Мб",
+		"maxSizePerFile": "Максимальный размер файла 20 Мб",
+		"infringeCopyright": "Аудиофайл не должен нарушать авторские и смежные права",
 		"play": "Играть",
 		"pause": "Пауза",
 		"playlist": "Плейлист",
@@ -30,7 +31,7 @@
 		"createOwnPlaylists": "Создавай свои собственные Плейлисты",
 		"addBestSong": "Добавляй только лучшие песни",
 		"shareCreatedPlaylist": "Поделись Плейлистом с друзьями",
-		"showAdvanced": "Показать настройки",
+		"showAdvanced": "Дополнительно",
 		"description": "Описание"
 	},
 	"bookmarks": {
@@ -417,6 +418,7 @@
 		"recommendedForYou": "Рекомендуемые для вас",
 		"seeAll": "Увидеть все",
 		"searchFriends": "Найти друзей",
-		"moreInfo": "Подробнее"
+		"moreInfo": "Подробнее",
+		"explicit": "Явное содержание"
 	}
 }

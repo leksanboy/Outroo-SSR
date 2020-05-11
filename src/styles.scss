@@ -669,7 +669,6 @@ body {
 					display: flex;
 					width: 100%;
 
-					.duration,
 					.titleArtist {
 						flex-direction: column;
 						box-sizing: border-box;
@@ -697,11 +696,18 @@ body {
 						}
 					}
 
-					.duration {
-						padding: 0 12px 0 0;
-						color: $greyColor;
-						text-align: right;
-						font-size: 13px;
+					.explicitDuration {
+						height: 100%;
+						display: flex;
+						align-items: center;
+						padding: 0 6px 0 0;
+
+						.duration {
+							color: $greyColor;
+							text-align: right;
+							font-size: 13px;
+							padding: 0 0 0 18px;
+						}
 
 						.status {
 							align-items: center;
@@ -721,6 +727,21 @@ body {
 								padding: 4px;
 								float: left;
 								margin: 0;
+							}
+
+							.explicit {
+								display: flex;
+								align-items: center;
+
+								.mat-checkbox {
+									margin: 0;
+
+									.mat-checkbox-layout {
+										.mat-checkbox-label {
+											display: flex;
+										}
+									}
+								}
 							}
 						}
 					}
@@ -1278,7 +1299,6 @@ body {
 			width: 150px;
 
 			.image {
-				background-color: $greyColor;
 				box-sizing: border-box;
 				position: relative;
 				border-radius: 12px;
@@ -3180,7 +3200,7 @@ body {
 
 		.info {
 			box-sizing: border-box;
-			padding: 6px 18px;
+			padding: 6px 18px 18px;
 			width: 100%;
 
 			.title {
@@ -3255,6 +3275,7 @@ body {
 			.info {
 				.title {
 					font-size: 24px;
+					padding: 0 0 4px;
 				}
 			}
 		}

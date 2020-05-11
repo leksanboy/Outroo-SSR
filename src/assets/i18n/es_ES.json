@@ -9,7 +9,8 @@
 		"top": "Top",
 		"fresh": "Novedades",
 		"chooseFiles": "Subir canciones",
-		"maxSizePerFile": "Canciones · Tamaño maximo por archivo 20 Mb",
+		"maxSizePerFile": "Tamaño maximo por archivo 20 Mb",
+		"infringeCopyright": "El archivo de audio no debe infringir los derechos de autor y derechos relacionados",
 		"play": "Reproducir",
 		"pause": "Pausar",
 		"playlist": "Playlist",
@@ -417,6 +418,7 @@
 		"recommendedForYou": "Recomendaciones para ti",
 		"seeAll": "Ver todo",
 		"searchFriends": "Buscar amigos",
-		"moreInfo": "Más información"
+		"moreInfo": "Más información",
+		"explicit": "Contenido explícito"
 	}
 }

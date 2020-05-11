@@ -52,7 +52,10 @@
 															<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 															<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 														</div>
-														<div class="duration">{{x.duration}}</div>
+														<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 													</div>
 
 													<div class="actions" *ngIf="sessionData?.current?.id">
@@ -253,7 +256,10 @@
 															<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 															<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 														</div>
-														<div class="duration">{{x.duration}}</div>
+														<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 													</div>
 
 													<div class="actions" *ngIf="sessionData?.current?.id">
@@ -524,6 +530,9 @@
 											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}
 										</div>
 										<div class="subtitle">
+											{{translations?.audios?.infringeCopyright}}
+										</div>
+										<div class="subtitle">
 											{{translations?.audios?.maxSizePerFile}}
 										</div>
 									</div>
@@ -548,15 +557,19 @@
 														<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 														<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 													</div>
-													<div class="duration">
-														{{x.duration}}
-
+													<div class="explicitDuration">
 														<div class="status">
 															<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
 																{{x.sizeBig}}
 															</div>
 															<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
 																{{translations?.common?.invalidFile}}
+															</div>
+
+															<div class="explicit">
+																<mat-checkbox [(ngModel)]="x.explicit" *ngIf="x.category !== 'unknown'">
+																	<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}"></i>
+																</mat-checkbox>
 															</div>
 														</div>
 													</div>
@@ -603,7 +616,10 @@
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
-												<div class="duration">{{x.duration}}</div>
+												<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -690,7 +706,10 @@
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
-												<div class="duration">{{x.duration}}</div>
+												<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -801,7 +820,10 @@
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
-												<div class="duration">{{x.duration}}</div>
+												<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -885,7 +907,10 @@
 													<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
-												<div class="duration">{{x.duration}}</div>
+												<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -964,7 +989,10 @@
 											<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 											<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 										</div>
-										<div class="duration">{{x.duration}}</div>
+										<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 									</div>
 
 									<div class="actions" *ngIf="sessionData?.current?.id">
@@ -1068,7 +1096,10 @@
 										<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 										<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 									</div>
-									<div class="duration">{{x.duration}}</div>
+									<div class="explicitDuration">
+															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+															<div class="duration">{{x.duration}}</div>
+														</div>
 								</div>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">

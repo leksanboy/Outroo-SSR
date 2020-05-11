@@ -334,8 +334,8 @@
 
 		$sql = "SELECT id
 				FROM z_following
-				WHERE receiver = $id 
-					AND is_deleted = 0 
+				WHERE receiver = $id
+					AND is_deleted = 0
 					AND status = 0";
 		$result = $conn->query($sql)->num_rows;
 

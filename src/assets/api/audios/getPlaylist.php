@@ -13,7 +13,8 @@
 					a.original_title,
 					a.original_artist,
 					a.duration,
-					a.image
+					a.image,
+					a.explicit
 			FROM z_audios_playlist_songs s
 				INNER JOIN z_audios a ON a.id = s.song
 			WHERE s.playlist = $id
@@ -27,6 +28,7 @@
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+			$row['explicit'] = boolval($row['explicit']);
 			$data[] = $row;
 		}
 	} else {

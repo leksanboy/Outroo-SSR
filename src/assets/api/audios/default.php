@@ -13,7 +13,8 @@
 						m.original_title,
 						m.original_artist,
 						m.duration,
-						m.image
+						m.image,
+						m.explicit
 				FROM z_audios_favorites f
 					INNER JOIN z_audios m ON m.id = f.song
 				WHERE f.user = $user
@@ -28,6 +29,7 @@
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 				$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 				$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+				$row['explicit'] = boolval($row['explicit']);
 				$data[] = $row;
 			}
 
@@ -58,6 +60,7 @@
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 				$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 				$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+				$row['explicit'] = boolval($row['explicit']);
 				$data[] = $row;
 			}
 
@@ -78,6 +81,7 @@
 						a.original_artist,
 						a.duration,
 						a.image,
+						a.explicit,
 						COUNT(r.song) AS replays
 				FROM z_audios a
 					INNER JOIN z_audios_replays r on a.id = r.song
@@ -95,6 +99,7 @@
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 				$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 				$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+				$row['explicit'] = boolval($row['explicit']);
 				$data[] = $row;
 			}
 
