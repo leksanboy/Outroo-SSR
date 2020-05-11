@@ -108,7 +108,10 @@
 													<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
 													<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>
 												</div>
-												<div class="duration">{{a.duration}}</div>
+												<div class="explicitDuration">
+													<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="a.explicit"></i>
+													<div class="duration">{{a.duration}}</div>
+												</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">

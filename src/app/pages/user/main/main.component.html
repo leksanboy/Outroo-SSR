@@ -93,7 +93,7 @@
 									<i class="icon65 blue" label="official" *ngIf="userData?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 								</div>
 								<div class="about" *ngIf="userData?.about">
-									<pre>{{userData?.about}}</pre>
+									{{userData?.about}}
 								</div>
 							</div>
 						</div>
@@ -393,7 +393,10 @@
 													<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
 													<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>
 												</div>
-												<div class="duration">{{a.duration}}</div>
+												<div class="explicitDuration">
+													<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="a.explicit"></i>
+													<div class="duration">{{a.duration}}</div>
+												</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -578,6 +581,10 @@
 								</a>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">
+									<div class="category" *ngIf="x.explicit">
+										<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}"></i>
+									</div>
+
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
 										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>

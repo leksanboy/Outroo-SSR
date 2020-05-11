@@ -40,7 +40,7 @@
 					</div>
 
 					<div class="desc" *ngIf="!dataDefault.loadingData && dataDefault?.info?.description">
-						<pre>{{dataDefault?.info?.description}}</pre>
+						{{dataDefault?.info?.description}}
 					</div>
 				</div>
 
@@ -61,9 +61,9 @@
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 								</div>
 								<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+									<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+									<div class="duration">{{x.duration}}</div>
+								</div>
 							</div>
 
 							<div class="actions" *ngIf="sessionData?.current?.id">
@@ -140,6 +140,10 @@
 								</a>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">
+									<div class="category" *ngIf="x.explicit">
+										<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}"></i>
+									</div>
+
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
 										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
 										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>

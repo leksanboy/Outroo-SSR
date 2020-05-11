@@ -12,6 +12,7 @@
 	$imageName = '';
 	$genre = $data['genre'];
 	$description = $data['description'];
+	$explicit = $data['explicit'] ? 1 : 0;
 
 	if ($image) {
 		$imageName = generateRandomString(23);
@@ -24,8 +25,8 @@
 	}
 
 	if ($type === 'create') {
-		$sql = "INSERT INTO z_audios_playlist (name, user, title, description, genre, image, ip_address)
-				VALUES ('$name', $session, '$title', '$description', '$genre', '$imageNameJpg', '$ipAddress')";
+		$sql = "INSERT INTO z_audios_playlist (name, user, title, description, genre, image, explicit, ip_address)
+				VALUES ('$name', $session, '$title', '$description', '$genre', '$imageNameJpg', '$explicit', '$ipAddress')";
 		$conn->query($sql);
 		$insertedId = $conn->insert_id;
 
@@ -46,6 +47,7 @@
 					description = '$description',
 					genre = '$genre',
 					image = '$imageNameJpg',
+					explicit = '$explicit',
 					ip_address = '$ipAddress'
 				WHERE id = $id
 					AND user = $session";

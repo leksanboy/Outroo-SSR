@@ -431,6 +431,7 @@
 						description,
 						genre,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE id = $id";
@@ -438,8 +439,9 @@
 
 		$result['user'] = userUsernameNameAvatar($result['user']);
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
-		$result['private'] = $result['private'] ? true : false;
+		$result['private'] = boolval($result['private']);
 		$result['idPlaylist'] = $result['id'];
+		$result['explicit'] = boolval($result['explicit']);
 
 		if ($result['type'] === 'follow') {
 			$o_result = getPlaylist($result['o_id']);
@@ -453,7 +455,7 @@
 		return $result;
 	}
 
-	// Get playlists
+	/* // Get playlists
 	function getPlaylists($user){
 		global $conn;
 
@@ -472,7 +474,7 @@
 		}
 
 		return $data;
-	}
+	} */
 
 	// Get playlists for select
 	function getPlaylistsSelect($user){
@@ -482,6 +484,7 @@
 						type,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE user = $user
@@ -494,6 +497,7 @@
 			if ($row['type'] !== 'follow') {
 				$row['private'] = $row['private'] ? true : false;
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 				$data[] = $row;
 			}
 		}

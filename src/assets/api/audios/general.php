@@ -74,6 +74,7 @@
 						user,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE is_deleted = 0
@@ -88,8 +89,9 @@
 
 			while($row = $result->fetch_assoc()) {
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-				$row['private'] = $row['private'] ? true : false;
+				$row['private'] = boolval($row['private']);
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
 					$f_row = getPlaylist($row['o_id']);
@@ -129,6 +131,7 @@
 						user,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE is_deleted = 0
@@ -143,8 +146,9 @@
 
 			while($row = $result->fetch_assoc()) {
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-				$row['private'] = $row['private'] ? true : false;
+				$row['private'] = boolval($row['private']);
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
 					$f_row = getPlaylist($row['o_id']);
@@ -253,6 +257,7 @@
 						user,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE type = 'ost'
@@ -266,8 +271,9 @@
 
 			while($row = $result->fetch_assoc()) {
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-				$row['private'] = $row['private'] ? true : false;
+				$row['private'] = boolval($row['private']);
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
 					$f_row = getPlaylist($row['o_id']);
@@ -299,6 +305,7 @@
 						user,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE type = 'top100'
@@ -312,8 +319,9 @@
 
 			while($row = $result->fetch_assoc()) {
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-				$row['private'] = $row['private'] ? true : false;
+				$row['private'] = boolval($row['private']);
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
 					$f_row = getPlaylist($row['o_id']);
@@ -347,6 +355,7 @@
 						user,
 						title,
 						image,
+						explicit,
 						private
 				FROM z_audios_playlist
 				WHERE is_deleted = 0
@@ -361,8 +370,9 @@
 
 			while($row = $result->fetch_assoc()) {
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
-				$row['private'] = $row['private'] ? true : false;
+				$row['private'] = boolval($row['private']);
 				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
 					$f_row = getPlaylist($row['o_id']);

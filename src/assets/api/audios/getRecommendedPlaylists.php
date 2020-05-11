@@ -9,6 +9,7 @@
                     user,
                     title,
                     image,
+                    explicit,
                     private
             FROM z_audios_playlist
             WHERE is_deleted = 0
@@ -24,6 +25,7 @@
             $row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
             $row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
             $row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+            $row['explicit'] = boolval($row['explicit']);
             $data[] = $row;
         }
 

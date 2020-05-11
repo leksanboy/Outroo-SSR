@@ -51,7 +51,7 @@
 			$insertedId = $conn->insert_id;
 
 			echo $insertedId;
-			
+
 			$conn->close();
 		} else if ($type == 'remove') {
 			$sql = "UPDATE z_audios_playlist_songs
@@ -60,7 +60,7 @@
 			$result = $conn->query($sql);
 
 			var_dump(http_response_code(204));
-			
+
 			$conn->close();
 		}
 	}

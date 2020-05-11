@@ -52,7 +52,8 @@ export class NewPlaylistComponent implements OnInit {
 				title: [this.data.current.title, [Validators.required]],
 				advanced: [(this.data.current.genre || this.data.current.description)],
 				genre: [this.data.current.genre],
-				description: [this.data.current.description]
+				description: [this.data.current.description],
+				explicit: [this.data.current.explicit]
 			});
 			this.data.showAdvanced = (this.data.current.genre || this.data.current.description);
 		} else if (this.data.type === 'create') {
@@ -60,7 +61,8 @@ export class NewPlaylistComponent implements OnInit {
 				title: ['', [Validators.required]],
 				advanced: [''],
 				genre: [''],
-				description: ['']
+				description: [''],
+				explicit: ['']
 			});
 		}
 	}
@@ -129,7 +131,8 @@ export class NewPlaylistComponent implements OnInit {
 						title: form.title,
 						image: this.data.newImage,
 						genre: form.advanced ? (form.genre ? form.genre : null) : null,
-						description: form.advanced ? (form.description.trim() ? form.description : null) : null
+						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
+						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null
 					};
 
 					this.audioDataService.createPlaylist(data)
@@ -148,10 +151,11 @@ export class NewPlaylistComponent implements OnInit {
 					let data = {
 						type: 'update',
 						id: this.data.current.id,
-						image: this.data.newImage ? this.data.newImage : null,
 						title: form.title,
+						image: this.data.newImage ? this.data.newImage : null,
 						genre: form.advanced ? (form.genre ? form.genre : null) : null,
-						description: form.advanced ? (form.description.trim() ? form.description : null) : null
+						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
+						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null
 					};
 
 					this.audioDataService.createPlaylist(data)

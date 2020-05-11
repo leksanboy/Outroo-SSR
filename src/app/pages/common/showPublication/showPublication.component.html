@@ -40,7 +40,7 @@
 							<mat-divider *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id"></mat-divider>
 							<button mat-menu-item (click)="itemOptions('remove', dataDefault?.data)" *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id">{{dataDefault?.data?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 						</mat-menu>
-						
+
 						<mat-menu #menuShareSocial="matMenu">
 							<button mat-menu-item (click)="shareOn('message', dataDefault?.data)">{{translations?.common?.sendMessage}}</button>
 							<button mat-menu-item (click)="shareOn('newTab', dataDefault?.data)">{{translations?.common?.openInNewTab}}</button>
@@ -70,7 +70,7 @@
 								<div class="slide">
 									<div class="image">
 										<div class="img" *ngIf="p?.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p?.name + ')'}"></div>
-										
+
 										<video *ngIf="p?.mimetype.indexOf('video') !== -1" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p?.name}}" preload="yes" controls="true">
 											<source src="{{env.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
 										</video>
@@ -86,7 +86,7 @@
 						</div>
 
 						<div class="swiper-pagination"></div>
-						
+
 						<div class="swiperNext" mat-ripple>
 							<i label="arrow-mini-line-right"></i>
 						</div>
@@ -126,7 +126,7 @@
 									<mat-divider *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id"></mat-divider>
 									<button mat-menu-item (click)="itemOptions('remove', dataDefault?.data)" *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id">{{dataDefault?.data?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
-								
+
 								<mat-menu #menuShareSocial="matMenu">
 									<button mat-menu-item (click)="shareOn('message', dataDefault?.data)">{{translations?.common?.sendMessage}}</button>
 									<button mat-menu-item (click)="shareOn('newTab', dataDefault?.data)">{{translations?.common?.openInNewTab}}</button>
