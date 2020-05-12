@@ -46,7 +46,8 @@
 						original_title,
 						original_artist,
 						duration,
-						image
+						image,
+						explicit
 				FROM z_audios
 				WHERE is_deleted = 0
 				ORDER by inet_aton('$ipAddress')
@@ -116,7 +117,8 @@
 						original_title,
 						original_artist,
 						duration,
-						image
+						image,
+						explicit
 				FROM z_audios
 				WHERE is_deleted = 0
 				ORDER by date DESC
@@ -130,6 +132,7 @@
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 				$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 				$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+				$row['explicit'] = boolval($row['explicit']);
 				$data[] = $row;
 			}
 

@@ -9,7 +9,8 @@
 					original_title,
 					original_artist,
 					duration,
-					image
+					image,
+					explicit
 			FROM z_audios
 			WHERE title LIKE '%$caption%' OR
 					original_title LIKE '%$caption%' OR
@@ -27,6 +28,7 @@
 			$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
 			$row['original_title'] = html_entity_decode($row['original_title'], ENT_QUOTES);
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
+			$row['explicit'] = boolval($row['explicit']);
 			$data[] = $row;
 		}
 

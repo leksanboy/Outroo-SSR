@@ -130,8 +130,8 @@
 
 					<ul class="playlists">
 						<li *ngFor="let x of recommendedPlaylists.list; let i=index;">
-							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
+								<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 							</a>
 
 							<div class="panel">

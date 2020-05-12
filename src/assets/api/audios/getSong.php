@@ -9,7 +9,8 @@
 					original_title,
 					original_artist,
 					duration,
-					image
+					image,
+					explicit
 			FROM z_audios
 			WHERE name = '$name'
 				AND is_deleted = 0";
@@ -26,6 +27,7 @@
 			$row['replays'] = counSongReplays($row['id']);
 			$row['timesAdded'] = counSongTimesAdded($row['id']);
 			$row['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$row['image'];
+			$row['explicit'] = boolval($row['explicit']);
 			$data[] = $row;
 		}
 

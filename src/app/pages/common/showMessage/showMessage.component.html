@@ -19,7 +19,7 @@
 				</button>
 				<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
 			</div>
-			
+
 			<ul class="conversationList" *ngIf="dataDefault.list.length > 0">
 				<li *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id}" [@showFromBottomAnimation]>
 					<div class="box">
@@ -38,7 +38,7 @@
 										<button mat-icon-button [matMenuTriggerFor]="options">
 											<i class="icon85 grey" label="more"></i>
 										</button>
-										
+
 										<mat-menu #options="matMenu">
 											<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>

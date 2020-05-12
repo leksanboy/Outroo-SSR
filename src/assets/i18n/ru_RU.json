@@ -411,7 +411,7 @@
 		"exceededMaxUploads": "Вы превысили максимальное количество загрузок",
 		"addedMoreElementsThanAllowed": "Вы добавили больше элементов чем разрешено",
 		"containsInvalidFiles": "Содержит недопустимые файлы",
-		"cropper": "кроппер изображения",
+		"cropper": "Кроппер изображения",
 		"publicationNotExists": "Публикация не существует или была удалена",
 		"clonedPlaylistSuccessfully": "Плейлист успешно клонирован в ваши плейлисты",
 		"followPlaylistSuccessfully": "Теперь вы подписаны на этот плейлист",

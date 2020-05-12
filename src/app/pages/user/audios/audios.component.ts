@@ -145,9 +145,13 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				if (this.userData.id === this.sessionData.current.id) {
 					this.sessionData = data;
 
-					if (data.current.playlists[0].id !== this.dataDefault.playlists[0].id) {
-						/* data.current.playlists[0].color = this.generateRandomColor(); */
-						this.dataDefault.playlists.unshift(data.current.playlists[0]);
+					if (this.dataDefault.playlists) {
+						if (data.current.playlists[0].id !== this.dataDefault.playlists[0].id) {
+							this.dataDefault.playlists.unshift(data.current.playlists[0]);
+						}
+					} else {
+						this.dataDefault.playlists = [];
+						this.dataDefault.playlists.push(data.current.playlists[0]);
 					}
 				}
 			});
@@ -378,8 +382,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			// Get playlists
 			this.audioDataService.defaultPlaylists(data)
 				.subscribe((res: any) => {
-					this.dataDefault.playlists = res.list;
-					this.dataDefault.playlistsCount = (res.count > 10);
+					this.dataDefault.playlists = res ? res.list : null;
+					this.dataDefault.playlistsCount = res ? (res.count > 10) : null;
 				});
 		} else if (type === 'more' && !this.dataDefault.noMore && !this.dataDefault.loadingMoreData) {
 			this.dataDefault.loadingMoreData = true;
@@ -1126,16 +1130,24 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	updatePlaylist(type, data) {
 		if (type === 'create') {
 			if (this.userData.id === this.sessionData.current.id) {
-				/* data.color = this.generateRandomColor(); */
 				this.dataDefault.playlists.unshift(data);
 			}
 
 			this.sessionData.current.playlists.unshift(data);
 		} else if (type === 'edit') {
-			this.dataDefault.playlists[data.index].image = data.item.image;
-			this.dataDefault.playlists[data.index].title = data.item.title;
-			this.dataDefault.playlists[data.index].description = data.item.description;
-			this.dataDefault.playlists[data.index].genre = data.item.genre;
+			let newPl = [];
+
+			for (let p of this.dataDefault.playlists) {
+				if (p.id == data.item.id) {
+					newPl.push(data.item);
+				} else {
+					newPl.push(p);
+				}
+			}
+
+			this.dataDefault.playlists = newPl;
+			console.log('this.dataDefault.playlists:', this.dataDefault.playlists);
+
 			this.sessionData.current.playlists = this.dataDefault.playlists;
 		} else if (type === 'addRemoveSession') {
 			this.sessionData.current.playlists = this.dataDefault.playlists;
@@ -1199,6 +1211,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
 				dialogRefEdit.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
+					console.log('afterClosed res:', res);
 
 					if (res) {
 						const data = {
@@ -1295,7 +1308,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	// See All
 	seeAll(type) {
 		this.data.content = 'seeAll';
-		this.window.scrollTo(0, 0);
 
 		console.log('type:', type);
 		console.log('data:', this.dataGeneral);
@@ -1310,6 +1322,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			type === 'top100' ||
 			type === 'enjoyWith'
 		) {
+			this.window.scrollTo(0, 0);
+
 			this.dataSection = {
 				type: type,
 				list: [],

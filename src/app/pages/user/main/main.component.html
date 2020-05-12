@@ -28,7 +28,8 @@
 						</mat-menu>
 					</div>
 
-					<div class="accounts" *ngIf="(userData?.id === sessionData?.current?.id) && showAccounts">
+					<!-- <div class="accounts" *ngIf="(userData?.id === sessionData?.current?.id) && showAccounts"> -->
+					<mat-expansion-panel [expanded]="(userData?.id === sessionData?.current?.id) && showAccounts">
 						<ul class="sessions">
 							<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 								<div mat-ripple class="inner">
@@ -77,7 +78,8 @@
 								</div>
 							</li>
 						</ul>
-					</div>
+					</mat-expansion-panel>
+					<!-- </div> -->
 
 					<div class="user">
 						<div class="left">
@@ -266,22 +268,11 @@
 						</ul>
 					</div>
 
-					<div class="uploadFilesBox" *ngIf="userData?.id === sessionData?.current?.id">
-						<div class="button">
-							<button mat-raised-button (click)="newPublication('new', null)">
-								<div class="left">
-									<i label="add"></i>
-								</div>
-								<div class="right">
-									<div class="top">
-										{{translations?.main?.newPublication}}
-									</div>
-									<div class="bottom">
-										{{translations?.main?.newPublicationSubtitle}}
-									</div>
-								</div>
-							</button>
-						</div>
+					<div class="createButton" *ngIf="userData?.id === sessionData?.current?.id">
+						<button mat-raised-button (click)="newPublication('new', null)">
+							<i label="add"></i>
+							{{translations?.main?.newPublication}}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -384,7 +375,7 @@
 												<button mat-icon-button (click)="playSong(x, a, i, 'publication')">
 													<i label="play" *ngIf="!a.playing || !(audioPlayerData?.postId === x?.id)"></i>
 													<i label="pause" *ngIf="a.playing && (audioPlayerData?.postId === x?.id)"></i>
-													<img *ngIf="a.image" [src]="env.pathAudios + 'thumbnails/' + a.image"/>
+													<img [src]="a.image ? (env.pathAudios + 'thumbnails/' + a.image) : env.defaultSongCover"/>
 												</button>
 											</div>
 
@@ -571,8 +562,8 @@
 
 					<ul class="playlists">
 						<li *ngFor="let x of recommendedPlaylists.list; let i=index;">
-							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathAudios + 'covers/' + x.image + ')'}"></div>
+							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
+								<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 							</a>
 
 							<div class="panel">

@@ -117,7 +117,7 @@
 
 										<ul class="playlists">
 											<li *ngFor="let x of dataGeneral?.list?.recommended; let i=index;">
-												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
+												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 												</a>
 
@@ -169,7 +169,7 @@
 
 										<ul class="playlists">
 											<li *ngFor="let x of dataGeneral?.list?.favourites; let i=index;">
-												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
+												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 												</a>
 
@@ -221,7 +221,7 @@
 
 										<ul class="playlists">
 											<li *ngFor="let x of dataGeneral?.list?.genres; let i=index;">
-												<a mat-ripple class="image" (click)="showGenre(x)" [style.background-image]="x.color">
+												<a mat-ripple class="image" (click)="showGenre(x)">
 													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 												</a>
 
@@ -324,34 +324,6 @@
 
 									<div class="section">
 										<div class="head">
-											<div class="title">{{translations?.audios?.ostMovies}}</div>
-										</div>
-
-										<ul class="playlists">
-											<li *ngFor="let x of dataGeneral?.list?.ost; let i=index;">
-												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
-													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
-												</a>
-
-												<div class="panel">
-													<a class="title" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
-														{{x.title}}
-													</a>
-												</div>
-											</li>
-
-											<li class="seeAll" (click)="seeAll('ost')">
-												<div class="inner">
-													<div class="text">
-														{{translations?.common?.seeAll}}
-													</div>
-												</div>
-											</li>
-										</ul>
-									</div>
-
-									<div class="section">
-										<div class="head">
 											<div class="title">{{translations?.audios?.top100}}</div>
 										</div>
 
@@ -380,12 +352,40 @@
 
 									<div class="section">
 										<div class="head">
+											<div class="title">{{translations?.audios?.ostMovies}}</div>
+										</div>
+
+										<ul class="playlists">
+											<li *ngFor="let x of dataGeneral?.list?.ost; let i=index;">
+												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
+													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
+												</a>
+
+												<div class="panel">
+													<a class="title" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
+														{{x.title}}
+													</a>
+												</div>
+											</li>
+
+											<li class="seeAll" (click)="seeAll('ost')">
+												<div class="inner">
+													<div class="text">
+														{{translations?.common?.seeAll}}
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+
+									<div class="section">
+										<div class="head">
 											<div class="title">{{translations?.audios?.enjoyYourDay}}</div>
 										</div>
 
 										<ul class="playlists">
 											<li *ngFor="let x of dataGeneral?.list?.enjoyWith; let i=index;">
-												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
+												<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 													<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 												</a>
 
@@ -723,9 +723,9 @@
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
 												<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+													<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+													<div class="duration">{{x.duration}}</div>
+												</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -788,7 +788,7 @@
 							<mat-tab label="{{translations?.audios?.top}}">
 								<ul class="playlists" *ngIf="dataTop.playlists && dataTop.list">
 									<li *ngFor="let x of dataTop.playlists; let i=index;">
-										<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
+										<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 											<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 										</a>
 
@@ -837,9 +837,9 @@
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
 												<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+													<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+													<div class="duration">{{x.duration}}</div>
+												</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -928,9 +928,9 @@
 													<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 												</div>
 												<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+													<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+													<div class="duration">{{x.duration}}</div>
+												</div>
 											</div>
 
 											<div class="actions" *ngIf="sessionData?.current?.id">
@@ -1010,9 +1010,9 @@
 											<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 										</div>
 										<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+											<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+											<div class="duration">{{x.duration}}</div>
+										</div>
 									</div>
 
 									<div class="actions" *ngIf="sessionData?.current?.id">
@@ -1117,9 +1117,9 @@
 										<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 									</div>
 									<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+										<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+										<div class="duration">{{x.duration}}</div>
+									</div>
 								</div>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">
@@ -1175,7 +1175,7 @@
 					<ul class="playlists list" *ngIf="dataSection.list">
 						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{advert: x.contentTypeAd}">
 							<span class="inner" *ngIf="!x.contentTypeAd">
-								<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;" [style.background-image]="x.color">
+								<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
 									<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
 								</a>
 

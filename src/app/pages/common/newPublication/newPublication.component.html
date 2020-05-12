@@ -43,7 +43,7 @@
 				<div class="filesBox">
 					<div class="counter" *ngIf="data.photosArray.length > 0" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations?.photos?.title}} {{data.photosArray.length}}/10</div>
 
-					<ul class="photos" *ngIf="data.photosArray.length > 0">
+					<!-- <ul class="photos" *ngIf="data.photosArray.length > 0">
 						<li mat-ripple *ngFor="let x of data.photosArray" (click)="toggleItem('photos', x)">
 							<div class="image">
 								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + 'thumbnails/' + x.up_name + ')'}"></div>
@@ -57,6 +57,36 @@
 								<div class="status">
 									<button mat-icon-button>
 										<i label="check"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul> -->
+
+					<ul class="photos" *ngIf="data.photosArray.length > 0">
+						<li mat-ripple *ngFor="let x of data.photosArray; let i = index;" (click)="toggleItemPhoto(x, i)">
+							<div class="image">
+								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + 'thumbnails/' + x.up_name + ')'}"></div>
+
+								<div class="category">
+									<i label="cloud-upload"></i>
+									<div class="size" *ngIf="x.sizeBig">{{x.sizeBig}}</div>
+									<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
+										{{translations?.common?.invalidFile}}
+									</div>
+								</div>
+
+								<div class="status">
+									<div class="progress" *ngIf="x.status=='progress'">
+										<mat-progress-spinner mode="determinate" [value]="x.progress"></mat-progress-spinner>
+										<div class="value">{{x.progress}}%</div>
+									</div>
+									<button mat-icon-button *ngIf="x.status=='error'">
+										<i label="cloud-off"></i>
+									</button>
+									<button mat-icon-button *ngIf="x.status=='completed'">
+										<i label="add" *ngIf="!x.selected"></i>
+										<i label="check" *ngIf="x.selected"></i>
 									</button>
 								</div>
 							</div>
@@ -104,12 +134,14 @@
 	</div>
 
 	<div mat-dialog-actions class="buttons post">
-		<div class="files">
-			<button mat-mini-fab type="button" (click)="openPhotos($event)" matTooltip="photos">
-				<i label="camera"></i>
+		<div class="panel">
+			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="photos">
+				<i label="camera" class="blue"></i>
 			</button>
-			<button mat-mini-fab type="button" (click)="openAudios($event)" matTooltip="audios">
-				<i label="music"></i>
+			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf">
+
+			<button mat-mini-fab type="button" (click)="openAudios()" matTooltip="audios">
+				<i label="music" class="blue"></i>
 			</button>
 		</div>
 

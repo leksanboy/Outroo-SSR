@@ -23,10 +23,10 @@
 			<div class="form">
 				<form [formGroup]="actionForm" (ngSubmit)="submit()">
 					<mat-form-field class="textarea">
-						<textarea matInput  
-						placeholder="{{translations?.support?.typeHere}}" 
-						#Content 
-						maxlength="1000" 
+						<textarea matInput
+						placeholder="{{translations?.support?.typeHere}}"
+						#Content
+						maxlength="1000"
 						formControlName="content"
 						cdkTextareaAutosize
 						#autosize="cdkTextareaAutosize"
@@ -40,12 +40,14 @@
 	</div>
 
 	<div mat-dialog-actions class="buttons">
-		<button mat-raised-button type="button" (click)="close()">
-			{{translations?.common?.cancel}}
-		</button>
-		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
-			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-			{{translations?.common?.send}}
-		</button>
+		<div class="actions">
+			<button mat-raised-button type="button" (click)="close()">
+				{{translations?.common?.cancel}}
+			</button>
+			<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.send}}
+			</button>
+		</div>
 	</div>
 </div>

@@ -405,7 +405,14 @@
 	function getAudioData($id){
 		global $conn;
 
-		$sql = "SELECT id, name, title, original_title, original_artist, image, duration
+		$sql = "SELECT id,
+						name,
+						title,
+						original_title,
+						original_artist,
+						image,
+						explicit,
+						duration
 				FROM z_audios
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -414,6 +421,7 @@
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
+		$result['explicit'] = boolval($result['explicit']);
 
 		return $result;
 	}
@@ -534,7 +542,14 @@
 	function getSongById($id){
 		global $conn;
 
-		$sql = "SELECT id, name, title, original_title, original_artist, duration, image
+		$sql = "SELECT id,
+						name,
+						title,
+						original_title,
+						original_artist,
+						duration,
+						image,
+						explicit
 				FROM z_audios
 				WHERE id = $id AND is_deleted = 0";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -543,6 +558,7 @@
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
 		$result['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$result['image'];
+		$result['explicit'] = boolval($result['explicit']);
 
 		return $result;
 	}

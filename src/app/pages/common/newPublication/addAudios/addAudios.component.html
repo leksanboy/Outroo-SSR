@@ -6,8 +6,7 @@
 			</button>
 
 			<div class="text">
-				{{translations?.audios?.title}} 
-				{{dataDefault.arrayAddedItems.length}}/10
+				{{translations?.audios?.title}} {{dataDefault.arrayAddedItems.length}}/10
 			</div>
 		</div>
 
@@ -35,7 +34,7 @@
 			</div>
 
 			<span *ngIf="data.active == 'default'">
-				<div class="uploadFilesBox">
+				<!-- <div class="uploadFilesBox">
 					<div class="button">
 						<button mat-raised-button (click)="uploadFile.click()">
 							<div class="left" [ngClass]="{'warning': dataDefault.list.length > 9}">
@@ -53,7 +52,7 @@
 
 						<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
 					</div>
-				</div>
+				</div> -->
 
 				<ul class="tracks" *ngIf="dataDefault.list">
 					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
@@ -82,10 +81,9 @@
 									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 								</div>
-								<div class="duration">
-									{{x.duration}}
 
-									<div class="status" *ngIf="x.id === 0">
+								<div class="explicitDuration">
+									<div class="status">
 										<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
 											{{x.sizeBig}}
 										</div>
@@ -95,7 +93,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="actions" *ngIf="sessionData?.current?.id">
 								<button mat-icon-button (click)="toggleItem(x)">
 									<i label="add" *ngIf="!x.selected"></i>
@@ -140,9 +138,9 @@
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 								</div>
 								<div class="explicitDuration">
-															<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-															<div class="duration">{{x.duration}}</div>
-														</div>
+									<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+									<div class="duration">{{x.duration}}</div>
+								</div>
 							</div>
 
 							<div class="actions" *ngIf="sessionData?.current?.id">

@@ -106,7 +106,7 @@
 				<div class="noData" *ngIf="dataSearch.noData">
 					<div class="description">{{translations?.common?.noSearchResults}}</div>
 				</div>
-				
+
 				<div class="loadMore" *ngIf="dataSearch.loadMoreData">
 					<button mat-fab (click)="search('more')" *ngIf="!dataSearch.loadingMoreData">
 						<i label="add"></i>

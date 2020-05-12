@@ -47,7 +47,7 @@
 
 		// Insert to user
 		$sqlFav = "INSERT INTO z_audios_favorites (user, song, ip_address)
-				VALUES ($session, $insertedId, '$ipAddress')";
+					VALUES ($session, $insertedId, '$ipAddress')";
 		$resultFav = $conn->query($sqlFav);
 
 	    var_dump(http_response_code(204));

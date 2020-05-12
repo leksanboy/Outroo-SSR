@@ -23,31 +23,31 @@
 			<div class="image">
 				<img (load)="imageLoad()" [src]="image ? image : env.avatar" #imageSrc>
 			</div>
-
-			<div class="panel">
-				<button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
-					<i label="zoom-in"></i>
-				</button>
-				<button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
-					<i label="zoom-out"></i>
-				</button>
-				<button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
-					<i label="rotate-left"></i>
-				</button>
-				<button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
-					<i label="rotate-right"></i>
-				</button>
-				<button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
-					<i label="swap-horiz"></i>
-				</button>
-				<button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
-					<i label="swap-vert"></i>
-				</button>
-			</div>
 		</div>
 	</div>
 
-	<div mat-dialog-actions class="buttons">
+	<div mat-dialog-actions class="buttons post">
+		<div class="panel">
+			<button mat-raised-button type="button" (click)="cropperFunctions('zoomIn')">
+				<i label="zoom-in"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('zoomOut')">
+				<i label="zoom-out"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('rotateLeft')">
+				<i label="rotate-left"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('rotateRight')">
+				<i label="rotate-right"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('flipHorizontal')">
+				<i label="swap-horiz"></i>
+			</button>
+			<button mat-raised-button type="button" (click)="cropperFunctions('flipVertical')">
+				<i label="swap-vert"></i>
+			</button>
+		</div>
+
 		<div class="actions">
 			<button mat-raised-button type="button" (click)="cropperFunctions('close')">
 				{{translations?.common?.cancel}}

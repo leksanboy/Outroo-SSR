@@ -122,10 +122,10 @@ export class MainComponent implements OnInit, OnDestroy {
 					const metaData = {
 						page: this.userData.name,
 						title: this.userData.name,
-						description: this.userData.aboutOriginal,
-						keywords: this.userData.aboutOriginal,
+						description: this.userData.about,
+						keywords: this.userData.about,
 						url: this.env.url + this.userData.username,
-						image: this.env.url + this.userData.avatarUrl
+						image: this.userData.avatarUrl
 					};
 					this.metaService.setData(metaData);
 

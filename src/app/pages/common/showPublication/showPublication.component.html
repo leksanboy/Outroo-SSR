@@ -145,7 +145,7 @@
 											<button mat-icon-button (click)="playSong(dataDefault?.data, a, i, 'publication')">
 												<i label="play" *ngIf="!a?.playing || !(audioPlayerData?.postId == dataDefault?.data?.id)"></i>
 												<i label="pause" *ngIf="a?.playing && (audioPlayerData?.postId == dataDefault?.data?.id)"></i>
-												<img *ngIf="a?.image" [src]="env.pathAudios + 'thumbnails/' + a?.image"/>
+												<img [src]="a.image ? (env.pathAudios + 'thumbnails/' + a.image) : env.defaultSongCover"/>
 											</button>
 										</div>
 
@@ -154,7 +154,10 @@
 												<div class="title">{{a?.original_title ? a?.original_title : a?.title}}</div>
 												<div class="artist">{{a?.original_artist ? a?.original_artist : a?.title}}</div>
 											</div>
-											<div class="duration">{{a?.duration}}</div>
+											<div class="explicitDuration">
+												<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="a.explicit"></i>
+												<div class="duration">{{a.duration}}</div>
+											</div>
 										</div>
 
 										<div class="actions" *ngIf="sessionData?.current?.id">
@@ -195,7 +198,7 @@
 									<i label="analytics-comments"></i>
 								</button>
 							</div>
-							
+
 							<div class="buttonBox">
 								<button mat-icon-button (click)="likeUnlike(dataDefault?.data)">
 									<i label="analytics-like" [ngClass]="{'active' : dataDefault?.data?.liked}"></i>
@@ -221,8 +224,7 @@
 					<div class="boxComments" *ngIf="dataDefault?.data?.showCommentsBox">
 						<div class="comments" *ngIf="!dataDefault?.data?.disabledComments && dataDefault?.data?.loaded">
 							<div class="countComments">
-								{{dataDefault?.data?.countComments}} 
-								{{translations?.common?.comments}}
+								{{dataDefault?.data?.countComments}} {{translations?.common?.comments}}
 							</div>
 
 							<div class="new" *ngIf="sessionData?.current?.id">
@@ -254,7 +256,7 @@
 												<div class="date">{{c?.date | timeago}}</div>
 											</div>
 										</div>
-										
+
 										<div class="actions" *ngIf="sessionData?.current?.id">
 											<button mat-icon-button [matMenuTriggerFor]="optionsComments">
 												<i class="icon75 grey" label="more"></i>
@@ -279,7 +281,7 @@
 							<div class="noData" *ngIf="dataDefault?.data?.noData">
 								<div class="description">{{translations?.common?.noComments}}</div>
 							</div>
-							
+
 							<div class="loadMore" *ngIf="dataDefault?.data?.loadMoreData">
 								<button mat-fab (click)="defaultComments('more', dataDefault?.data)" *ngIf="!dataDefault?.data?.loadingMoreData">
 									<i label="add"></i>

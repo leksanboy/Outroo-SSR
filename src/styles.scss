@@ -1455,14 +1455,13 @@ body {
 					}
 
 					.text {
-						text-transform: uppercase;
 						text-overflow: ellipsis;
 						padding: 0 0 0 12px;
 						white-space: nowrap;
 						color: $whiteColor;
 						font-weight: bold;
 						overflow: hidden;
-						font-size: 11px;
+						font-size: 13px;
 						max-width: 60%;
 					}
 
@@ -2155,7 +2154,6 @@ body {
 
 			.left {
 				.image {
-					background-color: $greyColor;
 					border-radius: 3px;
 					position: relative;
 					overflow: hidden;
@@ -2254,6 +2252,12 @@ body {
 
 		&.create {
 			.info {
+				.left {
+					.image {
+						background-color: #2e2e2e;
+					}
+				}
+
 				.right {
 					margin: -12px 0 0;
 
@@ -2603,6 +2607,7 @@ body {
 	.mat-expansion-panel {
 		background-color: transparent;
 		box-shadow: none !important;
+		color: currentColor;
 		margin: 12px 0 0;
 		width: 100%;
 		float: left;
@@ -3304,6 +3309,38 @@ body {
 		}
 	}
 
+	/* Create post */
+	.createButton {
+		box-sizing: border-box;
+		padding: 0 18px 18px;
+		width: 100%;
+		float: left;
+
+		button {
+			border-radius: 12px !important;
+			background: $blackColor;
+			text-transform: inherit;
+			color: $whiteColor;
+			padding: 8px 0;
+			display: flex;
+			width: 100%;
+			justify-content: center;
+			align-items: center;
+			font-weight: bold;
+			font-size: 13px;
+			text-transform: uppercase;
+
+			span {
+				display: flex;
+				align-items: center;
+
+				i {
+					margin: 0 6px 0 0;
+				}
+			}
+		}
+	}
+
 	/*No data*/
 	.noData {
 		box-sizing: border-box;
@@ -3917,7 +3954,7 @@ body {
 
 		.mat-dialog-content {
 			box-sizing: border-box;
-			padding: 0 0 4px;
+			padding: 0;
 			margin: 0;
 		}
 
@@ -4036,8 +4073,6 @@ body {
 				width: 100%;
 
 				button {
-					background: $blackColor;
-					color: $whiteColor;
 					font-weight: bold;
 					line-height: 28px;
 					margin: 0 0 0 8px;
@@ -4047,6 +4082,7 @@ body {
 					min-width: 0;
 					height: 28px;
 					text-transform: inherit;
+					color: currentColor;
 
 					mat-progress-spinner {
 						height: 16px !important;
@@ -4066,6 +4102,13 @@ body {
 
 					&[disabled] {
 						background-color: $greyColor;
+					}
+				}
+
+				.actions {
+					button {
+						background: $blackColor;
+						color: $whiteColor;
 					}
 				}
 
@@ -4155,28 +4198,25 @@ body {
 				}
 
 				&.post {
+					display: flex;
 					justify-content: space-between;
 
-					.files {
-						margin: 0 0 0 -6px;
+					.panel {
 						display: flex;
+						height: 100%;
 
 						button {
 							border-radius: 50% !important;
 							background-color: transparent;
 							height: 36px;
 							width: 36px;
-							margin: 0;
+							margin: 0 6px;
 
 							span {
 								justify-content: center;
 								align-items: center;
 								display: flex;
 								width: 100%;
-
-								i {
-									background-color: $blackColor;
-								}
 							}
 						}
 					}
@@ -4228,28 +4268,6 @@ body {
 
 						.cropper-container {
 							margin: 0 auto;
-						}
-					}
-
-					.panel {
-						justify-content: center;
-						display: flex;
-						width: 100%;
-
-						button {
-							border-radius: 50% !important;
-							background-color: transparent;
-							max-width: 36px;
-							min-width: 36px;
-							box-shadow: 0 0;
-							margin: 8px 4px;
-							height: 36px;
-							width: 36px;
-							padding: 0;
-
-							i {
-								background-color: $blackColor;
-							}
 						}
 					}
 				}
@@ -4372,10 +4390,6 @@ body {
 								}
 							}
 						}
-					}
-
-					.uploadFilesBox {
-						margin: 12px 0 0;
 					}
 
 					.filesBox {
@@ -6103,12 +6117,6 @@ body {
 							}
 						}
 
-						.accounts {
-							border-bottom: 1px solid transparentize($greyColor, .5);
-							padding: 12px 0;
-							width: 100%;
-						}
-
 						.user {
 							padding: 18px 0 0 18px;
 							box-sizing: border-box;
@@ -7057,18 +7065,6 @@ body {
 					}
 				}
 
-				.bodyCreateAvatar {
-					.container {
-						.panel {
-							button {
-								i {
-									background-color: $whiteColor;
-								}
-							}
-						}
-					}
-				}
-
 				.loadMore {
 					button {
 						border: 1px solid $whiteColor;
@@ -7088,12 +7084,14 @@ body {
 				}
 
 				.buttons {
-					button {
-						background: $whiteColor;
+					.actions {
+						button {
+							background: $whiteColor;
 						color: $blackColor;
+						}
 					}
 
-					.files {
+					/* .files {
 						button {
 							span {
 								i {
@@ -7101,7 +7099,7 @@ body {
 								}
 							}
 						}
-					}
+					} */
 				}
 			}
 		}
@@ -7182,6 +7180,14 @@ body {
 					background: $whiteColor;
 					color: $blackColor;
 				}
+			}
+		}
+
+		/* Create post */
+		.createButton {
+			button {
+				background: $whiteColor;
+				color: $blackColor;
 			}
 		}
 
@@ -7899,9 +7905,9 @@ body {
 					}
 
 					&.post {
-						display: block;
+						justify-content: center;
 
-						.files {
+						.panel {
 							display: flex;
 						}
 

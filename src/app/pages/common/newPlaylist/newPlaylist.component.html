@@ -83,12 +83,14 @@
 	</div>
 
 	<div mat-dialog-actions class="buttons">
-		<button mat-raised-button type="button" (click)="close()">
-			{{translations?.common?.cancel}}
-		</button>
-		<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
-			<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
-			{{data.type === 'edit' ? translations?.common?.submit : translations?.common?.create}}
-		</button>
+		<div class="actions">
+			<button mat-raised-button type="button" (click)="close()">
+				{{translations?.common?.cancel}}
+			</button>
+			<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{data.type === 'edit' ? translations?.common?.submit : translations?.common?.create}}
+			</button>
+		</div>
 	</div>
 </div>
