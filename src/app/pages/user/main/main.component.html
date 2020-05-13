@@ -23,9 +23,13 @@
 						</button>
 
 						<mat-menu #options="matMenu">
+							<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+							<button mat-menu-item (click)="userOptions('report', userData)">{{translations?.common?.report}}</button>
+						</mat-menu>
+
+						<mat-menu #menuShareSocial="matMenu">
 							<button mat-menu-item (click)="userOptions('copyLink', userData)">{{translations?.main?.copyLink}}</button>
 							<button mat-menu-item (click)="userOptions('message', userData)">{{translations?.common?.sendMessage}}</button>
-							<button mat-menu-item (click)="userOptions('report', userData)">{{translations?.common?.report}}</button>
 						</mat-menu>
 					</div>
 

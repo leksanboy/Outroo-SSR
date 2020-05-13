@@ -111,30 +111,33 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						// Set title
 						this.titleService.setTitle(title);
 
+						// Reset
+						this.search('clear')
+						this.dataDefault = [];
+
 						// Set playlist current playing
 						if (this.sessionData) {
 							if (this.sessionData.current.audioPlayerData && this.sessionData.current.audioPlayerData.user === this.userData.id) {
 								this.audioPlayerData = this.sessionData.current.audioPlayerData;
 							}
-						}
 
-						// Reset
-						this.search('clear')
-						this.dataDefault = [];
+							// Load general
+							if (this.sessionData.current.id === this.userData.id) {
+								this.data.selectedIndex = 0;
+								this.general(this.userData.id);
+							} else {
+								this.data.selectedIndex = 1;
+								this.default('default', this.userData.id);
+							}
 
-						// Load general
-						if (this.sessionData.current.id === this.userData.id) {
-							this.data.selectedIndex = 0;
-							this.general(this.userData.id);
+							// Denied
+							if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
+								this.deniedAccessOnlySession = true;
+							}
 						} else {
 							this.data.selectedIndex = 1;
 							this.default('default', this.userData.id);
 						}
-					}
-
-					// Denied
-					if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
-						this.deniedAccessOnlySession = true;
 					}
 				}
 			});
@@ -177,35 +180,41 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight) {
 				if (!this.deniedAccessOnlySession) {
-					if (this.data.active === 'default') {
-						switch (this.data.selectedIndex) {
-							case 0:
-								/* General: not in use, alwayys set */
-								break;
-							case 1:
-								if (this.dataDefault.list.length > 0) {
-									this.default('more', null);
-								}
-								break;
-							case 2:
-								if (this.dataAround.list.length > 0) {
-									this.around('more');
-								}
-								break;
-							case 3:
-								if (this.dataTop.list.length > 0) {
-									this.top('more');
-								}
-								break;
-							case 4:
-								if (this.dataFresh.list.length > 0) {
-									this.fresh('more');
-								}
-								break;
+					if (this.data.content === 'default') {
+						if (this.data.active === 'default') {
+							switch (this.data.selectedIndex) {
+								case 0:
+									/* General: not in use, alwayys set */
+									break;
+								case 1:
+									if (this.dataDefault.list.length > 0) {
+										this.default('more', null);
+									}
+									break;
+								case 2:
+									if (this.dataAround.list.length > 0) {
+										this.around('more');
+									}
+									break;
+								case 3:
+									if (this.dataTop.list.length > 0) {
+										this.top('more');
+									}
+									break;
+								case 4:
+									if (this.dataFresh.list.length > 0) {
+										this.fresh('more');
+									}
+									break;
+							}
+						} else if (this.data.active === 'search') {
+							if (this.dataSearch.list.length > 0) {
+								this.search('more');
+							}
 						}
-					} else if (this.data.active === 'search') {
-						if (this.dataSearch.list.length > 0) {
-							this.search('more');
+					} else if (this.data.content === 'seeAll') {
+						if (this.dataGeneral.list.length > 0) {
+							this.seeAll('more');
 						}
 					}
 				}

@@ -706,7 +706,7 @@ body {
 							color: $greyColor;
 							text-align: right;
 							font-size: 13px;
-							padding: 0 0 0 18px;
+							padding: 0 18px;
 						}
 
 						.status {
@@ -748,6 +748,8 @@ body {
 				}
 
 				.actions {
+					margin: 0 0 0 -18px;
+
 					button {
 						border-radius: 50% !important;
 					}
@@ -2154,11 +2156,11 @@ body {
 
 			.left {
 				.image {
-					border-radius: 3px;
+					border-radius: 12px;
 					position: relative;
 					overflow: hidden;
-					height: 144px;
-					width: 144px;
+					height: 216px;
+					width: 216px;
 					float: left;
 
 					img {
@@ -2642,13 +2644,15 @@ body {
 		text-align: center;
 		margin: 12px 18px;
 		font-weight: bold;
-		padding: 48px 0;
+		padding: 48px 24px;
+		box-sizing: border-box;
 		float: left;
 	}
 
 	/*Mat-menu*/
 	.mat-menu-panel {
 		border-radius: 3px !important;
+		max-height: 272px;
 
 		.mat-menu-content {
 			button {
@@ -2823,7 +2827,7 @@ body {
 				input {
 					background: transparent;
 					box-sizing: border-box;
-					color: $blackColor;
+					color: currentColor;
 					border: none;
 					height: 36px;
 					width: 100%;
@@ -7158,17 +7162,6 @@ body {
 			background-color: $darkThemeColor;
 		}
 
-		/*Serch*/
-		/* .searchBox {
-			.box {
-				.inner {
-					input {
-						color: $whiteColor;
-					}
-				}
-			}
-		} */
-
 		/*Tabs*/
 		.mat-tab-group {
 			.mat-tab-header {
@@ -7840,11 +7833,11 @@ body {
 	body {
 		ul.playlists {
 			&.list {
-				padding: 0 12px;
+				padding: 0 9px;
 
 				li {
-					width: calc(50% - 12px);
-					margin: 0 6px;
+					width: calc(50% - 18px);
+					margin: 0 9px;
 
 					.image {
 						height: calc(50vw - 24px);
@@ -7860,6 +7853,17 @@ body {
 								margin: 0 0 0 -12px;
 							}
 						}
+					}
+				}
+			}
+		}
+
+		.playlist {
+			.info {
+				.left {
+					.image {
+						height: 150px;
+						width: 150px;
 					}
 				}
 			}
@@ -8385,7 +8389,7 @@ body {
 				width: 100%;
 
 				.logo {
-					background-color: $blackColor;
+					background-color: currentColor;
 					mask-image: $logoTextImage;
 					mask-repeat: no-repeat;
 					display: inline-block;

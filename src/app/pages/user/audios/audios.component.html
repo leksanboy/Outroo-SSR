@@ -441,7 +441,7 @@
 							</mat-tab>
 
 							<mat-tab label="{{userData?.id === sessionData?.current?.id ? translations?.audios?.my : translations?.audios?.songs}}">
-								<ul class="playlists" *ngIf="!dataDefault.loadingData && sessionData?.current?.id">
+								<ul class="playlists" *ngIf="!dataDefault.loadingData">
 									<li class="uploadAndNew" *ngIf="userData?.id === sessionData?.current?.id">
 										<div class="inner">
 											<div class="mini" (click)="uploadFile.click()">
