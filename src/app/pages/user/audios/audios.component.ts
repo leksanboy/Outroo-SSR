@@ -1320,7 +1320,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			type === 'mostPlayed' ||
 			type === 'ost' ||
 			type === 'top100' ||
-			type === 'enjoyWith'
+			type === 'enjoyWith' ||
+			type === 'userPlaylists'
 		) {
 			this.window.scrollTo(0, 0);
 
@@ -1336,7 +1337,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			/* Temporalmente hasta que no se haga bien */
-			if (type === 'genres' || type === 'top100') {
+			if (type === 'genres') {
 				this.dataSection.loadingData = false;
 				this.dataSection.noData = false;
 				return;
@@ -1370,6 +1371,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 								}
 							}
 						}
+
+						console.log('this.dataSection:', this.dataSection);
 
 						if (!res || res.length < this.env.cuantity) {
 							this.dataSection.noMore = true;

@@ -35,7 +35,7 @@
 			</div>
 		</li>
 
-		<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+		<li *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
 			<div mat-ripple class="inner">
 				<div class="add">
 					<i label="add"></i>

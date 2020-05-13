@@ -14,8 +14,8 @@
 				<div class="playlist">
 					<div class="info" *ngIf="!dataDefault.loadingData">
 						<div class="left">
-							<div class="image" [style.background-image]="dataDefault?.info?.color">
-								<img [src]="env.pathAudios + 'covers/' + dataDefault?.info?.image" *ngIf="dataDefault?.info?.image">
+							<div class="image">
+								<img [src]="dataDefault?.current?.image ? (env.pathAudios + 'covers/' + dataDefault?.current?.image) : env.defaultPlaylistCover">
 							</div>
 						</div>
 
@@ -24,10 +24,14 @@
 								{{dataDefault?.info?.title}}
 							</div>
 
-							<a class="subtitle" routerLink="/{{dataDefault?.info?.user?.username}}">
+							<a class="subtitle" routerLink="/{{dataDefault?.info?.user?.username}}" *ngIf="dataDefault?.info?.user?.id">
 								@{{dataDefault?.info?.user?.username}}
 								<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							</a>
+
+							<div class="subtitle" *ngIf="!dataDefault?.info?.user?.id">
+								{{translations?.audios?.editorsChoice}}
+							</div>
 
 							<div class="button">
 								<button mat-button (click)="playTrack('play')">

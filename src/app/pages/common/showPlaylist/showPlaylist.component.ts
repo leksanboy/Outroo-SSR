@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -276,6 +276,7 @@ export class ShowPlaylistComponent implements OnInit {
 
 				const configShow = {
 					disableClose: false,
+					backdropClass: 'cdk-overlay-transparent-backdrop',
 					data: {
 						sessionData: this.sessionData,
 						userData: this.userData,
@@ -286,9 +287,8 @@ export class ShowPlaylistComponent implements OnInit {
 				};
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
-				dialogRefShow.beforeClosed().subscribe((res: string) => {
-					// Set url
-					this.location.go(this.router.url);
+				dialogRefShow.beforeClosed().subscribe((res: any) => {
+					this.location.go('/pl/' + this.data.current.name);
 				});
 				break;
 			case ('addRemoveUser'):

@@ -30,40 +30,13 @@ export class UserDataService {
 
 	getTranslations(lang) {
 		if (!lang) {
-			// Get lang from cookie
-			const langCookie = this.getLang('get', null);
-
-			if (!langCookie) {
-				// Array of available langs which exists on lang files repo
-				const langsArray = ['en', 'es', 'ru'];
-
-				// Detect language
-				const langRegion = this.locale;
-
-				// Checking browser lang for validate existing one
-				if (!(langsArray.indexOf(langRegion.slice(0, 2)) > -1)) {
-					lang = null;
-				} else {
-					if (langRegion === 'en') {
-						lang = 1;
-					} else if (langRegion === 'es') {
-						lang = 2;
-					} else if (langRegion === 'ru') {
-						lang = 3;
-					}
-
-					this.getLang('set', lang);
-				}
-			} else {
-				lang = langCookie;
-			}
+			lang = this.getLang('get', null);
 		} else {
 			this.getLang('set', lang);
 		}
 
 		// Lang cases
-		let language;
-		let htmlLang;
+		let language, htmlLang;
 		switch (Number(lang)) {
 			default:
 			case 1: // English
@@ -77,14 +50,6 @@ export class UserDataService {
 			case 3: // Русский
 				language = 'ru_RU';
 				htmlLang = 'ru';
-				break;
-			case 4: // Deutsch
-				language = 'de_DE';
-				htmlLang = 'de';
-				break;
-			case 5: // Français
-				language = 'fr_FR';
-				htmlLang = 'fr';
 				break;
 		}
 
@@ -105,7 +70,33 @@ export class UserDataService {
 			if (type === 'set') {
 				this.window.localStorage.setItem('lang', lang);
 			} else if (type === 'get') {
-				return this.window.localStorage.getItem('lang');
+				lang = this.window.localStorage.getItem('lang');
+
+				if (!lang) {
+					// Detect language
+					let navigatorLang = this.window.navigator.language;
+					let langRegion = navigatorLang ? navigatorLang : null;
+
+					// Checking browser lang for validate existing one
+					const langsArray = ['en', 'es', 'ru'];
+					if (!(langsArray.indexOf(langRegion.slice(0, 2)) > -1)) {
+						lang = null;
+					} else {
+						if (langRegion === 'en') {
+							lang = 1;
+						} else if (langRegion === 'es') {
+							lang = 2;
+						} else if (langRegion === 'ru') {
+							lang = 3;
+						}
+
+						this.getLang('set', lang);
+					}
+
+					return lang;
+				} else {
+					return lang;
+				}
 			}
 		}
 	}

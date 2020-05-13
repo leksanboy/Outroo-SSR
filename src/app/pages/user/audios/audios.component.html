@@ -1097,9 +1097,11 @@
 					<span *ngIf="dataSection.type === 'ost'">{{translations?.audios?.ostMovies}}</span>
 					<span *ngIf="dataSection.type === 'top100'">{{translations?.audios?.top100}}</span>
 					<span *ngIf="dataSection.type === 'enjoyWith'">{{translations?.audios?.enjoyYourDay}}</span>
+					<span *ngIf="dataSection.type === 'userPlaylists'">{{translations?.audios?.allPlaylists}}</span>
 				</div>
 
-				<span *ngIf="dataSection.type === 'hits' || dataSection.type === 'mostPlayed'">
+				<span *ngIf="dataSection.type === 'hits' ||
+							dataSection.type === 'mostPlayed'">
 					<ul class="tracks" *ngIf="dataSection.list">
 						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top'}">
 							<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
@@ -1171,7 +1173,12 @@
 					</ul>
 				</span>
 
-				<span *ngIf="dataSection.type === 'recommended' || dataSection.type === 'favourites' || dataSection.type === 'ost' || dataSection.type === 'enjoyWith'">
+				<span *ngIf="dataSection.type === 'recommended' ||
+							dataSection.type === 'favourites' ||
+							dataSection.type === 'ost' ||
+							dataSection.type === 'top100' ||
+							dataSection.type === 'enjoyWith' ||
+							dataSection.type === 'userPlaylists'">
 					<ul class="playlists list" *ngIf="dataSection.list">
 						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{advert: x.contentTypeAd}">
 							<span class="inner" *ngIf="!x.contentTypeAd">
@@ -1220,7 +1227,7 @@
 					</ul>
 				</span>
 
-				<span *ngIf="dataSection.type === 'genres' || dataSection.type === 'top100'">
+				<span *ngIf="dataSection.type === 'genres'">
 					<div class="noData">
 						<div class="description">Sorry, temporarily not available.</div>
 					</div>

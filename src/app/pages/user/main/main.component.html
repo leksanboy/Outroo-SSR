@@ -23,7 +23,8 @@
 						</button>
 
 						<mat-menu #options="matMenu">
-							<button mat-menu-item (click)="userOptions('copyLink', userData)">{{translations?.common?.copyLink}}</button>
+							<button mat-menu-item (click)="userOptions('copyLink', userData)">{{translations?.main?.copyLink}}</button>
+							<button mat-menu-item (click)="userOptions('message', userData)">{{translations?.common?.sendMessage}}</button>
 							<button mat-menu-item (click)="userOptions('report', userData)">{{translations?.common?.report}}</button>
 						</mat-menu>
 					</div>
@@ -64,7 +65,7 @@
 								</div>
 							</li>
 
-							<li *ngIf="sessionData.sessions.length < 10" (click)="openNewSession()">
+							<li *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
 								<div mat-ripple class="inner">
 									<div class="add">
 										<i label="add"></i>

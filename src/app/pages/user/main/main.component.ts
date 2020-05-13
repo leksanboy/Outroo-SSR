@@ -446,6 +446,11 @@ export class MainComponent implements OnInit, OnDestroy {
 				const urlExtension = this.env.url + item.username;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
+			case 'message':
+				case 'user':
+				item.comeFrom = 'user';
+				this.sessionService.setDataNewShare(item);
+				break;
 			case 'report':
 				item.type = 'user';
 				this.sessionService.setDataReport(item);

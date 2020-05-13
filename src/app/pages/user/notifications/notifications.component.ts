@@ -289,7 +289,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	}
 
 	// Item options
-	itemOptions(type, item) {
+	itemNotificationOptions(type, item) {
 		switch (type) {
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
@@ -301,8 +301,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				};
 
 				this.notificationsDataService.addRemove(dataAddRemove).subscribe();
-
-				this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 				break;
 			case 'report':
 				item.type = 'notification';

@@ -144,8 +144,10 @@ export class NewShareComponent implements OnInit, OnDestroy {
 			};
 
 			const data = {
+				user: this.sessionData.current.id,
 				caption: this.actionFormSearch.get('caption').value,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity,
+				rows: 0
 			};
 
 			this.followsDataService.searchFollowing(data)

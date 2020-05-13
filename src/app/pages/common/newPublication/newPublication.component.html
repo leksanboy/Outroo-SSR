@@ -64,9 +64,13 @@
 					</ul> -->
 
 					<ul class="photos" *ngIf="data.photosArray.length > 0">
-						<li mat-ripple *ngFor="let x of data.photosArray; let i = index;" (click)="toggleItemPhoto(x, i)">
+						<li mat-ripple *ngFor="let x of data.photosArray; let i = index;">
 							<div class="image">
 								<div class="img" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + 'thumbnails/' + x.up_name + ')'}"></div>
+
+								<div class="close" (click)="toggleItemPhoto(x, i)">
+									<i label="close"></i>
+								</div>
 
 								<div class="category">
 									<i label="cloud-upload"></i>

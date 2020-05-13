@@ -16,7 +16,7 @@
 		"playlist": "Playlist",
 		"removeCover": "Eliminar portada",
 		"addCoverToPlaylist": "Añadir portada (opcional)",
-		"uploadOrSearch": "Sube o busca alguna canción",
+		"uploadOrSearch": "Busca alguna canción",
 		"goAudios": "Ir a mis canciones",
 		"privatePlaylist": "Playlist privado",
 		"playlistTitle": "Título",
@@ -28,11 +28,13 @@
 		"ostMovies": "OST Películas / Series",
 		"top100": "Top 100",
 		"enjoyYourDay": "Disfruta tu día con ...",
-		"createOwnPlaylists": "Crea tus propias Playlists",
+		"createOwnPlaylists": "Crea tus propias playlists",
 		"addBestSong": "Añade las mejores canciones",
-		"shareCreatedPlaylist": "Comparte la Playlist con tus amigos y amigas",
+		"shareCreatedPlaylist": "Comparte la playlist con tus amigos y amigas",
 		"showAdvanced": "Mostrar advanzado",
-		"description": "Descripción"
+		"description": "Descripción",
+		"allPlaylists": "Todas las playlists",
+		"editorsChoice": "Selección de los editores"
 	},
 	"bookmarks": {
 		"title": "Guardados",
@@ -67,10 +69,11 @@
 			"two": "Este sitio utiliza cookies. Al continuar navegando, está aceptando el uso de cookies. Obtenga más información aquí",
 			"three": "Politica de privacidad"
 		},
-		"userNotFound": "La cuenta de usuario no existe"
+		"userNotFound": "La cuenta de usuario no existe",
+		"copyLink": "Copiar URL del perfil"
 	},
 	"news": {
-		"title": "Noticias",
+		"title": "Explorar",
 		"top": "Top",
 		"people": "Personas",
 		"tag": "Hashtags",
@@ -103,7 +106,7 @@
 		"title": "Fotos",
 		"noData": "No hay fotos",
 		"chooseFiles": "Subir fotos",
-		"maxSizePerFile": "Fotos & Videos · Tamaño maximo por archivo 20 Mb",
+		"maxSizePerFile": "Fotos & Videos · Tamaño maximo por archivo 50 Mb",
 		"addSomeFiles": "Sube fotos, videos, gif"
 	},
 	"post": {

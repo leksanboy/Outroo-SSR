@@ -490,7 +490,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.original_artist = res[0].original_artist ? res[0].original_artist : res[0].title;
 					this.audioPlayerData.current.duration = res[0].duration;
 					this.audioPlayerData.current.image = res[0].image ? (this.env.pathAudios + 'thumbnails/' + res[0].image) : '';
-
 					this.audioPlayerData.item = res[0];
 					this.audioPlayerData.key = 0;
 					this.audioPlayerData.user = this.sessionData.current.id;
@@ -616,6 +615,27 @@ export class ActiveSessionComponent implements AfterViewInit {
 						this.location.go(this.router.url);
 					});
 				});
+		}
+	}
+
+	// Item options
+	itemNotificationOptions(type, item) {
+		switch (type) {
+			case 'remove':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
+
+				const dataAddRemove = {
+					id: item.id,
+					type: item.removeType
+				};
+
+				this.notificationsDataService.addRemove(dataAddRemove).subscribe();
+				break;
+			case 'report':
+				item.type = 'notification';
+				this.sessionService.setDataReport(item);
+				break;
 		}
 	}
 
@@ -872,7 +892,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			artist: this.audioPlayerData.current.original_artist,
 			album: this.audioPlayerData.username,
 			artwork: [{
-				src: this.env.url + this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
+				src: this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
 			}]
 		});
 	}

@@ -397,6 +397,61 @@
 		}
 	}
 
+	function userPlaylists($params){
+		global $conn;
+
+		$cuantity = $params['cuantity'] == 0 ? 20 : $params['cuantity'];
+		$more = $params['more'];
+		$session = $params['session'];
+		$user = $params['user'];
+
+		$sql = "SELECT id,
+						original_id as o_id,
+						type,
+						name,
+						user,
+						title,
+						image,
+						explicit,
+						private
+				FROM z_audios_playlist
+				WHERE user = $user
+					AND is_deleted = 0
+				LIMIT $more, $cuantity";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			$data = array();
+
+			while($row = $result->fetch_assoc()) {
+				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
+				$row['private'] = boolval($row['private']);
+				$row['idPlaylist'] = $row['id'];
+				$row['explicit'] = boolval($row['explicit']);
+
+				if ($row['type'] === 'follow') {
+					$f_row = getPlaylist($row['o_id']);
+
+					$row['name'] = $f_row['name'];
+					$row['title'] = $f_row['title'];
+					$row['image'] = $f_row['image'];
+				}
+
+				if ($session === $user) {
+					$data[] = $row;
+				} else {
+					if (!$row['private']) {
+						$data[] = $row;
+					}
+				}
+			}
+
+			return $data;
+		} else {
+			return null;
+		}
+	}
+
 	if ($type === 'general') {
 		$res = array(
 			'hits'			=> hits($params),
@@ -426,5 +481,7 @@
 		echo json_encode(top100($params));
 	} else if ($type === 'enjoyWith') {
 		echo json_encode(enjoyWith($params));
+	} else if ($type === 'userPlaylists') {
+		echo json_encode(userPlaylists($params));
 	}
 ?>

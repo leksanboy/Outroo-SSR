@@ -268,7 +268,7 @@ export class NewPublicationComponent implements OnInit {
 		console.log('item', item);
 
 		if (item.category !== 'unknown') {
-			if (item.selected) {
+			if (!item.selected) {
 				this.data.photosArray.splice(i, 1);
 			} else {
 				item.selected = true;

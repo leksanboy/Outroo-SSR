@@ -113,8 +113,8 @@
 											</button>
 
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -171,8 +171,8 @@
 											</button>
 
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -248,8 +248,8 @@
 											</button>
 
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -277,8 +277,8 @@
 											</button>
 
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -305,8 +305,8 @@
 											</button>
 
 											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -499,7 +499,7 @@
 
 			<div class="menuBox">
 				<div class="inner" *ngIf="!navMenu">
-					<div mat-ripple class="user" (click)="showChangeSessionOnMenu=!showChangeSessionOnMenu">
+					<div mat-ripple class="user" (click)="setComeFromUserButton(); scrollTop()" routerLink="/{{sessionData?.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
 						<div class="avatar" mat-list-avatar>
 							<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 						</div>
@@ -513,80 +513,40 @@
 								@{{sessionData?.current?.username}}
 							</div>
 						</div>
-
-						<div class="button">
-							<i label="arrow-mini" [ngClass]="{active: showChangeSessionOnMenu}"></i>
-						</div>
 					</div>
 
-					<span *ngIf="showChangeSessionOnMenu">
-						<div mat-ripple class="item userMini" *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x?.id}">
-							<div class="avatar" mat-list-avatar (click)="setCurrentUser(x)">
-								<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
-							</div>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
+						<i label="home"></i>
+						<div class="text">{{translations?.feed?.title}}</div>
+					</a>
 
-							<div class="text" (click)="setCurrentUser(x)">@{{x.username}}</div>
-							<i label="exit" [matMenuTriggerFor]="signOut"></i>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
+						<i label="search"></i>
+						<div class="text">{{translations?.news?.title}}</div>
+					</a>
 
-							<mat-menu #signOut="matMenu" yPosition="below" xPosition="after" class="removeBox">
-								<div class="text">
-									{{translations?.common?.leaveSite}}
-								</div>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/songs" routerLinkActive="selected">
+						<i label="music"></i>
+						<div class="text">{{translations?.audios?.title}}</div>
+					</a>
 
-								<div class="buttons">
-									<button mat-menu-item>{{translations?.common?.no}}</button>
-									<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
-								</div>
-							</mat-menu>
-						</div>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
+						<i label="bookmarks"></i>
+						<div class="text">{{translations?.bookmarks?.title}}</div>
+					</a>
 
-						<div mat-ripple class="item userMini" *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
-							<div class="add" mat-list-avatar>
-								<i label="add"></i>
-							</div>
-							<div class="text">{{translations?.common?.addAccount}}</div>
-						</div>
-					</span>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
+						<i label="notifications"></i>
+						<div class="text">{{translations?.notifications?.title}}</div>
+						<!-- <div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+							{{sessionData?.current?.countPendingNotifications}}
+						</div> -->
+					</a>
 
-					<span *ngIf="!showChangeSessionOnMenu">
-						<a mat-ripple class="item" (click)="setComeFromUserButton(); scrollTop()" routerLink="/{{sessionData?.current.username}}" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
-							<i label="person"></i>
-							<div class="text">{{translations?.main?.title}}</div>
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
-							<i label="home"></i>
-							<div class="text">{{translations?.feed?.title}}</div>
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
-							<i label="search"></i>
-							<div class="text">{{translations?.news?.title}}</div>
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/{{sessionData?.current?.username}}/songs" routerLinkActive="selected">
-							<i label="music"></i>
-							<div class="text">{{translations?.audios?.title}}</div>
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/saved" routerLinkActive="selected">
-							<i label="bookmarks"></i>
-							<div class="text">{{translations?.bookmarks?.title}}</div>
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
-							<i label="notifications"></i>
-							<div class="text">{{translations?.notifications?.title}}</div>
-							<!-- <div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
-								{{sessionData?.current?.countPendingNotifications}}
-							</div> -->
-						</a>
-
-						<a mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
-							<i label="settings"></i>
-							<div class="text">{{translations?.settings?.title}}</div>
-						</a>
-					</span>
+					<a mat-ripple class="item" (click)="scrollTop()" routerLink="/settings" routerLinkActive="selected">
+						<i label="settings"></i>
+						<div class="text">{{translations?.settings?.title}}</div>
+					</a>
 				</div>
 			</div>
 		</span>
@@ -594,7 +554,11 @@
 		<span *ngIf="deniedAccess === 'none'">
 			<div class="head">
 				<div class="center">
-					<div class="logo" routerLink="/"></div>
+					<div class="logo">
+						<a routerLink="{{sessionData ? '/home' : '/'}}" class="img">
+							<i label="logo"></i>
+						</a>
+					</div>
 				</div>
 
 				<div class="right">

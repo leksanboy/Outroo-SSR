@@ -19,7 +19,7 @@
 
 	<div mat-dialog-content class="bodyMessage">
 		<div class="container">
-			<div class="searchBox">
+			<!-- <div class="searchBox">
 				<div class="box">
 					<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
 						<div class="inner">
@@ -41,6 +41,20 @@
 
 							<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
 								<i label="close"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div> -->
+
+			<div class="searchBox">
+				<div class="box">
+					<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
+						<div class="inner">
+							<i class="icon85 grey" label="search"></i>
+							<input type="text" placeholder="{{translations?.common?.search}}" formControlName="caption">
+							<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
+								<i class="icon85 grey" label="close"></i>
 							</button>
 						</div>
 					</form>

@@ -16,7 +16,7 @@
 		"playlist": "Playlist",
 		"removeCover": "Remove cover",
 		"addCoverToPlaylist": "Add cover to playlist (can be empty)",
-		"uploadOrSearch": "Upload or search some songs",
+		"uploadOrSearch": "Search some songs",
 		"goAudios": "Go to my songs",
 		"privatePlaylist": "Private playlist",
 		"playlistTitle": "Title",
@@ -28,11 +28,13 @@
 		"ostMovies": "OST Movies/Series",
 		"top100": "Top 100",
 		"enjoyYourDay": "Enjoy your day with ...",
-		"createOwnPlaylists": "Create your own Playlists",
+		"createOwnPlaylists": "Create your own playlists",
 		"addBestSong": "Add the best songs you can",
-		"shareCreatedPlaylist": "Share the Playlist with your friends",
+		"shareCreatedPlaylist": "Share the playlist with your friends",
 		"showAdvanced": "Show advanced",
-		"description": "Description"
+		"description": "Description",
+		"allPlaylists": "All playlists",
+		"editorsChoice": "Editors' choice"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",
@@ -67,10 +69,11 @@
 			"two": "This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. Find out more here",
 			"three": "Privacy policy"
 		},
-		"userNotFound": "The user account does not exist"
+		"userNotFound": "The user account does not exist",
+		"copyLink": "Copy profile URL"
 	},
 	"news": {
-		"title": "News",
+		"title": "Explore",
 		"top": "Top",
 		"people": "People",
 		"tag": "Hashtags",
@@ -103,7 +106,7 @@
 		"title": "Photos",
 		"noData": "No photos",
 		"chooseFiles": "Choose photos",
-		"maxSizePerFile": "Photos & Videos · Max size per file 20 Mb",
+		"maxSizePerFile": "Photos & Videos · Max size per file 50 Mb",
 		"addSomeFiles": "Upload photos, videos, gif"
 	},
 	"post": {

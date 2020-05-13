@@ -372,7 +372,6 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
 				dialogRefShow.beforeClosed().subscribe((res: string) => {
-					// Set url
 					this.location.go(this.router.url);
 				});
 				break;
