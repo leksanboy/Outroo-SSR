@@ -1,12 +1,15 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
+	$session = sessionId();
+	$url = $data['url'];
+	$id = $data['id'];
 
 	foreach($data['receivers'] as $row){
 		$notification = array(
-			'sender' 	=> $data['sender'],
+			'sender' 	=> $session,
 			'receiver' 	=> $row,
-			'url' 		=> $data['url'],
-			'id' 		=> $data['id'],
+			'url' 		=> $url,
+			'id' 		=> $id,
 			'type' 		=> "share"
 		);
 

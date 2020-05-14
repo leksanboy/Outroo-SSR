@@ -42,7 +42,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 		loadingMoreData: false
 	};
 	public showUsers: boolean;
-	public saveLoading: boolean;
+	public submitLoading: boolean;
 	public searchBoxMentions: boolean;
 
 	constructor(
@@ -61,10 +61,10 @@ export class NewShareComponent implements OnInit, OnDestroy {
 		this.data.list = [];
 		this.data.new = false;
 
-		if (this.data.comeFrom === 'sharePhoto' ||
+		/* if (this.data.comeFrom === 'sharePhoto' ||
 			this.data.comeFrom === 'sharePublication' ||
 			this.data.comeFrom === 'shareSong'
-		) {
+		) {} */
 			this.data.active = 'default';
 
 			// Search
@@ -83,7 +83,6 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 			// Get default following users list
 			this.defaultUsers();
-		}
 	}
 
 	ngOnInit() {
@@ -106,7 +105,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 		};
 
 		const data = {
-			user: this.sessionData.current.username,
+			user: this.sessionData.current.id,
 			type: 'following',
 			rows: this.dataUsers.rows,
 			cuantity: this.env.cuantity
@@ -221,7 +220,7 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 		if (!item.added) {
 			// Remove from users list and chat list
-			for (const i of this.dataUsers.list) {
+			for (const i in this.dataUsers.list) {
 				if (i) {
 					if (this.dataUsers.list[i].id === item.id) {
 						this.dataUsers.list[i].added = false;
@@ -240,50 +239,65 @@ export class NewShareComponent implements OnInit, OnDestroy {
 			}
 		} else {
 			this.data.users.push(item);
+
+			// Añadir si el buscado ya es mi amigo
+			for (const i in this.dataUsers.list) {
+				if (i) {
+					if (this.dataUsers.list[i].id === item.id) {
+						this.dataUsers.list[i].added = true;
+					}
+				}
+			}
 		}
+
+		console.log('this.data.users', this.data.users);
 	}
 
 	// Send shared
 	submit() {
-		const users = [];
-
-		for (const user of this.data.users) {
-			if (user) {
-				users.push(user.id);
-			}
-		}
-
 		if (this.data.users.length > 0) {
-			let id, url;
+			this.submitLoading = true;
+			let receivers = [],
+				id,
+				url;
 
-			if (this.data.comeFrom === 'sharePhoto') {
-				id = this.data.item.id;
-				url = 'photos';
-			} else if (this.data.comeFrom === 'sharePublication') {
+			for (const user of this.data.users) {
+				if (user) {
+					receivers.push(user.id);
+				}
+			}
+
+			if (this.data.comeFrom === 'sharePublication') {
 				id = this.data.item.id;
 				url = 'publications';
 			} else if (this.data.comeFrom === 'shareSong') {
 				id = this.data.item.song;
 				url = 'audios';
+			/*
+			} else if (this.data.comeFrom === 'sharePlaylist') {
+			} else if (this.data.comeFrom === 'shareUser') {
+			*/
 			}
 
 			const data = {
-				receivers: users,
+				receivers: receivers,
 				url: url,
 				id: id
 			};
 
 			this.notificationsDataService.share(data)
 				.subscribe((res: any) => {
-					this.saveLoading = false;
+					this.submitLoading = false;
+
+					this.alertService.success(this.translations.common.sentSuccessfully);
+					this.close();
 				}, error => {
-					this.saveLoading = false;
+					this.submitLoading = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
+		} else {
+			this.alertService.success(this.translations.common.addSomeUsers);
 		}
-
-		this.alertService.success(this.translations.common.sentSuccessfully);
-		this.close();
 	}
 
 	// Close dialog

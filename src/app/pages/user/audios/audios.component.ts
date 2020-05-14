@@ -1087,12 +1087,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
-		}
-	}
-
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
@@ -1103,24 +1097,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				break;
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
-				this.sessionService.setDataCopy(urlExtension);
-				break;
-		}
-	}
-
-	// Share on social media
-	shareOnPlaylist(type, item) {
-		switch (type) {
-			case 'message':
-				item.comeFrom = 'sharePlaylist';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'newTab':
-				const url = this.env.url + 'pl/' + item.name;
-				this.window.open(url, '_blank');
-				break;
-			case 'copyLink':
-				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
@@ -1305,6 +1281,18 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			case ('report'):
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
+				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
 	}

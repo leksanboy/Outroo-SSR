@@ -15,7 +15,7 @@
 					<div class="info" *ngIf="!dataDefault.loadingData">
 						<div class="left">
 							<div class="image">
-								<img [src]="dataDefault?.current?.image ? (env.pathAudios + 'covers/' + dataDefault?.current?.image) : env.defaultPlaylistCover">
+								<img [src]="dataDefault?.info?.image ? (env.pathAudios + 'covers/' + dataDefault?.info?.image) : env.defaultPlaylistCover">
 							</div>
 						</div>
 
@@ -105,9 +105,9 @@
 								</mat-menu>
 
 								<mat-menu #menuShareSocial="matMenu">
-									<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
-									<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
-									<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
+									<button mat-menu-item (click)="itemSongOptions('message', x, null)">{{translations?.common?.sendMessage}}</button>
+									<button mat-menu-item (click)="itemSongOptions('newTab', x, null)">{{translations?.common?.openInNewTab}}</button>
+									<button mat-menu-item (click)="itemSongOptions('copyLink', x, null)">{{translations?.common?.copyLink}}</button>
 								</mat-menu>
 							</div>
 						</div>
@@ -161,9 +161,9 @@
 									</mat-menu>
 
 									<mat-menu #menuShareSocial="matMenu">
-										<button mat-menu-item (click)="shareOnPlaylist('message', x)">{{translations?.common?.sendMessage}}</button>
-										<button mat-menu-item (click)="shareOnPlaylist('newTab', x)">{{translations?.common?.openInNewTab}}</button>
-										<button mat-menu-item (click)="shareOnPlaylist('copyLink', x)">{{translations?.common?.copyLink}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('message', x, i)">{{translations?.common?.sendMessage}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('newTab', x, i)">{{translations?.common?.openInNewTab}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('copyLink', x, i)">{{translations?.common?.copyLink}}</button>
 									</mat-menu>
 								</div>
 							</div>

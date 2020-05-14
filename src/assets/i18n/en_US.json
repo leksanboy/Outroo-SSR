@@ -422,6 +422,8 @@
 		"seeAll": "See all",
 		"searchFriends": "Search friends",
 		"moreInfo": "More information",
-		"explicit": "Explicit content"
+		"explicit": "Explicit content",
+		"sendTo": "Send to",
+		"addSomeUsers": "Add some users"
 	}
 }

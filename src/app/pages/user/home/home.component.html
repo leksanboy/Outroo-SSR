@@ -23,21 +23,21 @@
 								</button>
 
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('disableComments', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{!x?.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-									<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('report', x)">{{translations?.common?.report}}</button>
 									<mat-divider *ngIf="x?.user?.id == sessionData?.current?.id"></mat-divider>
-									<button mat-menu-item (click)="itemOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('remove', x)" *ngIf="x?.user?.id == sessionData?.current?.id">{{x?.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 								</mat-menu>
 
 								<mat-menu #menuShareSocial="matMenu">
-									<button mat-menu-item (click)="shareOn('message', x)">{{translations?.common?.sendMessage}}</button>
-									<button mat-menu-item (click)="shareOn('newTab', x)">{{translations?.common?.openInNewTab}}</button>
-									<button mat-menu-item (click)="shareOn('copyLink', x)">{{translations?.common?.copyLink}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('message', x)">{{translations?.common?.sendMessage}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('newTab', x)">{{translations?.common?.openInNewTab}}</button>
+									<button mat-menu-item (click)="itemPublicationOptions('copyLink', x)">{{translations?.common?.copyLink}}</button>
 								</mat-menu>
 							</div>
 						</div>
-						
+
 						<div class="body">
 							<div class="photos" *ngIf="x?.photos">
 								<span *ngIf="x?.photos.length == 1">
@@ -139,9 +139,9 @@
 												</mat-menu>
 
 												<mat-menu #menuSongShareSocial="matMenu">
-													<button mat-menu-item (click)="shareOn('messageSong', a)">{{translations?.common?.sendMessage}}</button>
-													<button mat-menu-item (click)="shareOn('newTabSong', a)">{{translations?.common?.openInNewTab}}</button>
-													<button mat-menu-item (click)="shareOn('copyLinkSong', a)">{{translations?.common?.copyLink}}</button>
+													<button mat-menu-item (click)="itemSongOptions('message', a, null)">{{translations?.common?.sendMessage}}</button>
+													<button mat-menu-item (click)="itemSongOptions('newTab', a, null)">{{translations?.common?.openInNewTab}}</button>
+													<button mat-menu-item (click)="itemSongOptions('copyLink', a, null)">{{translations?.common?.copyLink}}</button>
 												</mat-menu>
 											</div>
 										</div>

@@ -172,7 +172,7 @@
 													<button mat-icon-button (click)="playSong(x.contentData, x.contentData, 0, i)">
 														<i label="play" *ngIf="!x.contentData.playing || !(audioPlayerData.location === 'notifications' && audioPlayerData.type === i)"></i>
 														<i label="pause" *ngIf="x.contentData.playing && (audioPlayerData.location === 'notifications' && audioPlayerData.type === i)"></i>
-														<img *ngIf="x.contentData.image" [src]="x.contentData.imageSrc"/>
+														<img [src]="x.contentData.image ? (env.pathAudios + 'thumbnails/' + x.contentData.image) : env.defaultSongCover"/>
 													</button>
 												</div>
 
@@ -206,9 +206,9 @@
 													</mat-menu>
 
 													<mat-menu #menuShareSocial="matMenu">
-														<button mat-menu-item (click)="shareOn('message', x.contentData)">{{translations?.common?.sendMessage}}</button>
-														<button mat-menu-item (click)="shareOn('newTab', x.contentData)">{{translations?.common?.openInNewTab}}</button>
-														<button mat-menu-item (click)="shareOn('copyLink', x.contentData)">{{translations?.common?.copyLink}}</button>
+														<button mat-menu-item (click)="itemSongOptions('message', x.contentData, null)">{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="itemSongOptions('newTab', x.contentData, null)">{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="itemSongOptions('copyLink', x.contentData, null)">{{translations?.common?.copyLink}}</button>
 													</mat-menu>
 												</div>
 											</div>

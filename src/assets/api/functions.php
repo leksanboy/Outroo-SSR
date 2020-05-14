@@ -883,7 +883,7 @@
 	function getIdNameContentMediaCommentFromPublicationById($id, $commentId){
 		global $conn;
 
-		$sql = "SELECT id, name, content, url_video as urlVideo, photos 
+		$sql = "SELECT id, name, content, url_video as urlVideo, photos
 				FROM z_publications
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();

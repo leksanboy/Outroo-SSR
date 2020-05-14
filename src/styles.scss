@@ -107,7 +107,7 @@ $shadowIcon1: 0 1px 2px rgba(0, 0, 0, 0.24);
 
 /*General styles*/
 body {
-	font-family: -apple-system, BlinkMacSystemFont, Helvetica, Roboto, Arial, sans-serif;
+	font-family: Helvetica, Roboto, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	background-color: $whiteColor;
@@ -675,7 +675,7 @@ body {
 						padding: 0 6px 0 12px;
 						text-align: left;
 						overflow: hidden;
-						max-width: 80%;
+						max-width: 300px;
 						display: flex;
 
 						.title {
@@ -921,6 +921,29 @@ body {
 						background-color: $blueColor;
 					}
 				}
+
+				.share {
+					display: flex;
+					align-items: center;
+					height: 100%;
+
+					.mat-checkbox {
+						pointer-events: none;
+						margin: 0;
+
+						label {
+							.mat-checkbox-inner-container {
+								width: 24px;
+								height: 24px;
+
+								.mat-checkbox-frame,
+								.mat-checkbox-background {
+									border-radius: 50%;
+								}
+							}
+						}
+					}
+				}
 			}
 
 			&:hover {
@@ -1000,7 +1023,7 @@ body {
 							background-color: transparentize($greyColor, .75);
 							border-radius: 3px;
 							margin: 4px 0 0;
-							padding: 0;
+							padding: 6px 4px;
 							max-width: 80%;
 
 							.songInner {
@@ -1280,6 +1303,12 @@ body {
 					}
 				}
 			}
+		}
+
+		&.main {
+			padding: 12px 0;
+			margin: 0 0 6px;
+			border-bottom: 1px solid transparentize($greyColor, .75);
 		}
 	}
 
@@ -1822,6 +1851,55 @@ body {
 		}
 	}
 
+	ul.shareUsers {
+		-webkit-overflow-scrolling: touch;
+		box-sizing: border-box;
+		white-space: nowrap;
+		overflow-y: hidden;
+		overflow-x: auto;
+		padding: 0 18px 18px;
+		float: left;
+		width: 100%;
+		margin: 0 0 12px;
+		border-bottom: 1px solid transparentize($greyColor, .75);
+
+		.mat-expansion-panel-content {
+			padding: 12px 0 0;
+		}
+
+		li {
+			display: inline-block;
+			margin: 0 12px 0 0;
+			list-style: none;
+			padding: 0;
+
+			.inner {
+				box-sizing: border-box;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+
+				.avatar {
+					width: 64px;
+					height: 64px;
+					border-radius: 50%;
+					overflow: hidden;
+
+					img {
+						width: 100%;
+					}
+				}
+			}
+
+			&:last-child{
+				margin: 0;
+			}
+		}
+	}
+
 	.username {
 		width: calc(100% - 72px);
 		box-sizing: border-box;
@@ -2062,7 +2140,7 @@ body {
 					position: relative;
 					text-align: left;
 					overflow: hidden;
-					max-width: 80%;
+					max-width: 300px;
 					display: flex;
 
 					.title {
@@ -2611,7 +2689,7 @@ body {
 		background-color: transparent;
 		box-shadow: none !important;
 		color: currentColor;
-		margin: 12px 0 0;
+		margin: 0;
 		width: 100%;
 		float: left;
 
@@ -2790,14 +2868,10 @@ body {
 	/*Search box*/
 	.searchBox {
 		box-sizing: border-box;
-		padding: 0 18px 12px;
+		padding: 0 18px 18px;
 		float: left;
 		width: 100%;
 		margin: 0;
-
-		&.news {
-			padding: 12px 6px;
-		}
 
 		.box {
 			background: transparentize($greyColor, .75);
@@ -3968,7 +4042,7 @@ body {
 			color: $blackColor;
 			overflow-x: hidden;
 			max-height: 640px;
-			overflow-y: auto;
+			overflow-y: overlay;
 			height: 100%;
 			width: 100%;
 			float: left;
@@ -6212,7 +6286,7 @@ body {
 						.social {
 							justify-content: center;
 							box-sizing: border-box;
-							padding: 18px 18px 0;
+							padding: 18px 18px 12px;
 							display: flex;
 							width: 100%;
 							float: left;
@@ -6631,7 +6705,7 @@ body {
 						box-sizing: border-box;
 						display: flow-root;
 						width: 100%;
-						margin: 0 0 12px;
+						margin: 0;
 						padding: 0 0 12px;
 						border-top: 1px solid transparentize($greyColor, .75);
 
@@ -6681,7 +6755,7 @@ body {
 
 						&:nth-child(2) {
 							.playlists {
-								height: calc(190px * 2);
+								height: calc(190px * 2 + 12px);
 								display: flex;
 								flex-direction: column;
 								flex-wrap: wrap;
@@ -6690,7 +6764,7 @@ body {
 
 						&:last-child {
 							.playlists {
-								height: calc(190px * 3);
+								height: calc(190px * 3 + 12px);
 								display: flex;
 								flex-direction: column;
 								flex-wrap: wrap;
@@ -7016,6 +7090,10 @@ body {
 		background-color: $blackColor;
 		color: $whiteColor;
 
+		@at-root html {
+			background-color: $blackColor;
+		}
+
 		.mat-ripple-element {
 			background-color: rgba(11, 11, 11, 0.25);
 		}
@@ -7059,7 +7137,6 @@ body {
 			}
 		}
 
-		/* Modal box */
 		mat-dialog-container {
 			background: $darkThemeColor !important;
 
@@ -7120,7 +7197,6 @@ body {
 			}
 		}
 
-		/* Remove pop-up */
 		.mat-menu-panel {
 			background: #161616;
 
@@ -7133,14 +7209,12 @@ body {
 			}
 		}
 
-		/*Notifications box*/
 		.notificationsBox {
 			.box {
 				background-color: $darkThemeColor !important;
 			}
 		}
 
-		/*User box*/
 		.userBox {
 			.box {
 				background-color: $darkThemeColor !important;
@@ -7157,12 +7231,10 @@ body {
 			}
 		}
 
-		/*Cookies*/
 		.cookiesBox {
 			background-color: $darkThemeColor;
 		}
 
-		/*Tabs*/
 		.mat-tab-group {
 			.mat-tab-header {
 				border-bottom: 1px solid transparentize($whiteColor, .75);
@@ -7178,7 +7250,6 @@ body {
 			}
 		}
 
-		/*Upload files*/
 		.uploadFilesBox {
 			.button {
 				button {
@@ -7188,7 +7259,6 @@ body {
 			}
 		}
 
-		/* Create post */
 		.createButton {
 			button {
 				background: $whiteColor;
@@ -7196,7 +7266,6 @@ body {
 			}
 		}
 
-		/*Box comments*/
 		.boxComments {
 			.loadComments {
 				button {
@@ -7209,7 +7278,6 @@ body {
 			}
 		}
 
-		/*Load more*/
 		.loadMore {
 			button {
 				border: 1px solid $whiteColor;
@@ -7220,7 +7288,6 @@ body {
 			}
 		}
 
-		/*Content pages*/
 		.innerBodyUser {
 			.header {
 				.head {
@@ -7237,7 +7304,6 @@ body {
 			}
 		}
 
-		/*Mobile bottom nav*/
 		.bottomNav {
 			background-color: $blackColor;
 
@@ -7278,7 +7344,6 @@ body {
 			}
 		}
 
-		/*Audio Player web*/
 		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
 			background-color: $blackColor;
@@ -7387,6 +7452,25 @@ body {
 
 /*DESKTOP*/
 @media (min-width: 761px) {
+	::-webkit-scrollbar {
+		width: 7px;
+		height: 6px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: transparentize($greyColor, 0.65);
+		border-radius: 10px;
+		transition: .15s;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: transparentize($greyColor, 0.5);
+	}
+
 	body {
 		padding: 0 0 32px;
 
@@ -7851,6 +7935,30 @@ body {
 							.disableAdBlock {
 								width: calc(100% + 24px);
 								margin: 0 0 0 -12px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		ul.notifications {
+			li {
+				.inner {
+					.texts {
+						.text {
+							.song {
+								.songInner {
+									.songText {
+										.titleArtist {
+											max-width: 92px;
+										}
+
+										.duration {
+											display: none;
+										}
+									}
+								}
 							}
 						}
 					}

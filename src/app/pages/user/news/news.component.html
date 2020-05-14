@@ -1,6 +1,15 @@
 <div class="innerBodyUser">
 	<div class="innerBodyContent">
 		<div class="pageNews">
+			<div class="back" (click)="goBack()">
+				<button mat-icon-button>
+					<i label="back"></i>
+				</button>
+				<div class="text">{{translations?.common?.back}}</div>
+			</div>
+
+			<!-- <div class="pageTitle">{{translations?.news?.title}}</div> -->
+
 			<div class="content">
 				<div class="searchBox news" *ngIf="data.active === 'default' || data.active === 'search'">
 				 	<div class="box">

@@ -11,7 +11,8 @@
 		</div>
 
 		<div class="right">
-			<button mat-button type="submit" (click)="submit()" [disabled]="saveLoading || data.users.length === 0">
+			<button mat-button type="submit" (click)="submit()" [disabled]="submitLoading || data.users.length === 0">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 				{{translations?.common?.send}}
 			</button>
 		</div>
@@ -19,34 +20,6 @@
 
 	<div mat-dialog-content class="bodyMessage">
 		<div class="container">
-			<!-- <div class="searchBox">
-				<div class="box">
-					<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
-						<div class="inner">
-							<i label="search"></i>
-
-							<div class="chips">
-								<mat-chip-list matPrefix>
-									<mat-chip *ngFor="let x of data.users" (click)="addUser(x)">
-										<div class="avatar">
-											<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
-										</div>
-										<span class="name">{{x.user.username}}</span>
-										<i label="close"></i>
-									</mat-chip>
-
-									<input type="text" placeholder="{{translations.search}}" formControlName="caption">
-								</mat-chip-list>
-							</div>
-
-							<button mat-icon-button type="button" *ngIf="actionFormSearch.controls.caption.value.length > 0" (click)="search('clear')">
-								<i label="close"></i>
-							</button>
-						</div>
-					</form>
-				</div>
-			</div> -->
-
 			<div class="searchBox">
 				<div class="box">
 					<form [formGroup]="actionFormSearch" (ngSubmit)="search('send')">
@@ -61,25 +34,44 @@
 				</div>
 			</div>
 
-			<span *ngIf="data.active == 'default'">
-				<ul class="usersList" *ngIf="dataUsers.list.length > 0">
-					<li *ngFor="let x of dataUsers.list" (click)="addUser(x)">
-						<div class="avatar">
-							<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
-						</div>
+			<mat-expansion-panel [expanded]="data?.users?.length > 0">
+				<div class="expTitle">
+					{{translations?.common?.sendTo}}
+				</div>
 
-						<div class="text">
-							<span class="username">
-								{{x.user.username}}
-								<i *ngIf="x.user.official" matTooltip="{{translations.verifiedAccount}}"></i>
-							</span>
-							<br>
-							<span class="name">{{x.user.name}}</span>
+				<ul class="shareUsers">
+					<li *ngFor="let x of data?.users">
+						<div mat-ripple class="inner">
+							<div class="avatar" (click)="addUser(x)">
+								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</mat-expansion-panel>
+
+			<span *ngIf="data.active == 'default'">
+				<ul class="followers" *ngIf="dataUsers.list">
+					<li *ngFor="let x of dataUsers.list; let i=index;" (click)="addUser(x)">
+						<a class="avatar">
+							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+						</a>
+
+						<div class="texts">
+							<div class="text">
+								<a>{{x.user.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							</div>
+
+							<div class="text">
+								{{x.user.name}}
+							</div>
 						</div>
 
 						<div class="actions">
-							<i label="check-circle" *ngIf="x.added"></i>
-							<i label="uncheck-circle" *ngIf="!x.added"></i>
+							<div class="share">
+								<mat-checkbox [(ngModel)]="x.added"></mat-checkbox>
+							</div>
 						</div>
 					</li>
 				</ul>
@@ -94,21 +86,27 @@
 			</span>
 
 			<span *ngIf="data.active == 'search'">
-				<ul class="usersList" *ngIf="dataSearch.list.length > 0">
-					<li *ngFor="let x of dataSearch.list" (click)="addUser(x)">
-						<div class="avatar">
-							<img [src]="x.user.avatar ? x.user.avatarUrl : environment.avatar"/>
-						</div>
+				<ul class="followers" *ngIf="dataSearch.list">
+					<li *ngFor="let x of dataSearch.list; let i=index;" (click)="addUser(x)">
+						<a class="avatar">
+							<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+						</a>
 
-						<div class="text">
-							<span class="username">{{x.user.username}}</span>
-							<br>
-							<span class="name">{{x.about.trim() ? x.about : x.user.name}}</span>
+						<div class="texts">
+							<div class="text">
+								<a>{{x.user.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							</div>
+
+							<div class="text">
+								{{x.user.name}}
+							</div>
 						</div>
 
 						<div class="actions">
-							<i label="check-circle" *ngIf="x.added"></i>
-							<i label="uncheck-circle" *ngIf="!x.added"></i>
+							<div class="share">
+								<mat-checkbox [(ngModel)]="x.added"></mat-checkbox>
+							</div>
 						</div>
 					</li>
 				</ul>
@@ -128,6 +126,18 @@
 					<mat-progress-spinner mode="indeterminate" *ngIf="dataSearch.loadingMoreData"></mat-progress-spinner>
 				</div>
 			</span>
+		</div>
+	</div>
+
+	<div mat-dialog-actions class="buttons">
+		<div class="actions">
+			<button mat-raised-button type="button" (click)="close()">
+				{{translations?.common?.cancel}}
+			</button>
+			<button mat-raised-button type="submit" (click)="submit()" [disabled]="submitLoading">
+				<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
+				{{translations?.common?.send}}
+			</button>
 		</div>
 	</div>
 </div>

@@ -13,6 +13,7 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 
@@ -61,7 +62,8 @@ export class NewsComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private publicationsDataService: PublicationsDataService,
 		private followsDataService: FollowsDataService,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -179,6 +181,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.activeSessionPlaylists.unsubscribe();
 		this.activeLanguage.unsubscribe();
+	}
+
+	// Go back
+	goBack() {
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Push Google Ad

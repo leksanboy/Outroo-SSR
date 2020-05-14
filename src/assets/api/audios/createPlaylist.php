@@ -42,11 +42,13 @@
 
 		$conn->close();
 	} else if ($type === 'update') {
+		$image = $image ? "(image = '$imageNameJpg'," : "";
+
 		$sql = "UPDATE z_audios_playlist
 				SET title = '$title',
 					description = '$description',
 					genre = '$genre',
-					image = '$imageNameJpg',
+					$image
 					explicit = '$explicit',
 					ip_address = '$ipAddress'
 				WHERE id = $id
@@ -57,33 +59,5 @@
 		echo json_encode($res);
 
 		$conn->close();
-		/* if ($subtype === 'updateTitle') {
-		} else if ($subtype === 'updateTitleImage') {
-			$sql = "UPDATE z_audios_playlist
-					SET title = '$title',
-						image = '',
-						ip_address = '$ipAddress'
-					WHERE id = $id
-						AND user = $session";
-			$result = $conn->query($sql);
-
-			$res = getPlaylist($id);
-			echo json_encode($res);
-
-			$conn->close();
-		} else if ($subtype === 'updateNewImage') {
-			$sql = "UPDATE z_audios_playlist
-					SET title = '$title',
-						image = '$imageNameJpg',
-						ip_address = '$ipAddress'
-					WHERE id = $id
-						AND user = $session";
-			$result = $conn->query($sql);
-
-			$res = getPlaylist($id);
-			echo json_encode($res);
-
-			$conn->close();
-		} */
 	}
 ?>

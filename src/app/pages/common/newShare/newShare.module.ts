@@ -11,7 +11,9 @@ import {
 	MatRippleModule,
 	MatInputModule,
 	MatMenuModule,
-	MatChipsModule
+	MatChipsModule,
+	MatCheckboxModule,
+	MatExpansionModule
 } from '@angular/material';
 
 import { PipesModule } from '../../../../app/core/pipes/pipes.module';
@@ -40,7 +42,9 @@ const routes: Routes = [
 		MatRippleModule,
 		MatInputModule,
 		MatMenuModule,
-		MatChipsModule
+		MatChipsModule,
+		MatCheckboxModule,
+		MatExpansionModule
 	],
 	declarations: [
 		NewShareComponent

@@ -228,12 +228,6 @@ export class SongComponent implements OnInit, OnDestroy {
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
-		}
-	}
-
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
