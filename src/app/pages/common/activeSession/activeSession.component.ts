@@ -26,7 +26,9 @@ import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showL
 import { ActivePlayerMobileComponent } from '../../../../app/pages/common/activePlayerMobile/activePlayerMobile.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 import { ActiveSessionsMobileComponent } from '../../../../app/pages/common/activeSessionsMobile/activeSessionsMobile.component';
+
 import { NewShareComponent } from '../../../../app/pages/common/newShare/newShare.component';
+import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
 
 declare var navigator: any;
 declare var MediaMetadata: any;
@@ -588,7 +590,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Show photo from url if is one
 	showNotification(item) {
-		if (item.url === 'publications') {
+		if (item.url === 'publication') {
 			const data = {
 				name: item.contentData.name,
 				session: this.sessionData.current.id
@@ -1094,12 +1096,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
-		}
-	}
-
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
@@ -1110,6 +1106,105 @@ export class ActiveSessionComponent implements AfterViewInit {
 				break;
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
+	// Playlist options
+	itemPlaylistOptions(type, item, index) {
+		switch (type) {
+			case ('show'):
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.sessionData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
+			case ('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARO)
+					.subscribe((res: any) => {
+						item.idPlaylist = res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
+
+						if (dataARO.type === 'add') {
+							this.sessionData.current.playlists.unshift(dataARO);
+						} else {
+							for (const i in this.sessionData.current.playlists) {
+								if (i) {
+									if (this.sessionData.current.playlists[i].id = dataARO.id) {
+										this.sessionData.current.playlists[i] = dataARO;
+									}
+								}
+							}
+						}
+						// Update playslists on selects
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
+					});
+				break;
+			case ('follow'):
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
+
+				const dataF = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.followPlaylist(dataF)
+					.subscribe((res: any) => {
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
+					});
+
+				break;
+			case ('report'):
+				item.type = 'audioPlaylist';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}

@@ -241,7 +241,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 				const config = {
 					disableClose: false,
 					data: {
-						comeFrom: 'publications',
+						comeFrom: 'publication',
 						translations: this.translations,
 						sessionData: this.sessionData,
 						userData: (res ? res.user : null),

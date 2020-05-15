@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
-	
+
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$sender = sessionId();
 	$receiver = $data['receiver'];
@@ -14,7 +14,7 @@
 
 		// Notification data
 		$notification = array(
-			'url' 		=> 'publications',
+			'url' 		=> 'publication',
 			'type' 		=> 'like',
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver,
@@ -22,21 +22,22 @@
 		);
 
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
-		
+		}
+
 		var_dump(http_response_code(204));
 
 		$conn->close();
 	} else if ($type === 'unlike') { // Remove
 		$sql = "DELETE FROM z_publications_likes
-				WHERE user = $sender 
+				WHERE user = $sender
 					AND publication = $id";
 		$result = $conn->query($sql);
 
 		// Notification data
 		$notification = array(
-			'url' 		=> 'publications',
+			'url' 		=> 'publication',
 			'type' 		=> 'unlike',
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver,
@@ -44,8 +45,9 @@
 		);
 
 		// Check to not notificate myself
-		if ($sender != $receiver)
+		if ($sender != $receiver) {
 			generateNotification($notification);
+		}
 
 		var_dump(http_response_code(204));
 

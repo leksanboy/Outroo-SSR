@@ -69,7 +69,7 @@
 
 		if ($rcv) {
 			$notification = array(
-				'url' 		=> 'publications',
+				'url' 		=> 'publication',
 				'type' 		=> 'mention',
 				'sender' 	=> $session,
 				'receiver' 	=> $rcv,

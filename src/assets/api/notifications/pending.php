@@ -13,10 +13,12 @@
 				AND
 				(
 					CASE
-						WHEN n.page_url = 'publications' THEN
+						WHEN n.page_url = 'publication' THEN
 							EXISTS (SELECT 1 FROM z_publications WHERE id = n.page_id and is_deleted = 0)
-						WHEN n.page_url = 'audios' THEN
+						WHEN n.page_url = 'audio' THEN
 							EXISTS (SELECT 1 FROM z_audios WHERE id = n.page_id and is_deleted = 0)
+						WHEN n.page_url = 'playlist' THEN
+							EXISTS (SELECT 1 FROM z_audios_playlist WHERE id = n.page_id and is_deleted = 0)
 						WHEN n.page_url = 'followers' THEN
 							EXISTS (SELECT 1 FROM z_following WHERE receiver = n.receiver and is_deleted = 0)
 					END

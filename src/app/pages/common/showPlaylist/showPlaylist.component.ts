@@ -219,12 +219,6 @@ export class ShowPlaylistComponent implements OnInit {
 				item.type = 'playlist';
 				this.sessionService.setDataReport(item);
 				break;
-		}
-	}
-
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
 			case 'message':
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
@@ -351,6 +345,18 @@ export class ShowPlaylistComponent implements OnInit {
 			case ('report'):
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
+				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}
 	}

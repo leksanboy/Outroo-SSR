@@ -1020,14 +1020,15 @@ body {
 						}
 
 						.song {
-							background-color: transparentize($greyColor, .75);
+							background-color: transparentize(#2e2e2e, .75);
 							border-radius: 3px;
 							margin: 4px 0 0;
-							padding: 6px 4px;
+							padding: 0;
 							max-width: 80%;
 
 							.songInner {
-								padding: 6px;
+								padding: 12px 0 12px 12px;
+								height: inherit;
 								margin: 0;
 
 								.songImage button i {
@@ -1043,6 +1044,37 @@ body {
 									i {
 										margin: 0;
 										float: inherit;
+									}
+								}
+							}
+						}
+
+						.playlistNotification {
+							background-color: transparentize(#2e2e2e, .75);
+							border-radius: 3px;
+							margin: 4px 0 0;
+							padding: 16px 0 0;
+							box-sizing: border-box;
+							float: left;
+
+							ul.playlists {
+								overflow: hidden;
+								padding: 0 18px !important;
+
+								li {
+									padding: 0;
+
+									a {
+										max-width: inherit;
+										color: currentColor;
+									}
+
+									.panel .actions button i {
+										margin: 0;
+									}
+
+									&:hover {
+										background-color: initial;
 									}
 								}
 							}
@@ -1376,6 +1408,14 @@ body {
 					display: flex;
 					height: 40px;
 					float: left;
+
+					button {
+						span {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						}
+					}
 
 					.category {
 						justify-content: center;

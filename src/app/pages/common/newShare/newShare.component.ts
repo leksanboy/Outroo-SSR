@@ -61,28 +61,24 @@ export class NewShareComponent implements OnInit, OnDestroy {
 		this.data.list = [];
 		this.data.new = false;
 
-		/* if (this.data.comeFrom === 'sharePhoto' ||
-			this.data.comeFrom === 'sharePublication' ||
-			this.data.comeFrom === 'shareSong'
-		) {} */
-			this.data.active = 'default';
+		this.data.active = 'default';
 
-			// Search
-			this.actionFormSearch = this._fb.group({
-				caption: ['']
+		// Search
+		this.actionFormSearch = this._fb.group({
+			caption: ['']
+		});
+
+		// Search/Reset
+		this.actionFormSearch.controls['caption'].valueChanges
+			.pipe(
+				debounceTime(400),
+				distinctUntilChanged())
+			.subscribe(val => {
+				(val.length > 0) ? this.search('default') : this.search('clear');
 			});
 
-			// Search/Reset
-			this.actionFormSearch.controls['caption'].valueChanges
-				.pipe(
-					debounceTime(400),
-					distinctUntilChanged())
-				.subscribe(val => {
-					(val.length > 0) ? this.search('default') : this.search('clear');
-				});
-
-			// Get default following users list
-			this.defaultUsers();
+		// Get default following users list
+		this.defaultUsers();
 	}
 
 	ngOnInit() {
@@ -267,16 +263,20 @@ export class NewShareComponent implements OnInit, OnDestroy {
 				}
 			}
 
+			console.log('this.data:', this.data);
+
 			if (this.data.comeFrom === 'sharePublication') {
 				id = this.data.item.id;
-				url = 'publications';
+				url = 'publication';
 			} else if (this.data.comeFrom === 'shareSong') {
 				id = this.data.item.song;
-				url = 'audios';
-			/*
+				url = 'audio';
 			} else if (this.data.comeFrom === 'sharePlaylist') {
+				id = this.data.item.id;
+				url = 'playlist';
 			} else if (this.data.comeFrom === 'shareUser') {
-			*/
+				id = this.data.item.id;
+				url = 'user';
 			}
 
 			const data = {

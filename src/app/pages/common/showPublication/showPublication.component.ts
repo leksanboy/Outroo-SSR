@@ -192,7 +192,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	// Item Options
-	itemOptions(type, item) {
+	itemPublicationOptions(type, item) {
 		switch (type) {
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
@@ -223,12 +223,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			case 'close':
 				this.dialogRef.close();
 				break;
-		}
-	}
-
-	// Share on social media
-	shareOn(type, item) {
-		switch (type) {
 			case 'message':
 				item.comeFrom = 'sharePublication';
 				this.sessionService.setDataNewShare(item);
@@ -240,18 +234,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			case 'copyLink':
 				const urlExtension = this.env.url + 'p/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
-				break;
-			case 'messageSong':
-				item.comeFrom = 'shareSong';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'newTabSong':
-				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
-				this.window.open(urlSong, '_blank');
-				break;
-			case 'copyLinkSong':
-				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
-				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
 	}
@@ -328,6 +310,18 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				item.type = 'audio';
 				item.translations = this.translations;
 				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
 	}

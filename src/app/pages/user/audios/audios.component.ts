@@ -213,7 +213,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 							}
 						}
 					} else if (this.data.content === 'seeAll') {
-						if (this.dataGeneral.list.length > 0) {
+						if (this.dataGeneral.list.hits.length > 0) {
 							this.seeAll('more');
 						}
 					}

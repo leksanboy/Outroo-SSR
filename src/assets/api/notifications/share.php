@@ -4,10 +4,10 @@
 	$url = $data['url'];
 	$id = $data['id'];
 
-	foreach($data['receivers'] as $row){
+	foreach($data['receivers'] as $receiver){
 		$notification = array(
 			'sender' 	=> $session,
-			'receiver' 	=> $row,
+			'receiver' 	=> $receiver,
 			'url' 		=> $url,
 			'id' 		=> $id,
 			'type' 		=> "share"

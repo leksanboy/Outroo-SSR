@@ -22,14 +22,14 @@
 
 		// Notification data
 		$notification = array(
-			'url' 		=> 'publications',
+			'url' 		=> 'publication',
 			'type' 		=> 'comment',
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver,
 			'id' 		=> $id,
 			'comment' 	=> $insertedId
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver)
 			generateNotification($notification);
@@ -37,10 +37,10 @@
 		// Notificate mentioned friends on comment
 		foreach($mentionsNotificate as $row){
 			$rcv = userId(substr($row, 1));
-		
+
 			if ($rcv) {
 				$notification = array(
-					'url' 		=> 'publications',
+					'url' 		=> 'publication',
 					'type' 		=> 'mentionComment',
 					'sender' 	=> $sender,
 					'receiver' 	=> $rcv,
@@ -51,7 +51,7 @@
 				generateNotification($notification);
 			}
 		}
-		
+
 		echo json_encode($inserted);
 
 		$conn->close();
@@ -60,14 +60,14 @@
 		$comment = $data['comment'];
 
 		$sql = "UPDATE z_publications_comments
-				SET is_deleted = $status, 
-					ip_address = '$ipAddress' 
+				SET is_deleted = $status,
+					ip_address = '$ipAddress'
 				WHERE id = $comment";
 		$result = $conn->query($sql);
 
 		// Notification data
 		$notification = array(
-			'url' 		=> 'publications',
+			'url' 		=> 'publication',
 			'type' 		=> ($status ? 'uncomment' : 'commentUncommented'),
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver,
@@ -78,7 +78,7 @@
 		generateNotification($notification);
 
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	}
 ?>

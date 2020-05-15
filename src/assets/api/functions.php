@@ -841,7 +841,7 @@
 		return $data;
 	}
 
-	// Upload audio files on publications
+	// Upload audio files on post
 	function uploadAudiosPublication($user, $name, $mimetype, $title, $original_title, $original_artist, $genre, $image, $duration){
 		global $conn;
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -1036,7 +1036,7 @@
 					$result = $conn->query($sql);
 				}
 				break;
-			case 'publications':
+			case 'publication':
 				if ($type === 'like') {
 					$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 							VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
@@ -1086,7 +1086,12 @@
 					$result = $conn->query($sql);
 				}
 				break;
-			case 'audios':
+			case 'audio':
+				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
+						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
+				$result = $conn->query($sql);
+				break;
+			case 'playlist':
 				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 				$result = $conn->query($sql);

@@ -19,7 +19,6 @@ import { PipesModule } from '../../../../app/core/pipes/pipes.module';
 // Entry
 import { NewPublicationComponent } from './newPublication.component';
 import { NewPublicationAddAudiosComponent } from './addAudios/addAudios.component';
-import { NewPublicationAddPhotosComponent } from './addPhotos/addPhotos.component';
 
 const routes: Routes = [
 	{
@@ -46,17 +45,14 @@ const routes: Routes = [
 	],
 	declarations: [
 		NewPublicationComponent,
-		NewPublicationAddAudiosComponent,
-		NewPublicationAddPhotosComponent
+		NewPublicationAddAudiosComponent
 	],
 	exports: [
 		NewPublicationComponent,
-		NewPublicationAddAudiosComponent,
-		NewPublicationAddPhotosComponent
+		NewPublicationAddAudiosComponent
 	],
 	entryComponents: [
-		NewPublicationAddAudiosComponent,
-		NewPublicationAddPhotosComponent
+		NewPublicationAddAudiosComponent
 	]
 })
 export class NewPublicationModule {}

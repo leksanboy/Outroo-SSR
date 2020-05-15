@@ -16,6 +16,8 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
+import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 
@@ -281,7 +283,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Show photo from url if is one
 	show(item) {
-		if (item.url === 'publications') {
+		if (item.url === 'publication') {
 			this.sessionService.setDataShowPublication(item);
 		} else if (item.url === 'message') {
 			this.sessionService.setDataShowMessage(item.user);
@@ -321,7 +323,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				item.playing = !item.playing;
 				this.playerService.setPlayTrack(this.audioPlayerData);
 			} else { // Play new one
-				this.audioPlayerData.list = [data];
+				this.audioPlayerData.list = data;
 				this.audioPlayerData.item = item;
 				this.audioPlayerData.key = key;
 				this.audioPlayerData.user = this.sessionData.current.id;
@@ -399,6 +401,105 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				break;
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
+	// Playlist options
+	itemPlaylistOptions(type, item, index) {
+		switch (type) {
+			case ('show'):
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.sessionData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
+			case ('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARO)
+					.subscribe((res: any) => {
+						item.idPlaylist = res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
+
+						if (dataARO.type === 'add') {
+							this.sessionData.current.playlists.unshift(dataARO);
+						} else {
+							for (const i in this.sessionData.current.playlists) {
+								if (i) {
+									if (this.sessionData.current.playlists[i].id = dataARO.id) {
+										this.sessionData.current.playlists[i] = dataARO;
+									}
+								}
+							}
+						}
+						// Update playslists on selects
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
+					});
+				break;
+			case ('follow'):
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
+
+				const dataF = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.followPlaylist(dataF)
+					.subscribe((res: any) => {
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
+					});
+
+				break;
+			case ('report'):
+				item.type = 'audioPlaylist';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
 		}

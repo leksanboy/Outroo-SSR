@@ -12,7 +12,6 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 
-// import { NewPublicationAddPhotosComponent } from './addPhotos/addPhotos.component';
 import { NewPublicationAddAudiosComponent } from './addAudios/addAudios.component';
 
 declare var global: any;
@@ -99,33 +98,6 @@ export class NewPublicationComponent implements OnInit {
 					});
 			});
 	}
-
-	/* openPhotos(event: Event) {
-		this.location.go('/' + this.sessionData.current.username + '#newPublication#addPhotos');
-		const config = {
-			disableClose: false,
-			data: {
-				sessionData: this.sessionData,
-				translations: this.translations,
-				array: this.data.photosArray,
-				list: this.data.photosList,
-				rows: this.data.photosRows,
-				loadMore: this.data.photosLoadMore,
-				countUploads: (this.data.photosCountUploads ? this.data.photosCountUploads : 0),
-			}
-		};
-
-		const dialogRef = this.dialog.open(NewPublicationAddPhotosComponent, config);
-		dialogRef.afterClosed().subscribe((res: any) => {
-			this.location.go('/' + this.sessionData.current.username + '#newPublication');
-
-			this.data.photosArray = res.array;
-			this.data.photosList = res.list;
-			this.data.photosRows = res.rows;
-			this.data.photosLoadMore = res.loadMore;
-			this.data.photosCountUploads = res.countUploads;
-		});
-	} */
 
 	// Upload files
 	uploadFiles(type, event) {
@@ -268,11 +240,9 @@ export class NewPublicationComponent implements OnInit {
 		console.log('item', item);
 
 		if (item.category !== 'unknown') {
-			if (!item.selected) {
+			if (item.selected) {
 				this.data.photosArray.splice(i, 1);
-				console.log('item1', item);
 			} else {
-				console.log('item2', item);
 				item.selected = true;
 			}
 		} else {
