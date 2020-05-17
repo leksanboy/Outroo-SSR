@@ -19,6 +19,7 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -132,6 +133,9 @@ export class MainComponent implements OnInit, OnDestroy {
 					// Close all dialogs
 					this.dialog.closeAll();
 
+					// Close notificationsBox
+					this.sessionService.setNotificationsBox('close');
+
 					// Run page on routing
 					this.activeRouterExists = true;
 
@@ -239,6 +243,64 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.routingStateService.getPreviousUrl();
 	}
 
+	// User options
+	userOptions(type, item) {
+		switch (type) {
+			case 'copyLink':
+				const urlExtension = this.env.url + item.username;
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'message':
+				case 'user':
+				item.comeFrom = 'shareUser';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'report':
+				item.type = 'user';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'showAvatar':
+				const dataSA = {
+					userData: item
+				};
+
+				this.sessionService.setDataShowAvatar(dataSA);
+				break;
+			case 'openNewSession':
+				this.showAccounts = false;
+
+				const dataONS = {
+					type: 'create'
+				};
+
+				this.sessionService.setDataAddAccount(dataONS);
+				break;
+			case 'setCurrentUser':
+				this.showAccounts = false;
+
+				const dataSCU = {
+					type: 'set',
+					data: item
+				};
+
+				this.sessionService.setDataAddAccount(dataSCU);
+				break;
+			case 'closeSession':
+				this.showAccounts = false;
+
+				const dataCS = {
+					type: 'close',
+					data: item
+				};
+
+				this.sessionService.setDataAddAccount(dataCS);
+				break;
+			case 'sendMessage':
+				this.sessionService.setDataShowMessage(item);
+				break;
+		}
+	}
+
 	// Follow / Unfollow
 	followUnfollow(type, item) {
 		if (type === 'follow') {
@@ -254,47 +316,6 @@ export class MainComponent implements OnInit, OnDestroy {
 		};
 
 		this.followsDataService.followUnfollow(data).subscribe();
-	}
-
-	// Show user images
-	showAvatar() {
-		const data = {
-			userData: this.userData
-		};
-
-		this.sessionService.setDataShowAvatar(data);
-	}
-
-	openNewSession() {
-		this.showAccounts = false;
-
-		const data = {
-			type: 'create'
-		};
-
-		this.sessionService.setDataAddAccount(data);
-	}
-
-	setCurrentUser(user) {
-		this.showAccounts = false;
-
-		const data = {
-			type: 'set',
-			data: user
-		};
-
-		this.sessionService.setDataAddAccount(data);
-	}
-
-	closeSession(user) {
-		this.showAccounts = false;
-
-		const data = {
-			type: 'close',
-			data: user
-		};
-
-		this.sessionService.setDataAddAccount(data);
 	}
 
 	// New publication
@@ -324,20 +345,6 @@ export class MainComponent implements OnInit, OnDestroy {
 			.subscribe(data => {
 				this.translations = data;
 			});
-	}
-
-	// Play video
-	playVideo(item, player) {
-		player = document.getElementById(player);
-		player.load();
-		player.play();
-		item.playButton = true;
-
-		player.addEventListener('ended', myHandler, false);
-
-		function myHandler(e) {
-			item.playButton = false;
-		}
 	}
 
 	// Default
@@ -439,28 +446,32 @@ export class MainComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// User options
-	userOptions(type, item) {
-		switch (type) {
-			case 'copyLink':
-				const urlExtension = this.env.url + item.username;
-				this.sessionService.setDataCopy(urlExtension);
-				break;
-			case 'message':
-				case 'user':
-				item.comeFrom = 'user';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'report':
-				item.type = 'user';
-				this.sessionService.setDataReport(item);
-				break;
-		}
-	}
-
 	// Item options
 	itemPublicationOptions(type, item) {
 		switch (type) {
+			case 'show':
+				this.location.go('/p/' + item.name);
+
+				const config = {
+					disableClose: false,
+					data: {
+						comeFrom: 'publication',
+						translations: this.translations,
+						sessionData: this.sessionData,
+						userData: this.userData,
+						item: item
+					}
+				};
+
+				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
+				dialogRef.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (this.userData.id === this.sessionData.current.id) {
+						item.addRemoveSession = res.addRemoveSession;
+					}
+				});
+				break;
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
@@ -472,471 +483,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
-			case 'disableComments':
-				item.disabledComments = !item.disabledComments;
-
-				const dataDisableComments = {
-					id: item.id,
-					type: item.disabledComments
-				};
-
-				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
-				break;
-			case 'report':
-				item.type = 'publication';
-				this.sessionService.setDataReport(item);
-				break;
-			case 'message':
-				item.comeFrom = 'sharePublication';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'newTab':
-				const url = this.env.url + 'p/' + item.name;
-				this.window.open(url, '_blank');
-				break;
-			case 'copyLink':
-				const urlExtension = this.env.url + 'p/' + item.name;
-				this.sessionService.setDataCopy(urlExtension);
-				break;
 		}
-	}
-
-	// Send message
-	sendMessage() {
-		this.sessionService.setDataShowMessage(this.userData);
-	}
-
-	// Play item song
-	playSong(data, item, key, type) {
-		if (this.sessionData) {
-			if (this.sessionData.current.id) {
-				if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
-					item.playing = !item.playing;
-					this.playerService.setPlayTrack(this.audioPlayerData);
-				} else { // Play new one
-					this.audioPlayerData.postId = data.id;
-					this.audioPlayerData.list = data.audios;
-					this.audioPlayerData.item = item;
-					this.audioPlayerData.key = key;
-					this.audioPlayerData.user = this.userData.id;
-					this.audioPlayerData.username = this.userData.username;
-					this.audioPlayerData.location = 'user';
-					this.audioPlayerData.type = type;
-
-					item.playing = true;
-					this.playerService.setData(this.audioPlayerData);
-				}
-			}
-		} else {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		}
-	}
-
-	// Item options: add/remove, share, search, report
-	itemSongOptions(type, item, playlist) {
-		switch (type) {
-			case ('addRemoveUser'):
-				item.addRemoveUser = !item.addRemoveUser;
-				item.removeType = item.addRemoveUser ? 'add' : 'remove';
-
-				const dataU = {
-					type: item.removeType,
-					location: 'user',
-					id: item.insertedId,
-					item: item.id
-				};
-
-				this.audioDataService.addRemove(dataU)
-					.subscribe((res: any) => {
-						item.insertedId = res;
-					});
-				break;
-			case ('playlist'):
-				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
-
-				const dataP = {
-					type: item.removeType,
-					location: 'playlist',
-					item: item.song,
-					playlist: playlist.idPlaylist
-				};
-
-				this.audioDataService.addRemove(dataP)
-					.subscribe(res => {
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
-
-						this.alertService.success(song + text);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-				break;
-			case ('createPlaylist'):
-				const dataCP = {
-					type: 'create',
-					item: item
-				};
-
-				this.sessionService.setDataCreatePlaylist(dataCP);
-				break;
-			case ('report'):
-				item.type = 'audio';
-				this.sessionService.setDataReport(item);
-				break;
-			case 'message':
-				item.comeFrom = 'shareSong';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'newTab':
-				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
-				this.window.open(urlSong, '_blank');
-				break;
-			case 'copyLink':
-				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
-				this.sessionService.setDataCopy(urlExtensionSong);
-				break;
-		}
-	}
-
-	// Bookmarks
-	markUnmark(item) {
-		if (this.sessionData) {
-			item.bookmark.checked = !item.bookmark.checked;
-
-			if (item.bookmark.checked) {
-				this.alertService.success(this.translations.bookmarks.addedTo);
-			}
-
-			// data
-			const data = {
-				item: item.id,
-				id: item.bookmark.id,
-				type: item.bookmark.checked ? 'add' : 'remove'
-			};
-
-			this.bookmarksDataService.markUnmark(data)
-				.subscribe(res => {
-					if (res) {
-						item.bookmark.id = res;
-					}
-				}, error => {
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
-		}
-	}
-
-	// Like / Unlike
-	likeUnlike(item) {
-		if (this.sessionData) {
-			if (item.liked) {
-				item.liked = false;
-				item.countLikes--;
-
-				for (const i in item.likers) {
-					if (i) {
-						if (item.likers[i].id === this.sessionData.current.id) {
-							item.likers.splice(i, 1);
-						}
-					}
-				}
-			} else {
-				item.liked = true;
-				item.countLikes++;
-
-				item.likers.unshift(this.sessionData.current);
-			}
-
-			// data
-			const data = {
-				id: item.id,
-				receiver: item.user.id,
-				type: item.liked ? 'like' : 'unlike'
-			};
-
-			this.publicationsDataService.likeUnlike(data).subscribe();
-		}
-	}
-
-	// Show people who like
-	showLikes(item) {
-		item.comeFrom = 'publication';
-		this.sessionService.setDataShowLikes(item);
-	}
-
-	// Show/hide comments box
-	showComments(type, item) {
-		switch (type) {
-			case 'showHide':
-				item.showCommentsBox = !item.showCommentsBox;
-
-				if (!item.disabledComments) {
-					if (!item.loaded) {
-						this.defaultComments('default', item);
-					}
-				}
-				break;
-			case 'load':
-				this.defaultComments('default', item);
-				break;
-		}
-	}
-
-	// Comments
-	defaultComments(type, item) {
-		if (type === 'default') {
-			item.noData = false;
-			item.loadMoreData = false;
-			item.loadingData = true;
-			item.comments = [];
-			item.comments.list = [];
-			item.rowsComments = 0;
-			item.loaded = true;
-
-			// New comments set
-			this.newComment('clear', null, item);
-
-			// Data
-			const data = {
-				id: item.id,
-				rows: item.rowsComments,
-				cuantity: this.env.cuantity
-			};
-
-			this.publicationsDataService.comments(data)
-				.subscribe((res: any) => {
-					item.loadingData = false;
-
-					if (!res || res.length === 0) {
-						item.noData = true;
-					} else {
-						item.noData = false;
-						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						item.comments.list = res;
-					}
-				}, error => {
-					item.loadingData = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
-		} else if (type === 'more' && !item.loadingMoreData) {
-			item.loadingMoreData = true;
-			item.rowsComments++;
-
-			const data = {
-				id: item.id,
-				rows: item.rowsComments,
-				cuantity: this.env.cuantity
-			};
-
-			this.publicationsDataService.comments(data)
-				.subscribe((res: any) => {
-					setTimeout(() => {
-						item.loadingMoreData = false;
-						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									item.comments.list.push(res[i]);
-								}
-							}
-						}
-					}, 600);
-				}, error => {
-					item.loadingData = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
-		}
-	}
-
-	// New comment
-	newComment(type, event, item) {
-		if (type === 'clear') {
-			item.newCommentData = [];
-
-			setTimeout(() => {
-				item.newCommentData = {
-					original: '',
-					transformed: '',
-					onBackground: '',
-					eventTarget: '',
-					lastTypedWord: []
-				};
-
-				this.newComment('checkPlaceholder', null, item);
-			}, 100);
-		} else if (type === 'writingChanges') {
-			let str = event;
-			item.newCommentData.original = event;
-
-			// new line
-			str = str.replace(/\n/g, '<br>');
-
-			// hashtag
-			str = str.replace(/(#)\w+/g, function (value) {
-				return '<span class="hashtag">' + value + '</span>';
-			});
-
-			// mention
-			str = str.replace(/(@)\w+/g, function (value) {
-				return '<span class="mention">' + value + '</span>';
-			});
-
-			// url
-			str = str.replace(this.env.urlRegex, function (value) {
-				return '<span class="url">' + value + '</span>';
-			});
-
-			// writing content
-			item.newCommentData.transformed = str;
-
-			// check empty contenteditable
-			this.newComment('checkPlaceholder', null, item);
-		} else if (type === 'keyCode') {
-			if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
-				// Space, Enter, Escape
-				this.searchBoxMentions = false;
-			} else {
-				if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
-					this.searchBoxMentions = false;
-				} else {
-					item.newCommentData.eventTarget = event.target;
-					const position = this.getCaretPosition(event.target);
-					const word = this.getCurrentWord(event.target, position);
-
-					item.newCommentData.lastTypedWord = {
-						word: word,
-						position: position
-					};
-				}
-			}
-		} else if (type === 'checkPlaceholder') {
-			if (item.newCommentData.original.length === 0) {
-				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
-			}
-		} else if (type === 'transformBeforeSend') {
-			const newData = {
-				content: item.newCommentData.original ? item.newCommentData.original : '',
-				original: item.newCommentData.original ? item.newCommentData.original : '',
-				mentions: [],
-				hashtags: []
-			};
-
-			// new line
-			newData.content = newData.content.replace(/\n/g, '<br>');
-
-			// hashtag
-			newData.content = newData.content.replace(/(#)\w+/g, function (value) {
-				return '<a class="hashtag">' + value + '</a>';
-			});
-
-			// mention
-			newData.content = newData.content.replace(/(@)\w+/g, function (value) {
-				newData.mentions.push(value);
-				return '<a class="mention">' + value + '</a>';
-			});
-
-			// detect url
-			newData.content = newData.content.replace(this.env.urlRegex, function (value) {
-				return '<a class="url">' + value + '</a>';
-			});
-
-			return newData;
-		} else if (type === 'create') {
-			if (item.newCommentData.original.trim().length > 0) {
-				if (item.newCommentData.original.trim().length <= 1000) {
-					const formatedData = this.newComment('transformBeforeSend', null, item);
-					const dataCreate = {
-						type: 'create',
-						id: item.id,
-						receiver: item.user.id,
-						comment: formatedData.content,
-						comment_original: formatedData.original,
-						mentions: formatedData.mentions
-					};
-
-					this.publicationsDataService.comment(dataCreate)
-						.subscribe((res: any) => {
-							item.comments.list.unshift(res);
-							item.countComments++;
-							item.noData = false;
-
-							this.newComment('clear', null, item);
-						}, error => {
-							this.alertService.error(this.translations.common.anErrorHasOcurred);
-						});
-				} else {
-					this.alertService.error(this.translations.common.isTooLong);
-				}
-			} else {
-				this.alertService.warning(this.translations.common.isTooShort);
-			}
-		}
-	}
-
-	// Comments Options
-	commentsOptions(type, item, comment) {
-		switch (type) {
-			case 'addRemove':
-				comment.addRemove = !comment.addRemove;
-				comment.type = !comment.addRemove ? 'add' : 'remove';
-
-				const data = {
-					receiver: item.user.id,
-					type: comment.type,
-					comment: comment.id,
-					id: item.id
-				};
-
-				this.publicationsDataService.comment(data)
-					.subscribe((res: any) => {
-						if (comment.addRemove) {
-							item.countComments--;
-						} else {
-							item.countComments++;
-						}
-					});
-				break;
-			case 'report':
-				item.type = 'publicationComment';
-				this.sessionService.setDataReport(item);
-				break;
-		}
-	}
-
-	// Caret position on contenteditable
-	getCaretPosition(element) {
-		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
-		let caretOffset = 0;
-
-		if (w3) {
-			const range = this.window.getSelection().getRangeAt(0);
-			const preCaretRange = range.cloneRange();
-			preCaretRange.selectNodeContents(element);
-			preCaretRange.setEnd(range.endContainer, range.endOffset);
-			caretOffset = preCaretRange.toString().length;
-		} else {
-			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
-		}
-
-		return caretOffset;
-	}
-
-	// Get current typing word on contenteditable
-	getCurrentWord(el, position) {
-		// Get content of div
-		const content = el.textContent;
-
-		// Check if clicked at the end of word
-		position = content[position] === ' ' ? position - 1 : position;
-
-		// Get the start and end index
-		let startPosition = content.lastIndexOf(' ', position);
-		startPosition = startPosition === content.length ? 0 : startPosition;
-		let endPosition = content.indexOf(' ', position);
-		endPosition = endPosition === -1 ? content.length : endPosition;
-
-		return content.substring(startPosition + 1, endPosition);
 	}
 
 	// Recommended users
@@ -1029,7 +576,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
 				dialogRefShow.beforeClosed().subscribe((res: string) => {
-					// Set url
 					this.location.go(this.router.url);
 				});
 				break;

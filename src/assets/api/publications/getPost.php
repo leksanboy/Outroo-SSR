@@ -1,26 +1,33 @@
 <?php include "../db.php";
-	$name = $_GET['name'];
 	$session = sessionId();
+	$name = $_GET['name'];
+	$id = $_GET['id'];
 
-	$sql = "SELECT id, 
-					user, 
-					name, 
-					content, 
-					content_original, 
-					url_video as urlVideo, 
-					photos, 
-					audios, 
-					disabled_comments as disabledComments, 
+	if ($id) {
+		$cond = "id = $id";
+	} else {
+		$cond = "name = '$name'";
+	}
+
+	$sql = "SELECT id,
+					user,
+					name,
+					content,
+					content_original,
+					url_video as urlVideo,
+					photos,
+					audios,
+					disabled_comments as disabledComments,
 					date
 			FROM z_publications
-			WHERE name = '$name' 
+			WHERE $cond
 				AND is_deleted = 0
 			ORDER BY date DESC";
 	$result = $conn->query($sql);
 
-	if ($result->num_rows){
+	if ($result->num_rows > 0){
 		$data = array();
-		
+
 		while($row = $result->fetch_assoc()) {
 			$row['user'] = userUsernameNameAvatar($row['user']);
 			$row['content'] = trim($row['content']) ? html_entity_decode($row['content'], ENT_QUOTES) : null;

@@ -26,6 +26,8 @@
 							EXISTS (SELECT 1 FROM z_audios WHERE id = n.page_id and is_deleted = 0)
 						WHEN n.page_url = 'playlist' THEN
 							EXISTS (SELECT 1 FROM z_audios_playlist WHERE id = n.page_id and is_deleted = 0)
+						WHEN n.page_url = 'user' THEN
+							EXISTS (SELECT 1 FROM z_users WHERE id = n.page_id and is_deleted = 0)
 						WHEN n.page_url = 'followers' THEN
 							EXISTS (SELECT 1 FROM z_following WHERE receiver = n.receiver and is_deleted = 0)
 					END
@@ -66,6 +68,11 @@
 			// Playlist
 			if ($row['url'] === 'playlist') {
 				$row['contentData'] = getPlaylist($row['page']);
+			}
+
+			// User
+			if ($row['url'] === 'user') {
+				$row['contentData'] = userUsernameNameAvatar($row['page']);
 			}
 
 			// Message

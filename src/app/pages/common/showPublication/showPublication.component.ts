@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild, Inject, ElementRef, Renderer2 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from '../../../../environments/environment';
 
@@ -12,6 +14,9 @@ import { NotificationsDataService } from '../../../../app/core/services/user/not
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
+import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { MetaService } from '../../../../app/core/services/seo/meta.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -28,9 +33,9 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	public window: any = global;
 	public sessionData: any = [];
 	public translations: any = [];
-	public userData: any = [];
-	public dataDefault: any = [];
 	public audioPlayerData: any = [];
+	public dataDefault: any = [];
+	// public data: any = [];
 	public swiperConfig: any = {
 		pagination: '.swiper-pagination',
 		nextButton: '.swiperNext',
@@ -38,8 +43,11 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		paginationClickable: true,
 		spaceBetween: 0
 	};
+	public activeLanguage: any;
+	public activeSessionPlaylists: any;
+	public activePlayerInformation: any;
+	public hideAd: boolean;
 	public searchBoxMentions: boolean;
-	public isMobileScreen: boolean;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,18 +58,44 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private elementRef: ElementRef,
 		private alertService: AlertService,
 		private playerService: PlayerService,
+		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
+		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
 		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
-		private deviceService: DeviceDetectorService
+		private deviceService: DeviceDetectorService,
+		private metaService: MetaService,
+		private routingStateService: RoutingStateService
 	) {
-		this.translations = this.data.translations;
+		// Session
 		this.sessionData = this.data.sessionData;
-		this.userData = this.data.userData;
-		this.dataDefault.data = this.data.item ? this.data.item : [];
-		this.showComments('showHide', this.dataDefault.data);
+
+		// Translations
+		this.translations = this.data.translations;
+
+		// Load default
+		const n: any = this.data.item.id;
+		this.default(n);
+
+		// Session playlists
+		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
+			.subscribe(data => {
+				this.sessionData = data;
+			});
+
+		// Get current track
+		this.activePlayerInformation = this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
+
+		// Get language
+		this.activeLanguage = this.sessionService.getDataLanguage()
+			.subscribe(data => {
+				this.getTranslations(data);
+			});
 
 		// Click on a href
 		this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
@@ -69,20 +103,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataClickElementRef(event);
 			}
 		});
-
-		if (this.dataDefault.data) {
-			// Check if exists
-			this.dataDefault.notExists = false;
-
-			// Update replays
-			this.updateReplays(this.dataDefault.data.id);
-
-			// Load comments
-			this.defaultComments('default', this.dataDefault.data);
-		} else {
-			// Check if exists
-			this.dataDefault.notExists = true;
-		}
 	}
 
 	ngOnInit() {
@@ -90,12 +110,63 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
+		this.close();
+	}
+
+	close() {
 		this.dialogRef.close(this.dataDefault.data);
 	}
 
-	// Close
-	close() {
-		this.dialogRef.close(this.dataDefault.data);
+	// Replays +1
+	updateReplays(id) {
+		const data = {
+			id: id
+		};
+
+		this.publicationsDataService.updateReplays(data).subscribe();
+	}
+
+	// Get translations
+	getTranslations(lang) {
+		this.userDataService.getTranslations(lang)
+			.subscribe(data => {
+				this.translations = data;
+			});
+	}
+
+	// Default
+	default(id) {
+		this.dataDefault.loadingData = true;
+
+		const data = {
+			id: id
+		};
+
+		this.publicationsDataService.getPost(data)
+			.subscribe((res: any) => {
+				this.dataDefault.loadingData = false;
+
+				if (!res || res.length === 0) {
+					this.dataDefault.noData = true;
+				} else {
+					this.dataDefault.data = res;
+					// this.showComments('showHide', this.dataDefault.data);
+
+					// Update replays
+					this.updateReplays(res.id);
+
+					// Set Google analytics
+					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
+					const url = 'p/' + name;
+					const title = t;
+					const userId = this.sessionData ? (this.sessionData.current ? this.sessionData.current.id : null) : null;
+					this.userDataService.analytics(url, title, userId);
+				}
+			}, error => {
+				this.dataDefault.loadingData = false;
+				this.dataDefault.noData = true;
+				this.alertService.error(this.translations.common.anErrorHasOcurred);
+			});
 	}
 
 	// Play video
@@ -112,86 +183,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Replays +1
-	updateReplays(id) {
-		const data = {
-			id: id
-		};
-
-		this.publicationsDataService.updateReplays(data).subscribe();
-	}
-
-	// Bookmarks
-	markUnmark(item) {
-		if (this.sessionData) {
-			if (this.sessionData.current.id) {
-				item.bookmark.checked = !item.bookmark.checked;
-
-				// Se usa en la pantalla de bookmarks para saber los que ya estaban dentro
-				item.marked = item.bookmark.checked ? false : true;
-
-				if (item.bookmark.checked) {
-					this.alertService.success(this.translations.bookmarks.addedTo);
-				}
-
-				// data
-				const data = {
-					item: item.id,
-					id: item.bookmark.id,
-					type: item.bookmark.checked ? 'add' : 'remove'
-				};
-
-				this.bookmarksDataService.markUnmark(data)
-					.subscribe(res => {
-						if (res) {
-							item.bookmark.id = res;
-						}
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-			}
-		}
-	}
-
-	// Like / Unlike
-	likeUnlike(item) {
-		if (this.sessionData) {
-			if (item.liked) {
-				item.liked = false;
-				item.countLikes--;
-
-				for (const i in item.likers) {
-					if (i) {
-						if (item.likers[i].id === this.sessionData.current.id) {
-							item.likers.splice(i, 1);
-						}
-					}
-				}
-			} else {
-				item.liked = true;
-				item.countLikes++;
-
-				item.likers.unshift(this.sessionData.current);
-			}
-
-			// data
-			const data = {
-				id: item.id,
-				receiver: this.userData.id,
-				type: item.liked ? 'like' : 'unlike'
-			};
-
-			this.publicationsDataService.likeUnlike(data).subscribe();
-		}
-	}
-
-	// Show people who like
-	showLikes(item) {
-		item.comeFrom = 'publication';
-		this.sessionService.setDataShowLikes(item);
-	}
-
-	// Item Options
+	// Item options
 	itemPublicationOptions(type, item) {
 		switch (type) {
 			case 'remove':
@@ -216,12 +208,8 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.publicationsDataService.enableDisableComments(dataDisableComments).subscribe();
 				break;
 			case 'report':
-				item.type = 'photo';
-				item.translations = this.translations;
+				item.type = 'publication';
 				this.sessionService.setDataReport(item);
-				break;
-			case 'close':
-				this.dialogRef.close();
 				break;
 			case 'message':
 				item.comeFrom = 'sharePublication';
@@ -240,25 +228,29 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
-			item.playing = !item.playing;
-			this.playerService.setPlayTrack(this.audioPlayerData);
-		} else { // Play new one
-			this.audioPlayerData.postId = data.id;
-			this.audioPlayerData.list = data.audios;
-			this.audioPlayerData.item = item;
-			this.audioPlayerData.key = key;
-			this.audioPlayerData.user = this.dataDefault.data.id;
-			this.audioPlayerData.username = this.dataDefault.data.username;
-			this.audioPlayerData.location = 'user';
-			this.audioPlayerData.type = type;
+		if (!this.sessionData) {
+			this.alertService.success(this.translations.common.createAnAccountToListenSong);
+		} else {
+			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
+				item.playing = !item.playing;
+				this.playerService.setPlayTrack(this.audioPlayerData);
+			} else { // Play new one
+				this.audioPlayerData.postId = data.id;
+				this.audioPlayerData.list = data.audios;
+				this.audioPlayerData.item = item;
+				this.audioPlayerData.key = key;
+				this.audioPlayerData.user = this.sessionData.current.id;
+				this.audioPlayerData.username = this.sessionData.current.username;
+				this.audioPlayerData.location = 'user';
+				this.audioPlayerData.type = type;
 
-			item.playing = true;
-			this.playerService.setData(this.audioPlayerData);
+				item.playing = true;
+				this.playerService.setData(this.audioPlayerData);
+			}
 		}
 	}
 
-	// Item audios options
+	// Item options: add/remove, share, search, report
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
 			case ('addRemoveUser'):
@@ -278,8 +270,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 					});
 				break;
 			case ('playlist'):
-				item.addRemoveUser = !item.addRemoveUser;
-				item.removeType = item.addRemoveUser ? 'remove' : 'add';
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
 					type: item.removeType,
@@ -291,8 +282,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + playlist.title;
-
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -306,9 +296,11 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
+			case ('share'):
+				alert('Working on Share with friends');
+				break;
 			case ('report'):
 				item.type = 'audio';
-				item.translations = this.translations;
 				this.sessionService.setDataReport(item);
 				break;
 			case 'message':
@@ -324,6 +316,67 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataCopy(urlExtensionSong);
 				break;
 		}
+	}
+
+	// Bookmarks
+	markUnmark(item) {
+		if (this.sessionData) {
+			item.bookmark.checked = !item.bookmark.checked;
+
+			if (item.bookmark.checked) {
+				this.alertService.success(this.translations.bookmarks.addedTo);
+			}
+
+			const data = {
+				item: item.id,
+				id: item.bookmark.id,
+				type: item.bookmark.checked ? 'add' : 'remove'
+			};
+
+			this.bookmarksDataService.markUnmark(data)
+				.subscribe(res => {
+					if (res) {
+						item.bookmark.id = res;
+					}
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
+	}
+
+	// Like / Unlike
+	likeUnlike(item) {
+		if (this.sessionData) {
+			if (item.liked) {
+				item.liked = false;
+				item.countLikes--;
+
+				for (const i in item.likers) {
+					if (item.likers[i].id === this.sessionData.current.id) {
+						item.likers.splice(i, 1);
+					}
+				}
+			} else {
+				item.liked = true;
+				item.countLikes++;
+
+				item.likers.unshift(this.sessionData.current);
+			}
+
+			const data = {
+				id: item.id,
+				receiver: item.user.id,
+				type: item.liked ? 'like' : 'unlike'
+			};
+
+			this.publicationsDataService.likeUnlike(data).subscribe();
+		}
+	}
+
+	// Show people who like
+	showLikes(item) {
+		item.comeFrom = 'publication';
+		this.sessionService.setDataShowLikes(item);
 	}
 
 	// Show/hide comments box
@@ -398,8 +451,10 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 						// Push items
 						if (!res || res.length > 0) {
-							for (const i of res) {
-								item.comments.list.push(i);
+							for (const i in res) {
+								if (i) {
+									item.comments.list.push(res[i]);
+								}
 							}
 						}
 					}, 600);
@@ -504,33 +559,29 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 			return newData;
 		} else if (type === 'create') {
-			if (item.newCommentData.original.trim().length > 0) {
-				if (item.newCommentData.original.trim().length <= 1000) {
-					const formatedData = this.newComment('transformBeforeSend', null, item);
-					const dataCreate = {
-						type: 'create',
-						id: item.id,
-						receiver: item.user.id,
-						comment: formatedData.content,
-						comment_original: formatedData.original,
-						mentions: formatedData.mentions
-					};
-
-					this.publicationsDataService.comment(dataCreate)
-						.subscribe((res: any) => {
-							item.comments.list.unshift(res);
-							item.countComments++;
-							item.noData = false;
-
-							this.newComment('clear', null, item);
-						}, error => {
-							this.alertService.error(this.translations.common.anErrorHasOcurred);
-						});
-				} else {
-					this.alertService.error(this.translations.common.isTooLong);
-				}
-			} else {
+			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.warning(this.translations.common.isTooShort);
+			} else {
+				const formatedData = this.newComment('transformBeforeSend', null, item);
+				const dataCreate = {
+					type: 'create',
+					id: item.id,
+					receiver: item.user.id,
+					comment: formatedData.content,
+					comment_original: formatedData.original,
+					mentions: formatedData.mentions
+				};
+
+				this.publicationsDataService.comment(dataCreate)
+					.subscribe((res: any) => {
+						item.comments.list.unshift(res);
+						item.countComments++;
+						item.noData = false;
+
+						this.newComment('clear', null, item);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
 			}
 		}
 	}

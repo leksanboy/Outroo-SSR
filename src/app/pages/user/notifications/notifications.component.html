@@ -303,6 +303,58 @@
 							</div>
 						</div>
 
+						<div class="inner" *ngIf="x.url === 'user'">
+							<div class="texts">
+								<div class="text">
+									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+									<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+									<div class="date">{{x?.date | timeago}}</div>
+								</div>
+
+								<div class="text">
+									<span *ngIf="x.type === 'share'">
+										{{translations?.notifications?.sharedUser}}
+										<br>
+										<div class="userNotification">
+											<div class="user" routerLink="/{{x.contentData.username}}">
+												<a class="avatarUser" routerLink="/{{x.contentData.username}}">
+													<img [src]="x.contentData.avatar ? x.contentData.avatarUrl : env.avatar"/>
+												</a>
+
+												<div class="textsUser">
+													<div class="textUser">
+														<a routerLink="/{{x.contentData.username}}">{{x.contentData.username}}</a>
+														<i class="icon50 blue" label="official" *ngIf="x.contentData.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+													</div>
+
+													<div class="textUser">
+														{{x.contentData.name}}
+													</div>
+												</div>
+
+												<div class="buttonUser">
+													<i label="forward"></i>
+												</div>
+											</div>
+										</div>
+									</span>
+								</div>
+							</div>
+
+							<div class="operations">
+								<div class="actions">
+									<button mat-icon-button [matMenuTriggerFor]="options">
+										<i class="icon85 grey" label="more"></i>
+									</button>
+
+									<mat-menu #options="matMenu">
+										<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+									</mat-menu>
+								</div>
+							</div>
+						</div>
+
 						<div class="inner" *ngIf="x.url === 'message'">
 							<div class="texts">
 								<div class="text">
@@ -333,7 +385,7 @@
 						</div>
 
 						<!-- item to remove if not exists -->
-						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publication' || x.url === 'audio' || x.url === 'playlist' || x.url === 'message')">
+						<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publication' || x.url === 'audio' || x.url === 'playlist' || x.url === 'user' || x.url === 'message')">
 							<div class="texts">
 								<div class="text">
 									<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>

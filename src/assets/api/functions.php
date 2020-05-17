@@ -40,10 +40,9 @@
 
 		/* Return error | when try access by url with params  */
 		if ($secFetchDest === 'document' && $secFetchMode === 'navigate') {
-			http_response_code(401);
 			echo " ( ._.) Sorry";
-
-			return "Error";
+			http_response_code(401);
+			var_dumpvar_dump(http_response_code(401));
 		}
 
 		if (isset($auth)) {
@@ -701,48 +700,29 @@
 	function getPublication($id){
 		global $conn;
 
-		$sql = "SELECT id, user, name, content, url_video as urlVideo, photos, audios, disabled_comments as disabledComments, date
+		$sql = "SELECT id,
+						name,
+						photos as contentData
 				FROM z_publications
-				WHERE id = $id 
+				WHERE id = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		if ($result) {
-			$result['user'] = userUsernameNameAvatar($result['user']);
-			$result['content'] = html_entity_decode($result['content'], ENT_QUOTES);
-			$result['bookmark'] = array('id' => null, 'checked' => false);
-			$result['likers'] = getPublicationLikers($result['id']);
-			$result['disabledComments'] = ($result['disabledComments'] === 0) ? true : false;
-			$result['countComments'] = countCommentsPublication($result['id']);
-			$result['countLikes'] = countLikesPublication($result['id']);
-			$result['comments'] = [];
-
-			// Format urlVideo
-			$result['urlVideo'] = json_decode($result['urlVideo']);
-			if (count($result['urlVideo']) > 0) {
-				$result['urlVideo']->title = html_entity_decode($result['urlVideo']->title, ENT_QUOTES);
-				$result['urlVideo']->channel = html_entity_decode($result['urlVideo']->channel, ENT_QUOTES);
-				$result['urlVideo']->iframe = html_entity_decode($result['urlVideo']->iframe, ENT_QUOTES);
-			} else {
-				$result['urlVideo'] = null;
-			}
-
 			// Format photos
-			$result['photos'] = json_decode($result['photos']);
-			foreach ($result['photos'] as &$p) {
+			$result['contentData'] = json_decode($result['contentData']);
+			foreach ($result['contentData'] as &$p) {
 				$p = getPhotoData($p);
 			}
 
-			// Format audios
-			$result['audios'] = json_decode($result['audios']);
-			foreach ($result['audios'] as &$a) {
-				$a = getAudioData($a);
+			if ($result['contentData']) {
+				$result['contentData'] = $result['contentData'][0];
 			}
-		} else {
-			$result = null;
-		}
 
-		return $result;
+			return $result;
+		} else {
+			return null;
+		}
 	}
 
 	// Count likes publication
@@ -1092,6 +1072,11 @@
 				$result = $conn->query($sql);
 				break;
 			case 'playlist':
+				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
+						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
+				$result = $conn->query($sql);
+				break;
+			case 'user':
 				$sql = "INSERT INTO z_notifications (sender, receiver, page_id, page_url, page_type, ip_address)
 						VALUES ($sender, $receiver, $id, '$url', '$type', '$ipAddress')";
 				$result = $conn->query($sql);

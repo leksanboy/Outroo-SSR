@@ -11,7 +11,7 @@
 
 				<div class="pageTitle">{{translations?.post?.title}}</div>
 
-				<div class="publication" *ngIf="!dataDefault.noData">
+				<div class="publication" *ngIf="!dataDefault.loadingData && !dataDefault.noData">
 					<div class="head">
 						<a class="avatar" routerLink="/{{dataDefault.data?.user?.username}}">
 							<img [src]="dataDefault.data?.user?.avatar ? dataDefault.data?.user?.avatarUrl : env.avatar"/>
@@ -273,7 +273,7 @@
 
 				<div class="noData" *ngIf="dataDefault.noData">
 					<div class="description">{{translations?.post?.noData}}</div>
-				</div> 
+				</div>
 			</div>
 		</div>
 	</div>

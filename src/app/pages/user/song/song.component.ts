@@ -134,7 +134,7 @@ export class SongComponent implements OnInit, OnDestroy {
 						description: t,
 						keywords: t,
 						url: this.env.url + 's/' + name,
-						image: res.image ? (this.env.url + 'assets/media/audios/thumbnails/' + res.image) : this.env.image
+						image: res.image ? (this.env.url + 'assets/media/audios/thumbnails/' + res.image) : this.env.defaultSongCover
 					};
 					this.metaService.setData(metaData);
 

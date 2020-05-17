@@ -1,6 +1,6 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location, DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
@@ -48,7 +48,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
-		private router: Router,
 		private location: Location,
 		private renderer: Renderer2,
 		private titleService: Title,
@@ -116,6 +115,15 @@ export class PostComponent implements OnInit, OnDestroy {
 		this.routingStateService.getPreviousUrl();
 	}
 
+	// Replays +1
+	updateReplays(id) {
+		const data = {
+			id: id
+		};
+
+		this.publicationsDataService.updateReplays(data).subscribe();
+	}
+
 	// Push Google Ad
 	pushAd() {
 		const ad = {
@@ -143,6 +151,8 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	// Default
 	default(name) {
+		this.dataDefault.loadingData = true;
+
 		const data = {
 			name: name
 		};
@@ -157,6 +167,9 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.dataDefault.data = res;
 					// this.showComments('showHide', this.dataDefault.data);
 
+					// Update replays
+					this.updateReplays(res.id);
+
 					// Meta
 					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
 					const metaData = {
@@ -164,8 +177,8 @@ export class PostComponent implements OnInit, OnDestroy {
 						title: t,
 						description: t,
 						keywords: t,
-						url: this.env.url + 'p/' + name,
-						image: this.env.url + (res.photos ? 'assets/media/photos/thumbnails/' + res.photos[0].name : (res.audios ? 'assets/media/photos/thumbnails/' + res.audios[0].name : this.env.image))
+						url: this.env.url + 'p/' + res.name,
+						image: this.env.url + (res.photos ? ('assets/media/photos/thumbnails/' + res.photos[0].name) : (res.audios ? 'assets/media/audios/thumbnails/' + res.audios[0].image : this.env.defaultPostImage))
 					};
 					this.metaService.setData(metaData);
 

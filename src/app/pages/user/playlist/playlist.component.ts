@@ -154,7 +154,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 						description: t,
 						keywords: t,
 						url: this.env.url + 'pl/' + name,
-						image: res.image ? (this.env.url + 'assets/media/audios/covers/' + res.image) : this.env.image
+						image: res.info.image ? (this.env.url + 'assets/media/audios/covers/' + res.info.image) : this.env.defaultPlaylistCover
 					};
 					this.metaService.setData(metaData);
 

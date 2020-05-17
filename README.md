@@ -18,6 +18,9 @@ npm run build:ssr && npm run serve:ssr
 cd /var/www/html/ && pm2 stop 0 && pm2 delete 0 && sudo rm -rf dist/
 pm2 start dist/server.js
 
+<!-- Upload new + Stop Old + Launch new + Start new + Remove old -->
+cd /var/www/html/ && pm2 stop 0 && pm2 delete 0 && sudo mv dist distOld && sudo mv distNew dist && pm2 start dist/server.js && sudo rm -rf distOld/
+
 ----------------------------------------------------------------------------------------------------
 
 # ADDITIONAL CODE

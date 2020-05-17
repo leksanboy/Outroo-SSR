@@ -11,6 +11,9 @@ export const environment = {
 	name: 'Outroo',
 	copyright: '© ' + new Date().getFullYear() + ' Outroo',
 	cuantity: 30,
+	/* audioMimeTypes: 'audio/ac3, audio/aac, audio/basic, audio/amr, audio/dsd, audio/dts, audio/flac, audio/midi, audio/x-monkeys-audio, audio/it, audio/xm, audio/s3m, audio/x-musepack, audio/mpeg, audio/mp4, audio/voc, audio/x-realaudio, audio/m4a, audio/x-m4a', */
+	audioMimeTypes: 'audio/mpeg, audio/mp4',
+	photoMimeType: '.jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf',
 	image: 'https://outroo.com/assets/images/icons/square/icon-512x512.png',
 	avatar: 'https://outroo.com/assets/images/user/default/avatar.png',
 	background: 'https://outroo.com/assets/images/user/default/background.jpg',
@@ -19,6 +22,7 @@ export const environment = {
 	pathAudios: 'https://outroo.com/assets/media/audios/',
 	defaultSongCover: './assets/images/default_song_cover1.png',
 	defaultPlaylistCover: './assets/images/default_song_cover1.png',
+	defaultPostImage: './assets/images/default_song_cover1.png',
 	language: 1,
 	reCaptcha: '6Lc8UokUAAAAAFvc4FVu2WttNqdg1rep7UMx4pJG',
 	authHash: 'xQ3s1RVrSR',

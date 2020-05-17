@@ -122,27 +122,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		// Theme
 		this.actionFormPersonalData.get('theme').valueChanges
 			.subscribe(val => {
-				if (val === 0) {
-					this.document.body.classList.remove('darkTheme');
-				} else if (val === 1) {
-					this.document.body.classList.add('darkTheme');
-				}
-
-				this.alertService.success(this.translations.common.themeEnabled);
-
-				const data = {
-					theme: val
+				const dT = {
+					value: val
 				};
 
-				this.userDataService.updateTheme(data)
-					.subscribe(res => {
-						setTimeout(() => {
-							this.sessionData = this.userDataService.getSessionData();
-							this.sessionService.setDataTheme(this.sessionData);
-						}, 1000);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
+				this.sessionService.setDataTheme(dT);
 			});
 
 		// Validate username

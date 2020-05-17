@@ -816,14 +816,18 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		if (type === 1) { // Add files
 			for (const file of event.currentTarget.files) {
+				console.log('file', file);
+
 				if (file) {
-					file.title = file.name.replace('.mp3', '');
+					/* file.title = file.name.replace('.mp3', ''); */
+					file.title = file.name;
 					file.status = 'pending';
 
 					if (this.dataFiles.countUploads === 10) {
 						this.alertService.error(this.translations.common.exceededMaxUploads);
 					} else {
-						if (/^audio\/\w+$/.test(file.type)) {
+						/* if (/^audio\/\w+$/.test(file.type)) { */
+						if (file.type.indexOf('audio') > -1) {
 							file.category = 'audio';
 
 							if (file.size >= this.env.maxFileSize) {
@@ -937,7 +941,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				reload: false,
 				actions: true,
 				saveDisabled: false,
-				counter: 0
+				counter: 0,
+				max: 100
 			};
 		}
 	}

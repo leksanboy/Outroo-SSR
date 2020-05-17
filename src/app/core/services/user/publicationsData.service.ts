@@ -146,7 +146,8 @@ export class PublicationsDataService {
 
 	getPost(data: any) {
 		const url = this.env.url + 'assets/api/publications/getPost.php';
-		let params =	'&name=' + data.name;
+		let params =	(data.id ? '&id=' + data.id : '') +
+						(data.name ? '&name=' + data.name : '');
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())

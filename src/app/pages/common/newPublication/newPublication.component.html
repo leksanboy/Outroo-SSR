@@ -122,7 +122,7 @@
 			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="photos">
 				<i label="camera" class="blue"></i>
 			</button>
-			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, image/jpeg, image/png, image/gif, image/heic, image/heif, image/webp, video/*, .avi, .mp4, .3gp, .mpeg, .mov, .flv, .f4v, .wmv, .mkv, .webm, .vob, .rm, .rmvb, .m4v, .mpg, .ogv, .ts, .m2ts, .mts, .mxf">
+			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="{{env.photoMimeType}}">
 
 			<button mat-mini-fab type="button" (click)="openAudios()" matTooltip="audios">
 				<i label="music" class="blue"></i>

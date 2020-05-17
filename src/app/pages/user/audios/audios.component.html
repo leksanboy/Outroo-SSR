@@ -449,7 +449,7 @@
 													<i label="cloud-upload"></i>
 												</div>
 												<div class="text">{{translations?.audios?.songs}}</div>
-												<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="audio/mpeg, audio/mp4">
+												<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="{{env.audioMimeTypes}}">
 											</div>
 
 											<div class="mini" (click)="createPlaylist()">

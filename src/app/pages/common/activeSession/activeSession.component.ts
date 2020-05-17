@@ -137,11 +137,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.deniedAccess = 'session';
 
 			// Set theme
-			if (this.sessionData.current.theme === 0) {
-				this.document.body.classList.remove('darkTheme');
-			} else if (this.sessionData.current.theme === 1) {
-				this.document.body.classList.add('darkTheme');
-			}
+			this.changeTheme(this.sessionData.current.theme);
 
 			// Load default audios
 			this.defaultAudios(this.sessionData.current.id);
@@ -197,6 +193,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.getTranslations(data.current.language);
 				});
 
+			// Get notification box close
+			this.sessionService.getNotificationsBox()
+				.subscribe(data => {
+					this.showNotificationsBoxWeb(data);
+				});
+
 			// Get pending notifications
 			this.sessionService.getPendingNotifications()
 				.subscribe(data => {
@@ -230,7 +232,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get session data theme
 			this.sessionService.getDataTheme()
 				.subscribe(data => {
-					this.sessionData = data;
+					this.changeTheme(data.value);
 				});
 
 			// Get report
@@ -564,27 +566,31 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Show notifications web
-	showNotificationsBoxWeb() {
-		this.showNotificationsBox = !this.showNotificationsBox;
+	showNotificationsBoxWeb(type) {
+		if (type === 'show') {
+			this.showNotificationsBox = !this.showNotificationsBox;
 
-		// Count to '0'
-		this.sessionData.current.countPendingNotifications = 0;
+			// Count to '0'
+			this.sessionData.current.countPendingNotifications = 0;
 
-		// Update seen
-		if (this.dataNotifications.list.filter(x => x.is_seen == 0).length) {
-			const dataP = {
-				type: 'update'
-			};
+			// Update seen
+			if (this.dataNotifications.list.filter(x => x.is_seen == 0).length) {
+				const dataP = {
+					type: 'update'
+				};
 
-			this.notificationsDataService.pending(dataP).subscribe();
-		}
-
-		for (const i of this.dataNotifications.list) {
-			if (i) {
-				setTimeout(() => {
-					i.is_seen = 1;
-				}, 1800);
+				this.notificationsDataService.pending(dataP).subscribe();
 			}
+
+			for (const i of this.dataNotifications.list) {
+				if (i) {
+					setTimeout(() => {
+						i.is_seen = 1;
+					}, 1800);
+				}
+			}
+		} else if (type === 'close') {
+			this.showNotificationsBox = false;
 		}
 	}
 
@@ -1312,23 +1318,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 	setCurrentUser(data) {
 		if (this.sessionData.current.id !== data.id) {
 			// Set theme
-			if (data.theme === 0) {
-				this.document.body.classList.remove('darkTheme');
-			} else if (data.theme === 1) {
-				this.document.body.classList.add('darkTheme');
-			}
+			this.changeTheme(data.theme);
 
 			// Get translations
 			this.getTranslations(data.language);
-
-			// Get pending notifications
-			/* const dataP = {
-				type: 'default'
-			};
-			this.notificationsDataService.pending(dataP)
-				.subscribe(res => {
-					data.countPendingNotifications = res;
-				}); */
 
 			// Set data
 			this.sessionData.current = data;
@@ -1409,8 +1402,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 		// Set theme
 		if (value === 0) {
 			this.document.body.classList.remove('darkTheme');
+			this.document.getElementsByTagName('html')[0].setAttribute('class', 'light');
 		} else if (value === 1) {
 			this.document.body.classList.add('darkTheme');
+			this.document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
 		}
 
 		// Close user box
@@ -1422,17 +1417,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			theme: value
 		};
 
-		this.userDataService.updateTheme(data)
-			.subscribe(res => {
-				setTimeout(() => {
-					this.sessionData = this.userDataService.getSessionData();
-					this.sessionService.setDataTheme(this.sessionData);
-
-					this.alertService.success(this.translations.common.themeEnabled);
-				}, 1000);
-			}, error => {
-				this.alertService.error(this.translations.common.anErrorHasOcurred);
-			});
+		this.userDataService.updateTheme(data).subscribe();
 	}
 
 	// Report inapropiate content

@@ -1,4 +1,5 @@
 <?php include "../db.php";
+	$session = sessionId();
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$user = $_GET['user'];
 	$type = $_GET['type'];
@@ -8,17 +9,18 @@
 	if ($type === 'default') {
 		$sql = "SELECT f.id,
 						f.song,
-						m.name,
-						m.title,
-						m.original_title,
-						m.original_artist,
-						m.duration,
-						m.image,
-						m.explicit
+						a.name,
+						a.title,
+						a.original_title,
+						a.original_artist,
+						a.duration,
+						a.image,
+						a.explicit
 				FROM z_audios_favorites f
-					INNER JOIN z_audios m ON m.id = f.song
+					INNER JOIN z_audios a ON a.id = f.song
 				WHERE f.user = $user
 					AND f.is_deleted = 0
+					AND a.is_deleted = 0
 				ORDER BY f.date DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);

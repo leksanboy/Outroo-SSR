@@ -23,6 +23,7 @@ export class SessionService {
 	private subjectShowPublication = new Subject<any>();
 	private subjectLastUrl = new Subject<any>();
 	private subjectComeFromUserButton = new Subject<any>();
+	private subjectNotificationsBox = new Subject<any>();
 
 	setDataClickElementRef(data: any) {
 		this.subjectClickElementRef.next(data);
@@ -174,5 +175,13 @@ export class SessionService {
 
 	getComeFromUserButton(): Observable<any> {
 		return this.subjectComeFromUserButton.asObservable();
+	}
+
+	setNotificationsBox(data: any) {
+		this.subjectNotificationsBox.next(data);
+	}
+
+	getNotificationsBox(): Observable<any> {
+		return this.subjectNotificationsBox.asObservable();
 	}
 }

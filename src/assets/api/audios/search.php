@@ -12,9 +12,12 @@
 					image,
 					explicit
 			FROM z_audios
-			WHERE title LIKE '%$caption%' OR
-					original_title LIKE '%$caption%' OR
-					original_artist LIKE '%$caption%'
+			WHERE title LIKE '%$caption%'
+				OR
+				original_title LIKE '%$caption%'
+				OR
+				original_artist LIKE '%$caption%'
+				AND is_deleted = 0
 			ORDER by title ASC,
 					original_title ASC,
 					original_artist ASC
