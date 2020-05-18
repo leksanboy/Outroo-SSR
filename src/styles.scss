@@ -1768,6 +1768,11 @@ body {
 			&.big {
 				width: calc(100%/3*2 - 0.5%);
 			}
+
+			&.remove {
+				filter: grayscale(100%);
+				opacity: .5;
+			}
 		}
 	}
 
@@ -2115,7 +2120,7 @@ body {
 		width: 100%;
 		margin: 0;
 
-		.head {
+		.user {
 			padding: 6px 0 6px 18px;
 			box-sizing: border-box;
 			display: flex;
@@ -2167,49 +2172,44 @@ body {
 			}
 		}
 
-		.body {
-			box-sizing: border-box;
+		.photos {
 			width: 100%;
 			float: left;
 
-			.photos {
+			img {
 				width: 100%;
-				float: left;
-
-				img {
-					width: 100%;
-				}
-
-				video {
-					max-height: 360px;
-					width: 100%;
-				}
-
-				.playPause {
-					margin: -43px 0 0 -43px;
-					position: absolute;
-					height: 86px;
-					width: 86px;
-					left: 50%;
-					top: 50%;
-				}
 			}
 
-			.innerContent {
-				box-sizing: border-box;
+			video {
+				max-height: 360px;
 				width: 100%;
+			}
 
-				.textContainer {
-					word-break: break-word;
-					box-sizing: border-box;
-					padding: 12px 18px 6px;
-					width: 100%;
-					float: left;
-				}
+			.playPause {
+				margin: -43px 0 0 -43px;
+				position: absolute;
+				height: 86px;
+				width: 86px;
+				left: 50%;
+				top: 50%;
+			}
+		}
+
+		.innerContent {
+			padding: 12px 0;
+			float: left;
+			box-sizing: border-box;
+			width: 100%;
+
+			.textContainer {
+				word-break: break-word;
+				box-sizing: border-box;
+				padding: 0 18px 12px;
+				width: 100%;
+				float: left;
 			}
 
 			.audios {
-				margin: 12px 0 0;
 				width: 100%;
 				float: left;
 
@@ -2224,10 +2224,6 @@ body {
 		&.remove {
 			filter: grayscale(100%);
 			opacity: .5;
-
-			.body {
-				pointer-events: none;
-			}
 		}
 	}
 
@@ -3371,7 +3367,7 @@ body {
 	.analytics {
 		box-sizing: border-box;
 		position: relative;
-		padding: 0 9px;
+		padding: 12px;
 		display: flex;
 		width: 100%;
 		float: left;
@@ -3415,7 +3411,7 @@ body {
 		.likers {
 			text-overflow: ellipsis;
 			box-sizing: border-box;
-			padding: 0 48px 0 12px;
+			padding: 0 36px 0 12px;
 			white-space: nowrap;
 			font-weight: bold;
 			line-height: 40px;
@@ -4121,12 +4117,13 @@ body {
 			.slide {
 				box-sizing: border-box;
 				position: relative;
-				max-height: 600px;
 				border-radius: 0;
 				overflow: hidden;
-				height: 100vw;
 				float: left;
+				height: 100vw;
+				max-height: 666px;
 				width: 100%;
+				max-width: 666px;
 
 				.image {
 					position: absolute;
@@ -4160,7 +4157,13 @@ body {
 		}
 
 		.swiper-pagination {
-			margin: 0 0 6px;
+			bottom: 10px;
+			left: 0;
+			width: 100%;
+			height: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
 			.swiper-pagination-bullet {
 				background-color: $whiteColor !important;
@@ -4508,7 +4511,7 @@ body {
 			}
 
 			.noData {
-				padding: 48px 48px 96px;
+				padding: 48px 18px;
 			}
 
 			.searchBox {
@@ -5113,17 +5116,19 @@ body {
 
 			/*show publication*/
 			.bodyPublications {
-				max-height: 480px;
+				height: 480px;
+				width: calc(480px + 360px);
 
 				.container {
 					display: flex;
 					width: 100%;
 					height: 100%;
+					overflow: hidden;
 
 					.user {
-						padding: 6px 0 6px 12px;
-						box-sizing: border-box;
 						display: none;
+						padding: 6px 0 6px 18px;
+						box-sizing: border-box;
 						width: 100%;
 						float: left;
 
@@ -5131,10 +5136,10 @@ body {
 							box-sizing: border-box;
 							border-radius: 50%;
 							overflow: hidden;
-							min-width: 36px;
+							min-width: 32px;
 							margin: 4px 0;
-							height: 36px;
-							width: 36px;
+							height: 32px;
+							width: 32px;
 
 							img {
 								height: 100%;
@@ -5168,89 +5173,62 @@ body {
 					}
 
 					.left {
-						-webkit-box-orient: vertical;
-						-webkit-box-pack: center;
-						justify-content: center;
-						flex-direction: column;
-						box-sizing: border-box;
-						-ms-flex-pack: center;
-						-ms-flex-negative: 0;
-						align-items: stretch;
-						position: relative;
-						min-height: 240px;
-						max-width: 980px;
-						flex-shrink: 0;
-						display: flex;
-						padding: 0;
-						margin: 0;
+						width: 480px;
+						height: 480px;
+						text-align: center;
+						line-height: 480px;
+
+						img,
+						video {
+							vertical-align: middle;
+							max-width: 100%;
+							max-height: 100%;
+						}
 
 						swiper {
-							// width: 510px;
-							float: left;
-
 							.swiper-wrapper {
 								.slide {
-									max-height: 510px;
+									box-sizing: border-box;
+									position: relative;
+									height: 480px;
+									width: 480px;
 								}
 							}
 						}
 
-						.photos {
-							background: $blackColor;
-							position: relative;
-							float: left;
-							width: 100%;
+						.prev,
+						.next {
+							border-radius: 0 5px 5px 0;
+							position: absolute;
+							cursor: pointer;
+							display: flex;
+							margin: 25% 0;
+							width: 100px;
+							height: 50%;
+							z-index: 1;
+							top: 0;
 
-							img,
-							video {
-								min-height: 120px;
-								max-height: 75vh;
-								min-width: 120px;
-								max-width: 100%;
-								display: block;
-								margin: auto;
-							}
-
-							/*Photos*/
-							.prev,
-							.next {
-								border-radius: 0 5px 5px 0;
-								position: absolute;
-								cursor: pointer;
-								display: flex;
-								margin: 25% 0;
-								width: 100px;
-								height: 50%;
-								z-index: 1;
-								top: 0;
-
-								i {
-									margin: auto auto auto 6px;
-								}
-							}
-
-							.next {
-								border-radius: 3px 0 0 5px;
-								right: 0;
-
-								i {
-									margin: auto 6px auto auto;
-								}
-							}
-
-							.playPause {
-								margin: -43px 0 0 -43px;
-								position: absolute;
-								height: 86px;
-								width: 86px;
-								left: 50%;
-								top: 50%;
+							i {
+								margin: auto auto auto 6px;
 							}
 						}
 
-						&.remove {
-							filter: grayscale(100%);
-							opacity: .5;
+						.next {
+							border-radius: 3px 0 0 5px;
+							right: 0;
+
+							i {
+								margin: auto 6px auto auto;
+							}
+						}
+
+						.playPause {
+							margin: -43px 0 0 -43px;
+							position: absolute;
+							height: 86px;
+							width: 86px;
+							left: 50%;
+							top: 50%;
 						}
 					}
 
@@ -5259,38 +5237,70 @@ body {
 						width: 360px;
 						height: 100%;
 						float: left;
+						position: relative;
+						border-left: 1px solid transparentize($greyColor, .75);
 
-						.box {
-							max-height: 65vh;
+						.user {
+							padding: 12px 0 12px 18px;
+							border-bottom: 1px solid transparentize($greyColor, .75);
+							display: flex;
+						}
+
+						.innerContent {
+							padding: 12px 0;
+							float: left;
+							box-sizing: border-box;
+							width: 100%;
+							height: calc(480px - 69px - 59px);
 							overflow: auto;
-							height: 100%;
 
-							.panel {
+							.textContainer {
+								word-break: break-word;
 								box-sizing: border-box;
-								padding: 12px 0 0;
+								padding: 0 18px 12px;
 								width: 100%;
 								float: left;
+							}
 
-								.user {
-									padding: 0 0 6px 18px;
-									display: flex;
-								}
+							.audios {
+								width: 100%;
+								float: left;
+							}
 
-								.textContainer {
-									word-break: break-word;
-									box-sizing: border-box;
-									padding: 0 18px 12px;
-									width: 100%;
-									float: left;
-								}
+							.analytics {
+								display: none;
+							}
 
-								.audios {
-									width: 100%;
-									float: left;
+							.boxComments {
+								.comments {
+									.loadingData {
+										padding: 12px 0;
+										position: inherit;
+									}
 								}
 							}
 						}
+
+						.analytics {
+							display: flex;
+							border-top: 1px solid transparentize($greyColor, .75);
+						}
 					}
+				}
+
+				&.remove {
+					filter: grayscale(100%);
+					opacity: .5;
+				}
+
+				.loadingData {
+					position: absolute;
+					top: 0;
+					padding: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 100%;
 				}
 			}
 
@@ -8105,38 +8115,43 @@ body {
 				}
 
 				.bodyPublications {
+					width: 100%;
+					height: auto;
+
 					.container {
 						display: block;
 
+						.user {
+							display: flex;
+						}
+
 						.left {
-							width: 100%;
+							width: inherit;
+							height: 100%;
+							line-height: inherit;
 							float: left;
-
-							.user {
-								display: flex;
-							}
-
-							.image {
-								img {
-									min-height: 120px;
-								}
-
-								video {
-									width: 100%;
-								}
-							}
+							background-color: $blackColor;
 						}
 
 						.right {
 							width: 100%;
+							border: none;
 
-							.box {
-								overflow: initial;
-								height: initial;
+							.user {
+								display: none;
+							}
 
-								.panel .user {
-									display: none;
+							.innerContent {
+								height: inherit;
+
+								.analytics {
+									display: flex;
+									border: none;
 								}
+							}
+
+							.analytics {
+								display: none;
 							}
 						}
 					}

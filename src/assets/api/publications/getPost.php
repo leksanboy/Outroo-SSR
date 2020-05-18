@@ -18,56 +18,59 @@
 					photos,
 					audios,
 					disabled_comments as disabledComments,
-					date
+					date,
+					is_deleted as d
 			FROM z_publications
 			WHERE $cond
-				AND is_deleted = 0
 			ORDER BY date DESC";
-	$result = $conn->query($sql);
+	$result = $conn->query($sql)->fetch_assoc();
 
-	if ($result->num_rows > 0){
-		$data = array();
-
-		while($row = $result->fetch_assoc()) {
-			$row['user'] = userUsernameNameAvatar($row['user']);
-			$row['content'] = trim($row['content']) ? html_entity_decode($row['content'], ENT_QUOTES) : null;
-			$row['likers'] = getPublicationLikers($row['id']);
-			$row['disabledComments'] = intval($row['disabledComments']) === 0 ? false : true;
-			$row['countComments'] = countCommentsPublication($row['id']);
-			$row['countLikes'] = countLikesPublication($row['id']);
-			$row['comments'] = [];
+	if ($result) {
+		if ($result['d'] == 0 || ($result['d'] == 1 && $session == $result['user'])) {
+			$result['user'] = userUsernameNameAvatar($result['user']);
+			$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
+			$result['likers'] = getPublicationLikers($result['id']);
+			$result['disabledComments'] = intval($result['disabledComments']) === 0 ? false : true;
+			$result['countComments'] = countCommentsPublication($result['id']);
+			$result['countLikes'] = countLikesPublication($result['id']);
+			$result['comments'] = [];
 
 			if ($session) {
-				$row['bookmark'] = checkMarkedPublication($row['id'], $session);
-				$row['liked'] = checkLikedPublication($row['id'], $session);
+				$result['bookmark'] = checkMarkedPublication($result['id'], $session);
+				$result['liked'] = checkLikedPublication($result['id'], $session);
 			}
 
 			// Format urlVideo
-			$row['urlVideo'] = json_decode($row['urlVideo']);
-			if (count($row['urlVideo']) > 0) {
-				$row['urlVideo']->title = html_entity_decode($row['urlVideo']->title, ENT_QUOTES);
-				$row['urlVideo']->channel = html_entity_decode($row['urlVideo']->channel, ENT_QUOTES);
-				$row['urlVideo']->iframe = html_entity_decode($row['urlVideo']->iframe, ENT_QUOTES);
+			$result['urlVideo'] = json_decode($result['urlVideo']);
+			if (count($result['urlVideo']) > 0) {
+				$result['urlVideo']->title = html_entity_decode($result['urlVideo']->title, ENT_QUOTES);
+				$result['urlVideo']->channel = html_entity_decode($result['urlVideo']->channel, ENT_QUOTES);
+				$result['urlVideo']->iframe = html_entity_decode($result['urlVideo']->iframe, ENT_QUOTES);
 			} else {
-				$row['urlVideo'] = null;
+				$result['urlVideo'] = null;
 			}
 
 			// Format photos
-			$row['photos'] = json_decode($row['photos']);
-			foreach ($row['photos'] as &$p) {
+			$result['photos'] = json_decode($result['photos']);
+			foreach ($result['photos'] as &$p) {
 				$p = getPhotoData($p);
 			}
 
 			// Format audios
-			$row['audios'] = json_decode($row['audios']);
-			foreach ($row['audios'] as &$a) {
+			$result['audios'] = json_decode($result['audios']);
+			foreach ($result['audios'] as &$a) {
 				$a = getAudioData($a);
 			}
 
-			$data[] = $row;
-		}
+			// Para recuperar la publicación si esta eliminada, solo la ve el creador del post
+			if ($result['d'] == 1) {
+				$result['addRemoveSession'] = true;
+			}
 
-		echo json_encode($data[0]);
+			echo json_encode($result);
+		} else {
+			var_dump(http_response_code(204));
+		}
 	} else {
 		var_dump(http_response_code(204));
 	}

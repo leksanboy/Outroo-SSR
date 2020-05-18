@@ -462,7 +462,6 @@ export class MainComponent implements OnInit, OnDestroy {
 				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
-					console.log('res', res);
 
 					if (res.user.id === this.sessionData.current.id) {
 						item.addRemoveSession = res.addRemoveSession;

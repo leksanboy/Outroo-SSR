@@ -237,9 +237,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
-					if (res.user.id === this.sessionData.current.id) {
-						item.addRemoveSession = res.addRemoveSession;
-					}
+					console.log('res', res);
+
+					item.bookmarkRemoved = !res.bookmark.checked;
 				});
 				break;
 		}

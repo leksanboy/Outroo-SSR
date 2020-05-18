@@ -11,17 +11,17 @@
 
 				<div class="pageTitle">{{translations?.post?.title}}</div>
 
-				<div class="publication" *ngIf="!dataDefault.loadingData && !dataDefault.noData">
-					<div class="head">
-						<a class="avatar" routerLink="/{{dataDefault.data?.user?.username}}">
-							<img [src]="dataDefault.data?.user?.avatar ? dataDefault.data?.user?.avatarUrl : env.avatar"/>
+				<div class="publication" *ngIf="!dataDefault?.loadingData && !dataDefault?.noData" [ngClass]="{'remove': dataDefault?.data?.addRemoveSession}">
+					<div class="user">
+						<a class="avatar" routerLink="/{{dataDefault?.data?.user?.username}}">
+							<img [src]="dataDefault?.data?.user?.avatar ? dataDefault?.data?.user?.avatarUrl : env.avatar"/>
 						</a>
 
 						<div class="username">
 							<div class="data">
-								<a class="name" routerLink="/{{dataDefault.data?.user?.username}}">{{dataDefault.data?.user?.username}}</a>
-								<i class="icon50 blue" label="official" *ngIf="dataDefault.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-								<div class="date">{{dataDefault.data?.date | timeago}}</div>
+								<a class="name" routerLink="/{{dataDefault?.data?.user?.username}}">{{dataDefault?.data?.user?.username}}</a>
+								<i class="icon50 blue" label="official" *ngIf="dataDefault?.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								<div class="date">{{dataDefault?.data?.date | timeago}}</div>
 							</div>
 						</div>
 
@@ -31,86 +31,88 @@
 							</button>
 
 							<mat-menu #options="matMenu">
-								<button mat-menu-item (click)="itemPublicationOptions('disableComments', dataDefault.data)" *ngIf="dataDefault.data?.user?.id == sessionData?.current?.id">{{dataDefault.data.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
+								<button mat-menu-item (click)="itemPublicationOptions('disableComments', dataDefault?.data)" *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id">{{dataDefault?.data.disabledComments ? translations?.common?.disableComments : translations?.common?.enableComments}}</button>
 								<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-								<button mat-menu-item (click)="itemPublicationOptions('report', dataDefault.data)">{{translations?.common?.report}}</button>
-								<mat-divider *ngIf="dataDefault.data?.user?.id == sessionData?.current?.id"></mat-divider>
-								<button mat-menu-item (click)="itemPublicationOptions('remove', dataDefault.data)" *ngIf="dataDefault.data?.user?.id == sessionData?.current?.id">{{dataDefault.data.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+								<button mat-menu-item (click)="itemPublicationOptions('report', dataDefault?.data)">{{translations?.common?.report}}</button>
+								<mat-divider *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id"></mat-divider>
+								<button mat-menu-item (click)="itemPublicationOptions('remove', dataDefault?.data)" *ngIf="dataDefault?.data?.user?.id == sessionData?.current?.id">{{dataDefault?.data.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 							</mat-menu>
 
 							<mat-menu #menuShareSocial="matMenu">
-								<button mat-menu-item (click)="itemPublicationOptions('message', dataDefault.data)">{{translations?.common?.sendMessage}}</button>
-								<button mat-menu-item (click)="itemPublicationOptions('newTab', dataDefault.data)">{{translations?.common?.openInNewTab}}</button>
-								<button mat-menu-item (click)="itemPublicationOptions('copyLink', dataDefault.data)">{{translations?.common?.copyLink}}</button>
+								<button mat-menu-item (click)="itemPublicationOptions('message', dataDefault?.data)">{{translations?.common?.sendMessage}}</button>
+								<button mat-menu-item (click)="itemPublicationOptions('newTab', dataDefault?.data)">{{translations?.common?.openInNewTab}}</button>
+								<button mat-menu-item (click)="itemPublicationOptions('copyLink', dataDefault?.data)">{{translations?.common?.copyLink}}</button>
 							</mat-menu>
 						</div>
 					</div>
 
-					<div class="body">
-						<div class="photos" *ngIf="dataDefault.data?.photos">
-							<span *ngIf="dataDefault.data?.photos.length == 1">
-								<img *ngIf="dataDefault.data?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + dataDefault.data?.photos[0].name">
+					<div class="photos" *ngIf="dataDefault?.data?.photos">
+						<span *ngIf="dataDefault?.data?.photos.length == 1">
+							<img *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + dataDefault?.data?.photos[0].name">
 
-								<video *ngIf="dataDefault.data?.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{dataDefault.data.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + dataDefault.data?.photos[0].name}}">
-									<source src="{{env.pathVideos + dataDefault.data?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
-								</video>
+							<video *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{dataDefault?.data.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + dataDefault?.data?.photos[0].name}}">
+								<source src="{{env.pathVideos + dataDefault?.data?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+							</video>
 
-								<span *ngIf="dataDefault.data?.photos[0].mimetype.indexOf('video') !== -1">
-									<div class="playPause" (click)="playVideo(dataDefault.data?.photos[0], 'videoPlayer' + dataDefault.data.id)" *ngIf="!dataDefault.data?.photos[0].playButton">
-										<i label="play"></i>
-									</div>
-								</span>
+							<span *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1">
+								<div class="playPause" (click)="playVideo(dataDefault?.data?.photos[0], 'videoPlayer' + dataDefault?.data.id)" *ngIf="!dataDefault?.data?.photos[0].playButton">
+									<i label="play"></i>
+								</div>
 							</span>
+						</span>
 
-							<swiper *ngIf="dataDefault.data?.photos.length > 1" [config]="swiperConfig">
-								<div class="swiper-wrapper">
-									<div class="swiper-slide" *ngFor="let p of dataDefault.data?.photos">
-										<div class="slide">
-											<div class="image">
-												<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
+						<swiper *ngIf="dataDefault?.data?.photos.length > 1" [config]="swiperConfig">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" *ngFor="let p of dataDefault?.data?.photos">
+									<div class="slide">
+										<div class="image">
+											<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
 
-												<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p.name}}">
-													<source src="{{env.pathVideos + p.name.split('.')[0] + '.mp4'}}" type="video/mp4">
-												</video>
+											<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p.name}}">
+												<source src="{{env.pathVideos + p.name.split('.')[0] + '.mp4'}}" type="video/mp4">
+											</video>
 
-												<span *ngIf="p.mimetype.indexOf('video') !== -1">
-													<div class="playPause" (click)="playVideo(p, 'videoPlayer' + p.id)" *ngIf="!p.playButton">
-														<i label="play"></i>
-													</div>
-												</span>
-											</div>
+											<span *ngIf="p.mimetype.indexOf('video') !== -1">
+												<div class="playPause" (click)="playVideo(p, 'videoPlayer' + p.id)" *ngIf="!p.playButton">
+													<i label="play"></i>
+												</div>
+											</span>
 										</div>
 									</div>
 								</div>
+							</div>
 
-								<div class="swiper-pagination"></div>
+							<div class="swiper-pagination"></div>
 
-								<div class="swiperNext" mat-ripple>
-									<i label="arrow-mini-line-right"></i>
-								</div>
-								<div class="swiperPrev" mat-ripple>
-									<i label="arrow-mini-line-left"></i>
-								</div>
-							</swiper>
+							<div class="swiperNext" mat-ripple>
+								<i label="arrow-mini-line-right"></i>
+							</div>
+							<div class="swiperPrev" mat-ripple>
+								<i label="arrow-mini-line-left"></i>
+							</div>
+						</swiper>
+					</div>
+
+					<div class="innerContent">
+						<div class="noData" *ngIf="!(dataDefault?.data?.content?.length || dataDefault?.data?.audios?.length)">
+							<div class="description">{{translations?.common?.noData}}</div>
 						</div>
 
-						<div class="innerContent">
-							<div class="textContainer" *ngIf="dataDefault.data?.content" [innerHTML]="dataDefault.data?.content | safeHtml"></div>
-						</div>
+						<div class="textContainer" *ngIf="dataDefault?.data?.content" [innerHTML]="dataDefault?.data?.content | safeHtml"></div>
 
-						<div class="audios" *ngIf="dataDefault.data?.audios">
+						<div class="audios" *ngIf="dataDefault?.data?.audios">
 							<ul class="tracks">
-								<li *ngFor="let a of dataDefault.data?.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData.postId == dataDefault.data?.id, default: !a.image}">
+								<li *ngFor="let a of dataDefault?.data?.audios; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.type == 'publication' && audioPlayerData.postId == dataDefault?.data?.id, default: !a.image}">
 									<div class="inner">
 										<div class="image">
-											<button mat-icon-button (click)="playSong(dataDefault.data, a, i, 'publication')">
-												<i label="play" *ngIf="!a.playing || !(audioPlayerData.postId == dataDefault.data?.id)"></i>
-												<i label="pause" *ngIf="a.playing && (audioPlayerData.postId == dataDefault.data?.id)"></i>
+											<button mat-icon-button (click)="playSong(dataDefault?.data, a, i, 'publication')">
+												<i label="play" *ngIf="!a.playing || !(audioPlayerData.postId == dataDefault?.data?.id)"></i>
+												<i label="pause" *ngIf="a.playing && (audioPlayerData.postId == dataDefault?.data?.id)"></i>
 												<img [src]="a.image ? (env.pathAudios + 'thumbnails/' + a.image) : env.defaultSongCover"/>
 											</button>
 										</div>
 
-										<div class="text" (click)="playSong(dataDefault.data, a, i, 'publication')">
+										<div class="text" (click)="playSong(dataDefault?.data, a, i, 'publication')">
 											<div class="titleArtist" title="{{a.original_title ? a.original_title : a.title}}">
 												<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
 												<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>
@@ -158,28 +160,28 @@
 
 						<div class="analytics">
 							<div class="buttonBox">
-								<button mat-icon-button (click)="showComments('showHide', dataDefault.data)">
+								<button mat-icon-button (click)="showComments('showHide', dataDefault?.data)">
 									<i label="analytics-comments"></i>
 								</button>
 							</div>
 
 							<div class="buttonBox">
-								<button mat-icon-button (click)="likeUnlike(dataDefault.data)">
-									<i label="analytics-like" [ngClass]="{'active' : dataDefault.data?.liked}"></i>
+								<button mat-icon-button (click)="likeUnlike(dataDefault?.data)">
+									<i label="analytics-like" [ngClass]="{'active' : dataDefault?.data?.liked}"></i>
 								</button>
-								{{dataDefault.data?.countLikes}}
+								<!-- {{dataDefault?.data?.countLikes}} -->
 							</div>
 
-							<a class="likers" *ngIf="dataDefault.data?.countLikes > 0" (click)="showLikes(dataDefault.data)">
-								<span *ngFor="let l of dataDefault.data?.likers; let isLast = last">
+							<a class="likers" *ngIf="dataDefault?.data?.countLikes > 0" (click)="showLikes(dataDefault?.data)">
+								<span *ngFor="let l of dataDefault?.data?.likers; let isLast = last">
 									{{l.username}}{{isLast ? '' : ', '}}
 								</span>
-								{{dataDefault.data?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
+								{{dataDefault?.data?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
 							</a>
 
 							<div class="buttonBox bookmark">
-								<button mat-icon-button (click)="markUnmark(dataDefault.data)">
-									<i label="analytics-bookmark" [ngClass]="{'active' : dataDefault.data?.bookmark?.checked}"></i>
+								<button mat-icon-button (click)="markUnmark(dataDefault?.data)">
+									<i label="analytics-bookmark" [ngClass]="{'active' : dataDefault?.data?.bookmark?.checked}"></i>
 								</button>
 							</div>
 						</div>
@@ -187,8 +189,7 @@
 						<div class="boxComments" *ngIf="dataDefault?.data?.showCommentsBox">
 							<div class="comments" *ngIf="!dataDefault?.data?.disabledComments && dataDefault?.data?.loaded">
 								<div class="countComments">
-									{{dataDefault?.data?.countComments}} 
-									{{translations?.common?.comments}}
+									{{dataDefault?.data?.countComments}} {{translations?.common?.comments}}
 								</div>
 
 								<div class="new" *ngIf="sessionData?.current?.id">
@@ -267,11 +268,11 @@
 					</div>
 				</div>
 
-				<div class="loadingData" *ngIf="dataDefault.loadingData">
+				<div class="loadingData" *ngIf="dataDefault?.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataDefault.noData">
+				<div class="noData" *ngIf="dataDefault?.noData">
 					<div class="description">{{translations?.post?.noData}}</div>
 				</div>
 			</div>
