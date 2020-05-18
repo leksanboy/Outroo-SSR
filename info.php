@@ -1,4 +1,4 @@
-<?php 
+<?php
 	// // *Email sender
 	// require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
 
