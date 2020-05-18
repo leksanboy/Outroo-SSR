@@ -7,7 +7,7 @@
 						<i label="back"></i>
 					</button>
 					<div class="text" (click)="goBack()">{{translations?.common?.back}}</div>
-					<button mat-icon-button class="action" routerLink="/news/{{userData?.username.charAt(0)}}/people">
+					<button mat-icon-button class="action" routerLink="/news/{{data.searchWord}}/people">
 						<i label="person-add"></i>
 					</button>
 				</div>
@@ -172,7 +172,7 @@
 						<div class="noData" *ngIf="dataSearch.noData">
 							<div class="description">{{translations?.common?.noSearchResults}}</div>
 							<div class="button">
-								<button mat-raised-button routerLink="/news/{{userData?.username.charAt(0)}}/people">
+								<button mat-raised-button routerLink="/news/{{data.searchWord}}/people">
 									{{translations?.common?.searchFriends}}
 								</button>
 							</div>

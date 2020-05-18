@@ -98,6 +98,16 @@ export class PublicationsDataService {
 			}));
 	}
 
+	markUnmark(data: any) {
+		const url = this.env.url + 'assets/api/publications/markUnmark.php';
+		const params = data;
+
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
+
 	likes(data: any) {
 		const url = this.env.url + 'assets/api/publications/likes.php';
 		let params =	'&id=' + data.id +

@@ -1,18 +1,15 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Location, DOCUMENT } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
-import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
-import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
-import { SsrService } from '../../../../app/core/services/ssr.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -47,8 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
-		private router: Router,
-		private location: Location,
 		private renderer: Renderer2,
 		private titleService: Title,
 		private elementRef: ElementRef,
@@ -58,10 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private bookmarksDataService: BookmarksDataService,
-		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService,
-		private ssrService: SsrService
+		private publicationsDataService: PublicationsDataService
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -213,7 +205,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 								this.dataDefault.list.push(res[i]);
 
 								// Push ad
-								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+								if (i == '15' || i == '28') {
 									this.dataDefault.list.push(this.pushAd());
 								}
 							}
@@ -421,7 +413,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				type: item.bookmark.checked ? 'add' : 'remove'
 			};
 
-			this.bookmarksDataService.markUnmark(data)
+			this.publicationsDataService.markUnmark(data)
 				.subscribe(res => {
 					if (res) {
 						item.bookmark.id = res;

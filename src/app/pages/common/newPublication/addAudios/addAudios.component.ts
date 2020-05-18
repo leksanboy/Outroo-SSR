@@ -332,7 +332,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 					file.uploaded = true;
 					file.id = 0;
 
-					if (this.dataDefault.countUploads === 10) {
+					if (this.dataDefault.countUploads === this.env.maxItemsPerUpload) {
 						this.alertService.error(this.translations.common.exceededMaxUploads);
 					} else {
 						this.dataDefault.countUploads++;

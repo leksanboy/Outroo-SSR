@@ -1,12 +1,11 @@
 <?php include "../db.php";
+	$session = sessionId();
+	$user = $_GET['user'];
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
 	$type = $_GET['type'];
 
 	if ($type === 'user') {
-		$session = sessionId();
-		$user = $_GET['user'];
-
 		if ($more === 0) {
 			$user = userId($user);
 		}
@@ -44,9 +43,6 @@
 
 		$conn->close();
 	} else if ($type === 'home') {
-		$session = sessionId();
-		$user = $_GET['user'];
-
 		$sql = "SELECT id,
 						user,
 						name,
@@ -114,6 +110,77 @@
 		$conn->close();
 	} else if ($type === 'news') {
 		$sql = "SELECT id,
+						name,
+						photos as contentData
+				FROM z_publications
+				WHERE (length(photos) > 0 AND is_deleted = 0)
+				ORDER BY rand()
+				LIMIT $more, $cuantity";
+
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			$data = array();
+			while($row = $result->fetch_assoc()) {
+				// Format photos
+				$row['contentData'] = json_decode($row['contentData']);
+				foreach ($row['contentData'] as &$p) {
+					$p = getPhotoData($p);
+				}
+
+				if ($row['contentData']) {
+					$row['contentData'] = $row['contentData'][0];
+				}
+
+				$data[] = $row;
+			}
+
+			echo json_encode($data);
+		} else {
+			var_dump(http_response_code(204));
+		}
+
+		$conn->close();
+	} else if ($type === 'bookmarks') {
+		$sql = "SELECT p.id,
+						p.name,
+						p.photos as contentData
+				FROM z_bookmarks b
+					INNER JOIN z_publications p ON p.id = b.post
+				WHERE b.user = $session
+					AND b.is_deleted = 0
+					AND p.is_deleted = 0
+				ORDER BY b.id DESC
+				LIMIT $more, $cuantity";
+
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			$data = array();
+			while($row = $result->fetch_assoc()) {
+				// Format photos
+				$row['contentData'] = json_decode($row['contentData']);
+				foreach ($row['contentData'] as &$p) {
+					$p = getPhotoData($p);
+				}
+
+				if ($row['contentData']) {
+					$row['contentData'] = $row['contentData'][0];
+				}
+
+				$data[] = $row;
+			}
+
+			echo json_encode($data);
+		} else {
+			var_dump(http_response_code(204));
+		}
+
+		$conn->close();
+	}
+
+/* 	} else if ($type === 'news') {
+		$sql = "SELECT id,
 						user,
 						name,
 						url_video as urlVideo,
@@ -134,7 +201,7 @@
 			while($row = $result->fetch_assoc()) {
 				// Check if publication contains photos or photos + urlvideo
 				if (count(json_decode($row['photos'])) > 0 ||
-				   (count(json_decode($row['photos'])) > 0 && count(json_decode($row['urlVideo'])) > 0)
+				(count(json_decode($row['photos'])) > 0 && count(json_decode($row['urlVideo'])) > 0)
 				) {
 					$row['type'] = 'photo';
 					$row['photos'] = getPhotoData(json_decode($row['photos'])[0]);
@@ -169,5 +236,5 @@
 		}
 
 		$conn->close();
-	}
+	} */
 ?>

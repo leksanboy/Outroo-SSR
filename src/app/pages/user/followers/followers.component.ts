@@ -64,6 +64,9 @@ export class FollowersComponent implements OnInit, OnDestroy {
 			caption: ['']
 		});
 
+		// Word for search if not found between friends
+		this.data.searchWord = this.userData.username.charAt(0);
+
 		// Data
 		if (this.sessionData) {
 			// Set Google analytics
@@ -129,6 +132,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 				debounceTime(400),
 				distinctUntilChanged())
 			.subscribe(val => {
+				this.data.searchWord = val;
 				(val.length > 0) ? this.search('default') : this.search('clear');
 			});
 	}
@@ -321,6 +325,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		} else if (type === 'clear') {
 			this.data.active = 'default';
 			this.actionFormSearch.get('caption').setValue('');
+			this.data.searchWord = this.userData.username.charAt(0);
 		}
 	}
 }

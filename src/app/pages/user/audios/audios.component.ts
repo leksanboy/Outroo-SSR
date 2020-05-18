@@ -54,8 +54,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		list: [],
 		reload: false,
 		actions: true,
-		counter: 0,
-		max: 100
+		counter: 0
 	};
 	public activeSessionPlaylists: any;
 	public activePlayerInformation: any;
@@ -850,7 +849,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		} else if (type === 3) { // Remove 1 by 1
 			this.dataFiles.list.splice(event, 1);
 		} else if (type === 4) { // Save & Upload
-			if (this.dataFiles.list.length > this.dataFiles.max) {
+			if (this.dataFiles.list.length > this.env.maxItemsPerUpload) {
 				this.alertService.success(this.translations.common.addedMoreElementsThanAllowed);
 			} else {
 				let checkUnknown = _.find(this.dataFiles.list, { 'category': 'unknown' });
@@ -941,8 +940,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				reload: false,
 				actions: true,
 				saveDisabled: false,
-				counter: 0,
-				max: 100
+				counter: 0
 			};
 		}
 	}

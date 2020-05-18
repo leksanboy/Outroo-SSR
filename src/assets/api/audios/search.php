@@ -1,7 +1,12 @@
 <?php include "../db.php";
+	$session = sessionId();
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
 	$caption = $_GET['caption'];
+	$type = $_GET['type'] ? $_GET['type'] : 'song';
+
+	// Insert search data analytics
+	searchAudioAnalytics($session, $caption, $type);
 
 	$sql = "SELECT id,
 					name,

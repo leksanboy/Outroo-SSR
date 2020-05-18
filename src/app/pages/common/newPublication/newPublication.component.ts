@@ -120,7 +120,7 @@ export class NewPublicationComponent implements OnInit {
 				file.uploaded = true;
 				file.mimetype = file.type;
 
-				if (this.data.countUploads === 10) {
+				if (this.data.countUploads === 100) {
 					this.alertService.error(this.translations.common.exceededMaxUploads);
 				} else {
 					this.data.countUploads++;

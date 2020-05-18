@@ -7,9 +7,7 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
-import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
 import { FollowsDataService } from '../../../../app/core/services/user/followsData.service';
-import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
@@ -96,9 +94,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
 		private followsDataService: FollowsDataService,
-		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService,
 		private metaService: MetaService,
 		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
@@ -466,22 +462,12 @@ export class MainComponent implements OnInit, OnDestroy {
 				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
+					console.log('res', res);
 
-					if (this.userData.id === this.sessionData.current.id) {
+					if (res.user.id === this.sessionData.current.id) {
 						item.addRemoveSession = res.addRemoveSession;
 					}
 				});
-				break;
-			case 'remove':
-				item.addRemoveSession = !item.addRemoveSession;
-				item.removeType = item.addRemoveSession ? 'remove' : 'add';
-
-				const dataAddRemove = {
-					id: item.id,
-					type: item.removeType
-				};
-
-				this.publicationsDataService.addRemove(dataAddRemove).subscribe();
 				break;
 		}
 	}

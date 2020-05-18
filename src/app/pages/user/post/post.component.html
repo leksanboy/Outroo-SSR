@@ -169,7 +169,7 @@
 								</button>
 								{{dataDefault.data?.countLikes}}
 							</div>
-							
+
 							<a class="likers" *ngIf="dataDefault.data?.countLikes > 0" (click)="showLikes(dataDefault.data)">
 								<span *ngFor="let l of dataDefault.data?.likers; let isLast = last">
 									{{l.username}}{{isLast ? '' : ', '}}
@@ -245,7 +245,7 @@
 								<div class="noData" *ngIf="dataDefault?.data?.noData">
 									<div class="description">{{translations?.common?.noComments}}</div>
 								</div>
-								
+
 								<div class="loadMore" *ngIf="dataDefault?.data?.loadMoreData">
 									<button mat-fab (click)="defaultComments('more', dataDefault?.data)" *ngIf="!dataDefault?.data?.loadingMoreData">
 										<i label="add"></i>

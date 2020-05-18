@@ -107,7 +107,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 				if (localStotageData) {
 					this.dataDefault = localStotageData;
 				} else {
-					this.default('default');
+					this.default('default', this.sessionData.current.username);
 				}
 			}
 		} else {
@@ -136,7 +136,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			if (windowBottom >= docHeight) {
 				if (this.data.active === 'default') {
 					if (this.dataDefault.list.length > 0) {
-						this.default('more');
+						this.default('more', this.sessionData.current.username);
 					}
 				} else if (this.data.active === 'search') {
 					switch (this.data.selectedIndex) {
@@ -215,15 +215,11 @@ export class NewsComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	// Show publication
-	show(item) {
-		const data = {
-			name: item.name
-		};
-
-		this.publicationsDataService.getPost(data)
-			.subscribe((res: any) => {
-				this.location.go(this.router.url + '#publication');
+	// Item options
+	itemPublicationOptions(type, item) {
+		switch (type) {
+			case 'show':
+				this.location.go('/p/' + item.name);
 
 				const config = {
 					disableClose: false,
@@ -231,17 +227,21 @@ export class NewsComponent implements OnInit, OnDestroy {
 						comeFrom: 'publication',
 						translations: this.translations,
 						sessionData: this.sessionData,
-						userData: (res ? res.user : null),
-						item: (res ? res : null)
+						userData: this.sessionData.current,
+						item: item
 					}
 				};
 
-				// Open dialog
 				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
-				dialogRef.afterClosed().subscribe((result: any) => {
+				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
+
+					if (res.user.id === this.sessionData.current.id) {
+						item.addRemoveSession = res.addRemoveSession;
+					}
 				});
-			});
+				break;
+		}
 	}
 
 	// Set tab on click
@@ -297,13 +297,13 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.location.go('/news');
 
 			if (this.dataDefault.length === 0) {
-				this.default('default');
+				this.default('default', this.sessionData.current.username);
 			}
 		}
 	}
 
 	// Default
-	default(type) {
+	default(type, user) {
 		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
@@ -317,6 +317,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			const data = {
 				type: 'news',
+				user: user,
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity * 3
 			};
@@ -332,10 +333,18 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 						for (const i in res) {
 							if (i) {
+								if (i == '4' || i == '8' || // +4 (+9)
+									i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
+									i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
+									i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
+									i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9  +LM
+									res[i].big = true;
+								}
+
 								this.dataDefault.list.push(res[i]);
 
 								// Push add
-								if (i === '10' || i === '20' || i === '30' || i === '40') {
+								if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
 									this.dataDefault.list.push(this.pushAd());
 								}
 							}
@@ -370,10 +379,18 @@ export class NewsComponent implements OnInit, OnDestroy {
 						if (!res || res.length > 0) {
 							for (const i in res) {
 								if (i) {
+									if (i == '4' || i == '8' || // +4 (+9)
+										i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
+										i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
+										i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
+										i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9 +LM
+										res[i].big = true;
+									}
+
 									this.dataDefault.list.push(res[i]);
 
 									// Push add
-									if (i === '15' || i === '30' || i === '45' || i === '60') {
+									if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
 										this.dataDefault.list.push(this.pushAd());
 									}
 								}
@@ -538,7 +555,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 									this.dataPosts.list.push(res[i]);
 
 									// Push add
-									if (i === '10' || i === '20' || i === '30' || i === '40') {
+									if (i === '11' || i === '23' || i === '35' || i === '47' || i === '59' || i === '71' || i === '83') {
 										this.dataPosts.list.push(this.pushAd());
 									}
 								}

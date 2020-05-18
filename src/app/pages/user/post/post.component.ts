@@ -1,13 +1,10 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
-import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
-import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
@@ -48,9 +45,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
-		private location: Location,
 		private renderer: Renderer2,
-		private titleService: Title,
 		private elementRef: ElementRef,
 		private alertService: AlertService,
 		private playerService: PlayerService,
@@ -58,9 +53,7 @@ export class PostComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
-		private notificationsDataService: NotificationsDataService,
 		private metaService: MetaService,
 		private routingStateService: RoutingStateService,
 	) {
@@ -359,7 +352,7 @@ export class PostComponent implements OnInit, OnDestroy {
 				type: item.bookmark.checked ? 'add' : 'remove'
 			};
 
-			this.bookmarksDataService.markUnmark(data)
+			this.publicationsDataService.markUnmark(data)
 				.subscribe(res => {
 					if (res) {
 						item.bookmark.id = res;

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { RoutingStateService } from './route/state.service';
 import { AudioDataService } from './user/audioData.service';
-import { BookmarksDataService } from './user/bookmarksData.service';
 import { FollowsDataService } from './user/followsData.service';
 import { HeadersService } from './headers/headers.service';
 import { MetaService } from './seo/meta.service';
@@ -19,7 +18,6 @@ import { SsrService } from './ssr.service';
 	providers: [
 		RoutingStateService,
 		AudioDataService,
-		BookmarksDataService,
 		FollowsDataService,
 		HeadersService,
 		MetaService,

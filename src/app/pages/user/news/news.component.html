@@ -26,36 +26,22 @@
 				</div>
 
 				<span *ngIf="data.active === 'default'">
-					<span *ngIf="dataDefault.list">
-						<div class="line" *ngFor="let line of dataDefault.list" [ngClass]="{'ad': line.contentTypeAd}">
-							<ul class="publications" *ngIf="!line.contentTypeAd">
-								<li mat-ripple *ngFor="let x of line">
-									<a class="image" (click)="show(x)">
-										<span *ngIf="x.type === 'photo'">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
-											<div class="category">
-												<!-- <i label="videocam" *ngIf="x.photos.mimetype.indexOf('video') !== -1"></i> -->
-												<!-- <i label="gif" *ngIf="x.photos.mimetype.indexOf('image/gif') !== -1"></i> -->
-											</div>
-										</span>
-										<span *ngIf="x.type === 'url'">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
-											<div class="category">
-												<!-- <i label="videocam"></i> -->
-											</div>
-										</span>
-									</a>
-								</li>
-							</ul>
+					<ul class="publicationsBoxes" *ngIf="dataDefault?.list">
+						<li *ngFor="let x of dataDefault?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
+							<span class="inner" *ngIf="!x.contentTypeAd">
+								<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
+									<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.contentData ? (env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
+								</a>
+							</span>
 
-							<div class="adContent" *ngIf="line.contentTypeAd">
-								<div class="box" [innerHtml]="line.content | safeHtml"></div>
+							<div class="ad" *ngIf="x.contentTypeAd">
+								<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
 								<div class="disableAdBlock" *ngIf="hideAd">
 									{{translations?.common?.disableAdBlock}}
 								</div>
 							</div>
-						</div>
-					</span>
+						</li>
+					</ul>
 
 					<div class="loadingData" *ngIf="dataDefault.loadingData">
 						<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -159,27 +145,22 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.posts}}">
-							<div class="line" *ngFor="let line of dataPosts.list" [ngClass]="{'ad': line.contentTypeAd}">
-								<ul class="publications" *ngIf="!line.contentTypeAd">
-									<li mat-ripple *ngFor="let x of line">
-										<a class="image" (click)="show(x, i)">
-											<span *ngIf="x.type === 'photo'">
-												<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
-											</span>
-											<span *ngIf="x.type === 'url'">
-												<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
-											</span>
+							<ul class="publicationsBoxes" *ngIf="dataPosts?.list">
+								<li *ngFor="let x of dataPosts?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
+									<span class="inner" *ngIf="!x.contentTypeAd">
+										<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
+											<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.contentData ? (env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
 										</a>
-									</li>
-								</ul>
+									</span>
 
-								<div class="adContent" *ngIf="line.contentTypeAd">
-									<div class="box" [innerHtml]="line.content | safeHtml"></div>
-									<div class="disableAdBlock" *ngIf="hideAd">
-										{{translations?.common?.disableAdBlock}}
+									<div class="ad" *ngIf="x.contentTypeAd">
+										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+										<div class="disableAdBlock" *ngIf="hideAd">
+											{{translations?.common?.disableAdBlock}}
+										</div>
 									</div>
-								</div>
-							</div>
+								</li>
+							</ul>
 
 							<div class="loadingData" *ngIf="dataPosts.loadingData">
 								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

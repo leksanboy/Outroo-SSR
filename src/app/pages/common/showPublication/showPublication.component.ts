@@ -9,7 +9,6 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
-import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
 import { NotificationsDataService } from '../../../../app/core/services/user/notificationsData.service';
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
@@ -62,7 +61,6 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
 		private deviceService: DeviceDetectorService,
@@ -333,7 +331,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 				type: item.bookmark.checked ? 'add' : 'remove'
 			};
 
-			this.bookmarksDataService.markUnmark(data)
+			this.publicationsDataService.markUnmark(data)
 				.subscribe(res => {
 					if (res) {
 						item.bookmark.id = res;

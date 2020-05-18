@@ -1,17 +1,14 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
-import { BookmarksDataService } from '../../../../app/core/services/user/bookmarksData.service';
 import { PublicationsDataService } from '../../../../app/core/services/user/publicationsData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
-import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
@@ -45,9 +42,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private bookmarksDataService: BookmarksDataService,
 		private publicationsDataService: PublicationsDataService,
-		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
 	) {
 		// Session
@@ -68,7 +63,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			this.titleService.setTitle(title);
 
 			// Load default
-			this.default('default');
+			this.default('default', this.sessionData.current.username);
 		} else {
 			this.userDataService.noSessionData();
 		}
@@ -88,7 +83,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
 			if (windowBottom >= docHeight) {
 				if (this.dataDefault.list.length > 0) {
-					this.default('more');
+					this.default('more', this.sessionData.current.username);
 				}
 			}
 		};
@@ -135,7 +130,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	}
 
 	// Default
-	default(type) {
+	default(type, user) {
 		if (type === 'default') {
 			this.dataDefault = {
 				list: [],
@@ -148,11 +143,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			};
 
 			const data = {
+				type: 'bookmarks',
+				user: user,
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity * 3
 			};
 
-			this.bookmarksDataService.default(data)
+			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
 					this.dataDefault.loadingData = false;
 
@@ -166,7 +163,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 								this.dataDefault.list.push(res[i]);
 
 								// Push add
-								if (i === '10' || i === '20' || i === '30' || i === '40') {
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
 									this.dataDefault.list.push(this.pushAd());
 								}
 							}
@@ -176,8 +173,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					if (!res || res.length < this.env.cuantity * 3) {
 						this.dataDefault.noMore = true;
 					}
-
-					this.userDataService.setLocalStotage('bookmarksPage', this.dataDefault);
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -187,11 +182,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			this.dataDefault.rows++;
 
 			const data = {
+				type: 'news',
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity * 3
 			};
 
-			this.bookmarksDataService.default(data)
+			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
 					setTimeout(() => {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
@@ -203,7 +199,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 									this.dataDefault.list.push(res[i]);
 
 									// Push add
-									if (i === '15' || i === '30' || i === '45' || i === '60') {
+									if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
 										this.dataDefault.list.push(this.pushAd());
 									}
 								}
@@ -213,8 +209,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 						if (!res || res.length < this.env.cuantity * 3) {
 							this.dataDefault.noMore = true;
 						}
-
-						this.userDataService.setLocalStotage('bookmarksPage', this.dataDefault);
 					}, 600);
 				}, error => {
 					this.dataDefault.loadingData = false;
@@ -223,20 +217,11 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Show publication
-	show(item, line, index) {
-		item.line = line;
-		item.index = index;
-
-		const data = {
-			name: item.name
-		};
-
-		this.publicationsDataService.getPost(data)
-			.subscribe((res: any) => {
+	// Item options
+	itemPublicationOptions(type, item) {
+		switch (type) {
+			case 'show':
 				this.location.go('/p/' + item.name);
-
-				res.bookmark = item.marked ? item.bookmark : res.bookmark;
 
 				const config = {
 					disableClose: false,
@@ -244,21 +229,19 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 						comeFrom: 'publication',
 						translations: this.translations,
 						sessionData: this.sessionData,
-						userData: (res ? res.user : null),
-						item: (res ? res : null)
+						userData: this.sessionData.current,
+						item: item
 					}
 				};
 
-				// Open dialog
 				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
-				dialogRef.afterClosed().subscribe((result: any) => {
-					// Set mark if is deleted
-					this.dataDefault.list[item.line][item.index].marked = result.marked;
-					this.dataDefault.list[item.line][item.index].bookmark = result.bookmark;
-
-					// Set url
+				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
+					if (res.user.id === this.sessionData.current.id) {
+						item.addRemoveSession = res.addRemoveSession;
+					}
 				});
-			});
+				break;
+		}
 	}
 }

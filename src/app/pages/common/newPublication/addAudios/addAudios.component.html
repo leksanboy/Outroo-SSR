@@ -1,17 +1,17 @@
 <div class="dialogBox">
 	<div mat-dialog-title class="header">
 		<div class="left">
-			<button mat-icon-button (click)="close()" [disabled]="dataDefault.arrayAddedItems.length > 10">
+			<button mat-icon-button (click)="close()" [disabled]="dataDefault.arrayAddedItems.length > env.maxItemsPerUpload">
 				<i label="back"></i>
 			</button>
 
 			<div class="text">
-				{{translations?.audios?.title}} {{dataDefault.arrayAddedItems.length}}/10
+				{{translations?.audios?.title}} {{dataDefault.arrayAddedItems.length}}/{{env.maxItemsPerUpload}}
 			</div>
 		</div>
 
 		<div class="right createPublication">
-			<button mat-button type="submit" (click)="submit($event)" [disabled]="dataDefault.arrayAddedItems.length > 10">
+			<button mat-button type="submit" (click)="submit($event)" [disabled]="dataDefault.arrayAddedItems.length > env.maxItemsPerUpload">
 				{{translations?.common?.submit}}
 			</button>
 		</div>
@@ -81,16 +81,9 @@
 									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
 								</div>
-
 								<div class="explicitDuration">
-									<div class="status">
-										<div class="size" matTooltip="{{translations?.common?.fileSizeToBig}}" *ngIf="x.sizeBig">
-											{{x.sizeBig}}
-										</div>
-										<div class="size" matTooltip="{{translations?.common?.invalidFile}}" *ngIf="x.category === 'unknown'">
-											{{translations?.common?.invalidFile}}
-										</div>
-									</div>
+									<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+									<div class="duration">{{x.duration}}</div>
 								</div>
 							</div>
 

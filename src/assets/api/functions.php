@@ -574,6 +574,16 @@
 		return $result['id'];
 	}
 
+	// Search analytics
+	function searchAudioAnalytics($user, $caption, $type){
+		global $conn;
+		$ipAddress = $_SERVER['REMOTE_ADDR'];
+
+		$sql = "INSERT INTO z_audios_search (user, caption, type, ip_address)
+				VALUES ($user, '$caption', '$type', '$ipAddress')";
+		$result = $conn->query($sql);
+	}
+
 	////////////
 	// PHOTOS //
 	////////////

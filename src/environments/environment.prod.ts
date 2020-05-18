@@ -26,5 +26,6 @@ export const environment = {
 	urlRegex: /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g,
 	defaultPage: 'news',
 	contentLengthLimit: 300,
-	maxFileSize: 50000000 // 50Mb
+	maxFileSize: 50000000, // 50Mb
+	maxItemsPerUpload: 100
 };

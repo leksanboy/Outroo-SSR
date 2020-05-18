@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="filesBox">
-					<div class="counter" *ngIf="data.photosArray.length > 0" [ngClass]="{'warning': data.photosArray.length > 10}">{{translations?.photos?.title}} {{data.photosArray.length}}/10</div>
+					<div class="counter" *ngIf="data.photosArray.length > 0" [ngClass]="{'warning': data.photosArray.length > env.maxItemsPerUpload}">{{translations?.photos?.title}} {{data.photosArray.length}}/{{env.maxItemsPerUpload}}</div>
 
 					<ul class="photos" *ngIf="data.photosArray.length > 0">
 						<li mat-ripple *ngFor="let x of data.photosArray; let i = index;">
@@ -77,7 +77,7 @@
 						</li>
 					</ul>
 
-					<div class="counter" *ngIf="data.audiosArray.length > 0" [ngClass]="{'warning': data.audiosArray.length > 10}">{{translations?.audios?.title}} {{data.audiosArray.length}}/10</div>
+					<div class="counter" *ngIf="data.audiosArray.length > 0" [ngClass]="{'warning': data.audiosArray.length > env.maxItemsPerUpload}">{{translations?.audios?.title}} {{data.audiosArray.length}}/{{env.maxItemsPerUpload}}</div>
 
 					<ul class="tracks" *ngIf="data.audiosArray">
 						<li *ngFor="let x of data.audiosArray; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'newPublication' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">

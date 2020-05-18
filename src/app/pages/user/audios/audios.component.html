@@ -37,7 +37,7 @@
 										</div>
 
 										<ul class="tracks" *ngIf="dataGeneral?.list?.hits">
-											<li *ngFor="let x of dataGeneral?.list?.hits; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'hits', remove: x.addRemoveSession}">
+											<li *ngFor="let x of dataGeneral?.list?.hits; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'hits', remove: x.addRemoveSession, advert: x.contentTypeAd}">
 												<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 													<div class="image">
 														<button mat-icon-button (click)="playSong(dataGeneral?.list?.hits, x, i, 'hits')">
@@ -249,7 +249,7 @@
 										</div>
 
 										<ul class="tracks" *ngIf="dataGeneral?.list?.mostPlayed">
-											<li *ngFor="let x of dataGeneral?.list?.mostPlayed; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'mostPlayed', remove: x.addRemoveSession}">
+											<li *ngFor="let x of dataGeneral?.list?.mostPlayed; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'mostPlayed', remove: x.addRemoveSession, advert: x.contentTypeAd}">
 												<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 													<div class="image">
 														<button mat-icon-button (click)="playSong(dataGeneral?.list?.mostPlayed, x, i, 'mostPlayed')">
@@ -543,7 +543,7 @@
 								<div class="uploadFilesBox audios" *ngIf="userData?.id === sessionData?.current?.id && dataFiles.list.length > 0">
 									<div class="info">
 										<div class="title">
-											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{dataFiles.max}}
+											{{translations?.audios?.chooseFiles}} {{dataFiles.list.length}}/{{env.maxItemsPerUpload}}
 										</div>
 										<div class="subtitle">
 											{{translations?.audios?.infringeCopyright}}
@@ -582,7 +582,7 @@
 																{{translations?.common?.invalidFile}}
 															</div>
 
-															<div class="explicit">
+															<div class="explicit" *ngIf="x.status === 'pending' || x.status === 'error'">
 																<mat-checkbox [(ngModel)]="x.explicit" *ngIf="x.category !== 'unknown'">
 																	<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}"></i>
 																</mat-checkbox>
@@ -617,7 +617,7 @@
 								</div>
 
 								<ul class="tracks" *ngIf="dataDefault.list">
-									<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'default', remove: x.addRemoveSession}">
+									<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'default', remove: x.addRemoveSession, advert: x.contentTypeAd}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
@@ -707,7 +707,7 @@
 
 							<mat-tab label="{{translations?.audios?.aroundYou}}">
 								<ul class="tracks" *ngIf="dataAround.list">
-									<li *ngFor="let x of dataAround.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'around'}">
+									<li *ngFor="let x of dataAround.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'around', advert: x.contentTypeAd}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataAround.list, x, i, 'around')">
@@ -821,7 +821,7 @@
 								</ul>
 
 								<ul class="tracks" *ngIf="dataTop.list">
-									<li *ngFor="let x of dataTop.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top'}">
+									<li *ngFor="let x of dataTop.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', advert: x.contentTypeAd}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataTop.list, x, i, 'top')">
@@ -912,7 +912,7 @@
 
 							<mat-tab label="{{translations?.audios?.fresh}}">
 								<ul class="tracks" *ngIf="dataFresh.list">
-									<li *ngFor="let x of dataFresh.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'fresh'}">
+									<li *ngFor="let x of dataFresh.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'fresh', advert: x.contentTypeAd}">
 										<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataFresh.list, x, i, 'fresh')">
@@ -994,7 +994,7 @@
 
 					<span *ngIf="data.active === 'search'">
 						<ul class="tracks" *ngIf="dataSearch.list.length">
-							<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'search'}">
+							<li *ngFor="let x of dataSearch.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'search', advert: x.contentTypeAd}">
 								<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 									<div class="image">
 										<button mat-icon-button (click)="playSong(dataSearch.list, x, i, 'search')">
@@ -1103,7 +1103,7 @@
 				<span *ngIf="dataSection.type === 'hits' ||
 							dataSection.type === 'mostPlayed'">
 					<ul class="tracks" *ngIf="dataSection.list">
-						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top'}">
+						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', advert: x.contentTypeAd}">
 							<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 								<div class="image">
 									<button mat-icon-button (click)="playSong(dataSection.list, x, i, 'top')">
