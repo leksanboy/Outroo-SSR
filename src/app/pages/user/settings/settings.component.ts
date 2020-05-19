@@ -145,20 +145,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
 					this.userDataService.checkUsername(val)
 						.subscribe(
 							res => {
-								setTimeout(() => {
-									if (res) {
-										if (val === data.username) {
-											this.actionFormPersonalData.controls['username'].setErrors(null);
-											this.validatorUsername = 'done';
-										} else {
-											this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
-											this.validatorUsername = 'bad';
-										}
-									} else {
+								if (res) {
+									if (val === data.username) {
 										this.actionFormPersonalData.controls['username'].setErrors(null);
 										this.validatorUsername = 'done';
+									} else {
+										this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
+										this.validatorUsername = 'bad';
 									}
-								}, 600);
+								} else {
+									this.actionFormPersonalData.controls['username'].setErrors(null);
+									this.validatorUsername = 'done';
+								}
 							}
 						);
 				} else {

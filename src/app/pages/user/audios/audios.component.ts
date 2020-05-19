@@ -406,27 +406,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataDefault.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataDefault.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataDefault.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataDefault.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataDefault.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -455,30 +453,28 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataAround.loadingData = false;
+					this.dataAround.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataAround.noData = true;
-						} else {
-							this.dataAround.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataAround.noData = true;
+					} else {
+						this.dataAround.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataAround.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataAround.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataAround.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataAround.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataAround.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataAround.noMore = true;
+					}
 				}, error => {
 					this.dataAround.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -495,27 +491,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataAround.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataAround.loadingMoreData = false;
+					this.dataAround.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataAround.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataAround.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataAround.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataAround.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataAround.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataAround.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataAround.noMore = true;
+					}
 				}, error => {
 					this.dataAround.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -544,30 +538,28 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataTop.loadingData = false;
+					this.dataTop.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataTop.noData = true;
-						} else {
-							this.dataTop.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataTop.noData = true;
+					} else {
+						this.dataTop.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataTop.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataTop.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataTop.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataTop.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataTop.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataTop.noMore = true;
+					}
 				}, error => {
 					this.dataTop.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -590,27 +582,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataTop.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataTop.loadingMoreData = false;
+					this.dataTop.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataTop.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataTop.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataTop.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataTop.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataTop.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataTop.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataTop.noMore = true;
+					}
 				}, error => {
 					this.dataTop.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -639,30 +629,28 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataFresh.loadingData = false;
+					this.dataFresh.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataFresh.noData = true;
-						} else {
-							this.dataFresh.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataFresh.noData = true;
+					} else {
+						this.dataFresh.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataFresh.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataFresh.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataFresh.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataFresh.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataFresh.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataFresh.noMore = true;
+					}
 				}, error => {
 					this.dataFresh.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -679,27 +667,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataFresh.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataFresh.loadingMoreData = false;
+					this.dataFresh.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataFresh.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataFresh.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataFresh.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataFresh.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataFresh.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataFresh.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataFresh.noMore = true;
+					}
 				}, error => {
 					this.dataFresh.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -729,30 +715,28 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadingData = false;
+					this.dataSearch.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataSearch.noData = true;
-						} else {
-							this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataSearch.noData = true;
+					} else {
+						this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataSearch.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataSearch.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataSearch.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataSearch.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSearch.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSearch.noMore = true;
+					}
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -769,27 +753,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataSearch.loadingMoreData = false;
+					this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataSearch.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataSearch.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataSearch.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataSearch.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataSearch.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSearch.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSearch.noMore = true;
+					}
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -818,15 +800,15 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				console.log('file', file);
 
 				if (file) {
-					/* file.title = file.name.replace('.mp3', ''); */
-					file.title = file.name;
+					file.title = file.name.replace('.mp3', '');
+					/* file.title = file.name; */
 					file.status = 'pending';
 
 					if (this.dataFiles.countUploads === 10) {
 						this.alertService.error(this.translations.common.exceededMaxUploads);
 					} else {
-						/* if (/^audio\/\w+$/.test(file.type)) { */
-						if (file.type.indexOf('audio') > -1) {
+						/* if (file.type.indexOf('audio') > -1) { */
+						if (/^audio\/\w+$/.test(file.type)) {
 							file.category = 'audio';
 
 							if (file.size >= this.env.maxFileSize) {
@@ -1352,32 +1334,30 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.general(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSection.loadingData = false;
+					this.dataSection.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataSection.noData = true;
-						} else {
-							this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataSection.noData = true;
+					} else {
+						this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataSection.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataSection.list.push(res[i]);
 
-									// Push ad
-									if (i === '19') {
-										this.dataSection.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === '19') {
+									this.dataSection.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						console.log('this.dataSection:', this.dataSection);
+					console.log('this.dataSection:', this.dataSection);
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSection.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSection.noMore = true;
+					}
 				}, error => {
 					this.dataSection.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -1395,27 +1375,25 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 			this.audioDataService.general(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataSection.loadingMoreData = false;
+					this.dataSection.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataSection.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataSection.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataSection.list.push(res[i]);
 
-									// Push ad
-									if (i === '19') {
-										this.dataSection.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === '19') {
+									this.dataSection.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSection.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSection.noMore = true;
+					}
 				}, error => {
 					this.dataSection.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

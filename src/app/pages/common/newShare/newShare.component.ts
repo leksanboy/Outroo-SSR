@@ -147,32 +147,30 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadingData = false;
+					this.dataSearch.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataSearch.noData = true;
-							this.dataSearch.noMore = true;
-						} else {
-							this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
-							this.dataSearch.noData = false;
+					if (!res || res.length === 0) {
+						this.dataSearch.noData = true;
+						this.dataSearch.noMore = true;
+					} else {
+						this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
+						this.dataSearch.noData = false;
 
-							// validate added
-							for (const i of res) {
-								for (const u of this.data.users) {
-									if (i.id === u.user.id) {
-										i.added = true;
-									}
+						// validate added
+						for (const i of res) {
+							for (const u of this.data.users) {
+								if (i.id === u.user.id) {
+									i.added = true;
 								}
 							}
-
-							this.dataSearch.list = res;
-
-							if (res.length < this.env.cuantity) {
-								this.dataSearch.noMore = true;
-							}
 						}
-					}, 600);
+
+						this.dataSearch.list = res;
+
+						if (res.length < this.env.cuantity) {
+							this.dataSearch.noMore = true;
+						}
+					}
 				});
 		} else if (type === 'more' && !this.dataSearch.noMore) {
 			this.dataSearch.loadingMoreData = true;
@@ -186,23 +184,21 @@ export class NewShareComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
-						this.dataSearch.loadingMoreData = false;
+					this.dataSearch.loadMoreData = res ? ((res.length < this.env.cuantity) ? false : true) : false;
+					this.dataSearch.loadingMoreData = false;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i of res) {
-								if (i) {
-									this.dataSearch.list.push(i);
-								}
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i of res) {
+							if (i) {
+								this.dataSearch.list.push(i);
 							}
 						}
+					}
 
-						if (res.length < this.env.cuantity) {
-							this.dataSearch.noMore = true;
-						}
-					}, 600);
+					if (res.length < this.env.cuantity) {
+						this.dataSearch.noMore = true;
+					}
 				});
 		} else if (type === 'clear') {
 			this.data.active = 'default';

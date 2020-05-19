@@ -372,37 +372,35 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									if (i == '4' || i == '8' || // +4 (+9)
-										i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
-										i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
-										i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
-										i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9 +LM
-										res[i].big = true;
-									}
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								if (i == '4' || i == '8' || // +4 (+9)
+									i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
+									i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
+									i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
+									i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9 +LM
+									res[i].big = true;
+								}
 
-									this.dataDefault.list.push(res[i]);
+								this.dataDefault.list.push(res[i]);
 
-									// Push add
-									if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
-										this.dataDefault.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
+									this.dataDefault.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataDefault.noMore = true;
-						}
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataDefault.noMore = true;
+					}
 
-						this.userDataService.setLocalStotage('newsPage', this.dataDefault);
-					}, 600);
+					this.userDataService.setLocalStotage('newsPage', this.dataDefault);
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -429,15 +427,13 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.searchTop(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataTop.loadingData = false;
+					this.dataTop.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataTop.noData = true;
-						} else {
-							this.dataTop.list = res;
-						}
-					}, 600);
+					if (!res || res.length === 0) {
+						this.dataTop.noData = true;
+					} else {
+						this.dataTop.list = res;
+					}
 				}, error => {
 					this.dataTop.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -467,20 +463,18 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataPeople.loadingData = false;
+					this.dataPeople.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataPeople.noData = true;
-						} else {
-							this.dataPeople.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-							this.dataPeople.list = res;
-						}
+					if (!res || res.length === 0) {
+						this.dataPeople.noData = true;
+					} else {
+						this.dataPeople.loadMoreData = (res.length < this.env.cuantity) ? false : true;
+						this.dataPeople.list = res;
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataPeople.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataPeople.noMore = true;
+					}
 				}, error => {
 					this.dataPeople.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -497,22 +491,20 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataPeople.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-						this.dataPeople.loadingMoreData = false;
+					this.dataPeople.loadMoreData = (res.length < this.env.cuantity) ? false : true;
+					this.dataPeople.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataPeople.list.push(res[i]);
-								}
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataPeople.list.push(res[i]);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataPeople.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataPeople.noMore = true;
+					}
 				}, error => {
 					this.dataPeople.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -542,30 +534,28 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataPosts.loadingData = false;
+					this.dataPosts.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataPosts.noData = true;
-						} else {
-							this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataPosts.noData = true;
+					} else {
+						this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataPosts.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataPosts.list.push(res[i]);
 
-									// Push add
-									if (i === '11' || i === '23' || i === '35' || i === '47' || i === '59' || i === '71' || i === '83') {
-										this.dataPosts.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '11' || i === '23' || i === '35' || i === '47' || i === '59' || i === '71' || i === '83') {
+									this.dataPosts.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataPosts.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataPosts.noMore = true;
+					}
 				}, error => {
 					this.dataPosts.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -582,27 +572,25 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
-						this.dataPosts.loadingMoreData = false;
+					this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataPosts.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataPosts.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataPosts.list.push(res[i]);
 
-									// Push add
-									if (i === '15' || i === '30' || i === '45' || i === '60') {
-										this.dataPosts.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '15' || i === '30' || i === '45' || i === '60') {
+									this.dataPosts.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataPosts.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataPosts.noMore = true;
+					}
 				}, error => {
 					this.dataPosts.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -632,25 +620,23 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.searchTag(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataTag.loadingData = false;
+					this.dataTag.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataTag.noData = true;
-						} else {
-							this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataTag.noData = true;
+					} else {
+						this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataTag.list.push(res[i]);
-								}
+						for (const i in res) {
+							if (i) {
+								this.dataTag.list.push(res[i]);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataTag.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataTag.noMore = true;
+					}
 				}, error => {
 					this.dataTag.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -667,23 +653,21 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.searchTag(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataTag.loadingMoreData = false;
+					this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataTag.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								// Push items
-								if (res[i]) {
-									this.dataTag.list.push(res[i]);
-								}
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							// Push items
+							if (res[i]) {
+								this.dataTag.list.push(res[i]);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataTag.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataTag.noMore = true;
+					}
 				}, error => {
 					this.dataTag.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -722,30 +706,28 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataHashtag.loadingData = false;
+					this.dataHashtag.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataHashtag.noData = true;
-						} else {
-							this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					if (!res || res.length === 0) {
+						this.dataHashtag.noData = true;
+					} else {
+						this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
 
-							for (const i in res) {
-								if (i) {
-									this.dataHashtag.list.push(res[i]);
+						for (const i in res) {
+							if (i) {
+								this.dataHashtag.list.push(res[i]);
 
-									// Push add
-									if (i === '10' || i === '20' || i === '30' || i === '40') {
-										this.dataHashtag.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '10' || i === '20' || i === '30' || i === '40') {
+									this.dataHashtag.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataHashtag.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataHashtag.noMore = true;
+					}
 				}, error => {
 					this.dataHashtag.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -762,27 +744,25 @@ export class NewsComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
-						this.dataHashtag.loadingMoreData = false;
+					this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataHashtag.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataHashtag.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataHashtag.list.push(res[i]);
 
-									// Push add
-									if (i === '15' || i === '30' || i === '45' || i === '60') {
-										this.dataHashtag.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '15' || i === '30' || i === '45' || i === '60') {
+									this.dataHashtag.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataHashtag.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataHashtag.noMore = true;
+					}
 				}, error => {
 					this.dataHashtag.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

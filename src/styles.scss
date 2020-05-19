@@ -1853,21 +1853,22 @@ body {
 
 				.innerContent {
 					box-sizing: border-box;
-					padding: 12px 18px 6px;
+					padding: 0;
 					width: 100%;
 					float: left;
 
 					.textContainer {
+						padding: 12px 18px 0;
 						word-break: break-word;
 						box-sizing: border-box;
 						display: contents;
 					}
 
-					.more {
+					/* .more {
 						color: $greyColor;
 						cursor: pointer;
 						outline: none;
-					}
+					} */
 				}
 
 				.audios {
@@ -2106,124 +2107,6 @@ body {
 				font-size: 13px;
 				max-width: 75%;
 			}
-		}
-	}
-
-	.publication {
-		box-sizing: border-box;
-		position: relative;
-		padding: 0 0 12px;
-		overflow: hidden;
-		list-style: none;
-		transition: .15s;
-		float: left;
-		width: 100%;
-		margin: 0;
-
-		.user {
-			padding: 6px 0 6px 18px;
-			box-sizing: border-box;
-			display: flex;
-			width: 100%;
-			float: left;
-
-			.avatar {
-				box-sizing: border-box;
-				border-radius: 50%;
-				overflow: hidden;
-				min-width: 32px;
-				margin: 4px 0;
-				height: 32px;
-				width: 32px;
-
-				img {
-					height: 100%;
-					width: 100%;
-				}
-			}
-
-			.text {
-				text-overflow: ellipsis;
-				box-sizing: border-box;
-				white-space: nowrap;
-				line-height: 40px;
-				overflow: hidden;
-				padding: 0 12px;
-				height: 40px;
-				width: 100%;
-
-				.name {
-					.username {
-						word-break: break-all;
-						font-weight: bold;
-					}
-
-					.date {
-						color: $greyColor;
-						font-size: 13px;
-					}
-				}
-			}
-
-			.actions {
-				button {
-					border-radius: 50% !important;
-				}
-			}
-		}
-
-		.photos {
-			width: 100%;
-			float: left;
-
-			img {
-				width: 100%;
-			}
-
-			video {
-				max-height: 360px;
-				width: 100%;
-			}
-
-			.playPause {
-				margin: -43px 0 0 -43px;
-				position: absolute;
-				height: 86px;
-				width: 86px;
-				left: 50%;
-				top: 50%;
-			}
-		}
-
-		.innerContent {
-			padding: 12px 0;
-			float: left;
-			box-sizing: border-box;
-			width: 100%;
-
-			.textContainer {
-				word-break: break-word;
-				box-sizing: border-box;
-				padding: 0 18px 12px;
-				width: 100%;
-				float: left;
-			}
-
-			.audios {
-				width: 100%;
-				float: left;
-
-				ul {
-					li {
-						padding: inherit;
-					}
-				}
-			}
-		}
-
-		&.remove {
-			filter: grayscale(100%);
-			opacity: .5;
 		}
 	}
 
@@ -3188,7 +3071,7 @@ body {
 			float: left;
 
 			.countComments {
-				padding: 4px 0 12px 0;
+				padding: 12px 0;
 				font-weight: bold;
 				font-size: 13px;
 				width: 100%;
@@ -3331,6 +3214,24 @@ body {
 						margin: -6px 0 0;
 						font-size: 13px;
 						width: 100%;
+					}
+
+					.reply {
+						box-sizing: border-box;
+						padding: 4px 0 0 36px;
+						width: 100%;
+
+						button {
+							padding: 1px 8px;
+							line-height: inherit;
+							font-size: 10px;
+							font-weight: bold;
+							text-transform: inherit;
+							border-radius: 3px;
+							min-width: 0;
+							background-color: #2e2e2e;
+							color: transparentize($whiteColor, 0.5);
+						}
 					}
 
 					&.remove {
@@ -5247,22 +5148,31 @@ body {
 						}
 
 						.innerContent {
-							padding: 12px 0;
+							padding: 0;
 							float: left;
 							box-sizing: border-box;
 							width: 100%;
 							height: calc(480px - 69px - 59px);
 							overflow: auto;
 
+							.noData {
+								padding: 0;
+								height: 100%;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+							}
+
 							.textContainer {
 								word-break: break-word;
 								box-sizing: border-box;
-								padding: 0 18px 12px;
+								padding: 12px 18px 0;
 								width: 100%;
 								float: left;
 							}
 
 							.audios {
+								padding: 12px 0 0;
 								width: 100%;
 								float: left;
 							}
@@ -7170,6 +7080,129 @@ body {
 					width: 100%;
 					float: left;
 					margin: 0;
+
+					.publication {
+						box-sizing: border-box;
+						position: relative;
+						padding: 0 0 12px;
+						overflow: hidden;
+						list-style: none;
+						transition: .15s;
+						float: left;
+						width: 100%;
+						margin: 0;
+
+						.user {
+							padding: 6px 0 6px 18px;
+							box-sizing: border-box;
+							display: flex;
+							width: 100%;
+							float: left;
+				
+							.avatar {
+								box-sizing: border-box;
+								border-radius: 50%;
+								overflow: hidden;
+								min-width: 32px;
+								margin: 4px 0;
+								height: 32px;
+								width: 32px;
+				
+								img {
+									height: 100%;
+									width: 100%;
+								}
+							}
+				
+							.text {
+								text-overflow: ellipsis;
+								box-sizing: border-box;
+								white-space: nowrap;
+								line-height: 40px;
+								overflow: hidden;
+								padding: 0 12px;
+								height: 40px;
+								width: 100%;
+				
+								.name {
+									.username {
+										word-break: break-all;
+										font-weight: bold;
+									}
+				
+									.date {
+										color: $greyColor;
+										font-size: 13px;
+									}
+								}
+							}
+				
+							.actions {
+								button {
+									border-radius: 50% !important;
+								}
+							}
+						}
+
+						.photos {
+							width: 100%;
+							float: left;
+				
+							img {
+								width: 100%;
+							}
+				
+							video {
+								max-height: 360px;
+								width: 100%;
+							}
+				
+							.playPause {
+								margin: -43px 0 0 -43px;
+								position: absolute;
+								height: 86px;
+								width: 86px;
+								left: 50%;
+								top: 50%;
+							}
+						}
+
+						.innerContent {
+							padding: 0;
+							float: left;
+							box-sizing: border-box;
+							width: 100%;
+				
+							.noData {
+								display: none;
+							}
+				
+							.textContainer {
+								word-break: break-word;
+								box-sizing: border-box;
+								padding: 12px 18px 0;
+								width: 100%;
+								float: left;
+							}
+				
+							.audios {
+								padding: 12px 0 0;
+								width: 100%;
+								float: left;
+				
+								ul {
+									li {
+										padding: inherit;
+									}
+								}
+							}
+						}
+
+						&.remove {
+							filter: grayscale(100%);
+							opacity: .5;
+						}
+					}
 				}
 			}
 		}
@@ -8143,6 +8176,10 @@ body {
 
 							.innerContent {
 								height: inherit;
+
+								.noData {
+									display: none;
+								}
 
 								.analytics {
 									display: flex;

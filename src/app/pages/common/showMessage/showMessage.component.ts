@@ -147,22 +147,20 @@ export class ShowMessageComponent implements OnInit, OnDestroy {
 
 			this.messageDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i of res) {
-								if (i) {
-									this.dataDefault.list.push(i);
-								}
+					if (!res || res.length > 0) {
+						for (const i of res) {
+							if (i) {
+								this.dataDefault.list.push(i);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataDefault.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

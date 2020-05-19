@@ -223,23 +223,21 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataDefault.list.push(res[i]);
-								}
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataDefault.list.push(res[i]);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataDefault.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -269,20 +267,18 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadingData = false;
+					this.dataSearch.loadingData = false;
 
-						if (!res || res.length === 0) {
-							this.dataSearch.noData = true;
-						} else {
-							this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-							this.dataSearch.list = res;
-						}
+					if (!res || res.length === 0) {
+						this.dataSearch.noData = true;
+					} else {
+						this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
+						this.dataSearch.list = res;
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSearch.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSearch.noMore = true;
+					}
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -300,23 +296,21 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
 			this.followsDataService.searchFollowing(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
-						this.dataSearch.loadingMoreData = false;
+					this.dataSearch.loadMoreData = (res.length < this.env.cuantity) ? false : true;
+					this.dataSearch.loadingMoreData = false;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataSearch.list.push(res[i]);
-								}
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataSearch.list.push(res[i]);
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataSearch.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSearch.noMore = true;
+					}
 				}, error => {
 					this.dataSearch.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

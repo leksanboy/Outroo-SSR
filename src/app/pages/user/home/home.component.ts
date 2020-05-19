@@ -232,27 +232,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataDefault.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataDefault.list.push(res[i]);
 
-									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
-										this.dataDefault.list.push(this.pushAd());
-									}
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataDefault.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataDefault.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity) {
+						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -528,19 +526,17 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.comments(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						item.loadingMoreData = false;
-						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					item.loadingMoreData = false;
+					item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									item.comments.list.push(res[i]);
-								}
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								item.comments.list.push(res[i]);
 							}
 						}
-					}, 600);
+					}
 				}, error => {
 					item.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

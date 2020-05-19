@@ -443,19 +443,17 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.comments(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						item.loadingMoreData = false;
-						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					item.loadingMoreData = false;
+					item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									item.comments.list.push(res[i]);
-								}
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								item.comments.list.push(res[i]);
 							}
 						}
-					}, 600);
+					}
 				}, error => {
 					item.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

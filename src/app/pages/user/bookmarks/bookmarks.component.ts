@@ -189,27 +189,25 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
 			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (i) {
-									this.dataDefault.list.push(res[i]);
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataDefault.list.push(res[i]);
 
-									// Push add
-									if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
-										this.dataDefault.list.push(this.pushAd());
-									}
+								// Push add
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+									this.dataDefault.list.push(this.pushAd());
 								}
 							}
 						}
+					}
 
-						if (!res || res.length < this.env.cuantity * 3) {
-							this.dataDefault.noMore = true;
-						}
-					}, 600);
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataDefault.noMore = true;
+					}
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);

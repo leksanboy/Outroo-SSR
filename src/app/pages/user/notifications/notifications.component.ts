@@ -191,31 +191,29 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 			this.notificationsDataService.default(data)
 				.subscribe((res: any) => {
-					setTimeout(() => {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-						this.dataDefault.loadingMoreData = false;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadingMoreData = false;
 
-						// Push items
-						if (!res || res.length > 0) {
-							for (const i in res) {
-								if (res[i]) {
-									setTimeout(() => {
-										res[i].is_seen = 1;
-									}, 1800);
+					// Push items
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (res[i]) {
+								setTimeout(() => {
+									res[i].is_seen = 1;
+								}, 1800);
 
-									this.dataDefault.list.push(res[i]);
-								}
+								this.dataDefault.list.push(res[i]);
 							}
 						}
+					}
 
-						this.sessionService.setPendingNotifications('refresh');
+					this.sessionService.setPendingNotifications('refresh');
 
-						if (!res || res.length < this.env.cuantity) {
-							this.dataDefault.noMore = true;
-						}
+					if (!res || res.length < this.env.cuantity) {
+						this.dataDefault.noMore = true;
+					}
 
-						this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
-					}, 600);
+					this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 				}, error => {
 					this.dataDefault.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
