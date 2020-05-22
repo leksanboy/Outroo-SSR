@@ -50,6 +50,8 @@ export class ShowPlaylistComponent implements OnInit {
 		this.data.current = data.item;
 		this.data.loadingData = true;
 		this.data.noData = false;
+
+		console.log('data', data);
 	}
 
 	ngOnInit() {
@@ -74,7 +76,6 @@ export class ShowPlaylistComponent implements OnInit {
 					}
 				}
 			});
-
 
 		// Get player data
 		this.playerService.getCurrentTrack()

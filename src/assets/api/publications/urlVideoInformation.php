@@ -26,14 +26,14 @@
 		$data = json_encode($data);
 	} else if ($type === 'vimeo') { // Vimeo: check url on preg_match()
 		$regs = array();
-		
+
         if (preg_match('%^https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)(?:[?]?.*)$%im', $url, $regs)) {
             $video_id = $regs[3];
             $data = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$video_id.php"));
             $data[0]['iframe'] = '<iframe src="https://player.vimeo.com/video/'.$video_id.'?autoplay=1" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-			
+
 			$data = json_encode($data[0]);
-        } else { // video not exists or expired or indefined 
+        } else { // video not exists or expired or indefined
         	$data = null;
         }
 	} else { // Invalid URL

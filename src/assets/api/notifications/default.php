@@ -67,7 +67,7 @@
 
 			// Playlist
 			if ($row['url'] === 'playlist') {
-				$row['contentData'] = getPlaylist($row['page']);
+				$row['contentData'] = getPlaylist('id', $row['page']);
 			}
 
 			// User

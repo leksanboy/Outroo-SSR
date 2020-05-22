@@ -3,17 +3,17 @@
 	$more = $_GET['rows']*$cuantity;
 	$session = sessionId();
 
-	$sql = "SELECT b.id, 
-					b.user, 
-					p.name, 
-					p.url_video as urlVideo, 
+	$sql = "SELECT b.id,
+					b.user,
+					p.name,
+					p.url_video as urlVideo,
 					p.photos
 			FROM z_bookmarks b
-				INNER JOIN z_publications p ON p.id = b.post 
-			WHERE b.user = $session 
-				AND b.is_deleted = 0 
+				INNER JOIN z_publications p ON p.id = b.post
+			WHERE b.user = $session
+				AND b.is_deleted = 0
 				AND p.is_deleted = 0
-			ORDER BY b.id DESC 
+			ORDER BY b.id DESC
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
 
@@ -21,13 +21,13 @@
 		$data = array();
 		while($row = $result->fetch_assoc()) {
 			// Check if publication contains photos or photos + urlvideo
-			if (count(json_decode($row['photos'])) > 0 || 
+			if (count(json_decode($row['photos'])) > 0 ||
 			   (count(json_decode($row['photos'])) > 0 && count(json_decode($row['urlVideo'])) > 0)
 			) {
 				$row['type'] = 'photo';
 				$row['photos'] = getPhotoData(json_decode($row['photos'])[0]);
 				$row['urlVideo'] = null;
-			} else { 
+			} else {
 				if (count(json_decode($row['urlVideo'])) > 0) {
 					$row['type'] = 'url';
 					$row['photos'] = null;
@@ -43,18 +43,18 @@
 					$row['photos'] = null;
 				}
 			}
-			
+
 			// Get user information
 			$row['user'] = userUsernameNameAvatar($row['user']);
 			$data[] = $row;
 		}
 
 		$data = array_chunk($data, 3);
-		
+
 		echo json_encode($data);
 	} else {
 		var_dump(http_response_code(204));
 	}
-	
+
 	$conn->close();
 ?>

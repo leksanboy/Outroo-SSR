@@ -6,13 +6,13 @@
 	$type = $_GET['type'];
 
 	if ($type == 'following') {
-		$sql = "SELECT u.id, 
-						u.private 
-				FROM z_following f 
-					INNER JOIN z_users u ON f.receiver = u.id 
-				WHERE f.sender = $user 
-					AND f.is_deleted = 0 
-				ORDER by u.username ASC 
+		$sql = "SELECT u.id,
+						u.private
+				FROM z_following f
+					INNER JOIN z_users u ON f.receiver = u.id
+				WHERE f.sender = $user
+					AND f.is_deleted = 0
+				ORDER by u.username ASC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 

@@ -11270,6 +11270,7 @@ var ShowPlaylistComponent = /** @class */ (function () {
         this.data.current = data.item;
         this.data.loadingData = true;
         this.data.noData = false;
+        console.log('data', data);
     }
     ShowPlaylistComponent.prototype.ngOnInit = function () {
         var _this = this;

@@ -10,8 +10,7 @@
 		$sqlM = "SELECT id
 				FROM z_message
 				WHERE sender = $session AND receiver = $user
-					OR
-					sender = $user AND receiver = $session";
+					OR sender = $user AND receiver = $session";
 		$resultM = $conn->query($sqlM)->fetch_assoc();
 
 		if ($resultM['id']) {

@@ -15,7 +15,7 @@
 
 	  protected function closed ($user) {
 	    // Do nothing: This is where cleanup would go, in case the user had any sort of
-	    // open files or other objects associated with them.  This runs after the socket 
+	    // open files or other objects associated with them.  This runs after the socket
 	    // has been closed, so there is no need to clean up the socket itself here.
 	  }
 	}

@@ -18,7 +18,7 @@
 
 		// return response status
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	} else {
 		var_dump(http_response_code(403));

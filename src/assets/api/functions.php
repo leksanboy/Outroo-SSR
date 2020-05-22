@@ -373,8 +373,8 @@
 
 		$sql = "SELECT b.id
 				FROM z_bookmarks b
-					INNER JOIN z_publications p ON p.id = b.post 
-				WHERE b.user = $id 
+					INNER JOIN z_publications p ON p.id = b.post
+				WHERE b.user = $id
 					AND b.is_deleted = 0
 					AND p.is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
@@ -426,8 +426,14 @@
 	}
 
 	// Get inserted playlist
-	function getPlaylist($id){
+	function getPlaylist($type, $value) {
 		global $conn;
+
+		if ($type === 'id') {
+			$cond = "id = $value";
+		} else if ($type === 'name') {
+			$cond = "name = '$value'";
+		}
 
 		$sql = "SELECT id,
 						original_id as o_id,
@@ -441,7 +447,7 @@
 						explicit,
 						private
 				FROM z_audios_playlist
-				WHERE id = $id";
+				WHERE $cond";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		$result['user'] = userUsernameNameAvatar($result['user']);
@@ -451,7 +457,7 @@
 		$result['explicit'] = boolval($result['explicit']);
 
 		if ($result['type'] === 'follow') {
-			$o_result = getPlaylist($result['o_id']);
+			$o_result = getPlaylist('id', $result['o_id']);
 
 			$result['name'] = $o_result['name'];
 			$result['title'] = $o_result['title'];
@@ -562,7 +568,7 @@
 		return $result;
 	}
 
-	// Get id by name
+	/* // Get id by name
 	function getPlaylistIdByName($name){
 		global $conn;
 
@@ -572,7 +578,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		return $result['id'];
-	}
+	} */
 
 	// Search analytics
 	function searchAudioAnalytics($user, $caption, $type){
@@ -672,7 +678,7 @@
 
 		$sql = "SELECT id
 				FROM z_photos_comments
-				WHERE photo = $id 
+				WHERE photo = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
 
@@ -753,7 +759,7 @@
 
 		$sql = "SELECT id
 				FROM z_publications_comments
-				WHERE publication = $id 
+				WHERE publication = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
 
@@ -766,7 +772,7 @@
 
 		$sql = "SELECT id
 				FROM z_publications_likes
-				WHERE publication = '$publication' 
+				WHERE publication = '$publication'
 					AND user = $user";
 		$result = $conn->query($sql)->num_rows;
 
@@ -910,10 +916,10 @@
 
 		$sql = "SELECT id
 				FROM z_publications
-				WHERE hashtags LIKE '%$caption%' 
+				WHERE hashtags LIKE '%$caption%'
 					AND (
-							(length(photos) > 0 AND is_deleted = 0) OR  
-							(length(url_video) > 0 AND is_deleted = 0) OR 
+							(length(photos) > 0 AND is_deleted = 0) OR
+							(length(url_video) > 0 AND is_deleted = 0) OR
 							((length(photos) > 0 AND length(url_video) > 0) AND is_deleted = 0)
 						)
 				ORDER BY id";
@@ -964,9 +970,9 @@
 			case 'followers':
 				if ($type === 'startFollowing') {
 					$sql = "UPDATE z_notifications
-							SET is_deleted = 1, ip_address = '$ipAddress' 
-							WHERE sender = $sender 
-								AND receiver = $receiver 
+							SET is_deleted = 1, ip_address = '$ipAddress'
+							WHERE sender = $sender
+								AND receiver = $receiver
 								AND page_url = '$url'
 								AND is_deleted = 0";
 					$result = $conn->query($sql);

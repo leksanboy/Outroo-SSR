@@ -13,8 +13,8 @@
     	$result = $conn->query($sql);
 
 		// get data
-		$sqlGet = "SELECT username, 
-							email, 
+		$sqlGet = "SELECT username,
+							email,
 							password
 					FROM z_users
 					WHERE verification_code = '$code'";

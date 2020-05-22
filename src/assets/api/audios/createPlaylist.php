@@ -37,7 +37,7 @@
 							AND user = $session";
 		$conn->query($sqlUpdate);
 
-		$res = getPlaylist($insertedId);
+		$res = getPlaylist('id', $insertedId);
 		echo json_encode($res);
 
 		$conn->close();
@@ -55,7 +55,7 @@
 					AND user = $session";
 		$result = $conn->query($sql);
 
-		$res = getPlaylist($id);
+		$res = getPlaylist('id', $id);
 		echo json_encode($res);
 
 		$conn->close();

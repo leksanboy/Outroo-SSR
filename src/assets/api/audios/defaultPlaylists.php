@@ -70,7 +70,7 @@
 			$row['explicit'] = boolval($row['explicit']);
 
 			if ($row['type'] === 'follow') {
-				$f_row = getPlaylist($row['o_id']);
+				$f_row = getPlaylist('id', $row['o_id']);
 
 				$row['name'] = $f_row['name'];
 				$row['title'] = $f_row['title'];

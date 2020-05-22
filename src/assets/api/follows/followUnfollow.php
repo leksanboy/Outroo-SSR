@@ -11,8 +11,8 @@
 
 		// Reset first
 		$sql = "UPDATE z_following
-				SET is_deleted = 1 
-				WHERE sender = '$sender' 
+				SET is_deleted = 1
+				WHERE sender = '$sender'
 					AND receiver = '$receiver'";
 		$result = $conn->query($sql);
 
@@ -35,7 +35,7 @@
 		}
 
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	} else if ($type === 'following') { // Follow normal
 		$sender = sessionId();
@@ -44,8 +44,8 @@
 
 		// Reset first
 		$sql = "UPDATE z_following
-				SET is_deleted = 1 
-				WHERE sender = '$sender' 
+				SET is_deleted = 1
+				WHERE sender = '$sender'
 					AND receiver = '$receiver'";
 		$result = $conn->query($sql);
 
@@ -61,7 +61,7 @@
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver) {
 			generateNotification($notification);
@@ -76,7 +76,7 @@
 		$sql = "UPDATE z_following
 				SET is_deleted = 1,
 					ip_address = '$ipAddress'
-				WHERE sender = '$sender' 
+				WHERE sender = '$sender'
 					AND receiver = '$receiver'";
 		$result = $conn->query($sql);
 
@@ -88,7 +88,7 @@
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver) {
 			generateNotification($notification);
@@ -144,14 +144,14 @@
 			'sender' 	=> $sender,
 			'receiver' 	=> $receiver
 		);
-		
+
 		// Check to not notificate myself
 		if ($sender != $receiver) {
 			generateNotification($notification);
 		}
 
 		var_dump(http_response_code(204));
-		
+
 		$conn->close();
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php include "../db.php";
 	$data = json_decode(file_get_contents('php://input'), true);
-	
+
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$sender = sessionId();
 	$receiver = $data['receiver'];
@@ -12,6 +12,6 @@
 	}
 
 	var_dump(http_response_code(204));
-		
+
 	$conn->close();
 ?>

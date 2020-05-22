@@ -94,7 +94,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -151,7 +151,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -260,7 +260,7 @@
 						explicit,
 						private
 				FROM z_audios_playlist
-				WHERE type = 'ost'
+				WHERE (type = 'ost' OR genre = 28)
 					AND is_deleted = 0
 				ORDER BY id ASC
 				LIMIT $more, $cuantity";
@@ -276,7 +276,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -293,6 +293,7 @@
 	}
 
 	function top100($params){
+		/* https://docs.rocketship.it/php/1-0/usps-country-codes.html */
 		global $conn;
 
 		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
@@ -324,7 +325,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -375,7 +376,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -430,7 +431,7 @@
 				$row['explicit'] = boolval($row['explicit']);
 
 				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist($row['o_id']);
+					$f_row = getPlaylist('id', $row['o_id']);
 
 					$row['name'] = $f_row['name'];
 					$row['title'] = $f_row['title'];
@@ -461,7 +462,8 @@
 			'mostPlayed'	=> mostPlayed($params),
 			'ost'			=> ost($params),
 			'top100'		=> top100($params),
-			'enjoyWith'		=> enjoyWith($params)
+			'enjoyWith'		=> enjoyWith($params),
+			'CNT'			=> geoip_country_code_by_name('71.175.97.59')
 		);
 
 		echo json_encode($res);

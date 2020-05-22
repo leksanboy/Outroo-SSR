@@ -10,9 +10,9 @@
 
 	// Check if conversation exists
 	if ($id) {
-		// Insert message conversation 
+		// Insert message conversation
 		$sqlMC = "INSERT INTO z_message_conversation (message, user, type, content, content_original, ip_address)
-				VALUES ($id, $session, 'text', '$content','$contentOriginal', '$ipAddress')";
+					VALUES ($id, $session, 'text', '$content','$contentOriginal', '$ipAddress')";
 		$resultMC = $conn->query($sqlMC);
 		$insertedIdMC = $conn->insert_id;
 
@@ -45,9 +45,9 @@
 		$resultM = $conn->query($sqlM);
 		$insertedIdM = $conn->insert_id;
 
-		// Insert message conversation 
+		// Insert message conversation
 		$sqlMC = "INSERT INTO z_message_conversation (message, user, type, content, content_original, ip_address)
-				VALUES ($insertedIdM, $session, 'text', '$content','$contentOriginal', '$ipAddress')";
+					VALUES ($insertedIdM, $session, 'text', '$content','$contentOriginal', '$ipAddress')";
 		$resultMC = $conn->query($sqlMC);
 		$insertedIdMC = $conn->insert_id;
 
