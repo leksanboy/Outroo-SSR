@@ -34,25 +34,33 @@ export class ActiveSessionsMobileComponent {
 			});
 	}
 
-	// Set user
-	setCurrentUser(data) {
-		const current = {
-			data: data,
-			type: 'set'
-		};
+	// User options
+	userOptions(type, item) {
+		switch (type) {
+			case 'openNewSession':
+				const dataONS = {
+					type: 'create'
+				};
 
-		this.sessionService.setDataAddAccount(current);
-		this.bottomSheetRef.dismiss();
-	}
+				this.sessionService.setDataAddAccount(dataONS);
+				break;
+			case 'setCurrentUser':
+				const dataSCU = {
+					type: 'set',
+					data: item
+				};
 
-	openNewSession() {
-		this.close();
+				this.sessionService.setDataAddAccount(dataSCU);
+				break;
+			case 'closeSession':
+				const dataCS = {
+					type: 'close',
+					data: item
+				};
 
-		const data = {
-			type: 'create'
-		};
-
-		this.sessionService.setDataAddAccount(data);
+				this.sessionService.setDataAddAccount(dataCS);
+				break;
+		}
 	}
 
 	close() {

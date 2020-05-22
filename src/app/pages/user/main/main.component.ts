@@ -61,6 +61,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public activeRouterExists: any;
 	public activeSessionPlaylists: any;
 	public activeComeFromUserButton: any;
+	public activeGetData: any;
 	public userExists = true;
 	public data: any;
 	public dataDefault: any;
@@ -173,6 +174,12 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.comeFromUserButton = data;
 			});
 
+		// Get sessions on logout
+		this.activeGetData = this.sessionService.getData()
+			.subscribe(data => {
+				this.sessionData = data;
+			});
+
 		// Session playlists
 		this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
 			.subscribe(data => {
@@ -230,6 +237,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.activeLanguage.unsubscribe();
 		this.activeNewPublication.unsubscribe();
 		this.activeComeFromUserButton.unsubscribe();
+		this.activeGetData.unsubscribe();
 
 		this.showAccounts = false;
 	}

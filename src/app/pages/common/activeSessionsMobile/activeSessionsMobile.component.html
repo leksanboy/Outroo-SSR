@@ -4,11 +4,11 @@
 	<ul class="sessions">
 		<li *ngFor="let x of sessionData?.sessions" [ngClass]="{active: sessionData?.current?.id == x.id}">
 			<div mat-ripple class="inner">
-				<div class="avatar" (click)="setCurrentUser(x)">
+				<div class="avatar" (click)="userOptions('setCurrentUser', x)">
 					<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 				</div>
 
-				<div class="text" (click)="setCurrentUser(x)">
+				<div class="text" (click)="userOptions('setCurrentUser', x)">
 					<div class="in">
 						<div class="data">
 							<a class="name">{{x.username}}</a>
@@ -28,14 +28,14 @@
 						</div>
 						<div class="buttons">
 							<button mat-menu-item>{{translations?.common?.no}}</button>
-							<button mat-menu-item (click)="closeSession(x)">{{translations?.common?.yes}}</button>
+							<button mat-menu-item (click)="userOptions('closeSession', x)">{{translations?.common?.yes}}</button>
 						</div>
 					</mat-menu>
 				</div>
 			</div>
 		</li>
 
-		<li *ngIf="sessionData?.sessions?.length < 10" (click)="openNewSession()">
+		<li *ngIf="sessionData?.sessions?.length < 10" (click)="userOptions('openNewSession', x)">
 			<div mat-ripple class="inner">
 				<div class="add">
 					<i label="add"></i>

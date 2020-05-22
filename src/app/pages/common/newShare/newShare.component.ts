@@ -241,8 +241,6 @@ export class NewShareComponent implements OnInit, OnDestroy {
 				}
 			}
 		}
-
-		console.log('this.data.users', this.data.users);
 	}
 
 	// Send shared
@@ -258,8 +256,6 @@ export class NewShareComponent implements OnInit, OnDestroy {
 					receivers.push(user.id);
 				}
 			}
-
-			console.log('this.data:', this.data);
 
 			if (this.data.comeFrom === 'sharePublication') {
 				id = this.data.item.id;

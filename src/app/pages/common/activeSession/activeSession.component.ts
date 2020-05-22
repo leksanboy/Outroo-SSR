@@ -1368,8 +1368,13 @@ export class ActiveSessionComponent implements AfterViewInit {
 				}
 			}
 
+			// Set sessions
+			this.userDataService.setSessionData('data', this.sessionData);
+			this.sessionService.setData(this.sessionData);
+
 			// Set different account and check if is not set and deleted
-			this.setCurrentUser(this.sessionData.sessions[0]);
+			let session = this.sessionData.current.id === data.id ? this.sessionData.sessions[0] : this.sessionData.current;
+			this.setCurrentUser(session);
 		}
 	}
 

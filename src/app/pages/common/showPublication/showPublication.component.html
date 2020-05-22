@@ -12,16 +12,16 @@
 	</div>
 
 	<div mat-dialog-content class="bodyPublications" [ngClass]="{'remove': dataDefault?.data?.addRemoveSession}">
-		<div class="container" *ngIf="!dataDefault.loadingData && !dataDefault.noData">
+		<div class="container" *ngIf="!dataDefault?.loadingData && !dataDefault?.noData">
 			<div class="user">
-				<a class="avatar" routerLink="/{{dataDefault.data?.user?.username}}">
-					<img [src]="dataDefault.data?.user?.avatar ? dataDefault.data?.user?.avatarUrl : env.avatar"/>
+				<a class="avatar" routerLink="/{{dataDefault?.data?.user?.username}}">
+					<img [src]="dataDefault?.data?.user?.avatar ? dataDefault?.data?.user?.avatarUrl : env.avatar"/>
 				</a>
 
 				<div class="username">
 					<div class="data">
-						<a class="name" routerLink="/{{dataDefault.data?.user?.username}}">{{dataDefault.data?.user?.username}}</a>
-						<i class="icon50 blue" label="official" *ngIf="dataDefault.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+						<a class="name" routerLink="/{{dataDefault?.data?.user?.username}}">{{dataDefault?.data?.user?.username}}</a>
+						<i class="icon50 blue" label="official" *ngIf="dataDefault?.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 						<div class="date">{{dataDefault?.data?.date | timeago}}</div>
 					</div>
 				</div>
@@ -97,14 +97,14 @@
 
 			<div class="right">
 				<div class="user">
-					<a class="avatar" routerLink="/{{dataDefault.data?.user?.username}}">
-						<img [src]="dataDefault.data?.user?.avatar ? dataDefault.data?.user?.avatarUrl : env.avatar"/>
+					<a class="avatar" routerLink="/{{dataDefault?.data?.user?.username}}">
+						<img [src]="dataDefault?.data?.user?.avatar ? dataDefault?.data?.user?.avatarUrl : env.avatar"/>
 					</a>
 
 					<div class="username">
 						<div class="data">
-							<a class="name" routerLink="/{{dataDefault.data?.user?.username}}">{{dataDefault.data?.user?.username}}</a>
-							<i class="icon50 blue" label="official" *ngIf="dataDefault.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							<a class="name" routerLink="/{{dataDefault?.data?.user?.username}}">{{dataDefault?.data?.user?.username}}</a>
+							<i class="icon50 blue" label="official" *ngIf="dataDefault?.data?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 							<div class="date">{{dataDefault?.data?.date | timeago}}</div>
 						</div>
 					</div>
@@ -132,9 +132,9 @@
 				</div>
 
 				<div class="innerContent">
-					<div class="noData" *ngIf="!(dataDefault?.data?.content?.length || dataDefault?.data?.audios?.length)">
+					<!-- <div class="noData" *ngIf="!(dataDefault?.data?.content?.length || dataDefault?.data?.audios?.length || dataDefault?.data?.showCommentsBox)">
 						<div class="description">{{translations?.common?.noData}}</div>
-					</div>
+					</div> -->
 
 					<div class="textContainer" *ngIf="dataDefault?.data?.content" [innerHTML]="dataDefault?.data?.content | safeHtml"></div>
 
@@ -193,56 +193,14 @@
 						</ul>
 					</div>
 
-					<div class="analytics">
-						<div class="buttonBox">
-							<button mat-icon-button (click)="showComments('showHide', dataDefault?.data)">
-								<i label="analytics-comments"></i>
-							</button>
-						</div>
-		
-						<div class="buttonBox">
-							<button mat-icon-button (click)="likeUnlike(dataDefault?.data)">
-								<i label="analytics-like" [ngClass]="{'active' : dataDefault?.data?.liked}"></i>
-							</button>
-						</div>
-		
-						<a class="likers" *ngIf="dataDefault?.data?.countLikes > 0" (click)="showLikes(dataDefault?.data)">
-							<span *ngFor="let l of dataDefault?.data?.likers; let isLast = last">
-								{{l?.username}}{{isLast ? '' : ', '}}
-							</span>
-							{{dataDefault?.data?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
-						</a>
-		
-						<div class="buttonBox bookmark">
-							<button mat-icon-button (click)="markUnmark(dataDefault?.data)">
-								<i label="analytics-bookmark" [ngClass]="{'active' : dataDefault?.data?.bookmark?.checked}"></i>
-							</button>
-						</div>
-					</div>
-
 					<div class="boxComments" *ngIf="dataDefault?.data?.showCommentsBox">
 						<div class="comments" *ngIf="!dataDefault?.data?.disabledComments && dataDefault?.data?.loaded">
 							<div class="countComments">
 								{{dataDefault?.data?.countComments}} {{translations?.common?.comments}}
 							</div>
 
-							<div class="new" *ngIf="sessionData?.current?.id">
-								<div class="avatar">
-									<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
-								</div>
-								<div class="richComment">
-									<div class="highlights" [innerHTML]="dataDefault?.data?.newCommentData?.transformed"></div>
-									<div class="origin" contenteditable="plaintext-only" [textContent]="dataDefault?.data?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, dataDefault?.data)" (keyup)="newComment('keyCode', $event, dataDefault?.data)" (keydown)="newComment('keyCode', $event, dataDefault?.data)" (mouseup)="newComment('keyCode', $event, dataDefault?.data)"></div>
-								</div>
-								<div class="actions">
-									<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault?.data)">
-										<i class="blue" label="send-comment"></i>
-									</button>
-								</div>
-							</div>
-
 							<ul>
-								<li *ngFor="let c of dataDefault?.data?.comments?.list" [ngClass]="{'remove': c?.addRemove}">
+								<li *ngFor="let c of dataDefault?.data?.comments?.list" [ngClass]="{remove: c?.addRemove, active: c?.id == dataDefault?.data?.comments?.reply?.child?.id}">
 									<div class="top">
 										<a class="avatar" routerLink="/{{c?.user?.username}}">
 											<img [src]="c?.user?.avatar ? c?.user?.avatarUrl : env.avatar"/>
@@ -261,8 +219,9 @@
 												<i class="icon75 grey" label="more"></i>
 											</button>
 											<mat-menu #optionsComments="matMenu">
+												<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c?.user?.id == sessionData?.current?.id || dataDefault?.data?.user?.id == sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+												<button mat-menu-item (click)="replyComment('create', c, c, dataDefault?.data)">{{translations?.common?.reply}}</button>
 												<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, c)">{{translations?.common?.report}}</button>
-												<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, c)" *ngIf="c?.user?.id === sessionData?.current?.id || dataDefault?.data?.user?.id === sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
 											</mat-menu>
 										</div>
 									</div>
@@ -272,8 +231,45 @@
 									</div>
 
 									<div class="reply">
-										<button mat-raised-button>Reply</button>
+										<button mat-raised-button (click)="replyComment('create', c, c, dataDefault?.data)">{{translations?.common?.reply}}</button>
 									</div>
+
+									<ul class="replyComments" *ngIf="c?.list?.length">
+										<li *ngFor="let d of c?.list" [ngClass]="{remove: d?.addRemove, active: d?.id == dataDefault?.data?.comments?.reply?.child?.id}">
+											<div class="top">
+												<a class="avatar" routerLink="/{{d?.user?.username}}">
+													<img [src]="d?.user?.avatar ? d?.user?.avatarUrl : env.avatar"/>
+												</a>
+
+												<div class="username">
+													<div class="data">
+														<a class="name" routerLink="/{{d?.user?.username}}">{{d?.user?.username}}</a>
+														<i class="icon50 blue" label="official" *ngIf="d?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+														<div class="date">{{d?.date | timeago}}</div>
+													</div>
+												</div>
+
+												<div class="actions" *ngIf="sessionData?.current?.id">
+													<button mat-icon-button [matMenuTriggerFor]="optionsComments">
+														<i class="icon75 grey" label="more"></i>
+													</button>
+													<mat-menu #optionsComments="matMenu">
+														<button mat-menu-item (click)="commentsOptions('addRemove', dataDefault?.data, d)" *ngIf="d?.user?.id == sessionData?.current?.id || dataDefault?.data?.user?.id == sessionData?.current?.id">{{d.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
+														<button mat-menu-item (click)="replyComment('create', c, d, dataDefault?.data)">{{translations?.common?.reply}}</button>
+														<button mat-menu-item (click)="commentsOptions('report', dataDefault?.data, d)">{{translations?.common?.report}}</button>
+													</mat-menu>
+												</div>
+											</div>
+
+											<div class="bottom">
+												<span [innerHtml]="d?.comment | safeHtml"></span>
+											</div>
+
+											<div class="reply">
+												<button mat-raised-button (click)="replyComment('create', c, d, dataDefault?.data)">{{translations?.common?.reply}}</button>
+											</div>
+										</li>
+									</ul>
 								</li>
 							</ul>
 
@@ -305,41 +301,64 @@
 					</div>
 				</div>
 
-				<div class="analytics">
-					<div class="buttonBox">
-						<button mat-icon-button (click)="showComments('showHide', dataDefault?.data)">
-							<i label="analytics-comments"></i>
-						</button>
+				<div class="analyticsBox">
+					<div class="top">
+						<div class="new" *ngIf="sessionData?.current?.id">
+							<div class="avatar">
+								<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+							</div>
+							<div class="richComment">
+								<div class="highlights" [innerHTML]="dataDefault?.data?.newCommentData?.transformed"></div>
+								<div class="origin" contenteditable="plaintext-only" [textContent]="dataDefault?.data?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, dataDefault?.data)" (keyup)="newComment('keyCode', $event, dataDefault?.data)" (keydown)="newComment('keyCode', $event, dataDefault?.data)" (mouseup)="newComment('keyCode', $event, dataDefault?.data)"></div>
+							</div>
+							<div class="actions">
+								<button mat-icon-button type="submit" (click)="newComment('create', $event, dataDefault?.data)">
+									<i class="blue" label="send-comment"></i>
+								</button>
+							</div>
+						</div>
+						<div class="replyTo" *ngIf="dataDefault?.data?.comments?.reply?.child">
+							<div class="text">
+								{{translations?.common?.replyTo}} {{dataDefault?.data?.comments?.reply?.child?.user?.username}}
+							</div>
+							<button mat-raised-button (click)="replyComment('cancel', null, null, dataDefault?.data)">{{translations?.common?.cancel}}</button>
+						</div>
 					</div>
+					<div class="bottom">
+						<div class="buttonBox">
+							<button mat-icon-button (click)="showComments('showHide', dataDefault?.data)">
+								<i label="analytics-comments"></i>
+							</button>
+						</div>
 
-					<div class="buttonBox">
-						<button mat-icon-button (click)="likeUnlike(dataDefault?.data)">
-							<i label="analytics-like" [ngClass]="{'active' : dataDefault?.data?.liked}"></i>
-						</button>
-						<!-- {{dataDefault?.data?.countLikes}} -->
-					</div>
+						<div class="buttonBox">
+							<button mat-icon-button (click)="likeUnlike(dataDefault?.data)">
+								<i label="analytics-like" [ngClass]="{'active' : dataDefault?.data?.liked}"></i>
+							</button>
+						</div>
 
-					<a class="likers" *ngIf="dataDefault?.data?.countLikes > 0" (click)="showLikes(dataDefault?.data)">
-						<span *ngFor="let l of dataDefault?.data?.likers; let isLast = last">
-							{{l?.username}}{{isLast ? '' : ', '}}
-						</span>
-						{{dataDefault?.data?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
-					</a>
+						<a class="likers" (click)="showLikes(dataDefault?.data)" *ngIf="dataDefault?.data?.countLikes > 0">
+							<span *ngFor="let l of dataDefault?.data?.likers; let isLast = last">
+								{{l?.username}}{{isLast ? '' : ', '}}
+							</span>
+							{{dataDefault?.data?.countLikes <= 2 ? translations?.common?.likedThis : translations?.common?.andMoreLikedThis}}
+						</a>
 
-					<div class="buttonBox bookmark">
-						<button mat-icon-button (click)="markUnmark(dataDefault?.data)">
-							<i label="analytics-bookmark" [ngClass]="{'active' : dataDefault?.data?.bookmark?.checked}"></i>
-						</button>
+						<div class="buttonBox bookmark">
+							<button mat-icon-button (click)="markUnmark(dataDefault?.data)">
+								<i label="analytics-bookmark" [ngClass]="{'active' : dataDefault?.data?.bookmark?.checked}"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="loadingData" *ngIf="dataDefault.loadingData">
+		<div class="loadingData" *ngIf="dataDefault?.loadingData">
 			<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 		</div>
 
-		<div class="noData" *ngIf="dataDefault.noData">
+		<div class="noData" *ngIf="dataDefault?.noData">
 			<div class="description">{{translations?.common?.noData}}</div>
 		</div>
 	</div>

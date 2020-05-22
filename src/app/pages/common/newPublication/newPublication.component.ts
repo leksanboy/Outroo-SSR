@@ -237,8 +237,6 @@ export class NewPublicationComponent implements OnInit {
 
 	// Select/Unselect
 	toggleItemPhoto(item, i) {
-		console.log('item', item);
-
 		if (item.category !== 'unknown') {
 			if (item.selected) {
 				this.data.photosArray.splice(i, 1);
@@ -591,7 +589,6 @@ export class NewPublicationComponent implements OnInit {
 					photos: 			(photosArray.length > 0 ? photosArray : ''),
 					audios: 			(audiosArray.length > 0 ? audiosArray : '')
 				};
-				console.log('data', data);
 
 				this.publicationsDataService.createPublication(data)
 					.subscribe(res => {

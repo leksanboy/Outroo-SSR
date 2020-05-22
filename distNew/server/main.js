@@ -5809,6 +5809,7 @@ var ActiveSessionComponent = /** @class */ (function () {
             // Get session add account
             this.sessionService.getDataAddAccount()
                 .subscribe(function (data) {
+                console.log('getDataAddAccount:', data);
                 if (data.type === 'create') {
                     _this.openNewSession();
                 }
@@ -6793,6 +6794,7 @@ var ActiveSessionComponent = /** @class */ (function () {
     };
     // Set session
     ActiveSessionComponent.prototype.setCurrentUser = function (data) {
+        console.log('setCurrentUser:', data);
         if (this.sessionData.current.id !== data.id) {
             // Set theme
             this.changeTheme(data.theme);
@@ -6823,6 +6825,7 @@ var ActiveSessionComponent = /** @class */ (function () {
     };
     // Close session
     ActiveSessionComponent.prototype.closeSession = function (data) {
+        console.log('closeSession data:', data);
         if (this.sessionData.sessions.length === 1) {
             this.playPlayer('stop', null);
             this.router.navigate(['logout']);
@@ -6836,8 +6839,13 @@ var ActiveSessionComponent = /** @class */ (function () {
                     }
                 }
             }
+            // Set sessions
+            console.log('closeSession this.sessionData:', this.sessionData);
+            this.userDataService.setSessionData('data', this.sessionData);
+            this.sessionService.setData(this.sessionData);
             // Set different account and check if is not set and deleted
-            this.setCurrentUser(this.sessionData.sessions[0]);
+            var session = this.sessionData.current.id === data.id ? this.sessionData.sessions[0] : this.sessionData.current;
+            this.setCurrentUser(session);
         }
     };
     // Change language
@@ -7048,10 +7056,10 @@ function View_ActiveSessionsMobileComponent_2(_l) { return i0.ɵvid(0, [(_l()(),
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
 function View_ActiveSessionsMobileComponent_1(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 36, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i8.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { active: 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 33, "div", [["class", "inner mat-ripple"], ["mat-ripple", ""]], [[2, "mat-ripple-unbounded", null]], null, null, null, null)), i0.ɵdid(4, 212992, null, 0, i9.MatRipple, [i0.ElementRef, i0.NgZone, i4.Platform, [2, i9.MAT_RIPPLE_GLOBAL_OPTIONS], [2, i10.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(5, 0, null, null, 1, "div", [["class", "avatar"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.setCurrentUser(_v.context.$implicit) !== false);
+        var pd_0 = (_co.userOptions("setCurrentUser", _v.context.$implicit) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 8, "div", [["class", "text"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.setCurrentUser(_v.context.$implicit) !== false);
+        var pd_0 = (_co.userOptions("setCurrentUser", _v.context.$implicit) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 7, "div", [["class", "in"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 4, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(10, 0, null, null, 1, "a", [["class", "name"]], null, null, null, null, null)), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ActiveSessionsMobileComponent_2)), i0.ɵdid(13, 16384, null, 0, i8.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 1, "div", [["class", "info"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["@", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 20, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(17, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
         var pd_0 = (i0.ɵnov(_v, 19)._handleMousedown($event) !== false);
@@ -7078,11 +7086,11 @@ function View_ActiveSessionsMobileComponent_1(_l) { return i0.ɵvid(0, [(_l()(),
         var pd_1 = (i0.ɵnov(_v, 35)._handleMouseEnter() !== false);
         ad = (pd_1 && ad);
     } if (("click" === en)) {
-        var pd_2 = (_co.closeSession(_v.context.$implicit) !== false);
+        var pd_2 = (_co.userOptions("closeSession", _v.context.$implicit) !== false);
         ad = (pd_2 && ad);
     } return ad; }, i14.View_MatMenuItem_0, i14.RenderType_MatMenuItem)), i0.ɵdid(35, 180224, [[1, 4]], 0, i13.MatMenuItem, [i0.ElementRef, i8.DOCUMENT, i5.FocusMonitor, [2, i13.ɵf21]], null, null), (_l()(), i0.ɵted(36, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)) == _v.context.$implicit.id)); _ck(_v, 1, 0, currVal_0); _ck(_v, 4, 0); var currVal_4 = _v.context.$implicit.official; _ck(_v, 13, 0, currVal_4); var currVal_9 = i0.ɵnov(_v, 22); _ck(_v, 19, 0, currVal_9); var currVal_11 = "before"; var currVal_12 = "below"; var currVal_13 = "removeBox"; _ck(_v, 22, 0, currVal_11, currVal_12, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 4).unbounded; _ck(_v, 3, 0, currVal_1); var currVal_2 = (_v.context.$implicit.avatar ? _v.context.$implicit.avatarUrl : _co.env.avatar); _ck(_v, 6, 0, currVal_2); var currVal_3 = _v.context.$implicit.username; _ck(_v, 11, 0, currVal_3); var currVal_5 = _v.context.$implicit.username; _ck(_v, 15, 0, currVal_5); var currVal_6 = (i0.ɵnov(_v, 18).disabled || null); var currVal_7 = (i0.ɵnov(_v, 18)._animationMode === "NoopAnimations"); var currVal_8 = (i0.ɵnov(_v, 19).menuOpen || null); _ck(_v, 17, 0, currVal_6, currVal_7, currVal_8); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.logOut)); _ck(_v, 20, 0, currVal_10); var currVal_14 = _v.context.$implicit.name; _ck(_v, 27, 0, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.leaveSite)); _ck(_v, 29, 0, currVal_15); var currVal_16 = i0.ɵnov(_v, 32)._highlighted; var currVal_17 = i0.ɵnov(_v, 32)._triggersSubmenu; var currVal_18 = i0.ɵnov(_v, 32)._getTabIndex(); var currVal_19 = i0.ɵnov(_v, 32).disabled.toString(); var currVal_20 = (i0.ɵnov(_v, 32).disabled || null); _ck(_v, 31, 0, currVal_16, currVal_17, currVal_18, currVal_19, currVal_20); var currVal_21 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.no)); _ck(_v, 33, 0, currVal_21); var currVal_22 = i0.ɵnov(_v, 35)._highlighted; var currVal_23 = i0.ɵnov(_v, 35)._triggersSubmenu; var currVal_24 = i0.ɵnov(_v, 35)._getTabIndex(); var currVal_25 = i0.ɵnov(_v, 35).disabled.toString(); var currVal_26 = (i0.ɵnov(_v, 35).disabled || null); _ck(_v, 34, 0, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.yes)); _ck(_v, 36, 0, currVal_27); }); }
 function View_ActiveSessionsMobileComponent_3(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 10, "li", [], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.openNewSession() !== false);
+        var pd_0 = (_co.userOptions("openNewSession", _co.x) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 9, "div", [["class", "inner mat-ripple"], ["mat-ripple", ""]], [[2, "mat-ripple-unbounded", null]], null, null, null, null)), i0.ɵdid(2, 212992, null, 0, i9.MatRipple, [i0.ElementRef, i0.NgZone, i4.Platform, [2, i9.MAT_RIPPLE_GLOBAL_OPTIONS], [2, i10.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(3, 0, null, null, 1, "div", [["class", "add"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "i", [["label", "add"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 5, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 4, "div", [["class", "in"]], null, null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 1, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵted(8, null, ["", ""])), (_l()(), i0.ɵeld(9, 0, null, null, 1, "div", [["class", "info"]], null, null, null, null, null)), (_l()(), i0.ɵted(10, null, ["", ""]))], function (_ck, _v) { _ck(_v, 2, 0); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 2).unbounded; _ck(_v, 1, 0, currVal_0); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.addAccount)); _ck(_v, 8, 0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.setAnotherAccount)); _ck(_v, 10, 0, currVal_2); }); }
 function View_ActiveSessionsMobileComponent_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 6, "div", [["class", "sessionsPanelMobile"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 0, "div", [["class", "grabber"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
@@ -7132,21 +7140,30 @@ var ActiveSessionsMobileComponent = /** @class */ (function () {
             _this.translations = data;
         });
     };
-    // Set user
-    ActiveSessionsMobileComponent.prototype.setCurrentUser = function (data) {
-        var current = {
-            data: data,
-            type: 'set'
-        };
-        this.sessionService.setDataAddAccount(current);
-        this.bottomSheetRef.dismiss();
-    };
-    ActiveSessionsMobileComponent.prototype.openNewSession = function () {
-        this.close();
-        var data = {
-            type: 'create'
-        };
-        this.sessionService.setDataAddAccount(data);
+    // User options
+    ActiveSessionsMobileComponent.prototype.userOptions = function (type, item) {
+        switch (type) {
+            case 'openNewSession':
+                var dataONS = {
+                    type: 'create'
+                };
+                this.sessionService.setDataAddAccount(dataONS);
+                break;
+            case 'setCurrentUser':
+                var dataSCU = {
+                    type: 'set',
+                    data: item
+                };
+                this.sessionService.setDataAddAccount(dataSCU);
+                break;
+            case 'closeSession':
+                var dataCS = {
+                    type: 'close',
+                    data: item
+                };
+                this.sessionService.setDataAddAccount(dataCS);
+                break;
+        }
     };
     ActiveSessionsMobileComponent.prototype.close = function () {
         this.bottomSheetRef.dismiss();
@@ -8086,20 +8103,18 @@ var NewPublicationAddAudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                            }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -8127,23 +8142,21 @@ var NewPublicationAddAudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSearch.noData = true;
-                    }
-                    else {
-                        _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                            }
+                _this.dataSearch.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSearch.noData = true;
+                }
+                else {
+                    _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -8159,20 +8172,18 @@ var NewPublicationAddAudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataSearch.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                            }
+                _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataSearch.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -9825,31 +9836,29 @@ var NewShareComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSearch.noData = true;
-                        _this.dataSearch.noMore = true;
-                    }
-                    else {
-                        _this.dataSearch.loadMoreData = res ? ((res.length < _this.env.cuantity) ? false : true) : false;
-                        _this.dataSearch.noData = false;
-                        // validate added
-                        for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
-                            var i = res_1[_i];
-                            for (var _a = 0, _b = _this.data.users; _a < _b.length; _a++) {
-                                var u = _b[_a];
-                                if (i.id === u.user.id) {
-                                    i.added = true;
-                                }
+                _this.dataSearch.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSearch.noData = true;
+                    _this.dataSearch.noMore = true;
+                }
+                else {
+                    _this.dataSearch.loadMoreData = res ? ((res.length < _this.env.cuantity) ? false : true) : false;
+                    _this.dataSearch.noData = false;
+                    // validate added
+                    for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
+                        var i = res_1[_i];
+                        for (var _a = 0, _b = _this.data.users; _a < _b.length; _a++) {
+                            var u = _b[_a];
+                            if (i.id === u.user.id) {
+                                i.added = true;
                             }
                         }
-                        _this.dataSearch.list = res;
-                        if (res.length < _this.env.cuantity) {
-                            _this.dataSearch.noMore = true;
-                        }
                     }
-                }, 600);
+                    _this.dataSearch.list = res;
+                    if (res.length < _this.env.cuantity) {
+                        _this.dataSearch.noMore = true;
+                    }
+                }
             });
         }
         else if (type === 'more' && !this.dataSearch.noMore) {
@@ -9862,22 +9871,20 @@ var NewShareComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadMoreData = res ? ((res.length < _this.env.cuantity) ? false : true) : false;
-                    _this.dataSearch.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var _i = 0, res_2 = res; _i < res_2.length; _i++) {
-                            var i = res_2[_i];
-                            if (i) {
-                                _this.dataSearch.list.push(i);
-                            }
+                _this.dataSearch.loadMoreData = res ? ((res.length < _this.env.cuantity) ? false : true) : false;
+                _this.dataSearch.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var _i = 0, res_2 = res; _i < res_2.length; _i++) {
+                        var i = res_2[_i];
+                        if (i) {
+                            _this.dataSearch.list.push(i);
                         }
                     }
-                    if (res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             });
         }
         else if (type === 'clear') {
@@ -10353,22 +10360,20 @@ var ShowLikesComponent = /** @class */ (function () {
             };
             this.dataDefault.service.likes(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
-                            var i = res_1[_i];
-                            if (i) {
-                                _this.dataDefault.list.push(i);
-                            }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
+                        var i = res_1[_i];
+                        if (i) {
+                            _this.dataDefault.list.push(i);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -10639,21 +10644,19 @@ var ShowMessageComponent = /** @class */ (function () {
             };
             this.messageDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
-                            var i = res_1[_i];
-                            if (i) {
-                                _this.dataDefault.list.push(i);
-                            }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var _i = 0, res_1 = res; _i < res_1.length; _i++) {
+                        var i = res_1[_i];
+                        if (i) {
+                            _this.dataDefault.list.push(i);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -12019,12 +12022,145 @@ function View_ShowPublicationComponent_26(_l) { return i0.ɵvid(0, [(_l()(), i0.
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(13, 0, null, null, 4, "div", [["class", "titleArtist"]], [[8, "title", 0]], null, null, null, null)), (_l()(), i0.ɵeld(14, 0, null, null, 1, "div", [["class", "title"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "div", [["class", "artist"]], null, null, null, null, null)), (_l()(), i0.ɵted(17, null, ["", ""])), (_l()(), i0.ɵeld(18, 0, null, null, 4, "div", [["class", "explicitDuration"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_29)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(21, 0, null, null, 1, "div", [["class", "duration"]], null, null, null, null, null)), (_l()(), i0.ɵted(22, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_30)), i0.ɵdid(24, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (((((_co.audioPlayerData == null) ? null : _co.audioPlayerData.key) == _v.context.index) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.type) == "publication")) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))), !((_v.context.$implicit == null) ? null : _v.context.$implicit.image)); _ck(_v, 1, 0, currVal_0); var currVal_3 = (!((_v.context.$implicit == null) ? null : _v.context.$implicit.playing) || !(((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 8, 0, currVal_3); var currVal_4 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.playing) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 10, 0, currVal_4); var currVal_9 = _v.context.$implicit.explicit; _ck(_v, 20, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 24, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (i0.ɵnov(_v, 6).disabled || null); var currVal_2 = (i0.ɵnov(_v, 6)._animationMode === "NoopAnimations"); _ck(_v, 5, 0, currVal_1, currVal_2); var currVal_5 = (_v.context.$implicit.image ? ((_co.env.pathAudios + "thumbnails/") + _v.context.$implicit.image) : _co.env.defaultSongCover); _ck(_v, 11, 0, currVal_5); var currVal_6 = i0.ɵinlineInterpolate(1, "", (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)), ""); _ck(_v, 13, 0, currVal_6); var currVal_7 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)); _ck(_v, 15, 0, currVal_7); var currVal_8 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_artist) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_artist) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)); _ck(_v, 17, 0, currVal_8); var currVal_10 = _v.context.$implicit.duration; _ck(_v, 22, 0, currVal_10); }); }
 function View_ShowPublicationComponent_25(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "audios"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "ul", [["class", "tracks"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_26)), i0.ɵdid(3, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 3, 0, currVal_0); }, null); }
-function View_ShowPublicationComponent_37(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(1, null, [" ", "", " "]))], null, function (_ck, _v) { var currVal_0 = ((_v.context.$implicit == null) ? null : _v.context.$implicit.username); var currVal_1 = (_v.context.last ? "" : ", "); _ck(_v, 1, 0, currVal_0, currVal_1); }); }
-function View_ShowPublicationComponent_36(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "a", [["class", "likers"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.showLikes(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+function View_ShowPublicationComponent_39(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_37)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.likers)); _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = ((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) <= 2) ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.likedThis)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.andMoreLikedThis))); _ck(_v, 3, 0, currVal_1); }); }
-function View_ShowPublicationComponent_40(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 9, "div", [["class", "new"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "avatar"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 2, "div", [["class", "richComment"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "div", [["class", "highlights"]], [[8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 0, "div", [["class", "origin"], ["contenteditable", "plaintext-only"]], [[8, "textContent", 0]], [[null, "input"], [null, "keyup"], [null, "keydown"], [null, "mouseup"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("input" === en)) {
+    } if (("keydown" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
+        ad = (pd_1 && ad);
+    } if (("touchend" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
+function View_ShowPublicationComponent_41(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[15, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
+function View_ShowPublicationComponent_40(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 17, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("touchstart" === en)) {
+        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
+        ad = (pd_1 && ad);
+    } if (("keydown" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
+        ad = (pd_2 && ad);
+    } if (("click" === en)) {
+        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
+        ad = (pd_3 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 12, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵprd(6144, null, i9.ɵf21, null, [i9.MatMenu]), i0.ɵdid(7, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 15, { items: 1 }), i0.ɵqud(335544320, 16, { lazyContent: 0 }), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_ShowPublicationComponent_41)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 13)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 13)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.replyComment("create", _v.parent.context.$implicit, _v.parent.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(13, 180224, [[15, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(14, 0, ["", ""])), (_l()(), i0.ɵeld(15, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 16)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 16)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(16, 180224, [[15, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(17, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 7); _ck(_v, 3, 0, currVal_3); _ck(_v, 7, 0); var currVal_4 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 11, 0, currVal_4); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_5 = i0.ɵnov(_v, 13)._highlighted; var currVal_6 = i0.ɵnov(_v, 13)._triggersSubmenu; var currVal_7 = i0.ɵnov(_v, 13)._getTabIndex(); var currVal_8 = i0.ɵnov(_v, 13).disabled.toString(); var currVal_9 = (i0.ɵnov(_v, 13).disabled || null); _ck(_v, 12, 0, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 14, 0, currVal_10); var currVal_11 = i0.ɵnov(_v, 16)._highlighted; var currVal_12 = i0.ɵnov(_v, 16)._triggersSubmenu; var currVal_13 = i0.ɵnov(_v, 16)._getTabIndex(); var currVal_14 = i0.ɵnov(_v, 16).disabled.toString(); var currVal_15 = (i0.ɵnov(_v, 16).disabled || null); _ck(_v, 15, 0, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15); var currVal_16 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 17, 0, currVal_16); }); }
+function View_ShowPublicationComponent_44(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
+        ad = (pd_0 && ad);
+    } if (("keydown" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
+        ad = (pd_1 && ad);
+    } if (("touchend" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
+function View_ShowPublicationComponent_46(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[17, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
+function View_ShowPublicationComponent_45(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 17, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("touchstart" === en)) {
+        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
+        ad = (pd_1 && ad);
+    } if (("keydown" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
+        ad = (pd_2 && ad);
+    } if (("click" === en)) {
+        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
+        ad = (pd_3 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 12, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵprd(6144, null, i9.ɵf21, null, [i9.MatMenu]), i0.ɵdid(7, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 17, { items: 1 }), i0.ɵqud(335544320, 18, { lazyContent: 0 }), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_ShowPublicationComponent_46)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 13)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 13)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.replyComment("create", _v.parent.parent.parent.context.$implicit, _v.parent.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(13, 180224, [[17, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(14, 0, ["", ""])), (_l()(), i0.ɵeld(15, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 16)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 16)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(16, 180224, [[17, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(17, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 7); _ck(_v, 3, 0, currVal_3); _ck(_v, 7, 0); var currVal_4 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 11, 0, currVal_4); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_5 = i0.ɵnov(_v, 13)._highlighted; var currVal_6 = i0.ɵnov(_v, 13)._triggersSubmenu; var currVal_7 = i0.ɵnov(_v, 13)._getTabIndex(); var currVal_8 = i0.ɵnov(_v, 13).disabled.toString(); var currVal_9 = (i0.ɵnov(_v, 13).disabled || null); _ck(_v, 12, 0, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 14, 0, currVal_10); var currVal_11 = i0.ɵnov(_v, 16)._highlighted; var currVal_12 = i0.ɵnov(_v, 16)._triggersSubmenu; var currVal_13 = i0.ɵnov(_v, 16)._getTabIndex(); var currVal_14 = i0.ɵnov(_v, 16).disabled.toString(); var currVal_15 = (i0.ɵnov(_v, 16).disabled || null); _ck(_v, 15, 0, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15); var currVal_16 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 17, 0, currVal_16); }); }
+function View_ShowPublicationComponent_43(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 25, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { remove: 0, active: 1 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_44)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_45)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1), (_l()(), i0.ɵeld(22, 0, null, null, 3, "div", [["class", "reply"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("create", _v.parent.parent.context.$implicit, _v.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(24, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(25, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, ((_v.context.$implicit == null) ? null : _v.context.$implicit.addRemove), (((_v.context.$implicit == null) ? null : _v.context.$implicit.id) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : _co.dataDefault.data.comments.reply.child.id))))))); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent.parent.parent, 1), ((_v.context.$implicit == null) ? null : _v.context.$implicit.comment))); _ck(_v, 20, 0, currVal_12); var currVal_13 = (i0.ɵnov(_v, 24).disabled || null); var currVal_14 = (i0.ɵnov(_v, 24)._animationMode === "NoopAnimations"); _ck(_v, 23, 0, currVal_13, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 25, 0, currVal_15); }); }
+function View_ShowPublicationComponent_42(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "ul", [["class", "replyComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_43)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var currVal_0 = ((_v.parent.context.$implicit == null) ? null : _v.parent.context.$implicit.list); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_ShowPublicationComponent_38(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 27, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { remove: 0, active: 1 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_39)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_40)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1), (_l()(), i0.ɵeld(22, 0, null, null, 3, "div", [["class", "reply"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("create", _v.context.$implicit, _v.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(24, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(25, 0, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_42)), i0.ɵdid(27, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, ((_v.context.$implicit == null) ? null : _v.context.$implicit.addRemove), (((_v.context.$implicit == null) ? null : _v.context.$implicit.id) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : _co.dataDefault.data.comments.reply.child.id))))))); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); var currVal_16 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.list == null) ? null : _v.context.$implicit.list.length)); _ck(_v, 27, 0, currVal_16); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent, 1), ((_v.context.$implicit == null) ? null : _v.context.$implicit.comment))); _ck(_v, 20, 0, currVal_12); var currVal_13 = (i0.ɵnov(_v, 24).disabled || null); var currVal_14 = (i0.ɵnov(_v, 24)._animationMode === "NoopAnimations"); _ck(_v, 23, 0, currVal_13, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 25, 0, currVal_15); }); }
+function View_ShowPublicationComponent_47(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_ShowPublicationComponent_48(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noComments)); _ck(_v, 2, 0, currVal_0); }); }
+function View_ShowPublicationComponent_50(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["mat-fab", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.defaultComments("more", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(1, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(2, 0, null, 0, 0, "i", [["label", "add"]], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = (i0.ɵnov(_v, 1).disabled || null); var currVal_1 = (i0.ɵnov(_v, 1)._animationMode === "NoopAnimations"); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
+function View_ShowPublicationComponent_51(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(1, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 1, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 1)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 1).diameter; var currVal_2 = i0.ɵnov(_v, 1).diameter; var currVal_3 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 1).value; var currVal_6 = i0.ɵnov(_v, 1).mode; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_ShowPublicationComponent_49(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 4, "div", [["class", "loadMore"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_50)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_51)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 4, 0, currVal_1); }, null); }
+function View_ShowPublicationComponent_37(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 11, "div", [["class", "comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "countComments"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵeld(3, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_38)), i0.ɵdid(5, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_47)), i0.ɵdid(7, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_48)), i0.ɵdid(9, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_49)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : _co.dataDefault.data.comments.list))); _ck(_v, 5, 0, currVal_2); var currVal_3 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingData)); _ck(_v, 7, 0, currVal_3); var currVal_4 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.noData)); _ck(_v, 9, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadMoreData)); _ck(_v, 11, 0, currVal_5); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countComments)); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.comments)); _ck(_v, 2, 0, currVal_0, currVal_1); }); }
+function View_ShowPublicationComponent_52(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.commentsDisabled)); _ck(_v, 2, 0, currVal_0); }); }
+function View_ShowPublicationComponent_53(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "loadComments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.showComments("load", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(3, 0, [" ", " "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.main == null) ? null : _co.translations.main.loadComments)); _ck(_v, 3, 0, currVal_2); }); }
+function View_ShowPublicationComponent_36(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 6, "div", [["class", "boxComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_37)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_52)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_53)), i0.ɵdid(6, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)); _ck(_v, 4, 0, currVal_1); var currVal_2 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 6, 0, currVal_2); }, null); }
+function View_ShowPublicationComponent_54(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 9, "div", [["class", "new"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "avatar"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 2, "div", [["class", "richComment"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "div", [["class", "highlights"]], [[8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 0, "div", [["class", "origin"], ["contenteditable", "plaintext-only"]], [[8, "textContent", 0]], [[null, "input"], [null, "keyup"], [null, "keydown"], [null, "mouseup"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("input" === en)) {
         var pd_0 = (_co.newComment("writingChanges", $event.target.innerText, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
     } if (("keyup" === en)) {
@@ -12040,112 +12176,43 @@ function View_ShowPublicationComponent_40(_l) { return i0.ɵvid(0, [(_l()(), i0.
         var pd_0 = (_co.newComment("create", $event, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
     } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(8, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(9, 0, null, 0, 0, "i", [["class", "blue"], ["label", "send-comment"]], null, null, null, null, null))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.avatar)) ? ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.avatarUrl)) : _co.env.avatar); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.newCommentData == null) ? null : _co.dataDefault.data.newCommentData.transformed))); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.newCommentData == null) ? null : _co.dataDefault.data.newCommentData.onBackground))); _ck(_v, 5, 0, currVal_2); var currVal_3 = (i0.ɵnov(_v, 8).disabled || null); var currVal_4 = (i0.ɵnov(_v, 8)._animationMode === "NoopAnimations"); _ck(_v, 7, 0, currVal_3, currVal_4); }); }
-function View_ShowPublicationComponent_42(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
+function View_ShowPublicationComponent_55(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 5, "div", [["class", "replyTo"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵeld(3, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("cancel", null, null, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } if (("keydown" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
-        ad = (pd_1 && ad);
-    } if (("touchend" === en)) {
-        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
-function View_ShowPublicationComponent_44(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
-        ad = (pd_0 && ad);
-    } if (("mouseenter" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
-        ad = (pd_1 && ad);
-    } if (("click" === en)) {
-        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[15, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
-function View_ShowPublicationComponent_43(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 14, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
-        ad = (pd_0 && ad);
-    } if (("touchstart" === en)) {
-        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
-        ad = (pd_1 && ad);
-    } if (("keydown" === en)) {
-        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
-        ad = (pd_2 && ad);
-    } if (("click" === en)) {
-        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
-        ad = (pd_3 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 9, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵdid(6, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 15, { items: 1 }), i0.ɵqud(335544320, 16, { lazyContent: 0 }), i0.ɵprd(2048, null, i9.ɵf21, null, [i9.MatMenu]), (_l()(), i0.ɵeld(10, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 11)._checkDisabled($event) !== false);
-        ad = (pd_0 && ad);
-    } if (("mouseenter" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 11)._handleMouseEnter() !== false);
-        ad = (pd_1 && ad);
-    } if (("click" === en)) {
-        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(11, 180224, [[15, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(12, 0, ["", ""])), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_ShowPublicationComponent_44)), i0.ɵdid(14, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 6); _ck(_v, 3, 0, currVal_3); _ck(_v, 6, 0); var currVal_10 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) === ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) === ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 14, 0, currVal_10); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_4 = i0.ɵnov(_v, 11)._highlighted; var currVal_5 = i0.ɵnov(_v, 11)._triggersSubmenu; var currVal_6 = i0.ɵnov(_v, 11)._getTabIndex(); var currVal_7 = i0.ɵnov(_v, 11).disabled.toString(); var currVal_8 = (i0.ɵnov(_v, 11).disabled || null); _ck(_v, 10, 0, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8); var currVal_9 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 12, 0, currVal_9); }); }
-function View_ShowPublicationComponent_41(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 25, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { "remove": 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_42)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_43)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1), (_l()(), i0.ɵeld(22, 0, null, null, 3, "div", [["class", "reply"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], null, null, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(24, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(-1, 0, ["Reply"]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, ((_v.context.$implicit == null) ? null : _v.context.$implicit.addRemove)); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent, 1), ((_v.context.$implicit == null) ? null : _v.context.$implicit.comment))); _ck(_v, 20, 0, currVal_12); var currVal_13 = (i0.ɵnov(_v, 24).disabled || null); var currVal_14 = (i0.ɵnov(_v, 24)._animationMode === "NoopAnimations"); _ck(_v, 23, 0, currVal_13, currVal_14); }); }
-function View_ShowPublicationComponent_45(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_ShowPublicationComponent_46(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noComments)); _ck(_v, 2, 0, currVal_0); }); }
-function View_ShowPublicationComponent_48(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["mat-fab", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.defaultComments("more", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(1, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(2, 0, null, 0, 0, "i", [["label", "add"]], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = (i0.ɵnov(_v, 1).disabled || null); var currVal_1 = (i0.ɵnov(_v, 1)._animationMode === "NoopAnimations"); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
-function View_ShowPublicationComponent_49(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(1, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 1, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 1)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 1).diameter; var currVal_2 = i0.ɵnov(_v, 1).diameter; var currVal_3 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 1).value; var currVal_6 = i0.ɵnov(_v, 1).mode; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_ShowPublicationComponent_47(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 4, "div", [["class", "loadMore"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_48)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_49)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 4, 0, currVal_1); }, null); }
-function View_ShowPublicationComponent_39(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 13, "div", [["class", "comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "countComments"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_40)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(5, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_41)), i0.ɵdid(7, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_45)), i0.ɵdid(9, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_46)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_47)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 4, 0, currVal_2); var currVal_3 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : _co.dataDefault.data.comments.list))); _ck(_v, 7, 0, currVal_3); var currVal_4 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingData)); _ck(_v, 9, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.noData)); _ck(_v, 11, 0, currVal_5); var currVal_6 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadMoreData)); _ck(_v, 13, 0, currVal_6); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countComments)); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.comments)); _ck(_v, 2, 0, currVal_0, currVal_1); }); }
-function View_ShowPublicationComponent_50(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.commentsDisabled)); _ck(_v, 2, 0, currVal_0); }); }
-function View_ShowPublicationComponent_51(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "loadComments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.showComments("load", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(3, 0, [" ", " "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.main == null) ? null : _co.translations.main.loadComments)); _ck(_v, 3, 0, currVal_2); }); }
-function View_ShowPublicationComponent_38(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 6, "div", [["class", "boxComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_39)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_50)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_51)), i0.ɵdid(6, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)); _ck(_v, 4, 0, currVal_1); var currVal_2 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 6, 0, currVal_2); }, null); }
-function View_ShowPublicationComponent_53(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(1, null, [" ", "", " "]))], null, function (_ck, _v) { var currVal_0 = ((_v.context.$implicit == null) ? null : _v.context.$implicit.username); var currVal_1 = (_v.context.last ? "" : ", "); _ck(_v, 1, 0, currVal_0, currVal_1); }); }
-function View_ShowPublicationComponent_52(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "a", [["class", "likers"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(4, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(5, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.replyTo)); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : ((_co.dataDefault.data.comments.reply.child.user == null) ? null : _co.dataDefault.data.comments.reply.child.user.username)))))); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = (i0.ɵnov(_v, 4).disabled || null); var currVal_3 = (i0.ɵnov(_v, 4)._animationMode === "NoopAnimations"); _ck(_v, 3, 0, currVal_2, currVal_3); var currVal_4 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.cancel)); _ck(_v, 5, 0, currVal_4); }); }
+function View_ShowPublicationComponent_57(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(1, null, [" ", "", " "]))], null, function (_ck, _v) { var currVal_0 = ((_v.context.$implicit == null) ? null : _v.context.$implicit.username); var currVal_1 = (_v.context.last ? "" : ", "); _ck(_v, 1, 0, currVal_0, currVal_1); }); }
+function View_ShowPublicationComponent_56(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "a", [["class", "likers"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.showLikes(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_53)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.likers)); _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = ((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) <= 2) ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.likedThis)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.andMoreLikedThis))); _ck(_v, 3, 0, currVal_1); }); }
-function View_ShowPublicationComponent_1(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 85, "div", [["class", "container"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_57)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.likers)); _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = ((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) <= 2) ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.likedThis)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.andMoreLikedThis))); _ck(_v, 3, 0, currVal_1); }); }
+function View_ShowPublicationComponent_1(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 72, "div", [["class", "container"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 3).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), i0.ɵdid(3, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(4, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 8).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(8, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(9, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_2)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(13, null, ["", ""])), i0.ɵppd(14, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_3)), i0.ɵdid(16, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(17, 0, null, null, 4, "div", [["class", "left"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_7)), i0.ɵdid(19, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_12)), i0.ɵdid(21, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(22, 0, null, null, 63, "div", [["class", "right"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(24, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+    } return ad; }, null, null)), i0.ɵdid(8, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(9, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_2)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(13, null, ["", ""])), i0.ɵppd(14, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_3)), i0.ɵdid(16, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(17, 0, null, null, 4, "div", [["class", "left"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_7)), i0.ɵdid(19, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_12)), i0.ɵdid(21, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(22, 0, null, null, 50, "div", [["class", "right"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(24, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 25).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), i0.ɵdid(25, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(26, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(27, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(28, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(29, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 30).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(30, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(31, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_18)), i0.ɵdid(33, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(34, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(35, null, ["", ""])), i0.ɵppd(36, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_19)), i0.ɵdid(38, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(39, 0, null, null, 27, "div", [["class", "innerContent"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_23)), i0.ɵdid(41, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_24)), i0.ɵdid(43, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_25)), i0.ɵdid(45, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(46, 0, null, null, 18, "div", [["class", "analytics"]], null, null, null, null, null)), (_l()(), i0.ɵeld(47, 0, null, null, 3, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(48, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i0.ɵdid(30, 671744, null, 0, i19.RouterLinkWithHref, [i19.Router, i19.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(31, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_18)), i0.ɵdid(33, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(34, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(35, null, ["", ""])), i0.ɵppd(36, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_19)), i0.ɵdid(38, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(39, 0, null, null, 8, "div", [["class", "innerContent"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_23)), i0.ɵdid(41, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_24)), i0.ɵdid(43, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_25)), i0.ɵdid(45, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_36)), i0.ɵdid(47, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(48, 0, null, null, 24, "div", [["class", "analyticsBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(49, 0, null, null, 4, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_54)), i0.ɵdid(51, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_55)), i0.ɵdid(53, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(54, 0, null, null, 18, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(55, 0, null, null, 3, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(56, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.showComments("showHide", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(49, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(50, 0, null, 0, 0, "i", [["label", "analytics-comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(51, 0, null, null, 5, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(52, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(57, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(58, 0, null, 0, 0, "i", [["label", "analytics-comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(59, 0, null, null, 5, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(60, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.likeUnlike(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(53, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(54, 0, null, 0, 2, "i", [["label", "analytics-like"]], null, null, null, null, null)), i0.ɵdid(55, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(56, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_36)), i0.ɵdid(58, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(59, 0, null, null, 5, "div", [["class", "buttonBox bookmark"]], null, null, null, null, null)), (_l()(), i0.ɵeld(60, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(61, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(62, 0, null, 0, 2, "i", [["label", "analytics-like"]], null, null, null, null, null)), i0.ɵdid(63, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(64, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_56)), i0.ɵdid(66, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(67, 0, null, null, 5, "div", [["class", "buttonBox bookmark"]], null, null, null, null, null)), (_l()(), i0.ɵeld(68, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.markUnmark(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(61, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(62, 0, null, 0, 2, "i", [["label", "analytics-bookmark"]], null, null, null, null, null)), i0.ɵdid(63, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(64, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_38)), i0.ɵdid(66, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(67, 0, null, null, 18, "div", [["class", "analytics"]], null, null, null, null, null)), (_l()(), i0.ɵeld(68, 0, null, null, 3, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(69, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.showComments("showHide", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(70, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(71, 0, null, 0, 0, "i", [["label", "analytics-comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(72, 0, null, null, 5, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(73, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.likeUnlike(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(74, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(75, 0, null, 0, 2, "i", [["label", "analytics-like"]], null, null, null, null, null)), i0.ɵdid(76, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(77, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_52)), i0.ɵdid(79, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(80, 0, null, null, 5, "div", [["class", "buttonBox bookmark"]], null, null, null, null, null)), (_l()(), i0.ɵeld(81, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.markUnmark(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(82, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(83, 0, null, 0, 2, "i", [["label", "analytics-bookmark"]], null, null, null, null, null)), i0.ɵdid(84, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(85, { "active": 0 })], function (_ck, _v) { var _co = _v.component; var currVal_2 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)), ""); _ck(_v, 3, 0, currVal_2); var currVal_6 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)), ""); _ck(_v, 8, 0, currVal_6); var currVal_8 = ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official)); _ck(_v, 11, 0, currVal_8); var currVal_10 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 16, 0, currVal_10); var currVal_11 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos.length)) === 1); _ck(_v, 19, 0, currVal_11); var currVal_12 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos.length)) > 1); _ck(_v, 21, 0, currVal_12); var currVal_15 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)), ""); _ck(_v, 25, 0, currVal_15); var currVal_19 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)), ""); _ck(_v, 30, 0, currVal_19); var currVal_21 = ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official)); _ck(_v, 33, 0, currVal_21); var currVal_23 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 38, 0, currVal_23); var currVal_24 = !(((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.content == null) ? null : _co.dataDefault.data.content.length))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.audios == null) ? null : _co.dataDefault.data.audios.length)))); _ck(_v, 41, 0, currVal_24); var currVal_25 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.content)); _ck(_v, 43, 0, currVal_25); var currVal_26 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 45, 0, currVal_26); var currVal_31 = _ck(_v, 56, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.liked))); _ck(_v, 55, 0, currVal_31); var currVal_32 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) > 0); _ck(_v, 58, 0, currVal_32); var currVal_35 = _ck(_v, 64, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.bookmark == null) ? null : _co.dataDefault.data.bookmark.checked)))); _ck(_v, 63, 0, currVal_35); var currVal_36 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox)); _ck(_v, 66, 0, currVal_36); var currVal_41 = _ck(_v, 77, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.liked))); _ck(_v, 76, 0, currVal_41); var currVal_42 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) > 0); _ck(_v, 79, 0, currVal_42); var currVal_45 = _ck(_v, 85, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.bookmark == null) ? null : _co.dataDefault.data.bookmark.checked)))); _ck(_v, 84, 0, currVal_45); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 3).target; var currVal_1 = i0.ɵnov(_v, 3).href; _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_3 = (((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar)) ? ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl)) : _co.env.avatar); _ck(_v, 4, 0, currVal_3); var currVal_4 = i0.ɵnov(_v, 8).target; var currVal_5 = i0.ɵnov(_v, 8).href; _ck(_v, 7, 0, currVal_4, currVal_5); var currVal_7 = ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)); _ck(_v, 9, 0, currVal_7); var currVal_9 = i0.ɵunv(_v, 13, 0, _ck(_v, 14, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 13, 0, currVal_9); var currVal_13 = i0.ɵnov(_v, 25).target; var currVal_14 = i0.ɵnov(_v, 25).href; _ck(_v, 24, 0, currVal_13, currVal_14); var currVal_16 = (((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar)) ? ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl)) : _co.env.avatar); _ck(_v, 26, 0, currVal_16); var currVal_17 = i0.ɵnov(_v, 30).target; var currVal_18 = i0.ɵnov(_v, 30).href; _ck(_v, 29, 0, currVal_17, currVal_18); var currVal_20 = ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username)); _ck(_v, 31, 0, currVal_20); var currVal_22 = i0.ɵunv(_v, 35, 0, _ck(_v, 36, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 35, 0, currVal_22); var currVal_27 = (i0.ɵnov(_v, 49).disabled || null); var currVal_28 = (i0.ɵnov(_v, 49)._animationMode === "NoopAnimations"); _ck(_v, 48, 0, currVal_27, currVal_28); var currVal_29 = (i0.ɵnov(_v, 53).disabled || null); var currVal_30 = (i0.ɵnov(_v, 53)._animationMode === "NoopAnimations"); _ck(_v, 52, 0, currVal_29, currVal_30); var currVal_33 = (i0.ɵnov(_v, 61).disabled || null); var currVal_34 = (i0.ɵnov(_v, 61)._animationMode === "NoopAnimations"); _ck(_v, 60, 0, currVal_33, currVal_34); var currVal_37 = (i0.ɵnov(_v, 70).disabled || null); var currVal_38 = (i0.ɵnov(_v, 70)._animationMode === "NoopAnimations"); _ck(_v, 69, 0, currVal_37, currVal_38); var currVal_39 = (i0.ɵnov(_v, 74).disabled || null); var currVal_40 = (i0.ɵnov(_v, 74)._animationMode === "NoopAnimations"); _ck(_v, 73, 0, currVal_39, currVal_40); var currVal_43 = (i0.ɵnov(_v, 82).disabled || null); var currVal_44 = (i0.ɵnov(_v, 82)._animationMode === "NoopAnimations"); _ck(_v, 81, 0, currVal_43, currVal_44); }); }
-function View_ShowPublicationComponent_54(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_ShowPublicationComponent_55(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noData)); _ck(_v, 2, 0, currVal_0); }); }
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(69, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(70, 0, null, 0, 2, "i", [["label", "analytics-bookmark"]], null, null, null, null, null)), i0.ɵdid(71, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(72, { "active": 0 })], function (_ck, _v) { var _co = _v.component; var currVal_2 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 3, 0, currVal_2); var currVal_6 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 8, 0, currVal_6); var currVal_8 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official))); _ck(_v, 11, 0, currVal_8); var currVal_10 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 16, 0, currVal_10); var currVal_11 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos.length)) === 1); _ck(_v, 19, 0, currVal_11); var currVal_12 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos.length)) > 1); _ck(_v, 21, 0, currVal_12); var currVal_15 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 25, 0, currVal_15); var currVal_19 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 30, 0, currVal_19); var currVal_21 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official))); _ck(_v, 33, 0, currVal_21); var currVal_23 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 38, 0, currVal_23); var currVal_24 = !((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.content == null) ? null : _co.dataDefault.data.content.length))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.audios == null) ? null : _co.dataDefault.data.audios.length)))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox))); _ck(_v, 41, 0, currVal_24); var currVal_25 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.content)); _ck(_v, 43, 0, currVal_25); var currVal_26 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 45, 0, currVal_26); var currVal_27 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox)); _ck(_v, 47, 0, currVal_27); var currVal_28 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 51, 0, currVal_28); var currVal_29 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : _co.dataDefault.data.comments.reply.child)))); _ck(_v, 53, 0, currVal_29); var currVal_34 = _ck(_v, 64, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.liked))); _ck(_v, 63, 0, currVal_34); var currVal_35 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) > 0); _ck(_v, 66, 0, currVal_35); var currVal_38 = _ck(_v, 72, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.bookmark == null) ? null : _co.dataDefault.data.bookmark.checked)))); _ck(_v, 71, 0, currVal_38); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 3).target; var currVal_1 = i0.ɵnov(_v, 3).href; _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_3 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar))) ? ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl))) : _co.env.avatar); _ck(_v, 4, 0, currVal_3); var currVal_4 = i0.ɵnov(_v, 8).target; var currVal_5 = i0.ɵnov(_v, 8).href; _ck(_v, 7, 0, currVal_4, currVal_5); var currVal_7 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))); _ck(_v, 9, 0, currVal_7); var currVal_9 = i0.ɵunv(_v, 13, 0, _ck(_v, 14, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 13, 0, currVal_9); var currVal_13 = i0.ɵnov(_v, 25).target; var currVal_14 = i0.ɵnov(_v, 25).href; _ck(_v, 24, 0, currVal_13, currVal_14); var currVal_16 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar))) ? ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl))) : _co.env.avatar); _ck(_v, 26, 0, currVal_16); var currVal_17 = i0.ɵnov(_v, 30).target; var currVal_18 = i0.ɵnov(_v, 30).href; _ck(_v, 29, 0, currVal_17, currVal_18); var currVal_20 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))); _ck(_v, 31, 0, currVal_20); var currVal_22 = i0.ɵunv(_v, 35, 0, _ck(_v, 36, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 35, 0, currVal_22); var currVal_30 = (i0.ɵnov(_v, 57).disabled || null); var currVal_31 = (i0.ɵnov(_v, 57)._animationMode === "NoopAnimations"); _ck(_v, 56, 0, currVal_30, currVal_31); var currVal_32 = (i0.ɵnov(_v, 61).disabled || null); var currVal_33 = (i0.ɵnov(_v, 61)._animationMode === "NoopAnimations"); _ck(_v, 60, 0, currVal_32, currVal_33); var currVal_36 = (i0.ɵnov(_v, 69).disabled || null); var currVal_37 = (i0.ɵnov(_v, 69)._animationMode === "NoopAnimations"); _ck(_v, 68, 0, currVal_36, currVal_37); }); }
+function View_ShowPublicationComponent_58(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i20.View_MatProgressSpinner_0, i20.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i21.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i21.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_ShowPublicationComponent_59(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noData)); _ck(_v, 2, 0, currVal_0); }); }
 function View_ShowPublicationComponent_0(_l) { return i0.ɵvid(0, [i0.ɵpid(0, i22.TimeagoPipe, []), i0.ɵpid(0, i23.SafeHtmlPipe, [i7.DomSanitizer]), (_l()(), i0.ɵeld(2, 0, null, null, 18, "div", [["class", "dialogBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 7, "div", [["class", "header mobile mat-dialog-title"], ["mat-dialog-title", ""]], [[8, "id", 0]], null, null, null, null)), i0.ɵdid(4, 81920, null, 0, i24.MatDialogTitle, [[2, i24.MatDialogRef], i0.ElementRef, i24.MatDialog], null, null), (_l()(), i0.ɵeld(5, 0, null, null, 5, "div", [["class", "left"]], null, null, null, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.close() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(7, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(8, 0, null, 0, 0, "i", [["label", "back"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(10, null, [" ", " "])), (_l()(), i0.ɵeld(11, 0, null, null, 9, "div", [["class", "bodyPublications mat-dialog-content"], ["mat-dialog-content", ""]], null, null, null, null, null)), i0.ɵdid(12, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i0.ɵpod(13, { "remove": 0 }), i0.ɵdid(14, 16384, null, 0, i24.MatDialogContent, [], null, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_1)), i0.ɵdid(16, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_54)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_55)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; _ck(_v, 4, 0); var currVal_4 = "bodyPublications"; var currVal_5 = _ck(_v, 13, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.addRemoveSession))); _ck(_v, 12, 0, currVal_4, currVal_5); var currVal_6 = (!_co.dataDefault.loadingData && !_co.dataDefault.noData); _ck(_v, 16, 0, currVal_6); var currVal_7 = _co.dataDefault.loadingData; _ck(_v, 18, 0, currVal_7); var currVal_8 = _co.dataDefault.noData; _ck(_v, 20, 0, currVal_8); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 4).id; _ck(_v, 3, 0, currVal_0); var currVal_1 = (i0.ɵnov(_v, 7).disabled || null); var currVal_2 = (i0.ɵnov(_v, 7)._animationMode === "NoopAnimations"); _ck(_v, 6, 0, currVal_1, currVal_2); var currVal_3 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.title)); _ck(_v, 10, 0, currVal_3); }); }
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(7, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(8, 0, null, 0, 0, "i", [["label", "back"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(10, null, [" ", " "])), (_l()(), i0.ɵeld(11, 0, null, null, 9, "div", [["class", "bodyPublications mat-dialog-content"], ["mat-dialog-content", ""]], null, null, null, null, null)), i0.ɵdid(12, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i0.ɵpod(13, { "remove": 0 }), i0.ɵdid(14, 16384, null, 0, i24.MatDialogContent, [], null, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_1)), i0.ɵdid(16, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_58)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_ShowPublicationComponent_59)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; _ck(_v, 4, 0); var currVal_4 = "bodyPublications"; var currVal_5 = _ck(_v, 13, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.addRemoveSession))); _ck(_v, 12, 0, currVal_4, currVal_5); var currVal_6 = (!((_co.dataDefault == null) ? null : _co.dataDefault.loadingData) && !((_co.dataDefault == null) ? null : _co.dataDefault.noData)); _ck(_v, 16, 0, currVal_6); var currVal_7 = ((_co.dataDefault == null) ? null : _co.dataDefault.loadingData); _ck(_v, 18, 0, currVal_7); var currVal_8 = ((_co.dataDefault == null) ? null : _co.dataDefault.noData); _ck(_v, 20, 0, currVal_8); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 4).id; _ck(_v, 3, 0, currVal_0); var currVal_1 = (i0.ɵnov(_v, 7).disabled || null); var currVal_2 = (i0.ɵnov(_v, 7)._animationMode === "NoopAnimations"); _ck(_v, 6, 0, currVal_1, currVal_2); var currVal_3 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.title)); _ck(_v, 10, 0, currVal_3); }); }
 exports.View_ShowPublicationComponent_0 = View_ShowPublicationComponent_0;
 function View_ShowPublicationComponent_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "app-show-publication", [], null, null, null, View_ShowPublicationComponent_0, RenderType_ShowPublicationComponent)), i0.ɵprd(4608, null, i22.TimeagoPipe, i22.TimeagoPipe, []), i0.ɵprd(4608, null, i23.SafeHtmlPipe, i23.SafeHtmlPipe, [i7.DomSanitizer]), i0.ɵdid(3, 245760, null, 0, i25.ShowPublicationComponent, [i24.MAT_DIALOG_DATA, i24.MatDialogRef, i26.FormBuilder, i10.Location, i0.Renderer2, i0.ElementRef, i27.AlertService, i28.PlayerService, i19.ActivatedRoute, i29.SessionService, i30.UserDataService, i31.AudioDataService, i32.PublicationsDataService, i33.NotificationsDataService, i34.DeviceDetectorService, i35.MetaService, i36.RoutingStateService], null, null)], function (_ck, _v) { _ck(_v, 3, 0); }, null); }
 exports.View_ShowPublicationComponent_Host_0 = View_ShowPublicationComponent_Host_0;
@@ -12283,7 +12350,8 @@ var ShowPublicationComponent = /** @class */ (function () {
             }
             else {
                 _this.dataDefault.data = res;
-                // this.showComments('showHide', this.dataDefault.data);
+                // Show comments
+                _this.showComments('showHide', _this.dataDefault.data);
                 // Update replays
                 _this.updateReplays(res.id);
                 // Set Google analytics
@@ -12512,6 +12580,7 @@ var ShowPublicationComponent = /** @class */ (function () {
             item.loadingData = true;
             item.comments = [];
             item.comments.list = [];
+            item.comments.reply = null;
             item.rowsComments = 0;
             item.loaded = true;
             // New comments set
@@ -12548,18 +12617,16 @@ var ShowPublicationComponent = /** @class */ (function () {
             };
             this.publicationsDataService.comments(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    item.loadingMoreData = false;
-                    item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                item.comments.list.push(res[i]);
-                            }
+                item.loadingMoreData = false;
+                item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            item.comments.list.push(res[i]);
                         }
                     }
-                }, 600);
+                }
             }, function (error) {
                 item.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -12579,7 +12646,10 @@ var ShowPublicationComponent = /** @class */ (function () {
                     eventTarget: '',
                     lastTypedWord: []
                 };
+                // Put as default
                 _this.newComment('checkPlaceholder', null, item);
+                // Cancel reply
+                _this.replyComment('cancel', null, null, item);
             }, 100);
         }
         else if (type === 'writingChanges') {
@@ -12630,9 +12700,13 @@ var ShowPublicationComponent = /** @class */ (function () {
             }
         }
         else if (type === 'transformBeforeSend') {
+            // Add replied user
+            if (item.comments.reply) {
+                item.newCommentData.original = '@' + item.comments.reply.child.user.username + ' ' + item.newCommentData.original;
+            }
             var newData_1 = {
-                content: item.newCommentData.original ? item.newCommentData.original : '',
-                original: item.newCommentData.original ? item.newCommentData.original : '',
+                content: item.newCommentData.original,
+                original: item.newCommentData.original,
                 mentions: [],
                 hashtags: []
             };
@@ -12659,24 +12733,54 @@ var ShowPublicationComponent = /** @class */ (function () {
             }
             else {
                 var formatedData = this.newComment('transformBeforeSend', null, item);
-                var dataCreate = {
+                console.log('formatedData', formatedData);
+                var dataCreate_1 = {
                     type: 'create',
                     id: item.id,
                     receiver: item.user.id,
                     comment: formatedData.content,
                     comment_original: formatedData.original,
+                    comment_reply_parent_id: (item.comments.reply ? item.comments.reply.parent.id : null),
+                    comment_reply_child_id: (item.comments.reply ? item.comments.reply.child.id : null),
                     mentions: formatedData.mentions
                 };
-                this.publicationsDataService.comment(dataCreate)
+                this.publicationsDataService.comment(dataCreate_1)
                     .subscribe(function (res) {
-                    item.comments.list.unshift(res);
                     item.countComments++;
                     item.noData = false;
+                    if (dataCreate_1.comment_reply_parent_id) {
+                        var comm = item.comments.list.filter(function (i) { return i.id == dataCreate_1.comment_reply_parent_id; })[0];
+                        if (comm.list) {
+                            comm.list.push(res);
+                        }
+                        else {
+                            comm.list = [];
+                            comm.list.push(res);
+                        }
+                    }
+                    else {
+                        item.comments.list.push(res);
+                        _this.window.scrollTo(0, 1000);
+                    }
                     _this.newComment('clear', null, item);
                 }, function (error) {
                     _this.alertService.error(_this.translations.common.anErrorHasOcurred);
                 });
             }
+        }
+    };
+    // Reply
+    ShowPublicationComponent.prototype.replyComment = function (type, parent, child, item) {
+        console.log([type, parent, child, item]);
+        if (type === 'create') {
+            item.comments.reply = {
+                parent: parent,
+                child: child
+            };
+            console.log('item.comments', item.comments);
+        }
+        else if (type === 'cancel') {
+            item.comments.reply = null;
         }
     };
     // Comments Options
@@ -15481,24 +15585,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataDefault.list.push(_this.pushAd());
-                                }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataDefault.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15525,27 +15627,25 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataAround.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataAround.noData = true;
-                    }
-                    else {
-                        _this.dataAround.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataAround.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataAround.list.push(_this.pushAd());
-                                }
+                _this.dataAround.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataAround.noData = true;
+                }
+                else {
+                    _this.dataAround.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataAround.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataAround.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataAround.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataAround.noMore = true;
+                }
             }, function (error) {
                 _this.dataAround.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15561,24 +15661,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataAround.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataAround.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataAround.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataAround.list.push(_this.pushAd());
-                                }
+                _this.dataAround.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataAround.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataAround.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataAround.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataAround.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataAround.noMore = true;
+                }
             }, function (error) {
                 _this.dataAround.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15605,27 +15703,25 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataTop.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataTop.noData = true;
-                    }
-                    else {
-                        _this.dataTop.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataTop.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataTop.list.push(_this.pushAd());
-                                }
+                _this.dataTop.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataTop.noData = true;
+                }
+                else {
+                    _this.dataTop.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataTop.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataTop.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataTop.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataTop.noMore = true;
+                }
             }, function (error) {
                 _this.dataTop.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15646,24 +15742,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataTop.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataTop.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataTop.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataTop.list.push(_this.pushAd());
-                                }
+                _this.dataTop.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataTop.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataTop.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataTop.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataTop.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataTop.noMore = true;
+                }
             }, function (error) {
                 _this.dataTop.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15690,27 +15784,25 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataFresh.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataFresh.noData = true;
-                    }
-                    else {
-                        _this.dataFresh.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataFresh.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataFresh.list.push(_this.pushAd());
-                                }
+                _this.dataFresh.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataFresh.noData = true;
+                }
+                else {
+                    _this.dataFresh.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataFresh.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataFresh.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataFresh.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataFresh.noMore = true;
+                }
             }, function (error) {
                 _this.dataFresh.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15726,24 +15818,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataFresh.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataFresh.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataFresh.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataFresh.list.push(_this.pushAd());
-                                }
+                _this.dataFresh.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataFresh.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataFresh.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataFresh.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataFresh.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataFresh.noMore = true;
+                }
             }, function (error) {
                 _this.dataFresh.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15771,27 +15861,25 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSearch.noData = true;
-                    }
-                    else {
-                        _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataSearch.list.push(_this.pushAd());
-                                }
+                _this.dataSearch.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSearch.noData = true;
+                }
+                else {
+                    _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataSearch.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15807,24 +15895,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataSearch.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataSearch.list.push(_this.pushAd());
-                                }
+                _this.dataSearch.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataSearch.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataSearch.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -15849,15 +15935,15 @@ var AudiosComponent = /** @class */ (function () {
                 var file = _a[_i];
                 console.log('file', file);
                 if (file) {
-                    /* file.title = file.name.replace('.mp3', ''); */
-                    file.title = file.name;
+                    file.title = file.name.replace('.mp3', '');
+                    /* file.title = file.name; */
                     file.status = 'pending';
                     if (this.dataFiles.countUploads === 10) {
                         this.alertService.error(this.translations.common.exceededMaxUploads);
                     }
                     else {
-                        /* if (/^audio\/\w+$/.test(file.type)) { */
-                        if (file.type.indexOf('audio') > -1) {
+                        /* if (file.type.indexOf('audio') > -1) { */
+                        if (/^audio\/\w+$/.test(file.type)) {
                             file.category = 'audio';
                             if (file.size >= this.env.maxFileSize) {
                                 file.sizeBig = convertToMb(file.size);
@@ -16331,28 +16417,26 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.general(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSection.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSection.noData = true;
-                    }
-                    else {
-                        _this.dataSection.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSection.list.push(res[i]);
-                                // Push ad
-                                if (i === '19') {
-                                    _this.dataSection.list.push(_this.pushAd());
-                                }
+                _this.dataSection.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSection.noData = true;
+                }
+                else {
+                    _this.dataSection.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSection.list.push(res[i]);
+                            // Push ad
+                            if (i === '19') {
+                                _this.dataSection.list.push(_this.pushAd());
                             }
                         }
                     }
-                    console.log('this.dataSection:', _this.dataSection);
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSection.noMore = true;
-                    }
-                }, 600);
+                }
+                console.log('this.dataSection:', _this.dataSection);
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSection.noMore = true;
+                }
             }, function (error) {
                 _this.dataSection.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -16369,24 +16453,22 @@ var AudiosComponent = /** @class */ (function () {
             };
             this.audioDataService.general(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSection.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataSection.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSection.list.push(res[i]);
-                                // Push ad
-                                if (i === '19') {
-                                    _this.dataSection.list.push(_this.pushAd());
-                                }
+                _this.dataSection.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataSection.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSection.list.push(res[i]);
+                            // Push ad
+                            if (i === '19') {
+                                _this.dataSection.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSection.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSection.noMore = true;
+                }
             }, function (error) {
                 _this.dataSection.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -16726,24 +16808,22 @@ var BookmarksComponent = /** @class */ (function () {
             };
             this.publicationsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                                // Push add
-                                if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
-                                    _this.dataDefault.list.push(_this.pushAd());
-                                }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
+                            // Push add
+                            if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+                                _this.dataDefault.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -17333,21 +17413,19 @@ var FollowersComponent = /** @class */ (function () {
             };
             this.followsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                            }
+                _this.dataDefault.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -17376,19 +17454,17 @@ var FollowersComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSearch.noData = true;
-                    }
-                    else {
-                        _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                        _this.dataSearch.list = res;
-                    }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                _this.dataSearch.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSearch.noData = true;
+                }
+                else {
+                    _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                    _this.dataSearch.list = res;
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -17405,21 +17481,19 @@ var FollowersComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                    _this.dataSearch.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                            }
+                _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                _this.dataSearch.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -17991,21 +18065,19 @@ var FollowingComponent = /** @class */ (function () {
             };
             this.followsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                            }
+                _this.dataDefault.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -18033,19 +18105,17 @@ var FollowingComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataSearch.noData = true;
-                    }
-                    else {
-                        _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                        _this.dataSearch.list = res;
-                    }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                _this.dataSearch.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataSearch.noData = true;
+                }
+                else {
+                    _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                    _this.dataSearch.list = res;
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -18062,21 +18132,19 @@ var FollowingComponent = /** @class */ (function () {
             };
             this.followsDataService.searchFollowing(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                    _this.dataSearch.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataSearch.list.push(res[i]);
-                            }
+                _this.dataSearch.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                _this.dataSearch.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataSearch.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataSearch.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataSearch.noMore = true;
+                }
             }, function (error) {
                 _this.dataSearch.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -18805,24 +18873,22 @@ var HomeComponent = /** @class */ (function () {
             };
             this.publicationsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                                // Push ad
-                                if (i === (Math.round(res.length * 3 / 5)).toString()) {
-                                    _this.dataDefault.list.push(_this.pushAd());
-                                }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
+                            // Push ad
+                            if (i === (Math.round(res.length * 3 / 5)).toString()) {
+                                _this.dataDefault.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -19072,18 +19138,16 @@ var HomeComponent = /** @class */ (function () {
             };
             this.publicationsDataService.comments(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    item.loadingMoreData = false;
-                    item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                item.comments.list.push(res[i]);
-                            }
+                item.loadingMoreData = false;
+                item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            item.comments.list.push(res[i]);
                         }
                     }
-                }, 600);
+                }
             }, function (error) {
                 item.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -19993,6 +20057,11 @@ var MainComponent = /** @class */ (function () {
             .subscribe(function (data) {
             _this.comeFromUserButton = data;
         });
+        // Get sessions on logout
+        this.activeGetData = this.sessionService.getData()
+            .subscribe(function (data) {
+            _this.sessionData = data;
+        });
         // Session playlists
         this.activeSessionPlaylists = this.sessionService.getDataPlaylists()
             .subscribe(function (data) {
@@ -20042,6 +20111,7 @@ var MainComponent = /** @class */ (function () {
         this.activeLanguage.unsubscribe();
         this.activeNewPublication.unsubscribe();
         this.activeComeFromUserButton.unsubscribe();
+        this.activeGetData.unsubscribe();
         this.showAccounts = false;
     };
     // Go back
@@ -20129,7 +20199,7 @@ var MainComponent = /** @class */ (function () {
                 setTimeout(function () {
                     _this.dataDefault.list.unshift(data);
                     _this.dataDefault.noData = false;
-                }, 600);
+                }, 300);
             }
         }
     };
@@ -20209,21 +20279,19 @@ var MainComponent = /** @class */ (function () {
             };
             this.publicationsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataDefault.list.push(res[i]);
-                            }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataDefault.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21067,32 +21135,30 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                if (i == '4' || i == '8' || // +4 (+9)
-                                    i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
-                                    i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
-                                    i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
-                                    i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9 +LM
-                                    res[i].big = true;
-                                }
-                                _this.dataDefault.list.push(res[i]);
-                                // Push add
-                                if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
-                                    _this.dataDefault.list.push(_this.pushAd());
-                                }
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            if (i == '4' || i == '8' || // +4 (+9)
+                                i == '17' || i == '21' || i == '27' || // +4 +6 (+7)
+                                i == '34' || i == '40' || i == '44' || // +6 +4 (+9)
+                                i == '53' || i == '57' || i == '63' || // +4 +6 (+7)
+                                i == '70' || i == '76' || i == '80' || i == '89') { // +6 +4 +9 +LM
+                                res[i].big = true;
+                            }
+                            _this.dataDefault.list.push(res[i]);
+                            // Push add
+                            if (i === '12' || i === '30' || i === '48' || i === '66' || i === '84') {
+                                _this.dataDefault.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataDefault.noMore = true;
-                    }
-                    _this.userDataService.setLocalStotage('newsPage', _this.dataDefault);
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataDefault.noMore = true;
+                }
+                _this.userDataService.setLocalStotage('newsPage', _this.dataDefault);
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21117,15 +21183,13 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.searchTop(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataTop.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataTop.noData = true;
-                    }
-                    else {
-                        _this.dataTop.list = res;
-                    }
-                }, 600);
+                _this.dataTop.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataTop.noData = true;
+                }
+                else {
+                    _this.dataTop.list = res;
+                }
             }, function (error) {
                 _this.dataTop.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21153,19 +21217,17 @@ var NewsComponent = /** @class */ (function () {
             };
             this.followsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataPeople.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataPeople.noData = true;
-                    }
-                    else {
-                        _this.dataPeople.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                        _this.dataPeople.list = res;
-                    }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataPeople.noMore = true;
-                    }
-                }, 600);
+                _this.dataPeople.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataPeople.noData = true;
+                }
+                else {
+                    _this.dataPeople.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                    _this.dataPeople.list = res;
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataPeople.noMore = true;
+                }
             }, function (error) {
                 _this.dataPeople.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21181,20 +21243,18 @@ var NewsComponent = /** @class */ (function () {
             };
             this.followsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataPeople.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
-                    _this.dataPeople.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataPeople.list.push(res[i]);
-                            }
+                _this.dataPeople.loadMoreData = (res.length < _this.env.cuantity) ? false : true;
+                _this.dataPeople.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataPeople.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataPeople.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataPeople.noMore = true;
+                }
             }, function (error) {
                 _this.dataPeople.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21222,27 +21282,25 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataPosts.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataPosts.noData = true;
-                    }
-                    else {
-                        _this.dataPosts.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataPosts.list.push(res[i]);
-                                // Push add
-                                if (i === '11' || i === '23' || i === '35' || i === '47' || i === '59' || i === '71' || i === '83') {
-                                    _this.dataPosts.list.push(_this.pushAd());
-                                }
+                _this.dataPosts.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataPosts.noData = true;
+                }
+                else {
+                    _this.dataPosts.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataPosts.list.push(res[i]);
+                            // Push add
+                            if (i === '11' || i === '23' || i === '35' || i === '47' || i === '59' || i === '71' || i === '83') {
+                                _this.dataPosts.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataPosts.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataPosts.noMore = true;
+                }
             }, function (error) {
                 _this.dataPosts.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21258,24 +21316,22 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataPosts.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                    _this.dataPosts.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataPosts.list.push(res[i]);
-                                // Push add
-                                if (i === '15' || i === '30' || i === '45' || i === '60') {
-                                    _this.dataPosts.list.push(_this.pushAd());
-                                }
+                _this.dataPosts.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                _this.dataPosts.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataPosts.list.push(res[i]);
+                            // Push add
+                            if (i === '15' || i === '30' || i === '45' || i === '60') {
+                                _this.dataPosts.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataPosts.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataPosts.noMore = true;
+                }
             }, function (error) {
                 _this.dataPosts.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21303,23 +21359,21 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.searchTag(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataTag.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataTag.noData = true;
-                    }
-                    else {
-                        _this.dataTag.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataTag.list.push(res[i]);
-                            }
+                _this.dataTag.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataTag.noData = true;
+                }
+                else {
+                    _this.dataTag.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataTag.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataTag.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataTag.noMore = true;
+                }
             }, function (error) {
                 _this.dataTag.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21335,21 +21389,19 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.searchTag(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataTag.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataTag.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            // Push items
-                            if (res[i]) {
-                                _this.dataTag.list.push(res[i]);
-                            }
+                _this.dataTag.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataTag.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        // Push items
+                        if (res[i]) {
+                            _this.dataTag.list.push(res[i]);
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataTag.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataTag.noMore = true;
+                }
             }, function (error) {
                 _this.dataTag.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21388,27 +21440,25 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataHashtag.loadingData = false;
-                    if (!res || res.length === 0) {
-                        _this.dataHashtag.noData = true;
-                    }
-                    else {
-                        _this.dataHashtag.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataHashtag.list.push(res[i]);
-                                // Push add
-                                if (i === '10' || i === '20' || i === '30' || i === '40') {
-                                    _this.dataHashtag.list.push(_this.pushAd());
-                                }
+                _this.dataHashtag.loadingData = false;
+                if (!res || res.length === 0) {
+                    _this.dataHashtag.noData = true;
+                }
+                else {
+                    _this.dataHashtag.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataHashtag.list.push(res[i]);
+                            // Push add
+                            if (i === '10' || i === '20' || i === '30' || i === '40') {
+                                _this.dataHashtag.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataHashtag.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataHashtag.noMore = true;
+                }
             }, function (error) {
                 _this.dataHashtag.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -21424,24 +21474,22 @@ var NewsComponent = /** @class */ (function () {
             };
             this.publicationsDataService.search(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataHashtag.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
-                    _this.dataHashtag.loadingMoreData = false;
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                _this.dataHashtag.list.push(res[i]);
-                                // Push add
-                                if (i === '15' || i === '30' || i === '45' || i === '60') {
-                                    _this.dataHashtag.list.push(_this.pushAd());
-                                }
+                _this.dataHashtag.loadMoreData = (!res || res.length < _this.env.cuantity * 3) ? false : true;
+                _this.dataHashtag.loadingMoreData = false;
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            _this.dataHashtag.list.push(res[i]);
+                            // Push add
+                            if (i === '15' || i === '30' || i === '45' || i === '60') {
+                                _this.dataHashtag.list.push(_this.pushAd());
                             }
                         }
                     }
-                    if (!res || res.length < _this.env.cuantity * 3) {
-                        _this.dataHashtag.noMore = true;
-                    }
-                }, 600);
+                }
+                if (!res || res.length < _this.env.cuantity * 3) {
+                    _this.dataHashtag.noMore = true;
+                }
             }, function (error) {
                 _this.dataHashtag.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -22445,29 +22493,27 @@ var NotificationsComponent = /** @class */ (function () {
             };
             this.notificationsDataService.default(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    _this.dataDefault.loadingMoreData = false;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        var _loop_1 = function (i) {
-                            if (res[i]) {
-                                setTimeout(function () {
-                                    res[i].is_seen = 1;
-                                }, 1800);
-                                _this.dataDefault.list.push(res[i]);
-                            }
-                        };
-                        for (var i in res) {
-                            _loop_1(i);
+                _this.dataDefault.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                _this.dataDefault.loadingMoreData = false;
+                // Push items
+                if (!res || res.length > 0) {
+                    var _loop_1 = function (i) {
+                        if (res[i]) {
+                            setTimeout(function () {
+                                res[i].is_seen = 1;
+                            }, 1800);
+                            _this.dataDefault.list.push(res[i]);
                         }
+                    };
+                    for (var i in res) {
+                        _loop_1(i);
                     }
-                    _this.sessionService.setPendingNotifications('refresh');
-                    if (!res || res.length < _this.env.cuantity) {
-                        _this.dataDefault.noMore = true;
-                    }
-                    _this.userDataService.setLocalStotage('notificationsPage', _this.dataDefault);
-                }, 600);
+                }
+                _this.sessionService.setPendingNotifications('refresh');
+                if (!res || res.length < _this.env.cuantity) {
+                    _this.dataDefault.noMore = true;
+                }
+                _this.userDataService.setLocalStotage('notificationsPage', _this.dataDefault);
             }, function (error) {
                 _this.dataDefault.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -23855,19 +23901,19 @@ function View_PostComponent_25(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16
         var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.explicit)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
-function View_PostComponent_27(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 0, "i", [["class", "icon75 blue"], ["label", "check"]], null, null, null, null, null))], null, null); }
-function View_PostComponent_28(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null))], null, null); }
+function View_PostComponent_27(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 0, "i", [["class", "icon85 blue"], ["label", "check"]], null, null, null, null, null))], null, null); }
+function View_PostComponent_28(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 0, "i", [["class", "icon85 grey"], ["label", "more"]], null, null, null, null, null))], null, null); }
 function View_PostComponent_29(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "mat-divider", [["class", "mat-divider"], ["role", "separator"]], [[1, "aria-orientation", 0], [2, "mat-divider-vertical", null], [2, "mat-divider-horizontal", null], [2, "mat-divider-inset", null]], null, null, i11.View_MatDivider_0, i11.RenderType_MatDivider)), i0.ɵdid(1, 49152, null, 0, i12.MatDivider, [], null, null)], null, function (_ck, _v) { var currVal_0 = (i0.ɵnov(_v, 1).vertical ? "vertical" : "horizontal"); var currVal_1 = i0.ɵnov(_v, 1).vertical; var currVal_2 = !i0.ɵnov(_v, 1).vertical; var currVal_3 = i0.ɵnov(_v, 1).inset; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3); }); }
-function View_PostComponent_31(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_PostComponent_31(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
         ad = (pd_0 && ad);
     } if (("mouseenter" === en)) {
         var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
         ad = (pd_1 && ad);
     } if (("click" === en)) {
-        var pd_2 = (_co.itemSongOptions("playlist", _co.x, _v.parent.context.$implicit) !== false);
+        var pd_2 = (_co.itemSongOptions("playlist", _v.parent.parent.parent.context.$implicit, _v.parent.context.$implicit) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[7, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵeld(2, 0, null, 0, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵted(3, 0, [" ", " "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.context.$implicit.image ? ((_co.env.pathAudios + "covers/") + _v.parent.context.$implicit.image) : _co.env.defaultPlaylistCover); _ck(_v, 2, 0, currVal_5); var currVal_6 = _v.parent.context.$implicit.title; _ck(_v, 3, 0, currVal_6); }); }
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[7, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = ((_v.parent.context.$implicit == null) ? null : _v.parent.context.$implicit.title); _ck(_v, 2, 0, currVal_5); }); }
 function View_PostComponent_30(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "span", [], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_31)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var currVal_0 = !_v.context.$implicit.removed; _ck(_v, 2, 0, currVal_0); }, null); }
 function View_PostComponent_26(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 52, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 6, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
         var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
@@ -23971,21 +24017,154 @@ function View_PostComponent_26(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0,
     } if (("click" === en)) {
         var pd_2 = (_co.itemSongOptions("copyLinkSong", _v.parent.context.$implicit, null) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(51, 180224, [[9, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(52, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 9); _ck(_v, 3, 0, currVal_3); var currVal_4 = _v.parent.context.$implicit.addRemoveUser; _ck(_v, 5, 0, currVal_4); var currVal_5 = !_v.parent.context.$implicit.addRemoveUser; _ck(_v, 7, 0, currVal_5); _ck(_v, 9, 0); var currVal_18 = i0.ɵnov(_v, 28); _ck(_v, 18, 0, currVal_18); var currVal_26 = i0.ɵnov(_v, 40); _ck(_v, 22, 0, currVal_26); _ck(_v, 28, 0); var currVal_40 = (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : ((_co.sessionData.current.playlists == null) ? null : _co.sessionData.current.playlists.length))) > 0); _ck(_v, 36, 0, currVal_40); var currVal_41 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.playlists)); _ck(_v, 38, 0, currVal_41); _ck(_v, 40, 0); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_6 = i0.ɵnov(_v, 14)._highlighted; var currVal_7 = i0.ɵnov(_v, 14)._triggersSubmenu; var currVal_8 = i0.ɵnov(_v, 14)._getTabIndex(); var currVal_9 = i0.ɵnov(_v, 14).disabled.toString(); var currVal_10 = (i0.ɵnov(_v, 14).disabled || null); _ck(_v, 13, 0, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10); var currVal_11 = (!_v.parent.context.$implicit.addRemoveUser ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.add)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 15, 0, currVal_11); var currVal_12 = i0.ɵnov(_v, 17)._highlighted; var currVal_13 = i0.ɵnov(_v, 17)._triggersSubmenu; var currVal_14 = i0.ɵnov(_v, 17)._getTabIndex(); var currVal_15 = i0.ɵnov(_v, 17).disabled.toString(); var currVal_16 = (i0.ɵnov(_v, 17).disabled || null); var currVal_17 = (i0.ɵnov(_v, 18).menuOpen || null); _ck(_v, 16, 0, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17); var currVal_19 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.addToPlaylist)); _ck(_v, 19, 0, currVal_19); var currVal_20 = i0.ɵnov(_v, 21)._highlighted; var currVal_21 = i0.ɵnov(_v, 21)._triggersSubmenu; var currVal_22 = i0.ɵnov(_v, 21)._getTabIndex(); var currVal_23 = i0.ɵnov(_v, 21).disabled.toString(); var currVal_24 = (i0.ɵnov(_v, 21).disabled || null); var currVal_25 = (i0.ɵnov(_v, 22).menuOpen || null); _ck(_v, 20, 0, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25); var currVal_27 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.share)); _ck(_v, 23, 0, currVal_27); var currVal_28 = i0.ɵnov(_v, 25)._highlighted; var currVal_29 = i0.ɵnov(_v, 25)._triggersSubmenu; var currVal_30 = i0.ɵnov(_v, 25)._getTabIndex(); var currVal_31 = i0.ɵnov(_v, 25).disabled.toString(); var currVal_32 = (i0.ɵnov(_v, 25).disabled || null); _ck(_v, 24, 0, currVal_28, currVal_29, currVal_30, currVal_31, currVal_32); var currVal_33 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 26, 0, currVal_33); var currVal_34 = i0.ɵnov(_v, 33)._highlighted; var currVal_35 = i0.ɵnov(_v, 33)._triggersSubmenu; var currVal_36 = i0.ɵnov(_v, 33)._getTabIndex(); var currVal_37 = i0.ɵnov(_v, 33).disabled.toString(); var currVal_38 = (i0.ɵnov(_v, 33).disabled || null); _ck(_v, 32, 0, currVal_34, currVal_35, currVal_36, currVal_37, currVal_38); var currVal_39 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.createPlaylist)); _ck(_v, 34, 0, currVal_39); var currVal_42 = i0.ɵnov(_v, 45)._highlighted; var currVal_43 = i0.ɵnov(_v, 45)._triggersSubmenu; var currVal_44 = i0.ɵnov(_v, 45)._getTabIndex(); var currVal_45 = i0.ɵnov(_v, 45).disabled.toString(); var currVal_46 = (i0.ɵnov(_v, 45).disabled || null); _ck(_v, 44, 0, currVal_42, currVal_43, currVal_44, currVal_45, currVal_46); var currVal_47 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.sendMessage)); _ck(_v, 46, 0, currVal_47); var currVal_48 = i0.ɵnov(_v, 48)._highlighted; var currVal_49 = i0.ɵnov(_v, 48)._triggersSubmenu; var currVal_50 = i0.ɵnov(_v, 48)._getTabIndex(); var currVal_51 = i0.ɵnov(_v, 48).disabled.toString(); var currVal_52 = (i0.ɵnov(_v, 48).disabled || null); _ck(_v, 47, 0, currVal_48, currVal_49, currVal_50, currVal_51, currVal_52); var currVal_53 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.openInNewTab)); _ck(_v, 49, 0, currVal_53); var currVal_54 = i0.ɵnov(_v, 51)._highlighted; var currVal_55 = i0.ɵnov(_v, 51)._triggersSubmenu; var currVal_56 = i0.ɵnov(_v, 51)._getTabIndex(); var currVal_57 = i0.ɵnov(_v, 51).disabled.toString(); var currVal_58 = (i0.ɵnov(_v, 51).disabled || null); _ck(_v, 50, 0, currVal_54, currVal_55, currVal_56, currVal_57, currVal_58); var currVal_59 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.copyLink)); _ck(_v, 52, 0, currVal_59); }); }
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(51, 180224, [[9, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(52, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 9); _ck(_v, 3, 0, currVal_3); var currVal_4 = ((_v.parent.context.$implicit == null) ? null : _v.parent.context.$implicit.addRemoveUser); _ck(_v, 5, 0, currVal_4); var currVal_5 = !((_v.parent.context.$implicit == null) ? null : _v.parent.context.$implicit.addRemoveUser); _ck(_v, 7, 0, currVal_5); _ck(_v, 9, 0); var currVal_18 = i0.ɵnov(_v, 28); _ck(_v, 18, 0, currVal_18); var currVal_26 = i0.ɵnov(_v, 40); _ck(_v, 22, 0, currVal_26); _ck(_v, 28, 0); var currVal_40 = (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : ((_co.sessionData.current.playlists == null) ? null : _co.sessionData.current.playlists.length))) > 0); _ck(_v, 36, 0, currVal_40); var currVal_41 = _co.sessionData.current.playlists; _ck(_v, 38, 0, currVal_41); _ck(_v, 40, 0); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_6 = i0.ɵnov(_v, 14)._highlighted; var currVal_7 = i0.ɵnov(_v, 14)._triggersSubmenu; var currVal_8 = i0.ɵnov(_v, 14)._getTabIndex(); var currVal_9 = i0.ɵnov(_v, 14).disabled.toString(); var currVal_10 = (i0.ɵnov(_v, 14).disabled || null); _ck(_v, 13, 0, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10); var currVal_11 = (!_v.parent.context.$implicit.addRemoveUser ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.add)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 15, 0, currVal_11); var currVal_12 = i0.ɵnov(_v, 17)._highlighted; var currVal_13 = i0.ɵnov(_v, 17)._triggersSubmenu; var currVal_14 = i0.ɵnov(_v, 17)._getTabIndex(); var currVal_15 = i0.ɵnov(_v, 17).disabled.toString(); var currVal_16 = (i0.ɵnov(_v, 17).disabled || null); var currVal_17 = (i0.ɵnov(_v, 18).menuOpen || null); _ck(_v, 16, 0, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17); var currVal_19 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.addToPlaylist)); _ck(_v, 19, 0, currVal_19); var currVal_20 = i0.ɵnov(_v, 21)._highlighted; var currVal_21 = i0.ɵnov(_v, 21)._triggersSubmenu; var currVal_22 = i0.ɵnov(_v, 21)._getTabIndex(); var currVal_23 = i0.ɵnov(_v, 21).disabled.toString(); var currVal_24 = (i0.ɵnov(_v, 21).disabled || null); var currVal_25 = (i0.ɵnov(_v, 22).menuOpen || null); _ck(_v, 20, 0, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25); var currVal_27 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.share)); _ck(_v, 23, 0, currVal_27); var currVal_28 = i0.ɵnov(_v, 25)._highlighted; var currVal_29 = i0.ɵnov(_v, 25)._triggersSubmenu; var currVal_30 = i0.ɵnov(_v, 25)._getTabIndex(); var currVal_31 = i0.ɵnov(_v, 25).disabled.toString(); var currVal_32 = (i0.ɵnov(_v, 25).disabled || null); _ck(_v, 24, 0, currVal_28, currVal_29, currVal_30, currVal_31, currVal_32); var currVal_33 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 26, 0, currVal_33); var currVal_34 = i0.ɵnov(_v, 33)._highlighted; var currVal_35 = i0.ɵnov(_v, 33)._triggersSubmenu; var currVal_36 = i0.ɵnov(_v, 33)._getTabIndex(); var currVal_37 = i0.ɵnov(_v, 33).disabled.toString(); var currVal_38 = (i0.ɵnov(_v, 33).disabled || null); _ck(_v, 32, 0, currVal_34, currVal_35, currVal_36, currVal_37, currVal_38); var currVal_39 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.createPlaylist)); _ck(_v, 34, 0, currVal_39); var currVal_42 = i0.ɵnov(_v, 45)._highlighted; var currVal_43 = i0.ɵnov(_v, 45)._triggersSubmenu; var currVal_44 = i0.ɵnov(_v, 45)._getTabIndex(); var currVal_45 = i0.ɵnov(_v, 45).disabled.toString(); var currVal_46 = (i0.ɵnov(_v, 45).disabled || null); _ck(_v, 44, 0, currVal_42, currVal_43, currVal_44, currVal_45, currVal_46); var currVal_47 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.sendMessage)); _ck(_v, 46, 0, currVal_47); var currVal_48 = i0.ɵnov(_v, 48)._highlighted; var currVal_49 = i0.ɵnov(_v, 48)._triggersSubmenu; var currVal_50 = i0.ɵnov(_v, 48)._getTabIndex(); var currVal_51 = i0.ɵnov(_v, 48).disabled.toString(); var currVal_52 = (i0.ɵnov(_v, 48).disabled || null); _ck(_v, 47, 0, currVal_48, currVal_49, currVal_50, currVal_51, currVal_52); var currVal_53 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.openInNewTab)); _ck(_v, 49, 0, currVal_53); var currVal_54 = i0.ɵnov(_v, 51)._highlighted; var currVal_55 = i0.ɵnov(_v, 51)._triggersSubmenu; var currVal_56 = i0.ɵnov(_v, 51)._getTabIndex(); var currVal_57 = i0.ɵnov(_v, 51).disabled.toString(); var currVal_58 = (i0.ɵnov(_v, 51).disabled || null); _ck(_v, 50, 0, currVal_54, currVal_55, currVal_56, currVal_57, currVal_58); var currVal_59 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.copyLink)); _ck(_v, 52, 0, currVal_59); }); }
 function View_PostComponent_22(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 24, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { active: 0, default: 1 }), (_l()(), i0.ɵeld(3, 0, null, null, 21, "div", [["class", "inner"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 7, "div", [["class", "image"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 6, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.playSong(((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.context.$implicit, _v.context.index, "publication") !== false);
         ad = (pd_0 && ad);
     } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(6, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_PostComponent_23)), i0.ɵdid(8, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_PostComponent_24)), i0.ɵdid(10, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(11, 0, null, 0, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(12, 0, null, null, 10, "div", [["class", "text"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.playSong(((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.context.$implicit, _v.context.index, "publication") !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i0.ɵeld(13, 0, null, null, 4, "div", [["class", "titleArtist"]], [[8, "title", 0]], null, null, null, null)), (_l()(), i0.ɵeld(14, 0, null, null, 1, "div", [["class", "title"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "div", [["class", "artist"]], null, null, null, null, null)), (_l()(), i0.ɵted(17, null, ["", ""])), (_l()(), i0.ɵeld(18, 0, null, null, 4, "div", [["class", "explicitDuration"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_25)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(21, 0, null, null, 1, "div", [["class", "duration"]], null, null, null, null, null)), (_l()(), i0.ɵted(22, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_26)), i0.ɵdid(24, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (((_co.audioPlayerData.key == _v.context.index) && (_co.audioPlayerData.type == "publication")) && (_co.audioPlayerData.postId == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))), !_v.context.$implicit.image); _ck(_v, 1, 0, currVal_0); var currVal_3 = (!_v.context.$implicit.playing || !(_co.audioPlayerData.postId == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 8, 0, currVal_3); var currVal_4 = (_v.context.$implicit.playing && (_co.audioPlayerData.postId == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 10, 0, currVal_4); var currVal_9 = _v.context.$implicit.explicit; _ck(_v, 20, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 24, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (i0.ɵnov(_v, 6).disabled || null); var currVal_2 = (i0.ɵnov(_v, 6)._animationMode === "NoopAnimations"); _ck(_v, 5, 0, currVal_1, currVal_2); var currVal_5 = (_v.context.$implicit.image ? ((_co.env.pathAudios + "thumbnails/") + _v.context.$implicit.image) : _co.env.defaultSongCover); _ck(_v, 11, 0, currVal_5); var currVal_6 = i0.ɵinlineInterpolate(1, "", (_v.context.$implicit.original_title ? _v.context.$implicit.original_title : _v.context.$implicit.title), ""); _ck(_v, 13, 0, currVal_6); var currVal_7 = (_v.context.$implicit.original_title ? _v.context.$implicit.original_title : _v.context.$implicit.title); _ck(_v, 15, 0, currVal_7); var currVal_8 = (_v.context.$implicit.original_artist ? _v.context.$implicit.original_artist : _v.context.$implicit.title); _ck(_v, 17, 0, currVal_8); var currVal_10 = _v.context.$implicit.duration; _ck(_v, 22, 0, currVal_10); }); }
+    } return ad; }, null, null)), (_l()(), i0.ɵeld(13, 0, null, null, 4, "div", [["class", "titleArtist"]], [[8, "title", 0]], null, null, null, null)), (_l()(), i0.ɵeld(14, 0, null, null, 1, "div", [["class", "title"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "div", [["class", "artist"]], null, null, null, null, null)), (_l()(), i0.ɵted(17, null, ["", ""])), (_l()(), i0.ɵeld(18, 0, null, null, 4, "div", [["class", "explicitDuration"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_25)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(21, 0, null, null, 1, "div", [["class", "duration"]], null, null, null, null, null)), (_l()(), i0.ɵted(22, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_26)), i0.ɵdid(24, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (((((_co.audioPlayerData == null) ? null : _co.audioPlayerData.key) == _v.context.index) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.type) == "publication")) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))), !((_v.context.$implicit == null) ? null : _v.context.$implicit.image)); _ck(_v, 1, 0, currVal_0); var currVal_3 = (!((_v.context.$implicit == null) ? null : _v.context.$implicit.playing) || !(((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 8, 0, currVal_3); var currVal_4 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.playing) && (((_co.audioPlayerData == null) ? null : _co.audioPlayerData.postId) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.id)))); _ck(_v, 10, 0, currVal_4); var currVal_9 = _v.context.$implicit.explicit; _ck(_v, 20, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 24, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (i0.ɵnov(_v, 6).disabled || null); var currVal_2 = (i0.ɵnov(_v, 6)._animationMode === "NoopAnimations"); _ck(_v, 5, 0, currVal_1, currVal_2); var currVal_5 = (_v.context.$implicit.image ? ((_co.env.pathAudios + "thumbnails/") + _v.context.$implicit.image) : _co.env.defaultSongCover); _ck(_v, 11, 0, currVal_5); var currVal_6 = i0.ɵinlineInterpolate(1, "", (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)), ""); _ck(_v, 13, 0, currVal_6); var currVal_7 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_title) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)); _ck(_v, 15, 0, currVal_7); var currVal_8 = (((_v.context.$implicit == null) ? null : _v.context.$implicit.original_artist) ? ((_v.context.$implicit == null) ? null : _v.context.$implicit.original_artist) : ((_v.context.$implicit == null) ? null : _v.context.$implicit.title)); _ck(_v, 17, 0, currVal_8); var currVal_10 = _v.context.$implicit.duration; _ck(_v, 22, 0, currVal_10); }); }
 function View_PostComponent_21(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "audios"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "ul", [["class", "tracks"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_22)), i0.ɵdid(3, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 3, 0, currVal_0); }, null); }
-function View_PostComponent_33(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(1, null, [" ", "", " "]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.username; var currVal_1 = (_v.context.last ? "" : ", "); _ck(_v, 1, 0, currVal_0, currVal_1); }); }
-function View_PostComponent_32(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "a", [["class", "likers"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.showLikes(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+function View_PostComponent_35(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_33)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.likers)); _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = ((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) <= 2) ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.likedThis)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.andMoreLikedThis))); _ck(_v, 3, 0, currVal_1); }); }
-function View_PostComponent_36(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 9, "div", [["class", "new"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "avatar"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 2, "div", [["class", "richComment"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "div", [["class", "highlights"]], [[8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 0, "div", [["class", "origin"], ["contenteditable", "plaintext-only"]], [[8, "textContent", 0]], [[null, "input"], [null, "keyup"], [null, "keydown"], [null, "mouseup"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("input" === en)) {
+    } if (("keydown" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
+        ad = (pd_1 && ad);
+    } if (("touchend" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
+function View_PostComponent_37(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[11, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
+function View_PostComponent_36(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 17, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("touchstart" === en)) {
+        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
+        ad = (pd_1 && ad);
+    } if (("keydown" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
+        ad = (pd_2 && ad);
+    } if (("click" === en)) {
+        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
+        ad = (pd_3 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 12, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵprd(6144, null, i9.ɵf21, null, [i9.MatMenu]), i0.ɵdid(7, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 11, { items: 1 }), i0.ɵqud(335544320, 12, { lazyContent: 0 }), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_PostComponent_37)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 13)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 13)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.replyComment("create", _v.parent.context.$implicit, _v.parent.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(13, 180224, [[11, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(14, 0, ["", ""])), (_l()(), i0.ɵeld(15, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 16)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 16)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(16, 180224, [[11, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(17, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 7); _ck(_v, 3, 0, currVal_3); _ck(_v, 7, 0); var currVal_4 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 11, 0, currVal_4); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_5 = i0.ɵnov(_v, 13)._highlighted; var currVal_6 = i0.ɵnov(_v, 13)._triggersSubmenu; var currVal_7 = i0.ɵnov(_v, 13)._getTabIndex(); var currVal_8 = i0.ɵnov(_v, 13).disabled.toString(); var currVal_9 = (i0.ɵnov(_v, 13).disabled || null); _ck(_v, 12, 0, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 14, 0, currVal_10); var currVal_11 = i0.ɵnov(_v, 16)._highlighted; var currVal_12 = i0.ɵnov(_v, 16)._triggersSubmenu; var currVal_13 = i0.ɵnov(_v, 16)._getTabIndex(); var currVal_14 = i0.ɵnov(_v, 16).disabled.toString(); var currVal_15 = (i0.ɵnov(_v, 16).disabled || null); _ck(_v, 15, 0, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15); var currVal_16 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 17, 0, currVal_16); }); }
+function View_PostComponent_40(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
+        ad = (pd_0 && ad);
+    } if (("keydown" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
+        ad = (pd_1 && ad);
+    } if (("touchend" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
+function View_PostComponent_42(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[13, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
+function View_PostComponent_41(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 17, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("touchstart" === en)) {
+        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
+        ad = (pd_1 && ad);
+    } if (("keydown" === en)) {
+        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
+        ad = (pd_2 && ad);
+    } if (("click" === en)) {
+        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
+        ad = (pd_3 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 12, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵprd(6144, null, i9.ɵf21, null, [i9.MatMenu]), i0.ɵdid(7, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 13, { items: 1 }), i0.ɵqud(335544320, 14, { lazyContent: 0 }), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_PostComponent_42)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(12, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 13)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 13)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.replyComment("create", _v.parent.parent.parent.context.$implicit, _v.parent.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(13, 180224, [[13, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(14, 0, ["", ""])), (_l()(), i0.ɵeld(15, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 16)._checkDisabled($event) !== false);
+        ad = (pd_0 && ad);
+    } if (("mouseenter" === en)) {
+        var pd_1 = (i0.ɵnov(_v, 16)._handleMouseEnter() !== false);
+        ad = (pd_1 && ad);
+    } if (("click" === en)) {
+        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(16, 180224, [[13, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(17, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 7); _ck(_v, 3, 0, currVal_3); _ck(_v, 7, 0); var currVal_4 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) == ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 11, 0, currVal_4); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_5 = i0.ɵnov(_v, 13)._highlighted; var currVal_6 = i0.ɵnov(_v, 13)._triggersSubmenu; var currVal_7 = i0.ɵnov(_v, 13)._getTabIndex(); var currVal_8 = i0.ɵnov(_v, 13).disabled.toString(); var currVal_9 = (i0.ɵnov(_v, 13).disabled || null); _ck(_v, 12, 0, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 14, 0, currVal_10); var currVal_11 = i0.ɵnov(_v, 16)._highlighted; var currVal_12 = i0.ɵnov(_v, 16)._triggersSubmenu; var currVal_13 = i0.ɵnov(_v, 16)._getTabIndex(); var currVal_14 = i0.ɵnov(_v, 16).disabled.toString(); var currVal_15 = (i0.ɵnov(_v, 16).disabled || null); _ck(_v, 15, 0, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15); var currVal_16 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 17, 0, currVal_16); }); }
+function View_PostComponent_39(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 25, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { remove: 0, active: 1 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_40)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_41)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1), (_l()(), i0.ɵeld(22, 0, null, null, 3, "div", [["class", "reply"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("create", _v.parent.parent.context.$implicit, _v.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(24, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(25, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, ((_v.context.$implicit == null) ? null : _v.context.$implicit.addRemove), (((_v.context.$implicit == null) ? null : _v.context.$implicit.id) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : _co.dataDefault.data.comments.reply.child.id))))))); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent.parent.parent, 1), ((_v.context.$implicit == null) ? null : _v.context.$implicit.comment))); _ck(_v, 20, 0, currVal_12); var currVal_13 = (i0.ɵnov(_v, 24).disabled || null); var currVal_14 = (i0.ɵnov(_v, 24)._animationMode === "NoopAnimations"); _ck(_v, 23, 0, currVal_13, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 25, 0, currVal_15); }); }
+function View_PostComponent_38(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "ul", [["class", "replyComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_39)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var currVal_0 = ((_v.parent.context.$implicit == null) ? null : _v.parent.context.$implicit.list); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_PostComponent_34(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 27, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { remove: 0, active: 1 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_35)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_36)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1), (_l()(), i0.ɵeld(22, 0, null, null, 3, "div", [["class", "reply"]], null, null, null, null, null)), (_l()(), i0.ɵeld(23, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("create", _v.context.$implicit, _v.context.$implicit, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(24, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(25, 0, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_38)), i0.ɵdid(27, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, ((_v.context.$implicit == null) ? null : _v.context.$implicit.addRemove), (((_v.context.$implicit == null) ? null : _v.context.$implicit.id) == ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : _co.dataDefault.data.comments.reply.child.id))))))); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); var currVal_16 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.list == null) ? null : _v.context.$implicit.list.length)); _ck(_v, 27, 0, currVal_16); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent, 1), ((_v.context.$implicit == null) ? null : _v.context.$implicit.comment))); _ck(_v, 20, 0, currVal_12); var currVal_13 = (i0.ɵnov(_v, 24).disabled || null); var currVal_14 = (i0.ɵnov(_v, 24)._animationMode === "NoopAnimations"); _ck(_v, 23, 0, currVal_13, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.reply)); _ck(_v, 25, 0, currVal_15); }); }
+function View_PostComponent_43(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_PostComponent_44(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noComments)); _ck(_v, 2, 0, currVal_0); }); }
+function View_PostComponent_46(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["mat-fab", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.defaultComments("more", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(1, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(2, 0, null, 0, 0, "i", [["label", "add"]], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = (i0.ɵnov(_v, 1).disabled || null); var currVal_1 = (i0.ɵnov(_v, 1)._animationMode === "NoopAnimations"); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
+function View_PostComponent_47(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(1, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 1, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 1)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 1).diameter; var currVal_2 = i0.ɵnov(_v, 1).diameter; var currVal_3 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 1).value; var currVal_6 = i0.ɵnov(_v, 1).mode; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_PostComponent_45(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 4, "div", [["class", "loadMore"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_46)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_47)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 4, 0, currVal_1); }, null); }
+function View_PostComponent_33(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 11, "div", [["class", "comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "countComments"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵeld(3, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_34)), i0.ɵdid(5, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_43)), i0.ɵdid(7, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_44)), i0.ɵdid(9, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_45)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : _co.dataDefault.data.comments.list))); _ck(_v, 5, 0, currVal_2); var currVal_3 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingData)); _ck(_v, 7, 0, currVal_3); var currVal_4 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.noData)); _ck(_v, 9, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadMoreData)); _ck(_v, 11, 0, currVal_5); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countComments)); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.comments)); _ck(_v, 2, 0, currVal_0, currVal_1); }); }
+function View_PostComponent_48(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.commentsDisabled)); _ck(_v, 2, 0, currVal_0); }); }
+function View_PostComponent_49(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "loadComments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.showComments("load", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(3, 0, [" ", " "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.main == null) ? null : _co.translations.main.loadComments)); _ck(_v, 3, 0, currVal_2); }); }
+function View_PostComponent_32(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 6, "div", [["class", "boxComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_33)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_48)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_49)), i0.ɵdid(6, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)); _ck(_v, 4, 0, currVal_1); var currVal_2 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 6, 0, currVal_2); }, null); }
+function View_PostComponent_50(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 9, "div", [["class", "new"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "avatar"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 2, "div", [["class", "richComment"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "div", [["class", "highlights"]], [[8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 0, "div", [["class", "origin"], ["contenteditable", "plaintext-only"]], [[8, "textContent", 0]], [[null, "input"], [null, "keyup"], [null, "keydown"], [null, "mouseup"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("input" === en)) {
         var pd_0 = (_co.newComment("writingChanges", $event.target.innerText, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
     } if (("keyup" === en)) {
@@ -24001,92 +24180,37 @@ function View_PostComponent_36(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0,
         var pd_0 = (_co.newComment("create", $event, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
     } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(8, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(9, 0, null, 0, 0, "i", [["class", "blue"], ["label", "send-comment"]], null, null, null, null, null))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.avatar)) ? ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.avatarUrl)) : _co.env.avatar); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.newCommentData == null) ? null : _co.dataDefault.data.newCommentData.transformed))); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.newCommentData == null) ? null : _co.dataDefault.data.newCommentData.onBackground))); _ck(_v, 5, 0, currVal_2); var currVal_3 = (i0.ɵnov(_v, 8).disabled || null); var currVal_4 = (i0.ɵnov(_v, 8)._animationMode === "NoopAnimations"); _ck(_v, 7, 0, currVal_3, currVal_4); }); }
-function View_PostComponent_38(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 16777216, null, null, 1, "i", [["class", "icon50 blue"], ["label", "official"]], null, [[null, "longpress"], [null, "keydown"], [null, "touchend"]], function (_v, en, $event) { var ad = true; if (("longpress" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 1).show() !== false);
+function View_PostComponent_51(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 5, "div", [["class", "replyTo"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵeld(3, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.replyComment("cancel", null, null, ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } if (("keydown" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 1)._handleKeydown($event) !== false);
-        ad = (pd_1 && ad);
-    } if (("touchend" === en)) {
-        var pd_2 = (i0.ɵnov(_v, 1)._handleTouchend() !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i1.MatTooltip, [i2.Overlay, i0.ElementRef, i3.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i4.Platform, i5.AriaDescriber, i5.FocusMonitor, i1.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i6.Directionality], [2, i1.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i7.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
-function View_PostComponent_40(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 1)._checkDisabled($event) !== false);
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(4, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(5, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.replyTo)); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : ((_co.dataDefault.data.comments.reply.child == null) ? null : ((_co.dataDefault.data.comments.reply.child.user == null) ? null : _co.dataDefault.data.comments.reply.child.user.username)))))); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = (i0.ɵnov(_v, 4).disabled || null); var currVal_3 = (i0.ɵnov(_v, 4)._animationMode === "NoopAnimations"); _ck(_v, 3, 0, currVal_2, currVal_3); var currVal_4 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.cancel)); _ck(_v, 5, 0, currVal_4); }); }
+function View_PostComponent_53(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(1, null, [" ", "", " "]))], null, function (_ck, _v) { var currVal_0 = ((_v.context.$implicit == null) ? null : _v.context.$implicit.username); var currVal_1 = (_v.context.last ? "" : ", "); _ck(_v, 1, 0, currVal_0, currVal_1); }); }
+function View_PostComponent_52(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "a", [["class", "likers"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.showLikes(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } if (("mouseenter" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 1)._handleMouseEnter() !== false);
-        ad = (pd_1 && ad);
-    } if (("click" === en)) {
-        var pd_2 = (_co.commentsOptions("addRemove", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.parent.context.$implicit) !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(1, 180224, [[11, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(2, 0, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 1)._highlighted; var currVal_1 = i0.ɵnov(_v, 1)._triggersSubmenu; var currVal_2 = i0.ɵnov(_v, 1)._getTabIndex(); var currVal_3 = i0.ɵnov(_v, 1).disabled.toString(); var currVal_4 = (i0.ɵnov(_v, 1).disabled || null); _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4); var currVal_5 = (_v.parent.parent.context.$implicit.addRemove ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.restore)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.remove))); _ck(_v, 2, 0, currVal_5); }); }
-function View_PostComponent_39(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 14, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 3)._handleMousedown($event) !== false);
-        ad = (pd_0 && ad);
-    } if (("touchstart" === en)) {
-        var pd_1 = ((i0.ɵnov(_v, 3)._openedBy = "touch") !== false);
-        ad = (pd_1 && ad);
-    } if (("keydown" === en)) {
-        var pd_2 = (i0.ɵnov(_v, 3)._handleKeydown($event) !== false);
-        ad = (pd_2 && ad);
-    } if (("click" === en)) {
-        var pd_3 = (i0.ɵnov(_v, 3)._handleClick($event) !== false);
-        ad = (pd_3 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), i0.ɵdid(3, 1196032, null, 0, i9.MatMenuTrigger, [i2.Overlay, i0.ElementRef, i0.ViewContainerRef, i9.MAT_MENU_SCROLL_STRATEGY, [2, i9.MatMenu], [8, null], [2, i6.Directionality], i5.FocusMonitor], { menu: [0, "menu"] }, null), (_l()(), i0.ɵeld(4, 0, null, 0, 0, "i", [["class", "icon75 grey"], ["label", "more"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 9, "mat-menu", [], null, null, null, i8.View_MatMenu_0, i8.RenderType_MatMenu)), i0.ɵdid(6, 1294336, [["optionsComments", 4]], 2, i9.MatMenu, [i0.ElementRef, i0.NgZone, i9.MAT_MENU_DEFAULT_OPTIONS], null, null), i0.ɵqud(603979776, 11, { items: 1 }), i0.ɵqud(335544320, 12, { lazyContent: 0 }), i0.ɵprd(2048, null, i9.ɵf21, null, [i9.MatMenu]), (_l()(), i0.ɵeld(10, 0, null, 0, 2, "button", [["class", "mat-menu-item"], ["mat-menu-item", ""], ["role", "menuitem"]], [[2, "mat-menu-item-highlighted", null], [2, "mat-menu-item-submenu-trigger", null], [1, "tabindex", 0], [1, "aria-disabled", 0], [1, "disabled", 0]], [[null, "click"], [null, "mouseenter"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 11)._checkDisabled($event) !== false);
-        ad = (pd_0 && ad);
-    } if (("mouseenter" === en)) {
-        var pd_1 = (i0.ɵnov(_v, 11)._handleMouseEnter() !== false);
-        ad = (pd_1 && ad);
-    } if (("click" === en)) {
-        var pd_2 = (_co.commentsOptions("report", ((_co.dataDefault == null) ? null : _co.dataDefault.data), _v.parent.context.$implicit) !== false);
-        ad = (pd_2 && ad);
-    } return ad; }, i8.View_MatMenuItem_0, i8.RenderType_MatMenuItem)), i0.ɵdid(11, 180224, [[11, 4]], 0, i9.MatMenuItem, [i0.ElementRef, i10.DOCUMENT, i5.FocusMonitor, [2, i9.ɵf21]], null, null), (_l()(), i0.ɵted(12, 0, ["", ""])), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_PostComponent_40)), i0.ɵdid(14, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_3 = i0.ɵnov(_v, 6); _ck(_v, 3, 0, currVal_3); _ck(_v, 6, 0); var currVal_10 = ((((_v.parent.context.$implicit == null) ? null : ((_v.parent.context.$implicit.user == null) ? null : _v.parent.context.$implicit.user.id)) === ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id))) || (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.id))) === ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)))); _ck(_v, 14, 0, currVal_10); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); var currVal_2 = (i0.ɵnov(_v, 3).menuOpen || null); _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2); var currVal_4 = i0.ɵnov(_v, 11)._highlighted; var currVal_5 = i0.ɵnov(_v, 11)._triggersSubmenu; var currVal_6 = i0.ɵnov(_v, 11)._getTabIndex(); var currVal_7 = i0.ɵnov(_v, 11).disabled.toString(); var currVal_8 = (i0.ɵnov(_v, 11).disabled || null); _ck(_v, 10, 0, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8); var currVal_9 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.report)); _ck(_v, 12, 0, currVal_9); }); }
-function View_PostComponent_37(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 21, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { "remove": 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_53)), i0.ɵdid(2, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.likers)); _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = ((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) <= 2) ? ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.likedThis)) : ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.andMoreLikedThis))); _ck(_v, 3, 0, currVal_1); }); }
+function View_PostComponent_1(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 54, "div", [["class", "publication"]], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i0.ɵpod(2, { "remove": 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
         var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_38)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_39)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(19, 0, null, null, 2, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], [[8, "innerHTML", 1]], null, null, null, null)), i0.ɵppd(21, 1)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, _v.context.$implicit.addRemove); _ck(_v, 1, 0, currVal_0); var currVal_3 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 5, 0, currVal_3); var currVal_7 = i0.ɵinlineInterpolate(1, "/", ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)), ""); _ck(_v, 10, 0, currVal_7); var currVal_9 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.official)); _ck(_v, 13, 0, currVal_9); var currVal_11 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_11); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 5).target; var currVal_2 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_1, currVal_2); var currVal_4 = (((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatar)) ? ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.avatarUrl)) : _co.env.avatar); _ck(_v, 6, 0, currVal_4); var currVal_5 = i0.ɵnov(_v, 10).target; var currVal_6 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_5, currVal_6); var currVal_8 = ((_v.context.$implicit == null) ? null : ((_v.context.$implicit.user == null) ? null : _v.context.$implicit.user.username)); _ck(_v, 11, 0, currVal_8); var currVal_10 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent.parent.parent.parent, 0), ((_v.context.$implicit == null) ? null : _v.context.$implicit.date))); _ck(_v, 15, 0, currVal_10); var currVal_12 = i0.ɵunv(_v, 20, 0, _ck(_v, 21, 0, i0.ɵnov(_v.parent.parent.parent.parent, 1), _v.context.$implicit.comment)); _ck(_v, 20, 0, currVal_12); }); }
-function View_PostComponent_41(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_PostComponent_42(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.noComments)); _ck(_v, 2, 0, currVal_0); }); }
-function View_PostComponent_44(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "button", [["mat-fab", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.defaultComments("more", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(1, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(2, 0, null, 0, 0, "i", [["label", "add"]], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = (i0.ɵnov(_v, 1).disabled || null); var currVal_1 = (i0.ɵnov(_v, 1)._animationMode === "NoopAnimations"); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
-function View_PostComponent_45(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(1, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 1, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 1)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 1).diameter; var currVal_2 = i0.ɵnov(_v, 1).diameter; var currVal_3 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 1).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 1).value; var currVal_6 = i0.ɵnov(_v, 1).mode; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_PostComponent_43(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 4, "div", [["class", "loadMore"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_44)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_45)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingMoreData)); _ck(_v, 4, 0, currVal_1); }, null); }
-function View_PostComponent_35(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 13, "div", [["class", "comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "countComments"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, [" ", " ", " "])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_36)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(5, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_37)), i0.ɵdid(7, 278528, null, 0, i10.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_41)), i0.ɵdid(9, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_42)), i0.ɵdid(11, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_43)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 4, 0, currVal_2); var currVal_3 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : _co.dataDefault.data.comments.list))); _ck(_v, 7, 0, currVal_3); var currVal_4 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadingData)); _ck(_v, 9, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.noData)); _ck(_v, 11, 0, currVal_5); var currVal_6 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loadMoreData)); _ck(_v, 13, 0, currVal_6); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countComments)); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.comments)); _ck(_v, 2, 0, currVal_0, currVal_1); }); }
-function View_PostComponent_46(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.commentsDisabled)); _ck(_v, 2, 0, currVal_0); }); }
-function View_PostComponent_47(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "div", [["class", "loadComments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 2, "button", [["mat-raised-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.showComments("load", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(2, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵted(3, 0, [" ", " "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 2).disabled || null); var currVal_1 = (i0.ɵnov(_v, 2)._animationMode === "NoopAnimations"); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.main == null) ? null : _co.translations.main.loadComments)); _ck(_v, 3, 0, currVal_2); }); }
-function View_PostComponent_34(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 6, "div", [["class", "boxComments"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_35)), i0.ɵdid(2, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_46)), i0.ɵdid(4, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_47)), i0.ɵdid(6, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 2, 0, currVal_0); var currVal_1 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)); _ck(_v, 4, 0, currVal_1); var currVal_2 = (!((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.disabledComments)) && !((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.loaded))); _ck(_v, 6, 0, currVal_2); }, null); }
-function View_PostComponent_1(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 48, "div", [["class", "publication"]], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i0.ɵpod(2, { "remove": 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 15, "div", [["class", "user"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 2, "a", [["class", "avatar"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 5).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(5, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 9, "div", [["class", "username"]], null, null, null, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 8, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 2, "a", [["class", "name"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i0.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_2)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_3)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_7)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(21, 0, null, null, 27, "div", [["class", "innerContent"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_19)), i0.ɵdid(23, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_20)), i0.ɵdid(25, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_21)), i0.ɵdid(27, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(28, 0, null, null, 18, "div", [["class", "analytics"]], null, null, null, null, null)), (_l()(), i0.ɵeld(29, 0, null, null, 3, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(30, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i0.ɵdid(10, 671744, null, 0, i18.RouterLinkWithHref, [i18.Router, i18.ActivatedRoute, i10.LocationStrategy], { routerLink: [0, "routerLink"] }, null), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_2)), i0.ɵdid(13, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 2, "div", [["class", "date"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), i0.ɵppd(16, 1), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_3)), i0.ɵdid(18, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_7)), i0.ɵdid(20, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(21, 0, null, null, 8, "div", [["class", "innerContent"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_19)), i0.ɵdid(23, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_20)), i0.ɵdid(25, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_21)), i0.ɵdid(27, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_32)), i0.ɵdid(29, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(30, 0, null, null, 24, "div", [["class", "analyticsBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(31, 0, null, null, 4, "div", [["class", "top"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_50)), i0.ɵdid(33, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_51)), i0.ɵdid(35, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(36, 0, null, null, 18, "div", [["class", "bottom"]], null, null, null, null, null)), (_l()(), i0.ɵeld(37, 0, null, null, 3, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(38, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.showComments("showHide", ((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(31, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(32, 0, null, 0, 0, "i", [["label", "analytics-comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(33, 0, null, null, 5, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(34, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(39, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(40, 0, null, 0, 0, "i", [["label", "analytics-comments"]], null, null, null, null, null)), (_l()(), i0.ɵeld(41, 0, null, null, 5, "div", [["class", "buttonBox"]], null, null, null, null, null)), (_l()(), i0.ɵeld(42, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.likeUnlike(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(35, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(36, 0, null, 0, 2, "i", [["label", "analytics-like"]], null, null, null, null, null)), i0.ɵdid(37, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(38, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_32)), i0.ɵdid(40, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(41, 0, null, null, 5, "div", [["class", "buttonBox bookmark"]], null, null, null, null, null)), (_l()(), i0.ɵeld(42, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(43, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(44, 0, null, 0, 2, "i", [["label", "analytics-like"]], null, null, null, null, null)), i0.ɵdid(45, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(46, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_52)), i0.ɵdid(48, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(49, 0, null, null, 5, "div", [["class", "buttonBox bookmark"]], null, null, null, null, null)), (_l()(), i0.ɵeld(50, 0, null, null, 4, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.markUnmark(((_co.dataDefault == null) ? null : _co.dataDefault.data)) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(43, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(44, 0, null, 0, 2, "i", [["label", "analytics-bookmark"]], null, null, null, null, null)), i0.ɵdid(45, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(46, { "active": 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_34)), i0.ɵdid(48, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = "publication"; var currVal_1 = _ck(_v, 2, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.addRemoveSession))); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_4 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 5, 0, currVal_4); var currVal_8 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 10, 0, currVal_8); var currVal_10 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official))); _ck(_v, 13, 0, currVal_10); var currVal_12 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_12); var currVal_13 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos)); _ck(_v, 20, 0, currVal_13); var currVal_14 = !(((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.content == null) ? null : _co.dataDefault.data.content.length))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.audios == null) ? null : _co.dataDefault.data.audios.length)))); _ck(_v, 23, 0, currVal_14); var currVal_15 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.content)); _ck(_v, 25, 0, currVal_15); var currVal_16 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 27, 0, currVal_16); var currVal_21 = _ck(_v, 38, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.liked))); _ck(_v, 37, 0, currVal_21); var currVal_22 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) > 0); _ck(_v, 40, 0, currVal_22); var currVal_25 = _ck(_v, 46, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.bookmark == null) ? null : _co.dataDefault.data.bookmark.checked)))); _ck(_v, 45, 0, currVal_25); var currVal_26 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox)); _ck(_v, 48, 0, currVal_26); }, function (_ck, _v) { var _co = _v.component; var currVal_2 = i0.ɵnov(_v, 5).target; var currVal_3 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_2, currVal_3); var currVal_5 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar))) ? ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl))) : _co.env.avatar); _ck(_v, 6, 0, currVal_5); var currVal_6 = i0.ɵnov(_v, 10).target; var currVal_7 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_6, currVal_7); var currVal_9 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))); _ck(_v, 11, 0, currVal_9); var currVal_11 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 15, 0, currVal_11); var currVal_17 = (i0.ɵnov(_v, 31).disabled || null); var currVal_18 = (i0.ɵnov(_v, 31)._animationMode === "NoopAnimations"); _ck(_v, 30, 0, currVal_17, currVal_18); var currVal_19 = (i0.ɵnov(_v, 35).disabled || null); var currVal_20 = (i0.ɵnov(_v, 35)._animationMode === "NoopAnimations"); _ck(_v, 34, 0, currVal_19, currVal_20); var currVal_23 = (i0.ɵnov(_v, 43).disabled || null); var currVal_24 = (i0.ɵnov(_v, 43)._animationMode === "NoopAnimations"); _ck(_v, 42, 0, currVal_23, currVal_24); }); }
-function View_PostComponent_48(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_PostComponent_49(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.noData)); _ck(_v, 2, 0, currVal_0); }); }
+    } return ad; }, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(51, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(52, 0, null, 0, 2, "i", [["label", "analytics-bookmark"]], null, null, null, null, null)), i0.ɵdid(53, 278528, null, 0, i10.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(54, { "active": 0 })], function (_ck, _v) { var _co = _v.component; var currVal_0 = "publication"; var currVal_1 = _ck(_v, 2, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.addRemoveSession))); _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_4 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 5, 0, currVal_4); var currVal_8 = i0.ɵinlineInterpolate(1, "/", ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))), ""); _ck(_v, 10, 0, currVal_8); var currVal_10 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.official))); _ck(_v, 13, 0, currVal_10); var currVal_12 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 18, 0, currVal_12); var currVal_13 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.photos)); _ck(_v, 20, 0, currVal_13); var currVal_14 = !((((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.content == null) ? null : _co.dataDefault.data.content.length))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.audios == null) ? null : _co.dataDefault.data.audios.length)))) || ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox))); _ck(_v, 23, 0, currVal_14); var currVal_15 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.content)); _ck(_v, 25, 0, currVal_15); var currVal_16 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.audios)); _ck(_v, 27, 0, currVal_16); var currVal_17 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.showCommentsBox)); _ck(_v, 29, 0, currVal_17); var currVal_18 = ((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)); _ck(_v, 33, 0, currVal_18); var currVal_19 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.comments == null) ? null : ((_co.dataDefault.data.comments.reply == null) ? null : _co.dataDefault.data.comments.reply.child)))); _ck(_v, 35, 0, currVal_19); var currVal_24 = _ck(_v, 46, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.liked))); _ck(_v, 45, 0, currVal_24); var currVal_25 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.countLikes)) > 0); _ck(_v, 48, 0, currVal_25); var currVal_28 = _ck(_v, 54, 0, ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.bookmark == null) ? null : _co.dataDefault.data.bookmark.checked)))); _ck(_v, 53, 0, currVal_28); }, function (_ck, _v) { var _co = _v.component; var currVal_2 = i0.ɵnov(_v, 5).target; var currVal_3 = i0.ɵnov(_v, 5).href; _ck(_v, 4, 0, currVal_2, currVal_3); var currVal_5 = (((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatar))) ? ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.avatarUrl))) : _co.env.avatar); _ck(_v, 6, 0, currVal_5); var currVal_6 = i0.ɵnov(_v, 10).target; var currVal_7 = i0.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_6, currVal_7); var currVal_9 = ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : ((_co.dataDefault.data.user == null) ? null : _co.dataDefault.data.user.username))); _ck(_v, 11, 0, currVal_9); var currVal_11 = i0.ɵunv(_v, 15, 0, _ck(_v, 16, 0, i0.ɵnov(_v.parent, 0), ((_co.dataDefault == null) ? null : ((_co.dataDefault.data == null) ? null : _co.dataDefault.data.date)))); _ck(_v, 15, 0, currVal_11); var currVal_20 = (i0.ɵnov(_v, 39).disabled || null); var currVal_21 = (i0.ɵnov(_v, 39)._animationMode === "NoopAnimations"); _ck(_v, 38, 0, currVal_20, currVal_21); var currVal_22 = (i0.ɵnov(_v, 43).disabled || null); var currVal_23 = (i0.ɵnov(_v, 43)._animationMode === "NoopAnimations"); _ck(_v, 42, 0, currVal_22, currVal_23); var currVal_26 = (i0.ɵnov(_v, 51).disabled || null); var currVal_27 = (i0.ɵnov(_v, 51)._animationMode === "NoopAnimations"); _ck(_v, 50, 0, currVal_26, currVal_27); }); }
+function View_PostComponent_54(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "loadingData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "mat-progress-spinner", [["class", "mat-progress-spinner"], ["mode", "indeterminate"], ["role", "progressbar"]], [[2, "_mat-animation-noopable", null], [4, "width", "px"], [4, "height", "px"], [1, "aria-valuemin", 0], [1, "aria-valuemax", 0], [1, "aria-valuenow", 0], [1, "mode", 0]], null, null, i19.View_MatProgressSpinner_0, i19.RenderType_MatProgressSpinner)), i0.ɵdid(2, 49152, null, 0, i20.MatProgressSpinner, [i0.ElementRef, i4.Platform, [2, i10.DOCUMENT], [2, i15.ANIMATION_MODULE_TYPE], i20.MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS], { mode: [0, "mode"] }, null)], function (_ck, _v) { var currVal_7 = "indeterminate"; _ck(_v, 2, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i0.ɵnov(_v, 2)._noopAnimations; var currVal_1 = i0.ɵnov(_v, 2).diameter; var currVal_2 = i0.ɵnov(_v, 2).diameter; var currVal_3 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 0 : null); var currVal_4 = ((i0.ɵnov(_v, 2).mode === "determinate") ? 100 : null); var currVal_5 = i0.ɵnov(_v, 2).value; var currVal_6 = i0.ɵnov(_v, 2).mode; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
+function View_PostComponent_55(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 2, "div", [["class", "noData"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 1, "div", [["class", "description"]], null, null, null, null, null)), (_l()(), i0.ɵted(2, null, ["", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.noData)); _ck(_v, 2, 0, currVal_0); }); }
 function View_PostComponent_0(_l) { return i0.ɵvid(0, [i0.ɵpid(0, i21.TimeagoPipe, []), i0.ɵpid(0, i22.SafeHtmlPipe, [i7.DomSanitizer]), (_l()(), i0.ɵeld(2, 0, null, null, 17, "div", [["class", "innerBodyUser"]], null, null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 16, "div", [["class", "innerBodyContent"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 15, "div", [["class", "pagePublication"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 14, "div", [["class", "content"]], null, null, null, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 5, "div", [["class", "back"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.goBack() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], null, null, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(8, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(9, 0, null, 0, 0, "i", [["label", "back"]], null, null, null, null, null)), (_l()(), i0.ɵeld(10, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵeld(12, 0, null, null, 1, "div", [["class", "pageTitle"]], null, null, null, null, null)), (_l()(), i0.ɵted(13, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_1)), i0.ɵdid(15, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_48)), i0.ɵdid(17, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_49)), i0.ɵdid(19, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_4 = (!((_co.dataDefault == null) ? null : _co.dataDefault.loadingData) && !((_co.dataDefault == null) ? null : _co.dataDefault.noData)); _ck(_v, 15, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : _co.dataDefault.loadingData); _ck(_v, 17, 0, currVal_5); var currVal_6 = ((_co.dataDefault == null) ? null : _co.dataDefault.noData); _ck(_v, 19, 0, currVal_6); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 8).disabled || null); var currVal_1 = (i0.ɵnov(_v, 8)._animationMode === "NoopAnimations"); _ck(_v, 7, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.back)); _ck(_v, 11, 0, currVal_2); var currVal_3 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.title)); _ck(_v, 13, 0, currVal_3); }); }
+    } return ad; }, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 2, "button", [["mat-icon-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null]], null, null, i13.View_MatButton_0, i13.RenderType_MatButton)), i0.ɵdid(8, 180224, null, 0, i14.MatButton, [i0.ElementRef, i4.Platform, i5.FocusMonitor, [2, i15.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(9, 0, null, 0, 0, "i", [["label", "back"]], null, null, null, null, null)), (_l()(), i0.ɵeld(10, 0, null, null, 1, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵeld(12, 0, null, null, 1, "div", [["class", "pageTitle"]], null, null, null, null, null)), (_l()(), i0.ɵted(13, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_1)), i0.ɵdid(15, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_54)), i0.ɵdid(17, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_PostComponent_55)), i0.ɵdid(19, 16384, null, 0, i10.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_4 = (!((_co.dataDefault == null) ? null : _co.dataDefault.loadingData) && !((_co.dataDefault == null) ? null : _co.dataDefault.noData)); _ck(_v, 15, 0, currVal_4); var currVal_5 = ((_co.dataDefault == null) ? null : _co.dataDefault.loadingData); _ck(_v, 17, 0, currVal_5); var currVal_6 = ((_co.dataDefault == null) ? null : _co.dataDefault.noData); _ck(_v, 19, 0, currVal_6); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (i0.ɵnov(_v, 8).disabled || null); var currVal_1 = (i0.ɵnov(_v, 8)._animationMode === "NoopAnimations"); _ck(_v, 7, 0, currVal_0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.back)); _ck(_v, 11, 0, currVal_2); var currVal_3 = ((_co.translations == null) ? null : ((_co.translations.post == null) ? null : _co.translations.post.title)); _ck(_v, 13, 0, currVal_3); }); }
 exports.View_PostComponent_0 = View_PostComponent_0;
 function View_PostComponent_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 3, "app-post", [], null, null, null, View_PostComponent_0, RenderType_PostComponent)), i0.ɵprd(4608, null, i21.TimeagoPipe, i21.TimeagoPipe, []), i0.ɵprd(4608, null, i22.SafeHtmlPipe, i22.SafeHtmlPipe, [i7.DomSanitizer]), i0.ɵdid(3, 245760, null, 0, i23.PostComponent, [i10.DOCUMENT, i0.Renderer2, i0.ElementRef, i24.AlertService, i25.PlayerService, i18.ActivatedRoute, i26.SessionService, i27.UserDataService, i28.AudioDataService, i29.PublicationsDataService, i30.MetaService, i31.RoutingStateService], null, null)], function (_ck, _v) { _ck(_v, 3, 0); }, null); }
 exports.View_PostComponent_Host_0 = View_PostComponent_Host_0;
@@ -24232,7 +24356,7 @@ var PostComponent = /** @class */ (function () {
             }
             else {
                 _this.dataDefault.data = res;
-                // this.showComments('showHide', this.dataDefault.data);
+                _this.showComments('showHide', _this.dataDefault.data);
                 // Update replays
                 _this.updateReplays(res.id);
                 // Meta
@@ -24471,6 +24595,7 @@ var PostComponent = /** @class */ (function () {
             item.loadingData = true;
             item.comments = [];
             item.comments.list = [];
+            item.comments.reply = null;
             item.rowsComments = 0;
             item.loaded = true;
             // New comments set
@@ -24507,18 +24632,16 @@ var PostComponent = /** @class */ (function () {
             };
             this.publicationsDataService.comments(data)
                 .subscribe(function (res) {
-                setTimeout(function () {
-                    item.loadingMoreData = false;
-                    item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
-                    // Push items
-                    if (!res || res.length > 0) {
-                        for (var i in res) {
-                            if (i) {
-                                item.comments.list.push(res[i]);
-                            }
+                item.loadingMoreData = false;
+                item.loadMoreData = (!res || res.length < _this.env.cuantity) ? false : true;
+                // Push items
+                if (!res || res.length > 0) {
+                    for (var i in res) {
+                        if (i) {
+                            item.comments.list.push(res[i]);
                         }
                     }
-                }, 600);
+                }
             }, function (error) {
                 item.loadingData = false;
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
@@ -24538,7 +24661,10 @@ var PostComponent = /** @class */ (function () {
                     eventTarget: '',
                     lastTypedWord: []
                 };
+                // Put as default
                 _this.newComment('checkPlaceholder', null, item);
+                // Cancel reply
+                _this.replyComment('cancel', null, null, item);
             }, 100);
         }
         else if (type === 'writingChanges') {
@@ -24589,9 +24715,13 @@ var PostComponent = /** @class */ (function () {
             }
         }
         else if (type === 'transformBeforeSend') {
+            // Add replied user
+            if (item.comments.reply) {
+                item.newCommentData.original = '@' + item.comments.reply.child.user.username + ' ' + item.newCommentData.original;
+            }
             var newData_1 = {
-                content: item.newCommentData.original ? item.newCommentData.original : '',
-                original: item.newCommentData.original ? item.newCommentData.original : '',
+                content: item.newCommentData.original,
+                original: item.newCommentData.original,
                 mentions: [],
                 hashtags: []
             };
@@ -24618,24 +24748,54 @@ var PostComponent = /** @class */ (function () {
             }
             else {
                 var formatedData = this.newComment('transformBeforeSend', null, item);
-                var dataCreate = {
+                console.log('formatedData', formatedData);
+                var dataCreate_1 = {
                     type: 'create',
                     id: item.id,
                     receiver: item.user.id,
                     comment: formatedData.content,
                     comment_original: formatedData.original,
+                    comment_reply_parent_id: (item.comments.reply ? item.comments.reply.parent.id : null),
+                    comment_reply_child_id: (item.comments.reply ? item.comments.reply.child.id : null),
                     mentions: formatedData.mentions
                 };
-                this.publicationsDataService.comment(dataCreate)
+                this.publicationsDataService.comment(dataCreate_1)
                     .subscribe(function (res) {
-                    item.comments.list.unshift(res);
                     item.countComments++;
                     item.noData = false;
+                    if (dataCreate_1.comment_reply_parent_id) {
+                        var comm = item.comments.list.filter(function (i) { return i.id == dataCreate_1.comment_reply_parent_id; })[0];
+                        if (comm.list) {
+                            comm.list.push(res);
+                        }
+                        else {
+                            comm.list = [];
+                            comm.list.push(res);
+                        }
+                    }
+                    else {
+                        item.comments.list.push(res);
+                        _this.window.scrollTo(0, 1000);
+                    }
                     _this.newComment('clear', null, item);
                 }, function (error) {
                     _this.alertService.error(_this.translations.common.anErrorHasOcurred);
                 });
             }
+        }
+    };
+    // Reply
+    PostComponent.prototype.replyComment = function (type, parent, child, item) {
+        console.log([type, parent, child, item]);
+        if (type === 'create') {
+            item.comments.reply = {
+                parent: parent,
+                child: child
+            };
+            console.log('item.comments', item.comments);
+        }
+        else if (type === 'cancel') {
+            item.comments.reply = null;
         }
     };
     // Comments Options
@@ -24875,10 +25035,10 @@ function View_SettingsComponent_15(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i0.ɵdid(1, 147456, null, 0, i8.MatTooltip, [i9.Overlay, i0.ElementRef, i10.ScrollDispatcher, i0.ViewContainerRef, i0.NgZone, i3.Platform, i11.AriaDescriber, i11.FocusMonitor, i8.MAT_TOOLTIP_SCROLL_STRATEGY, [2, i12.Directionality], [2, i8.MAT_TOOLTIP_DEFAULT_OPTIONS], [2, i13.HAMMER_LOADER]], { message: [0, "message"] }, null), (_l()(), i0.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵinlineInterpolate(1, "", ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.verifiedAccount)), ""); _ck(_v, 1, 0, currVal_0); }, null); }
 function View_SettingsComponent_14(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 36, "li", [], null, null, null, null, null)), i0.ɵdid(1, 278528, null, 0, i4.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { ngClass: [0, "ngClass"] }, null), i0.ɵpod(2, { active: 0 }), (_l()(), i0.ɵeld(3, 0, null, null, 33, "div", [["class", "inner mat-ripple"], ["mat-ripple", ""]], [[2, "mat-ripple-unbounded", null]], null, null, null, null)), i0.ɵdid(4, 212992, null, 0, i7.MatRipple, [i0.ElementRef, i0.NgZone, i3.Platform, [2, i7.MAT_RIPPLE_GLOBAL_OPTIONS], [2, i5.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(5, 0, null, null, 1, "div", [["class", "avatar"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.setCurrentUser(_v.context.$implicit) !== false);
+        var pd_0 = (_co.userOptions("setCurrentUser", _v.context.$implicit) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 0, "img", [], [[8, "src", 4]], null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 8, "div", [["class", "text"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.setCurrentUser(_v.context.$implicit) !== false);
+        var pd_0 = (_co.userOptions("setCurrentUser", _v.context.$implicit) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(8, 0, null, null, 7, "div", [["class", "in"]], null, null, null, null, null)), (_l()(), i0.ɵeld(9, 0, null, null, 4, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵeld(10, 0, null, null, 1, "a", [["class", "name"]], null, null, null, null, null)), (_l()(), i0.ɵted(11, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_SettingsComponent_15)), i0.ɵdid(13, 16384, null, 0, i4.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(14, 0, null, null, 1, "div", [["class", "info"]], null, null, null, null, null)), (_l()(), i0.ɵted(15, null, ["@", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 20, "div", [["class", "actions"]], null, null, null, null, null)), (_l()(), i0.ɵeld(17, 16777216, null, null, 3, "button", [["aria-haspopup", "true"], ["mat-button", ""]], [[8, "disabled", 0], [2, "_mat-animation-noopable", null], [1, "aria-expanded", 0]], [[null, "mousedown"], [null, "touchstart"], [null, "keydown"], [null, "click"]], function (_v, en, $event) { var ad = true; if (("mousedown" === en)) {
         var pd_0 = (i0.ɵnov(_v, 19)._handleMousedown($event) !== false);
@@ -24905,11 +25065,11 @@ function View_SettingsComponent_14(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0
         var pd_1 = (i0.ɵnov(_v, 35)._handleMouseEnter() !== false);
         ad = (pd_1 && ad);
     } if (("click" === en)) {
-        var pd_2 = (_co.closeSession(_v.context.$implicit) !== false);
+        var pd_2 = (_co.userOptions("closeSession", _v.context.$implicit) !== false);
         ad = (pd_2 && ad);
     } return ad; }, i17.View_MatMenuItem_0, i17.RenderType_MatMenuItem)), i0.ɵdid(35, 180224, [[63, 4]], 0, i16.MatMenuItem, [i0.ElementRef, i4.DOCUMENT, i11.FocusMonitor, [2, i16.ɵf21]], null, null), (_l()(), i0.ɵted(36, 0, ["", ""]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (((_co.sessionData == null) ? null : ((_co.sessionData.current == null) ? null : _co.sessionData.current.id)) === _v.context.$implicit.id)); _ck(_v, 1, 0, currVal_0); _ck(_v, 4, 0); var currVal_4 = _v.context.$implicit.official; _ck(_v, 13, 0, currVal_4); var currVal_9 = i0.ɵnov(_v, 22); _ck(_v, 19, 0, currVal_9); var currVal_11 = "before"; var currVal_12 = "below"; var currVal_13 = "removeBox"; _ck(_v, 22, 0, currVal_11, currVal_12, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i0.ɵnov(_v, 4).unbounded; _ck(_v, 3, 0, currVal_1); var currVal_2 = (_v.context.$implicit.avatar ? _v.context.$implicit.avatarUrl : _co.env.avatar); _ck(_v, 6, 0, currVal_2); var currVal_3 = _v.context.$implicit.username; _ck(_v, 11, 0, currVal_3); var currVal_5 = _v.context.$implicit.username; _ck(_v, 15, 0, currVal_5); var currVal_6 = (i0.ɵnov(_v, 18).disabled || null); var currVal_7 = (i0.ɵnov(_v, 18)._animationMode === "NoopAnimations"); var currVal_8 = (i0.ɵnov(_v, 19).menuOpen || null); _ck(_v, 17, 0, currVal_6, currVal_7, currVal_8); var currVal_10 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.logOut)); _ck(_v, 20, 0, currVal_10); var currVal_14 = _v.context.$implicit.name; _ck(_v, 27, 0, currVal_14); var currVal_15 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.leaveSite)); _ck(_v, 29, 0, currVal_15); var currVal_16 = i0.ɵnov(_v, 32)._highlighted; var currVal_17 = i0.ɵnov(_v, 32)._triggersSubmenu; var currVal_18 = i0.ɵnov(_v, 32)._getTabIndex(); var currVal_19 = i0.ɵnov(_v, 32).disabled.toString(); var currVal_20 = (i0.ɵnov(_v, 32).disabled || null); _ck(_v, 31, 0, currVal_16, currVal_17, currVal_18, currVal_19, currVal_20); var currVal_21 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.no)); _ck(_v, 33, 0, currVal_21); var currVal_22 = i0.ɵnov(_v, 35)._highlighted; var currVal_23 = i0.ɵnov(_v, 35)._triggersSubmenu; var currVal_24 = i0.ɵnov(_v, 35)._getTabIndex(); var currVal_25 = i0.ɵnov(_v, 35).disabled.toString(); var currVal_26 = (i0.ɵnov(_v, 35).disabled || null); _ck(_v, 34, 0, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.yes)); _ck(_v, 36, 0, currVal_27); }); }
 function View_SettingsComponent_16(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 10, "li", [], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.openNewSession() !== false);
+        var pd_0 = (_co.userOptions("openNewSession", null) !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 9, "div", [["class", "inner mat-ripple"], ["mat-ripple", ""]], [[2, "mat-ripple-unbounded", null]], null, null, null, null)), i0.ɵdid(2, 212992, null, 0, i7.MatRipple, [i0.ElementRef, i0.NgZone, i3.Platform, [2, i7.MAT_RIPPLE_GLOBAL_OPTIONS], [2, i5.ANIMATION_MODULE_TYPE]], null, null), (_l()(), i0.ɵeld(3, 0, null, null, 1, "div", [["class", "add"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 0, "i", [["label", "add"]], null, null, null, null, null)), (_l()(), i0.ɵeld(5, 0, null, null, 5, "div", [["class", "text"]], null, null, null, null, null)), (_l()(), i0.ɵeld(6, 0, null, null, 4, "div", [["class", "in"]], null, null, null, null, null)), (_l()(), i0.ɵeld(7, 0, null, null, 1, "div", [["class", "data"]], null, null, null, null, null)), (_l()(), i0.ɵted(8, null, ["", ""])), (_l()(), i0.ɵeld(9, 0, null, null, 1, "div", [["class", "info"]], null, null, null, null, null)), (_l()(), i0.ɵted(10, null, ["", ""]))], function (_ck, _v) { _ck(_v, 2, 0); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 2).unbounded; _ck(_v, 1, 0, currVal_0); var currVal_1 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.addAccount)); _ck(_v, 8, 0, currVal_1); var currVal_2 = ((_co.translations == null) ? null : ((_co.translations.common == null) ? null : _co.translations.common.setAnotherAccount)); _ck(_v, 10, 0, currVal_2); }); }
 function View_SettingsComponent_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 306, "div", [["class", "innerBodyUser"]], null, null, null, null, null)), (_l()(), i0.ɵeld(1, 0, null, null, 305, "div", [["class", "innerBodyContent"]], null, null, null, null, null)), (_l()(), i0.ɵeld(2, 0, null, null, 304, "div", [["class", "pageSettings"]], null, null, null, null, null)), (_l()(), i0.ɵeld(3, 0, null, null, 303, "div", [["class", "content"]], null, null, null, null, null)), (_l()(), i0.ɵeld(4, 0, null, null, 5, "div", [["class", "back"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
@@ -25204,12 +25364,18 @@ var SettingsComponent = /** @class */ (function () {
             .subscribe(function (data) {
             _this.getTranslations(data);
         });
+        // Get sessions on logout
+        this.activeGetData = this.sessionService.getData()
+            .subscribe(function (data) {
+            _this.sessionData = data;
+        });
     }
     SettingsComponent.prototype.ngOnInit = function () {
         // not in use
     };
     SettingsComponent.prototype.ngOnDestroy = function () {
         this.activeLanguage.unsubscribe();
+        this.activeGetData.unsubscribe();
     };
     // Go back
     SettingsComponent.prototype.goBack = function () {
@@ -25260,22 +25426,20 @@ var SettingsComponent = /** @class */ (function () {
             if (val !== '' && regex.test(val)) {
                 _this.userDataService.checkUsername(val)
                     .subscribe(function (res) {
-                    setTimeout(function () {
-                        if (res) {
-                            if (val === data.username) {
-                                _this.actionFormPersonalData.controls['username'].setErrors(null);
-                                _this.validatorUsername = 'done';
-                            }
-                            else {
-                                _this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
-                                _this.validatorUsername = 'bad';
-                            }
-                        }
-                        else {
+                    if (res) {
+                        if (val === data.username) {
                             _this.actionFormPersonalData.controls['username'].setErrors(null);
                             _this.validatorUsername = 'done';
                         }
-                    }, 600);
+                        else {
+                            _this.actionFormPersonalData.controls['username'].setErrors({ validate: false });
+                            _this.validatorUsername = 'bad';
+                        }
+                    }
+                    else {
+                        _this.actionFormPersonalData.controls['username'].setErrors(null);
+                        _this.validatorUsername = 'done';
+                    }
                 });
             }
             else {
@@ -25383,6 +25547,31 @@ var SettingsComponent = /** @class */ (function () {
             });
         }
     };
+    // User options
+    SettingsComponent.prototype.userOptions = function (type, item) {
+        switch (type) {
+            case 'openNewSession':
+                var dataONS = {
+                    type: 'create'
+                };
+                this.sessionService.setDataAddAccount(dataONS);
+                break;
+            case 'setCurrentUser':
+                var dataSCU = {
+                    type: 'set',
+                    data: item
+                };
+                this.sessionService.setDataAddAccount(dataSCU);
+                break;
+            case 'closeSession':
+                var dataCS = {
+                    type: 'close',
+                    data: item
+                };
+                this.sessionService.setDataAddAccount(dataCS);
+                break;
+        }
+    };
     // Save data
     SettingsComponent.prototype.submit = function (type) {
         var _this = this;
@@ -25469,45 +25658,6 @@ var SettingsComponent = /** @class */ (function () {
             }, function (error) {
                 _this.alertService.error(_this.translations.common.anErrorHasOcurred);
             });
-        }
-    };
-    // Add more sessions
-    SettingsComponent.prototype.openNewSession = function () {
-        var dONS = {
-            type: 'create',
-            data: {
-                sessionData: this.sessionData,
-                translations: this.translations
-            }
-        };
-        this.sessionService.setDataAddAccount(dONS);
-    };
-    // Change user session
-    SettingsComponent.prototype.setCurrentUser = function (data) {
-        if (this.sessionData.current.id !== data.id) {
-            var dSCU = {
-                type: 'set',
-                data: data
-            };
-            this.sessionService.setDataAddAccount(dSCU);
-        }
-    };
-    // Close session
-    SettingsComponent.prototype.closeSession = function (data) {
-        var dCS = {
-            type: 'close',
-            data: data
-        };
-        this.sessionService.setDataAddAccount(dCS);
-        // Remove session
-        for (var i in this.sessionData.sessions) {
-            if (this.sessionData.sessions[i].id === data.id) {
-                this.sessionData.sessions.splice(i, 1);
-            }
-        }
-        // Set session after remove
-        if (this.sessionData.sessions[0].id !== data.id) {
-            this.sessionData.current = this.sessionData.sessions[0];
         }
     };
     return SettingsComponent;

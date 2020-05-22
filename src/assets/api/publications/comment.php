@@ -6,6 +6,8 @@
 	$receiver = $data['receiver'];
 	$type = $data['type'];
 	$id = $data['id'];
+	$commentParent = $data['comment_reply_parent_id'];
+	$commentChild = $data['comment_reply_child_id'];
 
 	if ($type === "create") {
 		$comment = htmlspecialchars(str_replace("\\","\\\\", $data['comment']), ENT_QUOTES);
@@ -14,9 +16,10 @@
 		$mentionsNotificate = $data['mentions'];
 
 		// Insert new comment
-		$sql = "INSERT INTO z_publications_comments (user, publication, comment, comment_original, mentions, ip_address)
-				VALUES ($sender, $id, '$comment', '$commentOriginal', '$mentions', '$ipAddress')";
+		$sql = "INSERT INTO z_publications_comments (user, publication, comment, comment_original, comment_reply_parent_id, comment_reply_child_id, mentions, ip_address)
+				VALUES ($sender, $id, '$comment', '$commentOriginal', '$commentParent', '$commentChild', '$mentions', '$ipAddress')";
 		$result = $conn->query($sql);
+
 		$insertedId = $conn->insert_id;
 		$inserted = getPublicationComment($insertedId);
 
@@ -62,7 +65,8 @@
 		$sql = "UPDATE z_publications_comments
 				SET is_deleted = $status,
 					ip_address = '$ipAddress'
-				WHERE id = $comment";
+				WHERE id = $comment
+					OR comment_reply_parent_id = $comment";
 		$result = $conn->query($sql);
 
 		// Notification data

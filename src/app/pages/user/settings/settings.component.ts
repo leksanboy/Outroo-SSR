@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	public sessionData: any = [];
 	public translations: any = [];
 	public activeLanguage: any;
+	public activeGetData: any;
 	public actionFormPersonalData: any;
 	public actionFormPasswordData: any;
 	public submitPersonalLoading: boolean;
@@ -78,6 +79,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			.subscribe(data => {
 				this.getTranslations(data);
 			});
+
+		// Get sessions on logout
+		this.activeGetData = this.sessionService.getData()
+			.subscribe(data => {
+				this.sessionData = data;
+			});
 	}
 
 	ngOnInit() {
@@ -86,6 +93,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.activeLanguage.unsubscribe();
+		this.activeGetData.unsubscribe();
 	}
 
 	// Go back
@@ -270,6 +278,35 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// User options
+	userOptions(type, item) {
+		switch (type) {
+			case 'openNewSession':
+				const dataONS = {
+					type: 'create'
+				};
+
+				this.sessionService.setDataAddAccount(dataONS);
+				break;
+			case 'setCurrentUser':
+				const dataSCU = {
+					type: 'set',
+					data: item
+				};
+
+				this.sessionService.setDataAddAccount(dataSCU);
+				break;
+			case 'closeSession':
+				const dataCS = {
+					type: 'close',
+					data: item
+				};
+
+				this.sessionService.setDataAddAccount(dataCS);
+				break;
+		}
+	}
+
 	// Save data
 	submit(type) {
 		if (type === 'personal') {
@@ -359,53 +396,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		}
-	}
-
-	// Add more sessions
-	openNewSession() {
-		const dONS = {
-			type: 'create',
-			data: {
-				sessionData: this.sessionData,
-				translations: this.translations
-			}
-		};
-
-		this.sessionService.setDataAddAccount(dONS);
-	}
-
-	// Change user session
-	setCurrentUser(data) {
-		if (this.sessionData.current.id !== data.id) {
-			const dSCU = {
-				type: 'set',
-				data: data
-			};
-
-			this.sessionService.setDataAddAccount(dSCU);
-		}
-	}
-
-	// Close session
-	closeSession(data) {
-		const dCS = {
-			type: 'close',
-			data: data
-		};
-
-		this.sessionService.setDataAddAccount(dCS);
-
-		// Remove session
-		for (const i in this.sessionData.sessions) {
-			if (this.sessionData.sessions[i].id === data.id) {
-				this.sessionData.sessions.splice(i, 1);
-			}
-		}
-
-		// Set session after remove
-		if (this.sessionData.sessions[0].id !== data.id) {
-			this.sessionData.current = this.sessionData.sessions[0];
 		}
 	}
 }

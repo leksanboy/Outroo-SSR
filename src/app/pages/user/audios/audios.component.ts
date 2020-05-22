@@ -797,8 +797,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		if (type === 1) { // Add files
 			for (const file of event.currentTarget.files) {
-				console.log('file', file);
-
 				if (file) {
 					file.title = file.name.replace('.mp3', '');
 					/* file.title = file.name; */
@@ -1116,8 +1114,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			}
 
 			this.dataDefault.playlists = newPl;
-			console.log('this.dataDefault.playlists:', this.dataDefault.playlists);
-
 			this.sessionData.current.playlists = this.dataDefault.playlists;
 		} else if (type === 'addRemoveSession') {
 			this.sessionData.current.playlists = this.dataDefault.playlists;
@@ -1181,7 +1177,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
 				dialogRefEdit.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
-					console.log('afterClosed res:', res);
 
 					if (res) {
 						const data = {
@@ -1291,9 +1286,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	seeAll(type) {
 		this.data.content = 'seeAll';
 
-		console.log('type:', type);
-		console.log('data:', this.dataGeneral);
-
 		if (
 			type === 'hits' ||
 			type === 'recommended' ||
@@ -1352,8 +1344,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 							}
 						}
 					}
-
-					console.log('this.dataSection:', this.dataSection);
 
 					if (!res || res.length < this.env.cuantity) {
 						this.dataSection.noMore = true;

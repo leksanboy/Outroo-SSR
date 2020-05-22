@@ -203,6 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 							if (i) {
 								res[i].contentLimit = this.env.contentLengthLimit;
 								this.dataDefault.list.push(res[i]);
+								this.newComment('clear', null, res[i]);
 
 								// Push ad
 								if (i == '15' || i == '28') {
@@ -472,6 +473,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 					}
 				}
 				break;
+			case 'showHide':
+					item.showCommentsBox = true;
+
+					if (!item.disabledComments) {
+						if (!item.loaded) {
+							this.defaultComments('default', item);
+						}
+					}
+					break;
 			case 'load':
 				this.defaultComments('default', item);
 				break;
@@ -486,6 +496,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			item.loadingData = true;
 			item.comments = [];
 			item.comments.list = [];
+			item.comments.reply = null;
 			item.rowsComments = 0;
 			item.loaded = true;
 
@@ -558,7 +569,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 					lastTypedWord: []
 				};
 
+				// Put as default
 				this.newComment('checkPlaceholder', null, item);
+
+				// Cancel reply
+				this.replyComment('cancel', null, null, item);
 			}, 100);
 		} else if (type === 'writingChanges') {
 			let str = event;
@@ -610,9 +625,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
 			}
 		} else if (type === 'transformBeforeSend') {
+			// Add replied user
+			if (item.comments.reply) {
+				item.newCommentData.original = '@' + item.comments.reply.child.user.username + ' ' + item.newCommentData.original;
+			}
+
 			const newData = {
-				content: item.newCommentData.original ? item.newCommentData.original : '',
-				original: item.newCommentData.original ? item.newCommentData.original : '',
+				content: item.newCommentData.original,
+				original: item.newCommentData.original,
 				mentions: [],
 				hashtags: []
 			};
@@ -638,34 +658,59 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 			return newData;
 		} else if (type === 'create') {
-			if (item.newCommentData.original.trim().length > 0) {
-				if (item.newCommentData.original.trim().length <= 1000) {
-					const formatedData = this.newComment('transformBeforeSend', null, item);
-					const dataCreate = {
-						type: 'create',
-						id: item.id,
-						receiver: item.user.id,
-						comment: formatedData.content,
-						comment_original: formatedData.original,
-						mentions: formatedData.mentions
-					};
-
-					this.publicationsDataService.comment(dataCreate)
-						.subscribe((res: any) => {
-							item.comments.list.unshift(res);
-							item.countComments++;
-							item.noData = false;
-
-							this.newComment('clear', null, item);
-						}, error => {
-							this.alertService.error(this.translations.common.anErrorHasOcurred);
-						});
-				} else {
-					this.alertService.error(this.translations.common.isTooLong);
-				}
-			} else {
+			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.warning(this.translations.common.isTooShort);
+			} else {
+				const formatedData = this.newComment('transformBeforeSend', null, item);
+				const dataCreate = {
+					type: 'create',
+					id: item.id,
+					receiver: item.user.id,
+					comment: formatedData.content,
+					comment_original: formatedData.original,
+					comment_reply_parent_id: (item.comments.reply ? item.comments.reply.parent.id : null),
+					comment_reply_child_id: (item.comments.reply ? item.comments.reply.child.id : null),
+					mentions: formatedData.mentions
+				};
+
+				this.publicationsDataService.comment(dataCreate)
+					.subscribe((res: any) => {
+						item.countComments++;
+						item.noData = false;
+
+						if (dataCreate.comment_reply_parent_id) {
+							let comm = item.comments.list.filter(i => i.id == dataCreate.comment_reply_parent_id)[0];
+
+							if (comm.list) {
+								comm.list.push(res);
+							} else {
+								comm.list = [];
+								comm.list.push(res);
+							}
+
+							this.showComments('show', item);
+						} else {
+							item.comments.list.push(res);
+							this.window.scrollTo(0, 1000);
+						}
+
+						this.newComment('clear', null, item);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
 			}
+		}
+	}
+
+	// Reply
+	replyComment(type, parent, child, item) {
+		if (type === 'create') {
+			item.comments.reply = {
+				parent: parent,
+				child: child
+			};
+		} else if (type === 'cancel') {
+			item.comments.reply = null;
 		}
 	}
 
@@ -698,6 +743,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				break;
 		}
 	}
+
 
 	// Caret position on contenteditable
 	getCaretPosition(element) {

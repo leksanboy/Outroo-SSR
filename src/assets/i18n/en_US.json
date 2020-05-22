@@ -426,6 +426,8 @@
 		"moreInfo": "More information",
 		"explicit": "Explicit content",
 		"sendTo": "Send to",
-		"addSomeUsers": "Add some users"
+		"addSomeUsers": "Add some users",
+		"reply": "Reply",
+		"replyTo": "Reply to"
 	}
 }
