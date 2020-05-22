@@ -7,8 +7,9 @@ import * as moment from 'moment/moment';
 })
 export class TimeagoPipe implements PipeTransform {
 	transform(value: any, args?: any): any {
-		const prefix = ' · ',
-		time = prefix + moment(moment.parseZone(value)).fromNow();
+		/* const prefix = ' · ',
+		time = prefix + moment(moment.parseZone(value)).fromNow(); */
+		const time = moment(moment.parseZone(value)).fromNow();
 
 		return time;
 	}

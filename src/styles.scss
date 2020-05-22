@@ -3371,19 +3371,26 @@ body {
 
 					.reply {
 						box-sizing: border-box;
-						padding: 4px 0 0 36px;
+						padding: 6px 0 0 36px;
 						width: 100%;
+						display: flex;
+
+						.date {
+							color: transparentize($greyColor, 0.25);
+							font-size: 13px;
+						}
 
 						button {
-							padding: 1px 8px;
+							padding: 0 6px;
+							margin: 0 0 0 6px;
 							line-height: inherit;
-							font-size: 10px;
-							font-weight: bold;
+							font-size: 13px;
+							font-weight: normal;
 							text-transform: inherit;
 							border-radius: 3px;
 							min-width: 0;
-							background-color: #2e2e2e;
-							color: transparentize($whiteColor, 0.5);
+							background-color: transparent;
+							color: transparentize($greyColor, 0.25);
 							box-shadow: none;
 						}
 					}
@@ -5346,8 +5353,6 @@ body {
 							}
 
 							.boxComments {
-								padding: 12px 0 98px;
-
 								.comments {
 									.loadingData {
 										padding: 12px 0;
@@ -8324,7 +8329,9 @@ body {
 			top: 0;
 
 			.mat-dialog-content {
-				max-height: calc(100vh - 168px) !important;
+				/* max-height: calc(100vh - 168px) !important; */
+				height: initial !important;
+				max-height: initial !important;
 			}
 
 			.dialogBox {
@@ -8399,6 +8406,10 @@ body {
 
 								.noData {
 									display: none;
+								}
+
+								.boxComments {
+									padding: 12px 0 156px;
 								}
 							}
 
