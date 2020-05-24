@@ -338,6 +338,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			self.audio.addEventListener('timeupdate', function() {
 				const countDown = Math.round(self.audio.duration - self.audio.currentTime);
 				self.audioPlayerData.current.time = self.formatTime(self.audio.currentTime);
+				self.audioPlayerData.loading = self.audio.currentTime > 0 ? false : true;
 
 				const durationCountDown = self.formatTime(countDown);
 				const radix = 10; // Hexadecimal
@@ -749,6 +750,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 					this.audioPlayerData.list[key].playing = true;
 					this.audioPlayerData.loadingToPlay = true;
+					this.audioPlayerData.loading = true;
 					this.audioPlayerData.playing = true;
 					this.audioPlayerData.current.user = this.audioPlayerData.user;
 					this.audioPlayerData.current.type = this.audioPlayerData.type;
@@ -925,8 +927,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Progress bar
 	progressBar(event) {
-		const time = ((event.value / 1000) * this.audio.duration);
-		this.audio.currentTime = time;
+		let time = ((event.value / 1000) * this.audio.duration);
+
+		if (time) {
+			this.audio.currentTime = time;
+		}
 	}
 
 	// Volume bar
@@ -1220,17 +1225,20 @@ export class ActiveSessionComponent implements AfterViewInit {
 	getColorFromAudioCover(image) {
 		const self = this;
 
-		if (image) {
-			const img = this.document.createElement('img');
+		if (image.length) {
+			let img = this.document.createElement('img');
 			img.setAttribute('src', image);
-			const vibrant = new Vibrant(img);
-			const swatches = vibrant.swatches();
 
-			for (const i in swatches) {
-				if (i) {
-					if (swatches.hasOwnProperty(i) && swatches[i]) {
-						if (i === 'Vibrant') {
-							self.audioPlayerData.current.color = swatches[i].getHex();
+			if (img.hasAttribute('src')) {
+				let vibrant = new Vibrant(img);
+				let swatches = vibrant.swatches();
+
+				for (const i in swatches) {
+					if (i) {
+						if (swatches.hasOwnProperty(i) && swatches[i]) {
+							if (i === 'Vibrant') {
+								self.audioPlayerData.current.color = swatches[i].getHex();
+							}
 						}
 					}
 				}
@@ -1539,6 +1547,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.alertService.success(this.translations.common.copied);
 	}
 
+	// Mini player
 	doMiniPlayer(type) {
 		if (type === 'collapse') {
 			this.audioPlayerData.mini = true;

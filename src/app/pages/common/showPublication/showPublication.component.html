@@ -49,7 +49,7 @@
 			</div>
 
 			<div class="left">
-				<span *ngIf="dataDefault?.data?.photos.length === 1">
+				<span *ngIf="dataDefault?.data?.photos?.length === 1">
 					<img *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + dataDefault?.data?.photos[0].name">
 
 					<span *ngIf="dataDefault?.data?.photos[0].mimetype.indexOf('video') !== -1">
@@ -63,7 +63,7 @@
 					</span>
 				</span>
 
-				<swiper *ngIf="dataDefault?.data?.photos.length > 1" [config]="swiperConfig">
+				<swiper *ngIf="dataDefault?.data?.photos?.length > 1" [config]="swiperConfig">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" *ngFor="let p of dataDefault?.data?.photos">
 							<div class="slide">
@@ -183,9 +183,9 @@
 										</mat-menu>
 
 										<mat-menu #menuSongShareSocial="matMenu">
-											<button mat-menu-item (click)="itemSongOptions('messageSong', a, null)">{{translations?.common?.sendMessage}}</button>
-											<button mat-menu-item (click)="itemSongOptions('newTabSong', a, null)">{{translations?.common?.openInNewTab}}</button>
-											<button mat-menu-item (click)="itemSongOptions('copyLinkSong', a, null)">{{translations?.common?.copyLink}}</button>
+											<button mat-menu-item (click)="itemSongOptions('message', a, null)">{{translations?.common?.sendMessage}}</button>
+											<button mat-menu-item (click)="itemSongOptions('newTab', a, null)">{{translations?.common?.openInNewTab}}</button>
+											<button mat-menu-item (click)="itemSongOptions('copyLink', a, null)">{{translations?.common?.copyLink}}</button>
 										</mat-menu>
 									</div>
 								</div>
@@ -327,7 +327,7 @@
 					<div class="bottom">
 						<div class="buttonBox">
 							<button mat-icon-button (click)="showComments('showHide', dataDefault?.data)">
-								<i label="analytics-comments" class="active"></i>
+								<i label="analytics-comments" [ngClass]="{'active' : dataDefault?.data?.showCommentsBox}"></i>
 							</button>
 						</div>
 

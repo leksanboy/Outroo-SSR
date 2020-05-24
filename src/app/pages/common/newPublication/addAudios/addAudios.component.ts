@@ -183,6 +183,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 			};
 
 			const data = {
+				type: 'song',
 				caption: this.actionFormSearch.get('caption').value,
 				rows: this.dataSearch.rows,
 				cuantity: this.env.cuantity

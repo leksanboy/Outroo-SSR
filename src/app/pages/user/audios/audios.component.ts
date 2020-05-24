@@ -37,7 +37,11 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public translations: any = [];
 	public audioPlayerData: any = [];
 	public userData: any = [];
-	public dataSearch: any = [];
+	public dataSearch: any = {
+		selectedIndex: 0,
+		songs: [],
+		playlists: []
+	};
 	public dataGeneral: any = [];
 	public dataDefault: any = [];
 	public dataAround: any = [];
@@ -207,8 +211,17 @@ export class AudiosComponent implements OnInit, OnDestroy {
 									break;
 							}
 						} else if (this.data.active === 'search') {
-							if (this.dataSearch.list.length > 0) {
-								this.search('more');
+							switch (this.dataSearch.selectedIndex) {
+								case 0:
+									if (this.dataSearch.songs.list.length > 0) {
+										this.search('more');
+									}
+									break;
+								case 1:
+									if (this.dataSearch.playlists.list.length > 0) {
+										this.search('more');
+									}
+									break;
 							}
 						}
 					} else if (this.data.content === 'seeAll') {
@@ -272,30 +285,45 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	}
 
 	// Set tab on click
-	setTab(tab) {
-		if (this.sessionData.current.id === this.userData.id) {
+	setTab(type, tab) {
+		if (type === 'default') {
+			if (this.sessionData.current.id === this.userData.id) {
+				switch (tab) {
+					case 0:
+						/* General: always set */
+						break;
+					case 1:
+						if (!this.dataDefault.list) {
+							this.default('default', this.userData.id);
+						}
+						break;
+					case 2:
+						if (!this.dataAround.list) {
+							this.around('default');
+						}
+						break;
+					case 3:
+						if (!this.dataTop.list) {
+							this.top('default');
+						}
+						break;
+					case 4:
+						if (!this.dataFresh.list) {
+							this.fresh('default');
+						}
+						break;
+				}
+			}
+		} else {
 			switch (tab) {
 				case 0:
-					/* General: always set */
+					if (!this.dataSearch.songs.list) {
+						this.search('default');
+					}
 					break;
 				case 1:
-					if (!this.dataDefault.list) {
-						this.default('default', this.userData.id);
-					}
-					break;
-				case 2:
-					if (!this.dataAround.list) {
-						this.around('default');
-					}
-					break;
-				case 3:
-					if (!this.dataTop.list) {
-						this.top('default');
-					}
-					break;
-				case 4:
-					if (!this.dataFresh.list) {
-						this.fresh('default');
+					if (!this.dataSearch.playlists.list) {
+						this.search('default');
 					}
 					break;
 			}
@@ -697,85 +725,174 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	search(type) {
 		if (type === 'default') {
 			this.data.active = 'search';
-			this.dataSearch = {
-				list: [],
-				rows: 0,
-				loadingData: true,
-				loadMoreData: false,
-				loadingMoreData: false,
-				noMore: false,
-				noData: false
-			};
 
-			const data = {
-				caption: this.actionFormSearch.get('caption').value,
-				rows: this.dataSearch.rows,
-				cuantity: this.env.cuantity
-			};
+			if (this.dataSearch.selectedIndex === 0) {
+				this.dataSearch.songs = {
+					list: [],
+					rows: 0,
+					loadingData: true,
+					loadMoreData: false,
+					loadingMoreData: false,
+					noMore: false,
+					noData: false
+				};
 
-			this.audioDataService.search(data)
-				.subscribe((res: any) => {
-					this.dataSearch.loadingData = false;
+				const data = {
+					type: 'song',
+					caption: this.actionFormSearch.get('caption').value,
+					rows: this.dataSearch.songs.rows,
+					cuantity: this.env.cuantity
+				};
 
-					if (!res || res.length === 0) {
-						this.dataSearch.noData = true;
-					} else {
-						this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+				this.audioDataService.search(data)
+					.subscribe((res: any) => {
+						this.dataSearch.songs.loadingData = false;
 
-						for (const i in res) {
-							if (i) {
-								this.dataSearch.list.push(res[i]);
+						if (!res || res.length === 0) {
+							this.dataSearch.songs.noData = true;
+						} else {
+							this.dataSearch.songs.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-								// Push ad
-								if (i === (Math.round(res.length * 3 / 5)).toString()) {
-									this.dataSearch.list.push(this.pushAd());
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.songs.list.push(res[i]);
+
+									// Push ad
+									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+										this.dataSearch.songs.list.push(this.pushAd());
+									}
 								}
 							}
 						}
-					}
 
-					if (!res || res.length < this.env.cuantity) {
-						this.dataSearch.noMore = true;
-					}
-				}, error => {
-					this.dataSearch.loadingData = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
-		} else if (type === 'more' && !this.dataSearch.noMore && !this.dataSearch.loadingMoreData) {
-			this.dataSearch.loadingMoreData = true;
-			this.dataSearch.rows++;
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.songs.noMore = true;
+						}
+					}, error => {
+						this.dataSearch.songs.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			} else if (this.dataSearch.selectedIndex === 1) {
+				this.dataSearch.playlists = {
+					list: [],
+					rows: 0,
+					loadingData: true,
+					loadMoreData: false,
+					loadingMoreData: false,
+					noMore: false,
+					noData: false
+				};
 
-			const data = {
-				caption: this.actionFormSearch.get('caption').value,
-				rows: this.dataSearch.rows,
-				cuantity: this.env.cuantity
-			};
+				const data = {
+					type: 'playlist',
+					caption: this.actionFormSearch.get('caption').value,
+					rows: this.dataSearch.playlists.rows,
+					cuantity: this.env.cuantity
+				};
 
-			this.audioDataService.search(data)
-				.subscribe((res: any) => {
-					this.dataSearch.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-					this.dataSearch.loadingMoreData = false;
+				this.audioDataService.search(data)
+					.subscribe((res: any) => {
+						this.dataSearch.playlists.loadingData = false;
 
-					if (!res || res.length > 0) {
-						for (const i in res) {
-							if (i) {
-								this.dataSearch.list.push(res[i]);
+						if (!res || res.length === 0) {
+							this.dataSearch.playlists.noData = true;
+						} else {
+							this.dataSearch.playlists.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
-								// Push ad
-								if (i === (Math.round(res.length * 3 / 5)).toString()) {
-									this.dataSearch.list.push(this.pushAd());
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.playlists.list.push(res[i]);
+
+									// Push ad
+									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+										this.dataSearch.playlists.list.push(this.pushAd());
+									}
 								}
 							}
 						}
-					}
 
-					if (!res || res.length < this.env.cuantity) {
-						this.dataSearch.noMore = true;
-					}
-				}, error => {
-					this.dataSearch.loadingData = false;
-					this.alertService.error(this.translations.common.anErrorHasOcurred);
-				});
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.playlists.noMore = true;
+						}
+					}, error => {
+						this.dataSearch.playlists.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			}
+		} else if (type === 'more') {
+			if (this.dataSearch.selectedIndex === 0 && !this.dataSearch.songs.noMore && !this.dataSearch.songs.loadingMoreData) {
+				this.dataSearch.songs.loadingMoreData = true;
+				this.dataSearch.songs.rows++;
+
+				const data = {
+					type: 'song',
+					caption: this.actionFormSearch.get('caption').value,
+					rows: this.dataSearch.songs.rows,
+					cuantity: this.env.cuantity
+				};
+
+				this.audioDataService.search(data)
+					.subscribe((res: any) => {
+						this.dataSearch.songs.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataSearch.songs.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.songs.list.push(res[i]);
+
+									// Push ad
+									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+										this.dataSearch.songs.list.push(this.pushAd());
+									}
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.songs.noMore = true;
+						}
+					}, error => {
+						this.dataSearch.songs.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			} else if (this.dataSearch.selectedIndex === 1 && !this.dataSearch.playlists.noMore && !this.dataSearch.playlists.loadingMoreData) {
+				this.dataSearch.playlists.loadingMoreData = true;
+				this.dataSearch.playlists.rows++;
+
+				const data = {
+					type: 'playlist',
+					caption: this.actionFormSearch.get('caption').value,
+					rows: this.dataSearch.playlists.rows,
+					cuantity: this.env.cuantity
+				};
+
+				this.audioDataService.search(data)
+					.subscribe((res: any) => {
+						this.dataSearch.playlists.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataSearch.playlists.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSearch.playlists.list.push(res[i]);
+
+									// Push ad
+									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+										this.dataSearch.playlists.list.push(this.pushAd());
+									}
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSearch.playlists.noMore = true;
+						}
+					}, error => {
+						this.dataSearch.playlists.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			}
 		} else if (type === 'clear') {
 			this.data.active = 'default';
 			this.actionFormSearch.get('caption').setValue('');
@@ -797,6 +914,8 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		if (type === 1) { // Add files
 			for (const file of event.currentTarget.files) {
+				console.log('file', file);
+
 				if (file) {
 					file.title = file.name.replace('.mp3', '');
 					/* file.title = file.name; */

@@ -728,24 +728,25 @@
 
 		<div class="center">
 			<div class="top">
-				<button mat-mini-fab (click)="playPlayer('shuffle', '')" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list?.length <= 1}">
+				<button mat-mini-fab (click)="playPlayer('shuffle', null)" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list?.length <= 1}">
 					<i></i>
 				</button>
 
-				<button mat-mini-fab (click)="playPlayer('prev', '')" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
+				<button mat-mini-fab (click)="playPlayer('prev', null)" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
 					<i [style.background]="audioPlayerData?.current?.color"></i>
 				</button>
 
-				<button mat-fab (click)="playPlayer('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color">
-					<i class="play" *ngIf="!audioPlayerData?.playing"></i>
-					<i class="pause" *ngIf="audioPlayerData?.playing"></i>
+				<button mat-fab (click)="playPlayer('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color">
+					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading"></i>
+					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading"></i>
+					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
 				</button>
 
-				<button mat-mini-fab (click)="playPlayer('next', '')" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
+				<button mat-mini-fab (click)="playPlayer('next', null)" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
 					<i [style.background]="audioPlayerData?.current?.color"></i>
 				</button>
 
-				<button mat-mini-fab (click)="playPlayer('repeat', '')" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">
+				<button mat-mini-fab (click)="playPlayer('repeat', null)" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">
 					<i></i>
 				</button>
 			</div>
@@ -755,7 +756,7 @@
 					<div class="current">{{audioPlayerData?.current?.time}}</div>
 					<div class="slider">
 						<canvas id="audioAnalyser"></canvas>
-						<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)" [disabled]="audioPlayerData?.list.length == 0"></mat-slider>
+						<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)"></mat-slider>
 					</div>
 					<div class="total">{{audioPlayerData?.current?.duration}}</div>
 				</div>

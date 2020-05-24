@@ -34,7 +34,8 @@
 		"showAdvanced": "Show advanced",
 		"description": "Description",
 		"allPlaylists": "All playlists",
-		"editorsChoice": "Editors' choice"
+		"editorsChoice": "Editors' choice",
+		"playlists": "Playlists"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",

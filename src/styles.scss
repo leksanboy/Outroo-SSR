@@ -909,6 +909,7 @@ body {
 					overflow: hidden;
 					width: 100%;
 					padding: 6px 6px 6px 12px;
+					word-break: break-word;
 
 					.text {
 						line-height: 18px;
@@ -6517,7 +6518,7 @@ body {
 							background: $blueColor;
 							color: $whiteColor;
 							margin: 24px auto;
-							text-transform: capitalize;
+							text-transform: inherit;
 							font-size: 14px;
 							font-weight: bold;
 
@@ -7759,10 +7760,6 @@ body {
 			.playlistBox {
 				background-color: $darkThemeColor;
 				color: $whiteColor;
-
-				/* &:after {
-					border: 8px solid $darkThemeColor;
-				} */
 			}
 		}
 
@@ -7850,7 +7847,7 @@ body {
 
 				.left {
 					display: flex;
-					width: 100%;
+					width: 360px;
 
 					.image {
 						margin: 12px 0 0 18px;
@@ -7899,12 +7896,13 @@ body {
 				}
 
 				.center {
+					width: calc(100% - 360px - 360px);
 					height: 86px;
+					max-width: 666px;
 
 					.top {
 						justify-content: center;
 						align-items: center;
-						width: $pageMaxWidth;
 						padding: 8px 0 0;
 						display: flex;
 
@@ -7918,6 +7916,22 @@ body {
 								mask-image: $spriteAudios;
 								mask-repeat: no-repeat;
 								display: block;
+							}
+
+							mat-progress-spinner {
+								height: 20px !important;
+								width: 20px !important;
+								margin: 0 auto;
+
+								svg {
+									height: 20px !important;
+									width: 20px !important;
+
+									circle {
+										stroke: $blackColor !important;
+										width: 20% !important;
+									}
+								}
 							}
 
 							&.mat-accent {
@@ -8091,7 +8105,7 @@ body {
 					justify-content: flex-end;
 					box-sizing: border-box;
 					display: flex;
-					width: 100%;
+					width: 360px;
 
 					.action {
 						padding: 23px 4px;

@@ -3,7 +3,7 @@
 	$session = sessionId();
 	$cuantity = $_GET['cuantity'];
 	$more = $_GET['rows']*$cuantity;
-	$caption = $_GET['caption'];
+	$caption = htmlspecialchars($_GET['caption'], ENT_QUOTES);
 
 	// Insert search data analytics
 	searchPublicationAnalytics($session, $caption, 'publication');

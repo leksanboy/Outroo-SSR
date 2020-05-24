@@ -31,7 +31,8 @@ export class AudioDataService {
 
 	search(data: any) {
 		const url = this.env.url + 'assets/api/audios/search.php';
-		let params = 	'&caption=' + data.caption +
+		let params = 	'&type=' + data.type +
+						'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
