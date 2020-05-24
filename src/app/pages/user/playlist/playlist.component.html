@@ -12,7 +12,7 @@
 				<div class="pageTitle">{{translations?.playlist?.title}}</div>
 
 				<div class="playlist">
-					<div class="info" *ngIf="!dataDefault.loadingData">
+					<div class="info" *ngIf="!dataDefault?.loadingData">
 						<div class="left">
 							<div class="image">
 								<img [src]="dataDefault?.info?.image ? (env.pathAudios + 'covers/' + dataDefault?.info?.image) : env.defaultPlaylistCover">
@@ -20,46 +20,68 @@
 						</div>
 
 						<div class="right">
-							<div class="title">
-								{{dataDefault?.info?.title}}
+							<div class="texts">
+								<div class="text">
+									{{dataDefault?.info?.title}}
+								</div>
+
+								<a class="text" routerLink="/{{dataDefault?.info?.user?.username}}" *ngIf="dataDefault?.info?.user?.id">
+									@{{dataDefault?.info?.user?.username}}
+									<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								</a>
+
+								<div class="text" *ngIf="!dataDefault?.info?.user?.id">
+									{{translations?.audios?.editorsChoice}}
+								</div>
+
+								<div class="button">
+									<button mat-button (click)="playTrack('play')">
+										<i label="pause" *ngIf="dataDefault?.playing" class="icon85 white"></i>
+										<i label="play" *ngIf="!dataDefault?.playing" class="icon85 white"></i>
+										{{dataDefault?.playing ? translations?.audios?.pause : translations?.audios?.play}}
+									</button>
+								</div>
 							</div>
 
-							<a class="subtitle" routerLink="/{{dataDefault?.info?.user?.username}}" *ngIf="dataDefault?.info?.user?.id">
-								@{{dataDefault?.info?.user?.username}}
-								<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-							</a>
-
-							<div class="subtitle" *ngIf="!dataDefault?.info?.user?.id">
-								{{translations?.audios?.editorsChoice}}
-							</div>
-
-							<div class="button">
-								<button mat-button (click)="playTrack('play')">
-									<i label="pause" *ngIf="dataDefault.playing" class="icon85 white"></i>
-									<i label="play" *ngIf="!dataDefault.playing" class="icon85 white"></i>
-									{{dataDefault.playing ? translations?.audios?.pause : translations?.audios?.play}}
+							<div class="actions" *ngIf="sessionData?.current?.id">
+								<button mat-icon-button [matMenuTriggerFor]="appMenu">
+									<i class="icon85 blue" label="check" *ngIf="dataDefault?.info?.addRemoveUser"></i>
+									<i class="icon85 grey" label="more" *ngIf="!dataDefault?.info?.addRemoveUser"></i>
 								</button>
+
+								<mat-menu #appMenu="matMenu">
+									<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', dataDefault?.info, i)">{{!dataDefault?.info?.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('follow', dataDefault?.info, i)">{{!dataDefault?.info?.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('report', dataDefault?.info, i)">{{translations?.common?.report}}</button>
+								</mat-menu>
+
+								<mat-menu #menuShareSocial="matMenu">
+									<button mat-menu-item (click)="itemPlaylistOptions('message', dataDefault?.info, i)">{{translations?.common?.sendMessage}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('newTab', dataDefault?.info, i)">{{translations?.common?.openInNewTab}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('copyLink', dataDefault?.info, i)">{{translations?.common?.copyLink}}</button>
+								</mat-menu>
 							</div>
 						</div>
 					</div>
 
-					<div class="desc" *ngIf="!dataDefault.loadingData && dataDefault?.info?.description">
+					<div class="desc" *ngIf="!dataDefault?.loadingData && dataDefault?.info?.description">
 						{{dataDefault?.info?.description}}
 					</div>
 				</div>
 
 				<ul class="tracks" *ngIf="dataDefault?.list?.length > 0">
-					<li *ngFor="let x of dataDefault.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', remove: x.addRemoveSession, advert: x.contentTypeAd}">
+					<li *ngFor="let x of dataDefault?.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', remove: x.addRemoveSession, advert: x.contentTypeAd}">
 						<div class="inner" *ngIf="!x.contentTypeAd">
 							<div class="image">
-								<button mat-icon-button (click)="playSong(dataDefault.list, x, i, 'default')">
+								<button mat-icon-button (click)="playSong(dataDefault?.list, x, i, 'default')">
 									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
 									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
 									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 								</button>
 							</div>
 
-							<div class="text" (click)="playSong(dataDefault.list, x, i, 'default')">
+							<div class="text" (click)="playSong(dataDefault?.list, x, i, 'default')">
 								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
 									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
 									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
@@ -119,15 +141,15 @@
 					</li>
 				</ul>
 
-				<div class="loadingData" *ngIf="dataDefault.loadingData">
+				<div class="loadingData" *ngIf="dataDefault?.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataDefault.noData">
+				<div class="noData" *ngIf="dataDefault?.noData">
 					<div class="description">{{translations?.playlist?.noData}}</div>
 				</div>
 
-				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0 && !dataDefault.loadingData">
+				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0 && !dataDefault?.loadingData">
 					<div class="boxTitle">
 						{{translations?.common?.recommendedForYou}}
 					</div>

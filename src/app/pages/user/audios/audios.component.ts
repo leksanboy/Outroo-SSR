@@ -1,6 +1,6 @@
 import { Title, DomSanitizer } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Location, DOCUMENT } from '@angular/common';
+import { Location, DOCUMENT, PlatformLocation } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -32,6 +32,7 @@ declare var global: any;
 export class AudiosComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public window: any = global;
+	public activeOnPopState: any;
 	public activeRouter: any;
 	public sessionData: any = [];
 	public translations: any = [];
@@ -81,6 +82,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
 		private routingStateService: RoutingStateService,
+		private platformLocation: PlatformLocation
 	) {
 		// Set component data
 		this.activeRouter = this.router.events
@@ -230,6 +232,13 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						}
 					}
 				}
+			}
+		};
+
+		// Go back | Swipe right to go back | go back from seeAll
+		this.window.onpopstate = (event) => {
+			if (this.router.url.indexOf('songs') > -1) {
+				this.data.content = 'default';
 			}
 		};
 	}
@@ -804,7 +813,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 									this.dataSearch.playlists.list.push(res[i]);
 
 									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									if (i === '19') {
 										this.dataSearch.playlists.list.push(this.pushAd());
 									}
 								}
@@ -842,7 +851,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 									this.dataSearch.songs.list.push(res[i]);
 
 									// Push ad
-									if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									if (i === '19') {
 										this.dataSearch.songs.list.push(this.pushAd());
 									}
 								}
@@ -1416,6 +1425,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			type === 'enjoyWith' ||
 			type === 'userPlaylists'
 		) {
+			this.location.go(this.router.url + '#all');
 			this.window.scrollTo(0, 0);
 
 			this.dataSection = {
@@ -1509,6 +1519,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				});
 		} else if (type === 'back') {
 			this.data.content = 'default';
+			this.location.go(this.router.url);
 		}
 	}
 }

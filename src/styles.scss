@@ -1236,64 +1236,52 @@ body {
 						height: 100%;
 						width: 100%;
 					}
-				}
 
-				.add {
-					background-color: $blackColor;
-					box-sizing: border-box;
-					border-radius: 50%;
-					overflow: hidden;
-					min-width: 40px;
-					margin: 4px 0;
-					height: 40px;
-					width: 40px;
-
-					img {
+					&.add {
+						background-color: $blackColor;
+						box-sizing: border-box;
 						border-radius: 50%;
-						height: 100%;
-						width: 100%;
-					}
+						overflow: hidden;
+						min-width: 40px;
+						margin: 4px 0;
+						height: 40px;
+						width: 40px;
 
-					i {
-						background-color: $whiteColor;
-						margin: 8px;
+						i {
+							background-color: $whiteColor;
+							margin: 8px;
+						}
 					}
 				}
 
-				.text {
-					box-sizing: border-box;
-					align-items: center;
-					padding: 0 12px;
-					display: flex;
+				.texts {
 					width: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					box-sizing: border-box;
+					padding: 0 12px;
+					line-height: 18px;
 
-					.in {
-						width: 100%;
+					.text {
+						text-overflow: ellipsis;
+						box-sizing: border-box;
+						white-space: nowrap;
+						overflow: hidden;
 
-						.data {
-							align-items: center;
+						&:first-child {
 							display: flex;
-
-							.name {
-								text-overflow: ellipsis;
-								word-break: break-all;
-								white-space: nowrap;
-								font-weight: bold;
-								overflow: hidden;
-								max-width: 75%;
-							}
+							align-items: center;
+							font-weight: bold;
 
 							i {
-								margin: -6px 0 -6px 0;
+								margin: -4px 0;
 							}
 						}
 
-						.info {
-							word-break: break-word;
+						&:last-child {
+							font-size: 13px;
 							color: $greyColor;
-							padding: 2px 0 0;
-							font-size: 14px;
-							width: 100%;
 						}
 					}
 				}
@@ -2386,7 +2374,7 @@ body {
 	}
 
 	.playlist {
-		width: 100%;
+		width: $pageMaxWidth;
 		float: left;
 
 		.info {
@@ -2426,58 +2414,63 @@ body {
 			}
 
 			.right {
-				width: calc(100% - 144px);
+				width: calc(100% - 216px);
 				box-sizing: border-box;
 				padding: 0 0 0 18px;
+				display: flex;
 
-				.title {
-					-webkit-box-orient: vertical;
-					text-overflow: ellipsis;
-					word-break: break-word;
-					-webkit-line-clamp: 3;
-					display: -webkit-box;
-					font-weight: bold;
-					overflow: hidden;
-					max-height: 84px;
-					font-size: 24px;
-					max-width: 100%;
-					margin: 0;
-				}
-
-				.subtitle {
-					color: $blueColor;
-					font-weight: bold;
-					text-align: left;
-					display: block;
+				.texts {
 					width: 100%;
-					padding: 4px 0;
 
-					i {
-						margin: 0 0 -7px -7px;
+					.text {
+						&:first-child {
+							font-size: 24px;
+						}
+
+						&:not(:first-child) {
+							color: $blueColor;
+							font-weight: bold;
+							text-align: left;
+							display: block;
+							width: 100%;
+							padding: 4px 0;
+
+							i {
+								margin: 0 0 -7px -7px;
+							}
+						}
+					}
+
+					.button {
+						width: 100%;
+
+						button {
+							background-color: $blueColor;
+							color: $whiteColor;
+							margin: 12px 0 0;
+							font-size: 12px;
+							text-transform: capitalize;
+							float: left;
+							height: 28px;
+							line-height: 28px;
+
+							span {
+								align-items: center;
+								display: flex;
+
+								i {
+									margin: 0 0 0 -8px;
+								}
+							}
+						}
 					}
 				}
 
-				.button {
-					width: 100%;
+				.actions {
+					margin: -6px -18px 0 0;
 
 					button {
-						background-color: $blueColor;
-						color: $whiteColor;
-						margin: 12px 0 0;
-						font-size: 12px;
-						text-transform: capitalize;
-						float: left;
-						height: 28px;
-						line-height: 28px;
-
-						span {
-							align-items: center;
-							display: flex;
-
-							i {
-								margin: 0 0 0 -8px;
-							}
-						}
+						border-radius: 50% !important;
 					}
 				}
 			}
@@ -2906,6 +2899,7 @@ body {
 	.mat-menu-panel {
 		border-radius: 3px !important;
 		max-height: 272px;
+		max-width: 220px;
 
 		.mat-menu-content {
 			button {
@@ -2913,15 +2907,15 @@ body {
 				text-transform: inherit;
 				line-height: 40px;
 				height: 40px;
-				display: flex;
-				align-items: center;
+				display: block;
 
 				img {
 					width: 20px;
+					min-width: 20px;
 					height: 20px;
 					border-radius: 3px;
 					overflow: hidden;
-					margin: 0 8px 0 0;
+					margin: 10px 12px -5px 0;
 				}
 
 				&:hover {
@@ -8325,6 +8319,8 @@ body {
 		}
 
 		.playlist {
+			width: 100%;
+
 			.info {
 				.left {
 					.image {

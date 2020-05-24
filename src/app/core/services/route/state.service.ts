@@ -68,7 +68,7 @@ export class RoutingStateService {
 		this.router.navigate([url]);
 	}
 
-	getLastUrl(){
+	getLastUrl() {
 		const url = (this.history ? this.history[this.history.length - 1] : null) || '/';
 		return url;
 	}

@@ -42,6 +42,7 @@ export class ActiveSessionsMobileComponent {
 					type: 'create'
 				};
 
+				this.close();
 				this.sessionService.setDataAddAccount(dataONS);
 				break;
 			case 'setCurrentUser':
@@ -50,6 +51,7 @@ export class ActiveSessionsMobileComponent {
 					data: item
 				};
 
+				this.close();
 				this.sessionService.setDataAddAccount(dataSCU);
 				break;
 			case 'closeSession':

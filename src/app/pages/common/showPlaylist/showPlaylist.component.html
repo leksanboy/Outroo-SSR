@@ -21,25 +21,47 @@
 				</div>
 
 				<div class="right">
-					<div class="title">
-						{{data?.info?.title}}
+					<div class="texts">
+						<div class="text">
+							{{data?.info?.title}}
+						</div>
+
+						<a class="text" routerLink="/{{data?.info?.user?.username}}" *ngIf="data?.info?.user?.id">
+							@{{data?.info?.user?.username}}
+							<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+						</a>
+
+						<div class="text" *ngIf="!data?.info?.user?.id">
+							{{translations?.audios?.editorsChoice}}
+						</div>
+
+						<div class="button">
+							<button mat-button (click)="playTrack('play')">
+								<i label="pause" *ngIf="data.playing" class="icon85 white"></i>
+								<i label="play" *ngIf="!data.playing" class="icon85 white"></i>
+								{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
+							</button>
+						</div>
 					</div>
 
-					<a class="subtitle" routerLink="/{{data?.info?.user?.username}}" *ngIf="data?.info?.user?.id">
-						@{{data?.info?.user?.username}}
-						<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-					</a>
-
-					<div class="subtitle" *ngIf="!data?.info?.user?.id">
-						{{translations?.audios?.editorsChoice}}
-					</div>
-
-					<div class="button">
-						<button mat-button (click)="playTrack('play')">
-							<i label="pause" *ngIf="data.playing" class="icon85 white"></i>
-							<i label="play" *ngIf="!data.playing" class="icon85 white"></i>
-							{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
+					<div class="actions" *ngIf="sessionData?.current?.id">
+						<button mat-icon-button [matMenuTriggerFor]="appMenu">
+							<i class="icon85 blue" label="check" *ngIf="data?.info?.addRemoveUser"></i>
+							<i class="icon85 grey" label="more" *ngIf="!data?.info?.addRemoveUser"></i>
 						</button>
+
+						<mat-menu #appMenu="matMenu">
+							<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', data?.info, i)">{{!data?.info?.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
+							<button mat-menu-item (click)="itemPlaylistOptions('follow', data?.info, i)">{{!data?.info?.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+							<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+							<button mat-menu-item (click)="itemPlaylistOptions('report', data?.info, i)">{{translations?.common?.report}}</button>
+						</mat-menu>
+
+						<mat-menu #menuShareSocial="matMenu">
+							<button mat-menu-item (click)="itemPlaylistOptions('message', data?.info, i)">{{translations?.common?.sendMessage}}</button>
+							<button mat-menu-item (click)="itemPlaylistOptions('newTab', data?.info, i)">{{translations?.common?.openInNewTab}}</button>
+							<button mat-menu-item (click)="itemPlaylistOptions('copyLink', data?.info, i)">{{translations?.common?.copyLink}}</button>
+						</mat-menu>
 					</div>
 				</div>
 			</div>

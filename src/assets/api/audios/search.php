@@ -63,6 +63,7 @@
 					description LIKE '%$caption%'
 					AND is_deleted = 0
 					AND type IS NULL
+					AND original_id IS NULL
 				ORDER BY RAND()
 					AND date DESC
 				LIMIT $more, $cuantity";

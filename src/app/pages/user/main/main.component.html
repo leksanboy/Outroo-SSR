@@ -41,14 +41,12 @@
 										<img [src]="x.avatar ? x.avatarUrl : env.avatar"/>
 									</div>
 
-									<div class="text" (click)="userOptions('setCurrentUser', x)">
-										<div class="in">
-											<div class="data">
-												<a class="name">{{x.username}}</a>
-												<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-											</div>
-											<div class="info">@{{x.username}}</div>
+									<div class="texts" (click)="userOptions('setCurrentUser', x)">
+										<div class="text">
+											{{x.username}}
+											<i class="icon50 blue" label="official" *ngIf="x.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 										</div>
+										<div class="text">@{{x.username}}</div>
 									</div>
 
 									<div class="actions">
@@ -70,14 +68,12 @@
 
 							<li *ngIf="sessionData?.sessions?.length < 10" (click)="userOptions('openNewSession', null)">
 								<div mat-ripple class="inner">
-									<div class="add">
+									<div class="avatar add">
 										<i label="add"></i>
 									</div>
-									<div class="text">
-										<div class="in">
-											<div class="data">{{translations?.common?.addAccount}}</div>
-											<div class="info">{{translations?.common?.setAnotherAccount}}</div>
-										</div>
+									<div class="texts">
+										<div class="text">{{translations?.common?.addAccount}}</div>
+										<div class="text">{{translations?.common?.setAnotherAccount}}</div>
 									</div>
 								</div>
 							</li>
