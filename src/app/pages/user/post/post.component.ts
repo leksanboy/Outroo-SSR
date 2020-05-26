@@ -190,15 +190,17 @@ export class PostComponent implements OnInit, OnDestroy {
 	}
 
 	// Play video
-	playVideo(item, player) {
-		player = document.getElementById(player);
-		player.load();
-		player.play();
-		item.playButton = true;
+	playVideo(type, item) {
+		if (type === 'play') {
+			let player: any = document.getElementById('videoPlayer' + item.id);
+			item.playButton = !item.playButton;
 
-		player.addEventListener('ended', myHandler, false);
-
-		function myHandler(e) {
+			if (player.paused) {
+				player.play();
+			} else {
+				player.pause();
+			}
+		} else if (type === 'end') {
 			item.playButton = false;
 		}
 	}

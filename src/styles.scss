@@ -1740,25 +1740,30 @@ body {
 				float: left;
 
 				.photos {
+					position: relative;
 					width: 100%;
 					float: left;
 
-					img {
-						width: 100%;
-					}
-
+					img,
 					video {
-						max-height: 360px;
-						width: 100%;
+						max-height: 80vh;
+						max-width: 100%;
+						margin: 0 auto;
+						display: block;
 					}
 
-					.playPause {
-						margin: -43px 0 0 -43px;
+					.play {
 						position: absolute;
-						height: 86px;
-						width: 86px;
+						height: 80px;
+						width: 80px;
 						left: 50%;
 						top: 50%;
+						margin: -40px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						cursor: pointer;
+						color: $whiteColor;
 					}
 				}
 
@@ -4192,21 +4197,21 @@ body {
 				overflow: hidden;
 				float: left;
 				height: 100vw;
-				max-height: 666px;
+				max-height: 80vh;
 				width: 100%;
 				max-width: 666px;
 
 				.image {
-					position: absolute;
+					position: fixed;
 					height: 100%;
 					width: 100%;
 
 					.img {
-						background-position: center 35%;
+						background-position: center center;
 						background-repeat: no-repeat;
 						transform: translate(0px);
 						box-sizing: border-box;
-						background-size: cover;
+						background-size: contain;
 						display: inline-block;
 						height: 100%;
 						width: 100%;
@@ -5248,6 +5253,7 @@ body {
 						width: 65vh;
 						height: 65vh;
 						line-height: 65vh;
+						position: relative;
 
 						img,
 						video {
@@ -5293,13 +5299,18 @@ body {
 							}
 						}
 
-						.playPause {
-							margin: -43px 0 0 -43px;
+						.play {
 							position: absolute;
-							height: 86px;
-							width: 86px;
+							height: 80px;
+							width: 80px;
 							left: 50%;
 							top: 50%;
+							margin: -40px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							cursor: pointer;
+							color: $whiteColor;
 						}
 					}
 
@@ -9530,6 +9541,21 @@ body {
 								i {
 									background-color: $greyColor !important;
 									opacity: .5;
+								}
+							}
+						}
+
+						mat-progress-spinner {
+							height: 42px !important;
+							width: 42px !important;
+							margin: 0 auto;
+
+							svg {
+								height: 42px !important;
+								width: 42px !important;
+
+								circle {
+									stroke: currentColor !important;
 								}
 							}
 						}

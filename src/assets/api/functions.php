@@ -612,7 +612,7 @@
 
 		$sql = "SELECT id
 				FROM z_photos_likes
-				WHERE photo = '$photo' 
+				WHERE photo = '$photo'
 					AND user = $user";
 		$result = $conn->query($sql)->num_rows;
 

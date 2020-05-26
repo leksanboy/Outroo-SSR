@@ -401,14 +401,14 @@ THE SOFTWARE.
 @angular/animations
 MIT
 
+@angular/material/progress-spinner
+
 @angular/material/menu
 
 @angular/material/divider
 
 @angular/forms
 MIT
-
-@angular/material/progress-spinner
 
 @angular/material/core
 

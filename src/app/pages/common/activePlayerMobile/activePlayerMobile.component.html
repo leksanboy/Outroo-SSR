@@ -48,8 +48,9 @@
 				</button>
 
 				<button mat-fab (click)="playSong('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}">
-					<i class="play" *ngIf="!audioPlayerData?.playing" [style.background]="audioPlayerData?.current?.color"></i>
-					<i class="pause" *ngIf="audioPlayerData?.playing" [style.background]="audioPlayerData?.current?.color"></i>
+					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading" [style.background]="audioPlayerData?.current?.color"></i>
+					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading" [style.background]="audioPlayerData?.current?.color"></i>
+					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
 				</button>
 
 				<button mat-mini-fab (click)="playSong('next', '')" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">

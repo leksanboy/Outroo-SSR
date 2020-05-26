@@ -30,7 +30,7 @@
 						<li *ngFor="let x of dataDefault?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
 							<span class="inner" *ngIf="!x.contentTypeAd">
 								<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
-									<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.contentData ? (env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
+									<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
 								</a>
 							</span>
 
@@ -149,7 +149,7 @@
 								<li *ngFor="let x of dataPosts?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
 									<span class="inner" *ngIf="!x.contentTypeAd">
 										<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
-											<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.contentData ? (env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
+											<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
 										</a>
 									</span>
 
@@ -223,27 +223,22 @@
 						<div class="text">{{data.selectedHashtag}}</div>
 					</div>
 
-					<div class="line" *ngFor="let line of dataHashtag.list" [ngClass]="{'ad': line.contentTypeAd}">
-						<ul class="publications" *ngIf="!line.contentTypeAd">
-							<li mat-ripple *ngFor="let x of line">
-								<a class="image" (click)="show(x, i)">
-									<span *ngIf="x.type === 'photo'">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.photos.mimetype.indexOf('image') !== -1 ? env.pathPhotos : env.pathVideos) + 'thumbnails/' + x.photos.name + ')'}"></div>
-									</span>
-									<span *ngIf="x.type === 'url'">
-										<div class="img" [ngStyle]="{'background-image': 'url(' + x.urlVideo.thumbnail + ')'}"></div>
-									</span>
+					<ul class="publicationsBoxes" *ngIf="dataHashtag?.list">
+						<li *ngFor="let x of dataHashtag?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
+							<span class="inner" *ngIf="!x.contentTypeAd">
+								<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
+									<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
 								</a>
-							</li>
-						</ul>
+							</span>
 
-						<div class="adContent" *ngIf="line.contentTypeAd">
-							<div class="box" [innerHtml]="line.content | safeHtml"></div>
-							<div class="disableAdBlock" *ngIf="hideAd">
-								{{translations?.common?.disableAdBlock}}
+							<div class="ad" *ngIf="x.contentTypeAd">
+								<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+								<div class="disableAdBlock" *ngIf="hideAd">
+									{{translations?.common?.disableAdBlock}}
+								</div>
 							</div>
-						</div>
-					</div>
+						</li>
+					</ul>
 
 					<div class="loadingData" *ngIf="dataHashtag.loadingData">
 						<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

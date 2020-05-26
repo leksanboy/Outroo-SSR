@@ -41,35 +41,37 @@
 
 							<div class="body">
 								<div class="photos" *ngIf="x?.photos">
-									<span *ngIf="x?.photos.length == 1">
-										<img *ngIf="x?.photos[0].mimetype.indexOf('image') !== -1" [src]="env.pathPhotos + x?.photos[0].name">
+									<span *ngIf="x?.photos?.length === 1">
+										<img *ngIf="!x?.photos[0].duration" [src]="env.pathPhotos + x?.photos[0].name">
 
-										<video *ngIf="x?.photos[0].mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{x?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + x?.photos[0].name}}">
-											<source src="{{env.pathVideos + x?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
-										</video>
+										<span *ngIf="x?.photos[0].duration">
+											<video (click)="playVideo('play', x?.photos[0])" id="videoPlayer{{x?.photos[0].id}}" width="100%" height="auto" preload="none" poster="{{env.pathVideos + 'thumbnails/' + x?.photos[0].name}}" (ended)="playVideo('end', x?.photos[0])">
+												<source src="{{env.pathVideos + x?.photos[0].name.split('.')[0] + '.mp4'}}" type="video/mp4">
+											</video>
 
-										<span *ngIf="x?.photos[0].mimetype.indexOf('video') !== -1">
-											<div class="playPause" (click)="playVideo(x?.photos[0], 'videoPlayer' + x?.id)" *ngIf="!x?.photos[0].playButton">
-												<i label="play"></i>
+											<div class="play" (click)="playVideo('play', x?.photos[0])" *ngIf="!x?.photos[0].playButton">
+												<i label="play" class="icon300"></i>
 											</div>
 										</span>
 									</span>
 
-									<swiper *ngIf="x?.photos.length > 1" [config]="swiperConfig">
+									<swiper *ngIf="x?.photos?.length > 1" [config]="swiperConfig">
 										<div class="swiper-wrapper">
 											<div class="swiper-slide" *ngFor="let p of x?.photos">
 												<div class="slide">
 													<div class="image">
-														<div class="img" *ngIf="p.mimetype.indexOf('image') !== -1" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p.name + ')'}"></div>
+														<div class="img" *ngIf="!p?.duration" [ngStyle]="{'background-image': 'url(' + env.pathPhotos + p?.name + ')'}"></div>
 
-														<video *ngIf="p.mimetype.indexOf('video') !== -1" attr.id="videoPlayer{{p?.id}}" width="100%" height="auto" poster="{{env.pathVideos + 'thumbnails/' + p?.name}}">
-															<source src="{{env.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
-														</video>
+														<span *ngIf="p?.duration">
+															<video *ngIf="p?.duration" (click)="playVideo('play', p)" id="videoPlayer{{p?.id}}" width="100%" height="auto" preload="none" poster="{{env.pathVideos + 'thumbnails/' + p?.name}}" (ended)="playVideo('end', p)">
+																<source src="{{env.pathVideos + p?.name.split('.')[0] + '.mp4'}}" type="video/mp4">
+															</video>
 
-														<span *ngIf="p.mimetype.indexOf('video') !== -1">
-															<div class="playPause" (click)="playVideo(p, 'videoPlayer' + p?.id)" *ngIf="!p.playButton">
-																<i label="play"></i>
-															</div>
+															<span *ngIf="p?.duration">
+																<div class="play" (click)="playVideo('play', p)" *ngIf="!p?.playButton">
+																	<i label="play" class="icon300"></i>
+																</div>
+															</span>
 														</span>
 													</div>
 												</div>
