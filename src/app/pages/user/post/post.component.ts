@@ -165,7 +165,7 @@ export class PostComponent implements OnInit, OnDestroy {
 					this.updateReplays(res.id);
 
 					// Meta
-					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].title : res.user.name));
+					const t = res.user.name + ' - ' + (res.content_original ? res.content_original : (res.audios ? res.audios[0].original_title : ''));
 					const metaData = {
 						page: t,
 						title: t,
