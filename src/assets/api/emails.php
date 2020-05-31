@@ -3,7 +3,39 @@
 	require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
 
 	// Register "Welcome"
-	function emailWelcome($name, $email, $hash) {
+	function emailWelcome($email, $lang, $name, $hash) {
+		$translations  = array(
+			'en' => array(
+				'subject'	=> 'Welcome to Outroo '.$name.', please confirm your email',
+				'title'		=> 'Welcome',
+				'hello'		=> 'Hello <b>'.$name.'</b>, thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.',
+				'confirm'	=> 'Confirm your email address <b>'.$email.'</b>, click on the button below.',
+				'button'	=> 'Confirm email address'
+			),
+			'es' => array(
+				'subject' 	=> 'Bienvenido a Outroo'.$name.', por favor, confirma tu email',
+				'title'		=> 'Bienvenido',
+				'hello'		=> 'Hola <b>'.$name.'</b>, gracias por crear la cuenta. Sigue a otras personas, busca increíbles canciones y comparte tus fotos y videos con el resto de la comunidad.',
+				'confirm'	=> 'Confirma tu dirección de correo electrónico <b>'.$email.'</b>, haz click en el siguiente botón.',
+				'button'	=> 'Confirmar correo electrónico'
+			),
+			'ru' => array(
+				'subject' 	=> 'Добро пожаловать в Outroo'.$name.', пожалуйста подтвердите свою электронную почту',
+				'title'		=> 'Добро пожаловать',
+				'hello'		=> 'Здравствуйте <b>'.$name.'</b>, спасибо за создание аккаунта. Следите за другими людьми, находите потрясающие песни и делитесь своими фотографиями и видео с остальным сообществом.',
+				'confirm'	=> 'Подтвердите ваш электронный адрес <b>'.$email.'</b>, нажмите на кнопку ниже.',
+				'button'	=> 'Подтвердить электронный адрес'
+			)
+		);
+
+		if ($lang == 1) {
+			$translations = $translations['en'];
+		} else if ($lang == 2) {
+			$translations = $translations['es'];
+		} else if ($lang == 3) {
+			$translations = $translations['ru'];
+		}
+
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -22,24 +54,24 @@
 																<tbody>
 																	<tr>
 																		<td id="title" style="padding:0 5% 24px;font:18px/12px Arial,Helvetica,sans-serif;font-weight:bold;text-transform:uppercase;color:#333">
-																			Welcome
+																			'.$translations['title'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			Hello <b>'.$name.'</b>, thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.
+																			'.$translations['hello'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			Confirm your email address <b>'.$email.'</b>, click on the button below.
+																			'.$translations['confirm'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:12px 5% 18px;">
 																			<a href="'.$urlWeb.'confirm-email/'.$hash.'" style="padding:10px 14px;text-decoration:none;background:#2196f3;color:#ffffff;border-radius:5px;font:300 15px/14px Arial,Helvetica,sans-serif;">
 																				<nowrap>
-																					Confirm email address
+																					'.$translations['button'].'
 																				</nowrap>
 																			</a>
 																		</td>
@@ -90,20 +122,62 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';
 		$mail->setFrom('noreply.outhroo@gmail.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
-		$mail->Subject = 'Welcome to Outroo, '.$name.'! Please confirm your email.';
+		$mail->Subject = $translations['subject'];
 		$mail->IsHTML(true);
 		$mail->Body = $messageContent;
 		$mail->Send();
 	}
 
 	// New login
-	function emailNewLogin($name, $email, $hash, $device, $location, $date) {
+	function emailNewLogin($email, $lang, $name, $hash, $device, $location, $date) {
+		$translations  = array(
+			'en' => array(
+				'subject'	=> 'New login',
+				'title'		=> 'New login',
+				'device'	=> 'Device',
+				'location'	=> 'Location',
+				'date'		=> 'Date',
+				'approx'	=> 'The location is approximate according to the IP address of the login.',
+				'detected'	=> 'Hello <b>@'.$name.'</b>, we have detected a new login activity on your account.',
+				'button' 	=> 'If you haven\'t done this action, your account may have been compromised and should complete a few steps to make sure your account is safe, please <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">Reset your password now</a>.'
+			),
+			'es' => array(
+				'subject' 	=> 'Nuevo inicio de sesión',
+				'title'		=> 'Nuevo inicio de sesión',
+				'device' 	=> 'Dispositivo',
+				'location' 	=> 'Ubicación',
+				'date' 		=> 'Fecha',
+				'approx' 	=> 'La ubicación es aproximada según la dirección IP del inicio de sesión',
+				'detect' 	=> 'Hola <b>@'.$name.'</b>, hemos detectado una nueva actividad de inicio de sesión en su cuenta.',
+				'button' 	=> 'Si no ha realizado esta acción, su cuenta puede haber sido comprometida y debe completar algunos pasos para asegurarse de que su cuenta esté segura, por favor <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">Restablezca su contraseña ahora</a>.'
+			),
+			'ru' => array(
+				'subject' 	=> 'Новый логин.',
+				'title'		=> 'Новый логин',
+				'device' 	=> 'Устройство',
+				'location' 	=> 'Расположение',
+				'date' 		=> 'Дата',
+				'approx' 	=> 'Местоположение является приблизительным в соответствии с IP-адресом для входа.',
+				'detect'	=> 'Здравствуйте <b>@'.$name.'</b>, мы обнаружили новую активность входа в вашу учетную запись.',
+				'button' 	=> 'Если вы не выполнили это действие, возможно, ваша учетная запись была взломана и должна выполнить несколько шагов, чтобы убедиться, что ваша учетная запись безопасна, <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">Восстановить пароль сейчас</a>.'
+			)
+		);
+
+		if ($lang == 1) {
+			$translations = $translations['en'];
+		} else if ($lang == 2) {
+			$translations = $translations['es'];
+		} else if ($lang == 3) {
+			$translations = $translations['ru'];
+		}
+
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -122,42 +196,37 @@
 																<tbody>
 																	<tr>
 																		<td id="title" style="padding:0 5% 24px;font:18px/12px Arial,Helvetica,sans-serif;font-weight:bold;text-transform:uppercase;color:#333">
-																			New login
+																			'.$translations['title'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 4px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			<b>Device</b>: '.$device.'
+																			<b>'.$translations['device'].'</b>: '.$device.'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 4px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			<b>Location</b>: '.$location.'
+																			<b>'.$translations['location'].'</b>: '.$location.'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 4px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			<b>Date</b>: '.$date.'
+																			<b>'.$translations['date'].'</b>: '.$date.'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:12px/18px Arial,Helvetica,sans-serif;color:#999">
-																			The location is approximate according to the IP address of the login.
+																			'.$translations['approx'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			Hello <b>@'.$name.'</b>, we have detected a new login activity on your account.
+																			'.$translations['detect'].'
 																		</td>
 																	</tr>
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#999">
-																			If you haven\'t done this action, your account may have been compromised
-																			and should complete a few steps to make sure your account is safe, please
-																			<a href="'.$urlWeb.'reset-password/'.$hash.'" style="color:#09f;text-decoration:none" role="link" target="_blank">
-																				reset your password now
-																			</a>
-																			.
+																			'.$translations['button'].'
 																		</td>
 																	</tr>
 																</tbody>
@@ -206,20 +275,21 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';
 		$mail->setFrom('noreply.outhroo@gmail.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
-		$mail->Subject = "New login";
+		$mail->Subject = $translations['subject'];
 		$mail->IsHTML(true);
 		$mail->Body = $messageContent;
 		$mail->Send();
 	}
 
 	// Forgot password
-	function emailForgotPassword($name, $email, $hash) {
+	function emailForgotPassword($email, $lang, $name, $hash) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -315,6 +385,7 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';
@@ -328,7 +399,7 @@
 	}
 
 	// Reset password
-	function emailResetPassword($name, $email, $hash) {
+	function emailResetPassword($email, $lang, $name, $hash) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -412,6 +483,7 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';
@@ -425,7 +497,7 @@
 	}
 
 	// Support
-	function emailSupportQuestion($email, $content) {
+	function emailSupportQuestion($email, $lang, $content) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -529,6 +601,7 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';
@@ -542,7 +615,7 @@
 	}
 
 	// Report
-	function emailReport($email, $content) {
+	function emailReport($email, $lang, $content) {
 		$urlWeb = 'https://outroo.com/';
 		$nameWeb = 'Outroo';
 		$messageContent = '<div style="background-color:#fff">
@@ -564,7 +637,6 @@
 																			Report
 																		</td>
 																	</tr>
-
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
 																			Hello, recently we received a report from this email <b>'.$email.'</b> in Support.
@@ -646,6 +718,7 @@
 		$mail->SMTPSecure = 'tls';
 		$mail->Host = 'smtp.gmail.com';
 		$mail->Port = 587;
+		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.outhroo@gmail.com';
 		$mail->Password = 'Rafalskyy1991';

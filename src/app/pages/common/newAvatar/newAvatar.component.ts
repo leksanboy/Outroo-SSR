@@ -90,11 +90,12 @@ export class NewAvatarComponent implements OnInit {
 
 					this.submitLoading = true;
 
-					const d = {
+					const data = {
+						type: 'avatar',
 						image: imageBase64
 					};
 
-					this.userDataService.updateAvatar(d)
+					this.userDataService.updateData(data)
 						.subscribe(res => {
 							setTimeout(() => {
 								this.submitLoading = false;

@@ -4,21 +4,24 @@
 			<div class="panel">
 				<div class="dataBox">
 					<div class="head">
-						<button mat-icon-button class="l" (click)="goBack()" *ngIf="!comeFromUserButton">
-							<i label="back"></i>
-						</button>
-
-						<div class="text">
-							<span class="active" (click)="showAccounts = !showAccounts" *ngIf="userData?.id === sessionData?.current?.id">
-								{{userData?.username}}
-								<i label="arrow-mini-line" [ngClass]="{active: showAccounts}"></i>
-							</span>
-							<span *ngIf="!(userData?.id === sessionData?.current?.id)">
-								{{userData?.username}}
-							</span>
+						<div class="b" (click)="goBack()" *ngIf="!comeFromUserButton">
+							<button mat-icon-button>
+								<i label="back"></i>
+							</button>
+							<div class="text">{{translations?.common?.back}}</div>
 						</div>
 
-						<button mat-icon-button class="r" [matMenuTriggerFor]="options" *ngIf="sessionData?.current?.id">
+						<div class="name">
+							<div class="in" *ngIf="userData?.id === sessionData?.current?.id">
+								<span class="n active" (click)="showAccounts = !showAccounts">{{userData?.username}}</span>
+								<i label="arrow-mini-line" [ngClass]="{active: showAccounts}" (click)="showAccounts = !showAccounts"></i>
+							</div>
+							<div class="in" *ngIf="!(userData?.id === sessionData?.current?.id)">
+								<span class="n">{{userData?.username}}</span>
+							</div>
+						</div>
+
+						<button mat-icon-button class="m" [matMenuTriggerFor]="options" *ngIf="sessionData?.current?.id">
 							<i label="more"></i>
 						</button>
 

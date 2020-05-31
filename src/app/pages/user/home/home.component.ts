@@ -10,6 +10,7 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -53,7 +54,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
-		private publicationsDataService: PublicationsDataService
+		private publicationsDataService: PublicationsDataService,
+		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -126,6 +128,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.activeSessionPlaylists.unsubscribe();
 		this.activePlayerInformation.unsubscribe();
 		this.activeLanguage.unsubscribe();
+	}
+
+	// Go back
+	goBack() {
+		this.routingStateService.getPreviousUrl();
 	}
 
 	// Push Google Ad
@@ -306,25 +313,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.postId = data.id;
-				this.audioPlayerData.list = data.audios;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username;
-				this.audioPlayerData.location = 'user';
-				this.audioPlayerData.type = type;
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.postId === data.id
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.postId = data.id;
+			this.audioPlayerData.list = data.audios;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.sessionData.current.id;
+			this.audioPlayerData.username = this.sessionData.current.username; */
+			this.audioPlayerData.location = 'user';
+			this.audioPlayerData.type = type;
 
-				item.playing = true;
-				this.playerService.setData(this.audioPlayerData);
-			}
+			item.playing = true;
+			this.playerService.setData(this.audioPlayerData);
 		}
 	}
 

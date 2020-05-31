@@ -132,6 +132,10 @@ body {
 		color: $greyColor;
 	}
 
+	canvas {
+		display: none;
+	}
+
 	.hiddenItem {
 		display: none;
 	}
@@ -1348,7 +1352,7 @@ body {
 		overflow-x: auto;
 		padding: 0 18px;
 		width: 100%;
-		margin: 0 0 12px;
+		margin: 0;
 
 		li {
 			box-sizing: border-box;
@@ -1809,7 +1813,7 @@ body {
 						float: left;
 
 						.new {
-							background-color: #2e2e2e;
+							background-color: transparentize($greyColor, 0.75);
 							width: calc(100% - 24px);
 							box-sizing: border-box;
 							margin: 12px 12px 0;
@@ -2420,7 +2424,7 @@ body {
 			}
 
 			.right {
-				width: calc(100% - 216px);
+				width: 100%;
 				box-sizing: border-box;
 				padding: 0 0 0 18px;
 				display: flex;
@@ -5384,7 +5388,7 @@ body {
 								float: left;
 
 								.new {
-									background-color: #2e2e2e;
+									background-color: transparentize($greyColor, 0.75);
 									width: calc(100% - 24px);
 									box-sizing: border-box;
 									margin: 12px 12px 0;
@@ -6384,6 +6388,7 @@ body {
 			top: 0;
 
 			.back {
+				cursor: pointer;
 				align-items: center;
 				position: relative;
 				display: flex;
@@ -6395,23 +6400,26 @@ body {
 					border-radius: 50% !important;
 					margin: 0 6px;
 					float: left;
+					color: #e91e63;
 				}
 
 				.text {
 					font-size: 18px;
 					float: left;
+					color: #e91e63;
 				}
 
 				.action {
 					margin: 0 12px 0 0;
 					position: absolute;
 					right: 0;
+					color: inherit;
 				}
 			}
 
 			.pageTitle {
 				text-overflow: ellipsis;
-				padding: 12px 18px 18px;
+				padding: 6px 18px 18px;
 				box-sizing: border-box;
 				font-weight: bold;
 				overflow: hidden;
@@ -6645,41 +6653,66 @@ body {
 							height: 56px;
 							width: 100%;
 
-							button {
-								border-radius: 50% !important;
-								margin: 8px 6px;
-								z-index: 1;
+							.b {
+								cursor: pointer;
+								align-items: center;
+								position: relative;
+								display: flex;
+								height: 56px;
+								float: left;
+								color: #e91e63;
 
-								&.l {
+								button {
+									border-radius: 50% !important;
+									margin: 0 6px;
 									float: left;
 								}
 
-								&.r {
-									margin: 8px 0;
-									float: right;
+								.text {
+									font-size: 18px;
+									float: left;
 								}
 							}
 
-							.text {
+							.name {
 								justify-content: center;
 								align-items: center;
 								position: absolute;
 								font-weight: bold;
 								display: flex;
 								width: 100%;
+								font-size: 18px;
 
-								span {
+								.in {
+									justify-content: center;
 									align-items: center;
 									display: flex;
+									width: 100%;
 
-									&.active {
-										cursor: pointer;
+									.n {
+										text-overflow: ellipsis;
+										overflow: hidden;
+										max-width: 30%;
+										white-space: nowrap;
+										display: block;
+
+										&.active {
+											cursor: pointer;
+										}
 									}
 
 									i {
 										margin: 0 -12px 0 0;
+										cursor: pointer;
 									}
 								}
+							}
+
+							button.m {
+								border-radius: 50% !important;
+								z-index: 1;
+								margin: 8px 0;
+								float: right;
 							}
 						}
 
@@ -8096,6 +8129,7 @@ body {
 								#audioAnalyser {
 									margin: 0 .5px 13px;
 									position: absolute;
+									display: block;
 									height: 32px;
 									width: 100%;
 									z-index: -1;

@@ -13,7 +13,7 @@
 	$locationPath = '/var/www/html/assets/media/audios/';
 	$explicit = $_POST['explicit'] ? 1 : 0;
 
-    // If not files to update (count files = 0)
+    // If no files to update (count files = 0)
 	if (!$fileTmpLoc) exit();
 
 	// Start to upload

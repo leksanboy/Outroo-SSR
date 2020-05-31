@@ -27,7 +27,7 @@
 				mkdir('/var/www/html/assets/media/user/'.$insertedUser.'/background', 0777, true);
 
 				// Send mail
-				emailWelcome(html_entity_decode($name, ENT_QUOTES), $email, $generatedHash);
+				emailWelcome($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash);
 
 				// Return response status
 				var_dump(http_response_code(204));

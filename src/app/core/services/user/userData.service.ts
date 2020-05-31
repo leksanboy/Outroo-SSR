@@ -226,69 +226,7 @@ export class UserDataService {
 	}
 
 	updateData(data) {
-		const url = this.env.url + 'assets/api/user/updateData.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return this.setSessionData('update', res);
-			}));
-	}
-
-	updateTheme(data) {
-		const url = this.env.url + 'assets/api/user/updateTheme.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return this.setSessionData('update', res);
-			}));
-	}
-
-	updateLanguage(lang) {
-		const url = this.env.url + 'assets/api/user/updateLanguage.php';
-		const params = {
-			language: lang
-		};
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return this.setSessionData('update', res);
-			}));
-	}
-
-	updatePrivate(data) {
-		const url = this.env.url + 'assets/api/user/updatePrivate.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return this.setSessionData('update', res);
-			}));
-	}
-
-	updatePassword(data) {
-		const url = this.env.url + 'assets/api/user/updatePassword.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return res;
-			}));
-	}
-
-	updateAvatar(data) {
-		const url = this.env.url + 'assets/api/user/updateAvatar.php';
-		const params = data;
-
-		return this.httpClient.post(url, params, this.headersService.getHeaders())
-			.pipe(map(res => {
-				return this.setSessionData('update', res);
-			}));
-	}
-
-	updateBackground(data) {
-		const url = this.env.url + 'assets/api/user/updateBackground.php';
+		const url = this.env.url + 'assets/api/user/update.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

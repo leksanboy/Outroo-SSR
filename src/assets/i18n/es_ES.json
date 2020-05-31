@@ -405,7 +405,7 @@
 		"emailOrPasswordIncorrect": "La contraseña no es correcta",
 		"isTooShort": "Escribe algo",
 		"isTooLong": "El texto es demasiado largo",
-		"commentPlaceholder": "Escribe aqui...",
+		"commentPlaceholder": "Comenta aqui...",
 		"loadComments": "Cargar comentarios",
 		"incorrectCredentials": "Las credenciales no son válidas",
 		"emailNotExist": "El correo electrónico no existe",

@@ -122,9 +122,9 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 						// Set playlist current playing
 						if (this.sessionData) {
-							if (this.sessionData.current.audioPlayerData && this.sessionData.current.audioPlayerData.user === this.userData.id) {
-								this.audioPlayerData = this.sessionData.current.audioPlayerData;
-							}
+							/* if (this.sessionData.audioPlayerData && this.sessionData.audioPlayerData.user === this.userData.id) {
+								this.audioPlayerData = this.sessionData.audioPlayerData;
+							} */
 
 							// Load general
 							if (this.sessionData.current.id === this.userData.id) {
@@ -164,7 +164,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				}
 			});
 
-		// Audio data
+		// Get current track
 		this.activePlayerInformation = this.playerService.getCurrentTrack()
 			.subscribe(data => {
 				this.audioPlayerData = data;
@@ -923,8 +923,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 		if (type === 1) { // Add files
 			for (const file of event.currentTarget.files) {
-				console.log('file', file);
-
 				if (file) {
 					file.title = file.name.replace('.mp3', '');
 					/* file.title = file.name; */
@@ -1101,28 +1099,24 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key === key &&
-				this.audioPlayerData.type === type &&
-				this.audioPlayerData.item.song === item.song
-			) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.list = data;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.userData.id;
-				this.audioPlayerData.username = this.userData.username;
-				this.audioPlayerData.location = 'audios';
-				this.audioPlayerData.type = type;
-				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.userData.id;
+			this.audioPlayerData.username = this.userData.username; */
+			this.audioPlayerData.location = 'audios';
+			this.audioPlayerData.type = type;
+			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
 
-				this.playerService.setData(this.audioPlayerData);
-				item.playing = true;
-			}
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
 		}
 	}
 

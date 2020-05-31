@@ -269,7 +269,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 		} else if (action === 'remove') {
 			this.sessionData.current.newAvatar = '';
-			this.userDataService.updateAvatar(this.sessionData.current)
+			const data = {
+				type: 'avatar',
+				avatar: null
+			};
+
+			this.userDataService.updateData(data)
 				.subscribe(res => {
 					this.sessionData = res;
 					this.sessionService.setData(this.sessionData);
@@ -312,19 +317,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
 		if (type === 'personal') {
 			const form = this.actionFormPersonalData.value;
 			const regex = /^[a-zA-Z0-9._-]+$/;
-			const params = {
+			const data = {
+				type: 'data',
 				username: form.username,
 				name: form.name.trim(),
 				language: form.language,
 				about: form.about
 			};
 
-			if (params.username.trim().length === 0 || !regex.test(params.username)) {
+			if (data.username.trim().length === 0 || !regex.test(data.username)) {
 				this.alertService.error(this.translations.settings.usernameRequirements);
 			} else {
 				this.submitPersonalLoading = true;
 
-				this.userDataService.updateData(params)
+				this.userDataService.updateData(data)
 					.subscribe(res => {
 						setTimeout(() => {
 							this.submitPersonalLoading = false;
@@ -355,20 +361,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				if (form.newPassword.trim() !== form.confirmPassword.trim()) {
 					this.alertService.error(this.translations.settings.passwordsNotMatch);
 				} else {
-					this.submitPasswordLoading = false;
+					this.submitPasswordLoading = true;
 
 					const data = {
+						type: 'password',
 						oldPassword: form.oldPassword,
 						newPassword: form.newPassword
 					};
 
-					this.userDataService.updatePassword(data)
+					this.userDataService.updateData(data)
 						.subscribe(res => {
-							setTimeout(() => {
-								this.validatorOldPassword = 'done';
-								this.submitPasswordLoading = false;
-								this.alertService.success(this.translations.common.savedSuccessfully);
-							}, 1000);
+							this.validatorOldPassword = 'done';
+							this.submitPasswordLoading = false;
+							this.alertService.success(this.translations.common.savedSuccessfully);
+
+							// Reset password data form
+							this.actionFormPasswordData = this._fb.group({
+								oldPassword: [''],
+								newPassword: [''],
+								confirmPassword: ['']
+							});
 						}, error => {
 							this.validatorOldPassword = 'bad';
 							this.submitPasswordLoading = false;
@@ -380,10 +392,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			}
 		} else if (type === 'privacy') {
 			const data = {
+				type: 'private',
 				private: this.sessionData.current.private ? 0 : 1
 			};
 
-			this.userDataService.updatePrivate(data)
+			this.userDataService.updateData(data)
 				.subscribe(res => {
 					this.sessionData = this.userDataService.getSessionData();
 					this.sessionService.setData(this.sessionData);

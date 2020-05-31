@@ -5,7 +5,8 @@
 	$session = sessionId();
     $pageId = $data['pageId'];
     $pageType = $data['pageType'];
-    $content = $data['content'];
+	$content = $data['content'];
+	$language = $data['language'];
 
 	if (isset($session)) {
         // create question
@@ -14,7 +15,7 @@
 		$result = $conn->query($sql);
 
         // Send email
-		// emailSupportQuestion($email, $content);
+		emailReport($email, $language, $content);
 
 		// return response status
 		var_dump(http_response_code(204));

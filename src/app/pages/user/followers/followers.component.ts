@@ -92,7 +92,9 @@ export class FollowersComponent implements OnInit, OnDestroy {
 		}
 
 		// Denied
-		if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
+		if (!this.sessionData) {
+			this.deniedAccessOnlySession = true;
+		} else if (this.userData.id !== this.sessionData.current.id && this.userData.private && this.userData.status !== 'following') {
 			this.deniedAccessOnlySession = true;
 		}
 

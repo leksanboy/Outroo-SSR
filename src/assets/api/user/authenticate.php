@@ -66,7 +66,7 @@
 		$date = date('l jS\, F Y h:i:s A').' ('.$zone.')';
 
 		// Send email
-		emailNewLogin($result['username'], $result['email'], $result['rp'], $device , $location, $date);
+		emailNewLogin($result['email'], $result['languages'], $result['username'], $result['rp'], $device , $location, $date);
 
 		// Return data
 		echo json_encode($result);

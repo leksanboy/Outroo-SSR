@@ -230,25 +230,24 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key === key && this.audioPlayerData.type === type && this.audioPlayerData.postId === data.id) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.postId = data.id;
-				this.audioPlayerData.list = data.audios;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username;
-				this.audioPlayerData.location = 'user';
-				this.audioPlayerData.type = type;
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.postId === data.id
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.postId = data.id;
+			this.audioPlayerData.list = data.audios;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.sessionData.current.id;
+			this.audioPlayerData.username = this.sessionData.current.username; */
+			this.audioPlayerData.location = 'user';
+			this.audioPlayerData.type = type;
 
-				item.playing = true;
-				this.playerService.setData(this.audioPlayerData);
-			}
+			item.playing = true;
+			this.playerService.setData(this.audioPlayerData);
 		}
 	}
 

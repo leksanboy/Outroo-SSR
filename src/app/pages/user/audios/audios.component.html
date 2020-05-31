@@ -471,7 +471,7 @@
 												{{x.title}}
 											</a>
 
-											<div class="actions">
+											<div class="actions" *ngIf="sessionData?.current?.id">
 												<div class="category" *ngIf="userData?.id === sessionData?.current?.id && x.type === 'follow'">
 													<i label="link" class="icon75 blue" matTooltip="{{translations?.common?.followingPlaylistSuccessfully}}"></i>
 												</div>

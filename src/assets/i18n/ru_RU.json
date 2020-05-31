@@ -405,7 +405,7 @@
 		"emailOrPasswordIncorrect": "Пароль неверный",
 		"isTooShort": "Напиши что-нибудь",
 		"isTooLong": "Текст слишком длинный",
-		"commentPlaceholder": "Пишите здесь...",
+		"commentPlaceholder": "Комментируй здесь...",
 		"loadComments": "Загрузить комментарии",
 		"incorrectCredentials": "Учетные данные не действительны",
 		"emailNotExist": "Электронная почта не существует",

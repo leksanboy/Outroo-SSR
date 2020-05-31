@@ -598,7 +598,10 @@
 	function getPhotoData($id){
 		global $conn;
 
-		$sql = "SELECT id, name, mimetype, duration
+		$sql = "SELECT id,
+						name,
+						mimetype,
+						duration
 				FROM z_photos
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -879,7 +882,11 @@
 	function getIdNameContentMediaCommentFromPublicationById($id, $commentId){
 		global $conn;
 
-		$sql = "SELECT id, name, content, url_video as urlVideo, photos
+		$sql = "SELECT id,
+						name,
+						content,
+						url_video as urlVideo,
+						photos
 				FROM z_publications
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -894,17 +901,19 @@
 		if (count($result['photos']) > 0) {
 			$result['media'] = getPhotoData($result['photos'][0]);
 
-			if(strrpos($result['media']['mimetype'], "image") !== false)
+			if (strrpos($result['media']['mimetype'], "image") !== false && strlen($result['media']['duration']) == 0) {
 				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/photos/thumbnails/'.$result['media']['name'] : null);
-			else if(strrpos($result['media']['mimetype'], "video") !== false)
+			} else if (strrpos($result['media']['mimetype'], "video") !== false || strlen($result['media']['duration']) > 0) {
 				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/videos/thumbnails/'.$result['media']['name'] : null);
-			else
+			} else {
 				$result['media'] = null;
+			}
 		} else {
-			if (count($result['urlVideo']) > 0)
+			if (count($result['urlVideo']) > 0) {
 				$result['media'] = $result['urlVideo']->thumbnail;
-			else
+			} else {
 				$result['media'] = null;
+			}
 		}
 
 		return $result;

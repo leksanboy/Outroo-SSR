@@ -50,8 +50,6 @@ export class ShowPlaylistComponent implements OnInit {
 		this.data.current = data.item;
 		this.data.loadingData = true;
 		this.data.noData = false;
-
-		console.log('data', data);
 	}
 
 	ngOnInit() {
@@ -89,57 +87,49 @@ export class ShowPlaylistComponent implements OnInit {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key === key &&
-				this.audioPlayerData.type === type &&
-				this.audioPlayerData.item.song === item.song
-			) { // Play/Pause current
-				item.playing = !item.playing;
-				this.data.playing = !this.data.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.list = data;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.userData.id;
-				this.audioPlayerData.username = this.userData.username;
-				this.audioPlayerData.location = 'playlist';
-				this.audioPlayerData.type = type;
-				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
-				this.audioPlayerData.playlist = this.data.info.id;
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.data.playing = !this.data.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.userData.id;
+			this.audioPlayerData.username = this.userData.username; */
+			this.audioPlayerData.location = 'playlist';
+			this.audioPlayerData.type = type;
+			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+			this.audioPlayerData.playlist = this.data.info.id;
 
-				item.playing = true;
-				this.data.playing = true;
-				this.playerService.setData(this.audioPlayerData);
-			}
+			item.playing = true;
+			this.data.playing = true;
+			this.playerService.setData(this.audioPlayerData);
 		}
 	}
 
 	// Play/Pause
 	playTrack(type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.data.list.length > 0) {
-				if (type === 'play') {
-					this.playSong(this.data.list,
-						(this.audioPlayerData.item ? this.audioPlayerData.item : this.data.list[0]),
-						(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
-						'default');
-				} else if (type === 'prev') {
-					const prevKey = (this.audioPlayerData.key === 0) ? (this.data.list.length - 1) : (this.audioPlayerData.key - 1);
-					this.audioPlayerData.key = prevKey;
-					this.playerService.setData(this.audioPlayerData);
-				} else if (type === 'next') {
-					const nextKey = (this.audioPlayerData.key === this.data.list.length - 1) ? 0 : (this.audioPlayerData.key + 1);
-					this.audioPlayerData.key = nextKey;
-					this.playerService.setData(this.audioPlayerData);
-				}
-			} else {
-				this.alertService.warning(this.translations.common.addSomeSongsToPlaylist);
+		if (this.data.list.length > 0) {
+			if (type === 'play') {
+				this.playSong(this.data.list,
+					(this.audioPlayerData.item ? this.audioPlayerData.item : this.data.list[0]),
+					(this.audioPlayerData.key ? this.audioPlayerData.key : 0),
+					'default');
+			} else if (type === 'prev') {
+				const prevKey = (this.audioPlayerData.key === 0) ? (this.data.list.length - 1) : (this.audioPlayerData.key - 1);
+				this.audioPlayerData.key = prevKey;
+				this.playerService.setData(this.audioPlayerData);
+			} else if (type === 'next') {
+				const nextKey = (this.audioPlayerData.key === this.data.list.length - 1) ? 0 : (this.audioPlayerData.key + 1);
+				this.audioPlayerData.key = nextKey;
+				this.playerService.setData(this.audioPlayerData);
 			}
+		} else {
+			this.alertService.warning(this.translations.common.addSomeSongsToPlaylist);
 		}
 	}
 

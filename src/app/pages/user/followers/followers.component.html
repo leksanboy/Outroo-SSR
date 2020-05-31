@@ -7,7 +7,7 @@
 						<i label="back"></i>
 					</button>
 					<div class="text" (click)="goBack()">{{translations?.common?.back}}</div>
-					<button mat-icon-button class="action" routerLink="/news/{{data.searchWord}}/people">
+					<button mat-icon-button class="action" routerLink="/news/{{data.searchWord}}/people" *ngIf="sessionData?.current?.id">
 						<i label="person-add"></i>
 					</button>
 				</div>

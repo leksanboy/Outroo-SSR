@@ -117,16 +117,55 @@ export class ActiveSessionComponent implements AfterViewInit {
 		// iPhone X
 		if (this.ssrService.isBrowser && this.window) {
 			if (this.window.screen) {
-				if (this.window.screen.height === 812 || this.window.screen.height === 2436) {
+				if (this.window.screen.height === 812 || // iPhone X, Xs, 11 Pro
+					this.window.screen.height === 896 || // iPhone 11, 11 Pro Max, Xs, Xs Max
+					this.window.screen.height === 2436)
+				{
 					this.document.body.classList.add('iphoneXClass');
 				}
 			}
 		}
 
+		// Get player data
+		this.playerService.getData()
+			.subscribe(data => {
+				this.audioPlayerData.playlistBox = true;
+				this.audioPlayerData.noData = false;
+				this.audioPlayerData.postId = data.postId;
+				this.audioPlayerData.list = data.list;
+				this.audioPlayerData.item = data.item;
+				this.audioPlayerData.key = data.key;
+				/* this.audioPlayerData.user = data.user;
+				this.audioPlayerData.username = data.username; */
+				this.audioPlayerData.location = data.location;
+				this.audioPlayerData.type = data.type;
+				this.audioPlayerData.selectedIndex = data.selectedIndex;
+				this.audioPlayerData.current.key = -1;
+				this.playPlayer('item', data.key);
+			});
+
+		// Get play/pause track
+		this.playerService.getPlayTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+
+				if (data.buttonType === 'next') {
+					this.playPlayer('next', data.key);
+				} else if (data.buttonType === 'prev') {
+					this.playPlayer('prev', data.key);
+				} else {
+					this.playPlayer('item', data.key);
+				}
+			});
+
+		// Get player data
+		this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
+
 		// Return to home if no access
 		if (!this.sessionData) {
-			this.sessionData = [];
-			this.sessionData.current = [];
 			this.deniedAccess = 'none';
 
 			// No tengo session y no puedo acceder a settings, notifications, news, home
@@ -137,7 +176,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.deniedAccess = 'session';
 
 			// Set theme
-			this.changeTheme(this.sessionData.current.theme);
+			this.changeTheme('init', this.sessionData.current.theme);
 
 			// Load default audios
 			this.defaultAudios(this.sessionData.current.id);
@@ -152,36 +191,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 			setInterval(() => {
 				this.pendingNotifications('default');
 			}, 1000 * 60 * 5);
-
-			// Get player data
-			this.playerService.getData()
-				.subscribe(data => {
-					this.audioPlayerData.playlistBox = true;
-					this.audioPlayerData.noData = false;
-					this.audioPlayerData.postId = data.postId;
-					this.audioPlayerData.list = data.list;
-					this.audioPlayerData.item = data.item;
-					this.audioPlayerData.key = data.key;
-					this.audioPlayerData.user = data.user;
-					this.audioPlayerData.username = data.username;
-					this.audioPlayerData.location = data.location;
-					this.audioPlayerData.type = data.type;
-					this.audioPlayerData.selectedIndex = data.selectedIndex;
-					this.audioPlayerData.current.key = -1;
-					this.playPlayer('item', data.key);
-				});
-
-			// Get play/pause track
-			this.playerService.getPlayTrack()
-				.subscribe(data => {
-					if (data.buttonType === 'next') {
-						this.playPlayer('next', data.key);
-					} else if (data.buttonType === 'prev') {
-						this.playPlayer('prev', data.key);
-					} else {
-						this.playPlayer('item', data.key);
-					}
-				});
 
 			// Get session data
 			this.sessionService.getData()
@@ -232,7 +241,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			// Get session data theme
 			this.sessionService.getDataTheme()
 				.subscribe(data => {
-					this.changeTheme(data.value);
+					this.changeTheme('update', data.value);
 				});
 
 			// Get report
@@ -336,6 +345,19 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 			// Progress bar and timing
 			self.audio.addEventListener('timeupdate', function() {
+				// First 30 seconds for free then create an account
+				if (!self.sessionData && self.audio.currentTime >= 30) {
+					if (!self.audioPlayerData.current.freeExprired) {
+						self.playPlayer('pause', self.audioPlayerData.current.key);
+						self.audioPlayerData.current.freeExprired = true;
+						self.alertService.success(self.translations.common.createAnAccountToListenSong);
+						return;
+					} else {
+						self.audioPlayerData.current.freeExprired = false;
+					}
+				}
+
+				// Countdown
 				const countDown = Math.round(self.audio.duration - self.audio.currentTime);
 				self.audioPlayerData.current.time = self.formatTime(self.audio.currentTime);
 				self.audioPlayerData.loading = self.audio.currentTime > 0 ? false : true;
@@ -497,8 +519,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.image = res[0].image ? (this.env.pathAudios + 'thumbnails/' + res[0].image) : '';
 					this.audioPlayerData.item = res[0];
 					this.audioPlayerData.key = 0;
-					this.audioPlayerData.user = this.sessionData.current.id;
-					this.audioPlayerData.username = this.sessionData.current.username;
+					/* this.audioPlayerData.user = this.sessionData.current.id;
+					this.audioPlayerData.username = this.sessionData.current.username; */
 					this.audioPlayerData.location = 'user';
 					this.audioPlayerData.type = 'default';
 					this.audioPlayerData.selectedIndex = 0;
@@ -719,7 +741,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		switch (type) {
 			case('item'):
 				if (this.audioPlayerData.current.key === key &&
-					this.audioPlayerData.current.user === this.audioPlayerData.user &&
+					/* this.audioPlayerData.current.user === this.audioPlayerData.user && */
 					this.audioPlayerData.current.type === this.audioPlayerData.type
 				) { // Play/pause current
 					if (this.audioPlayerData.playing === false) {
@@ -736,7 +758,12 @@ export class ActiveSessionComponent implements AfterViewInit {
 				} else { // Play new one
 					if (!this.audioPlayerData.equalizerInitialized) {
 						this.audioPlayerData.equalizerInitialized = true;
-						this.initEqualizer();
+
+						if (this.sessionData) {
+							if (this.sessionData.current) {
+								this.initEqualizer();
+							}
+						}
 					}
 
 					this.playPlayer('stop', null);
@@ -752,7 +779,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.loadingToPlay = true;
 					this.audioPlayerData.loading = true;
 					this.audioPlayerData.playing = true;
-					this.audioPlayerData.current.user = this.audioPlayerData.user;
+					/* this.audioPlayerData.current.user = this.audioPlayerData.user; */
 					this.audioPlayerData.current.type = this.audioPlayerData.type;
 					this.audioPlayerData.current.key = key;
 					this.audioPlayerData.current.item = this.audioPlayerData.list[key];
@@ -762,10 +789,10 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.env.pathAudios + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
 					this.audio.src = this.env.pathAudios + this.audioPlayerData.list[key].name;
 					this.audio.load();
-					this.getColorFromAudioCover(this.audioPlayerData.current.image);
+					//this.getColorFromAudioCover(this.audioPlayerData.current.image);
 
 					// Replays +1
-					this.updateReplays(this.audioPlayerData.list[key].song, this.sessionData.current.id, this.audioPlayerData.playlist);
+					this.updateReplays(this.audioPlayerData.list[key].song, (this.sessionData ? this.sessionData.current.id : 0), this.audioPlayerData.playlist);
 
 					// Set current track
 					this.audioPlayerData.location = this.audioPlayerData.location ? this.audioPlayerData.location : 'user';
@@ -774,17 +801,17 @@ export class ActiveSessionComponent implements AfterViewInit {
 					this.audioPlayerData.key = key;
 					this.audioPlayerData.postId = this.audioPlayerData.postId;
 					this.audioPlayerData.type = this.audioPlayerData.type;
-					this.audioPlayerData.user = this.audioPlayerData.user;
-					this.audioPlayerData.username = this.audioPlayerData.username;
+					/* this.audioPlayerData.user = this.audioPlayerData.user;
+					this.audioPlayerData.username = this.audioPlayerData.username; */
 					this.audioPlayerData.selectedIndex = this.audioPlayerData.selectedIndex;
 				}
 
 				// Set to service
 				this.playerService.setCurrentTrack(this.audioPlayerData);
 
-				// Set to session
-				this.sessionData.current.audioPlayerData = this.audioPlayerData;
-				this.userDataService.setSessionData('data', this.sessionData);
+				/* // Set to storage
+				this.sessionData.audioPlayerData = this.audioPlayerData;
+				this.userDataService.setSessionData('data', this.sessionData); */
 			break;
 			case('play'):
 				this.playPlayer('item', this.audioPlayerData.current.key);
@@ -851,31 +878,27 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 	// Play item song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
+		if (item.id === 0) {
+			this.alertService.warning(this.translations.common.songNotUploaded);
 		} else {
-			if (item.id === 0) {
-				this.alertService.warning(this.translations.common.songNotUploaded);
-			} else {
-				if (this.audioPlayerData.key === key &&
-					this.audioPlayerData.type === type &&
-					this.audioPlayerData.item.song === item.song
-				) { // Play/Pause current
-					item.playing = !item.playing;
-					this.playerService.setPlayTrack(this.audioPlayerData);
-				} else { // Play new one
-					this.audioPlayerData.list = data;
-					this.audioPlayerData.item = item;
-					this.audioPlayerData.key = key;
-					this.audioPlayerData.user = this.sessionData.current.id;
-					this.audioPlayerData.username = this.sessionData.current.username;
-					this.audioPlayerData.location = 'playlist';
-					this.audioPlayerData.type = type;
-					this.audioPlayerData.selectedIndex = null;
+			if (this.audioPlayerData.key === key &&
+				this.audioPlayerData.type === type &&
+				this.audioPlayerData.item.song === item.song
+			) { // Play/Pause current
+				item.playing = !item.playing;
+				this.playerService.setPlayTrack(this.audioPlayerData);
+			} else { // Play new one
+				this.audioPlayerData.list = data;
+				this.audioPlayerData.item = item;
+				this.audioPlayerData.key = key;
+				/* this.audioPlayerData.user = this.sessionData.current.id;
+				this.audioPlayerData.username = this.sessionData.current.username; */
+				this.audioPlayerData.location = 'playlist';
+				this.audioPlayerData.type = type;
+				this.audioPlayerData.selectedIndex = null;
 
-					this.playerService.setData(this.audioPlayerData);
-					item.playing = true;
-				}
+				this.playerService.setData(this.audioPlayerData);
+				item.playing = true;
 			}
 		}
 	}
@@ -900,7 +923,8 @@ export class ActiveSessionComponent implements AfterViewInit {
 		navigator.mediaSession.metadata = new MediaMetadata({
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
-			album: this.audioPlayerData.username,
+			/* album: this.audioPlayerData.username, */
+			album: 'Outroo',
 			artwork: [{
 				src: this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
 			}]
@@ -1326,7 +1350,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 	setCurrentUser(data) {
 		if (this.sessionData.current.id !== data.id) {
 			// Set theme
-			this.changeTheme(data.theme);
+			this.changeTheme('user', data.theme);
 
 			// Get translations
 			this.getTranslations(data.language);
@@ -1389,7 +1413,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 	// Change language
 	changeLanguage(lang) {
 		if (this.sessionData.current.language !== lang.id) {
-			this.userDataService.updateLanguage(lang.id)
+			const data = {
+				type: 'language',
+				language: lang.id
+			}
+			this.userDataService.updateData(data)
 				.subscribe(res => {
 					// Close user box
 					this.showChangeLanguage = false;
@@ -1411,12 +1439,17 @@ export class ActiveSessionComponent implements AfterViewInit {
 	}
 
 	// Dark theme
-	changeTheme(value) {
+	changeTheme(type, value) {
+		this.sessionData.current.theme = value;
+
 		// Set theme
 		if (value === 0) {
 			this.document.body.classList.remove('darkTheme');
 			this.document.getElementsByTagName('html')[0].setAttribute('class', 'light');
 		} else if (value === 1) {
+			this.document.body.classList.add('darkTheme');
+			this.document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
+		} else {
 			this.document.body.classList.add('darkTheme');
 			this.document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
 		}
@@ -1425,12 +1458,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 		this.showChangeTheme = false;
 		this.showUserBox = false;
 
-		const data = {
-			id: this.sessionData.current.id,
-			theme: value
-		};
+		// Update on DB
+		if (type === 'update') {
+			const data = {
+				type: 'theme',
+				theme: value
+			};
 
-		this.userDataService.updateTheme(data).subscribe();
+			this.userDataService.updateData(data).subscribe();
+		}
 	}
 
 	// Report inapropiate content

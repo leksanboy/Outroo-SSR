@@ -3,7 +3,8 @@
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$email = $data['email'];
-    $content = $data['content'];
+	$content = $data['content'];
+	$language = $data['language'];
 
 	if (isset($email)) {
         // Create question
@@ -12,7 +13,7 @@
 		$result = $conn->query($sql);
 
         // Send email
-		emailSupportQuestion($email, $content);
+		emailSupportQuestion($email, $language, $content);
 
 		// Return response status
 		var_dump(http_response_code(204));

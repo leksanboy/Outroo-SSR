@@ -110,6 +110,9 @@
 				// Get video poster
 				$frameTime = intval($duration/4);
 				exec("ffmpeg -i $locationPathVideos/$fileNameMp4 -ss $frameTime -s:v:1 320x240 -vframes 1 $locationPathVideos/thumbnails/$fileNameJpg");
+
+				// File type
+				$fileType = 'video/mp4';
 			} else { // MP4
 				// Get video duration
 				$duration = exec("ffprobe $locationPathVideos/$fileNameMp4 -show_format 2>&1 | sed -n 's/duration=//p'");
@@ -117,6 +120,9 @@
 				// Get video poster
 				$frameTime = intval($duration/4);
 				exec("ffmpeg -i $locationPathVideos/$fileNameMp4 -ss $frameTime -s:v:1 320x240 -vframes 1 $locationPathVideos/thumbnails/$fileNameJpg");
+
+				// File type
+				$fileType = 'video/mp4';
 			}
 
 			// Video duration
@@ -130,8 +136,9 @@
 			$insertedId = $conn->insert_id;
 
 			// Remove file from folder fisically (without .mp4)
-			if ($fileType != 'video/mp4')
+			if ($fileType != 'video/mp4') {
 				unlink($locationPathVideos.$FILE_NAME);
+			}
 
 			// Return data
 		    $data = array(

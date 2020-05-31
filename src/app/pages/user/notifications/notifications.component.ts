@@ -311,28 +311,24 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 	// Play song
 	playSong(data, item, key, type) {
-		if (!this.sessionData) {
-			this.alertService.success(this.translations.common.createAnAccountToListenSong);
-		} else {
-			if (this.audioPlayerData.key === key &&
-				this.audioPlayerData.type === type &&
-				this.audioPlayerData.item.song === item.song
-			) { // Play/Pause current
-				item.playing = !item.playing;
-				this.playerService.setPlayTrack(this.audioPlayerData);
-			} else { // Play new one
-				this.audioPlayerData.list = data;
-				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username;
-				this.audioPlayerData.location = 'notifications';
-				this.audioPlayerData.type = type;
-				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.sessionData.current.id;
+			this.audioPlayerData.username = this.sessionData.current.username; */
+			this.audioPlayerData.location = 'notifications';
+			this.audioPlayerData.type = type;
+			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
 
-				this.playerService.setData(this.audioPlayerData);
-				item.playing = true;
-			}
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
 		}
 	}
 

@@ -2,13 +2,14 @@
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$email = $_GET['email'];
 
-	$sql = "SELECT username
+	$sql = "SELECT username, language
 			FROM z_users
 			WHERE email = '$email'";
 	$result = $conn->query($sql)->fetch_assoc();
 
 	// get username
 	$username = $result['username'];
+	$language = $result['language'];
 
 	if ($username) {
 		// generated password
@@ -22,7 +23,7 @@
 		$resultUpdate = $conn->query($sqlUpdate);
 
 		// Send email
-		emailForgotPassword($username, $email , $generatedHash);
+		emailForgotPassword($email, $language, $username, $generatedHash);
 
 		// return response status
 		var_dump(http_response_code(204));

@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { UserDataService } from './core/services/user/userData.service';
 import { SsrService } from './core/services/ssr.service';
@@ -22,7 +23,9 @@ export class AppComponent implements OnDestroy {
 		private userDataService: UserDataService,
 		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
+		private deviceService: DeviceDetectorService
 	) {
+		/* log('deviceService:', this.deviceService.getDeviceInfo()); */
 		this.ssrServiceBrowser = this.ssrService.isBrowser;
 
 		// Set null for get new data
