@@ -518,6 +518,20 @@
 		return $data;
 	}
 
+	// Get genre data
+	function getGenre($id) {
+		global $conn;
+
+		$sql = "SELECT id,
+						title,
+						image
+				FROM z_audios_genres
+				WHERE id = $id";
+		$result = $conn->query($sql)->fetch_assoc();
+
+		return $result;
+	}
+
 	// Count replays
 	function counSongReplays($id){
 		global $conn;

@@ -1146,7 +1146,6 @@
 					<span *ngIf="dataSection.type === 'hits'">{{translations?.audios?.hitsOfMoment}}</span>
 					<span *ngIf="dataSection.type === 'recommended'">{{translations?.audios?.recommendedPlaylists}}</span>
 					<span *ngIf="dataSection.type === 'favourites'">{{translations?.audios?.ourFavourites}}</span>
-					<span *ngIf="dataSection.type === 'genres'">{{translations?.audios?.selectGenre}}</span>
 					<span *ngIf="dataSection.type === 'mostPlayed'">{{translations?.audios?.mostPlayed}}</span>
 					<span *ngIf="dataSection.type === 'ost'">{{translations?.audios?.ostMovies}}</span>
 					<span *ngIf="dataSection.type === 'top100'">{{translations?.audios?.top100}}</span>
@@ -1282,9 +1281,28 @@
 				</span>
 
 				<span *ngIf="dataSection.type === 'genres'">
-					<div class="noData">
-						<div class="description">Sorry, temporarily not available.</div>
-					</div>
+					<ul class="playlists list" *ngIf="dataSection.list">
+						<li *ngFor="let x of dataSection.list; let i=index;" [ngClass]="{advert: x.contentTypeAd}">
+							<span class="inner" *ngIf="!x.contentTypeAd">
+								<a mat-ripple class="image" (click)="showGenre(x)">
+									<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
+								</a>
+
+								<div class="panel">
+									<a class="title" (click)="showGenre(x)">
+										{{x.title}}
+									</a>
+								</div>
+							</span>
+
+							<div class="ad" *ngIf="x.contentTypeAd">
+								<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+								<div class="disableAdBlock" *ngIf="hideAd">
+									{{translations?.common?.disableAdBlock}}
+								</div>
+							</div>
+						</li>
+					</ul>
 				</span>
 
 				<div class="loadingData" *ngIf="dataSection.loadingData">
@@ -1300,6 +1318,104 @@
 						<i label="add"></i>
 					</button>
 					<mat-progress-spinner mode="indeterminate" *ngIf="dataSection.loadingMoreData"></mat-progress-spinner>
+				</div>
+			</div>
+
+			<div class="content" *ngIf="data.content === 'genres'">
+				<div class="back" (click)="seeAll('back')">
+					<button mat-icon-button>
+						<i label="back"></i>
+					</button>
+					<div class="text">{{translations?.common?.back}}</div>
+				</div>
+
+				<div class="pageTitle">
+					{{dataGenres.title}}
+				</div>
+
+				<ul class="tracks" *ngIf="dataGenres.list">
+					<li *ngFor="let x of dataGenres.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', advert: x.contentTypeAd}">
+						<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+							<div class="image">
+								<button mat-icon-button (click)="playSong(dataGenres.list, x, i, 'top')">
+									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'top')"></i>
+									<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'top')"></i>
+									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
+								</button>
+							</div>
+
+							<div class="text" (click)="playSong(dataGenres.list, x, i, 'top')">
+								<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+									<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+									<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+								</div>
+								<div class="explicitDuration">
+									<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+									<div class="duration">{{x.duration}}</div>
+								</div>
+							</div>
+
+							<div class="actions" *ngIf="sessionData?.current?.id">
+								<button mat-icon-button [matMenuTriggerFor]="appMenu">
+									<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+									<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+								</button>
+
+								<mat-menu #appMenu="matMenu">
+									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger" *ngIf="!x.private">{{translations?.common?.share}}</button>
+									<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
+								</mat-menu>
+
+								<mat-menu #menuPlaylists="matMenu">
+									<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
+									<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
+									<span *ngFor="let p of sessionData?.current?.playlists">
+										<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+											<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+											{{p.title}}
+										</button>
+									</span>
+								</mat-menu>
+
+								<mat-menu #menuShareSocial="matMenu">
+									<button mat-menu-item (click)="itemSongOptions('message', x, null)">{{translations?.common?.sendMessage}}</button>
+									<button mat-menu-item (click)="itemSongOptions('newTab', x, null)">{{translations?.common?.openInNewTab}}</button>
+									<button mat-menu-item (click)="itemSongOptions('copyLink', x, null)">{{translations?.common?.copyLink}}</button>
+								</mat-menu>
+
+								<mat-menu #menuShareSocial="matMenu">
+									<button mat-menu-item (click)="itemPlaylistOptions('message', x, i)">{{translations?.common?.sendMessage}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('newTab', x, i)">{{translations?.common?.openInNewTab}}</button>
+									<button mat-menu-item (click)="itemPlaylistOptions('copyLink', x, i)">{{translations?.common?.copyLink}}</button>
+								</mat-menu>
+							</div>
+						</div>
+
+						<div class="ad" *ngIf="x.contentTypeAd">
+							<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+							<div class="disableAdBlock" *ngIf="hideAd">
+								{{translations?.common?.disableAdBlock}}
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<div class="loadingData" *ngIf="dataGenres.loadingData">
+					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+				</div>
+
+				<div class="noData" *ngIf="dataGenres.noData">
+					<div class="description">{{translations?.audios?.noData}}</div>
+				</div>
+
+				<div class="loadMore" *ngIf="dataGenres.loadMoreData">
+					<button mat-fab (click)="genres('more', null)" *ngIf="!dataGenres.loadingMoreData">
+						<i label="add"></i>
+					</button>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataGenres.loadingMoreData"></mat-progress-spinner>
 				</div>
 			</div>
 		</div>

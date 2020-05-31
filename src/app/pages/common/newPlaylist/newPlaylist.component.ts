@@ -76,7 +76,14 @@ export class NewPlaylistComponent implements OnInit {
 			});
 
 		// Get genres
-		this.audioDataService.getGenres()
+		const data = {
+			user: this.sessionData.current.id,
+			type: 'genres',
+			rows: 0,
+			cuantity: 100
+		};
+
+		this.audioDataService.general(data)
 			.subscribe((res: any) => {
 				this.data.genres = res;
 			});

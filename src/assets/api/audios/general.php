@@ -178,12 +178,14 @@
 
 		$cuantity = $params['cuantity'] == 0 ? 6 : $params['cuantity'];
 		$more = $params['more'];
+		$order = $params['cuantity'] == 0 ? 'RAND()' : 'title ASC';
 
 		$sql = "SELECT id,
-						title
+						title,
+						image
 				FROM z_audios_genres
 				WHERE is_deleted = 0
-				ORDER BY RAND()
+				ORDER BY $order
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 

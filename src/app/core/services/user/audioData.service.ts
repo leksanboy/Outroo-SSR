@@ -163,10 +163,14 @@ export class AudioDataService {
 			}));
 	}
 
-	getGenres() {
+	getGenres(data: any) {
 		const url = this.env.url + 'assets/api/audios/getGenres.php';
+		let params =	'&id=' + data.id +
+						'&rows=' + data.rows +
+						'&cuantity=' + data.cuantity;
+		params = params.replace('&', '?');
 
-		return this.httpClient.get(url, this.headersService.getHeaders())
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));

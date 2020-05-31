@@ -44,6 +44,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		playlists: []
 	};
 	public dataGeneral: any = [];
+	public dataGenres: any = [];
 	public dataDefault: any = [];
 	public dataAround: any = [];
 	public dataSection: any = [];
@@ -122,10 +123,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 						// Set playlist current playing
 						if (this.sessionData) {
-							/* if (this.sessionData.audioPlayerData && this.sessionData.audioPlayerData.user === this.userData.id) {
-								this.audioPlayerData = this.sessionData.audioPlayerData;
-							} */
-
 							// Load general
 							if (this.sessionData.current.id === this.userData.id) {
 								this.data.selectedIndex = 0;
@@ -229,6 +226,10 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					} else if (this.data.content === 'seeAll') {
 						if (this.dataGeneral.list.hits.length > 0) {
 							this.seeAll('more');
+						}
+					} else if (this.data.content === 'genres') {
+						if (this.dataGenres.list.length > 0) {
+							this.genres('more', null);
 						}
 					}
 				}
@@ -1399,11 +1400,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Show genre
-	showGenre(item) {
-		this.alertService.warning('Genre ' + item.title + ' is not available');
-	}
-
 	// See All
 	seeAll(type) {
 		this.data.content = 'seeAll';
@@ -1434,11 +1430,11 @@ export class AudiosComponent implements OnInit, OnDestroy {
 			};
 
 			/* Temporalmente hasta que no se haga bien */
-			if (type === 'genres') {
+			/* if (type === 'genres') {
 				this.dataSection.loadingData = false;
 				this.dataSection.noData = false;
 				return;
-			}
+			} */
 
 			const data = {
 				user: this.userData.id,
@@ -1514,6 +1510,100 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		} else if (type === 'back') {
 			this.data.content = 'default';
 			this.location.go(this.router.url);
+		}
+	}
+
+	// Show genre
+	showGenre(item) {
+		console.log('showGenre-item:', item);
+		this.data.content = 'genres';
+		this.genres('default', item);
+	}
+
+	// General
+	genres(type, item) {
+		if (type === 'default') {
+			this.dataGenres = {
+				title: item.title,
+				item: item,
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false
+			};
+
+			const data = {
+				id: item.id,
+				rows: this.dataGenres.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.getGenres(data)
+				.subscribe((res: any) => {
+					this.dataGenres.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataGenres.noData = true;
+					} else {
+						this.dataGenres.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+						for (const i in res) {
+							if (i) {
+								this.dataGenres.list.push(res[i]);
+
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataGenres.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity) {
+						this.dataGenres.noMore = true;
+					}
+				}, error => {
+					this.dataGenres.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more' && !this.dataGenres.noMore && !this.dataGenres.loadingMoreData) {
+			this.dataGenres.loadingMoreData = true;
+			this.dataGenres.rows++;
+
+			const data = {
+				id: this.dataGenres.item.id,
+				rows: this.dataGenres.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.getGenres(data)
+				.subscribe((res: any) => {
+					this.dataGenres.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataGenres.loadingMoreData = false;
+
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataGenres.list.push(res[i]);
+
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataGenres.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity) {
+						this.dataGenres.noMore = true;
+					}
+				}, error => {
+					this.dataGenres.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 	}
 }
