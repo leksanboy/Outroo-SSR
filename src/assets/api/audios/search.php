@@ -8,7 +8,9 @@
 	// Insert search data analytics
 	searchAudioAnalytics($session, $caption, $type);
 
-	if ($type === 'song') {
+	if ($type === 'song') { // min 4 chars to correct search
+		$caption = "+".str_replace(' ', " +", $caption);
+
 		$sql = "SELECT id,
 						name,
 						title,
@@ -16,22 +18,19 @@
 						original_artist,
 						duration,
 						image,
-						explicit
-				FROM z_audios
-				WHERE title LIKE '%$caption%'
-					OR
-					original_title LIKE '%$caption%'
-					OR
-					original_artist LIKE '%$caption%'
-					AND is_deleted = 0
-				ORDER by title ASC,
-						original_title ASC,
-						original_artist ASC
+						explicit,
+						MATCH(`title`) AGAINST ('$caption' IN BOOLEAN MODE) * 10 as rel1,
+						MATCH(`original_title`) AGAINST ('$captionn' IN BOOLEAN MODE) * 3 as rel2,
+						MATCH(`original_artist`) AGAINST ('$captionn' IN BOOLEAN MODE) as rel3
+				FROM `z_audios`
+				WHERE MATCH (title, original_title, original_artist) AGAINST ('$caption' IN BOOLEAN MODE)
+				ORDER BY (rel1)+(rel2)+(rel3) DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
 			$data = array();
+
 			while($row = $result->fetch_assoc()) {
 				$row['song'] = $row['id'];
 				$row['title'] = html_entity_decode($row['title'], ENT_QUOTES);
@@ -58,13 +57,12 @@
 						explicit,
 						private
 				FROM z_audios_playlist
-				WHERE title LIKE '%$caption%'
-					OR
-					description LIKE '%$caption%'
+				WHERE (title LIKE '%$caption%' OR description LIKE '%$caption%')
 					AND is_deleted = 0
+					AND private = 0
 					AND type IS NULL
 					AND original_id IS NULL
-				ORDER BY RAND()
+				ORDER BY title
 					AND date DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
@@ -78,21 +76,7 @@
 				$row['idPlaylist'] = $row['id'];
 				$row['explicit'] = boolval($row['explicit']);
 
-				if ($row['type'] === 'follow') {
-					$f_row = getPlaylist('id', $row['o_id']);
-
-					$row['name'] = $f_row['name'];
-					$row['title'] = $f_row['title'];
-					$row['image'] = $f_row['image'];
-				}
-
-				if ($session === $user) {
-					$data[] = $row;
-				} else {
-					if (!$row['private']) {
-						$data[] = $row;
-					}
-				}
+				$data[] = $row;
 			}
 
 			echo json_encode($data);

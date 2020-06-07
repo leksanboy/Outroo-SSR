@@ -2,7 +2,7 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$username = $data['username'];
+	$username = str_replace(' ', '', $data['username']);
 	$name = htmlspecialchars($data['name'], ENT_QUOTES);
 	$email = $data['email'];
 	$password = md5($data['password']);

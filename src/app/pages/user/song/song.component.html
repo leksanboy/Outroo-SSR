@@ -30,7 +30,7 @@
 							<button mat-icon-button (click)="playSong(dataDefault.data, dataDefault.data, 0, 'default')">
 								<i label="play" *ngIf="!dataDefault.data.playing || !(audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
 								<i label="pause" *ngIf="dataDefault.data.playing && (audioPlayerData.location == 'song' && audioPlayerData.type == 'default')"></i>
-								<img *ngIf="dataDefault.data.image" [src]="dataDefault.data.imageSrc"/>
+								<img [src]="dataDefault?.image ? (env.pathAudios + 'thumbnails/' + dataDefault?.image) : env.defaultSongCover"/>
 							</button>
 						</div>
 
@@ -84,7 +84,7 @@
 
 				<div class="noData" *ngIf="dataDefault.noData">
 					<div class="description">{{translations?.song?.noData}}</div>
-				</div> 
+				</div>
 			</div>
 		</div>
 	</div>

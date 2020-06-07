@@ -1,6 +1,13 @@
 <?php include "../db.php";
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$id = $_GET['id'];
 	$name = $_GET['name'].'.mp3';
+
+	if ($id) {
+		$cond = "id = '$id'";
+	} else if ($name) {
+		$cond = "name = '$name'";
+	}
 
 	$sql = "SELECT id,
 					user,
@@ -12,7 +19,7 @@
 					image,
 					explicit
 			FROM z_audios
-			WHERE name = '$name'
+			WHERE $cond
 				AND is_deleted = 0";
 	$result = $conn->query($sql);
 

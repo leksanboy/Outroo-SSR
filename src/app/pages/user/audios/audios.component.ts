@@ -1515,7 +1515,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 
 	// Show genre
 	showGenre(item) {
-		console.log('showGenre-item:', item);
 		this.data.content = 'genres';
 		this.genres('default', item);
 	}

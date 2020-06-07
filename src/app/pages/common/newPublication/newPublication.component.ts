@@ -549,7 +549,7 @@ export class NewPublicationComponent implements OnInit {
 					const a = {
 						id: 		i.uploaded ? i.id : i.photo,
 						name: 		i.uploaded ? i.up_name : i.name,
-						mimetype: 	i.uploaded ? i.up_type : i.type,
+						mimetype: 	i.type,
 						duration: 	i.uploaded ? i.up_duration : i.duration,
 						uploaded: 	i.uploaded ? true : false
 					};

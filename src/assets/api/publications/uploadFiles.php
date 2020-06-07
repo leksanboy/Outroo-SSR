@@ -31,10 +31,7 @@
 	        $songLoc = $locationPathAudios.$fileNameMp3;
 	        $songImageLoc = $locationPathAudios.'thumbnails/'.$fileNameJpg;
 	        exec("ffmpeg -i $songLoc $songImageLoc", $output, $returnIfSongHasImage);
-	        if (!$returnIfSongHasImage)
-	        	$image = $fileNameJpg;
-	        else
-	        	$image = '';
+	        $image = (!$returnIfSongHasImage) ? $fileNameJpg : '';
 
 	        // Song information
 	        $getid3 = new getID3;

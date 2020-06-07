@@ -34,6 +34,7 @@ $spriteImages: url('assets/images/sprite_images_2.png');
 $logoImage: url('assets/images/logo.png');
 $logoTextImage: url('assets/images/logo_text.png');
 $noPostsImage: url('assets/images/icons/no_posts.png');
+$noCommentsImage: url('assets/images/icons/no_comments.png');
 
 /*Colors*/
 $whiteColor: #FFFFFF;
@@ -223,6 +224,15 @@ body {
 			min-width: 156px;
 			height: 156px;
 			width: 156px;
+		}
+
+		&[label="no-comments"] {
+			mask-image: $noCommentsImage;
+			mask-size: 84px 84px;
+			mask-position: 0 0;
+			min-width: 84px;
+			height: 84px;
+			width: 84px;
 		}
 
 		&[label="launch"] {
@@ -944,7 +954,7 @@ body {
 						}
 
 						.song {
-							background-color: transparentize(#2e2e2e, .75);
+							background-color: #2e2e2e;
 							border-radius: 3px;
 							margin: 4px 0 0;
 							padding: 0;
@@ -974,7 +984,7 @@ body {
 						}
 
 						.playlistNotification {
-							background-color: transparentize(#2e2e2e, .75);
+							background-color: #2e2e2e;
 							border-radius: 3px;
 							margin: 4px 0 0;
 							padding: 16px 0 0;
@@ -1006,7 +1016,7 @@ body {
 						}
 
 						.userNotification {
-							background-color: transparentize(#2e2e2e, .75);
+							background-color: #2e2e2e;
 							border-radius: 3px;
 							margin: 4px 0 0;
 							padding: 0;
@@ -3689,7 +3699,7 @@ body {
 		width: 100%;
 
 		.image {
-			padding: 0 0 6px;
+			padding: 0 0 12px;
 		}
 
 		.description {
@@ -3784,6 +3794,7 @@ body {
 		.left {
 			background-color: $greyColor;
 			justify-content: center;
+			flex-direction: column;
 			align-items: center;
 			position: relative;
 			overflow: auto;
@@ -3792,40 +3803,66 @@ body {
 			float: left;
 			width: 50%;
 
-			.text {
-				box-sizing: border-box;
-				color: $blackColor;
-				font-weight: bold;
-				line-height: 48px;
-				margin: -48px 0 0;
-				text-align: left;
-				padding: 0 24px;
-				font-size: 48px;
+			.top {
+				justify-content: center;
+				align-items: center;
+				display: flex;
 
-				.counter {
-					text-transform: uppercase;
-					display: initial;
+				.image {
+					padding: 0 0 18px;
+					color: $blackColor;
+				}
 
-					*+* {
-						margin-top: 0;
-					}
+				.text {
+					box-sizing: border-box;
+					color: $blackColor;
+					font-weight: bold;
+					line-height: 24px;
+					margin: -24px 0 0;
+					text-align: left;
+					font-size: 24px;
+					padding: 0;
 
-					.digit-con {
-						display: inline-block;
-						vertical-align: top;
-						overflow: hidden;
-						height: 58px;
-						line-height: 58px;
+					.counter {
+						text-transform: uppercase;
+						display: initial;
 
-						span {
-							position: relative;
-							text-align: center;
-							display: block;
-							height: 58px;
-							top: 0;
-							line-height: 58px;
+						*+* {
+							margin-top: 0;
+						}
+
+						.digit-con {
+							display: inline-block;
+							vertical-align: top;
+							overflow: hidden;
+							height: 32px;
+							line-height: 32px;
+
+							span {
+								position: relative;
+								text-align: center;
+								display: block;
+								height: 32px;
+								top: 0;
+								line-height: 32px;
+							}
 						}
 					}
+				}
+			}
+
+			.bottom {
+				display: flex;
+				justify-content: center;
+				margin: 48px 0 0;
+				width: 100%;
+
+				.song {
+					max-width: 400px;
+					background-color: $blackColor;
+					height: inherit;
+					padding: 15px 12px 9px 0;
+					border-radius: 12px;
 				}
 			}
 
@@ -5342,11 +5379,13 @@ body {
 							overflow: auto;
 
 							.noData {
-								padding: 0;
-								height: 100%;
+								padding: 48px 0;
 								display: flex;
 								align-items: center;
 								justify-content: center;
+								flex-direction: column;
+								height: 100%;
+								color: currentColor;
 							}
 
 							.textContainer {
@@ -5375,12 +5414,12 @@ body {
 
 						.analyticsBox {
 							border-top: 1px solid transparentize($greyColor, .75);
+							background-color: $whiteColor;
+							position: absolute;
 							width: 100%;
 							float: left;
-							position: absolute;
-							bottom: 0;
-							background-color: #0f0e0f;
 							z-index: 9;
+							bottom: 0;
 
 							.top {
 								box-sizing: border-box;
@@ -7540,6 +7579,16 @@ body {
 							.counter {
 								background-color: $whiteColor;
 								color: $blackColor;
+							}
+						}
+					}
+				}
+
+				.bodyPublications {
+					.container {
+						.right {
+							.analyticsBox {
+								background-color: $darkThemeColor;
 							}
 						}
 					}

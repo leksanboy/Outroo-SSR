@@ -68,12 +68,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public searchBoxMentions: boolean;
 	public comeFromUserButton: boolean;
 	public showAccounts: boolean;
-	public recommendedUsers = {
-		loading: false,
-		noData: true,
-		show: false,
-		list: []
-	};
+	public recommendedUsers: any = {};
 	public recommendedPlaylists = {
 		loading: false,
 		noData: true,
@@ -365,6 +360,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			};
 
 			this.recommendedUsers = {
+				launched: false,
 				loading: false,
 				noData: true,
 				show: false,
@@ -387,7 +383,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 						/* Show recommended user if no publications */
 						setTimeout(() => {
-							this.getRecommendedUsers();
+							this.getRecommendedUsers('auto');
 						}, 1200);
 					} else {
 						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
@@ -478,17 +474,23 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// Recommended users
-	getRecommendedUsers() {
-		this.recommendedUsers.show = !this.recommendedUsers.show;
-		this.recommendedUsers.loading = true;
+	getRecommendedUsers(type) {
+		// Si se pincha sobre el boton se muestra la lista o el mensaje de no hay datos
+		if (type === 'toggle') {
+			this.recommendedUsers.show = !this.recommendedUsers.show;
 
-		if (this.recommendedUsers.show && this.recommendedUsers.list.length === 0) {
+			this.recommendedUsers.loading = !this.recommendedUsers.launched || false;
+		}
+
+		if (this.recommendedUsers.list.length === 0 && !this.recommendedUsers.launched) {
 			const data = {
 				user: this.userData.id
 			};
 
 			this.userDataService.getRecommended(data)
 				.subscribe((res: any) => {
+					this.recommendedUsers.launched = true;
+
 					setTimeout(() => {
 						this.recommendedUsers.loading = false;
 					}, 600);
@@ -498,12 +500,15 @@ export class MainComponent implements OnInit, OnDestroy {
 					} else {
 						this.recommendedUsers.noData = false;
 						this.recommendedUsers.list = res;
+
+						// Se lanza automaticamente y si hay datos se muestra
+						if (type === 'auto') {
+							this.recommendedUsers.show = true;
+						}
 					}
 				}, error => {
 					this.recommendedUsers.loading = false;
 				});
-		} else {
-			this.recommendedUsers.loading = false;
 		}
 	}
 

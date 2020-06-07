@@ -147,7 +147,7 @@
 								<i class="icon85" label="send-comment"></i>
 							</button>
 
-							<button mat-raised-button class="icon" (click)="getRecommendedUsers()">
+							<button mat-raised-button class="icon" (click)="getRecommendedUsers('toggle')">
 								<mat-progress-spinner mode="indeterminate" *ngIf="recommendedUsers.loading"></mat-progress-spinner>
 								<i label="arrow-mini-line" *ngIf="!recommendedUsers.loading" [ngClass]="{active: recommendedUsers.show}"></i>
 							</button>
@@ -282,7 +282,7 @@
 					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.addRemoveSession}">
 						<span class="inner" *ngIf="!x.contentTypeAd">
 							<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : env.pathPhotos + x.contentData.name) : env.defaultPostImage) + ')'}"></div>
+								<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : (x.contentData.mimetype.indexOf('gif') > -1 ?  env.pathPhotos + x.contentData.name : env.pathPhotos + 'thumbnails/' + x.contentData.name)) : env.defaultPostImage) + ')'}"></div>
 							</a>
 						</span>
 

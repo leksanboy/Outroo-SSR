@@ -6,6 +6,8 @@ import { environment } from '../../../../environments/environment';
 
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
+import { PlayerService } from '../../../../app/core/services/player/player.service';
+import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
@@ -28,6 +30,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 	public listOfPhrases: any = [];
 	public colors = ['yellow', 'purple', 'blue', 'red', 'green'];
 	public randColor = this.colors[Math.floor(Math.random() * 4) + 0];
+	public dataDefault: any = [];
+	public audioPlayerData: any = [];
+	public activePlayerInformation: any;
 
 	constructor(
 		private _fb: FormBuilder,
@@ -37,6 +42,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		private userDataService: UserDataService,
 		private sessionService: SessionService,
 		private ssrService: SsrService,
+		private audioDataService: AudioDataService,
+		private playerService: PlayerService,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -47,6 +54,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 		// User data from routing resolve
 		this.activeSessionStatus = this.activatedRoute.snapshot.data.loginValidationResolvedData;
+
+		// Get player data
+		this.activePlayerInformation = this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
 
 		// Set Google analytics
 		const url = 'home';
@@ -69,6 +82,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 			if (this.sessionData.current) {
 				this.router.navigate([this.sessionData.current.username]);
 			}
+		} else {
+			// Get song
+			let rand = Math.floor(Math.random() * 2900) + 1;
+			this.getSong(rand);
 		}
 
 		if (this.ssrService.isBrowser) {
@@ -88,6 +105,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
+		this.activePlayerInformation.unsubscribe();
+
 		if (this.activeTextEffect) {
 			clearInterval(this.activeTextEffect);
 		}
@@ -117,6 +136,44 @@ export class HomeComponent implements OnInit, OnDestroy {
 			image: this.env.url + 'assets/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
+	}
+
+	getSong(id) {
+		const data = {
+			id: id
+		};
+
+		this.audioDataService.getSong(data)
+			.subscribe((res: any) => {
+				if (!res || res.length === 0) {
+					this.dataDefault.noData = true;
+				} else {
+					this.dataDefault.data = res;
+				}
+			}, error => {
+				this.dataDefault.noData = true;
+			});
+	}
+
+	playSong(data, item, key, type) {
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = [data];
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.sessionData.current.id;
+			this.audioPlayerData.username = this.sessionData.current.username; */
+			this.audioPlayerData.location = 'home';
+			this.audioPlayerData.type = type;
+
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
+		}
 	}
 
 	counter(element, value) {
