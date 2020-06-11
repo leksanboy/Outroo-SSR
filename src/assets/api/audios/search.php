@@ -23,8 +23,20 @@
 						MATCH(`original_title`) AGAINST ('$captionn' IN BOOLEAN MODE) * 3 as rel2,
 						MATCH(`original_artist`) AGAINST ('$captionn' IN BOOLEAN MODE) as rel3
 				FROM `z_audios`
-				WHERE MATCH (title, original_title, original_artist) AGAINST ('$caption' IN BOOLEAN MODE)
-				ORDER BY (rel1)+(rel2)+(rel3) DESC
+				WHERE (
+						(MATCH (title, original_title, original_artist) AGAINST ('$caption' IN BOOLEAN MODE))
+						OR
+						(
+							title LIKE '%$caption%'
+							OR
+							original_title LIKE '%$caption%'
+							OR
+							original_artist LIKE '%$caption%'
+						)
+					)
+					AND is_deleted = 0
+				ORDER BY (rel1)+(rel2)+(rel3) ASC,
+					title ASC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 

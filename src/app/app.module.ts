@@ -59,6 +59,7 @@ import { ActivePlayerMobileModule } from './pages/common/activePlayerMobile/acti
 // Common Components
 import { AlertComponent } from './core/services/alert/alert.component';
 import { CookiesComponent } from './core/services/cookies/cookies.component';
+import { CreateAccountComponent } from './core/services/create-account/create-account.component';
 import { ActiveSessionComponent } from './pages/common/activeSession/activeSession.component';
 
 @NgModule({
@@ -66,6 +67,7 @@ import { ActiveSessionComponent } from './pages/common/activeSession/activeSessi
 		AppComponent,
 		AlertComponent,
 		CookiesComponent,
+		CreateAccountComponent,
 		ActiveSessionComponent
 	],
 	imports: [

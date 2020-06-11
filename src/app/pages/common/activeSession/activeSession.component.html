@@ -58,7 +58,7 @@
 											</span>
 										</div>
 									</div>
-		
+
 									<div class="operations">
 										<!-- Request from others -->
 										<span class="acceptDecline" *ngIf="sessionData.current.id === x.receiver && x.type === 'startFollowingPrivate'">
@@ -69,7 +69,7 @@
 												{{translations?.notifications?.decline}}
 											</button>
 										</span>
-		
+
 										<!-- Mine Requests -->
 										<span *ngIf="x.type !== 'startFollowingPrivate'">
 											<button mat-button *ngIf="x.status === 'unfollow'" (click)="followUnfollow('follow', x)">
@@ -862,9 +862,9 @@
 	</div>
 </div>
 
-<!-- Bottom nav user buttons-->
-<div class="bottomNav" *ngIf="translations">
-	<ul *ngIf="deniedAccess === 'session'">
+<!-- Bottom nav user buttons -->
+<div class="bottomNav" *ngIf="translations && deniedAccess === 'session'">
+	<ul>
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
 				<div class="home">
@@ -910,8 +910,11 @@
 			</button>
 		</li>
 	</ul>
+</div>
 
-	<div class="inner" *ngIf="deniedAccess === 'none'">
+<!-- Bottom signin/signup -->
+<div class="bottomNav" *ngIf="translations && deniedAccess === 'none'">
+	<div class="inner">
 		<div class="logo" routerLink="/"></div>
 
 		<div class="buttons">

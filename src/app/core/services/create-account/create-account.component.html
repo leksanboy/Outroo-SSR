@@ -1,0 +1,19 @@
+<div class="createAccountBox" *ngIf="status" [ngClass]="{'home': style === 'home', 'web': style === 'web'}">
+	<div class="inner">
+		<button mat-icon-button type="button" class="close" (click)="setStatus('close', null)">
+			<i label="close"></i>
+		</button>
+
+		<div class="title">
+			{{translations?.main?.createAccount?.one}}
+		</div>
+
+		<div class="text">
+			{{translations?.main?.createAccount?.two}}
+
+            <button mat-raised-button routerLink="signup" (click)="setStatus('close', null)">
+                {{translations?.main?.createAccount?.three}}
+            </button>
+		</div>
+	</div>
+</div>

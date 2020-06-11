@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -90,6 +90,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 		list: [],
 		mini: false
 	};
+	public activeRouter: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -166,7 +167,15 @@ export class ActiveSessionComponent implements AfterViewInit {
 
 		// Return to home if no access
 		if (!this.sessionData) {
-			this.deniedAccess = 'none';
+			this.activeRouter = this.router.events.subscribe(event => {
+				if (event instanceof NavigationEnd) {
+					if (event.url === '/') {
+						this.deniedAccess = 'home';
+					} else {
+						this.deniedAccess = 'none';
+					}
+				}
+			});
 
 			// No tengo session y no puedo acceder a settings, notifications, news, home
 			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {

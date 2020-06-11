@@ -24,13 +24,13 @@ export class CookiesComponent implements OnInit, OnDestroy {
 		private routingStateService: RoutingStateService,
 	) {
 		let url = this.routingStateService.getLastUrl();
-		this.cookiesStyle(url);
+		this.getStyle(url);
 
 		// Get translations
 		this.getTranslations(null);
 
 		// Check if cookies set
-		this.cookies('check');
+		this.setStatus('check');
 
 		// Get language
 		this.activeLanguage = this.sessionService.getDataLanguage()
@@ -41,7 +41,7 @@ export class CookiesComponent implements OnInit, OnDestroy {
 		// Get last url
 		this.activeLastUrl = this.sessionService.getDataLastUrl()
 			.subscribe(data => {
-				this.cookiesStyle(data);
+				this.getStyle(data);
 			});
 	}
 
@@ -63,7 +63,7 @@ export class CookiesComponent implements OnInit, OnDestroy {
 	}
 
 	// Set/Get
-	cookies(type) {
+	setStatus(type) {
 		if (type === 'check') {
 			const check = this.userDataService.cookies('check');
 			this.status = check;
@@ -77,7 +77,7 @@ export class CookiesComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	cookiesStyle(url) {
+	getStyle(url) {
 		if (url === '/') {
 			this.style = 'home';
 		} else if (url === '/about' ||

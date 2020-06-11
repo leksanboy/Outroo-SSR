@@ -1,6 +1,6 @@
 <div class="cookiesBox" *ngIf="status" [ngClass]="{'home': style === 'home', 'web': style === 'web'}">
 	<div class="inner">
-		<button mat-icon-button type="button" class="close" (click)="cookies('close')">
+		<button mat-icon-button type="button" class="close" (click)="setStatus('close')">
 			<i label="close"></i>
 		</button>
 

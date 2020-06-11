@@ -71,7 +71,12 @@
 			"three": "Politica de privacidad"
 		},
 		"userNotFound": "La cuenta de usuario no existe",
-		"copyLink": "Copiar URL del perfil"
+		"copyLink": "Copiar URL del perfil",
+		"createAccount": {
+			"one": "Escucha musica gratis",
+			"two": "Pulsa en el bóton para crear la cuenta y disfrutar de todos los contenidos.",
+			"three": "Crear cuenta"
+		}
 	},
 	"news": {
 		"title": "Explorar",

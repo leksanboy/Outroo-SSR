@@ -4208,12 +4208,77 @@ body {
 			.text {
 				word-break: break-word;
 				box-sizing: border-box;
-				padding: 0 18px 0 0;
 				width: 100%;
 
 				a {
 					text-decoration: underline;
 					color: currentColor;
+				}
+			}
+		}
+
+		&.home {
+			background-color: $darkThemeColor;
+			margin: 0 0 16px 16px;
+			color: $whiteColor;
+		}
+
+		&.web {
+			margin: 0 0 16px 16px;
+		}
+	}
+
+	/*Cookies*/
+	.createAccountBox {
+		background-color: $whiteColor;
+		max-width: calc(50% - 32px);
+		box-shadow: $shadowBox1;
+		margin: 0 0 104px 16px;
+		color: currentColor;
+		position: fixed;
+		z-index: 99;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+
+		.inner {
+			padding: 42px 24px 48px;
+			box-sizing: border-box;
+			width: 100%;
+
+			.close {
+				margin: 10px 10px 0 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				i {
+					background-color: $greyColor;
+				}
+			}
+
+			.title {
+				text-transform: uppercase;
+				box-sizing: border-box;
+				padding: 0 18px 12px 0;
+				font-weight: bold;
+				text-align: left;
+				font-size: 18px;
+				width: 100%;
+			}
+
+			.text {
+				word-break: break-word;
+				box-sizing: border-box;
+				width: 100%;
+
+				button {
+					margin: 24px 0 0;
+					font-weight: bold;
+					text-transform: inherit;
+					background-color: $blueColor;
+					color: $whiteColor;
+					display: block;
 				}
 			}
 		}
@@ -7671,6 +7736,10 @@ body {
 			background-color: $darkThemeColor;
 		}
 
+		.createAccountBox {
+			background-color: $darkThemeColor;
+		}
+
 		.mat-tab-group {
 			.mat-tab-header {
 				border-bottom: 1px solid transparentize($whiteColor, .75);
@@ -8547,6 +8616,19 @@ body {
 		.cookiesBox {
 			margin: 0 !important;
 			max-width: 100%;
+		}
+
+		.createAccountBox {
+			margin: 0 !important;
+			max-width: 100%;
+
+			.inner {
+				.text {
+					button {
+						width: 100%;
+					}
+				}
+			}
 		}
 
 		.pageHomeBox {
@@ -9699,6 +9781,12 @@ body {
 			}
 
 			.cookiesBox {
+				.inner{
+					padding: 42px 24px 84px;
+				}
+			}
+
+			.createAccountBox {
 				.inner{
 					padding: 42px 24px 84px;
 				}

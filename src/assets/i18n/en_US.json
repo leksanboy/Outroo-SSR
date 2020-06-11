@@ -71,7 +71,12 @@
 			"three": "Privacy policy"
 		},
 		"userNotFound": "The user account does not exist",
-		"copyLink": "Copy profile URL"
+		"copyLink": "Copy profile URL",
+		"createAccount": {
+			"one": "Listen music for free",
+			"two": "Click on the button to create an account and enjoy all the content.",
+			"three": "Create account"
+		}
 	},
 	"news": {
 		"title": "Explore",
