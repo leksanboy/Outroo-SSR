@@ -130,7 +130,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 		// Get player data
 		this.playerService.getData()
 			.subscribe(data => {
-				this.audioPlayerData.playlistBox = true;
 				this.audioPlayerData.noData = false;
 				this.audioPlayerData.postId = data.postId;
 				this.audioPlayerData.list = data.list;
