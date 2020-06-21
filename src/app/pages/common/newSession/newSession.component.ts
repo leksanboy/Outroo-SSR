@@ -39,18 +39,17 @@ export class NewSessionComponent implements OnInit {
 	}
 
 	submit() {
+		const form = this.actionForm.value;
 		this.inUse = false;
 
-		if (this.actionForm.get('email').value.trim().length > 0 &&
-			this.actionForm.get('password').value.trim().length > 0
-		) {
+		if (form.email.trim().length > 0 && form.password.trim().length > 0) {
 			for (let session of this.sessionData.sessions) {
-				if (this.actionForm.get('email').value.indexOf('@') !== -1) { // email
-					if (this.actionForm.get('email').value === session.email) {
+				if (form.email.indexOf('@') !== -1) { // email
+					if (form.email === session.email) {
 						this.inUse = true;
 					}
 				} else { // username
-					if (this.actionForm.get('email').value === session.username) {
+					if (form.email === session.username) {
 						this.inUse = true;
 					}
 				}
@@ -59,7 +58,13 @@ export class NewSessionComponent implements OnInit {
 			if (!this.inUse) {
 				this.submitLoading = true;
 
-				this.userDataService.loginNewSession(this.actionForm.get('email').value, this.actionForm.get('password').value)
+				let params = {
+					type: 'normal',
+					email: form.email,
+					password: form.password
+				};
+
+				this.userDataService.loginNewSession(params)
 					.subscribe(res => {
 						this.dialogRef.close(res);
 						this.submitLoading = false;

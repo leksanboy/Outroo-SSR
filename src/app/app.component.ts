@@ -12,9 +12,10 @@ import { RoutingStateService } from './core/services/route/state.service';
 	templateUrl: './app.component.html'
 })
 export class AppComponent implements OnDestroy {
-	public activeSessionStatus: boolean;
 	public activeRouter: any;
 	public ssrServiceBrowser: any;
+	public activeSessionStatus: boolean;
+	public activeCreateAccount: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -46,6 +47,19 @@ export class AppComponent implements OnDestroy {
 						this.activeSessionStatus = false;
 					} else {
 						this.activeSessionStatus = true;
+					}
+
+					if (event.url === '/' ||
+						event.url === '/signup' ||
+						event.url === '/signin' ||
+						event.url === '/confirm-email' ||
+						event.url === '/forgot-password' ||
+						event.url === '/reset-password' ||
+						event.url === '/logout'
+					) {
+						this.activeCreateAccount = false;
+					} else {
+						this.activeCreateAccount = true;
 					}
 				}
 			});

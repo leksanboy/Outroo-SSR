@@ -11,6 +11,7 @@ import { AudioDataService } from '../../../../app/core/services/user/audioData.s
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
+declare var global: any;
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html'
@@ -18,6 +19,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 export class HomeComponent implements OnInit, OnDestroy {
 	@ViewChild('textCounterEffect') textCounterEffect: ElementRef;
 	public env: any = environment;
+	public window: any = global;
 	public translations: any = [];
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
@@ -29,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	public activeTextEffect: any;
 	public listOfPhrases: any = [];
 	public colors = ['yellow', 'purple', 'blue', 'red', 'green'];
-	public randColor = this.colors[Math.floor(Math.random() * 4) + 0];
+	public randColor = this.colors[Math.floor(Math.random() * 5) + 0];
 	public dataDefault: any = [];
 	public audioPlayerData: any = [];
 	public activePlayerInformation: any;
@@ -251,23 +253,31 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.errorMessage = false;
 
 		if (form.email.trim().length > 0 && form.password.trim().length > 0) {
-			this.userDataService.login(form.email, form.password)
-				.subscribe(
-					res => {
-						this.router.navigate([this.env.defaultPage]);
-					},
-					error => {
-						this.submitLoading = false;
+			let params = {
+				type: 'normal',
+				username: form.email,
+				password: form.password
+			};
 
-						// show error message
-						this.errorMessage = true;
-						this.errorMessageContent = this.translations.common.emailOrPasswordIncorrect;
-					}
-				);
+			this.userDataService.login(params)
+				.subscribe(res => {
+					//this.router.navigate([this.env.defaultPage]);
+					this.window.location.href = this.env.defaultPage;
+				}, error => {
+					this.submitLoading = false;
+
+					// show error message
+					this.errorMessage = true;
+					this.errorMessageContent = this.translations.common.emailOrPasswordIncorrect;
+				});
 		} else {
 			this.submitLoading = false;
 			this.errorMessage = true;
 			this.errorMessageContent = this.translations.common.completeAllFields;
 		}
+	}
+
+	socialLogin(type) {
+		this.sessionService.setSocialLogin(type);
 	}
 }

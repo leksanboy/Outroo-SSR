@@ -91,7 +91,13 @@ export class ConfirmEmailComponent implements OnInit {
 		this.submitLoading = true;
 
 		if (this.userData.email.length > 0 && this.userData.password.length > 0) {
-			this.userDataService.login(this.userData.email, this.userData.password)
+			let params = {
+				type: 'normal',
+				username: this.userData.email,
+				password: this.userData.password
+			};
+
+			this.userDataService.login(params)
 				.subscribe(
 					res => {
 						this.router.navigate(['/']);

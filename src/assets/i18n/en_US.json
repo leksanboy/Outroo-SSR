@@ -1,6 +1,6 @@
 {
 	"audios": {
-		"title": "Songs",
+		"title": "Music",
 		"noData": "No songs",
 		"songs": "Songs",
 		"general": "General",
@@ -75,11 +75,11 @@
 		"createAccount": {
 			"one": "Listen music for free",
 			"two": "Click on the button to create an account and enjoy all the content.",
-			"three": "Create account"
+			"three": "Create an account"
 		}
 	},
 	"news": {
-		"title": "Explore",
+		"title": "Search",
 		"top": "Top",
 		"people": "People",
 		"tag": "Hashtags",

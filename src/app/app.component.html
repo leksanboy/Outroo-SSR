@@ -4,6 +4,6 @@
 
 <router-outlet></router-outlet>
 
-<app-cookies></app-cookies>
+<app-cookies *ngIf="ssrServiceBrowser"></app-cookies>
 
-<app-create-account></app-create-account>
+<app-create-account *ngIf="ssrServiceBrowser && activeCreateAccount"></app-create-account>

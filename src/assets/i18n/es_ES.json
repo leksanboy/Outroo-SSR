@@ -1,6 +1,6 @@
 {
 	"audios": {
-		"title": "Canciones",
+		"title": "Música",
 		"noData": "No hay canciones",
 		"songs": "Canciones",
 		"general": "General",
@@ -79,7 +79,7 @@
 		}
 	},
 	"news": {
-		"title": "Explorar",
+		"title": "Buscar",
 		"top": "Top",
 		"people": "Personas",
 		"tag": "Hashtags",

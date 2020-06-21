@@ -140,10 +140,11 @@
 				WHERE username LIKE '$username'";
 		$result = $conn->query($sql)->fetch_assoc();
 
-		if ($result['id'])
+		if ($result['id']) {
 			$result = $result['id'];
-		else
+		} else {
 			$result = "";
+		}
 
 		return $result;
 	}
@@ -275,6 +276,19 @@
 				return $status;
 			}
 		}
+	}
+
+	function checkEmail($email) {
+		global $conn;
+
+		$sql = "SELECT id
+				FROM z_users
+				WHERE email LIKE '$email'";
+		$result = $conn->query($sql);
+
+		$status = ($result->num_rows == 0) ? false : true;
+
+		return $status;
 	}
 
 	// Get user private
@@ -807,7 +821,7 @@
 
 		$sql = "SELECT id
 				FROM z_bookmarks
-				WHERE post = $publication 
+				WHERE post = $publication
 					AND user = $user
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->fetch_assoc();

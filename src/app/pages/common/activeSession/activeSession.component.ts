@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -34,13 +34,15 @@ declare var navigator: any;
 declare var MediaMetadata: any;
 declare var Vibrant: any;
 declare var global: any;
+declare var FB: any;
+declare var gapi: any;
 
 @Component({
 	selector: 'app-active-session',
 	templateUrl: './activeSession.component.html',
 	providers: [ TimeagoPipe ]
 })
-export class ActiveSessionComponent implements AfterViewInit {
+export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	@ViewChild('audioPlayerHtml') audioPlayerHtml: ElementRef;
 
 	public env: any = environment;
@@ -135,8 +137,6 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.audioPlayerData.list = data.list;
 				this.audioPlayerData.item = data.item;
 				this.audioPlayerData.key = data.key;
-				/* this.audioPlayerData.user = data.user;
-				this.audioPlayerData.username = data.username; */
 				this.audioPlayerData.location = data.location;
 				this.audioPlayerData.type = data.type;
 				this.audioPlayerData.selectedIndex = data.selectedIndex;
@@ -164,15 +164,17 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.audioPlayerData = data;
 			});
 
+		// Get social login
+		this.sessionService.getSocialLogin()
+			.subscribe(data => {
+				this.socialLogin(data, null, null);
+			});
+
 		// Return to home if no access
 		if (!this.sessionData) {
 			this.activeRouter = this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
-					if (event.url === '/') {
-						this.deniedAccess = 'home';
-					} else {
-						this.deniedAccess = 'none';
-					}
+					this.deniedAccess = (event.url === '/') ? 'home' : 'none';
 				}
 			});
 
@@ -317,6 +319,43 @@ export class ActiveSessionComponent implements AfterViewInit {
 				this.location.go(this.router.url);
 				this.showSessions = false;
 				this.showPlayer = false;
+			});
+		}
+	}
+
+	ngOnInit() {
+		const self = this;
+
+		if (!this.sessionData) {
+			/* Facebook load script */
+			(window as any).fbAsyncInit = function() {
+				FB.init({
+					appId      : '1158154061233240',
+					cookie     : true,
+					xfbml      : true,
+					version    : 'v7.0'
+				});
+				FB.AppEvents.logPageView();
+			};
+
+			(function(d, s, id){
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {return;}
+				js = d.createElement(s); js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+
+			/* Google load */
+			gapi.load('auth2', function() {
+				let auth2 = gapi.auth2.init({
+					client_id: '300059601874-pcjvht2v7objtildb04hcp15cpt4v1fn.apps.googleusercontent.com',
+					cookiepolicy: 'single_host_origin',
+					scope: 'profile email'
+				});
+
+				let element = document.getElementById('googleSignIn');
+				self.socialLogin('google', auth2, element);
 			});
 		}
 	}
@@ -767,11 +806,11 @@ export class ActiveSessionComponent implements AfterViewInit {
 					if (!this.audioPlayerData.equalizerInitialized) {
 						this.audioPlayerData.equalizerInitialized = true;
 
-						if (this.sessionData) {
+						/* if (this.sessionData) {
 							if (this.sessionData.current) {
 								this.initEqualizer();
 							}
-						}
+						} */
 					}
 
 					this.playPlayer('stop', null);
@@ -1399,6 +1438,7 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.playPlayer('stop', null);
 			this.router.navigate(['logout']);
 			this.userDataService.logout();
+			this.window.location.reload();
 		} else {
 			for (const i in this.sessionData.sessions) {
 				if (i) {
@@ -1598,6 +1638,68 @@ export class ActiveSessionComponent implements AfterViewInit {
 			this.audioPlayerData.playlistBox = false
 		} else if (type === 'expand') {
 			this.audioPlayerData.mini = false;
+		}
+	}
+
+	// Login with Facebook | Google
+	socialLogin(type, auth, element) {
+		const self = this;
+
+		if (type === 'facebook') {
+			FB.login(res => {
+              	if (res.authResponse) {
+					FB.api('/me', 'get', { access_token: res.authResponse.accessToken, fields: 'id,name,email,picture' }, function(response) {
+						let params = {
+							type: type,
+							email: response.email,
+							password: null,
+							id: response.id,
+							name: response.name,
+							avatar: (response.picture.data.url || null),
+							lang: self.userDataService.getLang('get', null)
+						};
+
+						self.userDataService.login(params)
+							.subscribe(
+								res => {
+									self.window.location.href = self.env.defaultPage;
+								},
+								error => {
+									self.alertService.error(self.translations.common.anErrorHasOcurred);
+								}
+							);
+					});
+               	} else {
+					self.alertService.error(self.translations.common.anErrorHasOcurred);
+            	}
+			});
+		} else if (type === 'google') {
+			auth.attachClickHandler(element, {},
+				res => {
+					let params = {
+						type: type,
+						email: res.getBasicProfile().getEmail(),
+						password: null,
+						id: res.getBasicProfile().getId(),
+						name: res.getBasicProfile().getName(),
+						avatar: (res.getBasicProfile().getImageUrl() || null),
+						lang: self.userDataService.getLang('get', null)
+					};
+
+					self.userDataService.login(params)
+						.subscribe(
+							res => {
+								self.window.location.href = self.env.defaultPage;
+							},
+							error => {
+								self.alertService.error(self.translations.common.anErrorHasOcurred);
+							}
+						);
+				}, error => {
+					// log('Sign-in error', error);
+					self.alertService.error(self.translations.common.anErrorHasOcurred);
+				}
+			);
 		}
 	}
 }

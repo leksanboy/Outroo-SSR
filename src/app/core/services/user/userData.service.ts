@@ -125,12 +125,22 @@ export class UserDataService {
 		}
 	}
 
-	login(username, password) {
+	login(data) {
 		const url = this.env.url + 'assets/api/user/authenticate.php';
-		const params = {
-			username: username,
-			password: password
+		const params: any = {
+			type: data.type,
+			username: data.username,
+			password: data.password
 		};
+
+		// Facebook and Google login
+		if (data.type === 'facebook' || data.type === 'google') {
+			params.id = data.id;
+			params.name = data.name;
+			params.email = data.email;
+			params.avatar = data.avatar;
+			params.lang = data.lang;
+		}
 
 		// Reset storage data
 		this.logout();
@@ -142,11 +152,11 @@ export class UserDataService {
 			}));
 	}
 
-	loginNewSession(username, password) {
+	loginNewSession(data) {
 		const url = this.env.url + 'assets/api/user/authenticate.php';
 		const params = {
-			username: username,
-			password: password
+			username: data.username,
+			password: data.password
 		};
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

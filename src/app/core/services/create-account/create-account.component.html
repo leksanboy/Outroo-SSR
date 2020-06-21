@@ -1,4 +1,4 @@
-<div class="createAccountBox" *ngIf="status" [ngClass]="{'home': style === 'home', 'web': style === 'web'}">
+<div class="createAccountBox {{randColor}}" *ngIf="status" [ngClass]="{'home': style === 'home', 'web': style === 'web'}">
 	<div class="inner">
 		<button mat-icon-button type="button" class="close" (click)="setStatus('close', null)">
 			<i label="close"></i>
@@ -14,6 +14,20 @@
             <button mat-raised-button routerLink="signup" (click)="setStatus('close', null)">
                 {{translations?.main?.createAccount?.three}}
             </button>
+		</div>
+
+		<div class="socialButtons">
+			<div class="or">or</div>
+
+			<button class="facebook" mat-raised-button type="button" (click)="socialLogin('facebook')">
+				<img src="./assets/images/facebook_login.png">
+				Continue with Facebook
+			</button>
+
+			<button class="google" mat-raised-button type="button" id="googleSignIn">
+				<img src="./assets/images/google_login.png">
+				Continue with Google
+			</button>
 		</div>
 	</div>
 </div>

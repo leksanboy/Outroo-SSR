@@ -2,6 +2,7 @@
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+	$data['username'] = strtr($data['username'],'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 	$username = str_replace(' ', '', $data['username']);
 	$name = htmlspecialchars($data['name'], ENT_QUOTES);
 	$email = $data['email'];
@@ -10,9 +11,7 @@
 	$date = time();
 	$generatedHash = generateRandomString(23);
 
-	echo checkUsername($username);
-
-	if (checkUsername($username)) {
+	if (checkUsername($username) || checkEmail($email)) {
 		var_dump(http_response_code(403));
 	} else {
 		if (isset($username) && isset($name) && isset($email) && isset($password)) {
@@ -22,9 +21,8 @@
 			$insertedUser = $conn->insert_id;
 
 			if ($insertedUser) {
-				// Creating folders for images
+				// Creating folder for avatar
 				mkdir('/var/www/html/assets/media/user/'.$insertedUser.'/avatar', 0777, true);
-				mkdir('/var/www/html/assets/media/user/'.$insertedUser.'/background', 0777, true);
 
 				// Send mail
 				emailWelcome($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash);

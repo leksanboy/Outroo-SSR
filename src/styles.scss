@@ -44,11 +44,12 @@ $redColor: #E53935;
 $greenColor: #8bc34a;
 $greyColor: #9E9E9E;
 $yellowColor: #ff9800;
+$pinkColor: #e91e63;
 
 $headerWhiteColor: #fafafa;
 $modalDialogColor: #0e0d0f;
 
-$darkThemeColor: #0e0d0f;
+$darkThemeColor: #121212;
 $navyThemeColor: #15212c;
 
 /*Shadows*/
@@ -2311,7 +2312,7 @@ body {
 					position: relative;
 					text-align: left;
 					overflow: hidden;
-					max-width: 300px;
+					max-width: 324px;
 					display: flex;
 
 					.title {
@@ -2443,21 +2444,27 @@ body {
 					width: 100%;
 
 					.text {
+						font-weight: bold;
+						text-align: left;
+						display: block;
+						padding: 4px 0;
+						width: 100%;
+
+						i {
+							margin: 0 0 -7px -7px;
+						}
+
 						&:first-child {
 							font-size: 24px;
 						}
 
-						&:not(:first-child) {
+						&:nth-child(2) {
 							color: $blueColor;
-							font-weight: bold;
-							text-align: left;
-							display: block;
-							width: 100%;
-							padding: 4px 0;
+						}
 
-							i {
-								margin: 0 0 -7px -7px;
-							}
+						&:nth-child(3) {
+							font-weight: normal;
+							color: $greyColor;
 						}
 					}
 
@@ -2577,6 +2584,54 @@ body {
 			color: $greyColor;
 			font-size: 13px;
 			padding: 24px 18px 12px;
+		}
+	}
+
+	.socialButtons {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		margin: 12px 0;
+		float: left;
+
+		.or {
+			width: 100%;
+			text-align: center;
+			font-size: 13px;
+		}
+
+		button {
+			text-transform: inherit;
+			margin: 12px auto 0;
+			max-width: 324px;
+			width: 100%;
+
+			img {
+				width: 24px;
+				height: 24px;
+				position: absolute;
+				margin: 6px 18px;
+				left: 0;
+				top: 0;
+			}
+
+			&.facebook {
+				background-color: #4267B2;
+				color: $whiteColor;
+			}
+
+			&.google {
+				background-color: $whiteColor;
+				color: $blackColor;
+			}
+		}
+
+		&.signup {
+			background-color: transparentize($greyColor, .84);
+			box-sizing: border-box;
+			border-radius: 3px;
+			padding: 12px 12px 24px;
+			margin: 24px 0 12px;
 		}
 	}
 
@@ -4230,11 +4285,11 @@ body {
 
 	/*Cookies*/
 	.createAccountBox {
-		background-color: $whiteColor;
+		background-color: #e91e63;
 		max-width: calc(50% - 32px);
 		box-shadow: $shadowBox1;
 		margin: 0 0 104px 16px;
-		color: currentColor;
+		color: $blackColor;
 		position: fixed;
 		z-index: 99;
 		width: 100%;
@@ -4242,9 +4297,10 @@ body {
 		left: 0;
 
 		.inner {
-			padding: 42px 24px 48px;
+			padding: 42px 24px 24px;
 			box-sizing: border-box;
 			width: 100%;
+			float: left;
 
 			.close {
 				margin: 10px 10px 0 0;
@@ -4253,7 +4309,7 @@ body {
 				top: 0;
 
 				i {
-					background-color: $greyColor;
+					background-color: transparentize($blackColor, .5);
 				}
 			}
 
@@ -4261,8 +4317,8 @@ body {
 				text-transform: uppercase;
 				box-sizing: border-box;
 				padding: 0 18px 12px 0;
+				text-align: center;
 				font-weight: bold;
-				text-align: left;
 				font-size: 18px;
 				width: 100%;
 			}
@@ -4270,10 +4326,11 @@ body {
 			.text {
 				word-break: break-word;
 				box-sizing: border-box;
+				text-align: center;
 				width: 100%;
 
 				button {
-					margin: 24px 0 0;
+					margin: 24px auto 0;
 					font-weight: bold;
 					text-transform: inherit;
 					background-color: $blueColor;
@@ -4284,13 +4341,38 @@ body {
 		}
 
 		&.home {
-			background-color: $darkThemeColor;
+			/* background-color: $darkThemeColor; */
 			margin: 0 0 16px 16px;
-			color: $whiteColor;
+			/* color: $whiteColor; */
 		}
 
 		&.web {
 			margin: 0 0 16px 16px;
+		}
+
+		&.yellow {
+			background-color: #FFD200;
+			background-image: linear-gradient(to right, #FFD200, #F7971E);
+		}
+
+		&.purple {
+			background-color: #B721FF;
+			background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+		}
+
+		&.blue {
+			background-color: #1FA2FF;
+			background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
+		}
+
+		&.red {
+			background-color: #b31217;
+			background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
+		}
+
+		&.green {
+			background-color: #3CD500;
+			background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
 		}
 	}
 
@@ -4417,7 +4499,6 @@ body {
 			float: left;
 
 			.header {
-				border-bottom: 1px solid transparentize($greyColor, .75);
 				justify-content: space-between;
 				position: relative;
 				line-height: 56px;
@@ -4426,6 +4507,8 @@ body {
 				width: 100%;
 
 				.left {
+					padding: 0 0 0 3px;
+					color: $pinkColor;
 					overflow: hidden;
 					display: flex;
 					width: 100%;
@@ -5780,7 +5863,7 @@ body {
 
 			.head {
 				border-bottom: 1px solid transparentize($greyColor, .75);
-				background-color: $headerWhiteColor;
+				background-color: transparentize($headerWhiteColor, .04);
 				box-shadow: $shadowBox0;
 				position: absolute;
 				transition: .25s;
@@ -6504,13 +6587,13 @@ body {
 					border-radius: 50% !important;
 					margin: 0 6px;
 					float: left;
-					color: #e91e63;
+					color: $pinkColor;
 				}
 
 				.text {
 					font-size: 18px;
 					float: left;
-					color: #e91e63;
+					color: $pinkColor;
 				}
 
 				.action {
@@ -6704,7 +6787,7 @@ body {
 								color: $whiteColor;
 								line-height: 36px;
 								height: 36px;
-								text-transform: capitalize;
+								text-transform: inherit;
 								font-size: 14px;
 								font-weight: bold;
 
@@ -6764,7 +6847,7 @@ body {
 								display: flex;
 								height: 56px;
 								float: left;
-								color: #e91e63;
+								color: $pinkColor;
 
 								button {
 									border-radius: 50% !important;
@@ -6815,8 +6898,12 @@ body {
 							button.m {
 								border-radius: 50% !important;
 								z-index: 1;
-								margin: 8px 0;
+								margin: 8px;
 								float: right;
+
+								i {
+									transform: rotate(90deg);
+								}
 							}
 						}
 
@@ -7736,10 +7823,6 @@ body {
 			background-color: $darkThemeColor;
 		}
 
-		.createAccountBox {
-			background-color: $darkThemeColor;
-		}
-
 		.mat-tab-group {
 			.mat-tab-header {
 				border-bottom: 1px solid transparentize($whiteColor, .75);
@@ -7796,7 +7879,7 @@ body {
 		.innerBodyUser {
 			.header {
 				.head {
-					background-color: $blackColor;
+					background-color: transparentize($blackColor, .04);
 					box-shadow: $shadowBox0;
 
 					.left,
@@ -7851,7 +7934,7 @@ body {
 
 		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $blackColor;
+			background-color: transparentize($blackColor, .04);
 			box-shadow: $shadowBoxBottom;
 			color: $whiteColor;
 			transition: .25s;
@@ -7937,11 +8020,6 @@ body {
 				.grabber {
 					background-color: transparentize($whiteColor, .25);
 				}
-
-				.goTo button {
-					border: 1px solid $whiteColor;
-					color: $whiteColor;
-				}
 			}
 
 			.box .player {
@@ -7981,7 +8059,7 @@ body {
 
 		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: $whiteColor;
+			background-color: transparentize($whiteColor, .04);
 			box-shadow: $shadowBoxBottom;
 			color: $blackColor;
 			position: fixed;
@@ -8519,6 +8597,10 @@ body {
 						display: flex;
 					}
 
+					.left {
+						padding: 0;
+					}
+
 					.right {
 						display: block;
 					}
@@ -8638,6 +8720,7 @@ body {
 
 			.right {
 				width: 100%;
+				display: block;
 
 				.inner {
 					.footer {
@@ -9448,8 +9531,8 @@ body {
 
 					button {
 						background-color: transparent;
-						border: 1px solid $blackColor;
-						color: $blackColor;
+						border: 1px solid $pinkColor;
+						color: $pinkColor;
 						line-height: 22px;
 						font-weight: bold;
 						font-size: 10px;

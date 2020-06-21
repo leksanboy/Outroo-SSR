@@ -92,9 +92,23 @@
 						<div class="create" routerLink="/signup">
 							{{translations?.home?.dontHaveAnAccount}}
 							<a routerLink="/signup">
-								{{translations?.common?.signUp}}
+								{{translations?.main?.createAccount?.three}}
 							</a>
 						</div>
+					</div>
+
+					<div class="socialButtons">
+						<div class="or">or</div>
+
+						<button class="facebook" mat-raised-button type="button" (click)="socialLogin('facebook')">
+							<img src="./assets/images/facebook_login.png">
+							Continue with Facebook
+						</button>
+
+						<button class="google" mat-raised-button type="button" id="googleSignIn">
+							<img src="./assets/images/google_login.png">
+							Continue with Google
+						</button>
 					</div>
 				</form>
 			</div>

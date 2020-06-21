@@ -21,6 +21,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	public dataSearch: any = [];
 	public dataDefault: any = [];
 	public actionFormSearch: FormGroup;
+	public activePlayerInformation: any;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,6 +34,12 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 	) {
 		this.sessionData = this.data.sessionData;
 		this.translations = this.data.translations;
+
+		// Get current track
+		this.activePlayerInformation = this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
 
 		// Search
 		this.actionFormSearch = this._fb.group({
@@ -58,6 +65,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.submit(null);
+		this.activePlayerInformation.unsubscribe();
 	}
 
 	// Default
@@ -263,9 +271,7 @@ export class NewPublicationAddAudiosComponent implements OnInit, OnDestroy {
 				this.audioPlayerData.list = data;
 				this.audioPlayerData.item = item;
 				this.audioPlayerData.key = key;
-				/* this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username; */
-				this.audioPlayerData.location = 'newPublication';
+				this.audioPlayerData.location = 'audioNewPublication';
 				this.audioPlayerData.type = type;
 				this.audioPlayerData.selectedIndex = this.data.selectedIndex;
 

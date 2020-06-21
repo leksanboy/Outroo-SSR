@@ -11,6 +11,7 @@ import { SsrService } from '../../../../app/core/services/ssr.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
+declare var global: any;
 @Component({
 	selector: 'app-signin',
 	templateUrl: './signin.component.html'
@@ -18,6 +19,7 @@ import { RoutingStateService } from '../../../../app/core/services/route/state.s
 
 export class SigninComponent implements OnInit {
 	public env: any = environment;
+	public window: any = global;
 	public translations: any = [];
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
@@ -79,10 +81,17 @@ export class SigninComponent implements OnInit {
 		this.submitLoading = true;
 
 		if (form.email.trim().length > 0 && form.password.trim().length > 0) {
-			this.userDataService.login(form.email, form.password)
+			let params = {
+				type: 'normal',
+				username: form.email,
+				password: form.password
+			};
+
+			this.userDataService.login(params)
 				.subscribe(
 					res => {
-						this.router.navigate([this.env.defaultPage]);
+						//this.router.navigate([this.env.defaultPage]);
+						this.window.location.href = this.env.defaultPage;
 					},
 					error => {
 						this.submitLoading = false;

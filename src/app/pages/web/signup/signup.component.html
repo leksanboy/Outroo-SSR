@@ -59,6 +59,20 @@
 									{{translations?.common?.signUp}}
 								</button>
 							</div>
+
+							<div class="socialButtons signup">
+								<div class="or">You can try other ways</div>
+
+								<button class="facebook" mat-raised-button type="button" (click)="socialLogin('facebook')">
+									<img src="./assets/images/facebook_login.png">
+									Sign up with Facebook
+								</button>
+
+								<button class="google" mat-raised-button type="button" id="googleSignIn">
+									<img src="./assets/images/google_login.png">
+									Sign up with Google
+								</button>
+							</div>
 						</form>
 					</div>
 				</span>

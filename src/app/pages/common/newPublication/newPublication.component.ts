@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location, DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -20,7 +20,7 @@ declare var global: any;
 	selector: 'app-new-ublication',
 	templateUrl: './newPublication.component.html'
 })
-export class NewPublicationComponent implements OnInit {
+export class NewPublicationComponent implements OnInit, OnDestroy {
 	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
@@ -39,6 +39,7 @@ export class NewPublicationComponent implements OnInit {
 		lastTypedWord: []
 	};
 	public audioPlayerData: any = [];
+	public activePlayerInformation: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -59,6 +60,12 @@ export class NewPublicationComponent implements OnInit {
 		this.data.counterUploaded = 0;
 		this.sessionData = this.data.sessionData;
 		this.translations = this.data.translations;
+
+		// Get current track
+		this.activePlayerInformation = this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
 
 		// Set placeholder
 		this.checkPlaceholder();
@@ -97,6 +104,10 @@ export class NewPublicationComponent implements OnInit {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 			});
+	}
+
+	ngOnDestroy() {
+		this.activePlayerInformation.unsubscribe();
 	}
 
 	// Upload files

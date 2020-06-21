@@ -138,11 +138,17 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	signin(ev: Event) {
+		const form = this.actionForm.value;
 		this.signinLoading = true;
 
-		if (this.userData.email.length > 0 &&
-			this.actionForm.get('password').value.length > 0) {
-			this.userDataService.login(this.userData.email, this.actionForm.get('password').value)
+		if (this.userData.email.length > 0 && form.password.length > 0) {
+			let params = {
+				type: 'normal',
+				username: this.userData.email,
+				password: form.password
+			};
+
+			this.userDataService.login(params)
 				.subscribe(
 					res => {
 						this.router.navigate(['/']);

@@ -755,7 +755,7 @@
 				<div class="progress">
 					<div class="current">{{audioPlayerData?.current?.time}}</div>
 					<div class="slider">
-						<canvas id="audioAnalyser"></canvas>
+						<!-- <canvas id="audioAnalyser"></canvas> -->
 						<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)"></mat-slider>
 					</div>
 					<div class="total">{{audioPlayerData?.current?.duration}}</div>

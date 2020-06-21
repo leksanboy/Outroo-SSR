@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -8,16 +8,20 @@ import { environment } from '../../../../environments/environment';
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
+import { SessionService } from '../../../../app/core/services/session/session.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
+declare var global: any;
+declare var FB: any;
 @Component({
 	selector: 'app-signup',
 	templateUrl: './signup.component.html'
 })
 
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, AfterViewInit {
 	public env: any = environment;
+	public window: any = global;
 	public translations: any = [];
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
@@ -39,6 +43,7 @@ export class SignupComponent implements OnInit {
 		private userDataService: UserDataService,
 		private location: Location,
 		private routingStateService: RoutingStateService,
+		private sessionService: SessionService,
 	) {
 		// Get translations
 		this.translations = this.activatedRoute.snapshot.data.langResolvedData;
@@ -150,6 +155,27 @@ export class SignupComponent implements OnInit {
 			});
 	}
 
+	ngAfterViewInit() {
+		/* this.window.fbAsyncInit = function() {
+			this.window['FB'].init({
+				appId      : '1158154061233240',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v7.0'
+			});
+
+			this.window['FB'].AppEvents.logPageView();
+		};
+
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk')); */
+	}
+
 	goBack() {
 		this.routingStateService.getPreviousUrl();
 	}
@@ -160,12 +186,13 @@ export class SignupComponent implements OnInit {
 	}
 
 	submit(ev: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
 
-		if (this.actionForm.get('name').value.trim().length > 0 &&
-			this.actionForm.get('username').value.trim().length > 0 &&
-			this.actionForm.get('password').value.trim().length > 0 &&
-			this.env.emailPattern.test(this.actionForm.get('email').value) &&
+		if (form.name.trim().length > 0 &&
+			form.username.trim().length > 0 &&
+			form.password.trim().length > 0 &&
+			this.env.emailPattern.test(form.email) &&
 			this.recaptcha
 		) {
 			this.userDataService.createAccount(this.actionForm.value)
@@ -177,7 +204,7 @@ export class SignupComponent implements OnInit {
 						this.pageStatus = 'completed';
 
 						// email
-						this.emailAccount = this.actionForm.get('email').value;
+						this.emailAccount = form.email;
 					},
 					error => {
 						this.submitLoading = false;
@@ -199,12 +226,19 @@ export class SignupComponent implements OnInit {
 	}
 
 	signin() {
+		const form = this.actionForm.value;
 		this.signinLoading = true;
 
-		if (this.actionForm.get('name').value.trim().length > 0 &&
-			this.env.emailPattern.test(this.actionForm.get('email').value)
+		if (form.name.trim().length > 0 &&
+			this.env.emailPattern.test(form.email)
 		) {
-			this.userDataService.login(this.actionForm.get('email').value, this.actionForm.get('password').value)
+			let params = {
+				type: 'normal',
+				username: form.email,
+				password: form.password
+			};
+
+			this.userDataService.login(params)
 				.subscribe(
 					res => {
 						this.router.navigate(['/']);
@@ -212,15 +246,17 @@ export class SignupComponent implements OnInit {
 					error => {
 						this.signinLoading = false;
 
-						// show error message
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					}
 				);
 		} else {
 			this.signinLoading = false;
 
-			// show error message
 			this.alertService.error(this.translations.common.incorrectCredentials);
 		}
+	}
+
+	socialLogin(type) {
+		this.sessionService.setSocialLogin(type);
 	}
 }

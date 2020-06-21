@@ -17,6 +17,8 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
 	public style: any;
 	public activeLanguage: any;
 	public activeLastUrl: any;
+	public colors = ['yellow', 'purple', 'blue', 'red', 'green'];
+	public randColor = this.colors[Math.floor(Math.random() * 5) + 0];
 
 	constructor(
 		private userDataService: UserDataService,
@@ -89,5 +91,9 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
 				this.style = 'web';
 			}
 		}
+	}
+
+	socialLogin(type) {
+		this.sessionService.setSocialLogin(type);
 	}
 }
