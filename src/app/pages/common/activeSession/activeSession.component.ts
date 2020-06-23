@@ -93,6 +93,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		mini: false
 	};
 	public activeRouter: any;
+	public socialLoading: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -1646,6 +1647,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		const self = this;
 
 		if (type === 'facebook') {
+			self.socialLoading = true;
+
 			FB.login(res => {
               	if (res.authResponse) {
 					FB.api('/me', 'get', { access_token: res.authResponse.accessToken, fields: 'id,name,email,picture' }, function(response) {
@@ -1655,7 +1658,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 							password: null,
 							id: response.id,
 							name: response.name,
-							avatar: (response.picture.data.url || null),
+							avatar: ((response.picture ? (response.picture.data ? response.picture.data.url : null) : null) || null),
 							lang: self.userDataService.getLang('get', null)
 						};
 
@@ -1663,14 +1666,17 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 							.subscribe(
 								res => {
 									self.window.location.href = self.env.defaultPage;
+									self.socialLoading = false;
 								},
 								error => {
 									self.alertService.error(self.translations.common.anErrorHasOcurred);
+									self.socialLoading = false;
 								}
 							);
 					});
                	} else {
 					self.alertService.error(self.translations.common.anErrorHasOcurred);
+					self.socialLoading = false;
             	}
 			});
 		} else if (type === 'google') {
@@ -1686,18 +1692,21 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 						lang: self.userDataService.getLang('get', null)
 					};
 
+					self.socialLoading = true;
 					self.userDataService.login(params)
 						.subscribe(
 							res => {
 								self.window.location.href = self.env.defaultPage;
+								self.socialLoading = false;
 							},
 							error => {
 								self.alertService.error(self.translations.common.anErrorHasOcurred);
+								self.socialLoading = false;
 							}
 						);
 				}, error => {
-					// log('Sign-in error', error);
 					self.alertService.error(self.translations.common.anErrorHasOcurred);
+					self.socialLoading = false;
 				}
 			);
 		}

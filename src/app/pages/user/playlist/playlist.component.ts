@@ -140,10 +140,27 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.info = res.info;
-					this.dataDefault.list = res.list;
+					this.dataDefault.list = [];
 
 					if (res.list.length === 0) {
 						this.dataDefault.noData = true;
+					}
+
+					for (const i in res.list) {
+						if (i) {
+							this.dataDefault.list.push(res.list[i]);
+
+							// Push ad
+							if (res.list.lenght < 15) {
+								if (Math.round(res.list.lenght / 2)) {
+									this.dataDefault.list.push(this.pushAd());
+								}
+							} else {
+								if (i == '10' || i == '20' || i == '30') {
+									this.dataDefault.list.push(this.pushAd());
+								}
+							}
+						}
 					}
 
 					// Meta

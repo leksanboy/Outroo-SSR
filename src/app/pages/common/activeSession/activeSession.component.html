@@ -427,7 +427,7 @@
 											<button mat-icon-button [matMenuTriggerFor]="options">
 												<i class="icon85 grey" label="more"></i>
 											</button>
-		
+
 											<mat-menu #options="matMenu">
 												<button mat-menu-item (click)="itemNotificationOptions('report', x)">{{translations?.common?.report}}</button>
 												<button mat-menu-item (click)="itemNotificationOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
@@ -931,3 +931,8 @@
 
 <!-- Audio -->
 <audio #audioPlayerHtml src=""></audio>
+
+<div class="socialLoading" *ngIf="socialLoading">
+	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+	<div class="text">Loading ...</div>
+</div>

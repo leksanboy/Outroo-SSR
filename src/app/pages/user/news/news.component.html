@@ -144,6 +144,42 @@
 							</div>
 						</mat-tab>
 
+						<mat-tab label="{{translations?.audios?.title}}">
+							<!-- <ul class="followers" *ngIf="dataPeople.list">
+								<li *ngFor="let x of dataPeople.list; let i=index;">
+									<a class="avatar" routerLink="/{{x.user.username}}">
+										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+									</a>
+
+									<div class="texts">
+										<div class="text">
+											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
+											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+										</div>
+
+										<div class="text">
+											{{x.user.name}}
+										</div>
+									</div>
+								</li>
+							</ul>
+
+							<div class="loadingData" *ngIf="dataPeople.loadingData">
+								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+							</div>
+
+							<div class="noData" *ngIf="dataPeople.noData">
+								<div class="description">{{translations?.common?.noSearchResults}}</div>
+							</div>
+
+							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
+								<button mat-fab (click)="people('more')" *ngIf="!dataPeople.loadingMoreData">
+									<i label="add"></i>
+								</button>
+								<mat-progress-spinner mode="indeterminate" *ngIf="dataPeople.loadingMoreData"></mat-progress-spinner>
+							</div> -->
+						</mat-tab>
+
 						<mat-tab label="{{translations?.news?.posts}}">
 							<ul class="publicationsBoxes" *ngIf="dataPosts?.list">
 								<li *ngFor="let x of dataPosts?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">

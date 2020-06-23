@@ -57,7 +57,7 @@
 		if (!$result['id']) {
 			$u = strtr($name,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 			$u = str_replace(' ', '', $u);
-			$u = checkUsername($u) ? ($u + generateRandomString(6)) : $u;
+			$u = checkUsername($u) ? ($u.generateRandomString(6)) : $u;
 			$password = generateRandomString(10);
 			$generatedHash = generateRandomString(23);
 			$date = time();
@@ -75,7 +75,7 @@
 				// Insert image
 				$nameAvatar = generateRandomString(23).'.jpg';
 				$pathAvatar = '/var/www/html/assets/media/user/'.$insertedUser.'/avatar/'.$nameAvatar;
-				file_put_contents($pathAvatar, $avatar);
+				file_put_contents($pathAvatar, file_get_contents($avatar));
 
 				$sql = "UPDATE z_users
 						SET avatar = '$nameAvatar',

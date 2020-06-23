@@ -2635,6 +2635,40 @@ body {
 		}
 	}
 
+	.socialLoading {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background-color: transparentize($blackColor, .25);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		top: 0;
+		left: 0;
+		z-index: 999;
+		flex-direction: column;
+
+		mat-progress-spinner {
+			height: 36px !important;
+			width: 36px !important;
+
+			svg {
+				height: 36px !important;
+				width: 36px !important;
+
+				circle {
+					stroke: $blueColor !important;
+				}
+			}
+		}
+
+		.text {
+			padding: 24px;
+			color: $whiteColor;
+			font-weight: bold;
+		}
+	}
+
 	/* Advert
 		- (/news)
 		- (/home)
