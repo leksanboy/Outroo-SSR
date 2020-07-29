@@ -361,7 +361,7 @@
 
 		$sql = "SELECT id
 				FROM z_photos_favorites
-				WHERE user = $id 
+				WHERE user = $id
 					AND is_deleted = 0";
 		$result = $conn->query($sql)->num_rows;
 

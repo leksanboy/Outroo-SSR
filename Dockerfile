@@ -9,30 +9,32 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install basics
 RUN apt-get update && \
-    apt-get install -y apt-utils make gcc wget perl
-
-# Install apache2
-RUN apt-get update && \
-    apt-get install -y apache2 && \
-    a2enmod alias headers proxy proxy_http rewrite ssl
+    apt-get -y install \
+        apt-utils \
+        httpd \
+        php \
+        php-cli \
+        php-common \
+        mod_ssl \
+        openssl
 
 # Install PM2
 RUN npm install pm2 -g
 
-# Apache conf (Redirect on reloading page)
+# Apache conf (Redirect on reloading page) for SSR Web
 RUN sed -i 's/<\/VirtualHost>/\n RewriteEngine On \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR] \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d \n RewriteRule ^ - [L] \n RewriteRule ^ \/index.html \n <\/VirtualHost>/g' /etc/apache2/sites-available/000-default.conf
 
 # Apache conf
 RUN echo 'ServerName fake1.local' >> /etc/apache2/apache2.conf
 
-# Remove all files from html folder
-RUN rm /var/www/html/*.*
+# Copy ssl conf (TODO)
+#COPY ./conf/ssl.conf /etc/httpd/conf.d/default.conf
 
 # Copy build
 COPY ./distNew/ /var/www/html/dist
 
-# Exec
-CMD ["npm", "install", "pm2", "-g", "&&", "pm2", "start", "dist/server.js"]
-
 # Run on port
 EXPOSE 80
+
+# Exec
+CMD ["pm2", "start", "dist/server.js"]

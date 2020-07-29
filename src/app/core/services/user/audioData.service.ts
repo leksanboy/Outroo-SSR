@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,11 +7,14 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
 
+declare var Vibrant: any;
+
 @Injectable()
 export class AudioDataService {
 	public env: any = environment;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		private httpClient: HttpClient,
 		private headersService: HeadersService
 	) {}
@@ -175,5 +179,29 @@ export class AudioDataService {
 			.pipe(map(res => {
 				return res;
 			}));
+	}
+
+	getCoverColor(image) {
+		if (image.length) {
+			let img = this.document.createElement('img');
+			img.setAttribute('src', image);
+
+			if (img.hasAttribute('src')) {
+				let vibrant = new Vibrant(img);
+				let swatches = vibrant.swatches();
+
+				for (const i in swatches) {
+					if (i) {
+						if (swatches.hasOwnProperty(i) && swatches[i]) {
+							if (i === 'Vibrant') {
+								return swatches[i].getRgb();
+							}
+						}
+					}
+				}
+			}
+		} else {
+			return null;
+		}
 	}
 }

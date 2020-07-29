@@ -12,6 +12,7 @@
 	$imageName = '';
 	$genre = $data['genre'];
 	$description = $data['description'];
+	$color = $data['color'];
 	$explicit = $data['explicit'] ? 1 : 0;
 
 	if ($image) {
@@ -25,8 +26,8 @@
 	}
 
 	if ($type === 'create') {
-		$sql = "INSERT INTO z_audios_playlist (name, user, title, description, genre, image, explicit, ip_address)
-				VALUES ('$name', $session, '$title', '$description', '$genre', '$imageNameJpg', '$explicit', '$ipAddress')";
+		$sql = "INSERT INTO z_audios_playlist (name, user, title, color, description, genre, image, explicit, ip_address)
+				VALUES ('$name', $session, '$color', '$title', '$description', '$genre', '$imageNameJpg', '$explicit', '$ipAddress')";
 		$conn->query($sql);
 		$insertedId = $conn->insert_id;
 
@@ -42,13 +43,15 @@
 
 		$conn->close();
 	} else if ($type === 'update') {
-		$image = $image ? "(image = '$imageNameJpg'," : "";
+		$image = $image ? "image = '$imageNameJpg'," : "";
+		$color = $color ? "color = '$color'," : "";
 
 		$sql = "UPDATE z_audios_playlist
 				SET title = '$title',
 					description = '$description',
 					genre = '$genre',
 					$image
+					$color
 					explicit = '$explicit',
 					ip_address = '$ipAddress'
 				WHERE id = $id

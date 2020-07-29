@@ -12,8 +12,8 @@
 	$conn->query($sql);
 
 	if ($playlistId) {
-		$sqlPlaylist = "INSERT INTO z_audios_playlist_replays (user, song, playlist, ip_address)
-						VALUES ($session, $id, $playlistId, '$ipAddress')";
+		$sqlPlaylist = "INSERT INTO z_audios_playlist_replays (user, song, playlist, ip_address, country_code)
+						VALUES ($session, $id, $playlistId, '$ipAddress', '$countryCode')";
 		$conn->query($sqlPlaylist);
 	}
 

@@ -9,7 +9,7 @@
 	searchAudioAnalytics($session, $caption, $type);
 
 	if ($type === 'song') { // min 4 chars to correct search
-		$caption = "+".str_replace(' ', " +", $caption);
+		$caption = str_replace(' ', " +", $caption);
 
 		$sql = "SELECT id,
 						name,
@@ -20,8 +20,8 @@
 						image,
 						explicit,
 						MATCH(`title`) AGAINST ('$caption' IN BOOLEAN MODE) * 10 as rel1,
-						MATCH(`original_title`) AGAINST ('$captionn' IN BOOLEAN MODE) * 3 as rel2,
-						MATCH(`original_artist`) AGAINST ('$captionn' IN BOOLEAN MODE) as rel3
+						MATCH(`original_title`) AGAINST ('$caption' IN BOOLEAN MODE) * 3 as rel2,
+						MATCH(`original_artist`) AGAINST ('$caption' IN BOOLEAN MODE) as rel3
 				FROM `z_audios`
 				WHERE (
 						(MATCH (title, original_title, original_artist) AGAINST ('$caption' IN BOOLEAN MODE))
@@ -39,6 +39,7 @@
 					title ASC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
+		/* echo json_encode($sql); */
 
 		if ($result->num_rows > 0) {
 			$data = array();

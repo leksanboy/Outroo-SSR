@@ -1,7 +1,7 @@
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
@@ -14,10 +14,12 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+import { ActiveSessionComponent } from '../../../../app/pages/common/activeSession/activeSession.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
 declare var global: any;
+declare var Vibrant: any;
 
 @Component({
 	selector: 'app-playlist',
@@ -44,8 +46,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 		show: false,
 		list: []
 	};
+	public activeSessionComponent: ActiveSessionComponent;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		public dialog: MatDialog,
 		private router: Router,
 		private location: Location,
@@ -140,6 +144,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.info = res.info;
+
+					let color = res.info.image ? this.audioDataService.getCoverColor(this.env.pathAudios + 'covers/' + res.info.image) : null;
+					this.dataDefault.info.shadow = color ? ('0 20px 50px rgba(' + color + ', 0.42)') : null;
+
 					this.dataDefault.list = [];
 
 					if (res.list.length === 0) {

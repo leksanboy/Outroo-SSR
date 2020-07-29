@@ -2437,7 +2437,7 @@ body {
 			.right {
 				width: 100%;
 				box-sizing: border-box;
-				padding: 0 0 0 18px;
+				padding: 0 0 0 24px;
 				display: flex;
 
 				.texts {
@@ -8528,7 +8528,7 @@ body {
 				}
 
 				.close {
-					display: block;
+					display: flex;
 
 					button{
 						span{
@@ -8598,10 +8598,28 @@ body {
 			width: 100%;
 
 			.info {
+				flex-direction: column;
+
 				.left {
+					width: 100%;
+					display: flex;
+					justify-content: center;
+
 					.image {
-						height: 150px;
-						width: 150px;
+						margin: 0 0 18px;
+						display: block;
+						/* height: 200px;
+						width: 200px; */
+					}
+				}
+
+				.right {
+					border-bottom: 1px solid transparentize($greyColor, .5);
+					padding: 0 0 18px;
+
+					.texts {
+						padding: 0 0 0 24px;
+						text-align: center;
 					}
 				}
 			}

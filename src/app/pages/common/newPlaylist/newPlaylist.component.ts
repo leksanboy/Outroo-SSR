@@ -13,7 +13,7 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 
-declare var Cropper: any;
+declare var Vibrant: any;
 
 @Component({
 	selector: 'app-new-playlist',
@@ -33,6 +33,7 @@ export class NewPlaylistComponent implements OnInit {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
+		@Inject(DOCUMENT) private document: Document,
 		public dialogRef: MatDialogRef<NewPlaylistComponent>,
 		private sanitizer: DomSanitizer,
 		private _fb: FormBuilder,
@@ -110,11 +111,13 @@ export class NewPlaylistComponent implements OnInit {
 
 				const dialogRef = this.dialog.open(NewAvatarComponent, config);
 				dialogRef.afterClosed().subscribe(res => {
+					console.log('res', res);
 					this.data.newImage = res;
 
 					// Replace current image
 					if (this.data.current) {
-						this.data.current.image = res;
+						this.data.current.image = this.data.newImage;
+						this.data.current.color = this.data.color;
 					}
 				});
 			} else {
@@ -137,6 +140,7 @@ export class NewPlaylistComponent implements OnInit {
 						type: 'create',
 						title: form.title,
 						image: this.data.newImage,
+						color: this.data.color,
 						genre: form.advanced ? (form.genre ? form.genre : null) : null,
 						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
 						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null

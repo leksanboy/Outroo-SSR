@@ -15,7 +15,7 @@
 		<div class="playlist">
 			<div class="info" *ngIf="!data.loadingData">
 				<div class="left">
-					<div class="image">
+					<div class="image" [ngStyle]="{'box-shadow': data?.info?.shadow}">
 						<img [src]="data?.current?.image ? (env.pathAudios + 'covers/' + data?.current?.image) : env.defaultPlaylistCover">
 					</div>
 				</div>

@@ -50,58 +50,79 @@
 						private,
 						reset_password as rp
 				FROM z_users
-				WHERE email = '$email'";
+				WHERE source_user_id = '$id'";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		// If not exists then create an account
 		if (!$result['id']) {
-			$u = strtr($name,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
-			$u = str_replace(' ', '', $u);
-			$u = checkUsername($u) ? ($u.generateRandomString(6)) : $u;
-			$password = generateRandomString(10);
-			$generatedHash = generateRandomString(23);
-			$date = time();
+			$emailCheck = count($email) > 0 ? $email : '@@@';
+			$sqlE = "SELECT id,
+							username,
+							name,
+							avatar,
+							background,
+							email,
+							about,
+							language,
+							theme,
+							official,
+							private,
+							reset_password as rp
+					FROM z_users
+					WHERE email = '$emailCheck'";
+			$resultE = $conn->query($sqlE)->fetch_assoc();
 
-			// Create new one
-			$sql = "INSERT INTO z_users (username, name, email, password, verification_code, language, creation_date, ip_address_create, source, source_user_id)
-					VALUES ('$u', '$name', '$email', '$password', '$generatedHash', '$lang', '$date', '$ipAddress', '$type', '$id')";
-			$conn->query($sql);
-			$insertedUser = $conn->insert_id;
+			if (!$resultE['id']) {
+				$u = strtr($name,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+				$u = str_replace(' ', '', $u);
+				$u = checkUsername($u) ? ($u.generateRandomString(6)) : $u;
+				$password = generateRandomString(10);
+				$generatedHash = generateRandomString(23);
+				$date = time();
 
-			if ($insertedUser) {
-				// Creating folder for avatar
-				mkdir('/var/www/html/assets/media/user/'.$insertedUser.'/avatar', 0777, true);
-
-				// Insert image
-				$nameAvatar = generateRandomString(23).'.jpg';
-				$pathAvatar = '/var/www/html/assets/media/user/'.$insertedUser.'/avatar/'.$nameAvatar;
-				file_put_contents($pathAvatar, file_get_contents($avatar));
-
-				$sql = "UPDATE z_users
-						SET avatar = '$nameAvatar',
-							ip_address_update = '$ipAddress'
-						WHERE id = $insertedUser";
+				// Create new one
+				$sql = "INSERT INTO z_users (username, name, email, password, verification_code, language, creation_date, ip_address_create, source, source_user_id)
+						VALUES ('$u', '$name', '$email', '$password', '$generatedHash', '$lang', '$date', '$ipAddress', '$type', '$id')";
 				$conn->query($sql);
+				$insertedUser = $conn->insert_id;
 
-				// Send mail
-				emailWelcomeSocial($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash, $password);
+				if ($insertedUser) {
+					// Creating folder for avatar
+					mkdir('/var/www/html/assets/media/user/'.$insertedUser.'/avatar', 0777, true);
 
-				// Login data
-				$sql = "SELECT id,
-								username,
-								name,
-								avatar,
-								background,
-								email,
-								about,
-								language,
-								theme,
-								official,
-								private,
-								reset_password as rp
-						FROM z_users
-						WHERE id = $insertedUser";
-				$result = $conn->query($sql)->fetch_assoc();
+					// Insert image
+					$nameAvatar = generateRandomString(23).'.jpg';
+					$pathAvatar = '/var/www/html/assets/media/user/'.$insertedUser.'/avatar/'.$nameAvatar;
+					file_put_contents($pathAvatar, file_get_contents($avatar));
+
+					$sql = "UPDATE z_users
+							SET avatar = '$nameAvatar',
+								ip_address_update = '$ipAddress'
+							WHERE id = $insertedUser";
+					$conn->query($sql);
+
+					// Send mail
+					emailWelcomeSocial($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash, $password);
+
+					// Login data
+					$sql = "SELECT id,
+									username,
+									name,
+									avatar,
+									background,
+									email,
+									about,
+									language,
+									theme,
+									official,
+									private,
+									reset_password as rp
+							FROM z_users
+							WHERE id = $insertedUser";
+					$result = $conn->query($sql)->fetch_assoc();
+				}
+			} else {
+				$result = $resultE;
 			}
 		}
 	}

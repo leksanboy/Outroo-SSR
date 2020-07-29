@@ -736,7 +736,7 @@
 					<i [style.background]="audioPlayerData?.current?.color"></i>
 				</button>
 
-				<button mat-fab (click)="playPlayer('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color">
+				<button mat-fab (click)="playPlayer('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow}">
 					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading"></i>
 					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading"></i>
 					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
@@ -784,6 +784,10 @@
 	</div>
 
 	<div class="close">
+		<button mat-mini-fab (click)="showPlaylistWeb()">
+			<i label="playlist" class="icon75 grey"></i>
+		</button>
+
 		<button mat-mini-fab (click)="doMiniPlayer('expand')">
 			<i label="launch" class="icon50 grey"></i>
 		</button>

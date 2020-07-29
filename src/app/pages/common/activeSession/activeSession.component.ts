@@ -87,7 +87,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			type: 'default',
 			addRemoveSession: null,
 			addRemoveOther: null,
-			color: null
+			color: null,
+			shadow: null
 		},
 		list: [],
 		mini: false
@@ -837,7 +838,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.env.pathAudios + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
 					this.audio.src = this.env.pathAudios + this.audioPlayerData.list[key].name;
 					this.audio.load();
-					//this.getColorFromAudioCover(this.audioPlayerData.current.image);
+					this.audioPlayerData.current.color = this.audioPlayerData.current.image ? this.audioDataService.getCoverColor(this.audioPlayerData.current.image) : null;
+					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + this.audioPlayerData.current.color + ', 0.37)') : null;
 
 					// Replays +1
 					this.updateReplays(this.audioPlayerData.list[key].song, (this.sessionData ? this.sessionData.current.id : 0), this.audioPlayerData.playlist);
@@ -1294,7 +1296,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	}
 
 	// Get color
-	getColorFromAudioCover(image) {
+	/* getCoverColor(image) {
 		const self = this;
 
 		if (image.length) {
@@ -1309,16 +1311,16 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					if (i) {
 						if (swatches.hasOwnProperty(i) && swatches[i]) {
 							if (i === 'Vibrant') {
-								self.audioPlayerData.current.color = swatches[i].getHex();
+								return swatches[i].getHex();
 							}
 						}
 					}
 				}
 			}
 		} else {
-			self.audioPlayerData.current.color = null;
+			return null;
 		}
-	}
+	} */
 
 	// Show Player on Mobile
 	showMobilePlayer(type) {

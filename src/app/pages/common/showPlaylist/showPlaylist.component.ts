@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Location } from '@angular/common';
+import { Location, DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
@@ -9,6 +9,8 @@ import { AudioDataService } from '../../../../app/core/services/user/audioData.s
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
+
+import { ActiveSessionComponent } from '../../../../app/pages/common/activeSession/activeSession.component';
 
 declare var global: any;
 
@@ -29,9 +31,11 @@ export class ShowPlaylistComponent implements OnInit {
 		show: false,
 		list: []
 	};
+	public activeSessionComponent: ActiveSessionComponent;
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
+		@Inject(DOCUMENT) private document: Document,
 		public dialogRef: MatDialogRef<ShowPlaylistComponent>,
 		public dialog: MatDialog,
 		private router: Router,
@@ -68,6 +72,9 @@ export class ShowPlaylistComponent implements OnInit {
 				} else {
 					this.data.info = res.info;
 					this.data.list = res.list;
+
+					let color = res.info.image ? this.audioDataService.getCoverColor(this.env.pathAudios + 'covers/' + res.info.image) : null;
+					this.data.info.shadow = color ? ('0 20px 50px rgba(' + color + ', 0.42)') : null;
 
 					if (res.list.length === 0) {
 						this.data.noData = true;

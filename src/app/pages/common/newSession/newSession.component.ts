@@ -59,8 +59,7 @@ export class NewSessionComponent implements OnInit {
 				this.submitLoading = true;
 
 				let params = {
-					type: 'normal',
-					email: form.email,
+					username: form.email,
 					password: form.password
 				};
 
