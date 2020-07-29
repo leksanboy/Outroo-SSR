@@ -155,6 +155,7 @@ export class UserDataService {
 	loginNewSession(data) {
 		const url = this.env.url + 'assets/api/user/authenticate.php';
 		const params = {
+			type: (data.type ? data.type : 'normal'),
 			username: data.username,
 			password: data.password
 		};
