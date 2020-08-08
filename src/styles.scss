@@ -3008,7 +3008,7 @@ body {
 	.mat-menu-panel {
 		border-radius: 3px !important;
 		max-height: 272px;
-		max-width: 220px;
+		max-width: 260px;
 
 		.mat-menu-content {
 			button {
@@ -3054,6 +3054,120 @@ body {
 				width: 100%;
 
 				button {
+					text-transform: inherit;
+					display: flex;
+					justify-content: center;
+					font-weight: bold;
+					font-size: 12px;
+				}
+			}
+		}
+
+		&.postSettingsBox {
+			.mat-menu-content {
+				padding: 0 !important;
+				min-width: 240px;
+			}
+
+			.inner {
+				box-sizing: border-box;
+				font-weight: normal;
+				padding: 12px 18px 18px;
+				line-height: 24px;
+				font-size: 15px;
+				width: 100%;
+				float: left;
+
+				.title {
+					color: $greyColor;
+					font-size: 12px;
+				}
+
+				.items {
+					padding: 6px 0 0;
+					float: left;
+
+					.item {
+						width: 100%;
+						float: left;
+						line-height: 40px;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+
+						/* .text {
+							width: 100%;
+						} */
+
+						.mat-button-toggle-group {
+							.mat-button-toggle {
+								button {
+									height: 24px;
+									line-height: 24px;
+
+									.mat-button-toggle-label-content {
+										line-height: 24px;
+										color: $blackColor;
+										padding: 0 6px;
+										font-size: 11px;
+										font-weight: bold;
+									}
+								}
+
+								&.mat-button-toggle-checked {
+									background-color: $blueColor;
+
+									button {
+										.mat-button-toggle-label-content {
+											color: $whiteColor;
+										}
+									}
+								}
+							}
+						}
+
+						.datetime {
+							width: 100%;
+							display: flex;
+
+							.mat-form-field {
+								width: 48px;
+								margin: 0 12px 0 0;
+
+								&:first-child {
+									width: 96px;
+
+									input {
+										padding: 0;
+									}
+
+									button {
+										margin: 0;
+									}
+								}
+
+								&:last-child {
+									margin: 0;
+								}
+							}
+						}
+
+						&:last-child {
+							flex-direction: column;
+						}
+					}
+				}
+			}
+
+			.buttons {
+				border-top: 1px solid transparentize($greyColor, .5);
+				display: flex;
+				width: 100%;
+
+				button {
+					background-color: transparent;
+					width: 100%;
+					box-shadow: none;
 					text-transform: inherit;
 					display: flex;
 					justify-content: center;
@@ -5868,7 +5982,6 @@ body {
 
 		.mat-bottom-sheet-container {
 			background: transparent;
-			/*max-height: 100vh;*/
 			box-shadow: none;
 			width: 100%;
 			padding: 0;
@@ -6882,6 +6995,7 @@ body {
 								height: 56px;
 								float: left;
 								color: $pinkColor;
+								z-index: 9;
 
 								button {
 									border-radius: 50% !important;
@@ -8057,7 +8171,7 @@ body {
 			}
 
 			.box .player {
-				background: linear-gradient(0, $darkThemeColor 50%, $darkThemeColor 75%, transparent 100%);
+				background: transparentize($darkThemeColor, 0.05);
 			}
 		}
 	}
@@ -9598,7 +9712,8 @@ body {
 				width: 100%;
 
 				.player {
-					background: linear-gradient(0, $whiteColor 50%, $whiteColor 75%, transparentize($whiteColor, 1) 100%);
+					border-top: 1px solid transparentize($greyColor, .75);
+					background: transparentize($whiteColor, 0.05);
 					position: fixed;
 					width: 100%;
 					z-index: 99;
@@ -9606,9 +9721,9 @@ body {
 
 					.top {
 						box-sizing: border-box;
-						padding: 24px 18px 0;
 						position: relative;
 						margin: 0 0 -12px;
+						padding: 0 18px;
 						width: 100%;
 						float: left;
 
@@ -9633,10 +9748,11 @@ body {
 									white-space: nowrap;
 									overflow: hidden;
 									font-size: 24px;
-									height: 26px;
+									height: 30px;
+									line-height: 30px;
 
 									&:last-child {
-										font-size: 13px;
+										font-size: 15px;
 										color: $greyColor;
 									}
 								}
@@ -9732,7 +9848,7 @@ body {
 
 					.bottom {
 						justify-content: center;
-						padding: 6px 0 12px;
+						padding: 6px 0;
 						align-items: center;
 						position: relative;
 						display: flex;
@@ -9890,13 +10006,13 @@ body {
 					position: relative;
 					overflow-x: hidden;
 					overflow-y: auto;
-					max-height: 65vh;
+					max-height: 70vh;
 					width: 100%;
 					padding: 0;
 					margin: 0;
 
 					ul {
-						padding: 0 0 260px;
+						padding: 0 0 254px;
 						position: relative;
 						display: block;
 						width: 100%;

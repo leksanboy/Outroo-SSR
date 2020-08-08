@@ -14,6 +14,8 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
+import { PlayerService } from '../../../../app/core/services/player/player.service';
+import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
 
@@ -37,12 +39,15 @@ export class NewsComponent implements OnInit, OnDestroy {
 	public dataPeople: any = [];
 	public dataPosts: any = [];
 	public dataTop: any = [];
-	public dataTag: any = [];
+	public dataTags: any = [];
 	public data: any = {
 		selectedIndex: 0,
 		active: 'default',
 		selectedHashtag: null
 	};
+	public dataSongs: any = [];
+	public audioPlayerData: any = [];
+	public activePlayerInformation: any;
 	public activeLanguage: any;
 	public activeSessionPlaylists: any;
 	public hideAd: boolean;
@@ -57,6 +62,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 		private titleService: Title,
 		private sanitizer: DomSanitizer,
 		private alertService: AlertService,
+		private playerService: PlayerService,
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
@@ -64,6 +70,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 		private followsDataService: FollowsDataService,
 		private ssrService: SsrService,
 		private routingStateService: RoutingStateService,
+		private audioDataService: AudioDataService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -126,6 +133,12 @@ export class NewsComponent implements OnInit, OnDestroy {
 				this.getTranslations(data);
 			});
 
+		// Get current track
+		this.activePlayerInformation = this.playerService.getCurrentTrack()
+			.subscribe(data => {
+				this.audioPlayerData = data;
+			});
+
 		// Load more on scroll on bottom
 		this.window.onscroll = (event) => {
 			const windowHeight = 'innerHeight' in this.window ? this.window.innerHeight : document.documentElement.offsetHeight;
@@ -151,13 +164,18 @@ export class NewsComponent implements OnInit, OnDestroy {
 							}
 							break;
 						case 2:
+							if (this.dataSongs.list.length > 0) {
+								this.songs('more');
+							}
+							break;
+						case 3:
 							if (this.dataPosts.list.length > 0) {
 								this.posts('more');
 							}
 							break;
-						case 3:
-							if (this.dataTag.list.length > 0) {
-								this.tag('more');
+						case 4:
+							if (this.dataTags.list.length > 0) {
+								this.tags('more');
 							}
 							break;
 					}
@@ -258,13 +276,18 @@ export class NewsComponent implements OnInit, OnDestroy {
 				}
 				break;
 			case 2:
+				if (!this.dataSongs.list || (this.dataSongs.searchCaption !== this.data.newSearchCaption)) {
+					this.songs('default');
+				}
+				break;
+			case 3:
 				if (!this.dataPosts.list || (this.dataPosts.searchCaption !== this.data.newSearchCaption)) {
 					this.posts('default');
 				}
 				break;
-			case 3:
-				if (!this.dataTag.list || (this.dataTag.searchCaption !== this.data.newSearchCaption)) {
-					this.tag('default');
+			case 4:
+				if (!this.dataTags.list || (this.dataTags.searchCaption !== this.data.newSearchCaption)) {
+					this.tags('default');
 				}
 				break;
 		}
@@ -284,10 +307,13 @@ export class NewsComponent implements OnInit, OnDestroy {
 					this.people('default');
 					break;
 				case 2:
-					this.posts('default');
+					this.songs('default');
 					break;
 				case 3:
-					this.tag('default');
+					this.posts('default');
+					break;
+				case 4:
+					this.tags('default');
 					break;
 			}
 		} else if (type === 'clear') {
@@ -599,9 +625,9 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	// Tag
-	tag(type) {
+	tags(type) {
 		if (type === 'default') {
-			this.dataTag = {
+			this.dataTags = {
 				list: [],
 				rows: 0,
 				loadingData: true,
@@ -613,63 +639,63 @@ export class NewsComponent implements OnInit, OnDestroy {
 			};
 
 			const data = {
-				caption: this.dataTag.searchCaption,
-				rows: this.dataTag.rows,
+				caption: this.dataTags.searchCaption,
+				rows: this.dataTags.rows,
 				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.searchTag(data)
 				.subscribe((res: any) => {
-					this.dataTag.loadingData = false;
+					this.dataTags.loadingData = false;
 
 					if (!res || res.length === 0) {
-						this.dataTag.noData = true;
+						this.dataTags.noData = true;
 					} else {
-						this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataTags.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
-								this.dataTag.list.push(res[i]);
+								this.dataTags.list.push(res[i]);
 							}
 						}
 					}
 
 					if (!res || res.length < this.env.cuantity) {
-						this.dataTag.noMore = true;
+						this.dataTags.noMore = true;
 					}
 				}, error => {
-					this.dataTag.loadingData = false;
+					this.dataTags.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
-		} else if (type === 'more' && !this.dataTag.noMore && !this.dataTag.loadingMoreData) {
-			this.dataTag.loadingMoreData = true;
-			this.dataTag.rows++;
+		} else if (type === 'more' && !this.dataTags.noMore && !this.dataTags.loadingMoreData) {
+			this.dataTags.loadingMoreData = true;
+			this.dataTags.rows++;
 
 			const data = {
-				caption: this.dataTag.searchCaption,
-				rows: this.dataTag.rows,
+				caption: this.dataTags.searchCaption,
+				rows: this.dataTags.rows,
 				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.searchTag(data)
 				.subscribe((res: any) => {
-					this.dataTag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-					this.dataTag.loadingMoreData = false;
+					this.dataTags.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataTags.loadingMoreData = false;
 
 					if (!res || res.length > 0) {
 						for (const i in res) {
 							// Push items
 							if (res[i]) {
-								this.dataTag.list.push(res[i]);
+								this.dataTags.list.push(res[i]);
 							}
 						}
 					}
 
 					if (!res || res.length < this.env.cuantity) {
-						this.dataTag.noMore = true;
+						this.dataTags.noMore = true;
 					}
 				}, error => {
-					this.dataTag.loadingData = false;
+					this.dataTags.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}
@@ -767,6 +793,203 @@ export class NewsComponent implements OnInit, OnDestroy {
 					this.dataHashtag.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
+		}
+	}
+
+	// Songs
+	songs(type) {
+		if (type === 'default') {
+			this.dataSongs = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false
+			};
+
+			const data = {
+				type: 'song',
+				caption: this.actionFormSearch.get('caption').value,
+				rows: this.dataSongs.rows,
+				cuantity: this.env.cuantity
+			};
+
+			this.audioDataService.search(data)
+				.subscribe((res: any) => {
+					this.dataSongs.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataSongs.noData = true;
+					} else {
+						this.dataSongs.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+						for (const i in res) {
+							if (i) {
+								this.dataSongs.list.push(res[i]);
+
+								// Push ad
+								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataSongs.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSongs.noMore = true;
+					}
+				}, error => {
+					this.dataSongs.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+			} else if (type === 'more' && !this.dataPosts.noMore && !this.dataPosts.loadingMoreData) {
+				this.dataSongs.loadingMoreData = true;
+				this.dataSongs.rows++;
+
+				const data = {
+					type: 'song',
+					caption: this.actionFormSearch.get('caption').value,
+					rows: this.dataSongs.rows,
+					cuantity: this.env.cuantity
+				};
+
+				this.audioDataService.search(data)
+					.subscribe((res: any) => {
+						this.dataSongs.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataSongs.loadingMoreData = false;
+
+						if (!res || res.length > 0) {
+							for (const i in res) {
+								if (i) {
+									this.dataSongs.list.push(res[i]);
+
+									// Push ad
+									if (i === '19') {
+										this.dataSongs.list.push(this.pushAd());
+									}
+								}
+							}
+						}
+
+						if (!res || res.length < this.env.cuantity) {
+							this.dataSongs.noMore = true;
+						}
+					}, error => {
+						this.dataSongs.loadingData = false;
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+		}
+	}
+
+	// Play item song
+	playSong(data, item, key, type) {
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.userData.id;
+			this.audioPlayerData.username = this.userData.username; */
+			this.audioPlayerData.location = 'audios';
+			this.audioPlayerData.type = type;
+			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
+		}
+	}
+
+	// Item options
+	itemSongOptions(type, item, playlist) {
+		switch (type) {
+			case ('addRemoveSession'):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
+
+				const dataARS = {
+					type: item.removeType,
+					location: 'session',
+					id: item.id
+				};
+
+				this.audioDataService.addRemove(dataARS)
+					.subscribe(res => {
+						// let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						// 	text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+						// this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.insertedId,
+					item: item.song
+				};
+
+				this.audioDataService.addRemove(dataARO)
+					.subscribe(res => {
+						item.insertedId = res;
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
+
+				const dataP = {
+					type: item.removeType,
+					location: 'playlist',
+					item: item.song,
+					playlist: playlist.idPlaylist
+				};
+
+				this.audioDataService.addRemove(dataP)
+					.subscribe(res => {
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('report'):
+				item.type = 'audio';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
 		}
 	}
 }

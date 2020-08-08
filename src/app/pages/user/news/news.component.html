@@ -81,7 +81,7 @@
 										</div>
 									</span>
 
-									<span *ngIf="x.type === 'hashtag'" (click)="setHashtag('set', x)">
+									<span *ngIf="x.type === 'hashtag'" (click)="setHashtags('set', x)">
 										<a class="avatar">
 											<div class="hashtag">#</div>
 										</a>
@@ -145,39 +145,83 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.audios?.title}}">
-							<!-- <ul class="followers" *ngIf="dataPeople.list">
-								<li *ngFor="let x of dataPeople.list; let i=index;">
-									<a class="avatar" routerLink="/{{x.user.username}}">
-										<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
-									</a>
-
-									<div class="texts">
-										<div class="text">
-											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
-											<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							<ul class="tracks" *ngIf="dataSongs?.list">
+								<li *ngFor="let x of dataSongs?.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'search', advert: x.contentTypeAd}">
+									<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
+										<div class="image">
+											<button mat-icon-button (click)="playSong(dataSongs?.list, x, i, 'search')">
+												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
+												<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
+												<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
+											</button>
 										</div>
 
-										<div class="text">
-											{{x.user.name}}
+										<div class="text" (click)="playSong(dataSongs?.list, x, i, 'search')">
+											<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
+												<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
+												<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+											</div>
+											<div class="explicitDuration">
+												<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
+												<div class="duration">{{x.duration}}</div>
+											</div>
+										</div>
+
+										<div class="actions" *ngIf="sessionData?.current?.id">
+											<button mat-icon-button [matMenuTriggerFor]="appMenu">
+												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+											</button>
+
+											<mat-menu #appMenu="matMenu">
+												<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+												<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+												<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
+											</mat-menu>
+
+											<mat-menu #menuPlaylists="matMenu">
+												<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
+												<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
+												<span *ngFor="let p of sessionData?.current?.playlists">
+													<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+														<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+														{{p.title}}
+													</button>
+												</span>
+											</mat-menu>
+
+											<mat-menu #menuShareSocial="matMenu">
+												<button mat-menu-item (click)="itemSongOptions('message', x, null)">{{translations?.common?.sendMessage}}</button>
+												<button mat-menu-item (click)="itemSongOptions('newTab', x, null)">{{translations?.common?.openInNewTab}}</button>
+												<button mat-menu-item (click)="itemSongOptions('copyLink', x, null)">{{translations?.common?.copyLink}}</button>
+											</mat-menu>
+										</div>
+									</div>
+
+									<div class="ad" *ngIf="x.contentTypeAd">
+										<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+										<div class="disableAdBlock" *ngIf="hideAd">
+											{{translations?.common?.disableAdBlock}}
 										</div>
 									</div>
 								</li>
 							</ul>
 
-							<div class="loadingData" *ngIf="dataPeople.loadingData">
+							<div class="loadingData" *ngIf="dataSongs.loadingData">
 								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 							</div>
 
-							<div class="noData" *ngIf="dataPeople.noData">
+							<div class="noData" *ngIf="dataSongs.noData">
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 
-							<div class="loadMore" *ngIf="dataPeople.loadMoreData">
-								<button mat-fab (click)="people('more')" *ngIf="!dataPeople.loadingMoreData">
+							<div class="loadMore" *ngIf="dataSongs.loadMoreData">
+								<button mat-fab (click)="tags('more')" *ngIf="!dataSongs.loadingMoreData">
 									<i label="add"></i>
 								</button>
-								<mat-progress-spinner mode="indeterminate" *ngIf="dataPeople.loadingMoreData"></mat-progress-spinner>
-							</div> -->
+								<mat-progress-spinner mode="indeterminate" *ngIf="dataSongs.loadingMoreData"></mat-progress-spinner>
+							</div>
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.posts}}">
@@ -207,7 +251,7 @@
 							</div>
 
 							<div class="loadMore" *ngIf="dataPosts.loadMoreData">
-								<button mat-fab (click)="tag('more')" *ngIf="!dataPosts.loadingMoreData">
+								<button mat-fab (click)="tags('more')" *ngIf="!dataPosts.loadingMoreData">
 									<i label="add"></i>
 								</button>
 								<mat-progress-spinner mode="indeterminate" *ngIf="dataPosts.loadingMoreData"></mat-progress-spinner>
@@ -215,8 +259,8 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.tag}}">
-							<ul class="followers" *ngIf="dataTop.list">
-								<li *ngFor="let x of dataTag.list; let i=index;" (click)="setHashtag('set', x)">
+							<ul class="followers" *ngIf="dataTags.list">
+								<li *ngFor="let x of dataTags.list; let i=index;" (click)="setHashtags('set', x)">
 									<a class="avatar">
 										<div class="hashtag">#</div>
 									</a>
@@ -233,26 +277,26 @@
 								</li>
 							</ul>
 
-							<div class="loadingData" *ngIf="dataTag.loadingData">
+							<div class="loadingData" *ngIf="dataTags.loadingData">
 								<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 							</div>
 
-							<div class="noData" *ngIf="dataTag.noData">
+							<div class="noData" *ngIf="dataTags.noData">
 								<div class="description">{{translations?.common?.noSearchResults}}</div>
 							</div>
 
-							<div class="loadMore" *ngIf="dataTag.loadMoreData">
-								<button mat-fab (click)="tag('more')" *ngIf="!dataTag.loadingMoreData">
+							<div class="loadMore" *ngIf="dataTags.loadMoreData">
+								<button mat-fab (click)="tags('more')" *ngIf="!dataTags.loadingMoreData">
 									<i label="add"></i>
 								</button>
-								<mat-progress-spinner mode="indeterminate" *ngIf="dataTag.loadingMoreData"></mat-progress-spinner>
+								<mat-progress-spinner mode="indeterminate" *ngIf="dataTags.loadingMoreData"></mat-progress-spinner>
 							</div>
 						</mat-tab>
 					</mat-tab-group>
 				</span>
 
 				<span *ngIf="data.active === 'hashtag'">
-					<div class="back" (click)="setHashtag('close', null)">
+					<div class="back" (click)="setHashtags('close', null)">
 						<button mat-icon-button>
 							<i label="back"></i>
 						</button>
@@ -285,7 +329,7 @@
 					</div>
 
 					<div class="loadMore" *ngIf="dataHashtag.loadMoreData">
-						<button mat-fab (click)="setHashtag('more', null)" *ngIf="!dataHashtag.loadingMoreData">
+						<button mat-fab (click)="setHashtags('more', null)" *ngIf="!dataHashtag.loadingMoreData">
 							<i label="add"></i>
 						</button>
 						<mat-progress-spinner mode="indeterminate" *ngIf="dataHashtag.loadingMoreData"></mat-progress-spinner>

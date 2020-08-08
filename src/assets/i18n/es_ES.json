@@ -80,7 +80,7 @@
 	},
 	"news": {
 		"title": "Buscar",
-		"top": "Top",
+		"top": "Destacados",
 		"people": "Personas",
 		"tag": "Hashtags",
 		"fresh": "Novedades",
@@ -120,7 +120,13 @@
 	"post": {
 		"title": "Publicación",
 		"stats": "Estadisticas",
-		"noData": "La publicación no existe o ha sido eliminada."
+		"noData": "La publicación no existe o ha sido eliminada.",
+		"postSettings": "Ajustes",
+		"publicationDate": "Fecha de publicación",
+		"now": "Ahora",
+		"date": "Fecha",
+		"hour": "Hora",
+		"minutes": "Minutos"
 	},
 	"settings": {
 		"title": "Ajustes",

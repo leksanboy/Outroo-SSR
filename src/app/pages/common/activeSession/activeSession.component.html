@@ -733,17 +733,17 @@
 				</button>
 
 				<button mat-mini-fab (click)="playPlayer('prev', null)" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-					<i [style.background]="audioPlayerData?.current?.color"></i>
+					<i [style.background]="audioPlayerData?.current?.background"></i>
 				</button>
 
-				<button mat-fab (click)="playPlayer('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [style.background]="audioPlayerData?.current?.color" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow}">
+				<button mat-fab (click)="playPlayer('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}">
 					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading"></i>
 					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading"></i>
 					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
 				</button>
 
 				<button mat-mini-fab (click)="playPlayer('next', null)" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-					<i [style.background]="audioPlayerData?.current?.color"></i>
+					<i [style.background]="audioPlayerData?.current?.background"></i>
 				</button>
 
 				<button mat-mini-fab (click)="playPlayer('repeat', null)" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">
@@ -883,12 +883,12 @@
 		</li>
 		<li>
 			<button mat-icon-button (click)="showMobilePlayer('toggle')" (press)="showMobilePlayer('toggle')">
-				<div class='miniEqualizer' [ngClass]="{'active' : audioPlayerData?.playing}" [style.borderColor]="audioPlayerData?.current?.color" *ngIf="!audioPlayerData?.loadingToPlay">
-					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
-					<div class='bar' [style.background]="audioPlayerData?.current?.color"></div>
+				<div class='miniEqualizer' [ngClass]="{'active' : audioPlayerData?.playing}" [style.borderColor]="audioPlayerData?.current?.background" *ngIf="!audioPlayerData?.loadingToPlay">
+					<div class='bar' [style.background]="audioPlayerData?.current?.background"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.background"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.background"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.background"></div>
+					<div class='bar' [style.background]="audioPlayerData?.current?.background"></div>
 				</div>
 
 				<span class="loader" *ngIf="audioPlayerData?.loadingToPlay">

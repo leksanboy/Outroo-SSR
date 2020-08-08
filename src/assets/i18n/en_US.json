@@ -120,7 +120,13 @@
 	"post": {
 		"title": "Publication",
 		"stats": "Stats",
-		"noData": "The publication does not exist or has been removed."
+		"noData": "The publication does not exist or has been removed.",
+		"postSettings": "Post settings",
+		"publicationDate": "Publication date",
+		"now": "Now",
+		"date": "Date",
+		"hour": "Hour",
+		"minutes": "Minutes"
 	},
 	"settings": {
 		"title": "Settings",

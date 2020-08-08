@@ -14,7 +14,7 @@
 			<div class="top">
 				<div class="panel">
 					<div class="texts">
-						<div class="text" [style.color]="audioPlayerData?.current?.color">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
+						<div class="text" [style.color]="audioPlayerData?.current?.background">{{audioPlayerData?.current?.original_title ? audioPlayerData?.current?.original_title : audioPlayerData?.current?.title}}</div>
 						<div class="text">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
 					</div>
 
@@ -44,17 +44,17 @@
 				</button>
 
 				<button mat-mini-fab (click)="playSong('prev', '')" class="prev" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-					<i [style.background]="audioPlayerData?.current?.color"></i>
+					<i [style.background]="audioPlayerData?.current?.background"></i>
 				</button>
 
 				<button mat-fab (click)="playSong('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}">
-					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading" [style.background]="audioPlayerData?.current?.color"></i>
-					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading" [style.background]="audioPlayerData?.current?.color"></i>
+					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}"></i>
+					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}"></i>
 					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
 				</button>
 
 				<button mat-mini-fab (click)="playSong('next', '')" class="next" [ngClass]="{'disabled': audioPlayerData?.list.length <= 1}">
-					<i [style.background]="audioPlayerData?.current?.color"></i>
+					<i [style.background]="audioPlayerData?.current?.background"></i>
 				</button>
 
 				<button mat-mini-fab (click)="playSong('repeat', '')" class="repeat" [ngClass]="{'active': audioPlayerData?.repeat, 'disabled': audioPlayerData?.list.length <= 1}">

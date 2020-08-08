@@ -61,15 +61,22 @@
 		}
 	}
 
+	function compare($a, $b) {
+		return strnatcmp($b['count'], $a['count']);
+	}
+
 	// Data
 	if ($resultUsers->num_rows === 0 && $resultHashtags->num_rows === 0) {
 		var_dump(http_response_code(204));
 	} else {
-		// Order alphabetically
-		sort($dataHashtags);
-
 		// Not repeat values
 		$dataHashtags = array_unique($dataHashtags, SORT_REGULAR);
+
+		// Order numerically
+		usort($dataHashtags, 'compare');
+
+		// Limit
+		$dataHashtags = array_slice($dataHashtags, 0, $cuantity);
 
 		foreach ($dataHashtags as &$h) {
 			$dataUsers[] = $h;

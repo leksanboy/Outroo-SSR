@@ -21,6 +21,10 @@
 			LIMIT $more, $cuantity";
 	$result = $conn->query($sql);
 
+	function compare($a, $b) {
+		return strnatcmp($b['count'], $a['count']);
+	}
+
 	if ($result->num_rows > 0) {
 		$dataHashtags = array();
 
@@ -39,11 +43,14 @@
 			}
 		}
 
-		// Order alphabetically
-		sort($dataHashtags);
-
 		// Not repeat values
 		$dataHashtags = array_unique($dataHashtags, SORT_REGULAR);
+
+		// Order numerically
+		usort($dataHashtags, 'compare');
+
+		// Limit
+		$dataHashtags = array_slice($dataHashtags, 0, $cuantity);
 
 		$data = array();
 		foreach ($dataHashtags as &$h) {
