@@ -447,11 +447,17 @@ If the Work includes a "NOTICE" text file as part of its distribution, then any 
 END OF TERMS AND CONDITIONS
 
 
+@angular/material/slide-toggle
+
 @angular/material/dialog
 
 @angular/material/bottom-sheet
 
 @angular/material/slider
+
+@angular/material/datepicker
+
+@angular/material/button-toggle
 
 core-js
 MIT
@@ -527,8 +533,6 @@ THE SOFTWARE.
 
 
 @angular/material/radio
-
-@angular/material/slide-toggle
 
 lodash
 MIT

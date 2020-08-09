@@ -749,10 +749,11 @@
 
 		$sql = "SELECT id,
 						name,
-						photos as contentData
+						photos as contentData,
+						publication_date as pDate
 				FROM z_publications
 				WHERE id = $id
-					AND is_deleted = 0";
+					AND (is_deleted = 0 OR is_deleted = 2)";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		if ($result) {

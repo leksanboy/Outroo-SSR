@@ -84,7 +84,7 @@
 										'$photosArray',
 										'$audiosArray',
 										'$disabledComments',
-										".($publicationDate ? '$publicationDate, 2,' : '')."
+										".($publicationDate ? '\''.$publicationDate.'\''.', \'2\',' : '')."
 										'$cDate',
 										'$date',
 										'$ipAddress')";

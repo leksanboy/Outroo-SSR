@@ -21,8 +21,7 @@
 						is_deleted as isD
 				FROM z_publications
 				WHERE user = $user
-					AND is_deleted = 0
-					OR is_deleted = 2
+					AND (is_deleted = 0 OR is_deleted = 2)
 				ORDER BY date DESC
 				LIMIT $more, $cuantity";
 		} else {
