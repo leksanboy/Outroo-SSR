@@ -6,7 +6,7 @@
 	$receiver = $data['receiver'];
 
 	if ($sender != $receiver) {
-		$sql = "INSERT INTO z_users_replays (user, visitor, ip_address)
+		$sql = "INSERT INTO z_users_replays (sender, receiver, ip_address)
 				VALUES ($sender, $receiver, '$ipAddress')";
 		$result = $conn->query($sql);
 	}

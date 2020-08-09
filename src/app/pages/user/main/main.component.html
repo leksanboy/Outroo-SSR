@@ -284,6 +284,10 @@
 							<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
 								<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : (x.contentData.mimetype.indexOf('gif') > -1 ?  env.pathPhotos + x.contentData.name : env.pathPhotos + 'thumbnails/' + x.contentData.name)) : env.defaultPostImage) + ')'}"></div>
 							</a>
+
+							<div class="publicationDate" *ngIf="x.pDate">
+								{{x?.pDate | timeago}}
+							</div>
 						</span>
 
 						<div class="ad" *ngIf="x.contentTypeAd">

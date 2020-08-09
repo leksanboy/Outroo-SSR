@@ -402,7 +402,7 @@
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 
 		if ($sender != $receiver) {
-			$sql = "INSERT INTO z_users_replays (user, visitor, ip_address)
+			$sql = "INSERT INTO z_users_replays (sender, receiver, ip_address)
 					VALUES ($sender, $receiver, '$ipAddress')";
 			$result = $conn->query($sql);
 
@@ -965,6 +965,7 @@
 		return $result;
 	}
 
+	// Search analitics
 	function searchPublicationAnalytics($user, $caption, $type){
 		global $conn;
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -972,6 +973,32 @@
 		$sql = "INSERT INTO z_publications_search (user, caption, type, ip_address)
 				VALUES ($user, '$caption', '$type', '$ipAddress')";
 		$result = $conn->query($sql);
+	}
+
+	// Update publication date
+	function updatePublicationDate(){
+		global $conn;
+
+		$date = date('Y-m-d H:i:s');
+
+		$sql = "SELECT id
+				FROM z_publications
+				WHERE publication_date <= $date
+					AND is_deleted = 2
+				ORDER BY date DESC
+				LIMIT 0, 100";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$id = $row['id'];
+
+				$sqlU = "UPDATE z_publications
+						SET is_deleted = 0
+						WHERE id = $id";
+				$conn->query($sqlU);
+			}
+		}
 	}
 
 	///////////////////

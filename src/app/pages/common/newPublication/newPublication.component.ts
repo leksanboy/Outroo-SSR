@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location, DOCUMENT } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -42,8 +42,10 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 	public activePlayerInformation: any;
 	public time: any = {
 		hours: Array.from(Array(24), (_, i) => ('0' + i).slice(-2)),
-		minutes: Array.from(Array(60), (_, i) => ('0' + i).slice(-2))
+		minutes: Array.from(Array(60), (_, i) => ('0' + i).slice(-2)),
+		type: 'now'
 	};
+	public actionFormPostSettings: any;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -107,6 +109,24 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
+			});
+
+		// Post seettings
+		this.actionFormPostSettings = this._fb.group({
+			disableComments: [false],
+			type: ['now'],
+			date: [''],
+			hour: [''],
+			minutes: ['']
+		});
+
+		// Get time type
+		this.actionFormPostSettings.get('type').valueChanges
+			.pipe(
+				debounceTime(100),
+				distinctUntilChanged())
+			.subscribe(val => {
+				this.time.type = val;
 			});
 	}
 
@@ -556,6 +576,7 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 		if (validate) {
 			this.submitLoading = true;
 			const formatedData = this.transformBeforeSubmit(this.publicationData.original);
+			const postSettings = this.actionFormPostSettings.value;
 			const photosArray = [];
 			const audiosArray = [];
 
@@ -592,13 +613,35 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 			}
 
 			if (this.publicationData.original.length <= 3000) {
+				if (postSettings.type === 'date') {
+					let d = new Date(postSettings.date);
+					d.setHours(postSettings.hour);
+					d.setMinutes(postSettings.minutes);
+
+					if (d.getTime() < (new Date()).getTime()) {
+						this.alertService.error(this.translations.post.publicationDateIsLowerThanActual);
+						this.submitLoading = false;
+					} else {
+						postSettings.publicationDate = 	d.getFullYear() + "-" +
+														("00" + (d.getMonth() + 1)).slice(-2) + "-" +
+														("00" + d.getDate()).slice(-2) + " " +
+														("00" + d.getHours()).slice(-2) + ":" +
+														("00" + d.getMinutes()).slice(-2) + ":" +
+														"00";
+					}
+				} else {
+					postSettings.publicationDate = false;
+				}
+
 				const data = {
 					content: 			formatedData.content,
 					contentOriginal: 	this.publicationData.original,
 					mentions: 			formatedData.mentions,
 					hashtags: 			formatedData.hashtags,
 					photos: 			(photosArray.length > 0 ? photosArray : ''),
-					audios: 			(audiosArray.length > 0 ? audiosArray : '')
+					audios: 			(audiosArray.length > 0 ? audiosArray : ''),
+					disabledComments: 	postSettings.disableComments,
+					publicationDate: 	postSettings.publicationDate
 				};
 
 				this.publicationsDataService.createPublication(data)

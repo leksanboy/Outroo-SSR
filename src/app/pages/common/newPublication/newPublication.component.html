@@ -138,56 +138,54 @@
 						{{translations?.post?.postSettings}}
 					</div>
 
-					<div class="items">
+					<div class="items" [formGroup]="actionFormPostSettings">
 						<div class="item">
 							<div class="text">{{translations?.common?.disableComments}}</div>
-							<mat-slide-toggle></mat-slide-toggle>
+							<mat-slide-toggle formControlName="disableComments"></mat-slide-toggle>
 						</div>
 
 						<div class="item">
-							<div class="text">{{translations?.post?.publicationData}}</div>
-							<mat-button-toggle-group name="dateSelect">
+							<div class="text">{{translations?.post?.publicationDate}}</div>
+							<mat-button-toggle-group formControlName="type">
 								<mat-button-toggle value="now">{{translations?.post?.now}}</mat-button-toggle>
 								<mat-button-toggle value="date">{{translations?.post?.date}}</mat-button-toggle>
 							</mat-button-toggle-group>
 						</div>
 
-						<div class="item">
-							<div class="datetime">
-								<mat-form-field>
-									<mat-label>{{translations?.post?.date}}</mat-label>
-									<input matInput [matDatepicker]="picker" (click)="picker.open()">
-									<mat-datepicker-toggle matSuffix [for]="picker">
-										<i label="arrow-mini" matDatepickerToggleIcon></i>
-									</mat-datepicker-toggle>
-									<mat-datepicker #picker></mat-datepicker>
-								</mat-form-field>
+						<div class="item datetime" *ngIf="time.type === 'date'">
+							<mat-form-field>
+								<mat-label>{{translations?.post?.date}}</mat-label>
+								<input matInput [matDatepicker]="picker" (click)="picker.open()" formControlName="date">
+								<mat-datepicker-toggle matSuffix [for]="picker">
+									<i label="arrow-mini" matDatepickerToggleIcon></i>
+								</mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+							</mat-form-field>
 
-								<mat-form-field>
-									<mat-label>{{translations?.post?.hour}}</mat-label>
-									<mat-select>
-										<mat-option *ngFor="let x of time.hours" [value]="x">
-											{{x}}
-										</mat-option>
-									</mat-select>
-								</mat-form-field>
+							<mat-form-field>
+								<mat-label>{{translations?.post?.hour}}</mat-label>
+								<mat-select formControlName="hour">
+									<mat-option *ngFor="let x of time.hours" [value]="x">
+										{{x}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
 
-								<mat-form-field>
-									<mat-label>{{translations?.post?.minutes}}</mat-label>
-									<mat-select>
-										<mat-option *ngFor="let x of time.minutes" [value]="x">
-											{{x}}
-										</mat-option>
-									</mat-select>
-								</mat-form-field>
-							</div>
+							<mat-form-field>
+								<mat-label>{{translations?.post?.minutes}}</mat-label>
+								<mat-select formControlName="minutes">
+									<mat-option *ngFor="let x of time.minutes" [value]="x">
+										{{x}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
 						</div>
 					</div>
 				</div>
 				<div class="buttons">
-					<button mat-raised-button type="button" (click)="$event">
+					<!-- <button mat-raised-button type="button" (click)="$event">
 						{{translations?.common?.cancel}}
-					</button>
+					</button> -->
 					<button mat-raised-button type="button" (click)="$event">
 						{{translations?.common?.ok}}
 					</button>

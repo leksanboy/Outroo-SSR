@@ -11,6 +11,10 @@
 	$mentionsNotificate = $data['mentions'];
 	$photos = $data['photos'];
 	$audios = $data['audios'];
+	$disabledComments = $data['disabledComments'] ? 1 : 0;
+	$publicationDate = $data['publicationDate'] ? $data['publicationDate'] : null;
+	$cDate = time();
+	$date = date('Y-m-d H:i:s');
 
 	// Create new array and insert photo & video files on table
 	if ($photos) {
@@ -58,8 +62,33 @@
 	}
 
 	// Set query
-	$sql = "INSERT INTO z_publications (user, name, content, content_original, mentions, hashtags, photos, audios, ip_address)
-			VALUES ($session, '$name', '$content', '$contentOriginal', '$mentions', '$hashtags', '$photosArray', '$audiosArray', '$ipAddress')";
+	$sql = "INSERT INTO z_publications (user,
+										name,
+										content,
+										content_original,
+										mentions,
+										hashtags,
+										photos,
+										audios,
+										disabled_comments,
+										".($publicationDate ? 'publication_date, is_deleted,' : '')."
+										creation_date,
+										date,
+										ip_address)
+								VALUES ($session,
+										'$name',
+										'$content',
+										'$contentOriginal',
+										'$mentions',
+										'$hashtags',
+										'$photosArray',
+										'$audiosArray',
+										'$disabledComments',
+										".($publicationDate ? '$publicationDate, 2,' : '')."
+										'$cDate',
+										'$date',
+										'$ipAddress')";
+
 	$result = $conn->query($sql);
 	$insertedId = $conn->insert_id;
 

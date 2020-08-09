@@ -126,7 +126,8 @@
 		"now": "Now",
 		"date": "Date",
 		"hour": "Hour",
-		"minutes": "Minutes"
+		"minutes": "Minutes",
+		"publicationDateIsLower": "The publication date is less than the current date, it must be greater"
 	},
 	"settings": {
 		"title": "Settings",

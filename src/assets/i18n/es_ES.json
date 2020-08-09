@@ -126,7 +126,8 @@
 		"now": "Ahora",
 		"date": "Fecha",
 		"hour": "Hora",
-		"minutes": "Minutos"
+		"minutes": "Minutos",
+		"publicationDateIsLower": "La fecha de publicación es menor que la fecha real, debe ser mayor"
 	},
 	"settings": {
 		"title": "Ajustes",

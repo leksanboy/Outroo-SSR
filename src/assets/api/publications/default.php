@@ -5,19 +5,37 @@
 	$more = $_GET['rows']*$cuantity;
 	$type = $_GET['type'];
 
+	// Update scheduled publication
+	updatePublicationDate();
+
 	if ($type === 'user') {
 		if ($more === 0) {
 			$user = userId($user);
 		}
 
-		$sql = "SELECT id,
+		if ($session == $user) {
+			$sql = "SELECT id,
 						name,
-						photos as contentData
+						photos as contentData,
+						publication_date as pDate,
+						is_deleted as isD
 				FROM z_publications
 				WHERE user = $user
 					AND is_deleted = 0
+					OR is_deleted = 2
 				ORDER BY date DESC
 				LIMIT $more, $cuantity";
+		} else {
+			$sql = "SELECT id,
+							name,
+							photos as contentData
+					FROM z_publications
+					WHERE user = $user
+						AND is_deleted = 0
+					ORDER BY date DESC
+					LIMIT $more, $cuantity";
+		}
+
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -31,6 +49,22 @@
 
 				if ($row['contentData']) {
 					$row['contentData'] = $row['contentData'][0];
+				}
+
+				// Update
+				if ($row['isD'] == 2) {
+					if ($row['pDate'] <= date("Y-m-d H:i:s")) {
+						$id = $row['id'];
+
+						$sqlU = "UPDATE z_publications
+								SET is_deleted = 0
+								WHERE id = $id";
+						$conn->query($sqlU);
+
+						$row['pDate'] = null;
+					}
+				} else {
+					$row['pDate'] = null;
 				}
 
 				$data[] = $row;

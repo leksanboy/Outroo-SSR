@@ -1684,6 +1684,19 @@ body {
 						width: 100%;
 					}
 				}
+
+				.publicationDate {
+					position: absolute;
+					bottom: 0;
+					right: 0;
+					background-color: $pinkColor;
+					color: $whiteColor;
+					font-size: 11px;
+					font-weight: bold;
+					padding: 2px 6px;
+					border-radius: 3px;
+					margin: 12px;
+				}
 			}
 
 			&.advert {
@@ -3095,9 +3108,14 @@ body {
 						align-items: center;
 						justify-content: space-between;
 
-						/* .text {
-							width: 100%;
-						} */
+						.text {
+							display: block;
+							text-overflow: ellipsis;
+							box-sizing: border-box;
+							white-space: nowrap;
+							max-width: 170px;
+							overflow: hidden;
+						}
 
 						.mat-button-toggle-group {
 							.mat-button-toggle {
@@ -3126,7 +3144,7 @@ body {
 							}
 						}
 
-						.datetime {
+						&.datetime {
 							width: 100%;
 							display: flex;
 
@@ -3150,10 +3168,6 @@ body {
 									margin: 0;
 								}
 							}
-						}
-
-						&:last-child {
-							flex-direction: column;
 						}
 					}
 				}
