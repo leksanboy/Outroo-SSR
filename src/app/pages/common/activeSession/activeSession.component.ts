@@ -841,7 +841,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.current.color = this.audioPlayerData.current.image ? this.audioDataService.getCoverColor(this.audioPlayerData.current.image) : null;
 					this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + this.audioPlayerData.current.color + ')') : null;
 					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + this.audioPlayerData.current.color + ', 0.37)') : null;
-					console.log('this.audioPlayerData.current::', this.audioPlayerData.current);
 
 					// Replays +1
 					this.updateReplays(this.audioPlayerData.list[key].song, (this.sessionData ? this.sessionData.current.id : 0), this.audioPlayerData.playlist);
@@ -976,7 +975,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
 			/* album: this.audioPlayerData.username, */
-			album: 'Outroo',
+			/* album: 'Outroo', */
 			artwork: [{
 				src: this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
 			}]

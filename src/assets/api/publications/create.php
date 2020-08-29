@@ -14,7 +14,7 @@
 	$disabledComments = $data['disabledComments'] ? 1 : 0;
 	$publicationDate = $data['publicationDate'] ? $data['publicationDate'] : null;
 	$cDate = time();
-	$date = date('Y-m-d H:i:s');
+	$date = $data['publicationDate'] ? $data['publicationDate'] : date('Y-m-d H:i:s');
 
 	// Create new array and insert photo & video files on table
 	if ($photos) {

@@ -37,20 +37,19 @@ $noPostsImage: url('assets/images/icons/no_posts.png');
 $noCommentsImage: url('assets/images/icons/no_comments.png');
 
 /*Colors*/
-$whiteColor: #FFFFFF;
-$blackColor: #000000;
+$whiteColor: #ffffff;
+$blackColor: #181818;
+
+$headerWhiteColor: #fafafa;
+$headerBlackColor: #252627;
+$darkThemeColor: #252627;
+
 $blueColor: #0C98F5;
 $redColor: #E53935;
 $greenColor: #8bc34a;
 $greyColor: #9E9E9E;
 $yellowColor: #ff9800;
 $pinkColor: #e91e63;
-
-$headerWhiteColor: #fafafa;
-$modalDialogColor: #0e0d0f;
-
-$darkThemeColor: #121212;
-$navyThemeColor: #15212c;
 
 /*Shadows*/
 $shadowBoxBottom: 0 -2px 4px -2px rgba(0, 0, 0, .02),
@@ -2485,14 +2484,15 @@ body {
 						width: 100%;
 
 						button {
-							background-color: $blueColor;
+							background-color: $pinkColor;
+							text-transform: capitalize;
 							color: $whiteColor;
 							margin: 12px 0 0;
-							font-size: 12px;
-							text-transform: capitalize;
+							font-size: 13px;
 							float: left;
-							height: 28px;
-							line-height: 28px;
+							height: 42px;
+							line-height: 42px;
+							border-radius: 42px;
 
 							span {
 								align-items: center;
@@ -2591,7 +2591,7 @@ body {
 	.recommendedPlaylists {
 		width: 100%;
 		float: left;
-		margin: 64px 0 0;
+		margin: 0;
 
 		.boxTitle {
 			color: $greyColor;
@@ -4503,9 +4503,7 @@ body {
 		}
 
 		&.home {
-			/* background-color: $darkThemeColor; */
 			margin: 0 0 16px 16px;
-			/* color: $whiteColor; */
 		}
 
 		&.web {
@@ -6023,8 +6021,8 @@ body {
 			top: 0;
 
 			.head {
-				border-bottom: 1px solid transparentize($greyColor, .75);
-				background-color: transparentize($headerWhiteColor, .04);
+				/* border-bottom: 1px solid transparentize($greyColor, .75); */
+				background-color: transparentize($headerWhiteColor, .01);
 				box-shadow: $shadowBox0;
 				position: absolute;
 				transition: .25s;
@@ -6683,10 +6681,6 @@ body {
 
 										&.white {
 											background-color: $whiteColor;
-										}
-
-										&.blue {
-											background-color: $navyThemeColor;
 										}
 
 										&.black {
@@ -7948,7 +7942,7 @@ body {
 		}
 
 		.mat-menu-panel {
-			background: #161616;
+			background: $headerBlackColor;
 
 			button {
 				color: $whiteColor;
@@ -8041,7 +8035,7 @@ body {
 		.innerBodyUser {
 			.header {
 				.head {
-					background-color: transparentize($blackColor, .04);
+					background-color: transparentize($headerBlackColor, .01);
 					box-shadow: $shadowBox0;
 
 					.left,
@@ -8055,33 +8049,11 @@ body {
 		}
 
 		.bottomNav {
-			background-color: $blackColor;
+			background-color: transparentize($headerBlackColor, .01);
 
 			ul {
 				li {
 					button {
-						.home {
-							.roof {
-								&:before {
-									border-bottom-color: $blackColor;
-								}
-
-								&:after {
-									background-color: $blackColor;
-								}
-							}
-						}
-
-						.notifications {
-							&:after {
-								border-bottom-color: $blackColor;
-							}
-
-							.clapper:after {
-								background-color: $blackColor;
-							}
-						}
-
 						&.selected {
 							color: $whiteColor;
 
@@ -8095,8 +8067,8 @@ body {
 		}
 
 		.audioPlayerWeb {
-			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: transparentize($blackColor, .04);
+			border-top: none;
+			background-color: transparentize($headerBlackColor, .01);
 			box-shadow: $shadowBoxBottom;
 			color: $whiteColor;
 			transition: .25s;
@@ -8221,7 +8193,7 @@ body {
 
 		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: transparentize($whiteColor, .04);
+			background-color: transparentize($whiteColor, .01);
 			box-shadow: $shadowBoxBottom;
 			color: $blackColor;
 			position: fixed;
@@ -8572,8 +8544,8 @@ body {
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
 				color: $blackColor;
-				margin: 0 24px 110px;
-				border-radius: 3px;
+				margin: 0 24px 86px;
+				border-radius: 0;
 				position: fixed;
 				width: 320px;
 				bottom: 0;
@@ -8602,7 +8574,8 @@ body {
 
 			&.mini {
 				width: 260px;
-				border: 1px solid transparentize($greyColor, .75);
+				/* border: 1px solid transparentize($greyColor, .75); */
+				border: none;
 				box-shadow: $shadowBox2;
 				margin: 8px;
 				border-radius: 3px;
@@ -8677,6 +8650,12 @@ body {
 
 /*MOBILE*/
 @media (max-width: 760px) {
+	html {
+		&.dark {
+			background-color: #000;
+		}
+	}
+
 	body {
 		ul.playlists {
 			&.list {
@@ -8915,7 +8894,7 @@ body {
 		}
 
 		.bottomNav {
-			border-top: 1px solid transparentize($greyColor, .75);
+			border-top: 1px solid transparentize($greyColor, .5);
 			background-color: $headerWhiteColor;
 			box-shadow: $shadowBoxBottom;
 			user-select: none;
@@ -8942,7 +8921,7 @@ body {
 					width: 100%;
 
 					button {
-						color: currentColor;
+						color: transparentize($greyColor, .5);
 						border-radius: 0;
 						height: 48px;
 						width: 100%;
@@ -8950,106 +8929,6 @@ body {
 
 						.mat-button-ripple-round {
 							border-radius: 0;
-						}
-
-						.home {
-							box-sizing: border-box;
-							position: relative;
-							margin: auto;
-							height: 24px;
-							width: 24px;
-
-							&:before {
-								content: '';
-								border: solid $iconWidth currentColor;
-								border-radius: 0 0 0 3px;
-								box-sizing: border-box;
-								position: absolute;
-								border-top: none;
-								height: 11px;
-								width: 9px;
-								bottom: 0;
-								left: 1px;
-							}
-
-							&:after {
-								content: '';
-								border: solid $iconWidth currentColor;
-								border-radius: 0 0 3px 0;
-								box-sizing: border-box;
-								position: absolute;
-								border-top: none;
-								height: 11px;
-								width: 9px;
-								left: 14px;
-								bottom: 0;
-							}
-
-							.roof {
-								border-bottom: 12px solid currentColor;
-								border-right: 14px solid transparent;
-								border-left: 14px solid transparent;
-								position: absolute;
-								left: -2px;
-								height: 0;
-								width: 0;
-								top: 1px;
-
-								&:before {
-									content: '';
-									border-bottom: 11px solid $whiteColor;
-									border-right: 13px solid transparent;
-									border-left: 13px solid transparent;
-									position: absolute;
-									top: $iconWidth;
-									left: -13px;
-									z-index: 1;
-									height: 0;
-									width: 0;
-								}
-
-								&:after {
-									content: '';
-									border-bottom: 1px solid currentColor;
-									background-color: $whiteColor;
-									position: absolute;
-									height: 3px;
-									width: 6px;
-									z-index: 1;
-									left: -3px;
-									top: 11px;
-								}
-							}
-						}
-
-						.search {
-							position: relative;
-							margin: auto;
-							height: 24px;
-							width: 24px;
-
-							&:before {
-								content: '';
-								border: solid $iconWidth currentColor;
-								box-sizing: border-box;
-								border-radius: 100%;
-								position: absolute;
-								height: 18px;
-								width: 18px;
-								left: 3px;
-								top: 2px;
-							}
-
-							&:after {
-								content: '';
-								background-color: currentColor;
-								transform: rotate(-45deg);
-								position: absolute;
-								width: $iconWidth;
-								height: 7px;
-								left: 20px;
-								top: 16px;
-							}
 						}
 
 						.miniEqualizer {
@@ -9132,85 +9011,22 @@ body {
 							}
 						}
 
-						.notifications {
-							box-sizing: border-box;
-							position: relative;
-							margin: auto;
-							height: 24px;
-							width: 24px;
-
-							&:before {
-								content: '';
-								border: solid $iconWidth currentColor;
-								border-radius: 14px 14px 0 0;
-								box-sizing: border-box;
-								border-bottom: none;
-								position: absolute;
-								height: 16px;
-								width: 16px;
-								left: 4px;
-								top: 3px;
-							}
-
-							&:after {
-								content: '';
-								border-bottom: solid $iconWidth $whiteColor;
-								border-top: solid $iconWidth currentColor;
-								position: absolute;
-								bottom: 3px;
-								width: 20px;
-								left: 2px;
-							}
-
-							.clapper {
-								border: solid $iconWidth currentColor;
-								position: absolute;
-								border-radius: 50%;
-								height: 6px;
-								width: 6px;
-								left: 8px;
-								bottom: 0;
-
-								&:before {
-									content: '';
-									border: solid $iconWidth currentColor;
-									box-sizing: border-box;
-									position: absolute;
-									border-radius: 50%;
-									left: 1.5px;
-									height: 3px;
-									width: 3px;
-									top: -16px;
-								}
-
-								&:after {
-									content: '';
-									background-color: $whiteColor;
-									position: absolute;
-									height: 6px;
-									bottom: 3px;
-									width: 10px;
-									left: -2px;
-								}
-							}
-
-							.pending {
-								background-color: $redColor;
-								margin: -8px 0 0 5px;
-								position: absolute;
-								border-radius: 8px;
-								color: $whiteColor;
-								text-align: center;
-								font-weight: bold;
-								line-height: 12px;
-								font-size: 10px;
-								min-width: 12px;
-								padding: 2px;
-								height: 12px;
-								z-index: -1;
-								left: 50%;
-								top: 0;
-							}
+						.pending {
+							background-color: $redColor;
+							margin: 5px 0 0 5px;
+							position: absolute;
+							border-radius: 8px;
+							color: $whiteColor;
+							text-align: center;
+							font-weight: bold;
+							line-height: 12px;
+							font-size: 10px;
+							min-width: 12px;
+							padding: 2px;
+							height: 12px;
+							z-index: -1;
+							left: 50%;
+							top: 0;
 						}
 
 						.avatar {
@@ -9233,50 +9049,6 @@ body {
 
 						&.selected {
 							color: $blackColor;
-
-							.home {
-
-								&:before,
-								&:after {
-									background-color: currentColor;
-								}
-
-								.roof {
-									&:after {
-										background-color: currentColor;
-									}
-
-									&:before {
-										border-bottom-color: currentColor;
-									}
-								}
-							}
-
-							.search {
-								&:before {
-									border-width: 2px;
-								}
-
-								&:after {
-									width: 2px;
-								}
-							}
-
-							.notifications {
-								&:before {
-									background-color: currentColor;
-								}
-
-								.clapper {
-									background-color: currentColor;
-									border-color: $whiteColor;
-
-									&:before,
-									&:after {
-										background-color: currentColor;
-									}
-								}
-							}
 
 							.avatar {
 								border-color: $blackColor;
@@ -9676,7 +9448,7 @@ body {
 			}
 
 			.innerBodyContent {
-				padding: 0 0 100px;
+				padding: 0 0 48px;
 				position: inherit;
 				overflow: scroll;
 				height: 100%;
@@ -10057,6 +9829,10 @@ body {
 				}
 			}
 
+			.innerBodyContent {
+				padding: 0 0 84px;
+			}
+
 			.bottomNav {
 				height: 84px !important;
 			}
@@ -10072,6 +9848,10 @@ body {
 					padding: 0 0 36px 0;
 				}
 			}
+		}
+
+		&.darkTheme {
+			background-color: #000;
 		}
 	}
 }

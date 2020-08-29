@@ -81,7 +81,7 @@
 										</div>
 									</span>
 
-									<span *ngIf="x.type === 'hashtag'" (click)="setHashtags('set', x)">
+									<span *ngIf="x.type === 'hashtag'" (click)="getHashtag('set', x)">
 										<a class="avatar">
 											<div class="hashtag">#</div>
 										</a>
@@ -260,7 +260,7 @@
 
 						<mat-tab label="{{translations?.news?.tag}}">
 							<ul class="followers" *ngIf="dataTags.list">
-								<li *ngFor="let x of dataTags.list; let i=index;" (click)="setHashtags('set', x)">
+								<li *ngFor="let x of dataTags.list; let i=index;" (click)="getHashtag('set', x)">
 									<a class="avatar">
 										<div class="hashtag">#</div>
 									</a>
@@ -296,7 +296,7 @@
 				</span>
 
 				<span *ngIf="data.active === 'hashtag'">
-					<div class="back" (click)="setHashtags('close', null)">
+					<div class="back" (click)="getHashtag('close', null)">
 						<button mat-icon-button>
 							<i label="back"></i>
 						</button>
@@ -329,7 +329,7 @@
 					</div>
 
 					<div class="loadMore" *ngIf="dataHashtag.loadMoreData">
-						<button mat-fab (click)="setHashtags('more', null)" *ngIf="!dataHashtag.loadingMoreData">
+						<button mat-fab (click)="getHashtag('more', null)" *ngIf="!dataHashtag.loadingMoreData">
 							<i label="add"></i>
 						</button>
 						<mat-progress-spinner mode="indeterminate" *ngIf="dataHashtag.loadingMoreData"></mat-progress-spinner>

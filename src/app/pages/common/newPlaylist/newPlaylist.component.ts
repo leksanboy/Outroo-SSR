@@ -111,7 +111,6 @@ export class NewPlaylistComponent implements OnInit {
 
 				const dialogRef = this.dialog.open(NewAvatarComponent, config);
 				dialogRef.afterClosed().subscribe(res => {
-					console.log('res', res);
 					this.data.newImage = res;
 
 					// Replace current image

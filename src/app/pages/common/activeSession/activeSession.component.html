@@ -871,14 +871,16 @@
 	<ul>
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/home" routerLinkActive="selected">
-				<div class="home">
+				<!-- <div class="home">
 					<div class="roof"></div>
-				</div>
+				</div> -->
+				<i label="home"></i>
 			</button>
 		</li>
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
-				<div class="search"></div>
+				<!-- <div class="search"></div> -->
+				<i label="search"></i>
 			</button>
 		</li>
 		<li>
@@ -898,11 +900,12 @@
 		</li>
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/notifications" routerLinkActive="selected">
-				<div class="notifications">
+				<!-- <div class="notifications">
 					<div class="clapper"></div>
-					<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
-						{{sessionData?.current?.countPendingNotifications}}
-					</div>
+				</div> -->
+				<i label="notifications"></i>
+				<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+					{{sessionData?.current?.countPendingNotifications}}
 				</div>
 			</button>
 		</li>

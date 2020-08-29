@@ -26,7 +26,10 @@
 	$result = $conn->query($sql)->fetch_assoc();
 
 	if ($result) {
-		if ($result['d'] == 0 || ($result['d'] == 1 && $session == $result['user'])) {
+		if ($result['d'] == 0 ||
+		   ($result['d'] == 1 && $session == $result['user']) ||
+		   ($result['d'] == 2 && $session == $result['user'])
+		) {
 			$result['user'] = userUsernameNameAvatar($result['user']);
 			$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
 			$result['likers'] = getPublicationLikers($result['id']);

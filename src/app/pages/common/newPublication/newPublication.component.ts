@@ -14,6 +14,8 @@ import { PlayerService } from '../../../../app/core/services/player/player.servi
 
 import { NewPublicationAddAudiosComponent } from './addAudios/addAudios.component';
 
+import * as moment from 'moment/moment';
+
 declare var global: any;
 
 @Component({
@@ -622,16 +624,7 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 						this.alertService.error(this.translations.post.publicationDateIsLowerThanActual);
 						this.submitLoading = false;
 					} else {
-						let iso = new Date().toISOString().split('T')[1].split(':')[0];
-						let normal = new Date().getHours();
-						let diff = Number(normal) - Number(iso);
-
-						postSettings.publicationDate = 	d.getFullYear() + "-" +
-														("00" + (d.getMonth() + 1)).slice(-2) + "-" +
-														("00" + d.getDate()).slice(-2) + " " +
-														("00" + (d.getHours() - diff)).slice(-2) + ":" +
-														("00" + d.getMinutes()).slice(-2) + ":" +
-														"00";
+						postSettings.publicationDate = moment.utc(d).format().replace(/[TZ]/ig,' ').trim();
 					}
 				} else {
 					postSettings.publicationDate = false;

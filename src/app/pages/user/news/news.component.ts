@@ -345,7 +345,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 				type: 'news',
 				user: user,
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.default(data)
@@ -355,7 +355,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
@@ -377,7 +377,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
 					}
 
@@ -393,12 +393,12 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				type: 'news',
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
-					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 					this.dataDefault.loadingMoreData = false;
 
 					if (!res || res.length > 0) {
@@ -422,7 +422,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataDefault.noMore = true;
 					}
 
@@ -555,7 +555,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				caption: this.dataPosts.searchCaption,
 				rows: this.dataPosts.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.search(data)
@@ -565,7 +565,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataPosts.noData = true;
 					} else {
-						this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+						this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
@@ -579,7 +579,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataPosts.noMore = true;
 					}
 				}, error => {
@@ -593,12 +593,12 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				caption: this.dataPosts.searchCaption,
 				rows: this.dataPosts.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataPosts.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 					this.dataPosts.loadingMoreData = false;
 
 					if (!res || res.length > 0) {
@@ -614,7 +614,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataPosts.noMore = true;
 					}
 				}, error => {
@@ -702,14 +702,14 @@ export class NewsComponent implements OnInit, OnDestroy {
 	}
 
 	// Set hashtag
-	setHashtag(type, item) {
+	getHashtag(type, item) {
 		if (type === 'set') {
 			if (this.ssrService.isBrowser) {
 				this.window.scrollTo(0, 0);
 			}
 			this.data.active = 'hashtag';
 			this.data.selectedHashtag = item.caption;
-			this.setHashtag('default', item);
+			this.getHashtag('default', item);
 		} else if (type === 'close') {
 			this.data.active = 'search';
 		} else if (type === 'default') {
@@ -727,7 +727,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				caption: this.dataHashtag.searchCaption,
 				rows: this.dataHashtag.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.search(data)
@@ -737,7 +737,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataHashtag.noData = true;
 					} else {
-						this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+						this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 
 						for (const i in res) {
 							if (i) {
@@ -751,7 +751,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataHashtag.noMore = true;
 					}
 				}, error => {
@@ -765,12 +765,12 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				caption: this.dataHashtag.searchCaption,
 				rows: this.dataHashtag.rows,
-				cuantity: this.env.cuantity * 3
+				cuantity: this.env.cuantity
 			};
 
 			this.publicationsDataService.search(data)
 				.subscribe((res: any) => {
-					this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataHashtag.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 					this.dataHashtag.loadingMoreData = false;
 
 					if (!res || res.length > 0) {
@@ -786,7 +786,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity * 3) {
+					if (!res || res.length < this.env.cuantity) {
 						this.dataHashtag.noMore = true;
 					}
 				}, error => {
@@ -830,7 +830,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 								this.dataSongs.list.push(res[i]);
 
 								// Push ad
-								if (i === (Math.round(res.length * 3 / 5)).toString()) {
+								if (i === (Math.round(res.length / 5)).toString()) {
 									this.dataSongs.list.push(this.pushAd());
 								}
 							}

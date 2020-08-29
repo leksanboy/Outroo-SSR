@@ -195,7 +195,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 				type: 'home',
 				user: user,
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity / 3
 			};
 
 			this.publicationsDataService.default(data)
@@ -205,7 +205,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 					if (!res || res.length === 0) {
 						this.dataDefault.noData = true;
 					} else {
-						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity / 3) ? false : true;
 						this.dataDefault.noData = false;
 
 						for (const i in res) {
@@ -222,7 +222,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity) {
+					if (!res || res.length < this.env.cuantity / 3) {
 						this.dataDefault.noMore = true;
 					}
 				}, error => {
@@ -237,12 +237,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 				type: 'home',
 				user: this.sessionData.current.id,
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity / 3
 			};
 
 			this.publicationsDataService.default(data)
 				.subscribe((res: any) => {
-					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					this.dataDefault.loadMoreData = (!res || res.length < this.env.cuantity / 3) ? false : true;
 					this.dataDefault.loadingMoreData = false;
 
 					if (!res || res.length > 0) {
@@ -258,7 +258,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						}
 					}
 
-					if (!res || res.length < this.env.cuantity) {
+					if (!res || res.length < this.env.cuantity / 3) {
 						this.dataDefault.noMore = true;
 					}
 				}, error => {
@@ -515,7 +515,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			const data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity / 3
 			};
 
 			this.publicationsDataService.comments(data)
@@ -526,7 +526,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 						item.noData = true;
 					} else {
 						item.noData = false;
-						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+						item.loadMoreData = (!res || res.length < this.env.cuantity / 3) ? false : true;
 						item.comments.list = res;
 					}
 				}, error => {
@@ -540,13 +540,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 			const data = {
 				id: item.id,
 				rows: item.rowsComments,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity / 3
 			};
 
 			this.publicationsDataService.comments(data)
 				.subscribe((res: any) => {
 					item.loadingMoreData = false;
-					item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+					item.loadMoreData = (!res || res.length < this.env.cuantity / 3) ? false : true;
 
 					// Push items
 					if (!res || res.length > 0) {
