@@ -75,7 +75,10 @@
 		"createAccount": {
 			"one": "Listen music for free",
 			"two": "Click on the button to create an account and enjoy all the content.",
-			"three": "Create an account"
+			"three": "Create an account",
+			"four": "or",
+			"google": "Continue with Google",
+			"facebook": "Continue with Facebook"
 		}
 	},
 	"news": {
@@ -180,9 +183,8 @@
 		"title": "About us",
 		"description": "Outroo is the best.",
 		"companyText": {
-			"one": "Company",
-			"two": "Outroo is a community where people can share their publications with their friends.",
-			"three": "You can do an amazing publications with songs, photos and videos."
+			"title": "Company",
+			"one": "We are a social network with the main focus on music, the platform allows you to connect with more people, generate more influence and create attractive content that stands out."
 		},
 		"brandText": {
 			"one": "Brand",
@@ -224,7 +226,7 @@
 			"one": "Check your email",
 			"two": "We've sent an email to",
 			"three": "Click the link in the email to reset your password.",
-			"four": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+			"four": "If you don't see the email check other places it might be like your junk, spam, social, or other folders."
 		}
 	},
 	"logOut":{
@@ -280,6 +282,11 @@
 			"three": "Thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.",
 			"four": "In short, you will receive a confirmation email to activate your account.",
 			"five": "Go to mine profile"
+		},
+		"social": {
+			"otherWays": "You can try other ways",
+			"facebook": "Sign up with Facebook",
+			"google": "Sign up with Google"
 		}
 	},
 	"support":{
@@ -295,7 +302,7 @@
 		"confirmText": {
 			"one": "Sent to support",
 			"two": "We've sent an email to",
-			"three": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
+			"three": "The technical support team is solving your request, we will answer you as soon as possible, a copy has been sent to your email, if you do not see the message check other places such as spam, social networks or other folders."
 		}
 	},
 	"home":{

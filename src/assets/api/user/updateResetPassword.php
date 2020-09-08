@@ -7,7 +7,7 @@
     $newPassword = md5($data['password']);
 	$username = $data['username'];
 	$email = $data['email'];
-	$language = $data['language'];
+	$lang = $data['lang'];
 
     if (isset($code)) {
 		// Set new pasword
@@ -18,7 +18,7 @@
     	$result = $conn->query($sql);
 
 		// Send mail
-		emailResetPassword($email, $language, $username, $password);
+		emailResetPassword($email, $lang, $username, $password);
 
 		// Return response status
         var_dump(http_response_code(204));

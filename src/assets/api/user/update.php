@@ -8,14 +8,14 @@
     if ($type === 'data') {
         $username = $data['username'];
         $name = htmlspecialchars($data['name'], ENT_QUOTES);
-        $language = $data['language'];
+        $lang = $data['language'];
         $about = htmlspecialchars($data['about'], ENT_QUOTES);
 
         if ((strtolower(userUsername($session)) === strtolower($username)) || !checkUsername($username)) {
             $sql = "UPDATE z_users
                     SET username = '$username',
                         name = '$name',
-                        language = $language,
+                        language = $lang,
                         about = '$about',
                         ip_address_update = '$ipAddress'
                     WHERE id = $session";
@@ -26,7 +26,7 @@
 
             // History
             $sqlH = "INSERT INTO z_users_updates (type, user, username, name, language, about, ip_address)
-                    VALUES ('$type', $session, '$username', '$name', '$language', '$about', '$ipAddress')";
+                    VALUES ('$type', $session, '$username', '$name', '$lang', '$about', '$ipAddress')";
             $conn->query($sqlH);
 
             $conn->close();
@@ -72,10 +72,10 @@
 
         $conn->close();
     } else if ($type === 'language') {
-        $language = $data['language'];
+        $lang = $data['language'];
 
         $sql = "UPDATE z_users
-                SET language = '$language',
+                SET language = '$lang',
                     ip_address_update = '$ipAddress'
                 WHERE id = $session";
         $result = $conn->query($sql);
@@ -85,7 +85,7 @@
 
         // History
         $sqlH = "INSERT INTO z_users_updates (type, user, language, ip_address)
-				VALUES ('$type', $session, '$language', '$ipAddress')";
+				VALUES ('$type', $session, '$lang', '$ipAddress')";
 		$conn->query($sqlH);
 
         $conn->close();

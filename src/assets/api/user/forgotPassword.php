@@ -1,6 +1,8 @@
 <?php include "../db.php";
+	$data = json_decode(file_get_contents('php://input'), true);
+
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
-	$email = $_GET['email'];
+	$email = $data['email'];
 
 	$sql = "SELECT username, language
 			FROM z_users
@@ -9,7 +11,7 @@
 
 	// get username
 	$username = $result['username'];
-	$language = $result['language'];
+	$lang = $result['language'];
 
 	if ($username) {
 		// generated password
@@ -23,7 +25,7 @@
 		$resultUpdate = $conn->query($sqlUpdate);
 
 		// Send email
-		emailForgotPassword($email, $language, $username, $generatedHash);
+		emailForgotPassword($email, $lang, $username, $generatedHash);
 
 		// return response status
 		var_dump(http_response_code(204));

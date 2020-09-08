@@ -288,12 +288,11 @@ export class UserDataService {
 			}));
 	}
 
-	forgotPassword(email) {
+	forgotPassword(data) {
 		const url = this.env.url + 'assets/api/user/forgotPassword.php';
-		let params = 	'&email=' + email;
-		params = params.replace('&', '?');
+		let params = data;
 
-		return this.httpClient.get(url + params, this.headersService.getHeaders())
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));

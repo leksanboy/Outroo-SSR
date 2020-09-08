@@ -727,8 +727,8 @@
 				'subject' 		=> 'Soporte',
 				'title' 		=> 'Tu pregunta',
 				'hello' 		=> 'Hola, recientemente recibimos una pregunta de este correo electrónico <b>'.$email.'</b> en soporte.',
-				'copy' 			=> 'Le hemos enviado una copia con la pregunta solicitada',
-				'answer' 		=> 'Responderemos su pregunta lo antes posible',
+				'copy' 			=> 'Le hemos enviado una copia con la pregunta solicitada.',
+				'answer' 		=> 'Responderemos a su pregunta lo antes posible.',
 				'compromised' 	=> 'Si no ha realizado esta acción, su correo electrónico ha sido comprometido, no lo deje en páginas de terceros.',
 				'question' 		=> 'Si tiene alguna pregunta, por favor',
 				'contact' 		=> 'contacta con nosotros'
@@ -737,7 +737,7 @@
 				'subject' 		=> 'Служба поддержки',
 				'title' 		=> 'Ваш вопрос',
 				'hello' 		=> 'Здравствуйте, недавно мы получили вопрос из этой почты <b>'.$email.'</b> в службу поддержки.',
-				'copy' 			=> 'Мы отправим вам копию запрошенного вопроса.',
+				'copy' 			=> 'Мы отправили вам копию запрошенного вопроса.',
 				'answer' 		=> 'Мы ответим на ваш вопрос как можно скорее.',
 				'compromised' 	=> 'Если вы не сделали этого действия, ваша электронная почта была скомпрометирована, не оставляйте вашу электронную почту на сторонних страницах.',
 				'question' 		=> 'Если у вас есть вопросы, пожалуйста',
@@ -778,7 +778,7 @@
 																	</tr>
 
 																	<tr>
-																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																		<td id="paragraph" style="padding:0 5%;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
 																			'.$translations['hello'].'
 																		</td>
 																	</tr>
@@ -798,7 +798,7 @@
 																		</td>
 																	</tr>
 																	<tr>
-																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#999">
+																		<td id="paragraph" style="padding:0 5%;font:14px/18px Arial,Helvetica,sans-serif;color:#999">
 																			'.$translations['compromised'].'
 																		</td>
 																	</tr>
@@ -875,7 +875,7 @@
 			'en' => array(
 				'subject'		=> 'Report',
 				'title'			=> 'Report',
-				'hello'			=> 'Hello, recently we received a report from this email <b>'.$email.'</b> in support.',
+				'hello'			=> 'Hello, we have received a report of inappropriate content, this information is handled completely anonymously.',
 				'copy'			=> 'We send you the copy of the report.',
 				'measure'		=> 'We will take the necessary measures to resolve this matter.',
 				'question' 		=> 'If you have any question, please',
@@ -884,7 +884,7 @@
 			'es' => array(
 				'subject' 		=> 'Reporte',
 				'title' 		=> 'Reporte',
-				'hello' 		=> 'Hola, recientemente recibimos un reporte de este correo electrónico <b>'.$email.'</b> en soporte.',
+				'hello' 		=> 'Hola, hemos recibido un reporte de contenido inapropiado, esta información se gestiona de manera totalmente anonima.',
 				'copy' 			=> 'Le hemos enviado una copia con el reporte.',
 				'measure'		=> 'Tomaremos las medidas ncesarias para resolver este asunto.',
 				'question' 		=> 'Si tiene alguna pregunta, por favor',
@@ -893,8 +893,8 @@
 			'ru' => array(
 				'subject' 		=> 'Рапорт',
 				'title' 		=> 'Рапорт',
-				'hello' 		=> 'Здравствуйте, недавно мы получили рапорт из этой почты <b>'.$email.'</b> в службу поддержки.',
-				'copy' 			=> 'Мы отправим вам копию рапорта.',
+				'hello' 		=> 'Здравствуйте, мы получили сообщение о неприемлемом содержании, эта информация обрабатывается полностью анонимно.',
+				'copy' 			=> 'Мы отправили вам копию рапорта.',
 				'measure'		=> 'Мы примем необходимые меры для решения этого вопроса.',
 				'question' 		=> 'Если у вас есть вопросы, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами'
@@ -938,6 +938,11 @@
 																		</td>
 																	</tr>
 																	<tr>
+																		<td id="paragraph" style="padding:0 5%;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
+																			'.$translations['measure'].'
+																		</td>
+																	</tr>
+																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
 																			'.$translations['copy'].'
 																		</td>
@@ -945,11 +950,6 @@
 																	<tr>
 																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
 																			"<b>'.$content.'</b>"
-																		</td>
-																	</tr>
-																	<tr>
-																		<td id="paragraph" style="padding:0 5% 18px;font:14px/18px Arial,Helvetica,sans-serif;color:#333">
-																			'.$translations['measure'].'
 																		</td>
 																	</tr>
 																	<tr>

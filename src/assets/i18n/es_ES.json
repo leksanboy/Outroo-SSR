@@ -75,7 +75,10 @@
 		"createAccount": {
 			"one": "Escucha musica gratis",
 			"two": "Pulsa en el bóton para crear la cuenta y disfrutar de todos los contenidos.",
-			"three": "Crear cuenta"
+			"three": "Crear cuenta",
+			"four": "o",
+			"google": "Continuar con Google",
+			"facebook": "Continuar con Facebook"
 		}
 	},
 	"news": {
@@ -180,9 +183,8 @@
 		"title": "Sobre nosotros",
 		"description": "Outroo es lo mejor.",
 		"companyText": {
-			"one": "Empresa",
-			"two": "Outroo es una comunidad donde las personas pueden compartir sus publicaciones con sus amigos",
-			"three": "You can do an amazing publications with songs, photos and videos."
+			"title": "Empresa",
+			"one": "Somos una red social con el principal enfoque hacia la musica, la plataforma te permite conéctar con más personas, generar más influencia y crear contenido atractivo que te destaque."
 		},
 		"brandText": {
 			"one": "Marca",
@@ -224,7 +226,7 @@
 			"one": "Revisa tu correo electrónico",
 			"two": "Hemos enviado un correo electrónico a",
 			"three": "Haz clic en el enlace dentro del correo electrónico para restablecer tu contraseña.",
-			"four": "Si no ves el mensaje, verifica otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
+			"four": "Si no ves el mensaje verifica otros lugares como correo no deseado, spam, redes sociales u otras carpetas."
 		}
 	},
 	"logOut":{
@@ -267,7 +269,7 @@
 		"title": "Registrarse",
 		"description": "Crear cuenta para ser parte de nuestra familia.",
 		"username": "Nombre de usuario",
-		"name": "Nombre completo",
+		"name": "Nombre y Apellidos",
 		"email": "Correo electrónico",
 		"password": "Contraseña",
 		"privacyText": {
@@ -280,6 +282,11 @@
 			"three": "Gracias por crear la cuenta. Sigue a otras personas, busca canciones increíbles y comparte tus fotos y videos con el resto de la comunidad.",
 			"four": "En breve, recibiras un mensaje de confirmación para activar tu cuenta.",
 			"five": "Ir a mi perfil"
+		},
+		"social": {
+			"otherWays": "Puedes probar de otra manera",
+			"facebook": "Registrarse con Facebook",
+			"google": "Registrarse con Google"
 		}
 	},
 	"support":{
@@ -295,7 +302,7 @@
 		"confirmText": {
 			"one": "Enviado a Soporte",
 			"two": "Hemos enviado un correo electrónico a",
-			"three": "Si no ves el mensaje, verifica otros lugares, como correo no deseado, spam, redes sociales u otras carpetas."
+			"three": "El equipo de soporte técnico está resolviendo su petición, le contestaremos lo antes posible, se le ha enviado una copia a su correo electrónico, si no ve el mensaje verifique otros lugares como correo no deseado, spam, redes sociales u otras carpetas."
 		}
 	},
 	"home":{

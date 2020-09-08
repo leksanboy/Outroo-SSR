@@ -6,16 +6,19 @@
     $pageId = $data['pageId'];
     $pageType = $data['pageType'];
 	$content = $data['content'];
-	$language = $data['language'];
+	$lang = $data['lang'];
 
-	if (isset($session)) {
-        // create question
+	// Get user data
+	$user = $session ? userData($session) : null;
+
+	if (isset($session) && isset($user)) {
+        // Create question
         $sql = "INSERT INTO z_report (user, page_id, page_type, content, ip_address)
 				VALUES ($session, $pageId, '$pageType',  '$content', '$ipAddress')";
 		$result = $conn->query($sql);
 
         // Send email
-		emailReport($email, $language, $content);
+		emailReport($user['email'], $lang, $content);
 
 		// return response status
 		var_dump(http_response_code(204));

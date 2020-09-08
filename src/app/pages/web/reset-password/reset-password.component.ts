@@ -83,7 +83,8 @@ export class ResetPasswordComponent implements OnInit {
 		this.actionForm = this._fb.group({
 			password: ['', [Validators.required]],
 			confirmPassword: ['', [Validators.required]],
-			recaptcha: ['', [Validators.required]]
+			recaptcha: ['', [Validators.required]],
+			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 	}
 
@@ -96,19 +97,22 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	submit(ev: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
 
-		if (this.actionForm.get('password').value.length > 0 &&
-			this.actionForm.get('confirmPassword').value.length > 0 &&
+		if (form.password.length > 0 &&
+			form.confirmPassword.length > 0 &&
 			this.recaptcha
 		) {
-			if (this.actionForm.get('password').value === this.actionForm.get('confirmPassword').value) {
+			if (form.password === form.confirmPassword) {
 				const data = {
 					code: this.userData.code,
 					email: this.userData.email,
 					username: this.userData.username,
-					password: this.actionForm.get('password').value
+					password: form.password,
+					lang: form.lang
 				};
+
 
 				this.userDataService.updateResetPassword(data)
 					.subscribe(

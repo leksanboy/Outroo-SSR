@@ -60,7 +60,8 @@ export class SupportComponent implements OnInit {
 		// Form
 		this.actionForm = this._fb.group({
 			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
-			content: ['', [Validators.required]]
+			content: ['', [Validators.required]],
+			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 	}
 
@@ -73,16 +74,20 @@ export class SupportComponent implements OnInit {
 	}
 
 	submit(ev: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
-		this.email = this.actionForm.get('email').value;
 
-		if (this.env.emailPattern.test(this.actionForm.get('email').value) &&
-			this.actionForm.get('content').value.trim().length > 0 &&
+		// For html to say to who
+		this.email = form.email.trim();
+
+		if (this.env.emailPattern.test(form.email.trim()) &&
+			form.email.trim().length > 0 &&
 			this.recaptcha
 		) {
 			const data = {
-				email: this.actionForm.get('email').value,
-				content: this.actionForm.get('content').value
+				email: form.email.trim(),
+				content: form.content,
+				lang: form.lang
 			};
 
 			this.userDataService.supportQuestion(data)

@@ -32,30 +32,35 @@ export class NewReportComponent implements OnInit {
 	ngOnInit() {
 		// Form
 		this.actionForm = this._fb.group({
-			content: ['', [Validators.required]]
+			content: ['', [Validators.required]],
+			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 	}
 
 	submit() {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
 
-		if (this.actionForm.get('content').value.trim().length > 0) {
-			if (this.actionForm.get('content').value.trim().length <= 1000) {
+		if (form.content.trim().length > 0) {
+			if (form.content.trim().length <= 1000) {
 				const data = {
 					pageId: this.data.item.id,
 					pageType: this.data.item.type,
-					content: this.actionForm.get('content').value
+					content: form.content,
+					lang: form.lang
 				};
 
 				this.userDataService.report(data)
-					.subscribe(res => {
-						this.dialogRef.close(res);
-						this.submitLoading = false;
-						this.alertService.success(this.translations.common.sentSuccessfully);
-					}, error => {
-						this.submitLoading = false;
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
+					.subscribe(
+						res => {
+							this.dialogRef.close(res);
+							this.submitLoading = false;
+							this.alertService.success(this.translations.common.sentSuccessfully);
+						}, error => {
+							this.submitLoading = false;
+							this.alertService.error(this.translations.common.anErrorHasOcurred);
+						}
+					);
 			} else {
 				this.alertService.error(this.translations.common.isTooLong);
 			}

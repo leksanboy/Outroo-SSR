@@ -61,16 +61,16 @@
 							</div>
 
 							<div class="socialButtons signup">
-								<div class="or">You can try other ways</div>
+								<div class="or">{{translations?.signUp?.social?.otherWays}}</div>
 
 								<button class="facebook" mat-raised-button type="button" (click)="socialLogin('facebook')">
 									<img src="./assets/images/facebook_login.png">
-									Sign up with Facebook
+									{{translations?.signUp?.social?.facebook}}
 								</button>
 
 								<button class="google" mat-raised-button type="button" id="googleSignIn">
 									<img src="./assets/images/google_login.png">
-									Sign up with Google
+									{{translations?.signUp?.social?.google}}
 								</button>
 							</div>
 						</form>

@@ -62,7 +62,8 @@ export class ForgotPasswordComponent implements OnInit {
 	ngOnInit() {
 		// Form
 		this.actionForm = this._fb.group({
-			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]]
+			email: ['', [Validators.required, Validators.pattern(this.env.emailPattern)]],
+			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 	}
 
@@ -75,13 +76,21 @@ export class ForgotPasswordComponent implements OnInit {
 	}
 
 	submit(ev: Event) {
+		const form = this.actionForm.value;
 		this.submitLoading = true;
-		this.email = this.actionForm.get('email').value;
 
-		if (this.actionForm.get('email').value.trim().length > 0 &&
+		// For html to say to who
+		this.email = form.email.trim();
+
+		if (form.email.trim().length > 0 &&
 			this.recaptcha
 		) {
-			this.userDataService.forgotPassword(this.actionForm.get('email').value)
+			const data = {
+				email: form.email.trim(),
+				lang: form.lang
+			};
+
+			this.userDataService.forgotPassword(data)
 				.subscribe(
 					res => {
 						this.submitLoading = false;

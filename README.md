@@ -6,6 +6,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ----------------------------------------------------------------------------------------------------
 
+# Run LOCAL
+
+ng s --port 4400 -o
+
 # Build PROD
 
 <!-- [For GoogleCloudPlatform] -->

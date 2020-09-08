@@ -22,22 +22,22 @@
 					</div>
 
 					<div class="form">
-						<form [formGroup]="actionForm" (ngSubmit)="submit($event);">
+						<form [formGroup]="actionForm" (ngSubmit)="submit($event)">
 							<mat-form-field>
 								<input type="email" matInput placeholder="{{translations?.support?.email}}" #Email maxlength="100" formControlName="email">
 								<mat-hint align="end">{{Email.value.length}}/100</mat-hint>
 							</mat-form-field>
 
 							<mat-form-field class="textarea">
-								<textarea matInput  
-								placeholder="{{translations?.support?.description}}" 
-								#Content 
-								maxlength="1000" 
+								<textarea matInput
+								placeholder="{{translations?.support?.description}}"
+								#Content
+								maxlength="1000"
 								formControlName="content"
 								cdkTextareaAutosize
 								#autosize="cdkTextareaAutosize"
-								cdkAutosizeMinRows="5"
-								cdkAutosizeMaxRows="7"></textarea>
+								cdkAutosizeMinRows="1"
+								cdkAutosizeMaxRows="100"></textarea>
 								<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
 							</mat-form-field>
 
