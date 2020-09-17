@@ -875,12 +875,14 @@
 					<div class="roof"></div>
 				</div> -->
 				<i label="home"></i>
+				<div class="text">{{translations?.feed?.title}}</div>
 			</button>
 		</li>
 		<li>
 			<button mat-icon-button (click)="scrollTop()" routerLink="/news" routerLinkActive="selected">
 				<!-- <div class="search"></div> -->
 				<i label="search"></i>
+				<div class="text">{{translations?.news?.title}}</div>
 			</button>
 		</li>
 		<li>
@@ -896,6 +898,8 @@
 				<span class="loader" *ngIf="audioPlayerData?.loadingToPlay">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</span>
+
+				<div class="text">{{translations?.audios?.player}}</div>
 			</button>
 		</li>
 		<li>
@@ -907,6 +911,7 @@
 				<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
 					{{sessionData?.current?.countPendingNotifications}}
 				</div>
+				<div class="text">{{translations?.notifications?.title}}</div>
 			</button>
 		</li>
 		<li>
@@ -914,6 +919,7 @@
 				<div class="avatar">
 					<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
 				</div>
+				<div class="text">{{translations?.common?.myAccount}}</div>
 			</button>
 		</li>
 	</ul>

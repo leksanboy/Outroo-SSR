@@ -35,7 +35,8 @@
 		"description": "Описание",
 		"allPlaylists": "Все плейлисты",
 		"editorsChoice": "Выбор редакторов",
-		"playlists": "Плейлисты"
+		"playlists": "Плейлисты",
+		"player": "Плейер"
 	},
 	"bookmarks": {
 		"title": "Закладки",

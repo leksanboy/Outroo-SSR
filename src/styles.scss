@@ -8935,7 +8935,8 @@ body {
 							box-sizing: border-box;
 							align-items: center;
 							border-radius: 8px;
-							position: absolute;
+							/* position: absolute; */
+							position: relative;
 							padding: 0 3.5px;
 							display: flex;
 							margin: auto;
@@ -9030,19 +9031,33 @@ body {
 
 						.avatar {
 							color: transparent;
-							border: $iconWidth solid currentColor;
+							display: flex;
+							justify-content: center;
+							align-items: center;
 							border-radius: 50%;
-							margin: auto;
-							padding: 2px;
-							height: 26px;
-							width: 26px;
+							height: 24px;
+							width: 24px;
 
 							img {
 								background-color: transparentize($greyColor, .5);
 								border-radius: 50%;
 								overflow: hidden;
-								height: 24px;
-								width: 24px;
+								height: 100%;
+								width: 100%;
+							}
+						}
+
+						span {
+							display: flex;
+							justify-content: center;
+							flex-direction: column;
+							align-items: center;
+
+							.text {
+								text-transform: initial;
+								font-size: 9px;
+								height: 12px;
+								line-height: 12px;
 							}
 						}
 
@@ -9050,7 +9065,9 @@ body {
 							color: $blackColor;
 
 							.avatar {
-								border-color: $blackColor;
+								border: 1px solid currentColor;
+								margin: -2px 0;
+								padding: 1px;
 							}
 						}
 					}

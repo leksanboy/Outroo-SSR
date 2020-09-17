@@ -35,7 +35,8 @@
 		"description": "Descripción",
 		"allPlaylists": "Todas las playlists",
 		"editorsChoice": "Selección de los editores",
-		"playlists": "Playlists"
+		"playlists": "Playlists",
+		"player": "Player"
 	},
 	"bookmarks": {
 		"title": "Guardados",
