@@ -621,6 +621,11 @@ export class PostComponent implements OnInit, OnDestroy {
 						}
 
 						this.newComment('clear', null, item);
+
+						// Check if commentsBox is open
+						if (!item.showCommentsBox) {
+							this.showComments('showHide', item);
+						}
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
