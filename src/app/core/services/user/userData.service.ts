@@ -375,7 +375,8 @@ export class UserDataService {
 
 	getRecommended(data) {
 		const url = this.env.url + 'assets/api/user/getRecommended.php';
-		let params = '&user=' + data.user;
+		let params = 	'&user=' + data.user +
+						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
 
 		return this.httpClient.get(url + params, this.headersService.getHeaders())

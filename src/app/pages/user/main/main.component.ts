@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ViewChild, OnInit, OnDestroy, Inject, Element
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Location, DOCUMENT } from '@angular/common';
-import { trigger, transition, animate, style } from '@angular/animations'
+import { trigger, transition, animate, style } from '@angular/animations';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -63,8 +63,12 @@ export class MainComponent implements OnInit, OnDestroy {
 	public activeComeFromUserButton: any;
 	public activeGetData: any;
 	public userExists = true;
-	public data: any;
+	public data: any = {
+		selectedIndex: 0
+	};
 	public dataDefault: any;
+	public dataSongs: any;
+	public dataBookmarks: any;
 	public searchBoxMentions: boolean;
 	public comeFromUserButton: boolean;
 	public showAccounts: boolean;
@@ -75,6 +79,7 @@ export class MainComponent implements OnInit, OnDestroy {
 		show: false,
 		list: []
 	};
+	public hideAd: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -243,7 +248,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	// User options
-	userOptions(type, item) {
+	itemUserOptions(type, item) {
 		switch (type) {
 			case 'copyLink':
 				const urlExtension = this.env.url + item.username;
@@ -478,13 +483,13 @@ export class MainComponent implements OnInit, OnDestroy {
 		// Si se pincha sobre el boton se muestra la lista o el mensaje de no hay datos
 		if (type === 'toggle') {
 			this.recommendedUsers.show = !this.recommendedUsers.show;
-
 			this.recommendedUsers.loading = !this.recommendedUsers.launched || false;
 		}
 
 		if (this.recommendedUsers.list.length === 0 && !this.recommendedUsers.launched) {
 			const data = {
-				user: this.userData.id
+				user: this.userData.id,
+				cuantity: 20
 			};
 
 			this.userDataService.getRecommended(data)
@@ -648,6 +653,296 @@ export class MainComponent implements OnInit, OnDestroy {
 				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
+		}
+	}
+
+	// Push Google Ad
+	pushAd() {
+		const ad = {
+			contentTypeAd: true,
+			content: this.env.ad
+		};
+
+		setTimeout(() => {
+			const g = (this.window['adsbygoogle'] = this.window['adsbygoogle'] || []).push({});
+
+			if (g === 1) {
+				this.hideAd = true;
+			}
+		}, 100);
+
+		return ad;
+	}
+
+	// Set tab on click
+	setTab(tab) {
+		switch (tab) {
+			case 0:
+				/* General: always set */
+				break;
+			case 1:
+				if (!this.dataSongs) {
+					this.defaultSongs('default', this.userData.id);
+				}
+				break;
+			case 2:
+				if (!this.dataBookmarks) {
+					this.defaultBookmarks('default', this.userData.id);
+				}
+				break;
+		}
+	}
+
+	// Item options
+	itemSongOptions(type, item, playlist) {
+		switch (type) {
+			case ('addRemoveSession'):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
+
+				const dataARS = {
+					type: item.removeType,
+					subtype: 'session',
+					location: 'playlist',
+					id: item.id
+				};
+
+				this.audioDataService.addRemove(dataARS)
+					.subscribe(res => {
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.insertedId,
+					item: item.song
+				};
+
+				this.audioDataService.addRemove(dataARO)
+					.subscribe(res => {
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('playlist'):
+				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
+
+				const dataP = {
+					type: item.removeType,
+					location: 'playlist',
+					item: item.song,
+					playlist: playlist.idPlaylist
+				};
+
+				this.audioDataService.addRemove(dataP)
+					.subscribe(res => {
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case ('createPlaylist'):
+				const dataCP = {
+					type: 'create',
+					item: item
+				};
+
+				this.sessionService.setDataCreatePlaylist(dataCP);
+				break;
+			case ('report'):
+				item.type = 'playlist';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'shareSong';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+		}
+	}
+
+	// Play item song
+	playSong(data, item, key, type) {
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.userData.id;
+			this.audioPlayerData.username = this.userData.username; */
+			this.audioPlayerData.location = 'main';
+			this.audioPlayerData.type = type;
+			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
+		}
+	}
+
+	// Default songs
+	defaultSongs(type, user) {
+		if (type === 'default') {
+			this.dataSongs = {
+				list: [],
+				playlists: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noMore: false,
+				noData: false
+			};
+
+			const data = {
+				user: user,
+				type: 'default',
+				rows: this.dataSongs.rows,
+				cuantity: this.env.cuantity / 3
+			};
+
+			this.audioDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataSongs.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataSongs.noData = true;
+					} else {
+						this.dataSongs.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+						for (const i in res) {
+							if (i) {
+								this.dataSongs.list.push(res[i]);
+
+								// Push ad
+								/* if (i === (Math.round(res.length * 3 / 5)).toString()) {
+									this.dataSongs.list.push(this.pushAd());
+								} */
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity) {
+						this.dataSongs.noMore = true;
+					}
+				}, error => {
+					this.dataSongs.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
+	}
+
+	// Default saved
+	defaultBookmarks(type, user) {
+		if (type === 'default') {
+			this.dataBookmarks = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noData: false,
+				noMore: false
+			};
+
+			const data = {
+				type: 'bookmarks',
+				user: user,
+				rows: this.dataBookmarks.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.publicationsDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataBookmarks.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataBookmarks.noData = true;
+					} else {
+						this.dataBookmarks.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+
+						for (const i in res) {
+							if (i) {
+								this.dataBookmarks.list.push(res[i]);
+
+								// Push add
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+									this.dataBookmarks.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataBookmarks.noMore = true;
+					}
+				}, error => {
+					this.dataBookmarks.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more' && !this.dataBookmarks.noMore && !this.dataBookmarks.loadingMoreData) {
+			this.dataBookmarks.loadingMoreData = true;
+			this.dataBookmarks.rows++;
+
+			const data = {
+				type: 'news',
+				rows: this.dataBookmarks.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.publicationsDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataBookmarks.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataBookmarks.loadingMoreData = false;
+
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataBookmarks.list.push(res[i]);
+
+								// Push add
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+									this.dataBookmarks.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataBookmarks.noMore = true;
+					}
+				}, error => {
+					this.dataBookmarks.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 	}
 }

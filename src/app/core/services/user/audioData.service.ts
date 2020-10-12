@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 import { HeadersService } from '../headers/headers.service';
+import { PlayerService } from '../player/player.service';
 
 declare var Vibrant: any;
 
@@ -16,7 +16,8 @@ export class AudioDataService {
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
 		private httpClient: HttpClient,
-		private headersService: HeadersService
+		private headersService: HeadersService,
+		private playerService: PlayerService
 	) {}
 
 	default(data: any) {
@@ -181,25 +182,28 @@ export class AudioDataService {
 			}));
 	}
 
-	getCoverColor(image) {
+	getCoverColor(type, image) {
 		if (image.length) {
+			let self = this;
 			let img = this.document.createElement('img');
 			img.setAttribute('src', image);
 
-			if (img.hasAttribute('src')) {
+			img.addEventListener('load', () => {
 				let vibrant = new Vibrant(img);
-				let swatches = vibrant.swatches();
+				let swatches = vibrant.swatches()
 
-				for (const i in swatches) {
-					if (i) {
-						if (swatches.hasOwnProperty(i) && swatches[i]) {
-							if (i === 'Vibrant') {
-								return swatches[i].getRgb();
-							}
+				for (let swatch in swatches) {
+					if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
+						if (swatch == 'Vibrant') {
+							let res = {
+								type: type,
+								color: swatches[swatch].getRgb()
+							};
+							self.playerService.setCoverTrack(res);
 						}
 					}
 				}
-			}
+			});
 		} else {
 			return null;
 		}

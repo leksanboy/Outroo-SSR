@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, Inject, ElementRef, ViewChild } from 
 import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { trigger, transition, animate, style } from '@angular/animations';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -32,7 +33,6 @@ import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist
 
 declare var navigator: any;
 declare var MediaMetadata: any;
-declare var Vibrant: any;
 declare var global: any;
 declare var FB: any;
 declare var gapi: any;
@@ -40,7 +40,18 @@ declare var gapi: any;
 @Component({
 	selector: 'app-active-session',
 	templateUrl: './activeSession.component.html',
-	providers: [ TimeagoPipe ]
+	providers: [ TimeagoPipe ],
+	animations: [
+		trigger('slideInOut', [
+			transition(':enter', [
+				style({ transform: 'translateX(0%)' }),
+				animate('300ms ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
+			]),
+			transition(':leave', [
+				animate('300ms ease-in', style({ transform: 'translateX(-10%)', opacity: 0 }))
+			])
+		])
+	]
 })
 export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	@ViewChild('audioPlayerHtml') audioPlayerHtml: ElementRef;
@@ -95,6 +106,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	};
 	public activeRouter: any;
 	public socialLoading: boolean;
+	public recommendedUsers: any = {};
+	public recommendedSongs: any = {};
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -134,6 +147,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Get player data
 		this.playerService.getData()
 			.subscribe(data => {
+				console.log('G:', data);
+
 				this.audioPlayerData.noData = false;
 				this.audioPlayerData.postId = data.postId;
 				this.audioPlayerData.list = data.list;
@@ -143,6 +158,11 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.audioPlayerData.type = data.type;
 				this.audioPlayerData.selectedIndex = data.selectedIndex;
 				this.audioPlayerData.current.key = -1;
+				this.audioPlayerData.current.color = data.color;
+				this.audioPlayerData.current.background = data.color ? ('rgb(' + data.color + ')') : null;
+				this.audioPlayerData.current.shadow = data.color ? ('0 10px 30px rgba(' + data.color + ', 0.37)') : null;
+
+				console.log('A:', this.audioPlayerData);
 				this.playPlayer('item', data.key);
 			});
 
@@ -166,6 +186,16 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.audioPlayerData = data;
 			});
 
+		// Get cover data
+		this.playerService.getCoverTrack()
+			.subscribe(data => {
+				if (data.type === 'song') {
+					this.audioPlayerData.current.color = data.color;
+					this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + data.color + ')') : null;
+					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + data.color + ', 0.37)') : null;
+				}
+			});
+
 		// Get social login
 		this.sessionService.getSocialLogin()
 			.subscribe(data => {
@@ -186,6 +216,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			}
 		} else {
 			this.deniedAccess = 'session';
+
+			// Get recommended
+			this.getRecommendedUsersSongs();
 
 			// Set theme
 			this.changeTheme('init', this.sessionData.current.theme);
@@ -838,9 +871,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.current.image = this.audioPlayerData.list[key].image ? (this.env.pathAudios + 'thumbnails/' + this.audioPlayerData.list[key].image) : '';
 					this.audio.src = this.env.pathAudios + this.audioPlayerData.list[key].name;
 					this.audio.load();
-					this.audioPlayerData.current.color = this.audioPlayerData.current.image ? this.audioDataService.getCoverColor(this.audioPlayerData.current.image) : null;
-					this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + this.audioPlayerData.current.color + ')') : null;
-					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + this.audioPlayerData.current.color + ', 0.37)') : null;
+					this.audioPlayerData.current.color = this.audioPlayerData.current.image ? this.audioDataService.getCoverColor('song', this.audioPlayerData.current.image) : null;
+					/* this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + this.audioPlayerData.current.color + ')') : null;
+					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + this.audioPlayerData.current.color + ', 0.37)') : null; */
 
 					// Replays +1
 					this.updateReplays(this.audioPlayerData.list[key].song, (this.sessionData ? this.sessionData.current.id : 0), this.audioPlayerData.playlist);
@@ -848,13 +881,13 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					// Set current track
 					this.audioPlayerData.location = this.audioPlayerData.location ? this.audioPlayerData.location : 'user';
 					this.audioPlayerData.item = this.audioPlayerData.list[key];
-					this.audioPlayerData.list = this.audioPlayerData.list;
 					this.audioPlayerData.key = key;
-					this.audioPlayerData.postId = this.audioPlayerData.postId;
-					this.audioPlayerData.type = this.audioPlayerData.type;
+					/* this.audioPlayerData.list = this.audioPlayerData.list; */
+					/* this.audioPlayerData.postId = this.audioPlayerData.postId;
+					this.audioPlayerData.type = this.audioPlayerData.type; */
 					/* this.audioPlayerData.user = this.audioPlayerData.user;
 					this.audioPlayerData.username = this.audioPlayerData.username; */
-					this.audioPlayerData.selectedIndex = this.audioPlayerData.selectedIndex;
+					/* this.audioPlayerData.selectedIndex = this.audioPlayerData.selectedIndex; */
 				}
 
 				// Set to service
@@ -941,10 +974,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			} else { // Play new one
 				this.audioPlayerData.list = data;
 				this.audioPlayerData.item = item;
-				this.audioPlayerData.key = key;
-				/* this.audioPlayerData.user = this.sessionData.current.id;
-				this.audioPlayerData.username = this.sessionData.current.username; */
-				this.audioPlayerData.location = 'playlist';
+				this.audioPlayerData.key = (key ? key : 0);
+				this.audioPlayerData.location = 'activeSession';
 				this.audioPlayerData.type = type;
 				this.audioPlayerData.selectedIndex = null;
 
@@ -1295,33 +1326,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				break;
 		}
 	}
-
-	// Get color
-	/* getCoverColor(image) {
-		const self = this;
-
-		if (image.length) {
-			let img = this.document.createElement('img');
-			img.setAttribute('src', image);
-
-			if (img.hasAttribute('src')) {
-				let vibrant = new Vibrant(img);
-				let swatches = vibrant.swatches();
-
-				for (const i in swatches) {
-					if (i) {
-						if (swatches.hasOwnProperty(i) && swatches[i]) {
-							if (i === 'Vibrant') {
-								return swatches[i].getHex();
-							}
-						}
-					}
-				}
-			}
-		} else {
-			return null;
-		}
-	} */
 
 	// Show Player on Mobile
 	showMobilePlayer(type) {
@@ -1712,6 +1716,63 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					self.socialLoading = false;
 				}
 			);
+		}
+	}
+
+	// Recommended on the right side
+	getRecommendedUsersSongs() {
+		// Users
+		const dataU = {
+			user: this.sessionData.current.id,
+			cuantity: 3
+		};
+		this.userDataService.getRecommended(dataU)
+			.subscribe((res: any) => {
+				if (!res || res.length === 0) {
+					this.recommendedUsers.list = [];
+				} else {
+					this.recommendedUsers.list = res;
+				}
+			}, error => {
+				this.recommendedUsers.list = [];
+			});
+
+		//Songs
+		const dataS = {
+			user: this.sessionData.current.id,
+			type: 'hits',
+			cuantity: 3
+		};
+		this.audioDataService.general(dataS)
+			.subscribe((res: any) => {
+				if (!res || res.length === 0) {
+					this.recommendedSongs.list = [];
+				} else {
+					this.recommendedSongs.list = res;
+				}
+			}, error => {
+				this.recommendedSongs.list = [];
+			});
+	}
+
+	// User options
+	itemUserOptions(type, item, index) {
+		switch (type) {
+			case 'dismiss':
+				item.dismiss = true;
+
+				this.recommendedUsers.list.splice(index, 1);
+
+				const data = {
+					user: item.user.id
+				};
+
+				this.userDataService.dismissRecommended(data).subscribe();
+				break;
+			case 'report':
+				item.type = 'user';
+				this.sessionService.setDataReport(item);
+				break;
 		}
 	}
 }

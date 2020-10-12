@@ -1,5 +1,6 @@
 <?php include "../db.php";
-    $cuantity = 100;
+    $cuantitySearch = 50;
+    $cuantity = $_GET['cuantity'];
     $more = 0;
 	$session = sessionId();
 	$user = $_GET['user'];
@@ -22,7 +23,7 @@
 					END
                 )
             ORDER BY RAND()
-            LIMIT $more, $cuantity";
+            LIMIT $more, $cuantitySearch";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -39,7 +40,7 @@
     }
 
     /* Si no llego al minimo busco más usuarios */
-    if ($result->num_rows < 30) {
+    if ($result->num_rows < $cuantity) {
         $sql2 = "SELECT u.id,
                         u.private
                 FROM z_users u
@@ -56,7 +57,7 @@
                         END
                     )
                 ORDER BY RAND()
-                LIMIT $more, $cuantity";
+                LIMIT $more, $cuantitySearch";
         $result2 = $conn->query($sql2);
 
         if ($result2->num_rows > 0) {
@@ -69,16 +70,16 @@
 
             $data = arrayRemoveDuplicates($data, 'id');
 
-            echo json_encode(array_slice($data, 0, 20));
+            echo json_encode(array_slice($data, 0, $cuantity));
         } else {
             if ($result->num_rows == 0) {
                 var_dump(http_response_code(204));
             } else {
-                echo json_encode(array_slice($data, 0, 20));
+                echo json_encode(array_slice($data, 0, $cuantity));
             }
         }
     } else {
-        echo json_encode(array_slice($data, 0, 20));
+        echo json_encode(array_slice($data, 0, $cuantity));
     }
 
     $conn->close();

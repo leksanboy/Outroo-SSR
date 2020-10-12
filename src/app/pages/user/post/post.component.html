@@ -111,8 +111,8 @@
 												<div class="inner">
 													<div class="image">
 														<button mat-icon-button (click)="playSong(x, a, i, 'publication')">
-															<i label="play" *ngIf="!a?.playing || !(audioPlayerData?.postId == x?.id)"></i>
-															<i label="pause" *ngIf="a?.playing && (audioPlayerData?.postId == x?.id)"></i>
+															<i label="play" *ngIf="!a?.playing || !(audioPlayerData.location === 'post' && audioPlayerData.type === 'publication')"></i>
+															<i label="pause" *ngIf="a?.playing && (audioPlayerData.location === 'post' && audioPlayerData.type === 'publication')"></i>
 															<img [src]="a.image ? (env.pathAudios + 'thumbnails/' + a.image) : env.defaultSongCover"/>
 														</button>
 													</div>

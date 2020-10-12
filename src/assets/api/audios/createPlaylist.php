@@ -26,7 +26,7 @@
 	}
 
 	if ($type === 'create') {
-		$sql = "INSERT INTO z_audios_playlist (name, user, title, color, description, genre, image, explicit, ip_address)
+		$sql = "INSERT INTO z_audios_playlist (name, user, color, title, description, genre, image, explicit, ip_address)
 				VALUES ('$name', $session, '$color', '$title', '$description', '$genre', '$imageNameJpg', '$explicit', '$ipAddress')";
 		$conn->query($sql);
 		$insertedId = $conn->insert_id;

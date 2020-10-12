@@ -345,7 +345,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 				type: 'news',
 				user: user,
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity + 1
 			};
 
 			this.publicationsDataService.default(data)
@@ -393,7 +393,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			const data = {
 				type: 'news',
 				rows: this.dataDefault.rows,
-				cuantity: this.env.cuantity
+				cuantity: this.env.cuantity + 1
 			};
 
 			this.publicationsDataService.default(data)

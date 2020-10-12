@@ -261,9 +261,7 @@ export class PostComponent implements OnInit, OnDestroy {
 			this.audioPlayerData.list = data.audios;
 			this.audioPlayerData.item = item;
 			this.audioPlayerData.key = key;
-			/* this.audioPlayerData.user = this.sessionData.current.id;
-			this.audioPlayerData.username = this.sessionData.current.username; */
-			this.audioPlayerData.location = 'user';
+			this.audioPlayerData.location = 'post';
 			this.audioPlayerData.type = type;
 
 			item.playing = true;

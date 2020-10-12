@@ -35,11 +35,18 @@
 							{{translations?.audios?.editorsChoice}}
 						</div>
 
-						<div class="button">
-							<button mat-button (click)="playTrack('play')">
-								<i label="pause" *ngIf="data.playing" class="icon85 white"></i>
-								<i label="play" *ngIf="!data.playing" class="icon85 white"></i>
-								{{data.playing ? translations?.audios?.pause : translations?.audios?.play}}
+						<div class="button panel">
+							<button mat-button (click)="playTrack('prev')">
+								<i label="prev"></i>
+							</button>
+
+							<button mat-button (click)="playTrack('play')" class="play">
+								<i label="pause" *ngIf="data.playing"></i>
+								<i label="play" *ngIf="!data.playing"></i>
+							</button>
+
+							<button mat-button (click)="playTrack('next')">
+								<i label="next"></i>
 							</button>
 						</div>
 					</div>

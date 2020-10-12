@@ -11,7 +11,7 @@
 
 				<div class="pageTitle">{{translations?.bookmarks?.title}}</div>
 
-				<ul class="publicationsBoxes" *ngIf="dataDefault?.list">
+				<ul class="posts" *ngIf="dataDefault?.list">
 					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.bookmarkRemoved, 'advert': x.contentTypeAd}">
 						<span class="inner" *ngIf="!x.contentTypeAd">
 							<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
@@ -28,19 +28,19 @@
 					</li>
 				</ul>
 
-				<div class="loadingData" *ngIf="dataDefault.loadingData">
+				<div class="loadingData" *ngIf="dataDefault?.loadingData">
 					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 				</div>
 
-				<div class="noData" *ngIf="dataDefault.noData">
+				<div class="noData" *ngIf="dataDefault?.noData">
 					<div class="description">{{translations?.bookmarks?.noData}}</div>
 				</div>
 
-				<div class="loadMore" *ngIf="dataDefault.loadMoreData">
-					<button mat-fab (click)="default('more')" *ngIf="!dataDefault.loadingMoreData">
+				<div class="loadMore" *ngIf="dataDefault?.loadMoreData">
+					<button mat-fab (click)="default('more')" *ngIf="!dataDefault?.loadingMoreData">
 						<i label="add"></i>
 					</button>
-					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
 				</div>
 			</div>
 		</div>

@@ -26,7 +26,7 @@
 				</div>
 
 				<span *ngIf="data.active === 'default'">
-					<ul class="publicationsBoxes" *ngIf="dataDefault?.list">
+					<ul class="posts news" *ngIf="dataDefault?.list">
 						<li *ngFor="let x of dataDefault?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
 							<span class="inner" *ngIf="!x.contentTypeAd">
 								<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
@@ -225,7 +225,7 @@
 						</mat-tab>
 
 						<mat-tab label="{{translations?.news?.posts}}">
-							<ul class="publicationsBoxes" *ngIf="dataPosts?.list">
+							<ul class="posts" *ngIf="dataPosts?.list">
 								<li *ngFor="let x of dataPosts?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
 									<span class="inner" *ngIf="!x.contentTypeAd">
 										<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
@@ -303,7 +303,7 @@
 						<div class="text">{{data.selectedHashtag}}</div>
 					</div>
 
-					<ul class="publicationsBoxes" *ngIf="dataHashtag?.list">
+					<ul class="posts" *ngIf="dataHashtag?.list">
 						<li *ngFor="let x of dataHashtag?.list" [ngClass]="{remove: x?.addRemoveSession, advert: x?.contentTypeAd, big: x?.big}">
 							<span class="inner" *ngIf="!x.contentTypeAd">
 								<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">

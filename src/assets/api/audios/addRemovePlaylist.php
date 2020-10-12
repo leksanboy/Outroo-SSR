@@ -5,6 +5,7 @@
 	$session = sessionId();
 	$id = $data['id'];
 	$title = $data['title'];
+	$name = generateRandomString(23);
 	$type = $data['type'];
 	$location = $data['location'];
 	$imageName = $data['image'] ? $data['image'] : '';
@@ -25,8 +26,8 @@
 		$conn->close();
 	} else if ($location === 'user') { // Add/Remove
 		if (!$insertedPlaylist) {
-			$sql = "INSERT INTO z_audios_playlist (original_id, user, title, image, ip_address)
-					VALUES ($id, $session, '$title', '$imageName', '$ipAddress')";
+			$sql = "INSERT INTO z_audios_playlist (original_id, user, title, name, image, ip_address)
+					VALUES ($id, $session, '$title', '$name', '$imageName', '$ipAddress')";
 			$conn->query($sql);
 			$insertedId = $conn->insert_id;
 

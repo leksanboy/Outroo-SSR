@@ -17,6 +17,7 @@ import {
 	MatSelectModule,
 	MatSliderModule,
 	MatSlideToggleModule,
+	MatTabsModule,
 	MatTooltipModule
 } from '@angular/material';
 
@@ -58,6 +59,7 @@ const routes: Routes = [
 		MatSelectModule,
 		MatSliderModule,
 		MatSlideToggleModule,
+		MatTabsModule,
 		MatTooltipModule
 	],
 	declarations: [

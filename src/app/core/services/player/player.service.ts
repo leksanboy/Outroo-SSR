@@ -6,6 +6,7 @@ export class PlayerService {
 	private subjectSetData = new Subject<any>();
 	private subjectPlayTrack = new Subject<any>();
 	private subjectCurrentTrack = new Subject<any>();
+	private subjectCoverTrack = new Subject<any>();
 
 	setData(data: string) {
 		this.subjectSetData.next(data);
@@ -29,5 +30,13 @@ export class PlayerService {
 
 	getCurrentTrack(): Observable<any> {
 		return this.subjectCurrentTrack.asObservable();
+	}
+
+	setCoverTrack(data: any) {
+		this.subjectCoverTrack.next(data);
+	}
+
+	getCoverTrack(): Observable<any> {
+		return this.subjectCoverTrack.asObservable();
 	}
 }

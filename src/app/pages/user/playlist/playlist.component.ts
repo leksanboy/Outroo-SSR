@@ -19,7 +19,6 @@ import { ActiveSessionComponent } from '../../../../app/pages/common/activeSessi
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
 declare var global: any;
-declare var Vibrant: any;
 
 @Component({
 	selector: 'app-playlist',
@@ -89,6 +88,14 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
 		// Get recommended playlists
 		this.getRecommendedPlaylists();
+
+		// Get cover data
+		this.playerService.getCoverTrack()
+			.subscribe(data => {
+				if (data.type === 'playlist') {
+					this.dataDefault.info.shadow = data.color ? ('0 20px 50px rgba(' + data.color + ', 0.42)') : null;
+				}
+			});
 	}
 
 	ngOnInit() {
@@ -144,9 +151,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 					this.dataDefault.noData = true;
 				} else {
 					this.dataDefault.info = res.info;
-
-					let color = res.info.image ? this.audioDataService.getCoverColor(this.env.pathAudios + 'covers/' + res.info.image) : null;
-					this.dataDefault.info.shadow = color ? ('0 20px 50px rgba(' + color + ', 0.42)') : null;
+					(res.info.image ? this.audioDataService.getCoverColor('playlist', this.env.pathAudios + 'covers/' + res.info.image) : null);
 
 					this.dataDefault.list = [];
 

@@ -587,6 +587,7 @@
 				WHERE id = $id AND is_deleted = 0";
 		$result = $conn->query($sql)->fetch_assoc();
 
+		$result['song'] = $result['id'];
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);

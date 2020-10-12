@@ -54,6 +54,14 @@ export class ShowPlaylistComponent implements OnInit {
 		this.data.current = data.item;
 		this.data.loadingData = true;
 		this.data.noData = false;
+
+		// Get cover data
+		this.playerService.getCoverTrack()
+			.subscribe(data => {
+				if (data.type === 'playlist') {
+					this.data.info.shadow = data.color ? ('0 20px 50px rgba(' + data.color + ', 0.42)') : null;
+				}
+			});
 	}
 
 	ngOnInit() {
@@ -72,9 +80,7 @@ export class ShowPlaylistComponent implements OnInit {
 				} else {
 					this.data.info = res.info;
 					this.data.list = res.list;
-
-					let color = res.info.image ? this.audioDataService.getCoverColor(this.env.pathAudios + 'covers/' + res.info.image) : null;
-					this.data.info.shadow = color ? ('0 20px 50px rgba(' + color + ', 0.42)') : null;
+					(res.info.image ? this.audioDataService.getCoverColor('playlist', this.env.pathAudios + 'covers/' + res.info.image) : null);
 
 					if (res.list.length === 0) {
 						this.data.noData = true;

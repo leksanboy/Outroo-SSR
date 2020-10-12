@@ -13,8 +13,6 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 
-declare var Vibrant: any;
-
 @Component({
 	selector: 'app-new-playlist',
 	templateUrl: './newPlaylist.component.html'
