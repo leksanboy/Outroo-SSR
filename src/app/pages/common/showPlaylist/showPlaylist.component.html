@@ -22,17 +22,8 @@
 
 				<div class="right">
 					<div class="texts">
-						<div class="text">
+						<div class="title">
 							{{data?.info?.title}}
-						</div>
-
-						<a class="text" routerLink="/{{data?.info?.user?.username}}" *ngIf="data?.info?.user?.id">
-							@{{data?.info?.user?.username}}
-							<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-						</a>
-
-						<div class="text" *ngIf="!data?.info?.user?.id">
-							{{translations?.audios?.editorsChoice}}
 						</div>
 
 						<div class="button panel">
@@ -48,6 +39,15 @@
 							<button mat-button (click)="playTrack('next')">
 								<i label="next"></i>
 							</button>
+						</div>
+
+						<a class="user" routerLink="/{{data?.info?.user?.username}}" *ngIf="data?.info?.user?.id">
+							@{{data?.info?.user?.username}}
+							<i class="icon50 blue" label="official" *ngIf="data?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+						</a>
+
+						<div class="user" *ngIf="!data?.info?.user?.id">
+							{{translations?.audios?.editorsChoice}}
 						</div>
 					</div>
 

@@ -21,22 +21,9 @@
 
 						<div class="right">
 							<div class="texts">
-								<div class="text">
+								<div class="title">
 									{{dataDefault?.info?.title}}
 								</div>
-
-								<a class="text" routerLink="/{{dataDefault?.info?.user?.username}}" *ngIf="dataDefault?.info?.user?.id">
-									@{{dataDefault?.info?.user?.username}}
-									<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
-								</a>
-
-								<div class="text" *ngIf="!dataDefault?.info?.user?.id">
-									{{translations?.audios?.editorsChoice}}
-								</div>
-
-								<!-- <div class="text">
-									{{dataDefault?.list?.length}} {{translations?.audios?.songs}}
-								</div> -->
 
 								<div class="button">
 									<button mat-button (click)="playTrack('play')">
@@ -44,6 +31,15 @@
 										<i label="play" *ngIf="!dataDefault?.playing" class="icon85 white"></i>
 										{{dataDefault?.playing ? translations?.audios?.pause : translations?.audios?.play}}
 									</button>
+								</div>
+
+								<a class="user" routerLink="/{{dataDefault?.info?.user?.username}}" *ngIf="dataDefault?.info?.user?.id">
+									@{{dataDefault?.info?.user?.username}}
+									<i class="icon50 blue" label="official" *ngIf="dataDefault?.info?.user?.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+								</a>
+
+								<div class="user" *ngIf="!dataDefault?.info?.user?.id">
+									{{translations?.audios?.editorsChoice}}
 								</div>
 							</div>
 
