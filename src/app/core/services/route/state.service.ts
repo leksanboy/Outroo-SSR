@@ -72,4 +72,9 @@ export class RoutingStateService {
 		const url = (this.history ? this.history[this.history.length - 1] : null) || '/';
 		return url;
 	}
+
+	getUrlBeforeLogin() {
+		const url = (this.history ? this.history[this.history.length - 2] : null) || '/';
+		return url;
+	}
 }

@@ -36,7 +36,8 @@
 		"allPlaylists": "All playlists",
 		"editorsChoice": "Editors' choice",
 		"playlists": "Playlists",
-		"player": "Player"
+		"player": "Player",
+		"currentPlaylist": "Current playlist"
 	},
 	"bookmarks": {
 		"title": "Bookmarks",

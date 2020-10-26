@@ -90,8 +90,8 @@ export class SigninComponent implements OnInit {
 			this.userDataService.login(params)
 				.subscribe(
 					res => {
-						//this.router.navigate([this.env.defaultPage]);
-						this.window.location.href = this.env.defaultPage;
+						let url = this.routingStateService.getUrlBeforeLogin();
+						this.window.location.href = url;
 					},
 					error => {
 						this.submitLoading = false;

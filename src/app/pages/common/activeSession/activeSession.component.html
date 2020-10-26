@@ -946,6 +946,12 @@
 	</div>
 
 	<div class="playlistBox" *ngIf="audioPlayerData?.playlistBox">
+		<div class="close">
+			<div class="title">{{translations?.audios?.currentPlaylist}}</div>
+			<button mat-mini-fab (click)="showPlaylistWeb()">
+				<i label="close"></i>
+			</button>
+		</div>
 		<div class="data">
 			<ul class="tracks" *ngIf="audioPlayerData?.list">
 				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, remove: x.addRemoveSession}">

@@ -28,7 +28,7 @@ pm2 start dist/server.js
 npm run build:ssr && rm -rf dist/browser/assets/ && rm -rf distNew && mv dist distNew
 
 <!-- 2. Open SSH Console (Google GCP) -->
-via navegador/marcadores
+ir al navegador y seleccionar en marcadores ssh
 
 <!-- 3. Upload new + Stop Old + Launch new + Start new + Remove old -->
 cd /var/www/html/ && pm2 stop 0 && pm2 delete 0 && sudo mv dist distOld && sudo mv distNew dist && pm2 start dist/server.js && sudo rm -rf distOld/
