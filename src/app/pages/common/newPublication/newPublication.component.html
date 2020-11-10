@@ -26,7 +26,7 @@
 					<div class="origin" contenteditable="plaintext-only" name="publication" spellcheck="true" role="textbox" aria-multiline="true" dir="ltr" aria-autocomplete="list" aria-expanded="false" [textContent]="publicationData.onBackground" (input)="writingChanges($event.target.innerText)" (keyup)="checkKeyCode($event)" (keydown)="checkKeyCode($event)" (mouseup)="checkKeyCode($event)"></div>
 				</div>
 
-				<div class="searchBoxMentions" *ngIf="searchBoxMentions">
+				<div class="userMentions" *ngIf="searchBoxMentions">
 					<ul>
 						<li mat-ripple *ngFor="let x of searchMentionsData" (click)="addSearchedMention(x)">
 							<div class="avatar">

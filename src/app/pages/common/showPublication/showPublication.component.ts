@@ -188,6 +188,9 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 	// Item options
 	itemPublicationOptions(type, item) {
 		switch (type) {
+			case 'close':
+				this.close();
+				break;
 			case 'remove':
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';

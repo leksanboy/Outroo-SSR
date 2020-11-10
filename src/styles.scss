@@ -811,6 +811,7 @@ body {
 				overflow: hidden;
 				width: 100%;
 				padding: 6px 12px;
+				text-align: left;
 
 				.text {
 					line-height: 18px;
@@ -3370,6 +3371,11 @@ body {
 			overflow: hidden;
 			width: 100%;
 			float: left;
+			border: 1px solid transparent;
+
+			&:focus-within {
+				border: 1px solid $blueColor;
+			}
 
 			.inner {
 				background-color: transparent;
@@ -3386,6 +3392,7 @@ body {
 					line-height: 36px;
 					height: 36px;
 					width: 36px;
+					margin: 0 !important;
 				}
 
 				input {
@@ -4652,7 +4659,7 @@ body {
 				height: 100vw;
 				max-height: 80vh;
 				width: 100%;
-				max-width: 666px;
+				max-width: $pageMaxWidth;
 
 				.image {
 					position: fixed;
@@ -5117,7 +5124,7 @@ body {
 							}
 						}
 
-						.searchBoxMentions {
+						.userMentions {
 							background-color: $whiteColor;
 							box-shadow: $shadowBox2;
 							margin: 10px 0 0 18px;
@@ -6127,7 +6134,6 @@ body {
 			top: 0;
 
 			.head {
-				/* border-bottom: 1px solid transparentize($greyColor, .75); */
 				background-color: transparentize($headerWhiteColor, .01);
 				box-shadow: $shadowBox0;
 				position: absolute;
@@ -6137,16 +6143,43 @@ body {
 				width: 100%;
 				z-index: 9;
 
-				button {
-					color: $blackColor;
-					background: none;
-					box-shadow: none;
-					margin: 8px 16px;
+				.left,
+				.right {
+					button {
+						color: $blackColor;
+						background: none;
+						box-shadow: none;
+						margin: 8px 16px;
+						float: left;
+
+						&:hover {
+							box-shadow: none;
+							background: none;
+						}
+					}
+				}
+
+				.left {
 					float: left;
 
-					&:hover {
-						box-shadow: none;
-						background: none;
+					.logo {
+						float: left;
+						display: flex;
+						align-items: center;
+						height: 56px;
+
+						a {
+							float: left;
+							display: inherit;
+							color: $redColor;
+						}
+
+						.text {
+							font-weight: bold;
+							font-size: 15px;
+							padding: 0 0 0 8px;
+							color: transparentize($greyColor, .5);
+						}
 					}
 				}
 
@@ -6170,10 +6203,40 @@ body {
 							color: $redColor;
 						}
 					}
-				}
 
-				.left {
-					float: left;
+					.searchBox {
+						max-width: $pageMaxWidth;
+						padding: 0 18px;
+
+						.box {
+							background-color: transparentize($greyColor, .75);
+						}
+
+						.results {
+							max-width: calc(#{$pageMaxWidth} - 18px * 2);
+							background-color: $headerWhiteColor;
+							box-shadow: $shadowBox2;
+							color: currentColor;
+							position: absolute;
+							margin: 46px 0 0;
+							width: 100%;
+							max-height: 60vh;
+							overflow-y: auto;
+
+							ul.followers {
+								li {
+									padding: 0 12px;
+
+									.avatar {
+										min-width: 32px;
+										height: 32px;
+										width: 32px;
+										margin: 8px 0;
+									}
+								}
+							}
+						}
+					}
 				}
 
 				.right {
@@ -6279,7 +6342,7 @@ body {
 						.text {
 							box-sizing: border-box;
 							word-break: break-word;
-							padding: 4px 0 0 12px;
+							padding: 4px 0 0 16px;
 							width: 100%;
 
 							.data {
@@ -6326,7 +6389,7 @@ body {
 							overflow: hidden;
 							font-size: 15px;
 							width: 100%;
-							padding: 0;
+							padding: 0 0 0 8px;
 						}
 
 						.pending {
@@ -8199,6 +8262,18 @@ body {
 							color: $whiteColor;
 						}
 					}
+
+					.center {
+						.searchBox {
+							.box {
+								background-color: transparentize($blackColor, .5);
+							}
+
+							.results {
+								background-color: $headerBlackColor;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -8423,7 +8498,7 @@ body {
 				.center {
 					width: calc(100% - 360px - 360px);
 					height: 86px;
-					max-width: 666px;
+					max-width: $pageMaxWidth;
 
 					.top {
 						justify-content: center;

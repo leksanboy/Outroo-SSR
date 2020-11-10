@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { environment } from '../../../../environments/environment';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
@@ -55,6 +57,13 @@ declare var gapi: any;
 })
 export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	@ViewChild('audioPlayerHtml') audioPlayerHtml: ElementRef;
+
+	@ViewChild('searchInput') searchInput: ElementRef;
+	@ViewChild('searchResults') searchResults: ElementRef;
+	/* @ViewChild('notButton') notButton;
+	@ViewChild('notBox') notBox: ElementRef;
+	@ViewChild('userButton') userButton: ElementRef;
+	@ViewChild('userBox') userBox: ElementRef; */
 
 	public env: any = environment;
 	public window: any = global;
@@ -108,10 +117,13 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	public socialLoading: boolean;
 	public recommendedUsers: any = {};
 	public recommendedSongs: any = {};
+	public actionFormSearch: FormGroup;
+	public dataSearch: any = [];
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
 		private router: Router,
+		private _fb: FormBuilder,
 		public dialog: MatDialog,
 		private location: Location,
 		private alertService: AlertService,
@@ -124,8 +136,26 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		private publicationsDataService: PublicationsDataService,
 		private notificationsDataService: NotificationsDataService,
 		private bottomSheet: MatBottomSheet,
-		private ssrService: SsrService
+		private ssrService: SsrService,
+		private renderer: Renderer2
 	) {
+		// Close clicking outside of box
+		this.renderer.listen('window', 'click',(e: Event) => {
+			let si = this.searchInput 	? (this.searchInput.nativeElement || false) : false;
+			let sr = this.searchResults ? (this.searchResults.nativeElement || false) : false;
+
+			if (e.target !== si && e.target !== sr) {
+				this.search('close', null);
+			}
+
+			/* if (e.target !== nb && e.target !== nx) {
+				this.showNotificationsBoxWeb('close');
+			}
+			if (e.target !== ub && e.target !== ux) {
+				this.showUserBox = false;
+			} */
+	   });
+
 		// Get session data
 		this.sessionData = this.userDataService.getSessionData();
 
@@ -216,6 +246,11 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			}
 		} else {
 			this.deniedAccess = 'session';
+
+			// Search
+			this.actionFormSearch = this._fb.group({
+				caption: ['']
+			});
 
 			// Get recommended
 			this.getRecommendedUsersSongs();
@@ -392,6 +427,15 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				let element = document.getElementById('googleSignIn');
 				self.socialLogin('google', auth2, element);
 			});
+		} else {
+			// Search/Reset
+			this.actionFormSearch.controls['caption'].valueChanges
+				.pipe(
+					debounceTime(400),
+					distinctUntilChanged())
+				.subscribe(val => {
+					(val.trim().length > 0) ? this.search('default', val) : this.search('clear', null);
+				});
 		}
 	}
 
@@ -508,6 +552,49 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	// Scroll to top
 	scrollTop() {
 		this.window.scrollTo(0, 0);
+	}
+
+	// Search
+	search(type, value) {
+		if (type === 'default') {
+			this.dataSearch.show = true;
+			this.dataSearch.list = null;
+			this.dataSearch.noData = null;
+			this.dataSearch.loadingData = true;
+			this.dataSearch.value = value;
+
+			const data = {
+				caption: value,
+				rows: 0,
+				cuantity: this.env.cuantity
+			};
+
+			this.followsDataService.search(data)
+				.subscribe((res: any) => {
+					this.dataSearch.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataSearch.noData = true;
+					} else {
+						this.dataSearch.list = res;
+					}
+				}, error => {
+					this.dataSearch.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'clear') {
+			this.actionFormSearch.get('caption').setValue('');
+			this.dataSearch.list = null;
+			this.dataSearch.noData = null;
+		} else if (type === 'close') {
+			this.dataSearch.show = false;
+		} else if (type === 'show') {
+			console.log('show');
+
+			if (this.dataSearch.list) {
+				this.dataSearch.show = true;
+			}
+		}
 	}
 
 	// Update session data
@@ -674,6 +761,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	showNotificationsBoxWeb(type) {
 		if (type === 'show') {
 			this.showNotificationsBox = !this.showNotificationsBox;
+
+			// Close searchBox
+			//this.search('close', null);
 
 			// Count to '0'
 			this.sessionData.current.countPendingNotifications = 0;
@@ -1358,6 +1448,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		this.showChangeSession = false;
 		this.showChangeLanguage = false;
 		this.audioPlayerData.playlistBox = false;
+
+		// Close searchBox
+		//this.search('close', null);
 	}
 
 	// Show panel from bottom on mobile
