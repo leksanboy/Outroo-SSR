@@ -560,7 +560,7 @@ body {
 							width: 100%;
 
 							.progress {
-								background-color: transparentize($blackColor, .75);
+								background-color: transparentize($blackColor .75);
 								border-radius: 50%;
 								position: relative;
 								height: 36px;
@@ -577,7 +577,7 @@ body {
 										width: 36px !important;
 
 										circle {
-											stroke: $whiteColor !important;
+											stroke: $blueColor !important;
 											stroke-width: 5px !important;
 										}
 									}
@@ -587,7 +587,7 @@ body {
 									text-shadow: $shadowText1;
 									position: absolute;
 									text-align: center;
-									color: $whiteColor;
+									color: $blueColor;
 									line-height: 36px;
 									font-size: 10px;
 									width: 100%;
