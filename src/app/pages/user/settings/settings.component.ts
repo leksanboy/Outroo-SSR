@@ -409,6 +409,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
+		} else if (type === 'miniPlayer') {
+			const data = {
+				type: 'miniPlayer',
+				miniPlayer: this.sessionData.current.mp ? 0 : 1
+			};
+
+			this.userDataService.updateData(data)
+				.subscribe(res => {
+					this.sessionData = this.userDataService.getSessionData();
+
+					if (data.miniPlayer === 1) {
+						this.sessionData.current.mp = true;
+						this.alertService.success(this.translations.common.miniPlayerEnabled);
+					} else {
+						this.sessionData.current.mp = false;
+						this.alertService.success(this.translations.common.miniPlayerDisabled);
+					}
+
+					this.userDataService.setSessionData('data', this.sessionData);
+					this.sessionService.setData(this.sessionData);
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 	}
 }

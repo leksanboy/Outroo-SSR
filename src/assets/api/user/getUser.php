@@ -12,6 +12,7 @@
 						about,
 						language,
 						theme,
+						mini_player as mp,
 						official,
 						private
 				FROM z_users
@@ -24,6 +25,7 @@
 				$row['avatarUrl'] 			= $row['avatar'] ? ('https://outroo.com/assets/media/user/'.$row['id'].'/avatar/'.$row['avatar']) : '';
 				$row['languages'] 			= getLanguages();
 				$row['theme'] 				= intval($row['theme']);
+				$row['mp'] 					= $row['mp'] ? true : false;
 				$row['official'] 			= $row['official'] ? true : false;
 				$row['private'] 			= $row['private'] ? true : false;
 				$row['name'] 				= html_entity_decode($row['name'], ENT_QUOTES);

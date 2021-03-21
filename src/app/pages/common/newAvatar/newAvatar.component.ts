@@ -107,8 +107,8 @@ export class NewAvatarComponent implements OnInit {
 						});
 				} else if (this.data.comeFrom === 'playlist') {
 					const imageBase64 = this.cropperData.getCroppedCanvas({
-						width: 400,
-						height: 400,
+						width: 640,
+						height: 640,
 						imageSmoothingEnabled: false,
 						imageSmoothingQuality: 'high'
 					}).toDataURL('image/jpeg');

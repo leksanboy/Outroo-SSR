@@ -197,32 +197,23 @@
 							</div>
 						</div>
 
-						<!-- <div class="privacy">
-							<div class="left">
-								<div class="title">Eliminar cuenta</div>
-								<div class="description">
-									Enviar petición para eliminar cuenta (la cuenta será eliminada pasados los 7 dias)
-								</div>
-							</div>
-						</div> -->
-
 						<div class="privacy">
 							<div class="left">
-								<div class="title">Mini reproductor</div>
+								<div class="title">{{translations?.settings?.miniPlayer}}</div>
 								<div class="description">
-									Establecer mini reproductor por defecto
+									{{translations?.settings?.miniPlayerDescription}}
 								</div>
 							</div>
 							<div class="right">
-								<mat-slide-toggle [checked]="sessionData?.current?.miniPlayer" (change)="submit('privacy')"></mat-slide-toggle>
+								<mat-slide-toggle [checked]="sessionData?.current?.mp" (change)="submit('miniPlayer')"></mat-slide-toggle>
 							</div>
 						</div>
 
 						<!-- <div class="privacy">
 							<div class="left">
-								<div class="title">Migrar la cuenta de un email a otro</div>
+								<div class="title">Eliminar cuenta</div>
 								<div class="description">
-									Enviar la petición para elinar la cuenta
+									Enviar petición para eliminar cuenta (la cuenta será eliminada pasados los 30 dias)
 								</div>
 							</div>
 						</div> -->

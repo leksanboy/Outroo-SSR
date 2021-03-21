@@ -29,6 +29,7 @@
 						about,
 						language,
 						theme,
+						mini_player as mp,
 						official,
 						private,
 						reset_password as rp
@@ -46,6 +47,7 @@
 						about,
 						language,
 						theme,
+						mini_player as mp,
 						official,
 						private,
 						reset_password as rp
@@ -65,6 +67,7 @@
 							about,
 							language,
 							theme,
+							mini_player as mp,
 							official,
 							private,
 							reset_password as rp
@@ -102,7 +105,7 @@
 					$conn->query($sql);
 
 					// Send mail
-					emailWelcomeSocial($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash, $password);
+					emailWelcomeSocial($email, $lang, html_entity_decode($name, ENT_QUOTES), $generatedHash, $password, $type);
 
 					// Login data
 					$sql = "SELECT id,
@@ -114,6 +117,7 @@
 									about,
 									language,
 									theme,
+									mini_player as mp,
 									official,
 									private,
 									reset_password as rp
@@ -131,6 +135,7 @@
 		$result['avatarUrl'] 			= $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 		$result['languages'] 			= getLanguages();
 		$result['theme'] 				= intval($result['theme']);
+		$result['mp'] 					= $result['mp'] ? true : false;
 		$result['official'] 			= $result['official'] ? true : false;
 		$result['private'] 				= $result['private'] ? true : false;
 		$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
@@ -163,7 +168,7 @@
 		$date 							= date('l jS\, F Y h:i:s A').' ('.$zone.')';
 
 		// Send email
-		emailNewLogin($result['email'], $result['languages'], $result['username'], $result['rp'], $device , $location, $date);
+		emailNewLogin($result['email'], $result['language'], $result['username'], $result['rp'], $device , $location, $date);
 
 		// Return data
 		echo json_encode($result);

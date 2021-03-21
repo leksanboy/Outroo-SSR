@@ -560,7 +560,7 @@ body {
 							width: 100%;
 
 							.progress {
-								background-color: transparentize($blackColor .75);
+								background-color: transparentize($blackColor, .75);
 								border-radius: 50%;
 								position: relative;
 								height: 36px;
@@ -4760,11 +4760,11 @@ body {
 		}
 
 		.dialogBox {
+			overflow-y: overlay;
 			position: relative;
 			color: $blackColor;
 			overflow-x: hidden;
 			max-height: 640px;
-			overflow-y: overlay;
 			height: 100%;
 			width: 100%;
 			float: left;
@@ -6107,6 +6107,7 @@ body {
 
 		.mat-bottom-sheet-container {
 			background: transparent;
+			max-height: 100vh;
 			box-shadow: none;
 			width: 100%;
 			padding: 0;
@@ -8035,6 +8036,10 @@ body {
 				}
 			}
 		}
+
+		&.blur {
+			filter: blur(6px);
+		}
 	}
 
 	/*Black theme on user pages*/
@@ -8279,7 +8284,7 @@ body {
 		}
 
 		.bottomNav {
-			background-color: transparentize($headerBlackColor, .01);
+			background-color: transparentize(#000, .01);
 
 			ul {
 				li {
@@ -8368,7 +8373,7 @@ body {
 		}
 
 		.sessionsPanelMobile {
-			background-color: $darkThemeColor;
+			background-color: transparentize(#000, 0.05);
 			color: $whiteColor;
 
 			.grabber {
@@ -8377,7 +8382,7 @@ body {
 		}
 
 		.mobilePlayer {
-			background-color: $darkThemeColor;
+			/* background-color: transparentize(#000, 0.5); */
 			color: $whiteColor;
 
 			.topBar {
@@ -8387,7 +8392,7 @@ body {
 			}
 
 			.box .player {
-				background: transparentize($darkThemeColor, 0.05);
+				background: transparentize(#000, 0.05);
 			}
 		}
 	}
@@ -9704,12 +9709,12 @@ body {
 
 		.sessionsPanelMobile {
 			border-top: 1px solid transparentize($greyColor, .5);
-			background-color: $whiteColor;
+			background-color: transparentize($whiteColor, 0.05);
 			border-radius: 15px 15px 0 0;
-			padding: 0 0 48px 0;
 			color: $blackColor;
 			width: 100%;
 			float: left;
+			padding: 0;
 
 			.grabber {
 				background-color: transparentize($blackColor, .25);
@@ -9717,6 +9722,27 @@ body {
 				margin: 12px auto;
 				width: 36px;
 				height: 4px;
+			}
+
+			.close {
+				justify-content: center;
+				align-items: center;
+				display: flex;
+				width: 100%;
+				float: left;
+				padding: 0;
+
+				button {
+					border-radius: 50% !important;
+					background: none;
+					box-shadow: none;
+					height: 48px;
+					width: 48px;
+
+					i {
+						background-color: transparentize($greyColor, .5);
+					}
+				}
 			}
 		}
 
@@ -9740,9 +9766,9 @@ body {
 		}
 
 		.mobilePlayer {
-			border-top: 1px solid transparentize($greyColor, .5);
-			background-color: $whiteColor;
-			border-radius: 15px 15px 0 0;
+			/* border-top: 1px solid transparentize($greyColor, .5); */
+			/* background-color: transparentize($whiteColor, 0.5); */
+			border-radius: 0;
 			color: $blackColor;
 			position: relative;
 			min-height: 360px;
@@ -9782,8 +9808,9 @@ body {
 				width: 100%;
 
 				.player {
-					border-top: 1px solid transparentize($greyColor, .75);
-					background: transparentize($whiteColor, 0.05);
+					border-top: 1px solid transparentize($greyColor, .5);
+					background-color: transparentize($whiteColor, 0.05);
+					border-radius: 15px 15px 0 0;
 					position: fixed;
 					width: 100%;
 					z-index: 99;
@@ -10055,6 +10082,7 @@ body {
 						width: 100%;
 						float: left;
 						padding: 0;
+						margin: -12px 0 0 0;
 
 						button {
 							border-radius: 50% !important;
@@ -10076,18 +10104,22 @@ body {
 					position: relative;
 					overflow-x: hidden;
 					overflow-y: auto;
-					max-height: 70vh;
+					max-height: 100vh;
 					width: 100%;
 					padding: 0;
 					margin: 0;
 
 					ul {
-						padding: 0 0 254px;
+						padding: 18px 0 264px;
 						position: relative;
 						display: block;
 						width: 100%;
 						z-index: 1;
 						margin: 0;
+
+						li {
+							color: $whiteColor;
+						}
 					}
 				}
 			}
@@ -10122,7 +10154,7 @@ body {
 			}
 
 			.sessionsPanelMobile {
-				padding: 0 0 84px 0;
+				padding: 0 0 36px 0;
 			}
 
 			.mobilePlayer {
@@ -10136,6 +10168,10 @@ body {
 
 		&.darkTheme {
 			background-color: #000;
+
+			mat-dialog-container {
+				background-color: #000 !important;
+			}
 		}
 	}
 }

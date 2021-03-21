@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
+import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { SessionService } from '../../../../app/core/services/session/session.service';
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 
@@ -38,6 +39,7 @@ export class NewPlaylistComponent implements OnInit {
 		public dialog: MatDialog,
 		private location: Location,
 		private alertService: AlertService,
+		private playerService: PlayerService,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService
@@ -64,6 +66,14 @@ export class NewPlaylistComponent implements OnInit {
 				explicit: ['']
 			});
 		}
+
+		// Get cover data
+		this.playerService.getCoverTrack()
+			.subscribe(data => {
+				if (data.type === 'playlist') {
+					this.data.color = data.color ? ('rgba(' + data.color + ', 1)') : null;
+				}
+			});
 	}
 
 	ngOnInit() {
@@ -110,11 +120,12 @@ export class NewPlaylistComponent implements OnInit {
 				const dialogRef = this.dialog.open(NewAvatarComponent, config);
 				dialogRef.afterClosed().subscribe(res => {
 					this.data.newImage = res;
+					console.log('ni:', this.data.newImage);
 
 					// Replace current image
 					if (this.data.current) {
 						this.data.current.image = this.data.newImage;
-						this.data.current.color = this.data.color;
+						(this.data.newImage ? this.audioDataService.getCoverColor('playlist', this.data.newImage) : null);
 					}
 				});
 			} else {
@@ -161,6 +172,7 @@ export class NewPlaylistComponent implements OnInit {
 						id: this.data.current.id,
 						title: form.title,
 						image: this.data.newImage ? this.data.newImage : null,
+						color: this.data.color,
 						genre: form.advanced ? (form.genre ? form.genre : null) : null,
 						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
 						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null

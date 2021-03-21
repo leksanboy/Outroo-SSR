@@ -177,8 +177,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Get player data
 		this.playerService.getData()
 			.subscribe(data => {
-				console.log('G:', data);
-
 				this.audioPlayerData.noData = false;
 				this.audioPlayerData.postId = data.postId;
 				this.audioPlayerData.list = data.list;
@@ -191,8 +189,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.audioPlayerData.current.color = data.color;
 				this.audioPlayerData.current.background = data.color ? ('rgb(' + data.color + ')') : null;
 				this.audioPlayerData.current.shadow = data.color ? ('0 10px 30px rgba(' + data.color + ', 0.37)') : null;
-
-				console.log('A:', this.audioPlayerData);
 				this.playPlayer('item', data.key);
 			});
 
@@ -589,8 +585,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		} else if (type === 'close') {
 			this.dataSearch.show = false;
 		} else if (type === 'show') {
-			console.log('show');
-
 			if (this.dataSearch.list) {
 				this.dataSearch.show = true;
 			}
@@ -1419,6 +1413,10 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 
 	// Show Player on Mobile
 	showMobilePlayer(type) {
+		// Add class
+		this.document.getElementsByClassName('innerBodyUser')[1].classList.add('blur');
+
+		// Config
 		const config = {
 			data: {
 				sessionData: this.sessionData,
@@ -1431,7 +1429,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Set sheet
 		const bottomSheetRef = this.bottomSheet.open(ActivePlayerMobileComponent, config);
 		bottomSheetRef.afterDismissed().subscribe(val => {
-			// no actions
+			this.document.getElementsByClassName('innerBodyUser')[1].classList.remove('blur');
 		});
 	}
 
@@ -1457,6 +1455,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	showSessionPanelFromBottom() {
 		this.showPlayer = false;
 
+		// Add class
+		this.document.getElementsByClassName('innerBodyUser')[1].classList.add('blur');
+
 		// Config
 		const config = {
 			data: {
@@ -1467,7 +1468,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Set sheet
 		const bottomSheetRef = this.bottomSheet.open(ActiveSessionsMobileComponent, config);
 		bottomSheetRef.afterDismissed().subscribe(val => {
-			// no actions
+			this.document.getElementsByClassName('innerBodyUser')[1].classList.remove('blur');
 		});
 	}
 
@@ -1736,10 +1737,23 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	doMiniPlayer(type) {
 		if (type === 'collapse') {
 			this.audioPlayerData.mini = true;
-			this.audioPlayerData.playlistBox = false
+			this.audioPlayerData.playlistBox = false;
+			this.sessionData.current.mp = true;
 		} else if (type === 'expand') {
 			this.audioPlayerData.mini = false;
+			this.sessionData.current.mp = false;
 		}
+
+		// Set sessionData
+		this.userDataService.setSessionData('data', this.sessionData);
+		this.sessionService.setData(this.sessionData);
+
+		// Update user
+		const data = {
+			type: 'miniPlayer',
+			miniPlayer: this.audioPlayerData.mini ? 1 : 0
+		};
+		this.userDataService.updateData(data).subscribe();
 	}
 
 	// Login with Facebook | Google

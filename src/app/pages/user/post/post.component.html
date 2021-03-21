@@ -162,7 +162,7 @@
 
 									<div class="boxComments" *ngIf="x?.showCommentsBox">
 										<div class="comments" *ngIf="!x?.disabledComments || x?.loaded">
-											<div class="countComments">
+											<div class="countComments" *ngIf="x?.countComments > 0">
 												{{x?.countComments}} {{translations?.common?.comments}}
 											</div>
 
@@ -244,9 +244,9 @@
 												<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 											</div>
 
-											<div class="noData" *ngIf="x?.noData">
+											<!-- <div class="noData" *ngIf="x?.noData">
 												<div class="description">{{translations?.common?.noComments}}</div>
-											</div>
+											</div> -->
 
 											<div class="loadMore" *ngIf="x?.loadMoreData">
 												<button mat-fab (click)="defaultComments('more', x)" *ngIf="!x?.loadingMoreData">

@@ -149,5 +149,23 @@
         $conn->query($sqlH);
 
         $conn->close();
+    } else if ($type === 'miniPlayer') {
+        $miniPlayer = $data['miniPlayer'];
+
+        $sql = "UPDATE z_users
+                SET mini_player = '$miniPlayer',
+                    ip_address_update = '$ipAddress'
+                WHERE id = $session";
+        $result = $conn->query($sql);
+
+        $userData = userData($session);
+        echo json_encode($userData);
+
+        // History
+        $sqlH = "INSERT INTO z_users_updates (type, user, mini_player, ip_address)
+                VALUES ('$type', $session, '$miniPlayer', '$ipAddress')";
+        $conn->query($sqlH);
+
+        $conn->close();
     }
 ?>

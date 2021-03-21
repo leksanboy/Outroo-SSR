@@ -27,7 +27,7 @@
 		"mostPlayed": "Más reproducidas en este momento",
 		"ostMovies": "OST Películas / Series",
 		"top100": "Top 100",
-		"enjoyYourDay": "Disfruta tu día con ...",
+		"enjoyYourDay": "Disfruta tu día con",
 		"createOwnPlaylists": "Crea tus propias playlists",
 		"addBestSong": "Añade las mejores canciones",
 		"shareCreatedPlaylist": "Comparte la playlist con tus amigos y amigas",
@@ -165,7 +165,9 @@
 			"black": "Oscuro"
 		},
 		"privateAccount": "Cuenta privada",
-		"privateAccountDescription": "Si tu cuenta es privada, solo las personas que apruebes podrán ver tus fotos y videos en Instagram. Esto no afectará a tus seguidores actuales."
+		"privateAccountDescription": "Si tu cuenta es privada, solo las personas que apruebes podrán ver tus fotos y videos en Instagram. Esto no afectará a tus seguidores actuales.",
+		"miniPlayer": "Mini reproductor",
+		"miniPlayerDescription": "Establecer mini reproductor por defecto"
 	},
 	"song": {
 		"title": "Canción",
@@ -257,7 +259,7 @@
 		},
 		"errorText": {
 			"one": "Error",
-			"two": "Esta URL no está disponible o ha caducado.."
+			"two": "Esta URL no está disponible o ha caducado."
 		}
 	},
 	"signIn":{
@@ -450,6 +452,8 @@
 		"sendTo": "Enviar a",
 		"addSomeUsers": "Añade algunos usuarios",
 		"reply": "Responder",
-		"replyTo": "Responder a"
+		"replyTo": "Responder a",
+		"miniPlayerEnabled": "Mini reproductor ha sido establecido por defecto",
+		"miniPlayerDisabled": "Reproductor normal ha sido establecido por defecto"
 	}
 }

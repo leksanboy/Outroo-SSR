@@ -465,7 +465,7 @@
 			'ost'			=> ost($params),
 			'top100'		=> top100($params),
 			'enjoyWith'		=> enjoyWith($params),
-			'CNT'			=> geoip_country_code_by_name('71.175.97.59')
+			'CNT'			=> geoip_country_code_by_name($ipAddress)
 		);
 
 		echo json_encode($res);

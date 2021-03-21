@@ -27,7 +27,7 @@
 		"mostPlayed": "Most played at the moment",
 		"ostMovies": "OST Movies/Series",
 		"top100": "Top 100",
-		"enjoyYourDay": "Enjoy your day with ...",
+		"enjoyYourDay": "Enjoy your day with",
 		"createOwnPlaylists": "Create your own playlists",
 		"addBestSong": "Add the best songs you can",
 		"shareCreatedPlaylist": "Share the playlist with your friends",
@@ -165,7 +165,9 @@
 			"black": "Dark"
 		},
 		"privateAccount": "Private account",
-		"privateAccountDescription": "When your account is private, only people you approve can see your photos and videos on Instagram. Your existing followers won't be affected."
+		"privateAccountDescription": "When your account is private, only people you approve can see your photos and videos on Instagram. Your existing followers won't be affected.",
+		"miniPlayer": "Mini player",
+		"miniPlayerDescription": "Set mini player by default"
 	},
 	"song": {
 		"title": "Song",
@@ -206,7 +208,7 @@
 			"one": "Congratulations",
 			"two": "The account has been verified successfully,",
 			"three": "now you can access and enjoy your account.",
-			"four": "Go to mine profile"
+			"four": "Go to my profile"
 		},
 		"errorText": {
 			"one": "Error",
@@ -253,7 +255,7 @@
 			"two": "The password has been updated successfully,",
 			"three": "now you can use your new password",
 			"four": "We have sent a copy to",
-			"five": "Go to mine profile"
+			"five": "Go to my profile"
 		},
 		"errorText": {
 			"one": "Error",
@@ -283,7 +285,7 @@
 			"two": "We've sent an email to",
 			"three": "Thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.",
 			"four": "In short, you will receive a confirmation email to activate your account.",
-			"five": "Go to mine profile"
+			"five": "Go to my profile"
 		},
 		"social": {
 			"otherWays": "You can try other ways",
@@ -450,6 +452,8 @@
 		"sendTo": "Send to",
 		"addSomeUsers": "Add some users",
 		"reply": "Reply",
-		"replyTo": "Reply to"
+		"replyTo": "Reply to",
+		"miniPlayerEnabled": "Mini player is set by default",
+		"miniPlayerDisabled": "Large player is set by default"
 	}
 }
