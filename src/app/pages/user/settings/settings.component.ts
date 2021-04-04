@@ -432,6 +432,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
+		} else if (type === 'emailPromos') {
+			const data = {
+				type: 'emailPromos',
+				emailPromos: this.sessionData.current.ep ? 0 : 1
+			};
 		}
 	}
 }

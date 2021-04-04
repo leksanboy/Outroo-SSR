@@ -112,14 +112,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -297,14 +297,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -484,14 +484,14 @@
 												</td>
 											</tr>
 											<tr>
-												<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-													<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+												<td style="padding: 12px 0 0; color: #999;">
+													<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['about'].'
 													</a>
-													<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['privacy'].'
 													</a>
-													<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['support'].'
 													</a>
 												</td>
@@ -655,14 +655,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -824,14 +824,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -1001,14 +1001,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -1178,14 +1178,14 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-														<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<td style="padding: 12px 0 0; color: #999;">
+														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
-														<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
-														<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
 													</td>
@@ -1318,7 +1318,7 @@
 																							<div style="width: 100%; font: bold 32px/32px Arial,Helvetica,sans-serif; color: #fff;">
 																								'.$array['playlists'][0]['title'].'
 																							</div>
-																							<div style="margin: 6px 0 0;">
+																							<div style="margin: 18px 0 0;">
 																								<img alt="player" src="'.$urlWeb.'assets/images/playlist_player_email_white.png" style="height: 56px;">
 																							</div>
 																						</div>
@@ -1426,14 +1426,14 @@
 												</td>
 											</tr>
 											<tr>
-												<td style="padding: 12px 0 0; font: 11px/15px Arial,Helvetica,sans-serif; color: #999;">
-													<a href="'.$urlWeb.'about" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+												<td style="padding: 12px 0 0; color: #999;">
+													<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['about'].'
 													</a>
-													<a href="'.$urlWeb.'privacy" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['privacy'].'
 													</a>
-													<a href="'.$urlWeb.'support" style="padding:0 3px;color:#777;text-decoration:none;font-weight:bold;" role="link" target="_blank">
+													<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['support'].'
 													</a>
 												</td>

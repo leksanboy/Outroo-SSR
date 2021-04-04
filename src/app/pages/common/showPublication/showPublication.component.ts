@@ -246,7 +246,7 @@ export class ShowPublicationComponent implements OnInit, OnDestroy {
 			this.audioPlayerData.key = key;
 			/* this.audioPlayerData.user = this.sessionData.current.id;
 			this.audioPlayerData.username = this.sessionData.current.username; */
-			this.audioPlayerData.location = 'user';
+			this.audioPlayerData.location = 'showPublication';
 			this.audioPlayerData.type = type;
 
 			item.playing = true;

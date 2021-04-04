@@ -897,7 +897,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 			this.audioPlayerData.key = key;
 			/* this.audioPlayerData.user = this.userData.id;
 			this.audioPlayerData.username = this.userData.username; */
-			this.audioPlayerData.location = 'audios';
+			this.audioPlayerData.location = 'news';
 			this.audioPlayerData.type = type;
 			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
 

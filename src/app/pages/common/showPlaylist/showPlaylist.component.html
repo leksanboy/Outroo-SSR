@@ -79,12 +79,12 @@
 
 			<div class="container">
 				<ul class="tracks" *ngIf="data.list.length > 0">
-					<li *ngFor="let x of data.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
+					<li *ngFor="let x of data.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'showPlaylist' && audioPlayerData.type == 'default', remove: x.addRemoveSession}">
 						<div class="inner" *ngIf="!x.contentTypeAd">
 							<div class="image">
 								<button mat-icon-button (click)="playSong(data.list, x, i, 'default')">
-									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
-									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'playlist' && audioPlayerData.type == 'default')"></i>
+									<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'showPlaylist' && audioPlayerData.type == 'default')"></i>
+									<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'showPlaylist' && audioPlayerData.type == 'default')"></i>
 									<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 								</button>
 							</div>

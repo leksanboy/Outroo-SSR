@@ -132,6 +132,14 @@
 				<i label="settings" class="grey"></i>
 			</button>
 
+			<div class="scheduleDate" *ngIf="time.type === 'date' && time.hour && time.minutes">
+				Time: {{time.hour}}:{{time.minutes}}
+			</div>
+
+			<div class="commentsStatus" *ngIf="actionFormPostSettings.getValue()">
+				Comments Off
+			</div>
+
 			<mat-menu #postSettings="matMenu" yPosition="below" xPosition="after" class="postSettingsBox">
 				<div class="inner" (click)="$event.stopPropagation()">
 					<div class="title">

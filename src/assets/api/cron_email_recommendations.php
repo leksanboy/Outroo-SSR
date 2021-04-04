@@ -106,7 +106,8 @@
                     email,
                     language
             FROM z_users
-            WHERE id = 1";
+			WHERE is_deleted = 0";
+            // WHERE id = 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -116,7 +117,11 @@
             $name = html_entity_decode($row['username'], ENT_QUOTES);
 
             // Send mail
-            emailRecommendations($email, $lang, $name, $resData);
+			try {
+				emailRecommendations($email, $lang, $name, $resData);
+			} catch (Exception $e) {
+				print $e->getMessage();
+			}
         }
     }
 

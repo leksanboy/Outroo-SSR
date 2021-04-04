@@ -895,8 +895,8 @@
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
 
 		// Insert file
-		$sql = "INSERT INTO z_photos (user, name, mimetype, duration, ip_address)
-				VALUES ($user, '$name', '$mimetype', '$duration', '$ipAddress')";
+		$sql = "INSERT INTO z_photos (user, name, mimetype, ".($duration ? 'duration, ' : '')."ip_address)
+				VALUES ($user, '$name', '$mimetype', ".($duration ? '\'$duration\', ' : '')."'$ipAddress')";
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
 

@@ -9153,8 +9153,9 @@ body {
 				width: 100%;
 
 				.inner {
-					.footer {
+					height: 100%;
 
+					.footer {
 						ul,
 						.copyright {
 							display: block;
@@ -9832,7 +9833,7 @@ body {
 
 							.texts {
 								box-sizing: border-box;
-								padding: 12px 24px 0;
+								padding: 18px 24px 12px;
 								text-align: center;
 								font-weight: bold;
 								transition: .15s;
@@ -9945,7 +9946,7 @@ body {
 
 					.bottom {
 						justify-content: center;
-						padding: 6px 0;
+						padding: 12px 0 36px;
 						align-items: center;
 						position: relative;
 						display: flex;

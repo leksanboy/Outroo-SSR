@@ -146,12 +146,12 @@
 
 						<mat-tab label="{{translations?.audios?.title}}">
 							<ul class="tracks" *ngIf="dataSongs?.list">
-								<li *ngFor="let x of dataSongs?.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'search', advert: x.contentTypeAd}">
+								<li *ngFor="let x of dataSongs?.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'news' && audioPlayerData.type === 'search', advert: x.contentTypeAd}">
 									<div mat-ripple class="inner" *ngIf="!x.contentTypeAd">
 										<div class="image">
 											<button mat-icon-button (click)="playSong(dataSongs?.list, x, i, 'search')">
-												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
-												<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'audios' && audioPlayerData.type === 'search')"></i>
+												<i label="play" *ngIf="!x.playing || !(audioPlayerData.location === 'news' && audioPlayerData.type === 'search')"></i>
+												<i label="pause" *ngIf="x.playing && (audioPlayerData.location === 'news' && audioPlayerData.type === 'search')"></i>
 												<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
 											</button>
 										</div>

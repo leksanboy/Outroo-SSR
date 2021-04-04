@@ -1071,10 +1071,13 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 
 	// Replays +1
 	updateReplays(id, user, playlist) {
+		console.log('a:', this.audioPlayerData);
+
 		const data = {
 			id: id,
 			user: user,
-			playlist: playlist
+			location: (this.audioPlayerData ? this.audioPlayerData.location : null),
+			locationId: (this.audioPlayerData ? this.audioPlayerData.postId : null)
 		};
 
 		this.audioDataService.updateReplays(data).subscribe();

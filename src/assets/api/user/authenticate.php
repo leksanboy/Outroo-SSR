@@ -80,12 +80,13 @@
 				$u = str_replace(' ', '', $u);
 				$u = checkUsername($u) ? ($u.generateRandomString(6)) : $u;
 				$password = generateRandomString(10);
+				$passMD5 = md5($password);
 				$generatedHash = generateRandomString(23);
 				$date = time();
 
 				// Create new one
 				$sql = "INSERT INTO z_users (username, name, email, password, verification_code, language, creation_date, ip_address_create, source, source_user_id)
-						VALUES ('$u', '$name', '$email', '$password', '$generatedHash', '$lang', '$date', '$ipAddress', '$type', '$id')";
+						VALUES ('$u', '$name', '$email', '$passMD5', '$generatedHash', '$lang', '$date', '$ipAddress', '$type', '$id')";
 				$conn->query($sql);
 				$insertedUser = $conn->insert_id;
 

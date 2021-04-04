@@ -326,7 +326,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			this.audioPlayerData.key = key;
 			/* this.audioPlayerData.user = this.sessionData.current.id;
 			this.audioPlayerData.username = this.sessionData.current.username; */
-			this.audioPlayerData.location = 'user';
+			this.audioPlayerData.location = 'home';
 			this.audioPlayerData.type = type;
 
 			item.playing = true;
@@ -566,6 +566,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	// New comment
 	newComment(type, event, item) {
 		if (type === 'clear') {
+			item.comments = item.comments ? item.comments : [];
 			item.newCommentData = [];
 
 			setTimeout(() => {
