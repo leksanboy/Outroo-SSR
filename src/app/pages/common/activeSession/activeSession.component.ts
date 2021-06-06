@@ -1093,7 +1093,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			title: this.audioPlayerData.current.original_title,
 			artist: this.audioPlayerData.current.original_artist,
 			/* album: this.audioPlayerData.username, */
-			/* album: 'Outroo', */
+			/* album: 'Playlist', */
 			artwork: [{
 				src: this.audioPlayerData.current.image, sizes: '512x512', type: 'image/jpeg'
 			}]

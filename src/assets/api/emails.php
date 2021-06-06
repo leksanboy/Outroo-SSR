@@ -4,39 +4,39 @@
 
 	// Register "Welcome"
 	function emailWelcome($email, $lang, $name, $hash) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
-				'subject'		=> $name.', welcome to Outroo, please confirm your email',
+				'subject'		=> $name.', welcome to Beatfeel, please confirm your email',
 				'title'			=> 'Welcome',
 				'hello'			=> 'Hello <b>'.$name.'</b>, thanks for creating an account. Follow other people, search an amazing songs and share your photos and videos with the rest of comunity.',
 				'confirm'		=> 'Confirm your email address <b>'.$email.'</b>, click on the button below.',
 				'button'		=> 'Confirm email address',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
 			),
 			'es' => array(
-				'subject' 		=> $name.', bienvenido a Outroo, por favor, confirma tu email',
+				'subject' 		=> $name.', bienvenido a Beatfeel, por favor, confirma tu email',
 				'title'			=> 'Bienvenido',
 				'hello'			=> 'Hola <b>'.$name.'</b>, gracias por crear la cuenta. Sigue a otras personas, busca increíbles canciones y comparte tus fotos y videos con el resto de la comunidad.',
 				'confirm'		=> 'Confirma tu dirección de correo electrónico <b>'.$email.'</b>, haz click en el siguiente botón.',
 				'button'		=> 'Confirmar correo electrónico',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
 			),
 			'ru' => array(
-				'subject' 		=> $name.', добро пожаловать в Outroo, пожалуйста подтвердите свою электронную почту',
+				'subject' 		=> $name.', добро пожаловать в Beatfeel, пожалуйста подтвердите свою электронную почту',
 				'title'			=> 'Добро пожаловать',
 				'hello'			=> 'Здравствуйте <b>'.$name.'</b>, спасибо за создание аккаунта. Следите за другими людьми, находите потрясающие песни и делитесь своими фотографиями и видео с остальным сообществом.',
 				'confirm'		=> 'Подтвердите ваш электронный адрес <b>'.$email.'</b>, нажмите на кнопку ниже.',
 				'button'		=> 'Подтвердить электронный адрес',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -112,13 +112,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -161,8 +163,8 @@
 
 	// Register "Welcome Google/Facebook"
 	function emailWelcomeSocial($email, $lang, $name, $hash, $password, $source) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -174,7 +176,7 @@
 				'password'		=> 'Contraseña: <b>'.$password.'</b>',
 				'question' 		=> 'If you have any question, please',
 				'contact'		=> 'contact us',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -188,7 +190,7 @@
 				'password'		=> 'Password: <b>'.$password.'</b>',
 				'question' 		=> 'Si tiene alguna pregunta, por favor',
 				'contact' 		=> 'contacta con nosotros',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -202,7 +204,7 @@
 				'password'		=> 'Пароль: <b>'.$password.'</b>',
 				'question' 		=> 'Если у вас есть вопросы, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -297,13 +299,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -346,8 +350,8 @@
 
 	// New login
 	function emailNewLogin($email, $lang, $name, $hash, $device, $location, $date) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -359,7 +363,7 @@
 				'approx'		=> 'The location is approximate according to the IP address of the login.',
 				'detect'		=> 'Hello <b>@'.$name.'</b>, we have detected a new login activity on your account.',
 				'safeAccount' 	=> 'If you haven\'t done this action, your account may have been compromised and should complete a few steps to make sure your account is safe, please <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">reset your password now</a>.',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -373,7 +377,7 @@
 				'approx' 		=> 'La ubicación es aproximada según la dirección IP del inicio de sesión',
 				'detect' 		=> 'Hola <b>@'.$name.'</b>, hemos detectado una nueva actividad de inicio de sesión en su cuenta.',
 				'safeAccount' 	=> 'Si no ha realizado esta acción, su cuenta puede haber sido comprometida y debe completar algunos pasos para asegurarse de que su cuenta esté segura, por favor <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">restablezca su contraseña ahora</a>.',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -387,7 +391,7 @@
 				'approx' 		=> 'Местоположение является приблизительным в соответствии с IP-адресом для входа.',
 				'detect'		=> 'Здравствуйте <b>@'.$name.'</b>, мы обнаружили новую активность входа в вашу учетную запись.',
 				'safeAccount' 	=> 'Если вы не выполнили это действие, возможно, ваша учетная запись была взломана и должна выполнить несколько шагов, чтобы убедиться, что ваша учетная запись безопасна, <a href="'.$urlWeb.'reset-password/'.$hash.'"style="color:#09f;text-decoration:none" role="link" target="_blank">восстановить пароль сейчас</a>.',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -484,13 +488,15 @@
 												</td>
 											</tr>
 											<tr>
-												<td style="padding: 12px 0 0; color: #999;">
+												<td style="padding: 12px 0; color: #999;">
 													<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['about'].'
 													</a>
+													<br>
 													<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['privacy'].'
 													</a>
+													<br>
 													<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['support'].'
 													</a>
@@ -533,8 +539,8 @@
 
 	// Forgot password
 	function emailForgotPassword($email, $lang, $name, $hash) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -545,7 +551,7 @@
 				'notRequest'	=> 'If you didn\'t request a password reset, please',
 				'contact'		=> 'contact us',
 				'button' 		=> 'Reset password',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -558,7 +564,7 @@
 				'notRequest' 	=> 'Si no has solicitado recuperar la contraseña, por favor',
 				'contact' 		=> 'contacta con nosotros',
 				'button' 		=> 'Restablecer contraseña',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -571,7 +577,7 @@
 				'notRequest' 	=> 'Если вы не запрашивали восстановление пароля, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами',
 				'button' 		=> 'Восстановить пароль',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -655,13 +661,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -704,8 +712,8 @@
 
 	// Reset password
 	function emailResetPassword($email, $lang, $name, $hash) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -715,7 +723,7 @@
 				'password'		=> 'New password: <b>'.$hash.'</b>',
 				'notRequest'	=> 'If you didn\'t request a password reset, please',
 				'contact'		=> 'contact us',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -727,7 +735,7 @@
 				'password' 		=> 'Nueva contraseña: <b>'.$hash.'</b>',
 				'notRequest' 	=> 'Si no has solicitado recuperar la contraseña, por favor',
 				'contact' 		=> 'contacta con nosotros',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -739,7 +747,7 @@
 				'password' 		=> 'Новый пароль: <b>'.$hash.'</b>',
 				'notRequest' 	=> 'Если вы не запрашивали восстановление пароля, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -824,13 +832,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -873,8 +883,8 @@
 
 	// Support
 	function emailSupportQuestion($email, $lang, $content) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -885,7 +895,7 @@
 				'compromised' 	=> 'If you haven\'t done this action, your email has been compromised, do not leave your email in third-party pages.',
 				'question' 		=> 'If you have any question, please',
 				'contact'		=> 'contact us',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -898,7 +908,7 @@
 				'compromised' 	=> 'Si no ha realizado esta acción, su correo electrónico ha sido comprometido, no lo deje en páginas de terceros.',
 				'question' 		=> 'Si tiene alguna pregunta, por favor',
 				'contact' 		=> 'contacta con nosotros',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -911,7 +921,7 @@
 				'compromised' 	=> 'Если вы не сделали этого действия, ваша электронная почта была скомпрометирована, не оставляйте вашу электронную почту на сторонних страницах.',
 				'question' 		=> 'Если у вас есть вопросы, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -1001,13 +1011,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -1050,8 +1062,8 @@
 
 	// Report
 	function emailReport($email, $lang, $content) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -1062,7 +1074,7 @@
 				'measure'		=> 'We will take the necessary measures to resolve this matter.',
 				'question' 		=> 'If you have any question, please',
 				'contact'		=> 'contact us',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -1075,7 +1087,7 @@
 				'measure'		=> 'Tomaremos las medidas ncesarias para resolver este asunto.',
 				'question' 		=> 'Si tiene alguna pregunta, por favor',
 				'contact' 		=> 'contacta con nosotros',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -1088,7 +1100,7 @@
 				'measure'		=> 'Мы примем необходимые меры для решения этого вопроса.',
 				'question' 		=> 'Если у вас есть вопросы, пожалуйста',
 				'contact' 		=> 'свяжитесь с нами',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -1178,13 +1190,15 @@
 													</td>
 												</tr>
 												<tr>
-													<td style="padding: 12px 0 0; color: #999;">
+													<td style="padding: 12px 0; color: #999;">
 														<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['about'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['privacy'].'
 														</a>
+														<br>
 														<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 															'.$translations['support'].'
 														</a>
@@ -1227,8 +1241,8 @@
 
 	// Cron * Recomendations (Songs, Playlists)
 	function emailRecommendations($email, $lang, $name, $array) {
-		$urlWeb = 'https://outroo.com/';
-		$nameWeb = 'Outroo';
+		$urlWeb = 'https://beatfeel.com/';
+		$nameWeb = 'Beatfeel';
 
 		$translations  = array(
 			'en' => array(
@@ -1239,7 +1253,7 @@
 				'hits'			=> 'Hits of the moment',
 				'recommended'	=> 'Recommended playlists',
 				'findout'		=> 'Find out more',
-				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of Outroo Entertainment Venue, you can edit your profile or unsubscribe.',
+				'info'			=> 'Message sent to '.$email.'. This email is informative and is part of the privacy policies of '.$nameWeb.' Entertainment Venue, you can edit your profile or unsubscribe.',
 				'about'			=> 'About',
 				'privacy'		=> 'Privacy',
 				'support'		=> 'Support'
@@ -1252,7 +1266,7 @@
 				'hits'			=> 'Éxitos del momento',
 				'recommended'	=> 'Playlists recomendadas',
 				'findout'		=> 'Descubrir más',
-				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de Outroo Entertainment Venue, puedes editar tu perfil o darte de baja.',
+				'info'			=> 'Mensaje enviado a '.$email.'. Este correo es informativo y forma parte de las politicas de privaticidad de '.$nameWeb.' Entertainment Venue, puedes editar tu perfil o darte de baja.',
 				'about'			=> 'Sobre nosotros',
 				'privacy'		=> 'Politica de privacidad',
 				'support'		=> 'Soporte técnico'
@@ -1265,7 +1279,7 @@
 				'hits'			=> 'Хиты',
 				'recommended'	=> 'Рекомендуемые плейлисты',
 				'findout'		=> 'Узнать больше',
-				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности Outroo Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
+				'info'			=> 'Сообщение отправлено на '.$email.'. Это электронное письмо является информативным и является частью политики конфиденциальности '.$nameWeb.' Entertainment Venue, вы можете изменить свой профиль или отказаться от подписки.',
 				'about'			=> 'О нас',
 				'privacy'		=> 'Политика конфиденциальности',
 				'support'		=> 'Служба поддержки'
@@ -1344,8 +1358,8 @@
 																				<td>
 																					<a href="'.$urlWeb.'s/'.explode(".", $song['name'])[0].'" target="_blank" style="text-decoration: none; outline: none; display: flex; margin: 4px 0; height: 42px;">
 																						<img alt="'.$song['title'].'" src="'.($song['image'] ? $urlWeb.'assets/media/audios/thumbnails/'.$song['image'] : $urlWeb.'assets/images/default_song_cover1.png').'" style="width: 42px; border-radius: 3px; float: left;">
-																						<div style="padding: 2px 6px 0 12px; overflow: hidden; display: block; width: 100%;">
-																							<div style="font: 15px Arial,Helvetica,sans-serif; color: #333; padding: 4px 0; max-width: 75%; height: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+																						<div style="padding: 0 6px 0 12px; overflow: hidden; display: block; width: 100%;">
+																							<div style="font: 15px Arial,Helvetica,sans-serif; color: #333; padding: 3px 0; max-width: 75%; height: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 																								'.($song['original_title'] ? (strlen($song['original_title']) > 30 ? substr($song['original_title'], 0, 30).'...' : $song['original_title']) : (strlen($song['title']) > 30 ? substr($song['title'], 0, 30).'...' : $song['title'])).'
 																							</div>
 																							<div style="font: 13px Arial,Helvetica,sans-serif; color: #9e9e9e; max-width: 75%; height: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -1426,13 +1440,15 @@
 												</td>
 											</tr>
 											<tr>
-												<td style="padding: 12px 0 0; color: #999;">
+												<td style="padding: 12px 0; color: #999;">
 													<a href="'.$urlWeb.'about" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['about'].'
 													</a>
+													<br>
 													<a href="'.$urlWeb.'privacy" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['privacy'].'
 													</a>
+													<br>
 													<a href="'.$urlWeb.'support" style="padding: 0 3px; font: 11px/15px Arial,Helvetica,sans-serif; color: #777; text-decoration: none; font-weight: bold;" role="link" target="_blank">
 														'.$translations['support'].'
 													</a>

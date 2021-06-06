@@ -1,8 +1,8 @@
 {
-	"name": "outroo",
+	"name": "beatfeel",
 	"version": "1.0.0",
 	"private": true,
-	"description": "Outroo SSR Social Website",
+	"description": "Beatfeel SSR Social Website",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",

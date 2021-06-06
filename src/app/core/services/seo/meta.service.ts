@@ -22,14 +22,14 @@ export class MetaService {
 
 		// Twitter
 		this.meta.updateTag({ name: 'twitter:card',			content: 'summary' 											});
-		this.meta.updateTag({ name: 'twitter:site',			content: '@outroo' 											});
+		this.meta.updateTag({ name: 'twitter:site',			content: '@beatfeel' 										});
 		this.meta.updateTag({ name: 'twitter:title',		content: data.title 										});
 		this.meta.updateTag({ name: 'twitter:description',	content: data.description 									});
 		this.meta.updateTag({ name: 'twitter:image', 		content: data.image 										});
 
 		// Open Graph protocol
 		this.meta.updateTag({ property: 'og:type',			content: 'article' 											});
-		this.meta.updateTag({ property: 'og:site_name', 	content: 'Outroo' 											});
+		this.meta.updateTag({ property: 'og:site_name', 	content: 'Beatfeel' 										});
 		this.meta.updateTag({ property: 'og:title', 		content: data.title 										});
 		this.meta.updateTag({ property: 'og:description',	content: data.description 									});
 		this.meta.updateTag({ property: 'og:image', 		content: data.image 										});

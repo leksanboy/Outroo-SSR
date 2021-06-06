@@ -22,7 +22,7 @@
 		if ($result->num_rows > 0) {
 			$data = array();
 			while($row = $result->fetch_assoc()) {
-				$row['avatarUrl'] 			= $row['avatar'] ? ('https://outroo.com/assets/media/user/'.$row['id'].'/avatar/'.$row['avatar']) : '';
+				$row['avatarUrl'] 			= $row['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$row['id'].'/avatar/'.$row['avatar']) : '';
 				$row['languages'] 			= getLanguages();
 				$row['theme'] 				= intval($row['theme']);
 				$row['mp'] 					= $row['mp'] ? true : false;

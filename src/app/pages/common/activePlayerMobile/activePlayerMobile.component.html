@@ -10,7 +10,14 @@
 	</div> -->
 
 	<div class="box">
-		<div class="player">
+		<div class="player" [ngClass]="{'active': audioPlayerData.activeThumbnail}">
+			<!-- <div class="thumbnail" *ngIf="audioPlayerData.activeThumbnail"> -->
+			<div class="thumbnail">
+				<div class="inner">
+					<img [src]="audioPlayerData?.current?.image ? audioPlayerData?.current?.image : env.defaultSongCover"/>
+				</div>
+			</div>
+			
 			<div class="top">
 				<div class="panel">
 					<div class="texts">
@@ -18,7 +25,8 @@
 						<div class="text">{{audioPlayerData?.current?.original_artist ? audioPlayerData?.current?.original_artist : audioPlayerData?.current?.title}}</div>
 					</div>
 
-					<div class="add" *ngIf="audioPlayerData?.current?.initialized">
+					<!-- <div class="actions" *ngIf="audioPlayerData?.current?.initialized"> -->
+					<div class="actions">
 						<button mat-mini-fab (click)="itemSongOptions('addRemoveSession', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user == sessionData.current?.id && audioPlayerData?.current?.type == 'default'">
 							<i label="add" *ngIf="audioPlayerData?.current?.item?.addRemoveSession"></i>
 							<i label="check" *ngIf="!audioPlayerData?.current?.item?.addRemoveSession"></i>
@@ -27,18 +35,50 @@
 							<i label="add" *ngIf="!audioPlayerData?.current?.item?.addRemoveUser"></i>
 							<i label="check" *ngIf="audioPlayerData?.current?.item?.addRemoveUser"></i>
 						</button>
+
+						<button mat-icon-button [matMenuTriggerFor]="appMenu">
+							<i label="more"></i>
+						</button>
+
+						<mat-menu #appMenu="matMenu">
+							<button mat-menu-item (click)="itemSongOptions('addRemoveUser', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user != sessionData.current.id || audioPlayerData?.current?.type != 'default'">{{!audioPlayerData?.current?.item?.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+							<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
+							<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+							<button mat-menu-item (click)="itemSongOptions('report', audioPlayerData?.current?.item, null)">{{translations?.common?.report}}</button>
+							<mat-divider *ngIf="audioPlayerData?.current?.user == sessionData.current.id && audioPlayerData?.current?.type == 'default'"></mat-divider>
+							<button mat-menu-item (click)="itemSongOptions('addRemoveSession', audioPlayerData?.current?.item, null)" *ngIf="audioPlayerData?.current?.user == sessionData.current.id && audioPlayerData?.current?.type == 'default'">{{audioPlayerData?.current?.item.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+						</mat-menu>
+
+						<mat-menu #menuPlaylists="matMenu">
+							<button mat-menu-item (click)="itemSongOptions('createPlaylist', audioPlayerData?.current?.item, null)">{{translations?.common?.createPlaylist}}</button>
+							<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
+							<span *ngFor="let p of sessionData?.current?.playlists">
+								<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', audioPlayerData?.current?.item, p)">
+									<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+									{{p.title}}
+								</button>
+							</span>
+						</mat-menu>
+
+						<mat-menu #menuShareSocial="matMenu">
+							<button mat-menu-item (click)="itemSongOptions('message', audioPlayerData?.current?.item, null)">{{translations?.common?.sendMessage}}</button>
+							<button mat-menu-item (click)="itemSongOptions('newTab', audioPlayerData?.current?.item, null)">{{translations?.common?.openInNewTab}}</button>
+							<button mat-menu-item (click)="itemSongOptions('copyLink', audioPlayerData?.current?.item, null)">{{translations?.common?.copyLink}}</button>
+						</mat-menu>
 					</div>
 				</div>
+				
 				<div class="progress">
 					<mat-slider min="0" max="1000" [value]="audioPlayerData?.current?.progress" (change)="progressBar($event)" [disabled]="audioPlayerData?.list.length == 0"></mat-slider>
 				</div>
+				
 				<div class="duration">
 					<div class="current">{{audioPlayerData?.current?.time}}</div>
 					<div class="total">{{audioPlayerData?.current?.duration}}</div>
 				</div>
 			</div>
 
-			<div class="bottom">
+			<div class="controls">
 				<button mat-mini-fab (click)="playSong('shuffle', '')" class="shuffle" [ngClass]="{'active': audioPlayerData?.shuffle, 'disabled': audioPlayerData?.list.length <= 1}">
 					<i></i>
 				</button>
@@ -62,6 +102,21 @@
 				</button>
 			</div>
 
+			<div class="buttons">
+				<button mat-mini-fab type="button" (click)="playSong('explore', '')">
+					<i label="launch" class="icon75"></i>
+				</button>
+				<button mat-raised-button type="button" (click)="playSong('supermode', '')">
+					<i label="logo" class="icon85"></i>
+					{{translations?.common?.name}}
+				</button>
+				<button mat-mini-fab type="button" (click)="playSong('thumbnail', '')">
+					<!-- <i label="playlist" [ngClass]="{'blue': audioPlayerData?.activeThumbnail}"></i> -->
+					<i label="playlist" *ngIf="!audioPlayerData?.activeThumbnail"></i>
+					<i label="music-note" class="icon75" *ngIf="audioPlayerData?.activeThumbnail"></i>
+				</button>
+			</div>
+
 			<div class="close">
 				<button mat-mini-fab (click)="close()">
 					<i label="close"></i>
@@ -69,7 +124,9 @@
 			</div>
 		</div>
 
-		<div class="data">
+		<!-- <div class="data" *ngIf="!audioPlayerData.activeThumbnail"> -->
+		<div class="data" >
+			<div class="backdrop" *ngIf="!audioPlayerData.activeThumbnail" [ngStyle]="{'background': audioPlayerData?.current?.background}"></div>
 		    <ul class="tracks" *ngIf="audioPlayerData?.list.length > 0">
 				<li *ngFor="let x of audioPlayerData?.list; let i=index;" [ngClass]="{active: audioPlayerData?.current?.key == i, remove: x.addRemoveSession}">
 					<div class="inner" *ngIf="!x.contentTypeAd">

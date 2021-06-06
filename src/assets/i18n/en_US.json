@@ -58,7 +58,7 @@
 		"newPublication": "Create new publication",
 		"newPublicationSubtitle": "Songs, Gif, Photos, Videos",
 		"registerText": {
-			"one": "Register on Outroo",
+			"one": "Register on Beatfeel",
 			"two": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates."
 		},
 		"whatsHappening": {
@@ -185,7 +185,7 @@
 	},
 	"about":{
 		"title": "About us",
-		"description": "Outroo is the best.",
+		"description": "Beatfeel is the best.",
 		"companyText": {
 			"title": "Company",
 			"one": "We are a social network with the main focus on music, the platform allows you to connect with more people, generate more influence and create attractive content that stands out."
@@ -310,11 +310,12 @@
 		}
 	},
 	"home":{
-		"title": "Outroo",
+		"title": "Beatfeel",
 		"description": "Connect with new friends and listen the best music. Share amazing songs, photos, gifs and videos, send messages and get updates.",
 		"dontHaveAnAccount": "Don't have an account?"
 	},
 	"common": {
+		"name": "Beatfeel",
 		"lang": "en",
 		"langCode": "en_US",
 		"langText": "English",

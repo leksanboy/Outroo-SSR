@@ -130,6 +130,42 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 			.subscribe(val => {
 				this.time.type = val;
 			});
+
+		// Get time date
+		this.actionFormPostSettings.get('date').valueChanges
+			.pipe(
+				debounceTime(100),
+				distinctUntilChanged())
+			.subscribe(val => {
+				this.time.selectedDate = val;
+			});
+
+		// Get time hour
+		this.actionFormPostSettings.get('hour').valueChanges
+			.pipe(
+				debounceTime(100),
+				distinctUntilChanged())
+			.subscribe(val => {
+				this.time.selectedHours = val;
+			});
+
+		// Get time minutes
+		this.actionFormPostSettings.get('minutes').valueChanges
+			.pipe(
+				debounceTime(100),
+				distinctUntilChanged())
+			.subscribe(val => {
+				this.time.selectedMinutes = val;
+			});
+		
+		// Get disabled comment
+		this.actionFormPostSettings.get('disableComments').valueChanges
+			.pipe(
+				debounceTime(100),
+				distinctUntilChanged())
+			.subscribe(val => {
+				this.time.disableComments = val;
+			});
 	}
 
 	ngOnDestroy() {

@@ -217,7 +217,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		if ($result){
-			$result['avatarUrl'] 			= $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+			$result['avatarUrl'] 			= $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 			$result['languages'] 			= getLanguages();
 			$result['theme'] 				= intval($result['theme']);
 			$result['official'] 			= $result['official'] ? true : false;
@@ -243,7 +243,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		$result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['avatarUrl'] = $result['avatar'] ? ('https://outroo.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] = $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		return $result;
 	}
@@ -252,7 +252,7 @@
 	function checkUsername($username){
 		global $conn;
 
-		$inUse = array("outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy",
+		$inUse = array("beatfeel", "outroo", "outhroo", "sasa", "oleksandr", "vitaliy", "vitaly", "vitali", "rafalsky", "rafalskyy",
 						"user", "audios", "bookmarks", "saved", "followers", "following", "home", "main", "news",
 						"notifications", "photos", "settings",
 						"index", "web", "about", "confirm-email", "error", "forgot-password", "logout", "privacy", "terms",
@@ -591,7 +591,7 @@
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
-		$result['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$result['image'];
+		$result['imageSrc'] = 'https://beatfeel.com/assets/media/audios/thumbnails/'.$result['image'];
 		$result['explicit'] = boolval($result['explicit']);
 
 		return $result;
@@ -731,9 +731,9 @@
 
 		// Media
 		if(strrpos($result['mimetype'], "image") !== false)
-			$result['media'] = ($result['name'] ? 'https://outroo.com/assets/media/photos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://beatfeel.com/assets/media/photos/thumbnails/'.$result['name'] : null);
 		else if(strrpos($result['mimetype'], "video") !== false)
-			$result['media'] = ($result['name'] ? 'https://outroo.com/assets/media/videos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://beatfeel.com/assets/media/videos/thumbnails/'.$result['name'] : null);
 		else
 			$result['media'] = null;
 
@@ -932,9 +932,9 @@
 			$result['media'] = getPhotoData($result['photos'][0]);
 
 			if (strrpos($result['media']['mimetype'], "image") !== false && strlen($result['media']['duration']) == 0) {
-				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/photos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://beatfeel.com/assets/media/photos/thumbnails/'.$result['media']['name'] : null);
 			} else if (strrpos($result['media']['mimetype'], "video") !== false || strlen($result['media']['duration']) > 0) {
-				$result['media'] = ($result['media']['name'] ? 'https://outroo.com/assets/media/videos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://beatfeel.com/assets/media/videos/thumbnails/'.$result['media']['name'] : null);
 			} else {
 				$result['media'] = null;
 			}

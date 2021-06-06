@@ -1,5 +1,5 @@
 # generate distNew first
-# docker build -t outroo .
+# docker build -t beatfeel .
 
 # OS
 FROM node:10

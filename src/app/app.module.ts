@@ -71,7 +71,7 @@ import { ActiveSessionComponent } from './pages/common/activeSession/activeSessi
 		ActiveSessionComponent
 	],
 	imports: [
-		BrowserModule.withServerTransition({ appId: 'outroo-server' }),
+		BrowserModule.withServerTransition({ appId: 'beatfeel-server' }),
 		BrowserTransferStateModule,
 		HttpClientModule,
 		AppRoutingModule,

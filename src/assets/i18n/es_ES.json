@@ -58,7 +58,7 @@
 		"newPublication": "Crear publicación",
 		"newPublicationSubtitle": "Canciones, Gif, Fotos, Videos",
 		"registerText": {
-			"one": "Registrate en Outroo",
+			"one": "Registrate en Beatfeel",
 			"two": "Conéctate con nuevos amigos y escucha la mejor música. Comparte increíbles canciones, fotos, gifs y videos, envía mensajes y recibe actualizaciones."
 		},
 		"whatsHappening": {
@@ -185,7 +185,7 @@
 	},
 	"about":{
 		"title": "Sobre nosotros",
-		"description": "Outroo es lo mejor.",
+		"description": "Beatfeel es lo mejor.",
 		"companyText": {
 			"title": "Empresa",
 			"one": "Somos una red social con el principal enfoque hacia la musica, la plataforma te permite conéctar con más personas, generar más influencia y crear contenido atractivo que te destaque."
@@ -310,11 +310,12 @@
 		}
 	},
 	"home":{
-		"title": "Outroo",
+		"title": "Beatfeel",
 		"description": "Conéctate con nuevos amigos y escucha la mejor música. Comparte increíbles canciones, fotos, gifs y videos, envía mensajes y recibe actualizaciones.",
 		"dontHaveAnAccount": "¿No tienes cuenta?"
 	},
 	"common": {
+		"name": "Beatfeel",
 		"lang": "es",
 		"langCode": "es_ES",
 		"langText": "Español",

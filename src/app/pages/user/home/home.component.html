@@ -44,6 +44,16 @@
 										<button mat-menu-item (click)="itemPublicationOptions('message', x)">{{translations?.common?.sendMessage}}</button>
 										<button mat-menu-item (click)="itemPublicationOptions('newTab', x)">{{translations?.common?.openInNewTab}}</button>
 										<button mat-menu-item (click)="itemPublicationOptions('copyLink', x)">{{translations?.common?.copyLink}}</button>
+										<mat-divider></mat-divider>
+										<button mat-menu-item (click)="itemPublicationOptions('whatsapp', x)">
+											<i label="play"></i>
+											Whatsapp
+										</button>
+										<button mat-menu-item (click)="itemPublicationOptions('messenger', x)">Messenger</button>
+										<button mat-menu-item (click)="itemPublicationOptions('facebook', x)">Facebook</button>
+										<button mat-menu-item (click)="itemPublicationOptions('twitter', x)">Twitter</button>
+										<button mat-menu-item (click)="itemPublicationOptions('telegram', x)">Telegram</button>
+										<button mat-menu-item (click)="itemPublicationOptions('reddit', x)">Reddit</button>
 									</mat-menu>
 								</div>
 							</div>

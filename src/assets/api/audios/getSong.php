@@ -33,7 +33,7 @@
 			$row['original_artist'] = html_entity_decode($row['original_artist'], ENT_QUOTES);
 			$row['replays'] = counSongReplays($row['id']);
 			$row['timesAdded'] = counSongTimesAdded($row['id']);
-			$row['imageSrc'] = 'https://outroo.com/assets/media/audios/thumbnails/'.$row['image'];
+			$row['imageSrc'] = 'https://beatfeel.com/assets/media/audios/thumbnails/'.$row['image'];
 			$row['explicit'] = boolval($row['explicit']);
 			$data[] = $row;
 		}

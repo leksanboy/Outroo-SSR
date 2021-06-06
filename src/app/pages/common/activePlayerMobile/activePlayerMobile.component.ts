@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
@@ -36,7 +37,8 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 		private audioDataService: AudioDataService,
 		private playerService: PlayerService,
 		private sessionService: SessionService,
-		private ref: ChangeDetectorRef
+		private ref: ChangeDetectorRef,
+		private router: Router,
 	) {
 		this.sessionData = this.data.sessionData;
 		this.audioPlayerData = this.data.playerData;
@@ -109,6 +111,21 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 			case ('repeat'):
 				this.audioPlayerData.repeat = !this.audioPlayerData.repeat;
 				this.playerService.setCurrentTrack(this.audioPlayerData);
+				break;
+			case ('thumbnail'):
+				this.audioPlayerData.activeThumbnail = !this.audioPlayerData.activeThumbnail
+				break;
+			case ('explore'):
+				this.close();
+				this.router.navigate([this.sessionData.current.username + '/songs']);
+				break;
+			case ('supermode'):
+				this.audioPlayerData.superModeCount = !this.audioPlayerData.superModeCount ? 1 : this.audioPlayerData.superModeCount+1;
+
+				if (this.audioPlayerData.superModeCount >= 13) {
+					this.alertService.success('Super mode activated');
+					this.audioPlayerData.superModeCount = 1;
+				}
 				break;
 		}
 	}
