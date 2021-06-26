@@ -396,14 +396,15 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			/* Facebook load script */
 			(window as any).fbAsyncInit = function() {
 				FB.init({
-					appId      : '1158154061233240',
+					appId      : '506676413809707',
 					cookie     : true,
 					xfbml      : true,
-					version    : 'v7.0'
+					version    : 'v11.0'
 				});
-				FB.AppEvents.logPageView();
+					
+				FB.AppEvents.logPageView();   
 			};
-
+		
 			(function(d, s, id){
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) {return;}
@@ -415,7 +416,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			/* Google load */
 			gapi.load('auth2', function() {
 				let auth2 = gapi.auth2.init({
-					client_id: '300059601874-pcjvht2v7objtildb04hcp15cpt4v1fn.apps.googleusercontent.com',
+					client_id: '300059601874-7tomgilbgemad0d0k93i01pjq785a98u.apps.googleusercontent.com',
 					cookiepolicy: 'single_host_origin',
 					scope: 'profile email'
 				});

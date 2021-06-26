@@ -2721,10 +2721,11 @@ body {
 		}
 
 		&.signup {
-			background-color: transparentize($greyColor, .84);
+			/* background-color: transparentize($greyColor, .84); */
+			border: 1px solid $greyColor;
 			box-sizing: border-box;
-			border-radius: 3px;
-			padding: 12px 12px 24px;
+			padding: 18px 12px 24px;
+			border-radius: 12px;
 			margin: 24px 0 12px;
 		}
 	}
@@ -4185,8 +4186,12 @@ body {
 					max-width: 400px;
 					background-color: $blackColor;
 					height: inherit;
-					padding: 15px 12px 9px 0;
+					padding: 15px 0 9px 0;
 					border-radius: 12px;
+
+					.songInner:hover{
+						background-color: inherit;
+					}
 				}
 			}
 
