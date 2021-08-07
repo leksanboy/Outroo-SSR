@@ -267,7 +267,11 @@
 		"description": "Intoduce tu correo electrónico y la contraseña para entar.",
 		"email": "Correo electrónico",
 		"password": "Contraseña",
-		"usernameEmail": "Usuario / correo electrónico"
+		"usernameEmail": "Usuario / correo electrónico",
+		"social": {
+			"facebook": "Iniciar con Facebook",
+			"google": "Iniciar con Google"
+		}
 	},
 	"signUp":{
 		"title": "Registrarse",
@@ -455,6 +459,7 @@
 		"reply": "Responder",
 		"replyTo": "Responder a",
 		"miniPlayerEnabled": "Mini reproductor ha sido establecido por defecto",
-		"miniPlayerDisabled": "Reproductor normal ha sido establecido por defecto"
+		"miniPlayerDisabled": "Reproductor normal ha sido establecido por defecto",
+		"or": "o"
 	}
 }

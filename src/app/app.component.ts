@@ -14,7 +14,6 @@ import { RoutingStateService } from './core/services/route/state.service';
 export class AppComponent implements OnDestroy {
 	public activeRouter: any;
 	public ssrServiceBrowser: any;
-	public activeSessionStatus: boolean;
 	public activeCreateAccount: boolean;
 
 	constructor(
@@ -40,22 +39,15 @@ export class AppComponent implements OnDestroy {
 		this.activeRouter = this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
 					if (event.url === '/' ||
-						event.url === '/confirm-email' ||
-						event.url === '/reset-password' ||
-						event.url === '/logout'
-					) {
-						this.activeSessionStatus = false;
-					} else {
-						this.activeSessionStatus = true;
-					}
-
-					if (event.url === '/' ||
-						event.url === '/signup' ||
-						event.url === '/signin' ||
-						event.url === '/confirm-email' ||
+						event.url === '/signin' || 
+						event.url === '/signup' || 
 						event.url === '/forgot-password' ||
 						event.url === '/reset-password' ||
-						event.url === '/logout'
+						event.url === '/confirm-email' ||
+						event.url === '/logout' ||
+						event.url === '/about' ||
+						event.url === '/privacy' ||
+						event.url === '/support'
 					) {
 						this.activeCreateAccount = false;
 					} else {

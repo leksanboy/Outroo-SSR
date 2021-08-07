@@ -267,7 +267,11 @@
 		"description": "Enter your email and password to access.",
 		"email": "Email",
 		"password": "Password",
-		"usernameEmail": "Username / email"
+		"usernameEmail": "Username / email",
+		"social": {
+			"facebook": "Sign in with Facebook",
+			"google": "Sign in with Google"
+		}
 	},
 	"signUp":{
 		"title": "Sign Up",
@@ -455,6 +459,7 @@
 		"reply": "Reply",
 		"replyTo": "Reply to",
 		"miniPlayerEnabled": "Mini player is set by default",
-		"miniPlayerDisabled": "Large player is set by default"
+		"miniPlayerDisabled": "Large player is set by default",
+		"or": "or"
 	}
 }

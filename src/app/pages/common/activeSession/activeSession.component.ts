@@ -119,6 +119,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	public recommendedSongs: any = {};
 	public actionFormSearch: FormGroup;
 	public dataSearch: any = [];
+	public colors = ['yellow', 'purple', 'blue', 'red', 'green'];
+	public randColor = this.colors[Math.floor(Math.random() * 5) + 0];
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -232,12 +234,25 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		if (!this.sessionData) {
 			this.activeRouter = this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
-					this.deniedAccess = (event.url === '/') ? 'home' : 'none';
+					this.deniedAccess = (event.url === '/' || 
+										event.url === '/signin' || 
+										event.url === '/signup' || 
+										event.url === '/forgot-password' ||
+										event.url === '/reset-password' ||
+										event.url === '/confirm-email' ||
+										event.url === '/logout' ||
+										event.url === '/about' ||
+										event.url === '/privacy' ||
+										event.url === '/support'
+					) ? 'home' : 'none';
 				}
 			});
 
 			// No tengo session y no puedo acceder a settings, notifications, news, home
-			if (this.router.url === '/settings' || this.router.url === '/notifications' || this.router.url === '/news' || this.router.url === '/home') {
+			if (this.router.url === '/settings' ||
+				this.router.url === '/notifications' ||
+				this.router.url === '/news' ||
+				this.router.url === '/home') {
 				this.userDataService.noSessionData();
 			}
 		} else {

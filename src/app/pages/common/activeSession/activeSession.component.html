@@ -11,7 +11,7 @@
 						<a routerLink="{{sessionData ? '/home' : '/'}}" class="img">
 							<i label="logo"></i>
 						</a>
-						<div class="text">Beatfeel</div>
+						<div class="text">{{env.name}}</div>
 					</div>
 				</div>
 
@@ -1164,8 +1164,8 @@
 </div>
 
 <!-- Bottom signin/signup -->
-<div class="bottomNav" *ngIf="translations && deniedAccess === 'none'">
-	<div class="inner">
+<div class="bottomNav noSession" *ngIf="translations && deniedAccess === 'none'">
+	<div class="inner {{randColor}}">
 		<div class="logo" routerLink="/"></div>
 
 		<div class="buttons">

@@ -32,7 +32,7 @@ $iconWidth: 1px;
 $spriteAudios: url('assets/images/sprite_audios.png');
 $spriteImages: url('assets/images/sprite_images_5.png');
 $logoImage: url('assets/images/logo.png');
-$logoTextImage: url('assets/images/logo_text.png');
+$logoTextImage: url('assets/images/logo_text_email.png');
 $noPostsImage: url('assets/images/icons/no_posts.png');
 $noCommentsImage: url('assets/images/icons/no_comments.png');
 
@@ -2692,12 +2692,28 @@ body {
 			width: 100%;
 			text-align: center;
 			font-size: 13px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 12px 0;
+
+			span {
+				padding: 0 12px;
+			}
+
+			&:after,
+			&:before {
+				content: '';
+				width: 100%;
+				height: 1px;
+				background-color: transparentize($whiteColor, .75);
+			}
 		}
 
 		button {
 			text-transform: inherit;
-			margin: 12px auto 0;
-			max-width: 324px;
+			max-width: 420px;
+			margin: 0 auto;
 			width: 100%;
 
 			img {
@@ -2709,24 +2725,33 @@ body {
 				top: 0;
 			}
 
+			&.facebook,
+			&.google {
+				background-color: transparent;
+				box-shadow: none;
+				color: #ffffff;
+				display: flex;
+				width: auto;
+				padding: 0 18px 0 56px;
+				min-width: 232px;
+
+				&:hover {
+					background-color: transparentize($whiteColor, .9);
+				}
+			}
+
 			&.facebook {
-				background-color: #4267B2;
-				color: $whiteColor;
+				color: #4267B2;
 			}
 
 			&.google {
-				background-color: $whiteColor;
-				color: $blackColor;
+				color: $whiteColor;
 			}
 		}
 
 		&.signup {
-			/* background-color: transparentize($greyColor, .84); */
-			border: 1px solid $greyColor;
 			box-sizing: border-box;
-			padding: 18px 12px 24px;
-			border-radius: 12px;
-			margin: 24px 0 12px;
+			margin: 18px 0;
 		}
 	}
 
@@ -4244,7 +4269,7 @@ body {
 		}
 
 		.right {
-			background-color: $blackColor;
+			background-color: #000;
 			justify-content: center;
 			align-items: center;
 			color: $whiteColor;
@@ -4287,7 +4312,7 @@ body {
 					.buttons {
 						text-align: center;
 						font-weight: bold;
-						margin: 24px 0 0;
+						margin: 0;
 						font-size: 13px;
 						width: 100%;
 						float: left;
@@ -4319,19 +4344,21 @@ body {
 						}
 
 						.forgot {
-							margin: 24px auto 0;
+							margin: 6px auto 12px;
 							width: 100%;
 							float: left;
+							display: flex;
+							justify-content: flex-end;
 
 							a {
 								border-radius: 3px;
 								line-height: 18px;
-								color: $greyColor;
-								font-weight: bold;
-								padding: 8px 12px;
+								color: #424242;
+								font-weight: normal;
+								padding: 4px;
 
 								&:hover {
-									background-color: transparentize($blueColor, .85);
+									background-color: transparentize(#424242, .9);
 								}
 							}
 						}
@@ -4343,9 +4370,9 @@ body {
 							text-align: center;
 							color: $whiteColor;
 							padding: 24px 12px;
-							margin: 24px 0 0;
 							width: 100%;
 							float: left;
+							margin: 0;
 
 							a {
 								color: $whiteColor;
@@ -4374,7 +4401,7 @@ body {
 					float: left;
 
 					ul {
-						margin: 36px 0 0;
+						margin: 24px 0 0;
 						display: none;
 						width: 100%;
 						float: left;
@@ -4414,8 +4441,10 @@ body {
 
 						button {
 							text-transform: capitalize;
-							background: $whiteColor;
-							color: $blackColor;
+							background: transparent;
+							border: 1px solid #424242;
+							box-sizing: content-box;
+							color: #424242;
 							padding: 0 4px 0 12px;
 							line-height: 32px;
 							margin: 12px 0 0;
@@ -7141,7 +7170,7 @@ body {
 						margin: 0;
 
 						.terms {
-							color: $greyColor;
+							color: #424242;
 							margin: 24px 0 0;
 							text-align: left;
 							font-size: 15px;
@@ -8382,7 +8411,7 @@ body {
 			}
 		}
 
-		.mobilePlayer {
+		/* .mobilePlayer {
 			color: $whiteColor;
 
 			.topBar {
@@ -8394,7 +8423,7 @@ body {
 			.box .player {
 				background: transparentize(#000, 0.16);
 			}
-		}
+		} */
 	}
 }
 
@@ -8421,10 +8450,6 @@ body {
 
 	body {
 		padding: 0 0 32px;
-
-		/* .audioPlayerMobile {
-			display: none;
-		} */
 
 		.audioPlayerWeb {
 			border-top: 1px solid transparentize($greyColor, .75);
@@ -8533,7 +8558,7 @@ body {
 									width: 20px !important;
 
 									circle {
-										stroke: $blackColor !important;
+										stroke: currentColor !important;
 										width: 20% !important;
 									}
 								}
@@ -9101,6 +9126,7 @@ body {
 							}
 
 							.analyticsBox {
+								background-color: #000;
 								position: fixed;
 							}
 						}
@@ -9153,7 +9179,7 @@ body {
 				width: 100%;
 
 				.inner {
-					height: 100%;
+					height: auto;
 
 					.footer {
 						ul,
@@ -9347,47 +9373,81 @@ body {
 				}
 			}
 
-			.inner {
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 18px;
-				display: flex;
-				height: 48px;
-				width: 100%;
+			&.noSession {
+				border: none;
+				box-shadow: $shadowBox1;
 
-				.logo {
-					background-color: currentColor;
-					mask-image: $logoTextImage;
-					mask-repeat: no-repeat;
-					display: inline-block;
-					mask-size: auto 32px;
-					mask-position: 0 0;
-					height: 32px;
-					width: 100%;
-					margin: 0;
-				}
-
-				.buttons {
+				.inner {
+					justify-content: space-between;
+					box-sizing: border-box;
+					align-items: center;
+					background: rgba(0, 0, 0, 0.86);
+					width: calc(100% - 24px);
+					border-radius: 12px;
+					padding: 4px 12px;
+					margin: 0 12px;
 					display: flex;
-
-					button {
-						background-color: $blueColor;
-						color: $whiteColor;
-						font-weight: bold;
-						line-height: 30px;
-						margin: 0 4px 0 0;
-						font-size: 12px;
-						padding: 0 8px;
-						min-width: 0;
-						height: 30px;
-						text-transform: inherit;
-
-						&:last-child {
-							background-color: transparent;
-							border: 1px solid $blueColor;
-							color: $blueColor;
-							margin: 0;
+					height: 56px;
+	
+					.logo {
+						background-color: currentColor;
+						mask-image: $logoTextImage;
+						mask-repeat: no-repeat;
+						display: inline-block;
+						mask-size: auto 28px;
+						mask-position: 0 0;
+						height: 28px;
+						width: 100%;
+						margin: 0;
+					}
+	
+					.buttons {
+						display: flex;
+	
+						button {
+							background-color: $blackColor;
+							color: $whiteColor;
+							font-weight: bold;
+							line-height: 30px;
+							margin: 0 4px 0 0;
+							font-size: 12px;
+							padding: 0 8px;
+							min-width: 0;
+							height: 30px;
+							text-transform: inherit;
+	
+							&:last-child {
+								background-color: transparent;
+								border: 1px solid $blackColor;
+								color: $blackColor;
+								margin: 0;
+							}
 						}
+					}
+
+					&.yellow {
+						background-color: #FFD200;
+						background-image: linear-gradient(to right, #FFD200, #F7971E);
+					}
+			
+					&.purple {
+						background-color: #B721FF;
+						background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+					}
+			
+					&.blue {
+						background-color: #1FA2FF;
+						background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
+					}
+			
+					&.red {
+						background-color: #b31217;
+						background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
+					}
+			
+					&.green {
+						background-color: #3CD500;
+						background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
 					}
 				}
 			}
@@ -9396,317 +9456,6 @@ body {
 		.audioPlayerWeb {
 			display: none;
 		}
-
-		/* .audioPlayerMobile {
-			position: fixed;
-			z-index: 1000;
-			height: 100%;
-			width: 100%;
-			left: 0;
-			top: 0;
-
-			.box {
-				border-top: 1px solid transparentize($greyColor, .75);
-				background-color: $blackColor;
-				box-sizing: border-box;
-				color: $whiteColor;
-				max-height: 74vh;
-				position: fixed;
-				display: flex;
-				z-index: 1001;
-				width: 100%;
-				float: left;
-				bottom: 0;
-
-				.player {
-					background: linear-gradient(0, transparentize($blackColor, .05) 60%, transparentize($blackColor, .05) 75%, transparentize($blackColor, .15) 90%, transparent);
-					position: fixed;
-					width: 100%;
-					z-index: 9;
-					bottom: 0;
-
-					.top {
-						box-sizing: border-box;
-						padding: 12px 24px 0;
-						margin: 0 0 -12px;
-						width: 100%;
-						float: left;
-
-						.panel {
-							justify-content: space-between;
-							display: flex;
-							width: 100%;
-
-							.text {
-								box-sizing: border-box;
-								padding: 12px 36px 0;
-								text-align: center;
-								color: $whiteColor;
-								width: 100%;
-								float: left;
-
-								.title {
-									text-overflow: ellipsis;
-									white-space: nowrap;
-									font-weight: bold;
-									overflow: hidden;
-									transition: .15s;
-									padding: 0 0 4px;
-									font-size: 24px;
-								}
-
-								.artist {
-									text-overflow: ellipsis;
-									white-space: nowrap;
-									overflow: hidden;
-									font-size: 18px;
-								}
-							}
-
-							.add {
-								margin: 32px 18px 0 0;
-								position: absolute;
-								right: 0;
-
-								button {
-									position: relative;
-									background: none;
-									box-shadow: none;
-									height: 24px;
-									float: left;
-									width: 24px;
-									padding: 0;
-									z-index: 9;
-									margin: 0;
-
-									i {
-										background-color: $whiteColor;
-									}
-								}
-							}
-						}
-
-						.progress {
-							box-sizing: border-box;
-							width: 100%;
-							float: left;
-
-							mat-slider {
-								height: 36px;
-								width: 100%;
-								padding: 0;
-								margin: 0;
-
-								.mat-slider-wrapper {
-									top: 18px;
-									right: 0;
-									left: 0;
-
-									.mat-slider-track-wrapper {
-										.mat-slider-track-background {
-											background-color: transparentize($whiteColor, .85);
-										}
-
-										.mat-slider-track-fill {
-											background-color: $whiteColor;
-										}
-									}
-
-									.mat-slider-thumb-container {
-										.mat-slider-thumb {
-											background-color: $whiteColor;
-											border: none;
-											height: 12px;
-											bottom: -6px;
-											right: -6px;
-											width: 12px;
-
-											&:active {
-												transform: scale(2);
-											}
-										}
-									}
-								}
-							}
-						}
-
-						.duration {
-							color: transparentize($whiteColor, .5);
-							margin: -6px 0 0;
-							font-size: 12px;
-							display: flex;
-							float: left;
-							width: 100%;
-
-							.current,
-							.total {
-								text-align: left;
-								width: 100%;
-							}
-
-							.total {
-								text-align: right;
-							}
-						}
-					}
-
-					.bottom {
-						justify-content: center;
-						padding: 18px 0 12px;
-						align-items: center;
-						display: flex;
-						width: 100%;
-						float: left;
-
-						button {
-							border-radius: 50% !important;
-							background: none;
-							box-shadow: none;
-
-							i {
-								background-color: $whiteColor;
-								mask-image: $spriteAudios;
-								mask-repeat: no-repeat;
-								display: block;
-							}
-
-							&.mat-accent {
-								color: #09f;
-							}
-
-							&.playPause {
-								transition: .2s;
-								margin: 0 12px;
-								height: 76px;
-								width: 76px;
-
-								&:active {
-									transform: scale(.8);
-								}
-
-								i {
-									mask-size: 48px 144px;
-									margin: 14px;
-									height: 48px;
-									width: 48px;
-
-									&.play {
-										mask-position: 0 0;
-									}
-
-									&.pause {
-										mask-position: 0 -48px;
-									}
-								}
-							}
-
-							&.prev,
-							&.next {
-								margin: 4px 6px 4px 24px;
-								height: 48px;
-								width: 48px;
-
-								i {
-									mask-position: 0 -96px;
-									mask-size: 48px 144px;
-									margin: 12px;
-									height: 24px;
-									width: 24px;
-								}
-							}
-
-							&.next {
-								margin: 4px 24px 4px 6px;
-
-								i {
-									mask-position: -24px -96px;
-								}
-							}
-
-							&.shuffle,
-							&.repeat {
-								margin: 4px 0;
-								height: 24px;
-								width: 24px;
-
-								i {
-									mask-position: 0 -100px;
-									mask-size: 40px 120px;
-									height: 20px;
-									width: 20px;
-									margin: 2px;
-								}
-
-								&.active {
-									i {
-										background: $blueColor;
-									}
-								}
-							}
-
-							&.repeat {
-								i {
-									mask-position: -20px -100px;
-								}
-							}
-
-							&.disabled {
-								pointer-events: none;
-
-								i {
-									background-color: $greyColor !important;
-									opacity: .5;
-								}
-							}
-						}
-					}
-
-					.close {
-						justify-content: center;
-						align-items: center;
-						display: flex;
-						width: 100%;
-						float: left;
-						padding: 0;
-
-						button {
-							border-radius: 50% !important;
-							background: none;
-							box-shadow: none;
-							height: 48px;
-							width: 48px;
-
-							i {
-								background-color: $greyColor;
-							}
-						}
-					}
-				}
-
-				.data {
-					-webkit-overflow-scrolling: touch;
-					display: inline-block;
-					padding: 12px 0 546px;
-					margin: 0 0 -246px;
-					overflow-x: hidden;
-					overflow-y: auto;
-					width: 100%;
-
-					ul {
-						position: relative;
-						display: block;
-						width: 100%;
-						z-index: 1;
-						padding: 0;
-						margin: 0;
-
-						li {
-							color: $whiteColor;
-						}
-					}
-				}
-			}
-		} */
 
 		.sessionsPanelMobile {
 			border-top: 1px solid transparentize($greyColor, .5);
@@ -9767,9 +9516,7 @@ body {
 		}
 
 		.mobilePlayer {
-			/* border-top: 1px solid transparentize($greyColor, .5); */
-			/* background-color: transparentize($whiteColor, 0.5); */
-			color: $blackColor;
+			color: $whiteColor;
 			position: relative;
 			min-height: 360px;
 			border-radius: 0;
@@ -9780,7 +9527,7 @@ body {
 				width: 100%;
 
 				.grabber {
-					background-color: transparentize($blackColor, .25);
+					background-color: transparentize($whiteColor, .25);
 					border-radius: 4px;
 					margin: 12px auto;
 					width: 36px;
@@ -9810,7 +9557,7 @@ body {
 
 				.player {
 					border-top: 1px solid transparentize($greyColor, .5);
-					background-color: transparentize($whiteColor, 0.16);
+					background-color: transparentize($blackColor, 0.16);
 					backdrop-filter: blur(5px);
 					justify-content: flex-end;
 					flex-direction: column;
@@ -9830,12 +9577,12 @@ body {
 						width: 100%;
 
 						.inner {
-							margin: 0 18px;
-							width: calc(100% - 36px);
 							height: calc(100vw - 36px);
+							width: calc(100% - 36px);
+							box-shadow: $shadowBox2;
 							border-radius: 12px;
 							overflow: hidden;
-							box-shadow: $shadowBox2;
+							margin: 0 18px;
 
 							img {
 								width: 100%;
@@ -9846,7 +9593,7 @@ body {
 					.top {
 						box-sizing: border-box;
 						position: relative;
-						padding: 0 18px;
+						padding: 0 18px 24px;
 						width: 100%;
 						float: left;
 						margin: 0;
@@ -9956,8 +9703,8 @@ body {
 
 						.duration {
 							color: currentColor;
-							margin: -12px 0 0;
-							font-size: 13px;
+							margin: -6px 0 0;
+							font-size: 11px;
 							display: flex;
 							float: left;
 							width: 100%;
@@ -10001,6 +9748,33 @@ body {
 							}
 
 							&.playPause {
+								background: $whiteColor;
+								transition: .2s;
+								height: 84px;
+								width: 84px;
+								margin: 0 12px;
+
+								&:active {
+									transform: scale(.8);
+								}
+
+								i {
+									background-color: $blackColor;
+									mask-size: 24px 72px;
+									height: 24px;
+									width: 24px;
+
+									&.play {
+										mask-position: 0 0;
+									}
+
+									&.pause {
+										mask-position: 0 -24px;
+									}
+								}
+							}
+
+							/* &.playPause {
 								transition: .2s;
 								margin: 0 4px;
 								height: 96px;
@@ -10024,7 +9798,7 @@ body {
 										mask-position: 0 -56px;
 									}
 								}
-							}
+							} */
 
 							&.prev,
 							&.next {
@@ -10092,16 +9866,16 @@ body {
 						}
 
 						mat-progress-spinner {
-							height: 42px !important;
-							width: 42px !important;
+							height: 32px !important;
+							width: 32px !important;
 							margin: 0 auto;
 
 							svg {
-								height: 42px !important;
-								width: 42px !important;
+								height: 32px !important;
+								width: 32px !important;
 
 								circle {
-									stroke: currentColor !important;
+									stroke: $blackColor !important;
 								}
 							}
 						}
@@ -10111,21 +9885,22 @@ body {
 						justify-content: center;
 						align-items: center;
 						position: relative;
-						margin: 12px 0 24px;
+						margin: 24px 0;
 						display: flex;
 						width: 100%;
 						float: left;
 
 						button {
-							background-color: $whiteColor;
+							background-color: transparentize($greyColor, .5);
+							color: $whiteColor;
 							box-shadow: none;
 							border-radius: 0;
 
 							&:first-child,
 							&:last-child {
 								border-radius: 50% 0 0 50%;
-								height: 48px;
-								width: 48px;
+								height: 42px;
+								width: 42px;
 							}
 
 							&:last-child {
@@ -10136,7 +9911,7 @@ body {
 								font-size: 15px;
 								font-weight: bold;
 								text-transform: capitalize;
-								height: 48px;
+								height: 42px;
 
 								i {
 									margin: -4px -2px 0 0;
@@ -10145,9 +9920,9 @@ body {
 								&:before,
 								&:after {
 									content: '';
-									background-color: transparentize($greyColor, .5);
+									background-color: $greyColor;
 									position: absolute;
-									margin: 15px 0 0 0;
+									margin: 13px 0 0 0;
 									height: 18px;
 									width: 1px;
 									left: 0;

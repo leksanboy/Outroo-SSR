@@ -76,14 +76,20 @@
 							<i class="icon75 grey" [ngClass]="{'active': showPassword}" label="visibility"></i>
 						</button>
 					</mat-form-field>
-
+					
 					<div class="buttons">
+						<div class="forgot">
+							<a routerLink="/forgot-password">
+								{{translations?.common?.forgotPassword}}
+							</a>
+						</div>
+
 						<button mat-raised-button type="submit" [disabled]="submitLoading">
 							<mat-progress-spinner mode="indeterminate" *ngIf="submitLoading"></mat-progress-spinner>
 							{{translations?.common?.signIn}}
 						</button>
 
-						<div class="forgot">
+						<!-- <div class="forgot">
 							<a routerLink="/forgot-password">
 								{{translations?.common?.forgotPassword}}
 							</a>
@@ -94,21 +100,32 @@
 							<a routerLink="/signup">
 								{{translations?.main?.createAccount?.three}}
 							</a>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="socialButtons">
-						<div class="or">or</div>
+						<div class="or">
+							<span>{{translations?.common?.or}}</span>
+						</div>
 
 						<button class="facebook" mat-raised-button type="button" (click)="socialLogin('facebook')">
-							<img src="./assets/images/facebook_login.png">
-							Continue with Facebook
+							<img src="./assets/images/facebook_blue_login.png">
+							{{translations?.signIn?.social?.facebook}}
 						</button>
 
 						<button class="google" mat-raised-button type="button" id="googleSignIn">
 							<img src="./assets/images/google_login.png">
-							Continue with Google
+							{{translations?.signIn?.social?.google}}
 						</button>
+					</div>
+
+					<div class="buttons">
+						<div class="create" routerLink="/signup">
+							{{translations?.home?.dontHaveAnAccount}}
+							<a routerLink="/signup">
+								{{translations?.main?.createAccount?.three}}
+							</a>
+						</div>
 					</div>
 				</form>
 			</div>

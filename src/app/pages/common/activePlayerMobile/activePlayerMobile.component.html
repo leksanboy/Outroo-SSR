@@ -87,9 +87,15 @@
 					<i [style.background]="audioPlayerData?.current?.background"></i>
 				</button>
 
-				<button mat-fab (click)="playSong('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}">
+				<!-- <button mat-fab (click)="playSong('play', '')" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}">
 					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}"></i>
 					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}"></i>
+					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
+				</button> -->
+
+				<button mat-fab (click)="playSong('play', null)" class="playPause" [ngClass]="{'disabled': audioPlayerData?.list.length == 0}" [ngStyle]="{'box-shadow': audioPlayerData?.current?.shadow, 'background': audioPlayerData?.current?.background}">
+					<i class="play" *ngIf="!audioPlayerData?.playing && !audioPlayerData?.loading"></i>
+					<i class="pause" *ngIf="audioPlayerData?.playing && !audioPlayerData?.loading"></i>
 					<mat-progress-spinner mode="indeterminate" *ngIf="audioPlayerData?.loading"></mat-progress-spinner>
 				</button>
 
