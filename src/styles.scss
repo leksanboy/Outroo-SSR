@@ -4285,7 +4285,7 @@ body {
 
 				.logo {
 					text-align: center;
-					padding: 36px 0;
+					padding: 56px 0;
 				}
 
 				.form {
@@ -4447,7 +4447,7 @@ body {
 							color: #424242;
 							padding: 0 4px 0 12px;
 							line-height: 32px;
-							margin: 12px 0 0;
+							margin: 18px 0 0;
 							box-shadow: none;
 							height: 32px;
 							font-size: 13px;
@@ -9179,7 +9179,7 @@ body {
 				width: 100%;
 
 				.inner {
-					height: auto;
+					height: inherit;
 
 					.footer {
 						ul,
