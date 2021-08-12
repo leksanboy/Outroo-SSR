@@ -252,7 +252,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			if (this.router.url === '/settings' ||
 				this.router.url === '/notifications' ||
 				this.router.url === '/news' ||
-				this.router.url === '/home') {
+				this.router.url === '/home') 
+			{
 				this.userDataService.noSessionData();
 			}
 		} else {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location, DOCUMENT } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 import { AlertService } from '../../../../app/core/services/alert/alert.service';
@@ -38,7 +37,6 @@ export class ShowPlaylistComponent implements OnInit {
 		@Inject(DOCUMENT) private document: Document,
 		public dialogRef: MatDialogRef<ShowPlaylistComponent>,
 		public dialog: MatDialog,
-		private router: Router,
 		private location: Location,
 		private alertService: AlertService,
 		private playerService: PlayerService,

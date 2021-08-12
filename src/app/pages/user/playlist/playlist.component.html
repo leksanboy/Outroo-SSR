@@ -145,7 +145,10 @@
 				</div>
 
 				<div class="noData" *ngIf="dataDefault?.noData">
-					<div class="description">{{translations?.playlist?.noData}}</div>
+					<div class="image">
+						<i class="icon150" label="music"></i>
+					</div>
+					<div class="description">{{translations?.audios?.noData}}</div>
 				</div>
 
 				<div class="recommendedPlaylists" *ngIf="recommendedPlaylists.list.length > 0 && !dataDefault?.loadingData">

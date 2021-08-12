@@ -51,19 +51,15 @@ export class NewPlaylistComponent implements OnInit {
 		if (this.data.type === 'edit') {
 			this.actionForm = this._fb.group({
 				title: [this.data.current.title, [Validators.required]],
-				advanced: [(this.data.current.genre || this.data.current.description)],
-				genre: [this.data.current.genre],
 				description: [this.data.current.description],
-				explicit: [this.data.current.explicit]
+				private: [this.data.current.private]
 			});
 			this.data.showAdvanced = (this.data.current.genre || this.data.current.description);
 		} else if (this.data.type === 'create') {
 			this.actionForm = this._fb.group({
 				title: ['', [Validators.required]],
-				advanced: [''],
-				genre: [''],
 				description: [''],
-				explicit: ['']
+				private: ['']
 			});
 		}
 
@@ -76,27 +72,7 @@ export class NewPlaylistComponent implements OnInit {
 			});
 	}
 
-	ngOnInit() {
-		// Advanced
-		this.actionForm.controls['advanced'].valueChanges
-			.pipe(distinctUntilChanged())
-			.subscribe(val => {
-				this.data.showAdvanced = val;
-			});
-
-		// Get genres
-		const data = {
-			user: this.sessionData.current.id,
-			type: 'genres',
-			rows: 0,
-			cuantity: 100
-		};
-
-		this.audioDataService.general(data)
-			.subscribe((res: any) => {
-				this.data.genres = res;
-			});
-}
+	ngOnInit() {}
 
 	// Change image
 	openImage(action, event) {
@@ -146,12 +122,11 @@ export class NewPlaylistComponent implements OnInit {
 
 					let data = {
 						type: 'create',
-						title: form.title,
 						image: this.data.newImage,
 						color: this.data.color,
-						genre: form.advanced ? (form.genre ? form.genre : null) : null,
-						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
-						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null
+						title: form.title.trim(),
+						description: form.description.trim(),
+						private: form.private
 					};
 
 					this.audioDataService.createPlaylist(data)
@@ -170,12 +145,11 @@ export class NewPlaylistComponent implements OnInit {
 					let data = {
 						type: 'update',
 						id: this.data.current.id,
-						title: form.title,
 						image: this.data.newImage ? this.data.newImage : null,
 						color: this.data.color,
-						genre: form.advanced ? (form.genre ? form.genre : null) : null,
-						description: form.advanced ? (form.description.trim() ? form.description : null) : null,
-						explicit: form.advanced ? (form.explicit ? form.explicit : null) : null
+						title: form.title.trim(),
+						description: form.description.trim(),
+						private: form.private
 					};
 
 					this.audioDataService.createPlaylist(data)

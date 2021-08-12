@@ -113,7 +113,7 @@
 								</span>
 
 								<mat-menu #options="matMenu">
-									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData.id !== sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+									<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 									<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 									<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
@@ -152,6 +152,9 @@
 				</div>
 
 				<div class="noData" *ngIf="data.noData">
+					<div class="image">
+						<i class="icon150" label="music"></i>
+					</div>
 					<div class="description">{{translations?.audios?.noData}}</div>
 				</div>
 

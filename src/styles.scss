@@ -187,6 +187,10 @@ body {
 			transform: scale(0.85);
 		}
 
+		&.icon150 {
+			transform: scale(1.5);
+		}
+
 		&.icon200 {
 			transform: scale(2);
 		}
@@ -2444,7 +2448,7 @@ body {
 		.info {
 			flex-direction: column;
 			box-sizing: border-box;
-			padding: 6px 18px;
+			padding: 12px 18px;
 			display: flex;
 			width: 100%;
 
@@ -2617,16 +2621,11 @@ body {
 				}
 
 				.right {
+					border-bottom: none;
 					margin: -12px 0 0;
 
-					.mat-checkbox {
-						label {
-							.mat-checkbox-label {
-								i {
-									margin: 0 0 -7px 0;
-								}
-							}
-						}
+					form {
+						width: 100%;
 					}
 				}
 			}
@@ -3024,8 +3023,19 @@ body {
 
 	/*Slide toggle*/
 	.mat-slide-toggle {
-		.mat-slide-toggle-bar {
-			background-color: $greyColor !important;
+		width: 100%;
+
+		.mat-slide-toggle-label {
+			width: 100%;
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+			padding: 18px 0 12px;
+			
+			.mat-slide-toggle-bar {
+				background-color: $greyColor !important;
+				margin: 0 !important;
+			}
 		}
 
 		&.mat-checked:not(.mat-disabled) {
@@ -6275,7 +6285,7 @@ body {
 
 					.avatar {
 						border-radius: 50% !important;
-						box-shadow: $shadowBox1;
+						/* box-shadow: $shadowBox1; */
 						margin: 12px 28px 0 0;
 						overflow: hidden;
 						float: right;
@@ -6644,7 +6654,7 @@ body {
 							float: left;
 
 							img {
-								background-color: currentColor;
+								background-color: transparent;
 								height: 100%;
 								width: 100%;
 							}
@@ -7324,7 +7334,7 @@ body {
 								width: 86px;
 
 								.avatar {
-									box-shadow: $shadowBox2;
+									/* box-shadow: $shadowBox2; */
 									box-sizing: border-box;
 									border-radius: 50%;
 									min-width: 86px;
@@ -8992,41 +9002,6 @@ body {
 
 		.playlist {
 			width: 100%;
-
-			/* .info {
-				flex-direction: column;
-
-				.left {
-					width: 100%;
-					display: flex;
-					justify-content: center;
-
-					.image {
-						margin: 0 0 18px;
-						display: block;
-					}
-				}
-
-				.right {
-					border-bottom: 1px solid transparentize($greyColor, .75);
-					padding: 0 0 24px;
-
-					.texts {
-						padding: 0 0 0 24px;
-						text-align: center;
-
-						.text {
-							text-align: center;
-						}
-
-						.button {
-							justify-content: center;
-							align-items: center;
-							display: flex;
-						}
-					}
-				}
-			} */
 		}
 
 		mat-dialog-container {
@@ -9376,6 +9351,8 @@ body {
 			&.noSession {
 				border: none;
 				box-shadow: $shadowBox1;
+				background-color: transparent;
+				height: 64px;
 
 				.inner {
 					justify-content: space-between;
@@ -10049,7 +10026,7 @@ body {
 
 			.createAccountBox {
 				.inner{
-					padding: 42px 24px 84px;
+					padding: 42px 24px 60px;
 				}
 			}
 
