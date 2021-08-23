@@ -150,12 +150,15 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.search('close', null);
 			}
 
-			/* if (e.target !== nb && e.target !== nx) {
+			/* 
+			if (e.target !== nb && e.target !== nx) {
 				this.showNotificationsBoxWeb('close');
 			}
+
 			if (e.target !== ub && e.target !== ux) {
 				this.showUserBox = false;
-			} */
+			}
+			*/
 	   });
 
 		// Get session data
@@ -217,6 +220,8 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Get cover data
 		this.playerService.getCoverTrack()
 			.subscribe(data => {
+				console.log('data:', data);
+
 				if (data.type === 'song') {
 					this.audioPlayerData.current.color = data.color;
 					this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + data.color + ')') : null;
@@ -1088,8 +1093,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 
 	// Replays +1
 	updateReplays(id, user, playlist) {
-		console.log('a:', this.audioPlayerData);
-
 		const data = {
 			id: id,
 			user: user,

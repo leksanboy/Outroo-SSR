@@ -1399,8 +1399,6 @@ body {
 			.image {
 				box-sizing: border-box;
 				position: relative;
-				border-radius: 12px;
-				overflow: hidden;
 				cursor: pointer;
 				height: 150px;
 				width: 100%;
@@ -1413,6 +1411,8 @@ body {
 					box-sizing: border-box;
 					background-size: cover;
 					display: inline-block;
+					border-radius: 12px;
+					overflow: hidden;
 					height: 100%;
 					width: 100%;
 				}
@@ -2622,7 +2622,6 @@ body {
 
 				.right {
 					border-bottom: none;
-					margin: -12px 0 0;
 
 					form {
 						width: 100%;
@@ -3980,18 +3979,30 @@ body {
 		}
 
 		&.audios {
-			padding: 12px 0 0;
+			/* padding: 12px 0 0;
 			margin: 12px 0;
 			background: repeating-linear-gradient(-45deg,
 					transparent,
 					transparent 6px,
 					transparentize($greyColor, .85) 6px,
 					transparentize($greyColor, .85) 12px);
+			*/
+			border: 1px solid $blueColor;
+			box-sizing: border-box;
+			border-radius: 12px;
+			padding: 12px 0 0;
+			margin: 12px 18px;
+			width: calc(100% - 2*18px);
 
 			.info {
 				.title {
 					font-size: 24px;
 					padding: 0 0 4px;
+					color: $blueColor;
+				}
+
+				.subtitle {
+					color: transparentize($blueColor, .5);
 				}
 			}
 		}
@@ -4782,11 +4793,13 @@ body {
 	}
 
 	/*Modal box*/
-	mat-dialog-container {
+	.mat-dialog-container {
 		background: $whiteColor !important;
 		overflow-x: hidden !important;
-		border-radius: 0 !important;
-		padding: 0 !important;
+    	max-width: $pageMaxWidth;
+		margin: 76px auto 24px;
+		border-radius: 5px;
+		padding: 0;
 
 		.mat-dialog-title,
 		.mat-dialog-actions {
@@ -4797,6 +4810,19 @@ body {
 			box-sizing: border-box;
 			padding: 0;
 			margin: 0;
+			max-height: inherit;
+			overflow: hidden;
+			position: relative;
+			z-index: 1;
+		}
+
+		.dialogBoxBackDrop {
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			z-index: -1;
+			left: 0;
+			top: 0;
 		}
 
 		.dialogBox {
@@ -4804,10 +4830,49 @@ body {
 			position: relative;
 			color: $blackColor;
 			overflow-x: hidden;
-			max-height: 640px;
 			height: 100%;
 			width: 100%;
 			float: left;
+
+			.backdrop {
+				position: absolute;
+				overflow: hidden;
+				height: 100%;
+				width: 100%;
+				top: 0;
+
+				.image {
+					position: absolute;
+					transform: scale(1);
+					height: 100%;
+					width: 100%;
+
+					.one,
+					.two{
+						width: 200%;
+						position: absolute;
+					}
+					.one{
+						top: 0;
+						right: 0;
+						z-index: 10;
+						filter: blur(80px);
+						mix-blend-mode: luminosity;
+					}
+					.two{
+						left: 0; 
+						bottom: 0;
+						z-index: 1;
+						filter: blur(80px);
+					}
+				}
+
+				.inner {
+					opacity: 0.76;
+					width: 100%;
+    				height: 100%;
+				}
+			}
 
 			.header {
 				justify-content: space-between;
@@ -6135,22 +6200,33 @@ body {
 		}
 	}
 
-	/*Dialog background color*/
-	.cdk-overlay-dark-backdrop {
-		background: transparentize($blackColor, .25) !important;
-		opacity: .75 !important;
-	}
+	/*CDK*/
+	.cdk-overlay-container {
+		/*Dialog background color*/
+		.cdk-overlay-dark-backdrop {
+			background: transparentize($blackColor, .25) !important;
+			opacity: .75 !important;
+		}
 
-	/*Bottom-sheet*/
-	.cdk-overlay-pane {
-		max-width: 100% !important;
+		/*Bottom-sheet*/
+		.cdk-overlay-pane {
+			max-width: 100% !important;
 
-		.mat-bottom-sheet-container {
-			background: transparent;
-			max-height: 100vh;
-			box-shadow: none;
-			width: 100%;
-			padding: 0;
+			.mat-bottom-sheet-container {
+				background: transparent;
+				max-height: 100vh;
+				box-shadow: none;
+				width: 100%;
+				padding: 0;
+			}
+		}
+
+		/*Dialog large content*/
+		.cdk-global-overlay-wrapper {
+			.cdk-overlay-pane {
+				overflow-y: auto;
+				width: 100%;
+			}
 		}
 	}
 
@@ -9004,17 +9080,21 @@ body {
 			width: 100%;
 		}
 
-		mat-dialog-container {
-			border-radius: 0 !important;
+		.mat-dialog-container {
 			max-width: 100% !important;
 			position: absolute;
+			border-radius: 0;
+			margin: 0;
 			left: 0;
 			top: 0;
 
 			.mat-dialog-content {
-				/* max-height: calc(100vh - 168px) !important; */
-				height: initial !important;
 				max-height: initial !important;
+				height: initial !important;
+			}
+
+			.dialogBoxBackDrop {
+				display: none;
 			}
 
 			.dialogBox {
@@ -9022,6 +9102,10 @@ body {
 				max-height: 100%;
 				height: 100%;
 				width: 100%;
+
+				.backdrop {
+					position: fixed;
+				}
 
 				.header {
 					&.mobile {

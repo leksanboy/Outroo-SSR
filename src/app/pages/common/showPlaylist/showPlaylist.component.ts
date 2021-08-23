@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location, DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
@@ -18,6 +18,8 @@ declare var global: any;
 	templateUrl: './showPlaylist.component.html'
 })
 export class ShowPlaylistComponent implements OnInit {
+	@ViewChild('dialogBox') dialogBox: ElementRef;
+
 	public env: any = environment;
 	public window: any = global;
 	public sessionData: any = [];
@@ -42,7 +44,8 @@ export class ShowPlaylistComponent implements OnInit {
 		private playerService: PlayerService,
 		private sessionService: SessionService,
 		private userDataService: UserDataService,
-		private audioDataService: AudioDataService
+		private audioDataService: AudioDataService,
+		private renderer: Renderer2
 	) {
 		this.sessionData = data.sessionData;
 		this.userData = data.userData;
@@ -58,6 +61,7 @@ export class ShowPlaylistComponent implements OnInit {
 			.subscribe(data => {
 				if (data.type === 'playlist') {
 					this.data.info.shadow = data.color ? ('0 20px 50px rgba(' + data.color + ', 0.42)') : null;
+					this.data.info.backdrop = data.colors ? ('linear-gradient(45deg, rgb(' + data.colors[0] + ') 0%,  rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, rgb(' + data.colors[1] + ') 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, rgb(' + data.colors[2] + ') 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, rgb(' + data.colors[3] + ') 100%, rgba(0,0,0, 0) 70%)') : null;
 				}
 			});
 	}
@@ -79,6 +83,8 @@ export class ShowPlaylistComponent implements OnInit {
 					this.data.info = res.info;
 					this.data.list = res.list;
 					(res.info.image ? this.audioDataService.getCoverColor('playlist', this.env.pathAudios + 'covers/' + res.info.image) : null);
+					let aa = this.audioDataService.getCoverColor('playlist', this.env.pathAudios + 'covers/' + res.info.image);
+					console.log('aa:', aa)
 
 					if (res.list.length === 0) {
 						this.data.noData = true;

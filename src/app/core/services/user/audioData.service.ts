@@ -185,25 +185,36 @@ export class AudioDataService {
 	getCoverColor(type, image) {
 		if (image.length) {
 			let self = this;
-			let img = this.document.createElement('img');
-			img.setAttribute('src', image);
 
-			img.addEventListener('load', () => {
-				let vibrant = new Vibrant(img);
-				let swatches = vibrant.swatches()
+			var getPalette = function() {
+				return new Promise(function(resolve) {
+					/* missing implementation */
+					Vibrant.from(image).getPalette((err, palette) => {
+						let p = {
+							primary: palette.Vibrant.getRgb(),
+							palette: [
+								palette.DarkMuted.getRgb(),
+								palette.DarkVibrant.getRgb(),
+								palette.LightMuted.getRgb(),
+								palette.LightVibrant.getRgb(),
+								palette.Muted.getRgb(),
+								palette.Vibrant.getRgb()
+							]
+						};
+						resolve(p);
+					});
+				});
+			};
 
-				for (let swatch in swatches) {
-					if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
-						if (swatch == 'Vibrant') {
-							let res = {
-								type: type,
-								color: swatches[swatch].getRgb()
-							};
-							self.playerService.setCoverTrack(res);
-						}
-					}
-				}
-			});
+			(async function(){
+				let r: any = await getPalette();
+				let res = {
+					type: type,
+					color: r.primary,
+					colors: r.palette
+				};
+				self.playerService.setCoverTrack(res);
+			})();
 		} else {
 			return null;
 		}
