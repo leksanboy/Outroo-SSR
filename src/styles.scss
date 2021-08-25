@@ -2620,7 +2620,6 @@ body {
 
 				.right {
 					border-bottom: none;
-					margin: -12px 0 0;
 
 					form {
 						width: 100%;
@@ -4784,7 +4783,7 @@ body {
 	}
 
 	/*Modal box*/
-	mat-dialog-container {
+	.mat-dialog-container {
 		background: $whiteColor !important;
 		overflow-x: hidden !important;
 		border-radius: 0 !important;
@@ -4801,6 +4800,15 @@ body {
 			margin: 0;
 		}
 
+		.dialogBoxBackdrop {
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			z-index: -1;
+			left: 0;
+			top: 0;
+		}
+
 		.dialogBox {
 			overflow-y: overlay;
 			position: relative;
@@ -4810,6 +4818,40 @@ body {
 			height: 100%;
 			width: 100%;
 			float: left;
+
+			.backdrop {
+				position: absolute;
+				overflow: hidden;
+				height: 100%;
+				width: 100%;
+				top: 0;
+
+				.image {
+					position: absolute;
+					transform: scale(1);
+					height: 100%;
+					width: 100%;
+
+					.one,
+					.two{
+						width: 200%;
+						position: absolute;
+					}
+					.one{
+						top: 0;
+						right: 0;
+						z-index: 10;
+						filter: blur(80px);
+						mix-blend-mode: luminosity;
+					}
+					.two{
+						left: 0; 
+						bottom: 0;
+						z-index: 1;
+						filter: blur(80px);
+					}
+				}
+			}
 
 			.header {
 				justify-content: space-between;
@@ -5431,6 +5473,9 @@ body {
 
 			/*show playlist*/
 			.bodyPlaylist {
+				max-height: inherit;
+				position: relative;
+				
 				.container {
 					width: $pageMaxWidth;
 				}
@@ -8136,7 +8181,7 @@ body {
 			}
 		}
 
-		mat-dialog-container {
+		.mat-dialog-container {
 			background: $darkThemeColor !important;
 
 			.dialogBox {
@@ -9006,15 +9051,16 @@ body {
 			width: 100%;
 		}
 
-		mat-dialog-container {
+		.mat-dialog-container {
 			border-radius: 0 !important;
 			max-width: 100% !important;
+			width: 100% !important;
 			position: absolute;
+			margin: 0;
 			left: 0;
 			top: 0;
 
 			.mat-dialog-content {
-				/* max-height: calc(100vh - 168px) !important; */
 				height: initial !important;
 				max-height: initial !important;
 			}
@@ -9024,6 +9070,10 @@ body {
 				max-height: 100%;
 				height: 100%;
 				width: 100%;
+
+				.backdrop {
+					position: fixed;
+				}
 
 				.header {
 					&.mobile {
@@ -10055,7 +10105,7 @@ body {
 		&.darkTheme {
 			background-color: #000;
 
-			mat-dialog-container {
+			.mat-dialog-container {
 				background-color: #000 !important;
 			}
 		}
