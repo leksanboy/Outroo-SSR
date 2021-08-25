@@ -115,27 +115,8 @@
 						</li>
 					</ul>
 				</div>
-			</div>
-		</div>
-	</div>
 
-	<div mat-dialog-actions class="buttons post">
-		<div class="panel">
-			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="photos">
-				<i label="camera" class="blue"></i>
-			</button>
-			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="{{env.photoMimeType}}">
-
-			<button mat-mini-fab type="button" (click)="openAudios()" matTooltip="audios">
-				<i label="music" class="blue"></i>
-			</button>
-
-			<button mat-mini-fab type="button" [matMenuTriggerFor]="postSettings">
-				<i label="settings" class="grey"></i>
-			</button>
-
-			<mat-menu #postSettings="matMenu" yPosition="below" xPosition="after" class="postSettingsBox">
-				<div class="inner" (click)="$event.stopPropagation()">
+				<div class="advancedBox" *ngIf="showAdvanced">
 					<div class="title">
 						{{translations?.post?.postSettings}}
 					</div>
@@ -182,27 +163,30 @@
 								</mat-select>
 							</mat-form-field>
 						</div>
+
+						<!-- <div class="date" *ngIf="time.type === 'date' && time.selectedDate && time.selectedHours && time.selectedMinutes">
+							{{translations?.post?.date}}: {{time.selectedDate | date:'mediumDate'}} {{time.selectedHours}}:{{time.selectedMinutes}}
+						</div> -->
 					</div>
 				</div>
-				<div class="buttons">
-					<!-- <button mat-raised-button type="button" (click)="$event">
-						{{translations?.common?.cancel}}
-					</button> -->
-					<button mat-raised-button type="button" (click)="$event">
-						{{translations?.common?.ok}}
-					</button>
-				</div>
-			</mat-menu>
+			</div>
 		</div>
+	</div>
 
-		<div class="info">
-			<div class="scheduleDate" *ngIf="time.type === 'date' && time.selectedDate && time.selectedHours && time.selectedMinutes">
-				Time: {{time.selectedDate}} {{time.selectedHours}}:{{time.selectedMinutes}}
-			</div>
+	<div mat-dialog-actions class="buttons post">
+		<div class="panel">
+			<button mat-mini-fab type="button" (click)="uploadFile.click()" matTooltip="photos">
+				<i label="camera" class="blue"></i>
+			</button>
+			<input type='file' hidden #uploadFile name='fileUpload[]' multiple (change)="uploadFiles(1, $event)" accept="{{env.photoMimeType}}">
 
-			<div class="commentsStatus" *ngIf="time.disableComments">
-				Comments: Off
-			</div>
+			<button mat-mini-fab type="button" (click)="openAudios()" matTooltip="audios">
+				<i label="music" class="blue"></i>
+			</button>
+
+			<button mat-mini-fab type="button" (click)="showAdvanced=!showAdvanced">
+				<i label="settings" [ngClass]="{'grey': !showAdvanced, 'blue': showAdvanced}"></i>
+			</button>
 		</div>
 
 		<div class="actions">

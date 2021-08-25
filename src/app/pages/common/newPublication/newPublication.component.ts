@@ -42,6 +42,7 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 	};
 	public audioPlayerData: any = [];
 	public activePlayerInformation: any;
+	public showAdvanced: boolean = false;
 	public time: any = {
 		hours: Array.from(Array(24), (_, i) => ('0' + i).slice(-2)),
 		minutes: Array.from(Array(60), (_, i) => ('0' + i).slice(-2)),
