@@ -12,6 +12,9 @@ ng s --port 4400 -o
 
 ## Buiild to SSH
 
+<!-- 0. Super admin -->
+sudo su
+
 <!-- 1. Compile for distribution -->
 npm run build:ssr && rm -rf dist/browser/assets/ && rm -rf distNew && mv dist distNew
 

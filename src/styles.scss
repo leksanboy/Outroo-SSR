@@ -1403,7 +1403,7 @@ body {
 				height: 150px;
 				width: 100%;
 				float: left;
-
+				
 				.img {
 					background-position: center 65%;
 					background-repeat: no-repeat;
@@ -2604,9 +2604,7 @@ body {
 		.desc {
 			width: calc(100% - 18px * 2);
 			box-sizing: border-box;
-			padding: 12px 0;
-			border-top: 1px solid transparentize($greyColor, .75);
-			border-bottom: 1px solid transparentize($greyColor, .75);
+			padding: 0;
 			margin: 0 18px 12px;
 			white-space: pre-wrap;
 			font-family: inherit;
@@ -2622,6 +2620,7 @@ body {
 
 				.right {
 					border-bottom: none;
+					margin: -12px 0 0;
 
 					form {
 						width: 100%;
@@ -3979,14 +3978,6 @@ body {
 		}
 
 		&.audios {
-			/* padding: 12px 0 0;
-			margin: 12px 0;
-			background: repeating-linear-gradient(-45deg,
-					transparent,
-					transparent 6px,
-					transparentize($greyColor, .85) 6px,
-					transparentize($greyColor, .85) 12px);
-			*/
 			border: 1px solid $blueColor;
 			box-sizing: border-box;
 			border-radius: 12px;
@@ -4793,13 +4784,11 @@ body {
 	}
 
 	/*Modal box*/
-	.mat-dialog-container {
+	mat-dialog-container {
 		background: $whiteColor !important;
 		overflow-x: hidden !important;
-    	max-width: $pageMaxWidth;
-		margin: 76px auto 24px;
-		border-radius: 5px;
-		padding: 0;
+		border-radius: 0 !important;
+		padding: 0 !important;
 
 		.mat-dialog-title,
 		.mat-dialog-actions {
@@ -4810,19 +4799,6 @@ body {
 			box-sizing: border-box;
 			padding: 0;
 			margin: 0;
-			max-height: inherit;
-			overflow: hidden;
-			position: relative;
-			z-index: 1;
-		}
-
-		.dialogBoxBackDrop {
-			position: fixed;
-			height: 100%;
-			width: 100%;
-			z-index: -1;
-			left: 0;
-			top: 0;
 		}
 
 		.dialogBox {
@@ -4830,49 +4806,10 @@ body {
 			position: relative;
 			color: $blackColor;
 			overflow-x: hidden;
+			max-height: 640px;
 			height: 100%;
 			width: 100%;
 			float: left;
-
-			.backdrop {
-				position: absolute;
-				overflow: hidden;
-				height: 100%;
-				width: 100%;
-				top: 0;
-
-				.image {
-					position: absolute;
-					transform: scale(1);
-					height: 100%;
-					width: 100%;
-
-					.one,
-					.two{
-						width: 200%;
-						position: absolute;
-					}
-					.one{
-						top: 0;
-						right: 0;
-						z-index: 10;
-						filter: blur(80px);
-						mix-blend-mode: luminosity;
-					}
-					.two{
-						left: 0; 
-						bottom: 0;
-						z-index: 1;
-						filter: blur(80px);
-					}
-				}
-
-				.inner {
-					opacity: 0.76;
-					width: 100%;
-    				height: 100%;
-				}
-			}
 
 			.header {
 				justify-content: space-between;
@@ -6200,33 +6137,22 @@ body {
 		}
 	}
 
-	/*CDK*/
-	.cdk-overlay-container {
-		/*Dialog background color*/
-		.cdk-overlay-dark-backdrop {
-			background: transparentize($blackColor, .25) !important;
-			opacity: .75 !important;
-		}
+	/*Dialog background color*/
+	.cdk-overlay-dark-backdrop {
+		background: transparentize($blackColor, .25) !important;
+		opacity: .75 !important;
+	}
 
-		/*Bottom-sheet*/
-		.cdk-overlay-pane {
-			max-width: 100% !important;
+	/*Bottom-sheet*/
+	.cdk-overlay-pane {
+		max-width: 100% !important;
 
-			.mat-bottom-sheet-container {
-				background: transparent;
-				max-height: 100vh;
-				box-shadow: none;
-				width: 100%;
-				padding: 0;
-			}
-		}
-
-		/*Dialog large content*/
-		.cdk-global-overlay-wrapper {
-			.cdk-overlay-pane {
-				overflow-y: auto;
-				width: 100%;
-			}
+		.mat-bottom-sheet-container {
+			background: transparent;
+			max-height: 100vh;
+			box-shadow: none;
+			width: 100%;
+			padding: 0;
 		}
 	}
 
@@ -9080,21 +9006,17 @@ body {
 			width: 100%;
 		}
 
-		.mat-dialog-container {
+		mat-dialog-container {
+			border-radius: 0 !important;
 			max-width: 100% !important;
 			position: absolute;
-			border-radius: 0;
-			margin: 0;
 			left: 0;
 			top: 0;
 
 			.mat-dialog-content {
-				max-height: initial !important;
+				/* max-height: calc(100vh - 168px) !important; */
 				height: initial !important;
-			}
-
-			.dialogBoxBackDrop {
-				display: none;
+				max-height: initial !important;
 			}
 
 			.dialogBox {
@@ -9102,10 +9024,6 @@ body {
 				max-height: 100%;
 				height: 100%;
 				width: 100%;
-
-				.backdrop {
-					position: fixed;
-				}
 
 				.header {
 					&.mobile {
@@ -9397,7 +9315,6 @@ body {
 							width: 24px;
 
 							img {
-								background-color: transparentize($greyColor, .5);
 								border-radius: 50%;
 								overflow: hidden;
 								height: 100%;
