@@ -31,6 +31,7 @@ $iconWidth: 1px;
 /*Images*/
 $spriteAudios: url('assets/images/sprite_audios.png');
 $spriteImages: url('assets/images/sprite_images_5.png');
+$spriteSocial: url('assets/images/sprite_social.png');
 $logoImage: url('assets/images/logo.png');
 $logoTextImage: url('assets/images/logo_text_email.png');
 $noPostsImage: url('assets/images/icons/no_posts.png');
@@ -77,9 +78,7 @@ $shadowIcon1: 0 1px 2px rgba(0, 0, 0, 0.24);
 @keyframes scale {
 	0% {
 		/*null*/
-	}
-
-	100% {
+	} 100% {
 		transform: scale(1.2);
 	}
 }
@@ -87,21 +86,13 @@ $shadowIcon1: 0 1px 2px rgba(0, 0, 0, 0.24);
 @keyframes heartbeat {
 	0% {
 		transform: scale(1);
-	}
-
-	16% {
+	} 16% {
 		transform: scale(1.25);
-	}
-
-	33% {
+	} 33% {
 		transform: scale(1);
-	}
-
-	49% {
+	} 49% {
 		transform: scale(1.25);
-	}
-
-	100% {
+	} 100% {
 		transform: scale(1);
 	}
 }
@@ -213,6 +204,43 @@ body {
 
 		&.white {
 			background-color: $whiteColor;
+		}
+
+		&.social {
+			background-size: calc(20px * 2) calc(20px * 4);
+			background-image: $spriteSocial;
+			background-repeat: no-repeat;
+			background-color: transparent;
+			height: 20px;
+			width: 20px;
+			min-width: 20px;
+			mask-image: none;
+			mask-size: 0;
+			margin: 0 18px 0 0;
+
+			&[label="whatsapp"] {
+				background-position: 0 0;
+			}
+
+			&[label="telegram"] {
+				background-position: -20px 0;
+			}
+
+			&[label="twitter"] {
+				background-position: 0 -20px;
+			}
+
+			&[label="messenger"] {
+				background-position: -20px -20px;
+			}
+
+			&[label="facebook"] {
+				background-position: 0 -40px;
+			}
+
+			&[label="reddit"] {
+				background-position: -20px -40px;
+			}
 		}
 
 		&[label="logo"] {
@@ -3143,7 +3171,8 @@ body {
 				text-transform: inherit;
 				line-height: 40px;
 				height: 40px;
-				display: block;
+				display: flex;
+				align-items: center;
 
 				img {
 					width: 20px;
@@ -4037,17 +4066,25 @@ body {
 		left: 0;
 		top: 0;
 
+		.backdrop {
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			opacity: 1;
+		}
+
 		.left {
-			background-color: $greyColor;
+			background-color: transparent;
 			justify-content: center;
 			flex-direction: column;
 			align-items: center;
-			position: relative;
-			overflow: auto;
 			display: flex;
 			height: 100%;
 			float: left;
-			width: 50%;
+			width: calc(50% + (50% - 360px - 2*18px)/2);
+			padding: 0 calc(50% - (50% - 360px - 2*18px)/2) 0 0;
+			position: absolute;
+			overflow: hidden;
 
 			.top {
 				justify-content: center;
@@ -4165,18 +4202,24 @@ body {
 		}
 
 		.right {
-			background-color: #000;
+			background-color: transparent;
 			justify-content: center;
 			align-items: center;
+			border-radius: 12px;
 			color: $whiteColor;
-			position: relative;
 			overflow: auto;
 			display: flex;
 			height: 100%;
 			float: left;
 			width: 50%;
+			position: absolute;
+			right: 0;
 
 			.inner {
+				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+				background-color: #000;
+				border-radius: 12px;
+				padding: 18px;
 				width: 360px;
 
 				.logo {
@@ -4358,48 +4401,42 @@ body {
 		}
 
 		&.yellow {
-
-			.left,
+			.backdrop,
 			.right .inner .form .buttons .create {
-				background-color: #FFD200;
-				background-image: linear-gradient(to right, #FFD200, #F7971E);
+				background-color: #ffeb3b;
+				background-image: linear-gradient(45deg, #ffeb3b 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #ffc107 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #ff9800 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #ff5722 100%, rgba(0, 0, 0, 0) 70%);
 			}
 		}
 
 		&.purple {
-
-			.left,
+			.backdrop,
 			.right .inner .form .buttons .create {
 				background-color: #B721FF;
-				background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+				background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #4a148c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #311b92 100%, rgba(0, 0, 0, 0) 70%);
 			}
 		}
 
 		&.blue {
-
-			.left,
+			.backdrop,
 			.right .inner .form .buttons .create {
-				background-color: #1FA2FF;
-				background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
+				background-color: #2196f3;
+				background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #2196f3 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #9c27b0 100%, rgba(0, 0, 0, 0) 70%);
 			}
 		}
 
 		&.red {
-
-			.left,
+			.backdrop,
 			.right .inner .form .buttons .create {
-				background-color: #b31217;
-				background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
+				background-color: #e91e63;
+				background-image: linear-gradient(45deg, #b71c1c 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #bf360c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #d84315 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #e91e63 100%, rgba(0, 0, 0, 0) 70%);
 			}
 		}
 
 		&.green {
-
-			.left,
+			.backdrop,
 			.right .inner .form .buttons .create {
-				background-color: #3CD500;
-				background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
-
+				background-color: #56ab2f;
+				background-image: linear-gradient(45deg, #56ab2f 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #8bc34a 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #cddc39 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #4caf50 100%, rgba(0, 0, 0, 0) 70%);
 			}
 		}
 	}
@@ -5197,7 +5234,7 @@ body {
 						border: 1px solid $blueColor;
 						border-radius: 12px;
 						width: calc(100% - 2 * 18px);
-						margin: 0 18px;
+						margin: 12px 18px 0;
 						float: left;
 						box-sizing: border-box;
 						padding: 12px 18px;
@@ -5268,11 +5305,15 @@ body {
 									padding: 6px 0;
 		
 									.mat-form-field {
-										width: 48px;
+										width: calc(25% - 12px);
 										margin: 0 12px 0 0;
+
+										.mat-datepicker-toggle {
+											color: $greyColor;
+										}
 		
 										&:first-child {
-											min-width: 96px;
+											width: calc(50%);
 		
 											input {
 												padding: 0;
@@ -5458,6 +5499,8 @@ body {
 					}
 
 					ul.tracks {
+						padding: 0;
+
 						li {
 							.inner {
 								padding: 2px 6px 2px 18px;
@@ -9047,6 +9090,7 @@ body {
 				border-top: 1px solid transparentize($greyColor, .75);
 				background-color: transparent;
 				padding: 0 0 12px;
+				border-radius: 0;
 				margin: 0;
 
 				.body {
@@ -9208,15 +9252,21 @@ body {
 		}
 
 		.pageHomeBox {
+			.backdrop,
 			.left {
 				display: none;
 			}
 
 			.right {
+				position: relative;
+				background: #000;
+				border-radius: 0;
+				box-shadow: none;
 				width: 100%;
 
 				.inner {
 					height: inherit;
+					padding: 0;
 
 					.footer {
 						ul,

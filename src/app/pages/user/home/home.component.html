@@ -46,14 +46,29 @@
 										<button mat-menu-item (click)="itemPublicationOptions('copyLink', x)">{{translations?.common?.copyLink}}</button>
 										<mat-divider></mat-divider>
 										<button mat-menu-item (click)="itemPublicationOptions('whatsapp', x)">
-											<i label="play"></i>
+											<i class="social" label="whatsapp"></i>
 											Whatsapp
 										</button>
-										<button mat-menu-item (click)="itemPublicationOptions('messenger', x)">Messenger</button>
-										<button mat-menu-item (click)="itemPublicationOptions('facebook', x)">Facebook</button>
-										<button mat-menu-item (click)="itemPublicationOptions('twitter', x)">Twitter</button>
-										<button mat-menu-item (click)="itemPublicationOptions('telegram', x)">Telegram</button>
-										<button mat-menu-item (click)="itemPublicationOptions('reddit', x)">Reddit</button>
+										<button mat-menu-item (click)="itemPublicationOptions('telegram', x)">
+											<i class="social" label="telegram"></i>
+											Telegram
+										</button>
+										<button mat-menu-item (click)="itemPublicationOptions('twitter', x)">
+											<i class="social" label="twitter"></i>
+											Twitter
+										</button>
+										<button mat-menu-item (click)="itemPublicationOptions('messenger', x)">
+											<i class="social" label="messenger"></i>
+											Messenger
+										</button>
+										<button mat-menu-item (click)="itemPublicationOptions('facebook', x)">
+											<i class="social" label="facebook"></i>
+											Facebook
+										</button>
+										<button mat-menu-item (click)="itemPublicationOptions('reddit', x)">
+											<i class="social" label="reddit"></i>
+											Reddit
+										</button>
 									</mat-menu>
 								</div>
 							</div>
@@ -144,22 +159,27 @@
 															<i class="icon85 grey" label="more" *ngIf="!a?.addRemoveUser"></i>
 														</button>
 
-														<mat-menu #appMenu="matMenu">
-															<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+														<mat-menu #options="matMenu">
+															<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)" *ngIf="userData?.id != sessionData?.current?.id">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 															<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
-															<button mat-menu-item [matMenuTriggerFor]="menuSongShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
+															<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 															<button mat-menu-item (click)="itemSongOptions('report', a, null)">{{translations?.common?.report}}</button>
+															<mat-divider *ngIf="userData?.id == sessionData?.current?.id"></mat-divider>
+															<button mat-menu-item (click)="itemSongOptions('addRemoveSession', a, null)" *ngIf="userData?.id == sessionData?.current?.id">{{a.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
 														</mat-menu>
-
+						
 														<mat-menu #menuPlaylists="matMenu">
 															<button mat-menu-item (click)="itemSongOptions('createPlaylist', a, null)">{{translations?.common?.createPlaylist}}</button>
-															<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
-															<span *ngFor="let p of sessionData.current.playlists">
-																<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">{{p?.title}}</button>
+															<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
+															<span *ngFor="let p of sessionData?.current?.playlists">
+																<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">
+																	<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+																	{{p.title}}
+																</button>
 															</span>
 														</mat-menu>
-
-														<mat-menu #menuSongShareSocial="matMenu">
+						
+														<mat-menu #menuShareSocial="matMenu">
 															<button mat-menu-item (click)="itemSongOptions('message', a, null)">{{translations?.common?.sendMessage}}</button>
 															<button mat-menu-item (click)="itemSongOptions('newTab', a, null)">{{translations?.common?.openInNewTab}}</button>
 															<button mat-menu-item (click)="itemSongOptions('copyLink', a, null)">{{translations?.common?.copyLink}}</button>
