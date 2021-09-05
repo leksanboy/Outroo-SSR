@@ -4706,10 +4706,6 @@ body {
 
 	/*Modal box*/
 	.mat-dialog-container {
-		/* background: $whiteColor !important;
-		overflow-x: hidden !important;
-		border-radius: 0 !important;
-		padding: 0 !important; */
 		background: $whiteColor !important;
 		overflow-x: hidden !important;
 		margin: 76px auto 24px;
@@ -4873,7 +4869,7 @@ body {
 			}
 
 			.container {
-				width: $pageMaxWidth;
+				width: calc($pageMaxWidth + 100px);
 			}
 
 			.buttons {
@@ -5514,6 +5510,10 @@ body {
 			.bodyPlaylist {
 				max-height: inherit;
 				position: relative;
+
+				.playlist {
+					width: calc($pageMaxWidth + 100px);
+				}
 
 				.container {
 					width: $pageMaxWidth;
@@ -6621,7 +6621,7 @@ body {
 
 				.company {
 					color: transparentize($greyColor, .5);
-					padding: 0 18px;
+					padding: 12px 18px 0;
 					float: left;
 
 					ul {
@@ -8431,13 +8431,10 @@ body {
 		}
 
 		.audioPlayerWeb {
-			border-top: none;
-			background-color: transparentize($headerBlackColor, .01);
-			box-shadow: $shadowBoxBottom;
-			color: $whiteColor;
-			transition: .25s;
-
 			.player {
+				background-color: transparentize(#000, .23);
+				color: $whiteColor;
+				
 				.center {
 					.top {
 						button {
@@ -8551,21 +8548,29 @@ body {
 		padding: 0 0 32px;
 
 		.audioPlayerWeb {
-			border-top: 1px solid transparentize($greyColor, .75);
-			background-color: transparentize($whiteColor, .01);
-			box-shadow: $shadowBoxBottom;
-			color: $blackColor;
+			pointer-events: none;
 			position: fixed;
 			width: 100%;
 			z-index: 99;
 			bottom: 0;
+			right: 0;
+			left: 0;
 
 			.player {
+				pointer-events: all;
+				background-color: transparentize($whiteColor, .23);
 				justify-content: space-between;
-				margin: 0 auto;
+				box-shadow: $shadowBoxBottom;
+				backdrop-filter: blur(12px);
+				box-sizing: border-box;
+				border-radius: 18px;
+				color: $blackColor;
+				margin: 12px auto;
+				transition: .3s;
 				display: flex;
+				padding: 18px;
 				height: 100%;
-				width: 100%;
+				width: 766px;
 
 				button {
 					border-radius: 50% !important;
@@ -8575,16 +8580,18 @@ body {
 				}
 
 				.left {
+					justify-content: flex-start;
+					align-items: center;
 					display: flex;
-					width: 360px;
+					width: 200px;
 
 					.image {
-						margin: 12px 0 0 18px;
-						border-radius: 3px;
+						border-radius: 5px;
 						overflow: hidden;
-						min-width: 62px;
-						height: 62px;
-						width: 62px;
+						min-width: 64px;
+						height: 64px;
+						width: 64px;
+						margin: 0;
 
 						img {
 							height: 100%;
@@ -8594,11 +8601,10 @@ body {
 
 					.text {
 						box-sizing: border-box;
-						padding: 24px 0 0 18px;
+						padding: 0 0 0 18px;
 						text-align: left;
-						max-width: 276px;
-						min-width: 120px;
-						height: 86px;
+						max-width: 150px;
+						min-width: 100px;
 						float: left;
 
 						.title {
@@ -8619,20 +8625,21 @@ body {
 					}
 
 					.add {
-						padding: 21px 0 0 12px;
+						padding: 0;
 						float: left;
 					}
 				}
 
 				.center {
-					width: calc(100% - 360px - 360px);
-					height: 86px;
-					max-width: $pageMaxWidth;
+					width: calc(100% - 2 * 200px);
+					position: relative;
+					display: flex;
+					align-items: center;
+					justify-content: center;
 
 					.top {
 						justify-content: center;
 						align-items: center;
-						padding: 8px 0 0;
 						display: flex;
 
 						button {
@@ -8670,9 +8677,9 @@ body {
 							&.playPause {
 								background: $blackColor;
 								transition: .2s;
-								height: 52px;
-								width: 52px;
-								margin: 2px;
+								height: 56px;
+								width: 56px;
+								margin: 0;
 
 								&:active {
 									transform: scale(.8);
@@ -8681,7 +8688,7 @@ body {
 								i {
 									background-color: $whiteColor;
 									mask-size: 16px 48px;
-									margin: 18px;
+									margin: 20px;
 									height: 16px;
 									width: 16px;
 
@@ -8697,7 +8704,7 @@ body {
 
 							&.prev,
 							&.next {
-								margin: 4px 6px 4px 18px;
+								margin: 0 8px;
 								height: 48px;
 								width: 48px;
 
@@ -8713,8 +8720,6 @@ body {
 							}
 
 							&.next {
-								margin: 4px 18px 4px 6px;
-
 								i {
 									mask-position: -14px -56px;
 								}
@@ -8722,7 +8727,6 @@ body {
 
 							&.shuffle,
 							&.repeat {
-								margin: 4px 0;
 								height: 48px;
 								width: 48px;
 
@@ -8761,8 +8765,10 @@ body {
 					}
 
 					.bottom {
-						margin: -4px 0 0;
+						position: absolute;
 						width: 100%;
+						bottom: 0;
+						margin: 0 0 -18px 0;
 
 						.progress {
 							box-sizing: border-box;
@@ -8776,12 +8782,13 @@ body {
 								padding: 4px 8px;
 								font-size: 12px;
 								min-width: 36px;
+								margin: 0;
 							}
 
 							.slider {
+								width: calc(100% - 2*52px);
 								position: relative;
 								cursor: pointer;
-								width: 100%;
 
 								mat-slider {
 									height: 24px;
@@ -8833,26 +8840,25 @@ body {
 
 				.right {
 					justify-content: flex-end;
-					box-sizing: border-box;
+					align-items: center;
 					display: flex;
-					width: 360px;
+					width: 200px;
 
 					.action {
-						padding: 23px 4px;
 						width: 40px;
+						height: 40px;
 					}
 
 					.volume {
-						padding: 23px 24px 23px 0;
-						max-width: 240px;
 						display: flex;
+						align-items: center;
 
 						mat-slider {
-							margin: 8px 0 0;
 							height: 24px;
-							width: 120px;
 							min-width: 0;
+							width: 76px;
 							padding: 0;
+							margin: 0;
 
 							.mat-slider-wrapper {
 								top: 11px;
