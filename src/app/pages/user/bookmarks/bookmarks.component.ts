@@ -32,6 +32,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	public dataSearch: any = [];
 	public activeLanguage: any;
 	public hideAd: boolean;
+	public data: any = {
+		selectedIndex: 0
+	};
+	public dataLiked: any;
 
 	constructor(
 		private router: Router,
@@ -210,6 +214,106 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					}
 				}, error => {
 					this.dataDefault.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
+	}
+
+	// Set tab on click
+	setTab(tab) {
+		switch (tab) {
+			case 0:
+				/* General: always set */
+				break;
+			case 1:
+				if (!this.dataLiked) {
+					this.defaultLiked('default', this.userData.id);
+				}
+				break;
+		}
+	}
+
+	// Default liked
+	defaultLiked(type, user) {
+		if (type === 'default') {
+			this.dataLiked = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noData: false,
+				noMore: false
+			};
+
+			const data = {
+				type: 'liked',
+				user: user,
+				rows: this.dataLiked.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.publicationsDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataLiked.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataLiked.noData = true;
+					} else {
+						this.dataLiked.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+
+						for (const i in res) {
+							if (i) {
+								this.dataLiked.list.push(res[i]);
+
+								// Push add
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+									this.dataLiked.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataLiked.noMore = true;
+					}
+				}, error => {
+					this.dataLiked.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more' && !this.dataLiked.noMore && !this.dataLiked.loadingMoreData) {
+			this.dataLiked.loadingMoreData = true;
+			this.dataLiked.rows++;
+
+			const data = {
+				type: 'liked',
+				rows: this.dataLiked.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.publicationsDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataLiked.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataLiked.loadingMoreData = false;
+
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataLiked.list.push(res[i]);
+
+								// Push add
+								if (i === '10' || i === '29' || i === '48' || i === '67' || i === '86') {
+									this.dataLiked.list.push(this.pushAd());
+								}
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataLiked.noMore = true;
+					}
+				}, error => {
+					this.dataLiked.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		}

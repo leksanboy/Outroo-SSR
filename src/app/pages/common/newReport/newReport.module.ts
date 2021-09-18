@@ -9,7 +9,8 @@ import {
 	MatProgressSpinnerModule,
 	MatTooltipModule,
 	MatRippleModule,
-	MatInputModule
+	MatInputModule,
+	MatRadioModule,
 } from '@angular/material';
 
 import { NewReportComponent } from './newReport.component';
@@ -33,7 +34,8 @@ const routes: Routes = [
 		MatProgressSpinnerModule,
 		MatTooltipModule,
 		MatRippleModule,
-		MatInputModule
+		MatInputModule,
+		MatRadioModule
 	],
 	declarations: [
 		NewReportComponent

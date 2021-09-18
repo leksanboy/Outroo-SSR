@@ -30,7 +30,7 @@ $iconWidth: 1px;
 
 /*Images*/
 $spriteAudios: url('assets/images/sprite_audios.png');
-$spriteImages: url('assets/images/sprite_images_5.png');
+$spriteImages: url('assets/images/sprite_images_6.png');
 $spriteSocial: url('assets/images/sprite_social.png');
 $logoImage: url('assets/images/logo.png');
 $logoTextImage: url('assets/images/logo_text_email.png');
@@ -153,7 +153,7 @@ body {
 	}
 
 	i {
-		mask-size: calc(24px * 2) calc(24px * 26);
+		mask-size: calc(24px * 2) calc(24px * 27);
 		background-color: currentColor;
 		mask-image: $spriteImages;
 		mask-repeat: no-repeat;
@@ -267,7 +267,7 @@ body {
 			width: 84px;
 		}
 
-		&[label="launch"] {
+		&[label="max-box"] {
 			mask-position: -24px calc(-24px * 6);
 		}
 
@@ -340,6 +340,10 @@ body {
 
 		&[label="bookmarks"] {
 			mask-position: -24px calc(-24px * 18);
+		}
+
+		&[label="liked"] {
+			mask-position: -24px calc(-24px * 16);
 		}
 
 		&[label="arrow-mini"] {
@@ -503,12 +507,24 @@ body {
 			mask-position: 0 calc(-24px * 21);
 		}
 
+		&[label="copy"] {
+			mask-position: -24px calc(-24px * 23);
+		}
+
 		&[label="grid"] {
 			mask-position: 0 calc(-24px * 25);
 		}
 
 		&[label="music-note"] {
 			mask-position: -24px calc(-24px * 25);
+		}
+
+		&[label="launch"] {
+			mask-position: 0 calc(-24px * 26);
+		}
+
+		&[label="email"] {
+			mask-position: -24px calc(-24px * 26);
 		}
 	}
 
@@ -844,6 +860,8 @@ body {
 				.text {
 					line-height: 18px;
 					font-size: 14px;
+					display: flex;
+					align-items: center;
 					width: 100%;
 					float: left;
 
@@ -1877,11 +1895,11 @@ body {
 						width: 100%;
 						float: left;
 
-						ul {
+						/* ul {
 							li {
 								padding: inherit;
 							}
-						}
+						} */
 					}
 				}
 
@@ -2226,16 +2244,14 @@ body {
 	}
 
 	ul.shareUsers {
+		border-bottom: 1px solid transparentize($greyColor, .75);
 		-webkit-overflow-scrolling: touch;
 		box-sizing: border-box;
-		white-space: nowrap;
-		overflow-y: hidden;
-		overflow-x: auto;
-		padding: 0 18px 18px;
+		padding: 0 18px 6px;
+		overflow: hidden;
+		margin: 0 0 12px;
 		float: left;
 		width: 100%;
-		margin: 0 0 12px;
-		border-bottom: 1px solid transparentize($greyColor, .75);
 
 		.mat-expansion-panel-content {
 			padding: 12px 0 0;
@@ -2243,33 +2259,50 @@ body {
 
 		li {
 			display: inline-block;
-			margin: 0 12px 0 0;
+			margin: 0 12px 12px 0;
 			list-style: none;
 			padding: 0;
 
 			.inner {
-				box-sizing: border-box;
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
+				background-color: transparentize($blueColor, .75);
+				border: 1px solid $blueColor;
 				align-items: center;
-				position: relative;
+				border-radius: 24px;
+				transition: .15s;
+				display: flex;
+				padding: 6px;
 
 				.avatar {
-					width: 64px;
-					height: 64px;
 					border-radius: 50%;
 					overflow: hidden;
+					height: 24px;
+					width: 24px;
 
 					img {
 						width: 100%;
 					}
 				}
-			}
 
-			&:last-child{
-				margin: 0;
+				.text {
+					padding: 0 0 0 12px;
+					align-items: center;
+					cursor: default;
+					display: flex;
+				}
+
+				.remove {
+					justify-content: center;
+					align-items: center;
+					padding: 0 0 0 6px;
+					cursor: pointer;
+					display: flex;
+				}
+
+				&:active,
+				&:hover {
+					background-color: transparentize($redColor, .75);
+					border: 1px solid $redColor;
+				}
 			}
 		}
 	}
@@ -3074,6 +3107,49 @@ body {
 		}
 	}
 
+	/* Radio options */
+	.mat-radio-group {
+		overflow: inherit;
+		margin: 6px 0;
+		width: 100%;
+		float: left;
+
+		.mat-radio-button {
+			width: 100%;
+			padding: 6px 2px;
+
+			label {
+				.mat-radio-container {
+					.mat-radio-outer-circle {
+						border-color: currentColor;
+					}
+				}
+			}
+
+			&.mat-radio-checked {
+				label {
+					color: $blueColor;
+
+					.mat-radio-container {
+						.mat-radio-inner-circle {
+							background-color: $blueColor;
+						}
+
+						.mat-radio-outer-circle {
+							border-color: $blueColor;
+						}
+
+						.mat-radio-ripple {
+							.mat-radio-persistent-ripple {
+								background-color: $blueColor;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	/* Checkbox */
 	.mat-checkbox {
 		// border-bottom: 1px solid $greyColor;
@@ -3169,18 +3245,22 @@ body {
 			button {
 				border-radius: 0 !important;
 				text-transform: inherit;
-				line-height: 40px;
-				height: 40px;
-				display: flex;
 				align-items: center;
+				line-height: 40px;
+				display: flex;
+				height: 40px;
+
+				i {
+					margin: 0 10px 0 -2px;
+				}
 
 				img {
-					width: 20px;
+					border-radius: 3px;
+					margin: 0 12px 0 0;
+					overflow: hidden;
 					min-width: 20px;
 					height: 20px;
-					border-radius: 3px;
-					overflow: hidden;
-					margin: 10px 12px -5px 0;
+					width: 20px;
 				}
 
 				&:hover {
@@ -4373,23 +4453,22 @@ body {
 					.lang {
 						justify-content: center;
 						padding: 6px 0 0;
-						cursor: pointer;
 						display: flex;
 						width: 100%;
 						float: left;
 
 						button {
+							border: 1px solid #424242;
 							text-transform: capitalize;
 							background: transparent;
-							border: 1px solid #424242;
 							box-sizing: content-box;
-							color: #424242;
 							padding: 0 4px 0 12px;
 							line-height: 32px;
+							color: #424242;
 							margin: 18px 0 0;
 							box-shadow: none;
-							height: 32px;
 							font-size: 13px;
+							height: 32px;
 
 							i {
 								transform: rotate(-90deg) scale(.75);
@@ -4714,6 +4793,8 @@ body {
 		width: initial;
 		max-width: 100%;
 
+
+
 		.mat-dialog-title,
 		.mat-dialog-actions {
 			margin: 0 !important;
@@ -4744,6 +4825,7 @@ body {
 			float: left;
 
 			.backdrop {
+				background-color: #000;
 				position: absolute;
 				overflow: hidden;
 				height: 100%;
@@ -4869,7 +4951,7 @@ body {
 			}
 
 			.container {
-				width: calc($pageMaxWidth + 100px);
+				width: 714px;
 			}
 
 			.buttons {
@@ -5244,15 +5326,16 @@ body {
 							width: 100%;
 		
 							.item {
+								justify-content: space-between;
+								align-items: center;
+								padding: 12px 0 0;
+								display: flex;
 								width: 100%;
 								float: left;
-								display: flex;
-								align-items: center;
-								justify-content: space-between;
-								padding: 12px 0 0;
 		
 								.text {
 									display: block;
+									font-size: 13px;
 								}
 
 								.mat-slide-toggle {
@@ -5275,11 +5358,11 @@ body {
 											line-height: 24px;
 		
 											.mat-button-toggle-label-content {
-												line-height: 24px;
 												color: $blackColor;
-												padding: 0 6px;
-												font-size: 11px;
+												line-height: 24px;
 												font-weight: bold;
+												padding: 0 6px;
+												font-size: 9px;
 											}
 										}
 		
@@ -5916,12 +5999,12 @@ body {
 						}
 
 						.innerContent {
-							padding: 0;
-							float: left;
-							box-sizing: border-box;
-							width: 100%;
 							height: calc(65vh - 65px - 119px);
+							box-sizing: border-box;
 							overflow: auto;
+							float: left;
+							width: 100%;
+							padding: 0;
 
 							.noData {
 								padding: 48px 0;
@@ -5936,13 +6019,13 @@ body {
 							.textContainer {
 								word-break: break-word;
 								box-sizing: border-box;
-								padding: 12px 18px 0;
+								padding: 18px 18px 0;
 								width: 100%;
 								float: left;
 							}
 
 							.audios {
-								padding: 12px 0 0;
+								padding: 6px 0 0;
 								width: 100%;
 								float: left;
 							}
@@ -5959,7 +6042,8 @@ body {
 
 						.analyticsBox {
 							border-top: 1px solid transparentize($greyColor, .75);
-							background-color: $whiteColor;
+							background-color: transparentize($whiteColor, .25);
+							backdrop-filter: blur(12px);
 							position: absolute;
 							width: 100%;
 							float: left;
@@ -6613,10 +6697,12 @@ body {
 
 				ul.followers {
 					border-bottom: 1px solid transparentize($greyColor, .75);
+					padding: 0;
 				}
 
 				ul.tracks {
-					padding: 8px 0;
+					border-bottom: 1px solid transparentize($greyColor, .75);
+					padding: 12px 0;
 				}
 
 				.company {
@@ -8248,7 +8334,7 @@ body {
 					.container {
 						.right {
 							.analyticsBox {
-								background-color: $darkThemeColor;
+								background-color: transparentize($darkThemeColor, .25);
 							}
 						}
 					}
@@ -8558,7 +8644,7 @@ body {
 
 			.player {
 				pointer-events: all;
-				background-color: transparentize($whiteColor, .23);
+				background-color: transparentize(#f1f1f1, .23);
 				justify-content: space-between;
 				box-shadow: $shadowBoxBottom;
 				backdrop-filter: blur(12px);
@@ -8570,7 +8656,7 @@ body {
 				display: flex;
 				padding: 18px;
 				height: 100%;
-				width: 766px;
+				width: 714px;
 
 				button {
 					border-radius: 50% !important;
@@ -8704,7 +8790,7 @@ body {
 
 							&.prev,
 							&.next {
-								margin: 0 8px;
+								margin: 0 8px 0 0;
 								height: 48px;
 								width: 48px;
 
@@ -8720,6 +8806,8 @@ body {
 							}
 
 							&.next {
+								margin: 0 0 0 8px;
+
 								i {
 									mask-position: -14px -56px;
 								}
@@ -8786,9 +8874,9 @@ body {
 							}
 
 							.slider {
-								width: calc(100% - 2*52px);
 								position: relative;
 								cursor: pointer;
+								width: 100%;
 
 								mat-slider {
 									height: 24px;
@@ -8884,61 +8972,65 @@ body {
 						}
 					}
 				}
-			}
 
-			.close {
-				display: none;
-				position: absolute;
-				right: 0;
-				top: 0;
-
-				button{
-					width: 24px;
-					height: 24px;
-					background-color: transparent;
-					box-shadow: none !important;
-					margin: 2px;
-					z-index: 1;
-
-					&:hover {
-						background-color: transparentize($greyColor, 0.85);
+				.topRightButtons {
+					margin: 2px 4px 0 0;
+					position: absolute;
+					display: none;
+					right: 0;
+					top: 0;
+	
+					button{
+						background-color: transparent;
+						box-shadow: none !important;
+						height: 24px;
+						width: 24px;
+						z-index: 1;
+						margin: 0;
+	
+						&:hover {
+							background-color: transparentize($greyColor, 0.85);
+						}
 					}
 				}
 			}
 
 			.playlistBox {
+				pointer-events: all;
 				background-color: $whiteColor;
 				box-shadow: $shadowBox3;
+				border-radius: 3px;
 				color: $blackColor;
-				margin: 0 8px 86px;
-				border-radius: 0;
 				position: fixed;
-				padding: 0 4px;
 				width: 300px;
+				margin: 12px;
+				padding: 0;
 				bottom: 0;
 				right: 0;
 
 				.close {
-					display: flex;
-					width: 100%;
 					justify-content: space-between;
 					align-items: center;
+					margin: 8px 0 0;
+					display: flex;
+					width: 100%;
 
 					.title {
+						box-sizing: border-box;
+						padding: 0 0 0 18px;
 						color: $greyColor;
 						font-size: 13px;
-						padding: 0 0 0 24px;
-						box-sizing: border-box;
 					}
 
 					button {
-						margin: 8px 20px 8px 0;
 						color: transparentize($greyColor, .75);
+						background: transparent;
+						box-shadow: none;
 					}
 				}
 
 				.data {
-					margin: 42px 0 0 0;
+					margin: 0 0 12px;
 					max-height: 60vh;
 					overflow-y: auto;
 					min-height: 0;
@@ -8952,75 +9044,72 @@ body {
 			}
 
 			&.mini {
-				width: 260px;
-				border: none;
-				box-shadow: $shadowBox2;
-				margin: 8px;
-				border-radius: 3px;
-				box-sizing: border-box;
-				overflow: hidden;
-
 				.player {
 					justify-content: center;
+					box-shadow: $shadowBox2;
+					border-radius: 3px;
+					overflow: hidden;
+					width: 260px;
+					border: none;
+					margin: 12px;
+					flex-direction: column;
 
-					.left,
+					.left {
+						border-bottom: 1px solid transparentize($greyColor, .75);
+						padding: 0 0 18px;
+						width: 100%;
+
+						.add {
+							position: absolute;
+							margin: 0 8px 0 0;
+							right: 0;
+						}
+					}
+
 					.right{
 						display: none;
 					}
 
 					.center {
+						padding: 18px 0;
 						width: 100%;
-						height: 96px;
 
 						.top {
 							width: 100%;
-							padding: 15px 0 0;
+							margin: 0;
 
 							.suffle,
 							.repeat,
 							.prev,
 							.next {
-								margin: 4px 0;
+								margin: 0;
 							}
 						}
 
 						.bottom {
-							margin: 0;
+							width: calc(100% + 2*12px);
+							margin: 0 0 -12px;
 
 							.progress {
 								.current,
 								.total {
 									font-size: 11px;
 								}
-
-								/* .slider {
-									.mat-slider {
-										display: none;
-									}
-
-									#audioAnalyser{
-										margin: 0 .5px;
-									}
-								} */
 							}
 						}
 					}
-				}
 
-				.close {
-					display: flex;
-
-					button{
-						span{
-							display: flex;
-							justify-content: center;
-							align-items: center;
+					.topRightButtons {
+						display: flex;
+	
+						button{
+							span{
+								display: flex;
+								justify-content: center;
+								align-items: center;
+							}
 						}
 					}
-				}
-
-				.playlistBox {
-					margin: 0 8px 8px;
 				}
 			}
 		}
@@ -9213,7 +9302,7 @@ body {
 							}
 
 							.analyticsBox {
-								background-color: #000;
+								background-color: transparentize(#000, .25) !important;
 								position: fixed;
 							}
 						}

@@ -16,6 +16,7 @@ import { PublicationsDataService } from '../../../../app/core/services/user/publ
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
+import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -335,28 +336,57 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case ('addRemoveUser'):
-				item.addRemoveUser = !item.addRemoveUser;
-				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+			case('addRemoveSession'):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				const dataARO = {
+				const dataARS = {
+					user: this.sessionData.current.id,
 					type: item.removeType,
-					location: 'user',
-					id: item.insertedId,
-					item: item.id
+					location: 'session',
+					id: item.id
 				};
 
-				this.audioDataService.addRemove(dataARO)
+				this.audioDataService.addRemove(dataARS)
 					.subscribe(res => {
-						item.insertedId = res;
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+
+						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
-			case ('playlist'):
+			case('addRemoveUser'):
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					user: this.sessionData.current.id,
+					type: item.removeType,
+					location: 'user',
+					id: item.insertedId,
+					item: item.song
+				};
+
+				this.audioDataService.addRemove(dataARO)
+					.subscribe((res: any) => {
+						item.insertedId = res;
+
+						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+							text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+				break;
+			case('playlist'):
 				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
 
 				const dataP = {
+					session: this.sessionData.current.id,
+					translations: this.translations,
 					type: item.removeType,
 					location: 'playlist',
 					item: item.song,
@@ -366,26 +396,61 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
+							text = ' ' + this.translations.common.hasBeenAddedTo + playlist.title;
+
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('createPlaylist'):
-				const dataCP = {
-					type: 'create',
-					item: item
+				this.location.go(this.router.url + '#NewPlaylist');
+
+				const config = {
+					disableClose: false,
+					data: {
+						type: 'create',
+						sessionData: this.sessionData,
+						translations: this.translations
+					}
 				};
 
-				this.sessionService.setDataCreatePlaylist(dataCP);
+				const dialogRef = this.dialog.open(NewPlaylistComponent, config);
+				dialogRef.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (res) {
+						this.alertService.success(this.translations.common.createdSuccessfully);
+
+						// Add song to playlist
+						if (item) {
+							const dataSong = {
+								type: 'add',
+								location: 'playlist',
+								playlist: res.id,
+								item: item.id
+							};
+							this.audioDataService.addRemove(dataSong).subscribe();
+						}
+
+						if (this.sessionData.current.playlists) {
+							this.sessionData.current.playlists.unshift(res);
+						} else {
+							this.sessionData.current.playlists = [];
+							this.sessionData.current.playlists.push(res);
+						}
+
+						// Set playlist on session data
+						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+						this.sessionService.setDataPlaylists(this.sessionData);
+					}
+				});
 				break;
-			case ('report'):
+			case('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
 			case 'message':
-				item.song = item.id;
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
 				break;
@@ -396,6 +461,30 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			case 'copyLink':
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
 				break;
 		}
 	}
@@ -495,6 +584,30 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			case 'copyLink':
 				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
 				break;
 		}
 	}

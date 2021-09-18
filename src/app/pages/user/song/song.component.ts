@@ -177,20 +177,19 @@ export class SongComponent implements OnInit, OnDestroy {
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
 			case ('addRemoveUser'):
-				item.removeType = !item.addRemoveUser ? 'add' : 'remove';
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				const dataARO = {
+				const dataU = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.id
 				};
 
-				this.audioDataService.addRemove(dataARO)
-					.subscribe(res => {
+				this.audioDataService.addRemove(dataU)
+					.subscribe((res: any) => {
 						item.insertedId = res;
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('playlist'):
@@ -220,6 +219,9 @@ export class SongComponent implements OnInit, OnDestroy {
 
 				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
+			case ('share'):
+				alert('Working on Share with friends');
+				break;
 			case ('report'):
 				item.type = 'audio';
 				this.sessionService.setDataReport(item);
@@ -228,10 +230,37 @@ export class SongComponent implements OnInit, OnDestroy {
 				item.comeFrom = 'shareSong';
 				this.sessionService.setDataNewShare(item);
 				break;
+			case 'newTab':
+				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
+				break;
 			case 'copyLink':
-				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
-				urlExtension.toString();
-				this.sessionService.setDataCopy(urlExtension);
+				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
 				break;
 		}
 	}

@@ -32,6 +32,7 @@ export class NewReportComponent implements OnInit {
 	ngOnInit() {
 		// Form
 		this.actionForm = this._fb.group({
+			type: ['', [Validators.required]],
 			content: ['', [Validators.required]],
 			lang: [this.userDataService.getLang('get', null) || 1]
 		});
@@ -46,6 +47,7 @@ export class NewReportComponent implements OnInit {
 				const data = {
 					pageId: this.data.item.id,
 					pageType: this.data.item.type,
+					type: form.type,
 					content: form.content,
 					lang: form.lang
 				};

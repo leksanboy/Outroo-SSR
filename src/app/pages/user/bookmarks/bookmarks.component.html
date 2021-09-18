@@ -11,37 +11,83 @@
 
 				<div class="pageTitle">{{translations?.bookmarks?.title}}</div>
 
-				<ul class="posts" *ngIf="dataDefault?.list">
-					<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.bookmarkRemoved, 'advert': x.contentTypeAd}">
-						<span class="inner" *ngIf="!x.contentTypeAd">
-							<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : (x.contentData.mimetype.indexOf('gif') > -1 ?  env.pathPhotos + x.contentData.name : env.pathPhotos + 'thumbnails/' + x.contentData.name)) : env.defaultPostImage) + ')'}"></div>
-							</a>
-						</span>
+				<mat-tab-group mat-stretch-tabs [(selectedIndex)]="data.selectedIndex" (selectedIndexChange)="setTab(data.selectedIndex)">
+					<mat-tab>
+						<ng-template mat-tab-label>
+							<i label="bookmarks" matTooltip="{{translations?.bookmarks?.title}}"></i>
+						</ng-template>
 
-						<div class="ad" *ngIf="x.contentTypeAd">
-							<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
-							<div class="disableAdBlock" *ngIf="hideAd">
-								{{translations?.common?.disableAdBlock}}
-							</div>
+						<ul class="posts" *ngIf="dataDefault?.list">
+							<li *ngFor="let x of dataDefault?.list" [ngClass]="{'remove': x.bookmarkRemoved, 'advert': x.contentTypeAd}">
+								<span class="inner" *ngIf="!x.contentTypeAd">
+									<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
+										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : (x.contentData.mimetype.indexOf('gif') > -1 ?  env.pathPhotos + x.contentData.name : env.pathPhotos + 'thumbnails/' + x.contentData.name)) : env.defaultPostImage) + ')'}"></div>
+									</a>
+								</span>
+		
+								<div class="ad" *ngIf="x.contentTypeAd">
+									<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+									<div class="disableAdBlock" *ngIf="hideAd">
+										{{translations?.common?.disableAdBlock}}
+									</div>
+								</div>
+							</li>
+						</ul>
+		
+						<div class="loadingData" *ngIf="dataDefault?.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 						</div>
-					</li>
-				</ul>
+		
+						<div class="noData" *ngIf="dataDefault?.noData">
+							<div class="description">{{translations?.bookmarks?.noData}}</div>
+						</div>
+		
+						<div class="loadMore" *ngIf="dataDefault?.loadMoreData">
+							<button mat-fab (click)="default('more')" *ngIf="!dataDefault?.loadingMoreData">
+								<i label="add"></i>
+							</button>
+							<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
+						</div>
+					</mat-tab>
 
-				<div class="loadingData" *ngIf="dataDefault?.loadingData">
-					<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-				</div>
+					<mat-tab>
+						<ng-template mat-tab-label>
+							<i label="liked" matTooltip="{{translations?.common?.liked}}"></i>
+						</ng-template>
 
-				<div class="noData" *ngIf="dataDefault?.noData">
-					<div class="description">{{translations?.bookmarks?.noData}}</div>
-				</div>
-
-				<div class="loadMore" *ngIf="dataDefault?.loadMoreData">
-					<button mat-fab (click)="default('more')" *ngIf="!dataDefault?.loadingMoreData">
-						<i label="add"></i>
-					</button>
-					<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault?.loadingMoreData"></mat-progress-spinner>
-				</div>
+						<ul class="posts" *ngIf="dataLiked?.list">
+							<li *ngFor="let x of dataLiked?.list" [ngClass]="{'remove': x.bookmarkRemoved, 'advert': x.contentTypeAd}">
+								<span class="inner" *ngIf="!x.contentTypeAd">
+									<a mat-ripple class="image" routerLink="/p/{{x.name}}" target="popup" (click)="itemPublicationOptions('show', x); false;">
+										<div class="img" [ngStyle]="{'background-image': 'url(' + (x.contentData ? (x.contentData.duration ? env.pathVideos + 'thumbnails/' + x.contentData.name : (x.contentData.mimetype.indexOf('gif') > -1 ?  env.pathPhotos + x.contentData.name : env.pathPhotos + 'thumbnails/' + x.contentData.name)) : env.defaultPostImage) + ')'}"></div>
+									</a>
+								</span>
+		
+								<div class="ad" *ngIf="x.contentTypeAd">
+									<div class="adContent" [innerHtml]="x.content | safeHtml"></div>
+									<div class="disableAdBlock" *ngIf="hideAd">
+										{{translations?.common?.disableAdBlock}}
+									</div>
+								</div>
+							</li>
+						</ul>
+		
+						<div class="loadingData" *ngIf="dataLiked?.loadingData">
+							<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+						</div>
+		
+						<div class="noData" *ngIf="dataLiked?.noData">
+							<div class="description">{{translations?.bookmarks?.noLiked}}</div>
+						</div>
+		
+						<div class="loadMore" *ngIf="dataLiked?.loadMoreData">
+							<button mat-fab (click)="default('more')" *ngIf="!dataLiked?.loadingMoreData">
+								<i label="add"></i>
+							</button>
+							<mat-progress-spinner mode="indeterminate" *ngIf="dataLiked?.loadingMoreData"></mat-progress-spinner>
+						</div>
+					</mat-tab>
+				</mat-tab-group>
 			</div>
 		</div>
 	</div>

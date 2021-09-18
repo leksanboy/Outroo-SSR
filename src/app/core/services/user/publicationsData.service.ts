@@ -198,4 +198,18 @@ export class PublicationsDataService {
 				return res;
 			}));
 	}
+
+	likedPublications(data: any) {
+		const url = this.env.url + 'assets/api/publications/likedPublications.php';
+		let params =	(data.user ? ('&user=' + data.user) : '') +
+						'&type=' + data.type +
+						'&rows=' + data.rows +
+						'&cuantity=' + data.cuantity;
+		params = params.replace('&', '?');
+
+		return this.httpClient.get(url + params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
 }

@@ -7,7 +7,8 @@ import {
 	MatDialogModule,
 	MatProgressSpinnerModule,
 	MatRippleModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatTabsModule
 } from '@angular/material';
 
 // Pipe
@@ -33,7 +34,8 @@ const routes: Routes = [
 		MatDialogModule,
 		MatProgressSpinnerModule,
 		MatRippleModule,
-		MatTooltipModule
+		MatTooltipModule,
+		MatTabsModule
 	],
 	declarations: [
 		BookmarksComponent

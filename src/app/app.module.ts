@@ -17,7 +17,6 @@ import {
 	MatBottomSheetModule,
 	MatButtonModule,
 	MatButtonToggleModule,
-	MatCheckboxModule,
 	MatDialogModule,
 	MatDividerModule,
 	MatInputModule,
@@ -27,7 +26,8 @@ import {
 	MatSelectModule,
 	MatSliderModule,
 	MatSlideToggleModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatRadioModule
 } from '@angular/material';
 
 // App
@@ -99,6 +99,7 @@ import { ActiveSessionComponent } from './pages/common/activeSession/activeSessi
 		MatSliderModule,
 		MatSlideToggleModule,
 		MatTooltipModule,
+		MatRadioModule,
 		// Common modules
 		ActivePlayerMobileModule,
 		ActiveSessionsMobileModule,

@@ -42,6 +42,7 @@
 	"bookmarks": {
 		"title": "Bookmarks",
 		"noData": "No bookmarks",
+		"noLiked": "No liked publications yet",
 		"addedTo": "Added to Bookmarks"
 	},
 	"followers": {
@@ -301,7 +302,7 @@
 		"title": "Support",
 		"description": "We can help you with anything.",
 		"email": "Email",
-		"typeHere": "Type here, describe the problem",
+		"typeHere": "Describe the problem",
 		"defaultText": {
 			"one": "We can help you with your questions.",
 			"two": "If need to send a report of spam or similar things, we will take the appropriate measures.",
@@ -367,7 +368,14 @@
 		"add": "Add",
 		"remove": "Remove",
 		"report": "Report",
-		"reportDescription": "Describe what the problem is.",
+		"reportTypes": {
+			"violence": "Violent or repulsive content",
+			"hate": "Hateful or abusive content",
+			"rights": "Copyright infringement",
+			"spam": "Spam or misleading",
+			"other": "Other reason",
+			"problemDescription": "Describe what the problem is"
+		},
 		"share": "Share",
 		"edit": "Edit",
 		"addToPlaylist": "Add to playlist",
@@ -385,6 +393,7 @@
 		"disableComments": "Disable comments",
 		"enableComments": "Enable comments",
 		"likedThis": "liked this",
+		"liked": "Liked publications",
 		"andMoreLikedThis": "and more liked this",
 		"comments": "Comments",
 		"noComments": "No comments",

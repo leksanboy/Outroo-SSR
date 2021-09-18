@@ -198,7 +198,7 @@
 													</mat-menu>
 
 													<mat-menu #menuPlaylists="matMenu">
-														<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
+														<button mat-menu-item (click)="itemSongOptions('createPlaylist', x.contentData, null)"><i label="add"></i>{{translations?.common?.createPlaylist}}</button>
 														<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 														<span *ngFor="let p of sessionData.current.playlists">
 															<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x.contentData, p)">
@@ -209,9 +209,16 @@
 													</mat-menu>
 
 													<mat-menu #menuShareSocial="matMenu">
-														<button mat-menu-item (click)="itemSongOptions('message', x.contentData, null)">{{translations?.common?.sendMessage}}</button>
-														<button mat-menu-item (click)="itemSongOptions('newTab', x.contentData, null)">{{translations?.common?.openInNewTab}}</button>
-														<button mat-menu-item (click)="itemSongOptions('copyLink', x.contentData, null)">{{translations?.common?.copyLink}}</button>
+														<button mat-menu-item (click)="itemSongOptions('message', x.contentData, null)"><i label="email" class="icon85"></i>{{translations?.common?.sendMessage}}</button>
+														<button mat-menu-item (click)="itemSongOptions('newTab', x.contentData, null)"><i label="launch" class="icon85"></i>{{translations?.common?.openInNewTab}}</button>
+														<button mat-menu-item (click)="itemSongOptions('copyLink', x.contentData, null)"><i label="copy" class="icon85"></i>{{translations?.common?.copyLink}}</button>
+														<mat-divider></mat-divider>
+														<button mat-menu-item (click)="itemSongOptions('whatsapp', x.contentData, null)"><i class="social" label="whatsapp"></i>Whatsapp</button>
+														<button mat-menu-item (click)="itemSongOptions('telegram', x.contentData, null)"><i class="social" label="telegram"></i>Telegram</button>
+														<button mat-menu-item (click)="itemSongOptions('twitter', x.contentData, null)"><i class="social" label="twitter"></i>Twitter</button>
+														<button mat-menu-item (click)="itemSongOptions('messenger', x.contentData, null)"><i class="social" label="messenger"></i>Messenger</button>
+														<button mat-menu-item (click)="itemSongOptions('facebook', x.contentData, null)"><i class="social" label="facebook"></i>Facebook</button>
+														<button mat-menu-item (click)="itemSongOptions('reddit', x.contentData, null)"><i class="social" label="reddit"></i>Reddit</button>
 													</mat-menu>
 												</div>
 											</div>
@@ -276,9 +283,16 @@
 															</mat-menu>
 
 															<mat-menu #menuShareSocial="matMenu">
-																<button mat-menu-item (click)="itemPlaylistOptions('message', x.contentData, null)">{{translations?.common?.sendMessage}}</button>
-																<button mat-menu-item (click)="itemPlaylistOptions('newTab', x.contentData, null)">{{translations?.common?.openInNewTab}}</button>
-																<button mat-menu-item (click)="itemPlaylistOptions('copyLink', x.contentData, null)">{{translations?.common?.copyLink}}</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('message', x.contentData, null)"><i label="email" class="icon85"></i>{{translations?.common?.sendMessage}}</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('newTab', x.contentData, null)"><i label="launch" class="icon85"></i>{{translations?.common?.openInNewTab}}</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('copyLink', x.contentData, null)"><i label="copy" class="icon85"></i>{{translations?.common?.copyLink}}</button>
+																<mat-divider></mat-divider>
+																<button mat-menu-item (click)="itemPlaylistOptions('whatsapp', x.contentData, null)"><i class="social" label="whatsapp"></i>Whatsapp</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('telegram', x.contentData, null)"><i class="social" label="telegram"></i>Telegram</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('twitter', x.contentData, null)"><i class="social" label="twitter"></i>Twitter</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('messenger', x.contentData, null)"><i class="social" label="messenger"></i>Messenger</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('facebook', x.contentData, null)"><i class="social" label="facebook"></i>Facebook</button>
+																<button mat-menu-item (click)="itemPlaylistOptions('reddit', x.contentData, null)"><i class="social" label="reddit"></i>Reddit</button>
 															</mat-menu>
 														</div>
 													</div>

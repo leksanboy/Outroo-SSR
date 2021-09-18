@@ -57,13 +57,8 @@ declare var gapi: any;
 })
 export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	@ViewChild('audioPlayerHtml') audioPlayerHtml: ElementRef;
-
 	@ViewChild('searchInput') searchInput: ElementRef;
 	@ViewChild('searchResults') searchResults: ElementRef;
-	/* @ViewChild('notButton') notButton;
-	@ViewChild('notBox') notBox: ElementRef;
-	@ViewChild('userButton') userButton: ElementRef;
-	@ViewChild('userBox') userBox: ElementRef; */
 
 	public env: any = environment;
 	public window: any = global;
@@ -220,7 +215,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		// Get cover data
 		this.playerService.getCoverTrack()
 			.subscribe(data => {
-				console.log('data:', data);
+				console.log('cover data:', data);
 
 				if (data.type === 'song') {
 					this.audioPlayerData.current.color = data.color;
@@ -704,8 +699,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.current.image = res[0].image ? (this.env.pathAudios + 'thumbnails/' + res[0].image) : '';
 					this.audioPlayerData.item = res[0];
 					this.audioPlayerData.key = 0;
-					/* this.audioPlayerData.user = this.sessionData.current.id;
-					this.audioPlayerData.username = this.sessionData.current.username; */
+					this.audioPlayerData.current.item = res[0];
 					this.audioPlayerData.location = 'user';
 					this.audioPlayerData.type = 'default';
 					this.audioPlayerData.selectedIndex = 0;
@@ -967,7 +961,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.loadingToPlay = true;
 					this.audioPlayerData.loading = true;
 					this.audioPlayerData.playing = true;
-					/* this.audioPlayerData.current.user = this.audioPlayerData.user; */
 					this.audioPlayerData.current.type = this.audioPlayerData.type;
 					this.audioPlayerData.current.key = key;
 					this.audioPlayerData.current.item = this.audioPlayerData.list[key];
@@ -978,8 +971,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audio.src = this.env.pathAudios + this.audioPlayerData.list[key].name;
 					this.audio.load();
 					this.audioPlayerData.current.color = this.audioPlayerData.current.image ? this.audioDataService.getCoverColor('song', this.audioPlayerData.current.image) : null;
-					/* this.audioPlayerData.current.background = this.audioPlayerData.current.color ? ('rgb(' + this.audioPlayerData.current.color + ')') : null;
-					this.audioPlayerData.current.shadow = this.audioPlayerData.current.color ? ('0 10px 30px rgba(' + this.audioPlayerData.current.color + ', 0.37)') : null; */
 
 					// Replays +1
 					this.updateReplays(this.audioPlayerData.list[key].song, (this.sessionData ? this.sessionData.current.id : 0), this.audioPlayerData.playlist);
@@ -988,12 +979,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.audioPlayerData.location = this.audioPlayerData.location ? this.audioPlayerData.location : 'user';
 					this.audioPlayerData.item = this.audioPlayerData.list[key];
 					this.audioPlayerData.key = key;
-					/* this.audioPlayerData.list = this.audioPlayerData.list; */
-					/* this.audioPlayerData.postId = this.audioPlayerData.postId;
-					this.audioPlayerData.type = this.audioPlayerData.type; */
-					/* this.audioPlayerData.user = this.audioPlayerData.user;
-					this.audioPlayerData.username = this.audioPlayerData.username; */
-					/* this.audioPlayerData.selectedIndex = this.audioPlayerData.selectedIndex; */
 				}
 
 				// Set to service
@@ -1332,6 +1317,30 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
+				break;
 		}
 	}
 
@@ -1430,6 +1439,30 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			case 'copyLink':
 				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
 				break;
 		}
 	}
@@ -1760,7 +1793,6 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	doMiniPlayer(type) {
 		if (type === 'collapse') {
 			this.audioPlayerData.mini = true;
-			this.audioPlayerData.playlistBox = false;
 			this.sessionData.current.mp = true;
 		} else if (type === 'expand') {
 			this.audioPlayerData.mini = false;

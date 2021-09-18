@@ -42,6 +42,7 @@
 	"bookmarks": {
 		"title": "Guardados",
 		"noData": "No hay guardados",
+		"noLiked": "No hay publicaciones que te hayan gustado todavía",
 		"addedTo": "Añadido a Guardados"
 	},
 	"followers": {
@@ -301,7 +302,7 @@
 		"title": "Soporte técnico",
 		"description": "Podemos ayudarte con cualquier cosa.",
 		"email": "Correo electrónico",
-		"typeHere": "Escribe aquí, describa el problema",
+		"typeHere": "Describa el problema",
 		"defaultText": {
 			"one": "Podemos ayudarte con tus preguntas.",
 			"two": "Si es a causa de spam o similares, tomaremos las medidas adecuadas.",
@@ -367,7 +368,14 @@
 		"add": "Añadir",
 		"remove": "Eliminar",
 		"report": "Reportar",
-		"reportDescription": "Describe cual es el problema.",
+		"reportTypes": {
+			"violence": "Contenido violento o repulsivo",
+			"hate": "Contenido ofensivo o de odio",
+			"rights": "Infracción de derechos de autor",
+			"spam": "Spam o engañoso",
+			"other": "Otro motivo",
+			"problemDescription": "Describa cuál es el problema"
+		},
 		"share": "Compartir",
 		"edit": "Editar",
 		"addToPlaylist": "Añadir a la playlist",
@@ -385,6 +393,7 @@
 		"disableComments": "Deshabilitar comentarios",
 		"enableComments": "Habilitar comentarios",
 		"likedThis": "les ha gustado",
+		"liked": "Publicaciones que te han gustado",
 		"andMoreLikedThis": "y a más personas les ha gustado.",
 		"comments": "Commentarios",
 		"noComments": "No hay comentarios",

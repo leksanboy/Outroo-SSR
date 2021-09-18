@@ -24,16 +24,33 @@
 		<div class="container">
 			<div class="form">
 				<form [formGroup]="actionForm" (ngSubmit)="submit()">
-					<mat-form-field class="textarea">
-						<textarea matInput
-						placeholder="{{translations?.support?.typeHere}}"
-						#Content
-						maxlength="1000"
-						formControlName="content"
-						cdkTextareaAutosize
-						#autosize="cdkTextareaAutosize"
-						cdkAutosizeMinRows="5"
-						cdkAutosizeMaxRows="7"></textarea>
+					<mat-radio-group formControlName="type">
+						<mat-radio-button [value]="violence">
+							{{translations?.common?.reportTypes?.violence}}
+						</mat-radio-button>
+						<mat-radio-button [value]="hate">
+							{{translations?.common?.reportTypes?.hate}}
+						</mat-radio-button>
+						<mat-radio-button [value]="rights">
+							{{translations?.common?.reportTypes?.rights}}
+						</mat-radio-button>
+						<mat-radio-button [value]="spam">
+							{{translations?.common?.reportTypes?.spam}}
+						</mat-radio-button>
+						<mat-radio-button [value]="other">
+							{{translations?.common?.reportTypes?.other}}
+						</mat-radio-button>
+					</mat-radio-group>
+
+					<mat-form-field appearance="outline">
+						<mat-label>{{translations?.common?.reportTypes?.problemDescription}}</mat-label>
+						<textarea matInput 
+									formControlName="content"
+									#Content 
+									cdkTextareaAutosize
+									#autosize="cdkTextareaAutosize"
+									cdkAutosizeMinRows="3"
+									cdkAutosizeMaxRows="7"></textarea>
 						<mat-hint align="end">{{Content.value.length}}/1000</mat-hint>
 					</mat-form-field>
 				</form>

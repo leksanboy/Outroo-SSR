@@ -5,6 +5,7 @@
 	$session = sessionId();
     $pageId = $data['pageId'];
     $pageType = $data['pageType'];
+	$type = $data['type'];
 	$content = $data['content'];
 	$lang = $data['lang'];
 
@@ -13,8 +14,8 @@
 
 	if (isset($session) && isset($user)) {
         // Create question
-        $sql = "INSERT INTO z_report (user, page_id, page_type, content, ip_address)
-				VALUES ($session, $pageId, '$pageType',  '$content', '$ipAddress')";
+        $sql = "INSERT INTO z_report (user, page_id, page_type, type, content, ip_address)
+				VALUES ($session, $pageId, '$pageType', '$type', '$content', '$ipAddress')";
 		$result = $conn->query($sql);
 
         // Send email

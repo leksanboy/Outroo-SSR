@@ -210,5 +210,41 @@
 		}
 
 		$conn->close();
+	} else if ($type === 'liked') {
+		$sql = "SELECT p.id,
+						p.name,
+						p.photos as contentData
+				FROM z_publications_likes l
+					INNER JOIN z_publications p ON p.id = l.publication
+				WHERE l.user = $session
+					AND l.is_deleted = 0
+					AND p.is_deleted = 0
+				ORDER BY l.id DESC
+				LIMIT $more, $cuantity";
+
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			$data = array();
+			while($row = $result->fetch_assoc()) {
+				// Format photos
+				$row['contentData'] = json_decode($row['contentData']);
+				foreach ($row['contentData'] as &$p) {
+					$p = getPhotoData($p);
+				}
+
+				if ($row['contentData']) {
+					$row['contentData'] = $row['contentData'][0];
+				}
+
+				$data[] = $row;
+			}
+
+			echo json_encode($data);
+		} else {
+			var_dump(http_response_code(204));
+		}
+
+		$conn->close();
 	}
 ?>

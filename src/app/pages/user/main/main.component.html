@@ -331,71 +331,76 @@
 						</ng-template>
 
 						<ul class="tracks" *ngIf="dataSongs?.list?.length > 0">
-							<li *ngFor="let x of dataSongs?.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'main' && audioPlayerData.type == 'default', remove: x.addRemoveSession, advert: x.contentTypeAd}">
-								<div class="inner" *ngIf="!x.contentTypeAd">
+							<li *ngFor="let a of dataSongs?.list; let i=index;" [ngClass]="{active: audioPlayerData.key == i && audioPlayerData.location == 'main' && audioPlayerData.type == 'default', remove: a.addRemoveSession, advert: a.contentTypeAd}">
+								<div class="inner" *ngIf="!a.contentTypeAd">
 									<div class="image">
-										<button mat-icon-button (click)="playSong(dataSongs?.list, x, i, 'default')">
-											<i label="play" *ngIf="!x.playing || !(audioPlayerData.location == 'main' && audioPlayerData.type == 'default')"></i>
-											<i label="pause" *ngIf="x.playing && (audioPlayerData.location == 'main' && audioPlayerData.type == 'default')"></i>
-											<img [src]="x.image ? (env.pathAudios + 'thumbnails/' + x.image) : env.defaultSongCover"/>
+										<button mat-icon-button (click)="playSong(dataSongs?.list, a, i, 'default')">
+											<i label="play" *ngIf="!a.playing || !(audioPlayerData.location == 'main' && audioPlayerData.type == 'default')"></i>
+											<i label="pause" *ngIf="a.playing && (audioPlayerData.location == 'main' && audioPlayerData.type == 'default')"></i>
+											<img [src]="a.image ? (env.pathAudios + 'thumbnails/' + a.image) : env.defaultSongCover"/>
 										</button>
 									</div>
 
-									<div class="text" (click)="playSong(dataSongs?.list, x, i, 'default')">
-										<div class="titleArtist" title="{{x.original_title ? x.original_title : x.title}}">
-											<div class="title">{{x.original_title ? x.original_title : x.title}}</div>
-											<div class="artist">{{x.original_artist ? x.original_artist : x.title}}</div>
+									<div class="text" (click)="playSong(dataSongs?.list, a, i, 'default')">
+										<div class="titleArtist" title="{{a.original_title ? a.original_title : a.title}}">
+											<div class="title">{{a.original_title ? a.original_title : a.title}}</div>
+											<div class="artist">{{a.original_artist ? a.original_artist : a.title}}</div>
 										</div>
 										<div class="explicitDuration">
-											<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="x.explicit"></i>
-											<div class="duration">{{x.duration}}</div>
+											<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}" *ngIf="a.explicit"></i>
+											<div class="duration">{{a.duration}}</div>
 										</div>
 									</div>
 
 									<div class="actions" *ngIf="sessionData?.current?.id">
 										<span *ngIf="userData?.id == sessionData?.current?.id">
-											<button mat-icon-button [matMenuTriggerFor]="options">
+											<button mat-icon-button [matMenuTriggerFor]="appMenu">
 												<i class="icon85 grey" label="more"></i>
 											</button>
 										</span>
 
 										<span *ngIf="userData?.id != sessionData?.current?.id">
-											<button mat-icon-button [matMenuTriggerFor]="options">
-												<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
-												<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+											<button mat-icon-button [matMenuTriggerFor]="appMenu">
+												<i class="icon85 blue" label="check" *ngIf="a.addRemoveUser"></i>
+												<i class="icon85 grey" label="more" *ngIf="!a.addRemoveUser"></i>
 											</button>
 										</span>
 
-										<mat-menu #options="matMenu">
-											<button mat-menu-item (click)="itemSongOptions('addRemoveUser', x, null)" *ngIf="userData?.id != sessionData?.current?.id">{{!x.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+										<mat-menu #appMenu="matMenu">
+											<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-											<button mat-menu-item (click)="itemSongOptions('report', x, null)">{{translations?.common?.report}}</button>
-											<mat-divider *ngIf="userData?.id == sessionData?.current?.id"></mat-divider>
-											<button mat-menu-item (click)="itemSongOptions('addRemoveSession', x, null)" *ngIf="userData?.id == sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.add : translations?.common?.remove}}</button>
+											<button mat-menu-item (click)="itemSongOptions('report', a, null)">{{translations?.common?.report}}</button>
 										</mat-menu>
-
+		
 										<mat-menu #menuPlaylists="matMenu">
-											<button mat-menu-item (click)="itemSongOptions('createPlaylist', x, null)">{{translations?.common?.createPlaylist}}</button>
-											<mat-divider *ngIf="sessionData?.current?.playlists?.length"></mat-divider>
+											<button mat-menu-item (click)="itemSongOptions('createPlaylist', a, null)"><i label="add"></i>{{translations?.common?.createPlaylist}}</button>
+											<mat-divider *ngIf="sessionData?.current?.playlists?.length > 0"></mat-divider>
 											<span *ngFor="let p of sessionData?.current?.playlists">
-												<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', x, p)">
+												<button mat-menu-item *ngIf="!p.removed" (click)="itemSongOptions('playlist', a, p)">
 													<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
 													{{p.title}}
 												</button>
 											</span>
 										</mat-menu>
-
+		
 										<mat-menu #menuShareSocial="matMenu">
-											<button mat-menu-item (click)="itemSongOptions('message', x, null)">{{translations?.common?.sendMessage}}</button>
-											<button mat-menu-item (click)="itemSongOptions('newTab', x, null)">{{translations?.common?.openInNewTab}}</button>
-											<button mat-menu-item (click)="itemSongOptions('copyLink', x, null)">{{translations?.common?.copyLink}}</button>
+											<button mat-menu-item (click)="itemSongOptions('message', a, null)"><i label="email" class="icon85"></i>{{translations?.common?.sendMessage}}</button>
+											<button mat-menu-item (click)="itemSongOptions('newTab', a, null)"><i label="launch" class="icon85"></i>{{translations?.common?.openInNewTab}}</button>
+											<button mat-menu-item (click)="itemSongOptions('copyLink', a, null)"><i label="copy" class="icon85"></i>{{translations?.common?.copyLink}}</button>
+											<mat-divider></mat-divider>
+											<button mat-menu-item (click)="itemSongOptions('whatsapp', a, null)"><i class="social" label="whatsapp"></i>Whatsapp</button>
+											<button mat-menu-item (click)="itemSongOptions('telegram', a, null)"><i class="social" label="telegram"></i>Telegram</button>
+											<button mat-menu-item (click)="itemSongOptions('twitter', a, null)"><i class="social" label="twitter"></i>Twitter</button>
+											<button mat-menu-item (click)="itemSongOptions('messenger', a, null)"><i class="social" label="messenger"></i>Messenger</button>
+											<button mat-menu-item (click)="itemSongOptions('facebook', a, null)"><i class="social" label="facebook"></i>Facebook</button>
+											<button mat-menu-item (click)="itemSongOptions('reddit', a, null)"><i class="social" label="reddit"></i>Reddit</button>
 										</mat-menu>
 									</div>
 								</div>
 
-								<div class="ad" *ngIf="x.contentTypeAd">
-									<div class="box" [innerHtml]="x.content"></div>
+								<div class="ad" *ngIf="a.contentTypeAd">
+									<div class="box" [innerHtml]="a.content"></div>
 									<div class="disableAdBlock" *ngIf="hideAd">{{translations?.common?.disableAdBlock}}</div>
 								</div>
 							</li>
@@ -461,46 +466,45 @@
 					</div>
 
 					<ul class="playlists">
-						<li *ngFor="let x of recommendedPlaylists.list; let i=index;">
-							<a mat-ripple class="image" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
-								<div class="img" [ngStyle]="{'background-image': 'url(' + (x?.image?.length ? (env.pathAudios + 'covers/' + x.image) : env.defaultPlaylistCover) + ')'}"></div>
+						<li *ngFor="let p of recommendedPlaylists.list; let i=index;">
+							<a mat-ripple class="image" routerLink="/pl/{{p.name}}" target="popup" (click)="itemPlaylistOptions('show', p, i); false;">
+								<div class="img" [ngStyle]="{'background-image': 'url(' + (p?.image?.length ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover) + ')'}"></div>
 							</a>
 
 							<div class="panel">
-								<a class="title" routerLink="/pl/{{x.name}}" target="popup" (click)="itemPlaylistOptions('show', x, i); false;">
-									{{x.title}}
+								<a class="title" routerLink="/pl/{{p.name}}" target="popup" (click)="itemPlaylistOptions('show', p, i); false;">
+									{{p.title}}
 								</a>
 
 								<div class="actions" *ngIf="sessionData?.current?.id">
-									<div class="category" *ngIf="x.explicit">
+									<div class="category" *ngIf="p.explicit">
 										<i label="explicit" class="icon65 grey" matTooltip="{{translations?.common?.explicit}}"></i>
 									</div>
 
 									<button mat-icon-button [matMenuTriggerFor]="appMenu">
-										<i class="icon85 blue" label="check" *ngIf="x.addRemoveUser"></i>
-										<i class="icon85 grey" label="more" *ngIf="!x.addRemoveUser"></i>
+										<i class="icon85 blue" label="check" *ngIf="p.addRemoveUser"></i>
+										<i class="icon85 grey" label="more" *ngIf="!p.addRemoveUser"></i>
 									</button>
 
 									<mat-menu #appMenu="matMenu">
-										<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x, i)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
-										<button mat-menu-item (click)="itemPlaylistOptions('follow', x, i)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('follow', p, i)">{{!p.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', p, i)">{{!p.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
 										<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-										<button mat-menu-item (click)="itemPlaylistOptions('report', x, i)">{{translations?.common?.report}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('report', p, i)">{{translations?.common?.report}}</button>
 									</mat-menu>
 
 									<mat-menu #menuShareSocial="matMenu">
-										<button mat-menu-item (click)="itemPlaylistOptions('message', x, i)">{{translations?.common?.sendMessage}}</button>
-										<button mat-menu-item (click)="itemPlaylistOptions('newTab', x, i)">{{translations?.common?.openInNewTab}}</button>
-										<button mat-menu-item (click)="itemPlaylistOptions('copyLink', x, i)">{{translations?.common?.copyLink}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('message', p, i)"><i label="email" class="icon85"></i>{{translations?.common?.sendMessage}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('newTab', p, i)"><i label="launch" class="icon85"></i>{{translations?.common?.openInNewTab}}</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('copyLink', p, i)"><i label="copy" class="icon85"></i>{{translations?.common?.copyLink}}</button>
+										<mat-divider></mat-divider>
+										<button mat-menu-item (click)="itemPlaylistOptions('whatsapp', p, i)"><i class="social" label="whatsapp"></i>Whatsapp</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('telegram', p, i)"><i class="social" label="telegram"></i>Telegram</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('twitter', p, i)"><i class="social" label="twitter"></i>Twitter</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('messenger', p, i)"><i class="social" label="messenger"></i>Messenger</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('facebook', p, i)"><i class="social" label="facebook"></i>Facebook</button>
+										<button mat-menu-item (click)="itemPlaylistOptions('reddit', p, i)"><i class="social" label="reddit"></i>Reddit</button>
 									</mat-menu>
-								</div>
-							</div>
-						</li>
-
-						<li class="seeAll" routerLink="/{{sessionData?.current?.username}}/songs">
-							<div class="inner">
-								<div class="text">
-									{{translations?.common?.seeAll}}
 								</div>
 							</div>
 						</li>

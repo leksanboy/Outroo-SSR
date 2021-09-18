@@ -566,6 +566,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				const configShow = {
 					disableClose: false,
+					backdropClass: 'cdk-overlay-transparent-backdrop',
 					data: {
 						sessionData: this.sessionData,
 						userData: this.userData,
@@ -576,8 +577,8 @@ export class MainComponent implements OnInit, OnDestroy {
 				};
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
-				dialogRefShow.beforeClosed().subscribe((res: string) => {
-					this.location.go(this.router.url);
+				dialogRefShow.beforeClosed().subscribe((res: any) => {
+					this.location.go('/pl/' + this.data.current.name);
 				});
 				break;
 			case ('addRemoveUser'):
@@ -653,6 +654,30 @@ export class MainComponent implements OnInit, OnDestroy {
 				const urlExtension = this.env.url + 'pl/' + item.name;
 				this.sessionService.setDataCopy(urlExtension);
 				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
+				break;
 		}
 	}
 
@@ -696,46 +721,20 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case ('addRemoveSession'):
-				item.addRemoveSession = !item.addRemoveSession;
-				item.removeType = item.addRemoveSession ? 'remove' : 'add';
-
-				const dataARS = {
-					type: item.removeType,
-					subtype: 'session',
-					location: 'playlist',
-					id: item.id
-				};
-
-				this.audioDataService.addRemove(dataARS)
-					.subscribe(res => {
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
-
-						this.alertService.success(song + text);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-				break;
 			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				const dataARO = {
+				const dataU = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
-					item: item.song
+					item: item.id
 				};
 
-				this.audioDataService.addRemove(dataARO)
-					.subscribe(res => {
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.hasBeenAdded) : (' ' + this.translations.hasBeenRemoved);
-
-						this.alertService.success(song + text);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
+				this.audioDataService.addRemove(dataU)
+					.subscribe((res: any) => {
+						item.insertedId = res;
 					});
 				break;
 			case ('playlist'):
@@ -751,8 +750,7 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.audioDataService.addRemove(dataP)
 					.subscribe(res => {
 						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = ' ' + this.translations.hasBeenAddedTo + playlist.title;
-
+							text = ' ' + this.translations.common.hasBeenAddedTo + ' ' + playlist.title;
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -766,8 +764,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
 				this.sessionService.setDataCreatePlaylist(dataCP);
 				break;
+			case ('share'):
+				alert('Working on Share with friends');
+				break;
 			case ('report'):
-				item.type = 'playlist';
+				item.type = 'audio';
 				this.sessionService.setDataReport(item);
 				break;
 			case 'message':
@@ -775,12 +776,36 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataNewShare(item);
 				break;
 			case 'newTab':
-				const url = this.env.url + 's/' + item.name.slice(0, -4);
-				this.window.open(url, '_blank');
+				const urlSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.window.open(urlSong, '_blank');
 				break;
 			case 'copyLink':
-				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
-				this.sessionService.setDataCopy(urlExtension);
+				const urlExtensionSong = this.env.url + 's/' + item.name.slice(0, -4);
+				this.sessionService.setDataCopy(urlExtensionSong);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
 				break;
 		}
 	}
@@ -913,7 +938,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			this.dataBookmarks.rows++;
 
 			const data = {
-				type: 'news',
+				type: 'bookmarks',
 				rows: this.dataBookmarks.rows,
 				cuantity: this.env.cuantity * 3
 			};

@@ -44,8 +44,15 @@
 				<ul class="shareUsers">
 					<li *ngFor="let x of data?.users">
 						<div mat-ripple class="inner">
-							<div class="avatar" (click)="addUser(x)">
+							<div class="avatar">
 								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+							</div>
+							<div class="text">
+								{{x.user.username}}
+								<i class="icon50 blue" label="official" *ngIf="x.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+							</div>
+							<div class="remove" (click)="addUser(x)">
+								<i class="icon75" label="close"></i>
 							</div>
 						</div>
 					</li>
