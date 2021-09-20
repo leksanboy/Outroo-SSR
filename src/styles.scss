@@ -4764,7 +4764,7 @@ body {
 			i {
 				background-color: transparentize($whiteColor, .25);
 				filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, .5));
-				margin: auto auto auto 6px;
+				margin: auto auto auto 12px;
 				position: absolute;
 				bottom: 0;
 				right: 0;
@@ -4778,7 +4778,7 @@ body {
 			right: 0;
 
 			i {
-				margin: auto 6px auto auto;
+				margin: auto 12px auto auto;
 			}
 		}
 	}

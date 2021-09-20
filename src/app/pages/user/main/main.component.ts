@@ -16,8 +16,9 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
-import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
+import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
@@ -561,12 +562,11 @@ export class MainComponent implements OnInit, OnDestroy {
 	// Playlist options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
-			case ('show'):
+			case 'show':
 				this.location.go('/pl/' + item.name);
 
 				const configShow = {
 					disableClose: false,
-					backdropClass: 'cdk-overlay-transparent-backdrop',
 					data: {
 						sessionData: this.sessionData,
 						userData: this.userData,
@@ -577,11 +577,68 @@ export class MainComponent implements OnInit, OnDestroy {
 				};
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
-				dialogRefShow.beforeClosed().subscribe((res: any) => {
-					this.location.go('/pl/' + this.data.current.name);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
 				});
 				break;
-			case ('addRemoveUser'):
+			case 'edit':
+				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
+				item.path = this.env.pathAudios;
+				item.index = index;
+
+				const configEdit = {
+					disableClose: false,
+					data: {
+						type: 'edit',
+						sessionData: this.sessionData,
+						translations: this.translations,
+						item: item
+					}
+				};
+
+				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
+				dialogRefEdit.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (res) {
+						const data = {
+							index: res.index,
+							item: res
+						};
+
+						this.updatePlaylist('edit', data);
+					}
+				});
+				break;
+			case 'publicPrivate':
+				item.private = !item.private;
+				item.privateType = item.private ? 'private' : 'public';
+
+				const dataPPS = {
+					type: item.privateType,
+					id: item.id
+				};
+
+				this.audioDataService.publicPrivate(dataPPS).subscribe();
+				break;
+			case 'addRemoveSession':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
+				item.removed = item.addRemoveSession ? true : false;
+
+				const dataARS = {
+					type: item.removeType,
+					location: 'session',
+					id: item.idPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARS)
+					.subscribe((res: any) => {
+						this.updatePlaylist('addRemoveSession', null);
+					});
+				break;
+			case 'addRemoveUser':
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -599,26 +656,12 @@ export class MainComponent implements OnInit, OnDestroy {
 					.subscribe((res: any) => {
 						item.idPlaylist = res;
 						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
-
-						if (dataARO.type === 'add') {
-							this.sessionData.current.playlists.unshift(dataARO);
-						} else {
-							for (const i in this.sessionData.current.playlists) {
-								if (i) {
-									if (this.sessionData.current.playlists[i].id = dataARO.id) {
-										this.sessionData.current.playlists[i] = dataARO;
-									}
-								}
-							}
-						}
-						// Update playslists on selects
-						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
-						this.sessionService.setDataPlaylists(this.sessionData);
+						this.updatePlaylist('addRemoveUser', item);
 
 						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case ('follow'):
+			case 'follow':
 				item.followUnfollow = !item.followUnfollow;
 				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
@@ -638,7 +681,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					});
 
 				break;
-			case ('report'):
+			case 'report':
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
 				break;
@@ -679,6 +722,48 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.window.open(urlReddit, '_blank');
 				break;
 		}
+	}
+
+	// Update playlist
+	updatePlaylist(type, data) {
+		if (type === 'create') {
+			const d = {
+				type: 'create',
+				item: null
+			};
+			this.sessionService.setDataCreatePlaylist(d);
+		} else if (type === 'edit') {
+			let newPl = [];
+
+			for (let p of this.dataDefault.playlists) {
+				if (p.id == data.item.id) {
+					newPl.push(data.item);
+				} else {
+					newPl.push(p);
+				}
+			}
+
+			this.dataDefault.playlists = newPl;
+			this.sessionData.current.playlists = this.dataDefault.playlists;
+		} else if (type === 'addRemoveSession') {
+			this.sessionData.current.playlists = this.dataDefault.playlists;
+		} else if (type === 'addRemoveUser') {
+			if (data.type === 'add') {
+				this.sessionData.current.playlists.unshift(data);
+			} else {
+				for (const i in this.sessionData.current.playlists) {
+					if (i) {
+						if (this.sessionData.current.playlists[i].id = data.id) {
+							this.sessionData.current.playlists[i] = data;
+						}
+					}
+				}
+			}
+		}
+
+		// Update playslists on selects
+		this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+		this.sessionService.setDataPlaylists(this.sessionData);
 	}
 
 	// Push Google Ad

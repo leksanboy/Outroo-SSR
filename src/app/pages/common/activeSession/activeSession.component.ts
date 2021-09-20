@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, Inject, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Location, PlatformLocation, DOCUMENT } from '@angular/common';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { environment } from '../../../../environments/environment';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -1347,14 +1347,14 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 	// Playlist options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
-			case ('show'):
+			case 'show':
 				this.location.go('/pl/' + item.name);
 
 				const configShow = {
 					disableClose: false,
 					data: {
 						sessionData: this.sessionData,
-						userData: this.sessionData,
+						userData: this.sessionData.current,
 						translations: this.translations,
 						item: item,
 						audioPlayerData: this.audioPlayerData
@@ -1367,7 +1367,63 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.location.go(this.router.url);
 				});
 				break;
-			case ('addRemoveUser'):
+			case 'edit':
+				this.location.go('/' + this.sessionData.current.username + '/songs#editPlaylist');
+				item.path = this.env.pathAudios;
+				item.index = index;
+
+				const configEdit = {
+					disableClose: false,
+					data: {
+						type: 'edit',
+						sessionData: this.sessionData,
+						translations: this.translations,
+						item: item
+					}
+				};
+
+				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
+				dialogRefEdit.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (res) {
+						const data = {
+							index: res.index,
+							item: res
+						};
+
+						this.updatePlaylist('edit', data);
+					}
+				});
+				break;
+			case 'publicPrivate':
+				item.private = !item.private;
+				item.privateType = item.private ? 'private' : 'public';
+
+				const dataPPS = {
+					type: item.privateType,
+					id: item.id
+				};
+
+				this.audioDataService.publicPrivate(dataPPS).subscribe();
+				break;
+			case 'addRemoveSession':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
+				item.removed = item.addRemoveSession ? true : false;
+
+				const dataARS = {
+					type: item.removeType,
+					location: 'session',
+					id: item.idPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARS)
+					.subscribe((res: any) => {
+						this.updatePlaylist('addRemoveSession', null);
+					});
+				break;
+			case 'addRemoveUser':
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -1385,26 +1441,12 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					.subscribe((res: any) => {
 						item.idPlaylist = res;
 						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
-
-						if (dataARO.type === 'add') {
-							this.sessionData.current.playlists.unshift(dataARO);
-						} else {
-							for (const i in this.sessionData.current.playlists) {
-								if (i) {
-									if (this.sessionData.current.playlists[i].id = dataARO.id) {
-										this.sessionData.current.playlists[i] = dataARO;
-									}
-								}
-							}
-						}
-						// Update playslists on selects
-						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
-						this.sessionService.setDataPlaylists(this.sessionData);
+						this.updatePlaylist('addRemoveUser', item);
 
 						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case ('follow'):
+			case 'follow':
 				item.followUnfollow = !item.followUnfollow;
 				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
@@ -1424,7 +1466,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					});
 
 				break;
-			case ('report'):
+			case 'report':
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
 				break;
@@ -1465,6 +1507,48 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.window.open(urlReddit, '_blank');
 				break;
 		}
+	}
+
+	// Update playlist
+	updatePlaylist(type, data) {
+		if (type === 'create') {
+			const d = {
+				type: 'create',
+				item: null
+			};
+			this.sessionService.setDataCreatePlaylist(d);
+		} else if (type === 'edit') {
+			let newPl = [];
+
+			for (let p of this.sessionData.current.playlists) {
+				if (p.id == data.item.id) {
+					newPl.push(data.item);
+				} else {
+					newPl.push(p);
+				}
+			}
+
+			this.sessionData.current.playlists = newPl;
+			this.sessionData.current.playlists = this.sessionData.current.playlists;
+		} else if (type === 'addRemoveSession') {
+			this.sessionData.current.playlists = this.sessionData.current.playlists;
+		} else if (type === 'addRemoveUser') {
+			if (data.type === 'add') {
+				this.sessionData.current.playlists.unshift(data);
+			} else {
+				for (const i in this.sessionData.current.playlists) {
+					if (i) {
+						if (this.sessionData.current.playlists[i].id = data.id) {
+							this.sessionData.current.playlists[i] = data;
+						}
+					}
+				}
+			}
+		}
+
+		// Update playslists on selects
+		this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+		this.sessionService.setDataPlaylists(this.sessionData);
 	}
 
 	// Show Player on Mobile

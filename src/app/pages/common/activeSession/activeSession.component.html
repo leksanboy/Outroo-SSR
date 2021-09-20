@@ -380,10 +380,12 @@
 																	</button>
 
 																	<mat-menu #appMenu="matMenu">
-																		<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x.contentData, null)">{{!x.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
-																		<button mat-menu-item (click)="itemPlaylistOptions('follow', x.contentData, null)">{{!x.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+																		<button mat-menu-item (click)="itemPlaylistOptions('edit', x.contentData, i)" *ngIf="x.contentData.user.id === sessionData?.current?.id">{{translations?.common?.edit}}</button>
+																		<button mat-menu-item (click)="itemPlaylistOptions('addRemoveSession', x.contentData, i)" *ngIf="x.contentData.user.id === sessionData?.current?.id">{{x.contentData.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+																		<button mat-menu-item (click)="itemPlaylistOptions('follow', x.contentData, i)" *ngIf="x.contentData.user.id !== sessionData?.current?.id">{{!x.contentData.followUnfollow ? translations?.common?.follow : translations?.common?.stopFollowing}}</button>
+																		<button mat-menu-item (click)="itemPlaylistOptions('addRemoveUser', x.contentData, i)" *ngIf="x.contentData.user.id !== sessionData?.current?.id">{{!x.contentData.addRemoveUser ? translations?.common?.clone : translations?.common?.remove}}</button>
 																		<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
-																		<button mat-menu-item (click)="itemPlaylistOptions('report', x.contentData, null)">{{translations?.common?.report}}</button>
+																		<button mat-menu-item (click)="itemPlaylistOptions('report', x.contentData, i)">{{translations?.common?.report}}</button>
 																	</mat-menu>
 
 																	<mat-menu #menuShareSocial="matMenu">

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 import { Location, DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
@@ -10,6 +11,7 @@ import { UserDataService } from '../../../../app/core/services/user/userData.ser
 import { SessionService } from '../../../../app/core/services/session/session.service';
 
 import { ActiveSessionComponent } from '../../../../app/pages/common/activeSession/activeSession.component';
+import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 
 declare var global: any;
 
@@ -38,6 +40,7 @@ export class ShowPlaylistComponent implements OnInit {
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		@Inject(DOCUMENT) private document: Document,
 		public dialogRef: MatDialogRef<ShowPlaylistComponent>,
+		private router: Router,
 		public dialog: MatDialog,
 		private location: Location,
 		private alertService: AlertService,
@@ -267,46 +270,17 @@ export class ShowPlaylistComponent implements OnInit {
 		}
 	}
 
-	// Recommended playlists
-	getRecommendedPlaylists() {
-		this.recommendedPlaylists.show = !this.recommendedPlaylists.show;
-		this.recommendedPlaylists.loading = true;
-
-		if (this.recommendedPlaylists.show && this.recommendedPlaylists.list.length === 0) {
-			const data = {
-				user: this.userData.id
-			};
-
-			this.audioDataService.getRecommendedPlaylists(data)
-				.subscribe((res: any) => {
-					this.recommendedPlaylists.loading = false;
-
-					if (!res || res.length === 0) {
-						this.recommendedPlaylists.noData = true;
-					} else {
-						this.recommendedPlaylists.noData = false;
-						this.recommendedPlaylists.list = res;
-					}
-				}, error => {
-					this.recommendedPlaylists.loading = false;
-				});
-		} else {
-			this.recommendedPlaylists.loading = false;
-		}
-	}
-
 	// Playlist options
 	itemPlaylistOptions(type, item, index) {
 		switch (type) {
-			case ('show'):
+			case 'show':
 				this.location.go('/pl/' + item.name);
 
 				const configShow = {
 					disableClose: false,
-					backdropClass: 'cdk-overlay-transparent-backdrop',
 					data: {
 						sessionData: this.sessionData,
-						userData: this.userData,
+						userData: this.sessionData.current,
 						translations: this.translations,
 						item: item,
 						audioPlayerData: this.audioPlayerData
@@ -314,11 +288,68 @@ export class ShowPlaylistComponent implements OnInit {
 				};
 
 				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
-				dialogRefShow.beforeClosed().subscribe((res: any) => {
-					this.location.go('/pl/' + this.data.current.name);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
 				});
 				break;
-			case ('addRemoveUser'):
+			case 'edit':
+				this.location.go('/' + this.sessionData.current.username + '/songs#editPlaylist');
+				item.path = this.env.pathAudios;
+				item.index = index;
+
+				const configEdit = {
+					disableClose: false,
+					data: {
+						type: 'edit',
+						sessionData: this.sessionData,
+						translations: this.translations,
+						item: item
+					}
+				};
+
+				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
+				dialogRefEdit.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (res) {
+						const data = {
+							index: res.index,
+							item: res
+						};
+
+						this.updatePlaylist('edit', data);
+					}
+				});
+				break;
+			case 'publicPrivate':
+				item.private = !item.private;
+				item.privateType = item.private ? 'private' : 'public';
+
+				const dataPPS = {
+					type: item.privateType,
+					id: item.id
+				};
+
+				this.audioDataService.publicPrivate(dataPPS).subscribe();
+				break;
+			case 'addRemoveSession':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
+				item.removed = item.addRemoveSession ? true : false;
+
+				const dataARS = {
+					type: item.removeType,
+					location: 'session',
+					id: item.idPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARS)
+					.subscribe((res: any) => {
+						this.updatePlaylist('addRemoveSession', null);
+					});
+				break;
+			case 'addRemoveUser':
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
@@ -336,26 +367,12 @@ export class ShowPlaylistComponent implements OnInit {
 					.subscribe((res: any) => {
 						item.idPlaylist = res;
 						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
-
-						if (dataARO.type === 'add') {
-							this.sessionData.current.playlists.unshift(dataARO);
-						} else {
-							for (const i in this.sessionData.current.playlists) {
-								if (i) {
-									if (this.sessionData.current.playlists[i].id = dataARO.id) {
-										this.sessionData.current.playlists[i] = dataARO;
-									}
-								}
-							}
-						}
-						// Update playslists on selects
-						this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
-						this.sessionService.setDataPlaylists(this.sessionData);
+						this.updatePlaylist('addRemoveUser', item);
 
 						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
 					});
 				break;
-			case ('follow'):
+			case 'follow':
 				item.followUnfollow = !item.followUnfollow;
 				item.removeType = item.followUnfollow ? 'add' : 'remove';
 
@@ -375,7 +392,7 @@ export class ShowPlaylistComponent implements OnInit {
 					});
 
 				break;
-			case ('report'):
+			case 'report':
 				item.type = 'audioPlaylist';
 				this.sessionService.setDataReport(item);
 				break;
@@ -415,6 +432,76 @@ export class ShowPlaylistComponent implements OnInit {
 				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
 				this.window.open(urlReddit, '_blank');
 				break;
+		}
+	}
+
+	// Update playlist
+	updatePlaylist(type, data) {
+		if (type === 'create') {
+			const d = {
+				type: 'create',
+				item: null
+			};
+			this.sessionService.setDataCreatePlaylist(d);
+		} else if (type === 'edit') {
+			let newPl = [];
+
+			for (let p of this.sessionData.current.playlists) {
+				if (p.id == data.item.id) {
+					newPl.push(data.item);
+				} else {
+					newPl.push(p);
+				}
+			}
+
+			this.sessionData.current.playlists = newPl;
+			this.sessionData.current.playlists = this.sessionData.current.playlists;
+		} else if (type === 'addRemoveSession') {
+			this.sessionData.current.playlists = this.sessionData.current.playlists;
+		} else if (type === 'addRemoveUser') {
+			if (data.type === 'add') {
+				this.sessionData.current.playlists.unshift(data);
+			} else {
+				for (const i in this.sessionData.current.playlists) {
+					if (i) {
+						if (this.sessionData.current.playlists[i].id = data.id) {
+							this.sessionData.current.playlists[i] = data;
+						}
+					}
+				}
+			}
+		}
+
+		// Update playslists on selects
+		this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
+		this.sessionService.setDataPlaylists(this.sessionData);
+	}
+
+	// Recommended playlists
+	getRecommendedPlaylists() {
+		this.recommendedPlaylists.show = !this.recommendedPlaylists.show;
+		this.recommendedPlaylists.loading = true;
+
+		if (this.recommendedPlaylists.show && this.recommendedPlaylists.list.length === 0) {
+			const data = {
+				user: this.userData.id
+			};
+
+			this.audioDataService.getRecommendedPlaylists(data)
+				.subscribe((res: any) => {
+					this.recommendedPlaylists.loading = false;
+
+					if (!res || res.length === 0) {
+						this.recommendedPlaylists.noData = true;
+					} else {
+						this.recommendedPlaylists.noData = false;
+						this.recommendedPlaylists.list = res;
+					}
+				}, error => {
+					this.recommendedPlaylists.loading = false;
+				});
+		} else {
+			this.recommendedPlaylists.loading = false;
 		}
 	}
 

@@ -420,6 +420,7 @@
 				FROM z_audios_playlist
 				WHERE user = $user
 					AND is_deleted = 0
+				ORDER by id DESC
 				LIMIT $more, $cuantity";
 		$result = $conn->query($sql);
 

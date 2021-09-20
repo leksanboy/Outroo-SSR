@@ -15,8 +15,8 @@ import { AudioDataService } from '../../../../app/core/services/user/audioData.s
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
-import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
+import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -1205,26 +1205,206 @@ export class AudiosComponent implements OnInit, OnDestroy {
 				const urlExtension = this.env.url + 's/' + item.name.slice(0, -4);
 				this.sessionService.setDataCopy(urlExtension);
 				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
+				break;
 		}
 	}
 
-	// Create new playlist
-	createPlaylist() {
-		const data = {
-			type: 'create',
-			item: null
-		};
-		this.sessionService.setDataCreatePlaylist(data);
+	// Playlist options
+	itemPlaylistOptions(type, item, index) {
+		switch (type) {
+			case 'show':
+				this.location.go('/pl/' + item.name);
+
+				const configShow = {
+					disableClose: false,
+					data: {
+						sessionData: this.sessionData,
+						userData: this.userData,
+						translations: this.translations,
+						item: item,
+						audioPlayerData: this.audioPlayerData
+					}
+				};
+
+				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
+				dialogRefShow.beforeClosed().subscribe((res: string) => {
+					// Set url
+					this.location.go(this.router.url);
+				});
+				break;
+			case 'edit':
+				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
+				item.path = this.env.pathAudios;
+				item.index = index;
+
+				const configEdit = {
+					disableClose: false,
+					data: {
+						type: 'edit',
+						sessionData: this.sessionData,
+						translations: this.translations,
+						item: item
+					}
+				};
+
+				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
+				dialogRefEdit.afterClosed().subscribe((res: any) => {
+					this.location.go(this.router.url);
+
+					if (res) {
+						const data = {
+							index: res.index,
+							item: res
+						};
+
+						this.updatePlaylist('edit', data);
+					}
+				});
+				break;
+			case 'publicPrivate':
+				item.private = !item.private;
+				item.privateType = item.private ? 'private' : 'public';
+
+				const dataPPS = {
+					type: item.privateType,
+					id: item.id
+				};
+
+				this.audioDataService.publicPrivate(dataPPS).subscribe();
+				break;
+			case 'addRemoveSession':
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
+				item.removed = item.addRemoveSession ? true : false;
+
+				const dataARS = {
+					type: item.removeType,
+					location: 'session',
+					id: item.idPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARS)
+					.subscribe((res: any) => {
+						this.updatePlaylist('addRemoveSession', null);
+					});
+				break;
+			case 'addRemoveUser':
+				item.addRemoveUser = !item.addRemoveUser;
+				item.removeType = item.addRemoveUser ? 'add' : 'remove';
+
+				const dataARO = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.addRemovePlaylist(dataARO)
+					.subscribe((res: any) => {
+						item.idPlaylist = res;
+						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
+						this.updatePlaylist('addRemoveUser', item);
+
+						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
+					});
+				break;
+			case 'follow':
+				item.followUnfollow = !item.followUnfollow;
+				item.removeType = item.followUnfollow ? 'add' : 'remove';
+
+				const dataF = {
+					type: item.removeType,
+					location: 'user',
+					id: item.id,
+					title: item.title,
+					image: item.image,
+					playlist: item.idPlaylist,
+					insertedPlaylist: item.insertedPlaylist
+				};
+
+				this.audioDataService.followPlaylist(dataF)
+					.subscribe((res: any) => {
+						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
+					});
+
+				break;
+			case 'report':
+				item.type = 'audioPlaylist';
+				this.sessionService.setDataReport(item);
+				break;
+			case 'message':
+				item.comeFrom = 'sharePlaylist';
+				this.sessionService.setDataNewShare(item);
+				break;
+			case 'newTab':
+				const url = this.env.url + 'pl/' + item.name;
+				this.window.open(url, '_blank');
+				break;
+			case 'copyLink':
+				const urlExtension = this.env.url + 'pl/' + item.name;
+				this.sessionService.setDataCopy(urlExtension);
+				break;
+			case 'whatsapp':
+				const urlWhatsapp = 'https://api.whatsapp.com/send?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlWhatsapp, '_blank');
+				break;
+			case 'twitter':
+				const urlTwitter = 'https://twitter.com/intent/tweet?text=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTwitter, '_blank');
+				break;
+			case 'facebook':
+				const urlFacebook = 'https://www.facebook.com/sharer/sharer.php?u=' + this.env.url + this.sessionData.current.usurname + '&title=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlFacebook, '_blank');
+				break;
+			case 'messenger':
+				const urlMessenger = 'https://www.facebook.com/dialog/send?link=' + this.env.url + 'p/' + item.name + '&app_id=844385062569000&redirect_uri=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlMessenger, '_blank');
+				break;
+			case 'telegram':
+				const urlTelegram = 'https://t.me/share/url?url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlTelegram, '_blank');
+				break;
+			case 'reddit':
+				const urlReddit = 'https://www.reddit.com/submit?title=Share%20this%20post&url=' + this.env.url + 'p/' + item.name;
+				this.window.open(urlReddit, '_blank');
+				break;
+		}
 	}
 
 	// Update playlist
 	updatePlaylist(type, data) {
 		if (type === 'create') {
-			if (this.userData.id === this.sessionData.current.id) {
-				this.dataDefault.playlists.unshift(data);
-			}
-
-			this.sessionData.current.playlists.unshift(data);
+			const d = {
+				type: 'create',
+				item: null
+			};
+			this.sessionService.setDataCreatePlaylist(d);
 		} else if (type === 'edit') {
 			let newPl = [];
 
@@ -1257,147 +1437,6 @@ export class AudiosComponent implements OnInit, OnDestroy {
 		// Update playslists on selects
 		this.sessionData = this.userDataService.setSessionData('update', this.sessionData.current);
 		this.sessionService.setDataPlaylists(this.sessionData);
-	}
-
-	// Item options
-	itemPlaylistOptions(type, item, index) {
-		switch (type) {
-			case ('show'):
-				this.location.go('/pl/' + item.name);
-
-				const configShow = {
-					disableClose: false,
-					data: {
-						sessionData: this.sessionData,
-						userData: this.userData,
-						translations: this.translations,
-						item: item,
-						audioPlayerData: this.audioPlayerData
-					}
-				};
-
-				const dialogRefShow = this.dialog.open(ShowPlaylistComponent, configShow);
-				dialogRefShow.beforeClosed().subscribe((res: string) => {
-					// Set url
-					this.location.go(this.router.url);
-				});
-				break;
-			case ('edit'):
-				this.location.go('/' + this.userData.username + '/songs#editPlaylist');
-				item.path = this.env.pathAudios;
-				item.index = index;
-
-				const configEdit = {
-					disableClose: false,
-					data: {
-						type: 'edit',
-						sessionData: this.sessionData,
-						translations: this.translations,
-						item: item
-					}
-				};
-
-				const dialogRefEdit = this.dialog.open(NewPlaylistComponent, configEdit);
-				dialogRefEdit.afterClosed().subscribe((res: any) => {
-					this.location.go(this.router.url);
-
-					if (res) {
-						const data = {
-							index: res.index,
-							item: res
-						};
-
-						this.updatePlaylist('edit', data);
-					}
-				});
-				break;
-			case ('publicPrivate'):
-				item.private = !item.private;
-				item.privateType = item.private ? 'private' : 'public';
-
-				const dataPPS = {
-					type: item.privateType,
-					id: item.id
-				};
-
-				this.audioDataService.publicPrivate(dataPPS).subscribe();
-				break;
-			case ('addRemoveSession'):
-				item.addRemoveSession = !item.addRemoveSession;
-				item.removeType = !item.addRemoveSession ? 'add' : 'remove';
-				item.removed = item.addRemoveSession ? true : false;
-
-				const dataARS = {
-					type: item.removeType,
-					location: 'session',
-					id: item.idPlaylist
-				};
-
-				this.audioDataService.addRemovePlaylist(dataARS)
-					.subscribe((res: any) => {
-						this.updatePlaylist('addRemoveSession', null);
-					});
-				break;
-			case ('addRemoveUser'):
-				item.addRemoveUser = !item.addRemoveUser;
-				item.removeType = item.addRemoveUser ? 'add' : 'remove';
-
-				const dataARO = {
-					type: item.removeType,
-					location: 'user',
-					id: item.id,
-					title: item.title,
-					image: item.image,
-					playlist: item.idPlaylist,
-					insertedPlaylist: item.insertedPlaylist
-				};
-
-				this.audioDataService.addRemovePlaylist(dataARO)
-					.subscribe((res: any) => {
-						item.idPlaylist = res;
-						item.insertedPlaylist = item.insertedPlaylist ? item.insertedPlaylist : res;
-						this.updatePlaylist('addRemoveUser', item);
-
-						this.alertService.success(this.translations.common.clonedPlaylistSuccessfully);
-					});
-				break;
-			case ('follow'):
-				item.followUnfollow = !item.followUnfollow;
-				item.removeType = item.followUnfollow ? 'add' : 'remove';
-
-				const dataF = {
-					type: item.removeType,
-					location: 'user',
-					id: item.id,
-					title: item.title,
-					image: item.image,
-					playlist: item.idPlaylist,
-					insertedPlaylist: item.insertedPlaylist
-				};
-
-				this.audioDataService.followPlaylist(dataF)
-					.subscribe((res: any) => {
-						this.alertService.success(this.translations.common.followingPlaylistSuccessfully);
-					});
-
-				break;
-			case ('report'):
-				item.type = 'audioPlaylist';
-				this.sessionService.setDataReport(item);
-				break;
-			case 'message':
-				item.comeFrom = 'sharePlaylist';
-				this.sessionService.setDataNewShare(item);
-				break;
-			case 'newTab':
-				const url = this.env.url + 'pl/' + item.name;
-				this.window.open(url, '_blank');
-				break;
-			case 'copyLink':
-				const urlExtension = this.env.url + 'pl/' + item.name;
-				this.sessionService.setDataCopy(urlExtension);
-				break;
-		}
 	}
 
 	// See All
