@@ -217,7 +217,6 @@
 				FROM z_publications_likes l
 					INNER JOIN z_publications p ON p.id = l.publication
 				WHERE l.user = $session
-					AND l.is_deleted = 0
 					AND p.is_deleted = 0
 				ORDER BY l.id DESC
 				LIMIT $more, $cuantity";

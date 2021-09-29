@@ -6,6 +6,7 @@
     $pageId = $data['pageId'];
     $pageType = $data['pageType'];
 	$type = $data['type'];
+	$typeText = $data['typeText'];
 	$content = $data['content'];
 	$lang = $data['lang'];
 
@@ -19,6 +20,7 @@
 		$result = $conn->query($sql);
 
         // Send email
+		$content = $content ? $typeText.'<br>'.$content : $typeText;
 		emailReport($user['email'], $lang, $content);
 
 		// return response status

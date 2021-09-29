@@ -31,8 +31,8 @@
 						</mat-menu>
 
 						<mat-menu #menuShareSocial="matMenu">
-							<button mat-menu-item (click)="itemUserOptions('message', userData)">{{translations?.common?.sendMessage}}</button>
-							<button mat-menu-item (click)="itemUserOptions('copyLink', userData)">{{translations?.main?.copyLink}}</button>
+							<button mat-menu-item (click)="itemUserOptions('message', userData)"><i label="email" class="icon85"></i>{{translations?.common?.sendMessage}}</button>
+							<button mat-menu-item (click)="itemUserOptions('copyLink', userData)"><i label="copy" class="icon85"></i>{{translations?.main?.copyLink}}</button>
 						</mat-menu>
 					</div>
 
@@ -367,7 +367,8 @@
 										</span>
 
 										<mat-menu #appMenu="matMenu">
-											<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+											<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
+											<button mat-menu-item (click)="itemSongOptions('addRemoveSession', a, null)" *ngIf="userData?.id === sessionData?.current?.id">{{a.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>
 											<button mat-menu-item [matMenuTriggerFor]="menuShareSocial" #trigger="matMenuTrigger">{{translations?.common?.share}}</button>
 											<button mat-menu-item (click)="itemSongOptions('report', a, null)">{{translations?.common?.report}}</button>
@@ -451,11 +452,10 @@
 							<div class="description">{{translations?.bookmarks?.noData}}</div>
 						</div>
 
-						<div class="loadMore" *ngIf="dataBookmarks?.loadMoreData">
-							<button mat-fab (click)="default('more')" *ngIf="!dataBookmarks?.loadingMoreData">
-								<i label="add"></i>
+						<div class="seeAllData" *ngIf="dataBookmarks?.list?.length > 0">
+							<button mat-raised-button routerLink="/saved">
+								{{translations?.common?.seeAll}}
 							</button>
-							<mat-progress-spinner mode="indeterminate" *ngIf="dataBookmarks?.loadingMoreData"></mat-progress-spinner>
 						</div>
 					</mat-tab>
 				</mat-tab-group>

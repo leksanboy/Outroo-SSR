@@ -156,43 +156,41 @@ export class ActivePlayerMobileComponent implements OnInit, OnDestroy, AfterView
 				item.addRemoveSession = !item.addRemoveSession;
 				item.type = item.addRemoveSession ? 'remove' : 'add';
 
-				const dataARS = {
+				const dataS = {
 					type: item.type,
 					location: 'session',
 					id: item.id
 				};
 
-				this.audioDataService.addRemove(dataARS)
+				this.audioDataService.addRemove(dataS)
 					.subscribe(res => {
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? ' has been added successfully' : ' has been removed';
-
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.success('An error has ocurred');
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.type = item.addRemoveUser ? 'add' : 'remove';
 
-				const dataARO = {
+				const dataU = {
 					type: item.type,
 					location: 'user',
 					id: item.insertedId,
 					item: item.song
 				};
 
-				this.audioDataService.addRemove(dataARO)
-					.subscribe((res: any) => {
+				this.audioDataService.addRemove(dataU)
+					.subscribe(res => {
 						item.insertedId = res;
 
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? ' has been added successfully' : ' has been removed';
-
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
-						this.alertService.success('An error has ocurred');
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('playlist'):

@@ -709,7 +709,7 @@
 								</div>
 
 								<ul class="tracks" *ngIf="dataDefault?.list">
-									<li *ngFor="let a of dataDefault?.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', advert: a.contentTypeAd}">
+									<li *ngFor="let a of dataDefault?.list; let i=index;" [ngClass]="{active: audioPlayerData.key === i && audioPlayerData.location === 'audios' && audioPlayerData.type === 'top', remove: a.addRemoveSession, advert: a.contentTypeAd}">
 										<div mat-ripple class="inner" *ngIf="!a.contentTypeAd">
 											<div class="image">
 												<button mat-icon-button (click)="playSong(dataDefault?.list, a, i, 'top')">
@@ -737,7 +737,6 @@
 												</button>
 				
 												<mat-menu #appMenu="matMenu">
-													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 													<button mat-menu-item (click)="itemSongOptions('addRemoveUser', a, null)" *ngIf="userData?.id !== sessionData?.current?.id">{{!a.addRemoveUser ? translations?.common?.add : translations?.common?.remove}}</button>
 													<button mat-menu-item (click)="itemSongOptions('addRemoveSession', a, null)" *ngIf="userData?.id === sessionData?.current?.id">{{a.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
 													<button mat-menu-item [matMenuTriggerFor]="menuPlaylists" #trigger="matMenuTrigger">{{translations?.common?.addToPlaylist}}</button>

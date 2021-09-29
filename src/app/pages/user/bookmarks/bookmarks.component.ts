@@ -86,8 +86,17 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 			const windowBottom = windowHeight + this.window.pageYOffset;
 
 			if (windowBottom >= docHeight) {
-				if (this.dataDefault.list.length > 0) {
-					this.default('more', this.sessionData.current.username);
+				switch (this.data.selectedIndex) {
+					case 0:
+						if (this.dataDefault.list.length > 0) {
+							this.default('more', this.sessionData.current.username);
+						}
+						break;
+					case 1:
+						if (this.dataLiked.list.length > 0) {
+							this.defaultLiked('more', this.sessionData.current.username);
+						}
+						break;
 				}
 			}
 		};
@@ -227,7 +236,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 				break;
 			case 1:
 				if (!this.dataLiked) {
-					this.defaultLiked('default', this.userData.id);
+					this.defaultLiked('default', this.sessionData.current.username);
 				}
 				break;
 		}
@@ -341,6 +350,28 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					this.location.go(this.router.url);
 
 					item.bookmarkRemoved = !res.bookmark.checked;
+				});
+				break;
+			case 'showLiked':
+				this.location.go('/p/' + item.name);
+
+				const configLiked = {
+					disableClose: false,
+					data: {
+						comeFrom: 'publication',
+						translations: this.translations,
+						sessionData: this.sessionData,
+						userData: this.sessionData.current,
+						item: item
+					}
+				};
+
+				const dialogRefLiked = this.dialog.open(ShowPublicationComponent, configLiked);
+				dialogRefLiked.afterClosed().subscribe((res: any) => {
+					console.log('res::', res);
+					this.location.go(this.router.url);
+
+					item.likedRemoved = !res.liked;
 				});
 				break;
 		}

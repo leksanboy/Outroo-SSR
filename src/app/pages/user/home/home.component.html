@@ -203,7 +203,7 @@
 															</button>
 															<mat-menu #optionsComments="matMenu">
 																<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c?.user?.id == sessionData?.current?.id || x?.user?.id == sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
-																<button mat-menu-item (click)="replyComment('create', c, c, x)">{{translations?.common?.reply}}</button>
+																<button mat-menu-item (click)="replyComment(c?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, c, x)">{{c?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 																<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
 															</mat-menu>
 														</div>
@@ -215,7 +215,7 @@
 
 													<div class="reply">
 														<div class="date">{{c?.date | timeago}}</div>
-														<button mat-raised-button (click)="replyComment('create', c, c, x)">{{translations?.common?.reply}}</button>
+														<button mat-raised-button (click)="replyComment(c?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, c, x)">{{c?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 													</div>
 
 													<ul class="replyComments" *ngIf="c?.list?.length">
@@ -238,7 +238,7 @@
 																	</button>
 																	<mat-menu #optionsComments="matMenu">
 																		<button mat-menu-item (click)="commentsOptions('addRemove', x, d)" *ngIf="d?.user?.id == sessionData?.current?.id || x?.user?.id == sessionData?.current?.id">{{d.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
-																		<button mat-menu-item (click)="replyComment('create', c, d, x)">{{translations?.common?.reply}}</button>
+																		<button mat-menu-item (click)="replyComment(d?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, d, x)">{{d?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 																		<button mat-menu-item (click)="commentsOptions('report', x, d)">{{translations?.common?.report}}</button>
 																	</mat-menu>
 																</div>
@@ -250,7 +250,7 @@
 
 															<div class="reply">
 																<div class="date">{{d?.date | timeago}}</div>
-																<button mat-raised-button (click)="replyComment('create', c, d, x)">{{translations?.common?.reply}}</button>
+																<button mat-raised-button (click)="replyComment(d?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, d, x)">{{d?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 															</div>
 														</li>
 													</ul>

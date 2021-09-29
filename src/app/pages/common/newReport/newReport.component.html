@@ -25,20 +25,8 @@
 			<div class="form">
 				<form [formGroup]="actionForm" (ngSubmit)="submit()">
 					<mat-radio-group formControlName="type">
-						<mat-radio-button [value]="violence">
-							{{translations?.common?.reportTypes?.violence}}
-						</mat-radio-button>
-						<mat-radio-button [value]="hate">
-							{{translations?.common?.reportTypes?.hate}}
-						</mat-radio-button>
-						<mat-radio-button [value]="rights">
-							{{translations?.common?.reportTypes?.rights}}
-						</mat-radio-button>
-						<mat-radio-button [value]="spam">
-							{{translations?.common?.reportTypes?.spam}}
-						</mat-radio-button>
-						<mat-radio-button [value]="other">
-							{{translations?.common?.reportTypes?.other}}
+						<mat-radio-button *ngFor="let t of types" [value]="t.value">
+							{{t.content}}
 						</mat-radio-button>
 					</mat-radio-group>
 

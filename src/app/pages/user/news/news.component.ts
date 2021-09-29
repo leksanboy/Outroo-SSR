@@ -909,39 +909,24 @@ export class NewsComponent implements OnInit, OnDestroy {
 	// Item options
 	itemSongOptions(type, item, playlist) {
 		switch (type) {
-			case ('addRemoveSession'):
-				item.addRemoveSession = !item.addRemoveSession;
-				item.removeType = item.addRemoveSession ? 'remove' : 'add';
-
-				const dataARS = {
-					type: item.removeType,
-					location: 'session',
-					id: item.id
-				};
-
-				this.audioDataService.addRemove(dataARS)
-					.subscribe(res => {
-						// let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-						// 	text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
-						// this.alertService.success(song + text);
-					}, error => {
-						this.alertService.error(this.translations.common.anErrorHasOcurred);
-					});
-				break;
 			case ('addRemoveUser'):
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				const dataARO = {
+				const dataU = {
 					type: item.removeType,
 					location: 'user',
 					id: item.insertedId,
 					item: item.song
 				};
 
-				this.audioDataService.addRemove(dataARO)
+				this.audioDataService.addRemove(dataU)
 					.subscribe(res => {
 						item.insertedId = res;
+
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});

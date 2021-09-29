@@ -17,6 +17,7 @@ export class NewReportComponent implements OnInit {
 	public actionForm: FormGroup;
 	public submitLoading: boolean;
 	public inUse: boolean;
+	public types: any = [];
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -27,13 +28,34 @@ export class NewReportComponent implements OnInit {
 	) {
 		this.sessionData = data.sessionData;
 		this.translations = data.translations;
+
+		this.types = [
+			{
+				value: 'violence',
+				content: this.translations.common.reportTypes.violence
+			}, {
+				value: 'hate',
+				content: this.translations.common.reportTypes.hate
+			}, {
+				value: 'rights',
+				content: this.translations.common.reportTypes.rights
+			}, {
+				value: 'spam',
+				content: this.translations.common.reportTypes.spam
+			}, {
+				value: 'other',
+				content: this.translations.common.reportTypes.other
+			}
+		];
+
+		console.log('this.types:', this.types);
 	}
 
 	ngOnInit() {
 		// Form
 		this.actionForm = this._fb.group({
 			type: ['', [Validators.required]],
-			content: ['', [Validators.required]],
+			content: [''],
 			lang: [this.userDataService.getLang('get', null) || 1]
 		});
 	}
@@ -42,12 +64,13 @@ export class NewReportComponent implements OnInit {
 		const form = this.actionForm.value;
 		this.submitLoading = true;
 
-		if (form.content.trim().length > 0) {
-			if (form.content.trim().length <= 1000) {
+		if (form.type.trim().length > 0) {
+			if (form.type.trim().length <= 2000) {
 				const data = {
 					pageId: this.data.item.id,
 					pageType: this.data.item.type,
 					type: form.type,
+					typeText: this.types.filter(i => i.value == form.type)[0].content,
 					content: form.content,
 					lang: form.lang
 				};
@@ -68,7 +91,7 @@ export class NewReportComponent implements OnInit {
 			}
 		} else {
 			this.submitLoading = false;
-			this.alertService.error(this.translations.common.isTooShort);
+			this.alertService.error(this.translations.common.chooseOption);
 		}
 	}
 

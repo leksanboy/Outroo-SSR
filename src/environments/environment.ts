@@ -22,7 +22,7 @@ export const environment = {
 	pathAudios: 'https://beatfeel.com/assets/media/audios/',
 	defaultSongCover: './assets/images/default_song_cover1.png',
 	defaultPlaylistCover: './assets/images/default_song_cover1.png',
-	defaultPostImage: './assets/images/default_song_cover1.png',
+	defaultPostImage: './assets/images/default_post.png',
 	language: 1,
 	reCaptcha: '6Lf8hTkbAAAAAKcIPskHrfPWeljb_0Wx87UeJOAp',
 	authHash: 'xQ3s1RVrSR',

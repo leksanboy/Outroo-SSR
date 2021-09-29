@@ -188,8 +188,14 @@ export class SongComponent implements OnInit, OnDestroy {
 				};
 
 				this.audioDataService.addRemove(dataU)
-					.subscribe((res: any) => {
+					.subscribe(res => {
 						item.insertedId = res;
+
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('playlist'):

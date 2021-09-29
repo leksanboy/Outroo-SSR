@@ -308,8 +308,14 @@ export class PostComponent implements OnInit, OnDestroy {
 				};
 
 				this.audioDataService.addRemove(dataU)
-					.subscribe((res: any) => {
+					.subscribe(res => {
 						item.insertedId = res;
+
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
+						this.alertService.success(song + text);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
 					});
 				break;
 			case ('playlist'):
@@ -664,8 +670,8 @@ export class PostComponent implements OnInit, OnDestroy {
 								comm.list.push(res);
 							}
 						} else {
+							item.comments.list = item.comments.list ? item.comments.list : [];
 							item.comments.list.push(res);
-							this.window.scrollTo(0, 1000);
 						}
 
 						this.newComment('clear', null, item);

@@ -4538,12 +4538,13 @@ body {
 
 	/*Cookies*/
 	.cookiesBox {
-		background-color: $whiteColor;
-		max-width: calc(50% - 32px);
+		background-color: transparentize($whiteColor, .13);
+		backdrop-filter: blur(12px);
 		box-shadow: $shadowBox1;
-		margin: 0 0 104px 16px;
 		color: currentColor;
 		position: fixed;
+		max-width: 50%;
+		margin: 18px;
 		z-index: 99;
 		width: 100%;
 		bottom: 0;
@@ -4589,23 +4590,21 @@ body {
 
 		&.home {
 			background-color: $darkThemeColor;
-			margin: 0 0 16px 16px;
 			color: $whiteColor;
 		}
 
-		&.web {
+		/* &.web {
 			margin: 0 0 16px 16px;
-		}
+		} */
 	}
 
 	/*Cookies*/
 	.createAccountBox {
-		background-color: #e91e63;
-		max-width: calc(50% - 32px);
 		box-shadow: $shadowBox1;
-		margin: 0 0 104px 16px;
 		color: $blackColor;
 		position: fixed;
+		max-width: 50%;
+		margin: 18px;
 		z-index: 99;
 		width: 100%;
 		bottom: 0;
@@ -4632,8 +4631,8 @@ body {
 				text-transform: uppercase;
 				box-sizing: border-box;
 				padding: 0 18px 12px 0;
-				text-align: center;
 				font-weight: bold;
+				text-align: left;
 				font-size: 18px;
 				width: 100%;
 			}
@@ -4641,7 +4640,7 @@ body {
 			.text {
 				word-break: break-word;
 				box-sizing: border-box;
-				text-align: center;
+				text-align: left;
 				width: 100%;
 
 				button {
@@ -4655,37 +4654,29 @@ body {
 			}
 		}
 
-		&.home {
-			margin: 0 0 16px 16px;
-		}
-
-		&.web {
-			margin: 0 0 16px 16px;
-		}
-
 		&.yellow {
-			background-color: #FFD200;
-			background-image: linear-gradient(to right, #FFD200, #F7971E);
+			background-color: #ffeb3b;
+			background-image: linear-gradient(45deg, #ffeb3b 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #ffc107 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #ff9800 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #ff5722 100%, rgba(0, 0, 0, 0) 70%);
 		}
 
 		&.purple {
 			background-color: #B721FF;
-			background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+			background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #4a148c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #311b92 100%, rgba(0, 0, 0, 0) 70%);
 		}
 
 		&.blue {
-			background-color: #1FA2FF;
-			background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
+			background-color: #2196f3;
+			background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #2196f3 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #9c27b0 100%, rgba(0, 0, 0, 0) 70%);
 		}
 
 		&.red {
-			background-color: #b31217;
-			background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
+			background-color: #e91e63;
+			background-image: linear-gradient(45deg, #b71c1c 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #bf360c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #d84315 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #e91e63 100%, rgba(0, 0, 0, 0) 70%);
 		}
 
 		&.green {
-			background-color: #3CD500;
-			background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
+			background-color: #56ab2f;
+			background-image: linear-gradient(45deg, #56ab2f 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #8bc34a 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #cddc39 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #4caf50 100%, rgba(0, 0, 0, 0) 70%);
 		}
 	}
 
@@ -4763,7 +4754,6 @@ body {
 
 			i {
 				background-color: transparentize($whiteColor, .25);
-				filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, .5));
 				margin: auto auto auto 12px;
 				position: absolute;
 				bottom: 0;
@@ -8209,10 +8199,10 @@ body {
 					}
 
 					.privacy {
-						width: 100%;
-						display: flex;
-						padding: 6px 18px 24px;
 						box-sizing: border-box;
+						padding: 18px 18px 0;
+						display: flex;
+						width: 100%;
 
 						.left {
 							width: 100%;
@@ -8414,7 +8404,7 @@ body {
 		}
 
 		.cookiesBox {
-			background-color: $darkThemeColor;
+			background-color: transparentize($darkThemeColor, .13);
 		}
 
 		.mat-tab-group {
@@ -9609,28 +9599,28 @@ body {
 					}
 
 					&.yellow {
-						background-color: #FFD200;
-						background-image: linear-gradient(to right, #FFD200, #F7971E);
+						background-color: #ffeb3b;
+						background-image: linear-gradient(45deg, #ffeb3b 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #ffc107 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #ff9800 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #ff5722 100%, rgba(0, 0, 0, 0) 70%);
 					}
 			
 					&.purple {
 						background-color: #B721FF;
-						background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+						background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #4a148c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #311b92 100%, rgba(0, 0, 0, 0) 70%);
 					}
 			
 					&.blue {
-						background-color: #1FA2FF;
-						background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 100%)
+						background-color: #2196f3;
+						background-image: linear-gradient(45deg, #673ab7 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #e91e63 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #2196f3 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #9c27b0 100%, rgba(0, 0, 0, 0) 70%);
 					}
 			
 					&.red {
-						background-color: #b31217;
-						background-image: linear-gradient(to right, #e52d27 0%, #b31217 100%)
+						background-color: #e91e63;
+						background-image: linear-gradient(45deg, #b71c1c 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #bf360c 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #d84315 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #e91e63 100%, rgba(0, 0, 0, 0) 70%);
 					}
 			
 					&.green {
-						background-color: #3CD500;
-						background-image: linear-gradient(135deg, #FFF720 10%, #3CD500 100%);
+						background-color: #56ab2f;
+						background-image: linear-gradient(45deg, #56ab2f 0%, rgba(0, 0, 0, 0) 70%), linear-gradient(135deg, #8bc34a 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(225deg, #cddc39 10%, rgba(0, 0, 0, 0) 80%), linear-gradient(315deg, #4caf50 100%, rgba(0, 0, 0, 0) 70%);
 					}
 				}
 			}

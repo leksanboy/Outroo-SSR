@@ -1195,18 +1195,17 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				item.addRemoveSession = !item.addRemoveSession;
 				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-				const dataARS = {
+				const dataS = {
 					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'session',
 					id: item.id
 				};
 
-				this.audioDataService.addRemove(dataARS)
+				this.audioDataService.addRemove(dataS)
 					.subscribe(res => {
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
-
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = !item.addRemoveSession ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
@@ -1216,7 +1215,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				item.addRemoveUser = !item.addRemoveUser;
 				item.removeType = item.addRemoveUser ? 'add' : 'remove';
 
-				const dataARO = {
+				const dataU = {
 					user: this.sessionData.current.id,
 					type: item.removeType,
 					location: 'user',
@@ -1224,13 +1223,12 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					item: item.song
 				};
 
-				this.audioDataService.addRemove(dataARO)
-					.subscribe((res: any) => {
+				this.audioDataService.addRemove(dataU)
+					.subscribe(res => {
 						item.insertedId = res;
 
-						const song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
-							text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
-
+						let song = item.original_title ? (item.original_artist + ' - ' + item.original_title) : item.title,
+						text = item.addRemoveUser ? (' ' + this.translations.common.hasBeenAdded) : (' ' + this.translations.common.hasBeenRemoved);
 						this.alertService.success(song + text);
 					}, error => {
 						this.alertService.error(this.translations.common.anErrorHasOcurred);
