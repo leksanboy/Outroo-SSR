@@ -507,6 +507,10 @@ body {
 			mask-position: 0 calc(-24px * 21);
 		}
 
+		&[label="fit-to-screen"] {
+			mask-position: 0 calc(-24px * 23);
+		}
+
 		&[label="copy"] {
 			mask-position: -24px calc(-24px * 23);
 		}
@@ -654,9 +658,11 @@ body {
 
 						i {
 							background-color: $whiteColor;
+							box-shadow: $shadowBox2;
+							filter: drop-shadow($shadowText1);
 							position: relative;
-							z-index: 1;
 							display: none;
+							z-index: 1;
 						}
 					}
 				}
@@ -773,7 +779,7 @@ body {
 
 			&.active {
 				.inner {
-					background-color: transparentize($blackColor, .95);
+					background-color: transparentize($blueColor, .95);
 
 					.image {
 						button {
@@ -1894,12 +1900,6 @@ body {
 						padding: 12px 0 0;
 						width: 100%;
 						float: left;
-
-						/* ul {
-							li {
-								padding: inherit;
-							}
-						} */
 					}
 				}
 
@@ -5461,8 +5461,12 @@ body {
 								position: absolute;
 								display: flex;
 								padding: 10px;
-								top: 0;
 								right: 0;
+								top: 0;
+
+								i {
+									color: $whiteColor;
+								}
 							}
 
 							.category {
@@ -8582,20 +8586,6 @@ body {
 				background-color: transparentize($whiteColor, .25);
 			}
 		}
-
-		/* .mobilePlayer {
-			color: $whiteColor;
-
-			.topBar {
-				.grabber {
-					background-color: transparentize($whiteColor, .25);
-				}
-			}
-
-			.box .player {
-				background: transparentize(#000, 0.16);
-			}
-		} */
 	}
 }
 
@@ -9292,7 +9282,7 @@ body {
 							}
 
 							.analyticsBox {
-								background-color: transparentize(#000, .25) !important;
+								background-color: transparentize($whiteColor, .25) !important;
 								position: fixed;
 							}
 						}
@@ -9691,7 +9681,6 @@ body {
 		.mobilePlayer {
 			color: $whiteColor;
 			position: relative;
-			min-height: 360px;
 			border-radius: 0;
 			width: 100%;
 
@@ -10176,13 +10165,13 @@ body {
 					position: relative;
 					overflow-x: hidden;
 					overflow-y: auto;
-					max-height: 100vh;
+					height: 100vh;
 					width: 100%;
 					padding: 0;
 					margin: 0;
 
 					ul {
-						padding: 18px 0 364px;
+						padding: 18px 0 386px;
 						position: relative;
 						display: block;
 						width: 100%;

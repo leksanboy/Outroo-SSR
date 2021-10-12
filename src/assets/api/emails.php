@@ -1322,10 +1322,10 @@
 																			<tr>
 																				<td>
 																					<a href="'.$urlWeb.'pl/'.$array['playlists'][0]['name'].'" target="_blank" style="text-decoration: none;">
-																						<div style="width: 100%; height: 220px; overflow: hidden; border-collapse: collapse; display: block; border-radius: 10px 10px 0 0; border: none; outline: none; border-style: none;">
+																						<div style="width: 100%; max-height: 480px; overflow: hidden; border-collapse: collapse; display: block; border-radius: 10px; border: none; outline: none; border-style: none;">
 																							<img alt="'.$array['playlists'][0]['title'].'" src="'.$urlWeb.'assets/media/audios/covers/'.$array['playlists'][0]['image'].'" style="width: 100%;">
 																						</div>
-																						<div style="background: '.($array['playlists'][0]['color'] ? $array['playlists'][0]['color'] : '#666').'; width: 100%; min-height: 120px; border-radius: 0 0 10px 10px; padding: 18px 18px 12px; box-sizing: border-box; text-align: center;">
+																						<div style="background: '.($array['playlists'][0]['color'] ? $array['playlists'][0]['color'] : '#666').'; width: 100%; min-height: 120px; border-radius: 10px; padding: 18px 18px 12px; box-sizing: border-box; text-align: center;">
 																							<div style="font: bold 11px/19px Arial,Helvetica,sans-serif; color: '.($array['playlists'][0]['color'] ? $array['playlists'][0]['color'] : '#666').'; background: rgba(255,255,255,0.5); border-radius: 3px; width: fit-content; padding: 0 12px; margin: 0 auto 18px;">
 																								'.$translations['playlist'].'
 																							</div>

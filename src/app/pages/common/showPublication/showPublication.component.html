@@ -334,7 +334,7 @@
 				</div>
 
 				<div class="analyticsBox">
-					<div class="top">
+					<div class="top" *ngIf="!dataDefault?.data?.disabledComments">
 						<div class="new" *ngIf="sessionData?.current?.id">
 							<div class="avatar">
 								<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>

@@ -1,8 +1,3 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-
 // Common
 export const environment = {
 	production: false,
@@ -20,9 +15,9 @@ export const environment = {
 	pathPhotos: 'https://beatfeel.com/assets/media/photos/',
 	pathVideos: 'https://beatfeel.com/assets/media/videos/',
 	pathAudios: 'https://beatfeel.com/assets/media/audios/',
-	defaultSongCover: './assets/images/default_song_cover1.png',
-	defaultPlaylistCover: './assets/images/default_song_cover1.png',
-	defaultPostImage: './assets/images/default_post.png',
+	defaultSongCover: 'https://beatfeel.com/assets/images/default_song.png',
+	defaultPlaylistCover: 'https://beatfeel.com/assets/images/default_playlist.png',
+	defaultPostImage: 'https://beatfeel.com/assets/images/default_post.png',
 	language: 1,
 	reCaptcha: '6Lf8hTkbAAAAAKcIPskHrfPWeljb_0Wx87UeJOAp',
 	authHash: 'xQ3s1RVrSR',

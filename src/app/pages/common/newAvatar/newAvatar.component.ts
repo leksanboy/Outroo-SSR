@@ -22,6 +22,18 @@ export class NewAvatarComponent implements OnInit {
 	public flipHrz: boolean;
 	public flipVrt: boolean;
 	public submitLoading: boolean;
+	public cropperOptions = {
+		viewMode: 1,
+		aspectRatio: 1 / 1,
+		dragMode: 'move',
+		modal: true,
+		guides: true,
+		highlight: true,
+		background: true,
+		autoCrop: true,
+		autoCropArea: 0.7,
+		responsive: true
+	};
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,18 +51,7 @@ export class NewAvatarComponent implements OnInit {
 	}
 
 	imageLoad() {
-		this.cropperData = new Cropper(this.input.nativeElement, {
-			viewMode: 0,
-			aspectRatio: 1 / 1,
-			dragMode: 'move',
-			modal: true,
-			guides: true,
-			highlight: true,
-			background: true,
-			autoCrop: true,
-			autoCropArea: 0.7,
-			responsive: true
-		});
+		this.cropperData = new Cropper(this.input.nativeElement, this.cropperOptions);
 	}
 
 	cropperFunctions(type) {
