@@ -106,7 +106,8 @@
                     email,
                     language
             FROM z_users
-			WHERE is_deleted = 0";
+			WHERE is_deleted = 0
+				AND email_promos = 1";
             // WHERE id = 1";
     $result = $conn->query($sql);
 

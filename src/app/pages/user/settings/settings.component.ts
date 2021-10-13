@@ -437,6 +437,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
 				type: 'emailPromos',
 				emailPromos: this.sessionData.current.ep ? 0 : 1
 			};
+
+			this.userDataService.updateData(data)
+				.subscribe(res => {
+					this.sessionData = this.userDataService.getSessionData();
+
+					if (data.emailPromos === 1) {
+						this.sessionData.current.ep = true;
+						this.alertService.success(this.translations.settings.emailPromos.enabled);
+					} else {
+						this.sessionData.current.ep = false;
+						this.alertService.success(this.translations.settings.emailPromos.disabled);
+					}
+
+					this.userDataService.setSessionData('data', this.sessionData);
+					this.sessionService.setData(this.sessionData);
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
 		}
 	}
 }

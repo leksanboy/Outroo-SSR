@@ -168,7 +168,13 @@
 		"privateAccount": "Private account",
 		"privateAccountDescription": "When your account is private, only people you approve can see your photos and videos on Instagram. Your existing followers won't be affected.",
 		"miniPlayer": "Mini player",
-		"miniPlayerDescription": "Set mini player by default"
+		"miniPlayerDescription": "Set mini player by default",
+		"emailPromos": {
+			"title": "Promotions and recommendations",
+			"description": "By unchecking this option, you will automatically stop receiving all kinds of recommendations in your email inbox, except for the necessary notifications relevant to account activity.",
+			"enabled": "Promotions and recommendations enabled",
+			"disabled": "Promotions and recommendations disabled"
+		}
 	},
 	"song": {
 		"title": "Song",

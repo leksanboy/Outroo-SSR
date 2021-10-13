@@ -167,5 +167,23 @@
         $conn->query($sqlH);
 
         $conn->close();
+    } else if ($type === 'emailPromos') {
+        $emailPromos = $data['emailPromos'];
+
+        $sql = "UPDATE z_users
+                SET email_promos = '$emailPromos',
+                    ip_address_update = '$ipAddress'
+                WHERE id = $session";
+        $result = $conn->query($sql);
+
+        $userData = userData($session);
+        echo json_encode($userData);
+
+        // History
+        $sqlH = "INSERT INTO z_users_updates (type, user, email_promos, ip_address)
+                VALUES ('$type', $session, '$emailPromos', '$ipAddress')";
+        $conn->query($sqlH);
+
+        $conn->close();
     }
 ?>

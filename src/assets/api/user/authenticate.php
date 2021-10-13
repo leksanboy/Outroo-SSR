@@ -30,6 +30,7 @@
 						language,
 						theme,
 						mini_player as mp,
+						email_promos as ep,
 						official,
 						private,
 						reset_password as rp
@@ -48,6 +49,7 @@
 						language,
 						theme,
 						mini_player as mp,
+						email_promos as ep,
 						official,
 						private,
 						reset_password as rp
@@ -68,6 +70,7 @@
 							language,
 							theme,
 							mini_player as mp,
+							email_promos as ep,
 							official,
 							private,
 							reset_password as rp
@@ -119,6 +122,7 @@
 									language,
 									theme,
 									mini_player as mp,
+									email_promos as ep,
 									official,
 									private,
 									reset_password as rp
@@ -137,6 +141,7 @@
 		$result['languages'] 			= getLanguages();
 		$result['theme'] 				= intval($result['theme']);
 		$result['mp'] 					= $result['mp'] ? true : false;
+		$result['ep'] 					= $result['ep'] ? true : false;
 		$result['official'] 			= $result['official'] ? true : false;
 		$result['private'] 				= $result['private'] ? true : false;
 		$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);

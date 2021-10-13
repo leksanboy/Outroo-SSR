@@ -2916,6 +2916,10 @@ body {
 			z-index: 1;
 		}
 
+		.mat-tab-body-content {
+			overflow: hidden;
+		}
+
 		.mat-ink-bar {
 			background-color: $blueColor !important;
 		}

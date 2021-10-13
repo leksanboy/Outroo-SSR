@@ -168,7 +168,13 @@
 		"privateAccount": "Cuenta privada",
 		"privateAccountDescription": "Si tu cuenta es privada, solo las personas que apruebes podrán ver tus fotos y videos en Instagram. Esto no afectará a tus seguidores actuales.",
 		"miniPlayer": "Mini reproductor",
-		"miniPlayerDescription": "Establecer mini reproductor por defecto"
+		"miniPlayerDescription": "Establecer mini reproductor por defecto",
+		"emailPromos": {
+			"title": "Promociones y Recomendaciones",
+			"description": "Al desmarcar esta opcion automaticamente dejara de recibir todo tipo de recomendaciones en su bandeja de email salvo las notificaciones necesarias relevantes a la actividad de de cuenta.",
+			"enabled": "Promociones y Recomendaciones habilitadas",
+			"disabled": "Promociones y Recomendaciones deshabilitadas"
+		}
 	},
 	"song": {
 		"title": "Canción",
