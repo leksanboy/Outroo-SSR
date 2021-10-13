@@ -171,7 +171,7 @@
 		"miniPlayerDescription": "Set mini player by default",
 		"emailPromos": {
 			"title": "Promotions and recommendations",
-			"description": "By unchecking this option, you will automatically stop receiving all kinds of recommendations in your email inbox, except for the necessary notifications relevant to account activity.",
+			"description": "By unchecking this option you will automatically stop receiving all kinds of recommendations in your email inbox except for the necessary notifications relevant to account activity.",
 			"enabled": "Promotions and recommendations enabled",
 			"disabled": "Promotions and recommendations disabled"
 		}
