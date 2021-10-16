@@ -12,6 +12,7 @@
 	$fileTmpLoc = $_FILES["fileUpload"]["tmp_name"];
 	$locationPath = '/var/www/html/assets/media/audios/';
 	$explicit = $_POST['explicit'] ? 1 : 0;
+	$uploadTo = intval($_POST['uploadTo']);
 
     // If no files to update (count files = 0)
 	if (!$fileTmpLoc) exit();
@@ -46,10 +47,16 @@
 		$result = $conn->query($sql);
 		$insertedId = $conn->insert_id;
 
-		// Insert to user
-		$sqlFav = "INSERT INTO z_audios_favorites (user, song, ip_address)
-					VALUES ($session, $insertedId, '$ipAddress')";
-		$resultFav = $conn->query($sqlFav);
+		// Insert to user/playlist
+		if ($uploadTo === 0) {
+			$sqlFav = "INSERT INTO z_audios_favorites (user, song, ip_address)
+						VALUES ($session, $insertedId, '$ipAddress')";
+			$resultFav = $conn->query($sqlFav);
+		} else {
+			$sqlFav = "INSERT INTO z_audios_playlist_songs (playlist, song, ip_address)
+						VALUES ($uploadTo, $insertedId, '$ipAddress')";
+			$resultFav = $conn->query($sqlFav);
+		}
 
 	    var_dump(http_response_code(204));
 

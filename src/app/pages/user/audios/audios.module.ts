@@ -11,6 +11,7 @@ import {
 	MatMenuModule,
 	MatProgressSpinnerModule,
 	MatTabsModule,
+	MatSelectModule,
 	MatTooltipModule,
 	MatCheckboxModule
 } from '@angular/material';
@@ -43,6 +44,7 @@ const routes: Routes = [
 		MatMenuModule,
 		MatProgressSpinnerModule,
 		MatTabsModule,
+		MatSelectModule,
 		MatTooltipModule,
 		MatCheckboxModule
 	],

@@ -151,7 +151,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -338,7 +338,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -527,7 +527,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -700,7 +700,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -871,7 +871,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -1050,7 +1050,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -1229,7 +1229,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);
@@ -1479,7 +1479,7 @@
 		$mail->CharSet = 'utf-8';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'noreply.beatfeel@gmail.com';
-		$mail->Password = 'Rafalskyy1991@@';
+		$mail->Password = 'Pv8G8qV$Y^ZgD"@#';
 		$mail->setFrom('noreply@beatfeel.com');
 		$mail->FromName = $nameWeb;
 		$mail->AddAddress($email);

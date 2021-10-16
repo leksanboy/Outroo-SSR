@@ -645,6 +645,18 @@
 										</div>
 									</div>
 
+									<div class="uploadTo">
+										<mat-form-field>
+											<mat-select placeholder="Upload to Playlist/Mine" [formControl]="uploadTo">
+												<mat-option value="0" selected>Leave in Mine</mat-option>
+												<mat-option *ngFor="let p of sessionData?.current?.playlists" [value]="p.id">
+													<img [src]="p.image ? (env.pathAudios + 'covers/' + p.image) : env.defaultPlaylistCover">
+													{{p.title}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+
 									<ul class="tracks" *ngIf="dataFiles.list.length > 0">
 										<li *ngFor="let x of dataFiles.list; let i = index;" [ngClass]="{default: !x.image}">
 											<div mat-ripple class="inner">

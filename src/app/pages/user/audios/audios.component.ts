@@ -1,9 +1,9 @@
-import { Title, DomSanitizer } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Location, DOCUMENT, PlatformLocation } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
@@ -68,6 +68,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public deniedAccessOnlySession: boolean;
 	public actionFormSearch: FormGroup;
 	public hideAd: boolean;
+	public uploadTo = new FormControl('0');
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -965,6 +966,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 					this.alertService.error(this.translations.common.containsInvalidFiles);
 				} else {
 					this.dataFiles.actions = false;
+					const uTo = this.uploadTo.value;
 					const self = this;
 
 					const progressHandler = function (ev, file) {
@@ -997,6 +999,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 						formdata.append('fileUpload', file);
 						formdata.append('category', file.category);
 						formdata.append('title', file.title);
+						formdata.append('uploadTo', uTo);
 
 						if (file.explicit) {
 							formdata.append('explicit', file.explicit);
