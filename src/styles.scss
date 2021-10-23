@@ -3156,7 +3156,6 @@ body {
 
 	/* Checkbox */
 	.mat-checkbox {
-		// border-bottom: 1px solid $greyColor;
 		box-sizing: border-box;
 		margin: 18px 0 0;
 		display: flex;
@@ -3165,17 +3164,14 @@ body {
 		float: left;
 
 		label {
+			white-space: inherit;
 			width: 100%;
 
 			.mat-checkbox-label {
-				text-overflow: ellipsis;
-				box-sizing: border-box;
-				white-space: nowrap;
-				overflow: hidden;
 				display: block;
 				width: 100%;
 			}
-
+			
 			.mat-checkbox-inner-container {
 				.mat-checkbox-frame {
 					border: 2px solid $greyColor;
@@ -8263,9 +8259,59 @@ body {
 									background-color: $redColor;
 									color: $whiteColor;
 									font-weight: bold;
-									margin: 12px 0 0;
+									margin: 12px 12px 0 0;
 									font-size: 13px;
 									text-transform: inherit;
+									
+									mat-progress-spinner {
+										height: 16px !important;
+										width: 16px !important;
+										margin: 8px 6px 0 0;
+										float: left;
+		
+										svg {
+											height: 16px !important;
+											width: 16px !important;
+		
+											circle {
+												stroke: $whiteColor !important;
+											}
+										}
+									}
+								}
+
+								.check {
+									width: 100%;
+
+									.mat-checkbox {
+										label {
+											.mat-checkbox-inner-container {
+												margin-right: 18px;
+											}
+										}
+
+										&:not(.mat-checkbox-disabled) {
+											label {
+												.mat-checkbox-inner-container {
+													.mat-checkbox-ripple .mat-ripple-element {
+														background-color: $redColor!important;
+													}
+												}
+											}
+										}
+								
+										&.mat-checkbox-checked {
+											label {
+												.mat-checkbox-inner-container {
+								
+													.mat-checkbox-ripple .mat-ripple-element,
+													.mat-checkbox-background {
+														background-color: $redColor;
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}

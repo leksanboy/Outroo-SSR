@@ -205,13 +205,16 @@
 						username,
 						name,
 						avatar,
-						background,
 						email,
 						about,
 						language,
 						theme,
+						mini_player as mp,
+						email_promos as ep,
 						official,
-						private
+						private,
+						reset_password as rp,
+						deletion_date as dd
 				FROM z_users
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
@@ -220,6 +223,8 @@
 			$result['avatarUrl'] 			= $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 			$result['languages'] 			= getLanguages();
 			$result['theme'] 				= intval($result['theme']);
+			$result['mp'] 					= $result['mp'] ? true : false;
+			$result['ep'] 					= $result['ep'] ? true : false;
 			$result['official'] 			= $result['official'] ? true : false;
 			$result['private'] 				= $result['private'] ? true : false;
 			$result['name'] 				= html_entity_decode($result['name'], ENT_QUOTES);
@@ -228,6 +233,9 @@
 			$result['countFollowers'] 		= countUserFollowers($result['id']);
 			$result['countAudios'] 			= countUserAudios($result['id']);
 			$result['countBookmarks'] 		= countUserBookmarks($result['id']);
+
+			// Get playlists
+			$result['playlists'] 			= getPlaylistsSelect($result['id']);
 		}
 
 		return $result;

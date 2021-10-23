@@ -15,11 +15,14 @@ import { RoutingStateService } from '../../../../app/core/services/route/state.s
 
 import { NewAvatarComponent } from '../../../../app/pages/common/newAvatar/newAvatar.component';
 
+import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
+
 declare var global: any;
 
 @Component({
 	selector: 'app-settings',
-	templateUrl: './settings.component.html'
+	templateUrl: './settings.component.html',
+	providers: [TimeagoPipe]
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 	public env: any = environment;
@@ -452,6 +455,59 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 					this.userDataService.setSessionData('data', this.sessionData);
 					this.sessionService.setData(this.sessionData);
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
+	}
+
+	deleteAccount(type) {
+		if (type === 'check') {
+			this.sessionData.current.deleteCheck = true;
+		} else if (type === 'cancel') {
+			this.sessionData.current.deleteCheck = false;
+		} else if (type === 'proceed') {
+			if (!this.sessionData.current.deleteChecked) {
+				this.alertService.error('Check to proceed');
+			} else {
+				let t = 9;
+				this.sessionData.current.deleteInterval = setInterval(() => { this.sessionData.current.deleteCountdown = t >= 0 ? (t === 0 ? this.deleteAccount('delete') : t--) : null }, 1000);
+			}
+		} else if (type === 'undo') {
+			this.sessionData.current.deleteCountdown = null;
+			clearInterval(this.sessionData.current.deleteInterval);
+		} else if (type === 'delete') {
+			clearInterval(this.sessionData.current.deleteInterval);
+			
+			const data = {
+				type: 'deleteAccount',
+				deleteAccount: 1
+			};
+
+			this.userDataService.updateData(data)
+				.subscribe(res => {
+					this.sessionData.current.dd = res.dd;
+					this.alertService.success('Account deletion has been successfully requested');
+
+					this.userDataService.setSessionData('data', this.sessionData);
+					this.sessionService.setData(this.sessionData);
+				}, error => {
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'restore') {
+			const data = {
+				type: 'deleteAccount',
+				deleteAccount: 0
+			};
+
+			this.userDataService.updateData(data)
+				.subscribe(res => {
+					this.sessionData.current.dd = res.dd;
+					this.alertService.success('Account deletion has been successfully canceled');
+
+					this.userDataService.setSessionData('data', this.sessionData);
+					this.sessionService.setData(this.sessionData);
+					this.sessionData = this.userDataService.getSessionData();
 				}, error => {
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});

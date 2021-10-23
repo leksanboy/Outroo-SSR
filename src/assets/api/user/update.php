@@ -185,5 +185,23 @@
         $conn->query($sqlH);
 
         $conn->close();
+    } else if ($type === 'deleteAccount') {
+        $deletionDate = $data['deleteAccount'] === 1 ? date("Y-m-d H:i:s", strtotime("+30 days",time())) : NULL;
+
+        $sql = "UPDATE z_users
+                SET deletion_date = '$deletionDate',
+                    ip_address_update = '$ipAddress'
+                WHERE id = $session";
+        $result = $conn->query($sql);
+
+        $userData = userData($session);
+        echo json_encode($userData);
+
+        // History
+        $sqlH = "INSERT INTO z_users_updates (type, user, language, ip_address)
+				VALUES ('$type', $session, '$lang', '$ipAddress')";
+		$conn->query($sqlH);
+
+        $conn->close();
     }
 ?>

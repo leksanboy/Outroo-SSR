@@ -116,7 +116,6 @@
 									username,
 									name,
 									avatar,
-									background,
 									email,
 									about,
 									language,
@@ -125,7 +124,8 @@
 									email_promos as ep,
 									official,
 									private,
-									reset_password as rp
+									reset_password as rp,
+									deletion_date as dd
 							FROM z_users
 							WHERE id = $insertedUser";
 					$result = $conn->query($sql)->fetch_assoc();

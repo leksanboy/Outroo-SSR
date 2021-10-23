@@ -403,6 +403,13 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				this.showPlayer = false;
 			});
 		}
+
+		var host = 'wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self';
+        var socket = new WebSocket(host);
+        socket.onmessage = function(e) {
+            console.log('WS - e:', e);
+			console.log('WS - e.data:', e.data);
+        };
 	}
 
 	ngOnInit() {

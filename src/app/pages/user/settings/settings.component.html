@@ -227,11 +227,45 @@
 								<div class="description">
 									Send request to delete account (the account will be deleted after 30 days), In that period of time you can cancel the request.
 								</div>
-								<div class="button">
-									<button mat-raised-button type="button">
-										<!-- <mat-progress-spinner mode="indeterminate" *ngIf="submitPersonalLoading"></mat-progress-spinner> -->
-										Delete account
-									</button>
+								<div class="button" *ngIf="!sessionData?.current?.dd">
+									<button mat-button [matMenuTriggerFor]="delete" *ngIf="!sessionData?.current?.deleteCheck">Delete account</button>
+									<mat-menu #delete="matMenu" yPosition="below" xPosition="before" class="removeBox">
+										<div class="text">
+											{{sessionData?.current?.name}}
+											<br>
+											Are you sure you want delete your account?
+										</div>
+										<div class="buttons">
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="deleteAccount('check')">{{translations?.common?.yes}}</button>
+										</div>
+									</mat-menu>
+
+									<div class="check" *ngIf="sessionData?.current?.deleteCheck">
+										<mat-checkbox [(ngModel)]="sessionData.current.deleteChecked">
+											By checking this option you agree that you want to proceed with the deletion of the account.
+										</mat-checkbox>
+										<button mat-button (click)="deleteAccount('undo')" *ngIf="sessionData?.current?.deleteCountdown">Undo ({{sessionData?.current?.deleteCountdown}})</button>
+										<button mat-button (click)="deleteAccount('proceed')" [disabled]="sessionData?.current?.deleteCountdown">
+											<mat-progress-spinner mode="indeterminate" *ngIf="sessionData?.current?.deleteCountdown"></mat-progress-spinner>
+											Delete
+										</button>
+									</div>
+								</div>
+								
+								<div class="button" *ngIf="sessionData?.current?.dd">
+									<button mat-button [matMenuTriggerFor]="restore">Cancel deletion ({{sessionData?.current?.dd | timeago}})</button>
+									<mat-menu #restore="matMenu" yPosition="below" xPosition="before" class="removeBox">
+										<div class="text">
+											{{sessionData?.current?.name}}
+											<br>
+											Are you sure you want to cancel the deletion of your account?
+										</div>
+										<div class="buttons">
+											<button mat-menu-item>{{translations?.common?.no}}</button>
+											<button mat-menu-item (click)="deleteAccount('restore')">{{translations?.common?.yes}}</button>
+										</div>
+									</mat-menu>
 								</div>
 							</div>
 						</div>
