@@ -1,40 +1,27 @@
-# generate distNew first
-# docker build -t beatfeel .
+# https://dev.to/avatsaev/create-efficient-angular-docker-images-with-multi-stage-builds-1f3n
 
-# OS
-FROM node:10
+# STAGE 1: Build
+FROM node:12.5.0-alpine as builder
 
-# Install directly (no user interaction)
-ENV DEBIAN_FRONTEND noninteractive
+ARG ENV=dev
 
-# Install basics
-RUN apt-get update && \
-    apt-get -y install \
-        apt-utils \
-        httpd \
-        php \
-        php-cli \
-        php-common \
-        mod_ssl \
-        openssl
+WORKDIR /tmp
+ADD package.json ./package.json
+ADD package-lock.json ./package-lock.json
 
-# Install PM2
-RUN npm install pm2 -g
+RUN npm ci
 
-# Apache conf (Redirect on reloading page) for SSR Web
-RUN sed -i 's/<\/VirtualHost>/\n RewriteEngine On \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR] \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d \n RewriteRule ^ - [L] \n RewriteRule ^ \/index.html \n <\/VirtualHost>/g' /etc/apache2/sites-available/000-default.conf
+ADD . .
 
-# Apache conf
-RUN echo 'ServerName fake1.local' >> /etc/apache2/apache2.conf
+RUN npm run build -- --configuration=$ENV --output-path=dist
 
-# Copy ssl conf (TODO)
-#COPY ./conf/ssl.conf /etc/httpd/conf.d/default.conf
+# STAGE 2: Run
+FROM nginx:1.17.2-alpine
 
-# Copy build
-COPY ./distNew/ /var/www/html/dist
+# From "builder" stage copy over the artifacts in dist folder to default nginx public folder
+COPY --from=builder /tmp/dist /usr/share/nginx/html
+ADD nginx.conf /etc/nginx/conf.d/default.conf
 
-# Run on port
 EXPOSE 80
 
-# Exec
-CMD ["pm2", "start", "dist/server.js"]
+CMD nginx -g "daemon off;"

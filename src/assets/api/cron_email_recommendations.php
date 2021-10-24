@@ -1,10 +1,10 @@
 <?php include "db.php";
     /*
     1. En la maquina linux ssh lanzar comando "crontab -e"
-    2. Dentro del archivo agreagar al finnal una nueva linea
-        50 * * * * php /var/www/html/assets/api/cron.php
+    2. Dentro del archivo agreagar al final una nueva linea
+        50 * * * * php /var/www/html/assets/api/cron_something.php
         o
-        0 11 1/2 * * /usr/bin/php /var/www/html/assets/api/cron.php
+        0 11 1/2 * * /usr/bin/php /var/www/html/assets/api/cron_something.php
     3. Crontab empezara a funcionar de manera automatica
     */
     
@@ -108,7 +108,6 @@
             FROM z_users
 			WHERE is_deleted = 0
 				AND email_promos = 1";
-            // WHERE id = 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

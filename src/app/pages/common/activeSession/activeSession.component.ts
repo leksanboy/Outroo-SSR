@@ -404,11 +404,26 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			});
 		}
 
-		var host = 'wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self';
+		/* var host = 'wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self';
         var socket = new WebSocket(host);
         socket.onmessage = function(e) {
             console.log('WS - e:', e);
 			console.log('WS - e.data:', e.data);
+        }; */
+
+		var host2 = 'ws://beatfeel.com:8080';
+        var socket2 = new WebSocket(host2);
+        socket2.onopen = function(e) {
+            console.log('WS2 - onopen:', e);
+        };
+		socket2.onmessage = function(e) {
+            console.log('WS2 - onmessage:', e);
+        };
+		socket2.onclose = function(e) {
+            console.log('WS2 - onclose:', e);
+        };
+		socket2.onerror = function(e) {
+            console.log('WS2 - onerror:', e);
         };
 	}
 
