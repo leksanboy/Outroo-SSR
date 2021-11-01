@@ -21,6 +21,7 @@ import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 import { TimeagoPipe } from '../../../../app/core/pipes/timeago.pipe';
+import { ChatDataService } from '../../../../app/core/services/user/chatData.service';
 
 declare var global: any;
 
@@ -35,6 +36,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	public sessionData: any = [];
 	public translations: any = [];
 	public dataDefault: any = [];
+	public dataChats: any = [];
+	public dataConversation: any = [];
 	public data: any = {
 		selectedIndex: 0
 	};
@@ -51,13 +54,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		private playerService: PlayerService,
 		private activatedRoute: ActivatedRoute,
 		private sessionService: SessionService,
+		private chatDataService: ChatDataService,
 		private userDataService: UserDataService,
 		private audioDataService: AudioDataService,
 		private followsDataService: FollowsDataService,
-		private publicationsDataService: PublicationsDataService,
+		private routingStateService: RoutingStateService,
 		private notificationsDataService: NotificationsDataService,
 		private ssrService: SsrService,
-		private routingStateService: RoutingStateService,
 	) {
 		// Session
 		this.sessionData = this.activatedRoute.snapshot.data.sessionResolvedData;
@@ -146,7 +149,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			};
 
 			const data = {
-				type: 'default',
 				rows: this.dataDefault.rows,
 				cuantity: this.env.cuantity
 			};
@@ -222,6 +224,132 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	// Set tab on click
+	setTab(tab) {
+		switch (tab) {
+			case 0:
+				/* General: always set */
+				break;
+			case 1:
+				if (!this.dataChats.list) {
+					this.defaultChats('default');
+				}
+				break;
+		}
+	}
+
+	// Default chat
+	defaultChats(type) {
+		if (type === 'default') {
+			this.dataChats = {
+				list: [],
+				rows: 0,
+				loadingData: true,
+				loadMoreData: false,
+				loadingMoreData: false,
+				noData: false,
+				noMore: false
+			};
+
+			const data = {
+				rows: this.dataChats.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.chatDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataChats.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataChats.noData = true;
+					} else {
+						this.dataChats.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+						this.dataChats.list = res;
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataChats.noMore = true;
+					}
+				}, error => {
+					this.dataChats.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (type === 'more' && !this.dataChats.noMore && !this.dataChats.loadingMoreData) {
+			this.dataChats.loadingMoreData = true;
+			this.dataChats.rows++;
+
+			const data = {
+				rows: this.dataChats.rows,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.chatDataService.default(data)
+				.subscribe((res: any) => {
+					this.dataChats.loadMoreData = (!res || res.length < this.env.cuantity * 3) ? false : true;
+					this.dataChats.loadingMoreData = false;
+
+					if (!res || res.length > 0) {
+						for (const i in res) {
+							if (i) {
+								this.dataChats.list.push(res[i]);
+							}
+						}
+					}
+
+					if (!res || res.length < this.env.cuantity * 3) {
+						this.dataChats.noMore = true;
+					}
+				}, error => {
+					this.dataChats.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		}
+	}
+
+	// Open chat conversation
+	showChat(item) {
+		let view = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+		console.log('item:', item);
+
+		if (view === 'desktop') {
+			this.dataConversation.id = item.id;
+			this.dataConversation.loadingData = true;
+			console.log('dataConversation:', this.dataConversation);
+
+			const data = {
+				id: item.id,
+				rows: item.rows ? item.rows = 1 : 0,
+				cuantity: this.env.cuantity * 3
+			};
+
+			this.chatDataService.conversation(data)
+				.subscribe((res: any) => {
+					this.dataConversation.loadingData = false;
+
+					if (!res || res.length === 0) {
+						this.dataConversation.noData = true;
+					} else {
+						this.dataConversation.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
+
+						item.conversation = res;
+						this.dataConversation.list = item.conversation;
+					}
+
+					if (!res || res.length < this.env.cuantity) {
+						item.conversation.noMore = true;
+						this.dataConversation.noMore = item.conversation.noMore;
+					}
+
+					/* this.userDataService.setLocalStotage('notificationsPage', this.dataDefault); */
+				}, error => {
+					this.dataConversation.loadingData = false;
+					this.alertService.error(this.translations.common.anErrorHasOcurred);
+				});
+		} else if (view === 'mobile') {
+			this.sessionService.setDataShowMessage(item);
+		}
+	}
+
 	// Follow / Unfollow
 	followUnfollow(type, item) {
 		if (type === 'accept') {
@@ -280,12 +408,35 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		this.userDataService.setLocalStotage('notificationsPage', this.dataDefault);
 	}
 
-	// Show photo from url if is one
+	// Show from url if is one
 	show(item) {
 		if (item.url === 'publication') {
 			this.sessionService.setDataShowPublication(item);
 		} else if (item.url === 'message') {
 			this.sessionService.setDataShowMessage(item.user);
+		}
+	}
+
+	// Play song
+	playSong(data, item, key, type) {
+		if (this.audioPlayerData.key === key &&
+			this.audioPlayerData.type === type &&
+			this.audioPlayerData.item.song === item.song
+		) { // Play/Pause current
+			item.playing = !item.playing;
+			this.playerService.setPlayTrack(this.audioPlayerData);
+		} else { // Play new one
+			this.audioPlayerData.list = data;
+			this.audioPlayerData.item = item;
+			this.audioPlayerData.key = key;
+			/* this.audioPlayerData.user = this.sessionData.current.id;
+			this.audioPlayerData.username = this.sessionData.current.username; */
+			this.audioPlayerData.location = 'notifications';
+			this.audioPlayerData.type = type;
+			/* this.audioPlayerData.selectedIndex = this.data.selectedIndex; */
+
+			this.playerService.setData(this.audioPlayerData);
+			item.playing = true;
 		}
 	}
 
@@ -310,26 +461,37 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Play song
-	playSong(data, item, key, type) {
-		if (this.audioPlayerData.key === key &&
-			this.audioPlayerData.type === type &&
-			this.audioPlayerData.item.song === item.song
-		) { // Play/Pause current
-			item.playing = !item.playing;
-			this.playerService.setPlayTrack(this.audioPlayerData);
-		} else { // Play new one
-			this.audioPlayerData.list = data;
-			this.audioPlayerData.item = item;
-			this.audioPlayerData.key = key;
-			/* this.audioPlayerData.user = this.sessionData.current.id;
-			this.audioPlayerData.username = this.sessionData.current.username; */
-			this.audioPlayerData.location = 'notifications';
-			this.audioPlayerData.type = type;
-			this.audioPlayerData.selectedIndex = this.data.selectedIndex;
+	// Item options
+	itemChatOptions(type, item){
+		switch(type){
+			case("remove"):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
 
-			this.playerService.setData(this.audioPlayerData);
-			item.playing = true;
+				let d = {
+					id: item.id,
+					type: item.removeType,
+					user: this.sessionData.current.id
+				}
+
+				this.chatDataService.addRemove(d).subscribe();
+			break;
+			case("removeComment"):
+				item.addRemoveSession = !item.addRemoveSession;
+				item.removeType = item.addRemoveSession ? 'remove' : 'add';
+
+				let dc = {
+					id: item.id,
+					type: item.removeType,
+					user: this.sessionData.current.id
+				}
+
+				this.chatDataService.addRemoveComment(dc).subscribe();
+			break;
+			case("report"):
+				item.type = 'chat';
+				this.sessionService.setDataReport(item);
+			break;
 		}
 	}
 

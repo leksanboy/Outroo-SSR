@@ -116,6 +116,9 @@
 		"share": "Share",
 		"haveNewMessage": "Have a new message"
 	},
+	"chat": {
+		"title": "Chat"
+	},
 	"photos": {
 		"title": "Photos",
 		"noData": "No photos",

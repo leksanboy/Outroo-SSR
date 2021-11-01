@@ -29,13 +29,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 	public userData: any = [];
 	public translations: any = [];
 	public dataDefault: any = [];
+	public dataLiked: any = [];
 	public dataSearch: any = [];
 	public activeLanguage: any;
 	public hideAd: boolean;
 	public data: any = {
 		selectedIndex: 0
 	};
-	public dataLiked: any;
 
 	constructor(
 		private router: Router,
@@ -235,7 +235,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 				/* General: always set */
 				break;
 			case 1:
-				if (!this.dataLiked) {
+				if (!this.dataLiked.list) {
 					this.defaultLiked('default', this.sessionData.current.username);
 				}
 				break;

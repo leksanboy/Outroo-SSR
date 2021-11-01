@@ -411,7 +411,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			console.log('WS - e.data:', e.data);
         }; */
 
-		var host2 = 'ws://beatfeel.com:8080';
+		var host2 = 'ws://localhost:8888';
         var socket2 = new WebSocket(host2);
         socket2.onopen = function(e) {
             console.log('WS2 - onopen:', e);

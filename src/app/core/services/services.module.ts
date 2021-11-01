@@ -8,6 +8,7 @@ import { MetaService } from './seo/meta.service';
 import { MessageDataService } from './user/messageData.service';
 import { MomentService } from './moment/moment.service';
 import { NotificationsDataService } from './user/notificationsData.service';
+import { ChatDataService } from './user/chatData.service';
 import { PlayerService } from './player/player.service';
 import { PublicationsDataService } from './user/publicationsData.service';
 import { SessionService } from './session/session.service';
@@ -18,6 +19,7 @@ import { SsrService } from './ssr.service';
 	providers: [
 		RoutingStateService,
 		AudioDataService,
+		ChatDataService,
 		FollowsDataService,
 		HeadersService,
 		MetaService,

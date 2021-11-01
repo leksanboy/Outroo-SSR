@@ -490,27 +490,6 @@
 		return $result;
 	}
 
-	/* // Get playlists
-	function getPlaylists($user){
-		global $conn;
-
-		$sql = "SELECT id, title, private
-				FROM z_audios_playlist
-				WHERE user = $user
-					AND is_deleted = 0
-				ORDER BY date DESC";
-		$result = $conn->query($sql);
-
-		$data = array();
-		while($row = $result->fetch_assoc()) {
-			$row['private'] = $row['private'] ? true : false;
-			$row['idPlaylist'] = $row['id'];
-			$data[] = $row;
-		}
-
-		return $data;
-	} */
-
 	// Get playlists for select
 	function getPlaylistsSelect($user){
 		global $conn;
@@ -604,18 +583,6 @@
 
 		return $result;
 	}
-
-	/* // Get id by name
-	function getPlaylistIdByName($name){
-		global $conn;
-
-		$sql = "SELECT id
-				FROM z_audios_playlist
-				WHERE name = '$name'";
-		$result = $conn->query($sql)->fetch_assoc();
-
-		return $result['id'];
-	} */
 
 	// Search analytics
 	function searchAudioAnalytics($user, $caption, $type){
@@ -1190,55 +1157,47 @@
 		}
 	}
 
-	/////////////
-	// MESSAGE //
-	/////////////
+	//////////
+	// CHAT //
+	//////////
 
-	// // Get conversation users
-	// function getChatConversationUsers($id, $user){
-	// 	global $conn;
+	//Get conversation users
+	function getChatUsers($id, $user){
+		global $conn;
 
-	// 	$sql = "SELECT user
-	// 			FROM z_chat_users
-	// 			WHERE chat = $id
-	// 				AND is_deleted = 0
-	// 			ORDER BY date DESC
-	// 			LIMIT 100";
-	// 	$result = $conn->query($sql);
+		$sql = "SELECT user
+				FROM z_chat_users
+				WHERE chat = $id
+					AND is_deleted = 0
+					AND user != $user
+				ORDER BY date DESC
+				LIMIT 100";
+		$result = $conn->query($sql);
 
-	// 	$dataAll = array();
-	// 	$dataExcluded = array();
-	// 	while($row = $result->fetch_assoc()) {
-	// 		$row['user'] = userUsernameNameAvatar($row['user']);
-	// 		$dataAll[] = $row;
+		$list = array();
+		while($row = $result->fetch_assoc()) {
+			$row = userUsernameNameAvatar($row['user']);
+			$list[] = $row;
+		}
 
-	// 		if ($user != $row['user']['id'])
-	// 			$dataExcluded[] = $row;
-	// 	}
+		return $list;
+	}
 
-	// 	$data = array(
-	// 		"all" 	=> $dataAll,
-	// 		"excluded" 	=> $dataExcluded
-	// 	);
+	// Get last inserted comment
+	function getChatConversationLastComment($id){
+		global $conn;
 
-	// 	return $data;
-	// }
+		$sql = "SELECT content, date, type
+				FROM z_chat_conversation
+				WHERE chat = $id
+					AND is_deleted = 0
+				ORDER BY date DESC
+				LIMIT 1";
+		$result = $conn->query($sql)->fetch_assoc();
+		$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
 
-	// // Get last inserted comment
-	// function getChatConversationLastComment($id){
-	// 	global $conn;
-
-	// 	$sql = "SELECT content, date, type
-	// 			FROM z_chat_conversation
-	// 			WHERE chat = $id
-	// 				AND is_deleted = 0
-	// 			ORDER BY date DESC
-	// 			LIMIT 1";
-	// 	$result = $conn->query($sql)->fetch_assoc();
-	// 	$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
-
-	// 	return $result;
-	// }
+		return $result;
+	}
 
 	// Get inserted comment in conversation
 	function getMessageById($id){
