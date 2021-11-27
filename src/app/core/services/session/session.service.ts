@@ -15,7 +15,7 @@ export class SessionService {
 	private subjectPendingNotifications = new Subject<any>();
 	private subjectReport = new Subject<any>();
 	private subjectData = new Subject<any>();
-	private subjectShowMessage = new Subject<any>();
+	private subjectShowChat = new Subject<any>();
 	private subjectNewShare = new Subject<any>();
 	private subjectShowAvatar = new Subject<any>();
 	private subjectShowLikes = new Subject<any>();
@@ -114,12 +114,12 @@ export class SessionService {
 		return this.subjectData.asObservable();
 	}
 
-	setDataShowMessage(data: any) {
-		this.subjectShowMessage.next(data);
+	setDataShowChat(data: any) {
+		this.subjectShowChat.next(data);
 	}
 
-	getDataShowMessage(): Observable<any> {
-		return this.subjectShowMessage.asObservable();
+	getDataShowChat(): Observable<any> {
+		return this.subjectShowChat.asObservable();
 	}
 
 	setDataNewShare(data: any) {

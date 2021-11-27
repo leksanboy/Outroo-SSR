@@ -1,0 +1,117 @@
+<div class="dialogBoxBackdrop" (click)="close()"></div>
+
+<div class="dialogBox">
+	<div mat-dialog-title class="header">
+		<div class="left">
+			<button mat-icon-button (click)="close()">
+				<i label="back"></i>
+			</button>
+
+			<div class="text">
+				{{translations?.common?.sendMessage}}
+			</div>
+		</div>
+	</div>
+
+	<div mat-dialog-content class="bodyMessage" #conversationContainer>
+		<div class="container">
+			<!-- <div class="loadMore" *ngIf="dataDefault.loadMoreData">
+				<button mat-fab (click)="default('more')" *ngIf="!dataDefault.loadingMoreData">
+					<i label="add"></i>
+				</button>
+				<mat-progress-spinner mode="indeterminate" *ngIf="dataDefault.loadingMoreData"></mat-progress-spinner>
+			</div> -->
+
+			<!-- <ul class="conversationList" *ngIf="dataDefault.list.length > 0">
+				<li *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id}" [@showFromBottomAnimation]>
+					<div class="box">
+						<div class="top" *ngIf="!((i > 0) && (x.user.id == dataDefault.list[i-1].user.id))">
+							<a class="avatar" routerLink="/{{x.user.username}}">
+								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+							</a>
+						</div>
+
+						<div class="bottom" [ngClass]="{'remove': x.addRemoveSession}">
+							<div class="innerContent">
+								<div class="text">
+									<div class="content" [innerHtml]="x.content | safeHtml"></div>
+
+									<div class="actions">
+										<button mat-icon-button [matMenuTriggerFor]="options">
+											<i class="icon85 grey" label="more"></i>
+										</button>
+
+										<mat-menu #options="matMenu">
+											<button mat-menu-item (click)="itemOptions('remove', x)">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+											<button mat-menu-item (click)="itemOptions('report', x)">{{translations?.common?.report}}</button>
+										</mat-menu>
+									</div>
+								</div>
+							</div>
+
+							<div class="date">{{x.date | dateTime}}</div>
+						</div>
+					</div>
+				</li>
+			</ul> -->
+
+
+			<ul class="chatConversation" *ngIf="dataDefault.list">
+				<li *ngFor="let x of dataDefault.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id, 'remove': x.addRemoveSession}">
+					<div class="box">
+						<div class="top" *ngIf="!((i > 0) && (x.user.id == dataDefault.list[i-1].user.id))">
+							<a class="avatar" routerLink="/{{x.user.username}}">
+								<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+							</a>
+						</div>
+
+						<div class="bottom">
+							<div class="innerContent">
+								<div class="text">
+									<div class="content" [innerHtml]="x.content | safeHtml"></div>
+
+									<div class="actions">
+										<button mat-icon-button [matMenuTriggerFor]="options">
+											<i class="icon85" label="more"></i>
+										</button>
+
+										<mat-menu #options="matMenu">
+											<button mat-menu-item (click)="itemChatOptions('removeComment', x)" *ngIf="x.user.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+											<button mat-menu-item (click)="itemChatOptions('report', x)">{{translations?.common?.report}}</button>
+										</mat-menu>
+									</div>
+								</div>
+							</div>
+							<div class="date">{{x.date | date:'hh:mm'}}</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<div class="loadingData" *ngIf="dataDefault.loadingData">
+				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+			</div>
+
+			<div class="noData" *ngIf="dataDefault.noData && !dataDefault.loadingData">
+				<div class="description">{{translations?.common?.noData}}</div>
+			</div>
+		</div>
+	</div>
+
+	<div mat-dialog-actions class="buttons chat">
+		<div class="new">
+			<div class="avatar">
+				<img [src]="sessionData.current.avatar ? sessionData.current.avatarUrl : env.avatar"/>
+			</div>
+			<div class="richComment">
+				<div class="highlights" [innerHTML]="data.newCommentData.transformed"></div>
+				<div class="origin" contenteditable="plaintext-only" [textContent]="data.newCommentData.onBackground" (input)="newComment('writingChanges', $event.target.innerText, data)" (keyup)="newComment('keyCode', $event, data)" (keydown)="newComment('keyCode', $event, data)" (mouseup)="newComment('keyCode', $event, data)"></div>
+			</div>
+			<div class="actions">
+				<button mat-icon-button type="submit" (click)="newComment('create', $event, data)">
+					<i class="blue" label="send-comment"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

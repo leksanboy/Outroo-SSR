@@ -88,6 +88,16 @@ export class PublicationsDataService {
 			}));
 	}
 
+	addRemoveComment(data: any) {
+		const url = this.env.url + 'assets/api/publications/addRemoveComment.php';
+		const params = data;
+
+		return this.httpClient.post(url, params, this.headersService.getHeaders())
+			.pipe(map(res => {
+				return res;
+			}));
+	}
+
 	likeUnlike(data: any) {
 		const url = this.env.url + 'assets/api/publications/likeUnlike.php';
 		const params = data;

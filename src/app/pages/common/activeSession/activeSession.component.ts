@@ -24,7 +24,7 @@ import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/n
 import { NewReportComponent } from '../../../../app/pages/common/newReport/newReport.component';
 import { NewSessionComponent } from '../../../../app/pages/common/newSession/newSession.component';
 import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/showAvatar.component';
-import { ShowMessageComponent } from '../../../../app/pages/common/showMessage/showMessage.component';
+import { ShowChatComponent } from '../showChat/showChat.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
 import { ActivePlayerMobileComponent } from '../../../../app/pages/common/activePlayerMobile/activePlayerMobile.component';
 import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
@@ -280,9 +280,9 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			this.pendingNotifications('default');
 
 			// Pending notifications every 5 minutes
-			setInterval(() => {
+			/* setInterval(() => {
 				this.pendingNotifications('default');
-			}, 1000 * 60 * 5);
+			}, 1000 * 60 * 5); */
 
 			// Get session data
 			this.sessionService.getData()
@@ -354,10 +354,10 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					this.openShare(data);
 				});
 
-			// Get Message
-			this.sessionService.getDataShowMessage()
+			// Get Chat
+			this.sessionService.getDataShowChat()
 				.subscribe(data => {
-					this.openMessage(data);
+					this.openChat(data);
 				});
 
 			// Get publication
@@ -1856,20 +1856,20 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 		}
 	}
 
-	// Message
-	openMessage(data) {
-		this.location.go(this.router.url + '#sendMessage');
+	// Chat
+	openChat(data) {
+		this.location.go(this.router.url + '#sendChat');
 
 		const config = {
 			disableClose: false,
 			data: {
 				sessionData: this.sessionData,
-				userData: data,
+				item: data,
 				translations: this.translations
 			}
 		};
 
-		const dialogRef = this.dialog.open(ShowMessageComponent, config);
+		const dialogRef = this.dialog.open(ShowChatComponent, config);
 		dialogRef.afterClosed().subscribe((res: any) => {
 			// Set url
 			this.location.go(this.router.url);

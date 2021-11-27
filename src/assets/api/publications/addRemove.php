@@ -3,8 +3,9 @@
 
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 	$session = sessionId();
-	$type = $data['type'];
+	
 	$id = $data['id'];
+	$type = $data['type'];
 
 	$status = ($type === 'remove') ? 1 : 0;
 

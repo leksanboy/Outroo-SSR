@@ -301,7 +301,7 @@ export class MainComponent implements OnInit, OnDestroy {
 				this.sessionService.setDataAddAccount(dataCS);
 				break;
 			case 'sendMessage':
-				this.sessionService.setDataShowMessage(item);
+				this.sessionService.setDataShowChat(item);
 				break;
 		}
 	}

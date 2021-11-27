@@ -50,7 +50,7 @@ import { NewSessionModule } from './pages/common/newSession/newSession.module';
 import { ShowAvatarModule } from './pages/common/showAvatar/showAvatar.module';
 import { NewShareModule } from './pages/common/newShare/newShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
-import { ShowMessageModule } from './pages/common/showMessage/showMessage.module';
+import { ShowChatModule } from './pages/common/showChat/showChat.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
 import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
 import { ActiveSessionsMobileModule } from './pages/common/activeSessionsMobile/activeSessionsMobile.module';
@@ -111,7 +111,7 @@ import { ActiveSessionComponent } from './pages/common/activeSession/activeSessi
 		NewShareModule,
 		ShowAvatarModule,
 		ShowLikesModule,
-		ShowMessageModule,
+		ShowChatModule,
 		ShowPlaylistModule,
 		ShowPublicationModule
 	],

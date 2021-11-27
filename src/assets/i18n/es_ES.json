@@ -479,6 +479,8 @@
 		"replyTo": "Responder a",
 		"miniPlayerEnabled": "Mini reproductor ha sido establecido por defecto",
 		"miniPlayerDisabled": "Reproductor normal ha sido establecido por defecto",
-		"or": "o"
+		"or": "o",
+		"viewReplies": "Ver respuestas",
+		"hideReplies": "Ocultar respuestas"
 	}
 }

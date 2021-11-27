@@ -502,6 +502,8 @@ export class PostComponent implements OnInit, OnDestroy {
 						item.noData = false;
 						item.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
 						item.comments.list = res;
+
+						item.comments.list.filter((i: any) => { i.list.filter((c: any) => c.user.id === this.sessionData.current.id ? i.viewReplies = true : null); });
 					}
 				}, error => {
 					item.loadingData = false;
@@ -553,9 +555,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
 				// Put as default
 				this.newComment('checkPlaceholder', null, item);
-
-				// Cancel reply
-				this.replyComment('cancel', null, null, item);
 			}, 100);
 		} else if (type === 'writingChanges') {
 			let str = event;
@@ -608,8 +607,8 @@ export class PostComponent implements OnInit, OnDestroy {
 			}
 		} else if (type === 'transformBeforeSend') {
 			// Add replied user
-			if (item.comments.reply) {
-				item.newCommentData.original = '@' + item.comments.reply.child.user.username + ' ' + item.newCommentData.original;
+			if (item.reply) {
+				item.newCommentData.original = '@' + item.reply.user.username + ' ' + item.newCommentData.original;
 			}
 
 			const newData = {
@@ -640,18 +639,19 @@ export class PostComponent implements OnInit, OnDestroy {
 
 			return newData;
 		} else if (type === 'create') {
+			console.log('item:', item);
+
 			if (item.newCommentData.original.trim().length === 0) {
 				this.alertService.warning(this.translations.common.isTooShort);
 			} else {
 				const formatedData = this.newComment('transformBeforeSend', null, item);
 				const dataCreate = {
-					type: 'create',
 					id: item.id,
+					content: formatedData.content,
+					content_original: formatedData.original,
+					reply: (item.reply ? (item.reply.reply == 0 ? item.reply.id : item.reply.reply) : null),
+					reply_child: (item.reply ? item.reply.id : null),
 					receiver: item.user.id,
-					comment: formatedData.content,
-					comment_original: formatedData.original,
-					comment_reply_parent_id: (item.comments.reply ? item.comments.reply.parent.id : null),
-					comment_reply_child_id: (item.comments.reply ? item.comments.reply.child.id : null),
 					mentions: formatedData.mentions
 				};
 
@@ -660,8 +660,8 @@ export class PostComponent implements OnInit, OnDestroy {
 						item.countComments++;
 						item.noData = false;
 
-						if (dataCreate.comment_reply_parent_id) {
-							let comm = item.comments.list.filter(i => i.id == dataCreate.comment_reply_parent_id)[0];
+						if (dataCreate.reply) {
+							let comm = item.comments.list.filter(i => i.id == dataCreate.reply)[0];
 
 							if (comm.list) {
 								comm.list.push(res);
@@ -675,6 +675,7 @@ export class PostComponent implements OnInit, OnDestroy {
 						}
 
 						this.newComment('clear', null, item);
+						this.commentsOptions('reply', item, null);
 
 						// Check if commentsBox is open
 						if (!item.showCommentsBox) {
@@ -687,18 +688,6 @@ export class PostComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	// Reply
-	replyComment(type, parent, child, item) {
-		if (type === 'create') {
-			item.comments.reply = {
-				parent: parent,
-				child: child
-			};
-		} else if (type === 'cancel') {
-			item.comments.reply = null;
-		}
-	}
-
 	// Comments Options
 	commentsOptions(type, item, comment) {
 		switch (type) {
@@ -707,13 +696,12 @@ export class PostComponent implements OnInit, OnDestroy {
 				comment.type = !comment.addRemove ? 'add' : 'remove';
 
 				const data = {
-					receiver: item.user.id,
+					id: comment.id,
 					type: comment.type,
-					comment: comment.id,
-					id: item.id
+					user: (this.sessionData.current.id !== comment.user.id ? comment.user.id : null)
 				};
 
-				this.publicationsDataService.comment(data)
+				this.publicationsDataService.addRemoveComment(data)
 					.subscribe((res: any) => {
 						if (comment.addRemove) {
 							item.countComments--;
@@ -725,6 +713,12 @@ export class PostComponent implements OnInit, OnDestroy {
 			case 'report':
 				item.type = 'publicationComment';
 				this.sessionService.setDataReport(item);
+				break;
+			case('reply'):
+				item.reply = comment;
+				break;
+			case('viewReplies'):
+				comment.viewReplies = !comment.viewReplies;
 				break;
 		}
 	}

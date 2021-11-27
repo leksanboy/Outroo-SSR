@@ -76,9 +76,9 @@
 			}
 
 			// Message
-			if ($row['url'] === 'message') {
+			/* if ($row['url'] === 'message') {
 				$row['contentData'] = getMessageById($row['page']);
-			}
+			} */
 
 			$data[] = $row;
 		}

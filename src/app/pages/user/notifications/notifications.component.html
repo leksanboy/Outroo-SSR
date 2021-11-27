@@ -110,13 +110,13 @@
 											<span *ngIf="x.type === 'comment'">
 												{{translations?.notifications?.commentedYourPublication}}
 												<br>
-												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
+												<span *ngIf="x.contentData.content" [innerHtml]="x.contentData.comment.content | safeHtml"></span>
 											</span>
 		
 											<span *ngIf="x.type === 'mentionComment'">
 												{{translations?.notifications?.mentionOnCommentOnPublication}}
 												<br>
-												<span *ngIf="x.contentData.comment" [innerHtml]="x.contentData.comment.comment | safeHtml"></span>
+												<span *ngIf="x.contentData.content" [innerHtml]="x.contentData.comment.content | safeHtml"></span>
 											</span>
 		
 											<span *ngIf="x.type === 'like'">
@@ -373,7 +373,7 @@
 									</div>
 								</div>
 		
-								<div class="inner" *ngIf="x.url === 'message'">
+								<!-- <div class="inner" *ngIf="x.url === 'message'">
 									<div class="texts">
 										<div class="text">
 											<a routerLink="/{{x.user.username}}">{{x.user.username}}</a>
@@ -400,7 +400,7 @@
 											</mat-menu>
 										</div>
 									</div>
-								</div>
+								</div> -->
 		
 								<!-- item to remove if not exists -->
 								<div class="inner" *ngIf="!(x.url === 'followers' || x.url === 'publication' || x.url === 'audio' || x.url === 'playlist' || x.url === 'user' || x.url === 'message')">
@@ -454,7 +454,7 @@
 								<ul class="chats" *ngIf="dataChats.list">
 									<li mat-ripple *ngFor="let x of dataChats.list; let i = index;" [ngClass]="{'active': x.id === dataConversation?.id,'remove': x.addRemoveSession}" (click)="showChat(x)">
 										<a class="avatar" *ngIf="x.users.length === 1">
-											<img [src]="x.users[0].avatar ? x.users[0].avatarUrl : env.avatar"/>
+											<img [src]="x.users[0].user.avatar ? x.users[0].user.avatarUrl : env.avatar"/>
 										</a>
 
 										<div class="avatarsGroup" [ngClass]="{'group': x.users.length > 1}" *ngIf="x.users.length > 1">
@@ -466,12 +466,12 @@
 										<div class="inner">
 											<div class="texts">
 												<div class="text">
-													<a>{{x.users[0].username}}</a>
-													<i class="icon50 blue" label="official" *ngIf="x.users[0].official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+													<a>{{x.users[0].user.username}}</a>
+													<i class="icon50 blue" label="official" *ngIf="x.users[0].user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 													<div class="date">{{x?.last?.date | timeago}}</div>
 												</div>
 				
-												<div class="text">
+												<div class="text" *ngIf="x.last.type">
 													<span *ngIf="x.last.type === 'text'">
 														<span [innerHtml]="x.last.content | safeHtml"></span>
 													</span>
@@ -482,43 +482,6 @@
 											</div>
 										</div>
 									</li>
-
-
-									<!-- <li mat-ripple *ngFor="let x of dataChats.list" [ngClass]="{remove: x.addRemoveSession}">
-										<div class="avatarsGroup" [ngClass]="{'group': x.users.length > 1}">
-											<div class="avatar" *ngFor="let u of x.users | slice: 0:2">
-												<img [src]="u.avatar ? u.avatarUrl : environment.avatar"/>
-											</div>
-										</div>
-			
-										<div class="text" (click)="showConversation('conversation', x)">
-											<div class="name">
-												<span class="username" *ngFor="let u of x.users | slice: 0:3; let isLast = last;">
-													{{u.username}}{{isLast ? '' : ', '}}
-												</span>
-												<span class="date">{{x.last.date | timeago}}</span>
-											</div>
-											<div class="container">
-												<span *ngIf="x.last.type == 'text'">
-													<span [innerHtml]="x.last.content | safeHtml"></span>
-												</span>
-												<span *ngIf="x.last.type == 'publication'">
-													<i label="reply"></i> {{translations.sharedPublicationWithYou}}
-												</span>
-											</div>
-										</div>
-			
-										<div class="actions">
-											<button mat-icon-button [matMenuTriggerFor]="options">
-												<i label="more"></i>
-											</button>
-											
-											<mat-menu #options="matMenu">
-												<button mat-menu-item (click)="itemChatOptions('remove', x)">{{x.addRemoveSession ? translations.returnChat : translations.leaveChat}}</button>
-												<button mat-menu-item (click)="itemChatOptions('report', x)">{{translations.report}}</button>
-											</mat-menu>
-										</div>
-									</li> -->
 								</ul>
 	
 								<div class="loadingData" *ngIf="dataChats.loadingData">
@@ -538,44 +501,140 @@
 							</div>
 
 							<div class="right">
-								<ul class="chatConversation" *ngIf="dataConversation.list">
-									<li *ngFor="let x of dataConversation.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id}">
-										<div class="box">
-											<div class="top" *ngIf="!((i > 0) && (x.user.id == dataConversation.list[i-1].user.id))">
-												<a class="avatar" routerLink="/{{x.user.username}}">
-													<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
-												</a>
-											</div>
-					
-											<div class="bottom" [ngClass]="{'remove': x.addRemoveSession}">
-												<div class="innerContent">
-													<div class="text">
-														<div class="content" [innerHtml]="x.content | safeHtml"></div>
-					
-														<div class="actions">
-															<button mat-icon-button [matMenuTriggerFor]="options">
-																<i class="icon85" label="more"></i>
-															</button>
-					
-															<mat-menu #options="matMenu">
-																<button mat-menu-item (click)="itemChatOptions('removeComment', x)" *ngIf="x.user.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
-																<button mat-menu-item (click)="itemChatOptions('report', x)">{{translations?.common?.report}}</button>
-															</mat-menu>
-														</div>
-													</div>
-												</div>
-												<div class="date">{{x.date | date:'hh:mm'}}</div>
+								<span *ngIf="dataConversation.active">
+									<div class="info">
+										<div class="b" *ngIf="dataConversation?.item?.info" (click)="itemChatOptions('info', dataConversation?.item)">
+											<button mat-icon-button>
+												<i label="back"></i>
+											</button>
+											<div class="text">Detalle</div>
+										</div>
+
+										<div class="u" *ngIf="!dataConversation?.item?.info">
+											<a routerLink="/{{dataConversation?.item?.users[0].user.username}}" class="avatar">
+												<img [src]="dataConversation?.item?.users[0].user.avatar ? dataConversation?.item?.users[0].user.avatarUrl : env.avatar"/>
+											</a>
+											<div class="username" routerLink="/{{dataConversation?.item?.users[0].user.username}}">
+												<a>{{dataConversation?.item?.users[0].user.username}}</a>
+												<i class="icon50 blue" label="official" *ngIf="dataConversation?.item?.users[0].user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
 											</div>
 										</div>
-									</li>
-								</ul>
-					
-								<div class="loadingData" *ngIf="dataConversation.loadingData">
-									<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-								</div>
 
-								<div class="noData" *ngIf="dataConversation.noData && !dataConversation.loadingData">
-									<div class="description">{{translations?.common?.noData}}</div>
+										<button mat-fab (click)="itemChatOptions('info', dataConversation?.item)">
+											<i label="info" [ngClass]="{'active': dataConversation?.item?.info}"></i>
+										</button>
+									</div>
+
+									<div class="infoBox" *ngIf="dataConversation?.item?.info">
+										<div class="title">Members</div>
+										<ul class="followers">
+											<li *ngFor="let u of dataConversation?.item?.users">
+												<a class="avatar" routerLink="/{{u.user.username}}">
+													<img [src]="u.user.avatar ? u.user.avatarUrl : env.avatar"/>
+												</a>
+			
+												<div class="texts">
+													<div class="text">
+														<a routerLink="/{{u.user.username}}">{{u.user.username}}</a>
+														<i class="icon50 blue" label="official" *ngIf="u.user.official" matTooltip="{{translations?.common?.verifiedAccount}}"></i>
+													</div>
+			
+													<div class="text">
+														{{u.user.name}}
+													</div>
+												</div>
+											</li>
+										</ul>
+										<div class="buttons">
+											<button mat-button>Delete chat</button>
+											<button mat-button>Block</button>
+										</div>
+									</div>
+
+									<span *ngIf="!dataConversation?.item?.info">
+										<div class="chatBox">
+											<ul class="chatConversation" *ngIf="dataConversation.list">
+												<li *ngFor="let x of dataConversation.list; let i = index;" [ngClass]="{'me': sessionData.current.id == x.user.id, 'remove': x.addRemoveSession}">
+													<div class="box">
+														<div class="top" *ngIf="!((i > 0) && (x.user.id == dataConversation.list[i-1].user.id))">
+															<a class="avatar" routerLink="/{{x.user.username}}">
+																<img [src]="x.user.avatar ? x.user.avatarUrl : env.avatar"/>
+															</a>
+														</div>
+								
+														<div class="bottom">
+															<div class="innerContent">
+																<div class="text">
+																	<div class="content" [innerHtml]="x.content | safeHtml"></div>
+								
+																	<div class="actions">
+																		<button mat-icon-button [matMenuTriggerFor]="options">
+																			<i class="icon85" label="more"></i>
+																		</button>
+								
+																		<mat-menu #options="matMenu">
+																			<button mat-menu-item (click)="itemChatOptions('removeComment', x)" *ngIf="x.user.id === sessionData?.current?.id">{{x.addRemoveSession ? translations?.common?.restore : translations?.common?.remove}}</button>
+																			<button mat-menu-item (click)="itemChatOptions('reply', x.id === dataConversation?.reply?.id ? null : x)">{{x.id == dataConversation?.reply?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+																			<button mat-menu-item (click)="itemChatOptions('report', x)">{{translations?.common?.report}}</button>
+																		</mat-menu>
+																	</div>
+																</div>
+															</div>
+															<div class="date">{{x.date | date:'hh:mm'}}</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+								
+											<div class="loadingData" *ngIf="dataConversation.loadingData">
+												<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+											</div>
+
+											<div class="noData" *ngIf="dataConversation.noData && !dataConversation.loadingData">
+												<div class="description">{{translations?.common?.noData}}</div>
+											</div>
+										</div>
+
+										<div class="commentBox">
+											<div class="reply" *ngIf="dataConversation?.reply">
+												<div class="in">
+													<div class="username">{{dataConversation?.reply?.user?.username}}</div>
+													<div class="content" [innerHtml]="dataConversation?.reply?.content | safeHtml"></div>
+												</div>
+												<div class="ac">
+													<button mat-icon-button (click)="itemChatOptions('reply', null)">
+														<i class="grey" label="close"></i>
+													</button>
+												</div>
+											</div>
+
+											<div class="inner">
+												<div class="avatar">
+													<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+												</div>
+												<div class="richComment">
+													<div class="highlights" [innerHTML]="dataConversation?.newCommentData?.transformed"></div>
+													<div class="origin" contenteditable="plaintext-only" 
+																		[textContent]="dataConversation?.newCommentData?.onBackground" 
+																		(input)="newComment('writingChanges', $event.target.innerText, dataConversation)" 
+																		(keyup)="newComment('keyCode', $event, dataConversation)" 
+																		(keydown)="newComment('keyCode', $event, dataConversation)" 
+																		(mouseup)="newComment('keyCode', $event, dataConversation)"></div>
+												</div>
+												<div class="actions">
+													<button mat-icon-button type="submit" (click)="newComment('create', $event, dataConversation)">
+														<i class="blue" label="send-comment"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</span>
+								</span>
+
+								<div class="noData" *ngIf="!dataConversation.active">
+									<div class="description">
+										Init some chat
+									</div>
 								</div>
 							</div>
 						</div>

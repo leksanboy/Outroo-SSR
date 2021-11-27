@@ -3,7 +3,12 @@
 	$more = $_GET['rows']*$cuantity;
 	$id = $_GET['id'];
 
-	$sql = "SELECT id, user, type, content, publication, date
+	$sql = "SELECT id,
+					user,
+					type,
+					content,
+					publication,
+					date
 			FROM z_chat_conversation
 			WHERE chat = $id 
 				AND is_deleted = 0

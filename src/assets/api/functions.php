@@ -813,13 +813,19 @@
 	function getPublicationComment($id){
 		global $conn;
 
-		$sql = "SELECT id, user, publication, comment, date
+		$sql = "SELECT id,
+						user,
+						publication,
+						content,
+						reply,
+						reply_child,
+						date
 				FROM z_publications_comments
 				WHERE id = $id";
 		$result = $conn->query($sql)->fetch_assoc();
 
 		$result['user'] = userUsernameNameAvatar($result['user']);
-		$result['comment'] = trim($result['comment']) ? html_entity_decode($result['comment'], ENT_QUOTES) : null;
+		$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
 
 		return $result;
 	}
@@ -1176,11 +1182,31 @@
 
 		$list = array();
 		while($row = $result->fetch_assoc()) {
-			$row = userUsernameNameAvatar($row['user']);
+			$row['user'] = userUsernameNameAvatar($row['user']);
 			$list[] = $row;
 		}
 
 		return $list;
+	}
+
+	// Get last inserted comment
+	function getChatConversationComment($id){
+		global $conn;
+
+		$sql = "SELECT id,
+						user,
+						content,
+						type,
+						date
+				FROM z_chat_conversation
+				WHERE id = $id
+					AND is_deleted = 0";
+		$result = $conn->query($sql)->fetch_assoc();
+
+		$result['user'] = userUsernameNameAvatar($result['user']);
+		$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
+
+		return $result;
 	}
 
 	// Get last inserted comment
@@ -1200,7 +1226,7 @@
 	}
 
 	// Get inserted comment in conversation
-	function getMessageById($id){
+	/* function getMessageById($id){
 		global $conn;
 
 		$sql = "SELECT id, user, message, content, content_original, date
@@ -1212,5 +1238,5 @@
 		$result['content'] = trim($result['content']) ? html_entity_decode($result['content'], ENT_QUOTES) : null;
 
 		return $result;
-	}
+	} */
 ?>

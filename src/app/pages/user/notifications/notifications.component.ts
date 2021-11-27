@@ -43,6 +43,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	};
 	public activeLanguage: any;
 	public audioPlayerData: any = [];
+	public searchBoxMentions: boolean;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -309,12 +310,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Open chat conversation
 	showChat(item) {
 		let view = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
-		console.log('item:', item);
 
 		if (view === 'desktop') {
+			this.dataConversation = [];
+			this.dataConversation.active = true;
 			this.dataConversation.id = item.id;
+			this.dataConversation.item = item;
+			this.dataConversation.list = [];
 			this.dataConversation.loadingData = true;
-			console.log('dataConversation:', this.dataConversation);
+			this.newComment('clear', null, this.dataConversation);
 
 			const data = {
 				id: item.id,
@@ -330,23 +334,19 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 						this.dataConversation.noData = true;
 					} else {
 						this.dataConversation.loadMoreData = (!res || res.length < this.env.cuantity) ? false : true;
-
-						item.conversation = res;
-						this.dataConversation.list = item.conversation;
+						this.dataConversation.list = res;
 					}
 
 					if (!res || res.length < this.env.cuantity) {
-						item.conversation.noMore = true;
-						this.dataConversation.noMore = item.conversation.noMore;
+						item.noMore = true;
+						this.dataConversation.noMore = item.noMore;
 					}
-
-					/* this.userDataService.setLocalStotage('notificationsPage', this.dataDefault); */
 				}, error => {
 					this.dataConversation.loadingData = false;
 					this.alertService.error(this.translations.common.anErrorHasOcurred);
 				});
 		} else if (view === 'mobile') {
-			this.sessionService.setDataShowMessage(item);
+			this.sessionService.setDataShowChat(item);
 		}
 	}
 
@@ -413,7 +413,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 		if (item.url === 'publication') {
 			this.sessionService.setDataShowPublication(item);
 		} else if (item.url === 'message') {
-			this.sessionService.setDataShowMessage(item.user);
+			this.sessionService.setDataShowChat(item.user);
 		}
 	}
 
@@ -470,8 +470,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 				let d = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.chatDataService.addRemove(d).subscribe();
@@ -482,8 +481,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
 				let dc = {
 					id: item.id,
-					type: item.removeType,
-					user: this.sessionData.current.id
+					type: item.removeType
 				}
 
 				this.chatDataService.addRemoveComment(dc).subscribe();
@@ -491,6 +489,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 			case("report"):
 				item.type = 'chat';
 				this.sessionService.setDataReport(item);
+			case("reply"):
+				this.dataConversation.reply = item;
+			break;
+			case("info"):
+				item.info = !item.info;
 			break;
 		}
 	}
@@ -750,5 +753,165 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 				this.window.open(urlReddit, '_blank');
 				break;
 		}
+	}
+
+	// New comment
+	newComment(type, event, item) {
+		if (type === 'clear') {
+			item.newCommentData = [];
+
+			setTimeout(() => {
+				item.newCommentData = {
+					original: '',
+					transformed: '',
+					onBackground: '',
+					eventTarget: '',
+					lastTypedWord: []
+				};
+
+				// Put as default
+				this.newComment('checkPlaceholder', null, item);
+			}, 100);
+		} else if (type === 'writingChanges') {
+			let str = event;
+			item.newCommentData.original = event;
+
+			// new line
+			str = str.replace(/\n/g, '<br>');
+
+			// hashtag
+			str = str.replace(/(#)\w+/g, function (value) {
+				return '<span class="hashtag">' + value + '</span>';
+			});
+
+			// mention
+			str = str.replace(/(@)\w+/g, function (value) {
+				return '<span class="mention">' + value + '</span>';
+			});
+
+			// url
+			str = str.replace(this.env.urlRegex, function (value) {
+				return '<span class="url">' + value + '</span>';
+			});
+
+			// writing content
+			item.newCommentData.transformed = str;
+
+			// check empty contenteditable
+			this.newComment('checkPlaceholder', null, item);
+		} else if (type === 'keyCode') {
+			if (event.keyCode === 32 || event.keyCode === 13 || event.keyCode === 27) {
+				// Space, Enter, Escape
+				this.searchBoxMentions = false;
+			} else {
+				if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
+					this.searchBoxMentions = false;
+				} else {
+					item.newCommentData.eventTarget = event.target;
+					const position = this.getCaretPosition(event.target);
+					const word = this.getCurrentWord(event.target, position);
+
+					item.newCommentData.lastTypedWord = {
+						word: word,
+						position: position
+					};
+				}
+			}
+		} else if (type === 'checkPlaceholder') {
+			if (item.newCommentData.original.length === 0) {
+				item.newCommentData.transformed = '<div class="placeholder">' + this.translations.common.commentPlaceholder + '</div>';
+			}
+		} else if (type === 'transformBeforeSend') {
+			// Add replied user
+			if (item.list.reply) {
+				item.newCommentData.original = '@' + item.list.reply.child.user.username + ' ' + item.newCommentData.original;
+			}
+
+			const newData = {
+				content: item.newCommentData.original,
+				original: item.newCommentData.original,
+				mentions: [],
+				hashtags: []
+			};
+
+			// new line
+			newData.content = newData.content.replace(/\n/g, '<br>');
+
+			// hashtag
+			newData.content = newData.content.replace(/(#)\w+/g, function (value) {
+				return '<a class="hashtag">' + value + '</a>';
+			});
+
+			// mention
+			newData.content = newData.content.replace(/(@)\w+/g, function (value) {
+				newData.mentions.push(value);
+				return '<a class="mention">' + value + '</a>';
+			});
+
+			// detect url
+			newData.content = newData.content.replace(this.env.urlRegex, function (value) {
+				return '<a class="url">' + value + '</a>';
+			});
+
+			return newData;
+		} else if (type === 'create') {
+			if (item.newCommentData.original.trim().length === 0) {
+				this.alertService.warning(this.translations.common.isTooShort);
+			} else {
+				const formatedData = this.newComment('transformBeforeSend', null, item);
+				const dataCreate = {
+					id: item.id,
+					type: 'text',
+					content: formatedData.content,
+					content_original: formatedData.original,
+					reply: item.reply.id,
+					mentions: formatedData.mentions
+				};
+
+				this.chatDataService.comment(dataCreate)
+					.subscribe((res: any) => {
+						item.noData = false;
+						item.list.push(res);
+						this.newComment('clear', null, item);
+					}, error => {
+						this.alertService.error(this.translations.common.anErrorHasOcurred);
+					});
+			}
+		}
+	}
+
+	// Caret position on contenteditable
+	getCaretPosition(element) {
+		const w3 = (typeof this.window.getSelection !== 'undefined') && true;
+		let caretOffset = 0;
+
+		if (w3) {
+			const range = this.window.getSelection().getRangeAt(0);
+			const preCaretRange = range.cloneRange();
+			preCaretRange.selectNodeContents(element);
+			preCaretRange.setEnd(range.endContainer, range.endOffset);
+			caretOffset = preCaretRange.toString().length;
+		} else {
+			this.alertService.error(this.translations.common.tryToUseAnotherBrowser);
+		}
+
+		return caretOffset;
+	}
+
+	// Get current typing word on contenteditable
+	getCurrentWord(el, position) {
+		// Get content of div
+		const content = el.textContent;
+
+		// Check if clicked at the end of word
+		position = content[position] === ' ' ? position - 1 : position;
+
+		// Get the start and end index
+		let startPosition = content.lastIndexOf(' ', position);
+		startPosition = startPosition === content.length ? 0 : startPosition;
+		let endPosition = content.indexOf(' ', position);
+		endPosition = endPosition === -1 ? content.length : endPosition;
+
+		return content.substring(startPosition + 1, endPosition);
 	}
 }

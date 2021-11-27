@@ -97,6 +97,13 @@
 				</div>
 
 				<div class="right">
+					<button mat-mini-fab routerLink="/notifications">
+						<!-- <div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
+							{{sessionData?.current?.countPendingNotifications}}
+						</div> -->
+						<i class="chat" label="send-comment"></i>
+					</button>
+
 					<button mat-mini-fab (click)="showNotificationsBoxWeb('show')">
 						<div class="pending" *ngIf="sessionData?.current?.countPendingNotifications">
 							{{sessionData?.current?.countPendingNotifications}}
@@ -212,13 +219,13 @@
 											<span *ngIf="x.type === 'comment'">
 												{{translations?.notifications?.commentedYourPublication}}
 												<br>
-												<span *ngIf="x.contentData?.comment" [innerHtml]="x.contentData?.comment.comment | safeHtml"></span>
+												<span *ngIf="x.contentData?.content" [innerHtml]="x.contentData?.comment.content | safeHtml"></span>
 											</span>
 		
 											<span *ngIf="x.type === 'mentionComment'">
 												{{translations?.notifications?.mentionOnCommentOnPublication}}
 												<br>
-												<span *ngIf="x.contentData?.comment" [innerHtml]="x.contentData?.comment.comment | safeHtml"></span>
+												<span *ngIf="x.contentData?.content" [innerHtml]="x.contentData?.comment.content | safeHtml"></span>
 											</span>
 		
 											<span *ngIf="x.type === 'like'">
