@@ -117,7 +117,8 @@
 		"haveNewMessage": "У вас новое сообщение"
 	},
 	"chat": {
-		"title": "Чат"
+		"title": "Чат",
+		"noData": "Нет чатов"
 	},
 	"photos": {
 		"title": "Фотографии",

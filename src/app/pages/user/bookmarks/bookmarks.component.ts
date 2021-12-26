@@ -11,7 +11,7 @@ import { SessionService } from '../../../../app/core/services/session/session.se
 import { UserDataService } from '../../../../app/core/services/user/userData.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
-import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
+import { showPostComponent } from '../../../../app/pages/common/showPost/showPost.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -345,7 +345,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					}
 				};
 
-				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
+				const dialogRef = this.dialog.open(showPostComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 
@@ -366,7 +366,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 					}
 				};
 
-				const dialogRefLiked = this.dialog.open(ShowPublicationComponent, configLiked);
+				const dialogRefLiked = this.dialog.open(showPostComponent, configLiked);
 				dialogRefLiked.afterClosed().subscribe((res: any) => {
 					console.log('res::', res);
 					this.location.go(this.router.url);

@@ -117,7 +117,8 @@
 		"haveNewMessage": "Tienes un nuevo mensaje"
 	},
 	"chat": {
-		"title": "Chat"
+		"title": "Chat",
+		"noData": "No hay chats"
 	},
 	"photos": {
 		"title": "Fotos",

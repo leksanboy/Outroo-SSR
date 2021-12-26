@@ -20,7 +20,7 @@ export class SessionService {
 	private subjectShowAvatar = new Subject<any>();
 	private subjectShowLikes = new Subject<any>();
 	private subjectShowPhoto = new Subject<any>();
-	private subjectShowPublication = new Subject<any>();
+	private subjectshowPost = new Subject<any>();
 	private subjectLastUrl = new Subject<any>();
 	private subjectComeFromUserButton = new Subject<any>();
 	private subjectNotificationsBox = new Subject<any>();
@@ -154,12 +154,12 @@ export class SessionService {
 		return this.subjectShowPhoto.asObservable();
 	}
 
-	setDataShowPublication(data: any) {
-		this.subjectShowPublication.next(data);
+	setDatashowPost(data: any) {
+		this.subjectshowPost.next(data);
 	}
 
-	getDataShowPublication(): Observable<any> {
-		return this.subjectShowPublication.asObservable();
+	getDatashowPost(): Observable<any> {
+		return this.subjectshowPost.asObservable();
 	}
 
 	setDataLastUrl(data: any) {

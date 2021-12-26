@@ -27,7 +27,7 @@ import { ShowAvatarComponent } from '../../../../app/pages/common/showAvatar/sho
 import { ShowChatComponent } from '../showChat/showChat.component';
 import { ShowLikesComponent } from '../../../../app/pages/common/showLikes/showLikes.component';
 import { ActivePlayerMobileComponent } from '../../../../app/pages/common/activePlayerMobile/activePlayerMobile.component';
-import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
+import { showPostComponent } from '../../../../app/pages/common/showPost/showPost.component';
 import { ActiveSessionsMobileComponent } from '../../../../app/pages/common/activeSessionsMobile/activeSessionsMobile.component';
 
 import { NewShareComponent } from '../../../../app/pages/common/newShare/newShare.component';
@@ -361,7 +361,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 				});
 
 			// Get publication
-			this.sessionService.getDataShowPublication()
+			this.sessionService.getDatashowPost()
 				.subscribe(data => {
 					this.showNotification(data);
 				});
@@ -411,20 +411,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 			console.log('WS - e.data:', e.data);
         }; */
 
-		var host2 = 'ws://localhost:8888';
-        var socket2 = new WebSocket(host2);
-        socket2.onopen = function(e) {
-            console.log('WS2 - onopen:', e);
-        };
-		socket2.onmessage = function(e) {
-            console.log('WS2 - onmessage:', e);
-        };
-		socket2.onclose = function(e) {
-            console.log('WS2 - onclose:', e);
-        };
-		socket2.onerror = function(e) {
-            console.log('WS2 - onerror:', e);
-        };
+		
 	}
 
 	ngOnInit() {
@@ -472,6 +459,22 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					(val.trim().length > 0) ? this.search('default', val) : this.search('clear', null);
 				});
 		}
+
+		var host2 = 'ws://localhost:8888';
+		//var host2 = 'wss://beatfeel.com:8888';
+        var socket2 = new WebSocket(host2);
+        socket2.onopen = function(e) {
+            console.log('WS2 - onopen:', e);
+        };
+		socket2.onmessage = function(e) {
+            console.log('WS2 - onmessage:', e);
+        };
+		socket2.onclose = function(e) {
+            console.log('WS2 - onclose:', e);
+        };
+		socket2.onerror = function(e) {
+            console.log('WS2 - onerror:', e);
+        };
 	}
 
 	// Audios player - document ready -> audio addEventListener
@@ -845,7 +848,7 @@ export class ActiveSessionComponent implements OnInit, AfterViewInit {
 					};
 
 					// Open dialog
-					const dialogRef = this.dialog.open(ShowPublicationComponent, config);
+					const dialogRef = this.dialog.open(showPostComponent, config);
 					dialogRef.afterClosed().subscribe((result: any) => {
 						this.location.go(this.router.url);
 					});

@@ -9110,7 +9110,7 @@ body {
 					.container {
 						.right {
 							.analyticsBox {
-								background-color: transparentize($darkThemeColor, .25);
+								background-color: transparentize($blackColor, .25);
 							}
 						}
 					}
@@ -11037,6 +11037,18 @@ body {
 
 			.mat-dialog-container {
 				background-color: #000 !important;
+				
+				.dialogBox {
+					.bodyPublications {
+						.container {
+							.right {
+								.analyticsBox {
+									background-color: transparentize(#000, .25) !important;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

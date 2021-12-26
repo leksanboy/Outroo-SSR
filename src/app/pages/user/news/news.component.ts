@@ -17,7 +17,7 @@ import { RoutingStateService } from '../../../../app/core/services/route/state.s
 import { PlayerService } from '../../../../app/core/services/player/player.service';
 import { AudioDataService } from '../../../../app/core/services/user/audioData.service';
 
-import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
+import { showPostComponent } from '../../../../app/pages/common/showPost/showPost.component';
 
 import { SafeHtmlPipe } from '../../../../app/core/pipes/safehtml.pipe';
 
@@ -250,7 +250,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 					}
 				};
 
-				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
+				const dialogRef = this.dialog.open(showPostComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 

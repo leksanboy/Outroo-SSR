@@ -16,7 +16,7 @@ import { MetaService } from '../../../../app/core/services/seo/meta.service';
 import { SsrService } from '../../../../app/core/services/ssr.service';
 import { RoutingStateService } from '../../../../app/core/services/route/state.service';
 
-import { ShowPublicationComponent } from '../../../../app/pages/common/showPublication/showPublication.component';
+import { showPostComponent } from '../../../../app/pages/common/showPost/showPost.component';
 import { ShowPlaylistComponent } from '../../../../app/pages/common/showPlaylist/showPlaylist.component';
 import { NewPlaylistComponent } from '../../../../app/pages/common/newPlaylist/newPlaylist.component';
 
@@ -467,7 +467,7 @@ export class MainComponent implements OnInit, OnDestroy {
 					}
 				};
 
-				const dialogRef = this.dialog.open(ShowPublicationComponent, config);
+				const dialogRef = this.dialog.open(showPostComponent, config);
 				dialogRef.afterClosed().subscribe((res: any) => {
 					this.location.go(this.router.url);
 

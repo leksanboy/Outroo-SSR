@@ -52,7 +52,7 @@ import { NewShareModule } from './pages/common/newShare/newShare.module';
 import { ShowLikesModule } from './pages/common/showLikes/showLikes.module';
 import { ShowChatModule } from './pages/common/showChat/showChat.module';
 import { ShowPlaylistModule } from './pages/common/showPlaylist/showPlaylist.module';
-import { ShowPublicationModule } from './pages/common/showPublication/showPublication.module';
+import { showPostModule } from './pages/common/showPost/showPost.module';
 import { ActiveSessionsMobileModule } from './pages/common/activeSessionsMobile/activeSessionsMobile.module';
 import { ActivePlayerMobileModule } from './pages/common/activePlayerMobile/activePlayerMobile.module';
 
@@ -113,7 +113,7 @@ import { ActiveSessionComponent } from './pages/common/activeSession/activeSessi
 		ShowLikesModule,
 		ShowChatModule,
 		ShowPlaylistModule,
-		ShowPublicationModule
+		showPostModule
 	],
 	exports: [
 		MatBottomSheetModule,

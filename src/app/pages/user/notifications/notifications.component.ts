@@ -411,7 +411,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 	// Show from url if is one
 	show(item) {
 		if (item.url === 'publication') {
-			this.sessionService.setDataShowPublication(item);
+			this.sessionService.setDatashowPost(item);
 		} else if (item.url === 'message') {
 			this.sessionService.setDataShowChat(item.user);
 		}

@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
-import { ShowPublicationComponent } from '../showPublication/showPublication.component';
+import { showPostComponent } from '../showPost/showPost.component';
 
 import { AlertService } from '../../../core/services/alert/alert.service';
 import { ChatDataService } from '../../../core/services/user/chatData.service';

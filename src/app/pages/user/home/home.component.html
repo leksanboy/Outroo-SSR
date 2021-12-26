@@ -179,7 +179,7 @@
 
 									<div class="boxComments" *ngIf="x?.showCommentsBox">
 										<div class="comments" *ngIf="!x?.disabledComments || x?.loaded">
-											<div class="countComments">
+											<div class="countComments" *ngIf="x?.countComments > 0">
 												{{x?.countComments}} {{translations?.common?.comments}}
 											</div>
 
@@ -203,22 +203,28 @@
 															</button>
 															<mat-menu #optionsComments="matMenu">
 																<button mat-menu-item (click)="commentsOptions('addRemove', x, c)" *ngIf="c?.user?.id == sessionData?.current?.id || x?.user?.id == sessionData?.current?.id">{{c.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
-																<button mat-menu-item (click)="replyComment(c?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, c, x)">{{c?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+																<button mat-menu-item (click)="commentsOptions('reply', x, c.id === x?.reply?.id ? null : c)">{{c.id === x?.reply?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 																<button mat-menu-item (click)="commentsOptions('report', x, c)">{{translations?.common?.report}}</button>
 															</mat-menu>
 														</div>
 													</div>
 
 													<div class="bottom">
-														<span [innerHtml]="c?.comment | safeHtml"></span>
+														<span [innerHtml]="c?.content | safeHtml"></span>
 													</div>
 
 													<div class="reply">
 														<div class="date">{{c?.date | timeago}}</div>
-														<button mat-raised-button (click)="replyComment(c?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, c, x)">{{c?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+														<button mat-raised-button (click)="commentsOptions('reply', x, c.id === x?.reply?.id ? null : c)">{{c.id === x?.reply?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+													</div>
+													<div class="reply">
+														<button mat-raised-button (click)="commentsOptions('viewReplies', x, c)" *ngIf="c?.list?.length" class="replies">
+															<div class="line"></div>
+															{{c?.viewReplies ? translations?.common?.hideReplies : translations?.common?.viewReplies + ' (' + c?.list?.length + ')'}}
+														</button>
 													</div>
 
-													<ul class="replyComments" *ngIf="c?.list?.length">
+													<ul class="replyComments" *ngIf="c?.list?.length && c?.viewReplies">
 														<li *ngFor="let d of c?.list" [ngClass]="{remove: d?.addRemove, active: d?.id == x?.comments?.reply?.child?.id}">
 															<div class="top">
 																<a class="avatar" routerLink="/{{d?.user?.username}}">
@@ -238,19 +244,19 @@
 																	</button>
 																	<mat-menu #optionsComments="matMenu">
 																		<button mat-menu-item (click)="commentsOptions('addRemove', x, d)" *ngIf="d?.user?.id == sessionData?.current?.id || x?.user?.id == sessionData?.current?.id">{{d.addRemove ? translations?.common?.restore : translations?.common?.remove}}</button>
-																		<button mat-menu-item (click)="replyComment(d?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, d, x)">{{d?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+																		<button mat-menu-item (click)="commentsOptions('reply', x, d.id === x?.reply?.id ? null : d)">{{d.id === x?.reply?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 																		<button mat-menu-item (click)="commentsOptions('report', x, d)">{{translations?.common?.report}}</button>
 																	</mat-menu>
 																</div>
 															</div>
 
 															<div class="bottom">
-																<span [innerHtml]="d?.comment | safeHtml"></span>
+																<span [innerHtml]="d?.content | safeHtml"></span>
 															</div>
 
 															<div class="reply">
 																<div class="date">{{d?.date | timeago}}</div>
-																<button mat-raised-button (click)="replyComment(d?.id == x?.comments?.reply?.child?.id ? 'cancel' : 'create', c, d, x)">{{d?.id == x?.comments?.reply?.child?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
+																<button mat-raised-button (click)="commentsOptions('reply', x, d.id === x?.reply?.id ? null : d)">{{d.id === x?.reply?.id ? translations?.common?.cancel : translations?.common?.reply}}</button>
 															</div>
 														</li>
 													</ul>
@@ -259,10 +265,6 @@
 
 											<div class="loadingData" *ngIf="x?.loadingData">
 												<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-											</div>
-
-											<div class="noData" *ngIf="x?.noData">
-												<div class="description">{{translations?.common?.noComments}}</div>
 											</div>
 
 											<div class="loadMore" *ngIf="x?.loadMoreData">
@@ -287,25 +289,38 @@
 
 								<div class="analyticsBox">
 									<div class="top" *ngIf="!x?.disabledComments">
-										<div class="new" *ngIf="sessionData?.current?.id">
-											<div class="avatar">
-												<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+										<div class="commentBox">
+											<div class="reply" *ngIf="x?.reply">
+												<div class="in">
+													<div class="username">{{x?.reply?.user?.username}}</div>
+													<div class="content" [innerHtml]="x?.reply?.content | safeHtml"></div>
+												</div>
+												<div class="ac">
+													<button mat-icon-button (click)="commentsOptions('reply', x, null)">
+														<i class="grey" label="close"></i>
+													</button>
+												</div>
 											</div>
-											<div class="richComment">
-												<div class="highlights" [innerHTML]="x?.newCommentData?.transformed"></div>
-												<div class="origin" contenteditable="plaintext-only" [textContent]="x?.newCommentData?.onBackground" (input)="newComment('writingChanges', $event.target.innerText, x)" (keyup)="newComment('keyCode', $event, x)" (keydown)="newComment('keyCode', $event, x)" (mouseup)="newComment('keyCode', $event, x)"></div>
+
+											<div class="inner">
+												<div class="avatar">
+													<img [src]="sessionData?.current?.avatar ? sessionData?.current?.avatarUrl : env.avatar"/>
+												</div>
+												<div class="richComment">
+													<div class="highlights" [innerHTML]="x?.newCommentData?.transformed"></div>
+													<div class="origin" contenteditable="plaintext-only" 
+																		[textContent]="x?.newCommentData?.onBackground" 
+																		(input)="newComment('writingChanges', $event.target.innerText, x)" 
+																		(keyup)="newComment('keyCode', $event, x)" 
+																		(keydown)="newComment('keyCode', $event, x)" 
+																		(mouseup)="newComment('keyCode', $event, x)"></div>
+												</div>
+												<div class="actions">
+													<button mat-raised-button type="submit" (click)="newComment('create', $event, x)">
+														{{translations?.common?.post}}
+													</button>
+												</div>
 											</div>
-											<div class="actions">
-												<button mat-icon-button type="submit" (click)="newComment('create', $event, x)">
-													<i class="blue" label="send-comment"></i>
-												</button>
-											</div>
-										</div>
-										<div class="replyTo" *ngIf="x?.comments?.reply?.child">
-											<div class="text">
-												{{translations?.common?.replyTo}} {{x?.comments?.reply?.child?.user?.username}}
-											</div>
-											<button mat-raised-button (click)="replyComment('cancel', null, null, x)">{{translations?.common?.cancel}}</button>
 										</div>
 									</div>
 
