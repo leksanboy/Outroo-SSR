@@ -36,7 +36,7 @@ export class ErrorComponent implements OnInit {
 			description: this.translations.error.description,
 			keywords: this.translations.error.description,
 			url: this.env.url + 'confirm-email',
-			image: this.env.url + 'assets/images/image_color.png'
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

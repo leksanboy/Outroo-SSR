@@ -172,7 +172,7 @@ export class PostComponent implements OnInit, OnDestroy {
 						description: t,
 						keywords: t,
 						url: this.env.url + 'p/' + res.name,
-						image: this.env.url + (res.photos ? ('assets/media/photos/thumbnails/' + res.photos[0].name) : (res.audios ? 'assets/media/audios/thumbnails/' + res.audios[0].image : this.env.defaultPostImage))
+						image: this.env.urlCdn + (res.photos ? ('photos/thumbnails/' + res.photos[0].name) : (res.audios ? 'audios/thumbnails/' + res.audios[0].image : this.env.defaultPostImage))
 					};
 					this.metaService.setData(metaData);
 

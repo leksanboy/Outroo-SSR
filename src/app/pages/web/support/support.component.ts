@@ -45,8 +45,8 @@ export class SupportComponent implements OnInit {
 			title: this.translations.support.title,
 			description: this.translations.support.description,
 			keywords: this.translations.support.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

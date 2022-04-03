@@ -18,7 +18,7 @@ export class ChatsocketService {
 	// 	let openSubscriber = Subscriber.create(
 	// 		() => this.webSocket.send({productId: productId}));
 
-	// 	return this.webSocket.createObservableSocket('wss://beatfeel.com/assets/api/socket_test.php?productId=1', openSubscriber)
+	// 	return this.webSocket.createObservableSocket('wss://beatfeel.com/this.env.urlApi + '/socket_test.php?productId=1', openSubscriber)
 	// 		.map(message => {
 	// 			// JSON.parse(message);
 	// 		});

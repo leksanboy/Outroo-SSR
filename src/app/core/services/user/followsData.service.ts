@@ -16,7 +16,7 @@ export class FollowsDataService {
 	) {}
 
 	default(data: any) {
-		const url = this.env.url + 'assets/api/follows/default.php';
+		const url = this.env.urlApi + '/follows/default.php';
 		let params =	'&user=' + data.user +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
@@ -30,7 +30,7 @@ export class FollowsDataService {
 	}
 
 	search(data: any) {
-		const url = this.env.url + 'assets/api/follows/search.php';
+		const url = this.env.urlApi + '/follows/search.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -43,7 +43,7 @@ export class FollowsDataService {
 	}
 
 	searchFollowing(data: any) {
-		const url = this.env.url + 'assets/api/follows/searchFollowing.php';
+		const url = this.env.urlApi + '/follows/searchFollowing.php';
 		let params = 	'&user=' + data.user +
 						'&caption=' + data.caption +
 						'&rows=' + data.rows +
@@ -57,7 +57,7 @@ export class FollowsDataService {
 	}
 
 	followUnfollow(data: any) {
-		const url = this.env.url + 'assets/api/follows/followUnfollow.php';
+		const url = this.env.urlApi + '/follows/followUnfollow.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -67,7 +67,7 @@ export class FollowsDataService {
 	}
 
 	checkFollowing(data: any) {
-		const url = this.env.url + 'assets/api/follows/checkFollowing.php';
+		const url = this.env.urlApi + '/follows/checkFollowing.php';
 		let params = 	'&receiver=' + data.receiver;
 		params = params.replace('&', '?');
 

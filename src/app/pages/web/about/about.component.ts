@@ -39,7 +39,7 @@ export class AboutComponent implements OnInit {
 			description: this.translations.about.description,
 			keywords: this.translations.about.description,
 			url: this.env.url + 'about',
-			image: this.env.url + 'assets/images/image_color.png'
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 
@@ -58,6 +58,6 @@ export class AboutComponent implements OnInit {
 	}
 
 	downloadAssetPack() {
-		this.window.location.href = './assets/images/Asset_pack.zip';
+		this.window.location.href = 'https://cdn.beatfeel.com/common/images/Asset_pack.zip';
 	}
 }

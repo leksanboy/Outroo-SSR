@@ -35,8 +35,8 @@ export class PrivacyComponent implements OnInit {
 			title: this.translations.privacy.title,
 			description: this.translations.privacy.description,
 			keywords: this.translations.privacy.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

@@ -15,7 +15,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
         $result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['avatarUrl'] = $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] = $result['avatar'] ? ('https://cdn.beatfeel.com/users/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		$array = array(
 			'avatar'	 	=> $result['avatar'],

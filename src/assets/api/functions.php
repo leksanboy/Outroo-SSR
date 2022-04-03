@@ -220,7 +220,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		if ($result){
-			$result['avatarUrl'] 			= $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+			$result['avatarUrl'] 			= $result['avatar'] ? ('https://cdn.beatfeel.com/users/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 			$result['languages'] 			= getLanguages();
 			$result['theme'] 				= intval($result['theme']);
 			$result['mp'] 					= $result['mp'] ? true : false;
@@ -251,7 +251,7 @@
 		$result = $conn->query($sql)->fetch_assoc();
 
 		$result['name'] = html_entity_decode($result['name'], ENT_QUOTES);
-		$result['avatarUrl'] = $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] = $result['avatar'] ? ('https://cdn.beatfeel.com/users/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 
 		return $result;
 	}
@@ -578,7 +578,7 @@
 		$result['title'] = html_entity_decode($result['title'], ENT_QUOTES);
 		$result['original_title'] = html_entity_decode($result['original_title'], ENT_QUOTES);
 		$result['original_artist'] = html_entity_decode($result['original_artist'], ENT_QUOTES);
-		$result['imageSrc'] = 'https://beatfeel.com/assets/media/audios/thumbnails/'.$result['image'];
+		$result['imageSrc'] = 'https://cdn.beatfeel.com/audios/thumbnails/'.$result['image'];
 		$result['explicit'] = boolval($result['explicit']);
 
 		return $result;
@@ -706,9 +706,9 @@
 
 		// Media
 		if(strrpos($result['mimetype'], "image") !== false)
-			$result['media'] = ($result['name'] ? 'https://beatfeel.com/assets/media/photos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://cdn.beatfeel.com/photos/thumbnails/'.$result['name'] : null);
 		else if(strrpos($result['mimetype'], "video") !== false)
-			$result['media'] = ($result['name'] ? 'https://beatfeel.com/assets/media/videos/thumbnails/'.$result['name'] : null);
+			$result['media'] = ($result['name'] ? 'https://cdn.beatfeel.com/videos/thumbnails/'.$result['name'] : null);
 		else
 			$result['media'] = null;
 
@@ -913,9 +913,9 @@
 			$result['media'] = getPhotoData($result['photos'][0]);
 
 			if (strrpos($result['media']['mimetype'], "image") !== false && strlen($result['media']['duration']) == 0) {
-				$result['media'] = ($result['media']['name'] ? 'https://beatfeel.com/assets/media/photos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://cdn.beatfeel.com/photos/thumbnails/'.$result['media']['name'] : null);
 			} else if (strrpos($result['media']['mimetype'], "video") !== false || strlen($result['media']['duration']) > 0) {
-				$result['media'] = ($result['media']['name'] ? 'https://beatfeel.com/assets/media/videos/thumbnails/'.$result['media']['name'] : null);
+				$result['media'] = ($result['media']['name'] ? 'https://cdn.beatfeel.com/videos/thumbnails/'.$result['media']['name'] : null);
 			} else {
 				$result['media'] = null;
 			}
@@ -1239,4 +1239,34 @@
 
 		return $result;
 	} */
+
+	//////////////////////
+	// UPLOAD to BUCKET //
+	//////////////////////
+
+	require_once "vendor/autoload.php";
+	use Google\Cloud\Storage\StorageClient;
+
+	function uploadToBucket() {
+		global $conn;
+	
+		try {
+			$storage = new StorageClient([
+				'keyFilePath' => 'natural-iridium-92813-3888d4df3eb3.json',
+			]);
+			$bucketName = 'beat-bucket';
+	
+			$fileName = 'email.php';
+			$bucket = $storage->bucket($bucketName);
+			$object = $bucket->upload(
+				fopen($fileName, 'r'),
+				[
+					'predefinedAcl' => 'publicRead'
+				]
+			);
+		} catch(Exception $e) {
+			echo $e->getMessage();
+		}
+	}
+
 ?>

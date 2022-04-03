@@ -295,7 +295,7 @@ export class NewPublicationComponent implements OnInit, OnDestroy {
 					abortHandler(ev, fl);
 				}, false);
 
-				ajax.open('POST', './assets/api/publications/uploadFiles.php');
+				ajax.open('POST', this.env.urlApi + 'publications/uploadFiles.php');
 				ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
 				ajax.send(formdata);
 			};

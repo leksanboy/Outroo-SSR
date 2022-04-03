@@ -53,8 +53,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 	public data: any = {
 		content: 'default',
 		active: 'default',
-		selectedIndex: 0,
-		path: 'assets/media/audios/'
+		selectedIndex: 0
 	};
 	public dataFiles: any = {
 		list: [],
@@ -1021,7 +1020,7 @@ export class AudiosComponent implements OnInit, OnDestroy {
 							abortHandler(ev, file);
 						}, false);
 
-						ajax.open('POST', './assets/api/audios/uploadFiles.php');
+						ajax.open('POST', this.env.urlApi + 'audios/uploadFiles.php');
 						ajax.setRequestHeader('Authorization', self.sessionData.current.authorization);
 						ajax.send(formdata);
 					};

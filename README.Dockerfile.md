@@ -1,40 +1,51 @@
-# generate distNew first
-# docker build -t beatfeel .
+FROM ubuntu:20.04
 
-# OS
-FROM node:10
+# Don't ask questions during install
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Install directly (no user interaction)
-ENV DEBIAN_FRONTEND noninteractive
+# Install dependencies
+RUN apt-get update  -y \
+&&  apt-get install -y apache2 \
+                    -y nodejs \
+                    -y npm \
+                    -y build-essential \
+&&  apt-get install -y php \
+                    -y php-cli \
+                    -y php-zip \
+                    -y wget \
+                    -y unzip \
+                    -y libapache2-mod-php \
+&&  apt-get install -y ffmpeg \
+                    -y php-imagick \
+                    -y id3v2 \
+                    -y php-getid3 \
+                    -y libphp-phpmailer \
+&&  apt-get clean
 
-# Install basics
-RUN apt-get update && \
-    apt-get -y install \
-        apt-utils \
-        httpd \
-        php \
-        php-cli \
-        php-common \
-        mod_ssl \
-        openssl
+# Install composer
+RUN wget -O composer-setup.php https://getcomposer.org/installer
+RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+RUN alias composer='/usr/local/bin/composer'
 
 # Install PM2
-RUN npm install pm2 -g
+RUN npm install -g pm2@latest
 
-# Apache conf (Redirect on reloading page) for SSR Web
-RUN sed -i 's/<\/VirtualHost>/\n RewriteEngine On \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR] \n RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d \n RewriteRule ^ - [L] \n RewriteRule ^ \/index.html \n <\/VirtualHost>/g' /etc/apache2/sites-available/000-default.conf
+# App directory
+COPY dist /var/www/beatfeel.com/dist
+WORKDIR /var/www/beatfeel.com
 
-# Apache conf
-RUN echo 'ServerName fake1.local' >> /etc/apache2/apache2.conf
+# Conf
+COPY apache2.conf /etc/apache2/apache2.conf
+COPY beatfeel.com.conf /etc/apache2/sites-available/beatfeel.com.conf
 
-# Copy ssl conf (TODO)
-#COPY ./conf/ssl.conf /etc/httpd/conf.d/default.conf
+# Apache2 enable proxy mode
+RUN a2enmod proxy \
+&&  a2enmod proxy_http \
+&&  a2enmod rewrite \
+&&  a2dissite 000-default
 
-# Copy build
-COPY ./distNew/ /var/www/html/dist
+# Expose the listening port
+EXPOSE 4000
 
-# Run on port
-EXPOSE 80
-
-# Exec
-CMD ["pm2", "start", "dist/server.js"]
+# Launch app with PM2
+CMD [ "pm2-runtime", "dist/server.js" ]

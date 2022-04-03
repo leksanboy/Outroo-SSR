@@ -137,7 +137,7 @@
 	}
 
 	if ($result) {
-		$result['avatarUrl'] 			= $result['avatar'] ? ('https://beatfeel.com/assets/media/user/'.$result['id'].'/avatar/'.$result['avatar']) : '';
+		$result['avatarUrl'] 			= $result['avatar'] ? ('https://cdn.beatfeel.com/users/'.$result['id'].'/avatar/'.$result['avatar']) : '';
 		$result['languages'] 			= getLanguages();
 		$result['theme'] 				= intval($result['theme']);
 		$result['mp'] 					= $result['mp'] ? true : false;

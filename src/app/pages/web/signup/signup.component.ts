@@ -54,8 +54,8 @@ export class SignupComponent implements OnInit, AfterViewInit {
 			title: this.translations.signUp.title,
 			description: this.translations.signUp.description,
 			keywords: this.translations.signUp.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

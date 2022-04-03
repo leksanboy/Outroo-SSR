@@ -28,8 +28,10 @@ export class HeadersService {
 			const authorization = sessionData ? (sessionData.current ? sessionData.current.authorization : 'empty') : 'empty';
 			const headers = new HttpHeaders().set('Authorization', authorization);
 
-			/* headers.set('Content-Type', 'application/json');
-			headers.set('Authorization', authorization); */
+			headers.set('Content-Type', 'application/json');
+			headers.set('Access-Control-Allow-Origin', '*');
+			headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-PINGOTHER, Content-Type, Accept');
+			headers.set('Access-Control-Allow-Methods', 'OPTIONS,POST,PUT,GET');
 
 			// const authorizationValidator = this.clicksPerSecond() ? authorization : '';
 			// if (!authorizationValidator) {

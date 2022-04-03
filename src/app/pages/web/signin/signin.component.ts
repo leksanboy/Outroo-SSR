@@ -46,8 +46,8 @@ export class SigninComponent implements OnInit {
 			title: this.translations.signIn.title,
 			description: this.translations.signIn.description,
 			keywords: this.translations.signIn.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

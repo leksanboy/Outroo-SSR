@@ -16,7 +16,7 @@ export class MessageDataService {
 	) {}
 
 	default(data: any) {
-		const url = environment.url + 'assets/api/message/default.php';
+		const url = environment.url + this.env.urlApi + '/message/default.php';
 		let params =	data.id ? ('&id=' + data.id) : '' +
 						'&user=' + data.user +
 						'&rows=' + data.rows +
@@ -30,7 +30,7 @@ export class MessageDataService {
 	}
 
 	comment(data: any) {
-		const url = environment.url + 'assets/api/message/comment.php';
+		const url = environment.url + this.env.urlApi + '/message/comment.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -40,7 +40,7 @@ export class MessageDataService {
 	}
 
 	addRemove(data: any) {
-		const url = environment.url + 'assets/api/message/addRemove.php';
+		const url = environment.url + this.env.urlApi + '/message/addRemove.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

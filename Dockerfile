@@ -1,10 +1,7 @@
-# STAGE 1: Build
-FROM node as builder
+FROM node:slim
 
-WORKDIR /tmp
+WORKDIR /home/node/app
+COPY dist /home/node/app/dist
 
-ADD . .
-
-RUN npm ci
-
-RUN npm run build:ssr
+EXPOSE 4000
+CMD [ "node", "dist/server.js" ]

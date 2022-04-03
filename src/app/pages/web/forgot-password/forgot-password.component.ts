@@ -46,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
 			description: this.translations.forgotPassword.description,
 			keywords: this.translations.forgotPassword.description,
 			url: this.env.url + 'forgot-password',
-			image: this.env.url + 'assets/images/image_color.png'
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 

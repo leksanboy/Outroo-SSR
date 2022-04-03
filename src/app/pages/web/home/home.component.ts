@@ -134,8 +134,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 			title: data.home.title,
 			description: data.home.description,
 			keywords: data.home.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 	}

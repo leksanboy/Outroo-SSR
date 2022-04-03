@@ -59,7 +59,7 @@ export class UserDataService {
 		// Set html lang attr
 		this.metaService.setHtmlLang(htmlLang);
 
-		return this.httpClient.get(this.env.url + 'assets/i18n/' + language + '.json', this.headersService.getHeaders())
+		return this.httpClient.get(this.env.urlCdn + 'common/i18n/' + language + '.json', this.headersService.getHeaders())
 			.pipe(map(res => {
 				return res;
 			}));
@@ -126,7 +126,7 @@ export class UserDataService {
 	}
 
 	login(data) {
-		const url = this.env.url + 'assets/api/user/authenticate.php';
+		const url = this.env.urlApi + '/user/authenticate.php';
 		const params: any = {
 			type: data.type,
 			username: data.username,
@@ -153,7 +153,7 @@ export class UserDataService {
 	}
 
 	loginNewSession(data) {
-		const url = this.env.url + 'assets/api/user/authenticate.php';
+		const url = this.env.urlApi + '/user/authenticate.php';
 		const params = {
 			type: (data.type ? data.type : 'normal'),
 			username: data.username,
@@ -226,7 +226,7 @@ export class UserDataService {
 	}
 
 	getUserData(id) {
-		const url = this.env.url + 'assets/api/user/getUser.php';
+		const url = this.env.urlApi + '/user/getUser.php';
 		let params = '&id=' + id;
 		params = params.replace('&', '?');
 
@@ -237,7 +237,7 @@ export class UserDataService {
 	}
 
 	updateData(data) {
-		const url = this.env.url + 'assets/api/user/update.php';
+		const url = this.env.urlApi + '/user/update.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -247,7 +247,7 @@ export class UserDataService {
 	}
 
 	checkUsername(username) {
-		const url = this.env.url + 'assets/api/user/checkUsername.php';
+		const url = this.env.urlApi + '/user/checkUsername.php';
 		let params = 	'&username=' + username;
 		params = params.replace('&', '?');
 
@@ -258,7 +258,7 @@ export class UserDataService {
 	}
 
 	checkEmail(email) {
-		const url = this.env.url + 'assets/api/user/checkEmail.php';
+		const url = this.env.urlApi + '/user/checkEmail.php';
 		let params = 	'&email=' + email;
 		params = params.replace('&', '?');
 
@@ -269,7 +269,7 @@ export class UserDataService {
 	}
 
 	confirmEmail(data) {
-		const url = this.env.url + 'assets/api/user/confirmEmail.php';
+		const url = this.env.urlApi + '/user/confirmEmail.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -279,7 +279,7 @@ export class UserDataService {
 	}
 
 	createAccount(data) {
-		const url = this.env.url + 'assets/api/user/createAccount.php';
+		const url = this.env.urlApi + '/user/createAccount.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -289,7 +289,7 @@ export class UserDataService {
 	}
 
 	forgotPassword(data) {
-		const url = this.env.url + 'assets/api/user/forgotPassword.php';
+		const url = this.env.urlApi + '/user/forgotPassword.php';
 		let params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -299,7 +299,7 @@ export class UserDataService {
 	}
 
 	resetPassword(data) {
-		const url = this.env.url + 'assets/api/user/resetPassword.php';
+		const url = this.env.urlApi + '/user/resetPassword.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -309,7 +309,7 @@ export class UserDataService {
 	}
 
 	updateResetPassword(data) {
-		const url = this.env.url + 'assets/api/user/updateResetPassword.php';
+		const url = this.env.urlApi + '/user/updateResetPassword.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -325,7 +325,7 @@ export class UserDataService {
 	}
 
 	supportQuestion(data) {
-		const url = this.env.url + 'assets/api/user/supportQuestion.php';
+		const url = this.env.urlApi + '/user/supportQuestion.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -335,7 +335,7 @@ export class UserDataService {
 	}
 
 	report(data) {
-		const url = this.env.url + 'assets/api/user/report.php';
+		const url = this.env.urlApi + '/user/report.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -345,7 +345,7 @@ export class UserDataService {
 	}
 
 	searchMentions(data) {
-		const url = this.env.url + 'assets/api/user/searchMentions.php';
+		const url = this.env.urlApi + '/user/searchMentions.php';
 		let params = 	'&caption=' + data.caption +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
@@ -374,7 +374,7 @@ export class UserDataService {
 	}
 
 	getRecommended(data) {
-		const url = this.env.url + 'assets/api/user/getRecommended.php';
+		const url = this.env.urlApi + '/user/getRecommended.php';
 		let params = 	'&user=' + data.user +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
@@ -386,7 +386,7 @@ export class UserDataService {
 	}
 
 	dismissRecommended(data) {
-		const url = this.env.url + 'assets/api/user/dismissRecommended.php';
+		const url = this.env.urlApi + '/user/dismissRecommended.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

@@ -46,8 +46,8 @@ export class ResetPasswordComponent implements OnInit {
 			title: this.translations.resetPassword.title,
 			description: this.translations.resetPassword.description,
 			keywords: this.translations.resetPassword.description,
-			url: this.env.url + '/',
-			image: this.env.url + 'assets/images/image_color.png'
+			url: this.env.url,
+			image: this.env.urlCdn + 'common/images/image_color.png'
 		};
 		this.metaService.setData(metaData);
 
