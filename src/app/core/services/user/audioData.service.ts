@@ -21,7 +21,7 @@ export class AudioDataService {
 	) {}
 
 	default(data: any) {
-		const url = this.env.urlApi + '/audios/default.php';
+		const url = this.env.urlApi + 'audios/default.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
@@ -35,7 +35,7 @@ export class AudioDataService {
 	}
 
 	search(data: any) {
-		const url = this.env.urlApi + '/audios/search.php';
+		const url = this.env.urlApi + 'audios/search.php';
 		let params = 	'&type=' + data.type +
 						'&caption=' + data.caption +
 						'&rows=' + data.rows +
@@ -49,7 +49,7 @@ export class AudioDataService {
 	}
 
 	getSong(data: any) {
-		const url = this.env.urlApi + '/audios/getSong.php';
+		const url = this.env.urlApi + 'audios/getSong.php';
 		let params = 	data.id ? ('&id=' + data.id) : '' +
 						data.name ? ('&name=' + data.name) : '';
 		params = params.replace('&', '?');
@@ -61,7 +61,7 @@ export class AudioDataService {
 	}
 
 	addRemove(data: any) {
-		const url = this.env.urlApi + '/audios/addRemove.php';
+		const url = this.env.urlApi + 'audios/addRemove.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -71,7 +71,7 @@ export class AudioDataService {
 	}
 
 	updateReplays(data: any) {
-		const url = this.env.urlApi + '/audios/updateReplays.php';
+		const url = this.env.urlApi + 'audios/updateReplays.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -81,7 +81,7 @@ export class AudioDataService {
 	}
 
 	defaultPlaylists(data: any) {
-		const url = this.env.urlApi + '/audios/defaultPlaylists.php';
+		const url = this.env.urlApi + 'audios/defaultPlaylists.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type;
 		params = params.replace('&', '?');
@@ -93,7 +93,7 @@ export class AudioDataService {
 	}
 
 	getPlaylist(data: any) {
-		const url = this.env.urlApi + '/audios/getPlaylist.php';
+		const url = this.env.urlApi + 'audios/getPlaylist.php';
 		let params =	(data.id ? '&id=' + data.id : '') +
 						(data.name ? '&name=' + data.name : '');
 		params = params.replace('&', '?');
@@ -105,7 +105,7 @@ export class AudioDataService {
 	}
 
 	createPlaylist(data: any) {
-		const url = this.env.urlApi + '/audios/createPlaylist.php';
+		const url = this.env.urlApi + 'audios/createPlaylist.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -115,7 +115,7 @@ export class AudioDataService {
 	}
 
 	addRemovePlaylist(data: any) {
-		const url = this.env.urlApi + '/audios/addRemovePlaylist.php';
+		const url = this.env.urlApi + 'audios/addRemovePlaylist.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -125,7 +125,7 @@ export class AudioDataService {
 	}
 
 	followPlaylist(data: any) {
-		const url = this.env.urlApi + '/audios/followPlaylist.php';
+		const url = this.env.urlApi + 'audios/followPlaylist.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -135,7 +135,7 @@ export class AudioDataService {
 	}
 
 	publicPrivate(data: any) {
-		const url = this.env.urlApi + '/audios/publicPrivate.php';
+		const url = this.env.urlApi + 'audios/publicPrivate.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -145,7 +145,7 @@ export class AudioDataService {
 	}
 
 	general(data: any) {
-		const url = this.env.urlApi + '/audios/general.php';
+		const url = this.env.urlApi + 'audios/general.php';
 		let params =	'&user=' + data.user +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
@@ -159,7 +159,7 @@ export class AudioDataService {
 	}
 
 	getRecommendedPlaylists(data) {
-		const url = this.env.urlApi + '/audios/getRecommendedPlaylists.php';
+		const url = this.env.urlApi + 'audios/getRecommendedPlaylists.php';
 		let params = '&user=' + data.user;
 		params = params.replace('&', '?');
 
@@ -170,7 +170,7 @@ export class AudioDataService {
 	}
 
 	getGenres(data: any) {
-		const url = this.env.urlApi + '/audios/getGenres.php';
+		const url = this.env.urlApi + 'audios/getGenres.php';
 		let params =	'&id=' + data.id +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;

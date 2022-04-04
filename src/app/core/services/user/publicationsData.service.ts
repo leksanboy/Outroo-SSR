@@ -16,7 +16,7 @@ export class PublicationsDataService {
 	) {}
 
 	default(data: any) {
-		const url = this.env.urlApi + '/publications/default.php';
+		const url = this.env.urlApi + 'publications/default.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +
@@ -30,7 +30,7 @@ export class PublicationsDataService {
 	}
 
 	search(data: any) {
-		const url = this.env.urlApi + '/publications/search.php';
+		const url = this.env.urlApi + 'publications/search.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -43,7 +43,7 @@ export class PublicationsDataService {
 	}
 
 	searchTop(data: any) {
-		const url = this.env.urlApi + '/publications/searchTop.php';
+		const url = this.env.urlApi + 'publications/searchTop.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -56,7 +56,7 @@ export class PublicationsDataService {
 	}
 
 	searchTag(data: any) {
-		const url = this.env.urlApi + '/publications/searchTag.php';
+		const url = this.env.urlApi + 'publications/searchTag.php';
 		let params = 	'&caption=' + data.caption +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -69,7 +69,7 @@ export class PublicationsDataService {
 	}
 
 	createPublication(data: any) {
-		const url = this.env.urlApi + '/publications/create.php';
+		const url = this.env.urlApi + 'publications/create.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -79,7 +79,7 @@ export class PublicationsDataService {
 	}
 
 	addRemove(data: any) {
-		const url = this.env.urlApi + '/publications/addRemove.php';
+		const url = this.env.urlApi + 'publications/addRemove.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -89,7 +89,7 @@ export class PublicationsDataService {
 	}
 
 	addRemoveComment(data: any) {
-		const url = this.env.urlApi + '/publications/addRemoveComment.php';
+		const url = this.env.urlApi + 'publications/addRemoveComment.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -99,7 +99,7 @@ export class PublicationsDataService {
 	}
 
 	likeUnlike(data: any) {
-		const url = this.env.urlApi + '/publications/likeUnlike.php';
+		const url = this.env.urlApi + 'publications/likeUnlike.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -109,7 +109,7 @@ export class PublicationsDataService {
 	}
 
 	markUnmark(data: any) {
-		const url = this.env.urlApi + '/publications/markUnmark.php';
+		const url = this.env.urlApi + 'publications/markUnmark.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -119,7 +119,7 @@ export class PublicationsDataService {
 	}
 
 	likes(data: any) {
-		const url = this.env.urlApi + '/publications/likes.php';
+		const url = this.env.urlApi + 'publications/likes.php';
 		let params =	'&id=' + data.id +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -132,7 +132,7 @@ export class PublicationsDataService {
 	}
 
 	enableDisableComments(data: any) {
-		const url = this.env.urlApi + '/publications/enableDisableComments.php';
+		const url = this.env.urlApi + 'publications/enableDisableComments.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -142,7 +142,7 @@ export class PublicationsDataService {
 	}
 
 	comment(data: any) {
-		const url = this.env.urlApi + '/publications/comment.php';
+		const url = this.env.urlApi + 'publications/comment.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -152,7 +152,7 @@ export class PublicationsDataService {
 	}
 
 	comments(data: any) {
-		const url = this.env.urlApi + '/publications/comments.php';
+		const url = this.env.urlApi + 'publications/comments.php';
 		let params =	'&id=' + data.id +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -165,7 +165,7 @@ export class PublicationsDataService {
 	}
 
 	getPost(data: any) {
-		const url = this.env.urlApi + '/publications/getPost.php';
+		const url = this.env.urlApi + 'publications/getPost.php';
 		let params =	(data.id ? '&id=' + data.id : '') +
 						(data.name ? '&name=' + data.name : '');
 		params = params.replace('&', '?');
@@ -177,7 +177,7 @@ export class PublicationsDataService {
 	}
 
 	updateReplays(data: any) {
-		const url = this.env.urlApi + '/publications/updateReplays.php';
+		const url = this.env.urlApi + 'publications/updateReplays.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -187,7 +187,7 @@ export class PublicationsDataService {
 	}
 
 	checkLike(data: any) {
-		const url = this.env.urlApi + '/publications/checkLike.php';
+		const url = this.env.urlApi + 'publications/checkLike.php';
 		let params = 	'&id=' + data.id;
 		params = params.replace('&', '?');
 
@@ -198,7 +198,7 @@ export class PublicationsDataService {
 	}
 
 	urlVideoInformation(data: any) {
-		const url = this.env.urlApi + '/publications/urlVideoInformation.php';
+		const url = this.env.urlApi + 'publications/urlVideoInformation.php';
 		let params =	'&type=' + data.type +
 						'&url=' + data.url;
 		params = params.replace('&', '?');
@@ -210,7 +210,7 @@ export class PublicationsDataService {
 	}
 
 	likedPublications(data: any) {
-		const url = this.env.urlApi + '/publications/likedPublications.php';
+		const url = this.env.urlApi + 'publications/likedPublications.php';
 		let params =	(data.user ? ('&user=' + data.user) : '') +
 						'&type=' + data.type +
 						'&rows=' + data.rows +

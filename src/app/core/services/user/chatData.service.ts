@@ -16,7 +16,7 @@ export class ChatDataService {
 	) {}
 
 	default(data: any) {
-		let url = environment.url + this.env.urlApi + '/chat/default.php';
+		let url = environment.url + this.env.urlApi + 'chat/default.php';
 		let params =	'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
 		params = params.replace('&', '?');
@@ -28,7 +28,7 @@ export class ChatDataService {
 	}
 
 	conversation(data: any) {
-		let url = environment.url + this.env.urlApi + '/chat/conversation.php';
+		let url = environment.url + this.env.urlApi + 'chat/conversation.php';
 		let params =	'&id=' + data.id +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -41,7 +41,7 @@ export class ChatDataService {
 	}
 
 	addRemove(data: any) {
-		let url = environment.url + this.env.urlApi + '/chat/addRemove.php';
+		let url = environment.url + this.env.urlApi + 'chat/addRemove.php';
 		let params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -51,7 +51,7 @@ export class ChatDataService {
 	}
 
 	addRemoveComment(data: any) {
-		let url = environment.url + this.env.urlApi + '/chat/addRemoveComment.php';
+		let url = environment.url + this.env.urlApi + 'chat/addRemoveComment.php';
 		let params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -61,7 +61,7 @@ export class ChatDataService {
 	}
 
 	comment(data: any) {
-		let url = environment.url + this.env.urlApi + '/chat/comment.php';
+		let url = environment.url + this.env.urlApi + 'chat/comment.php';
 		let params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -71,7 +71,7 @@ export class ChatDataService {
 	}
 
 	newChat(data: any){
-		let url = environment.url + this.env.urlApi + '/chat/newChat.php';
+		let url = environment.url + this.env.urlApi + 'chat/newChat.php';
 		let params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

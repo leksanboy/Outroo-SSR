@@ -16,7 +16,7 @@ export class NotificationsDataService {
 	) {}
 
 	default(data: any) {
-		const url = this.env.urlApi + '/notifications/default.php';
+		const url = this.env.urlApi + 'notifications/default.php';
 		let params =	(data.type ? ('&type=' + data.type) : '') +
 						'&rows=' + data.rows +
 						'&cuantity=' + data.cuantity;
@@ -29,7 +29,7 @@ export class NotificationsDataService {
 	}
 
 	share(data: any) {
-		const url = this.env.urlApi + '/notifications/share.php';
+		const url = this.env.urlApi + 'notifications/share.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())
@@ -39,7 +39,7 @@ export class NotificationsDataService {
 	}
 
 	pending(data: any) {
-		const url = this.env.urlApi + '/notifications/pending.php';
+		const url = this.env.urlApi + 'notifications/pending.php';
 		let params =	'&type=' + data.type;
 		params = params.replace('&', '?');
 
@@ -50,7 +50,7 @@ export class NotificationsDataService {
 	}
 
 	addRemove(data: any) {
-		const url = this.env.urlApi + '/notifications/addRemove.php';
+		const url = this.env.urlApi + 'notifications/addRemove.php';
 		const params = data;
 
 		return this.httpClient.post(url, params, this.headersService.getHeaders())

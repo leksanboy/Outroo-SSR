@@ -2,7 +2,7 @@ export const environment = {
 	production: 			false,
 	name: 					'Beatfeel',
 	url: 					'https://beatfeel.com/',
-	urlApi: 				'https://api.beatfeel.com/v1/',
+	urlApi: 				'http://localhost:8095/v1/',
 	urlCdn: 				'https://cdn.beatfeel.com/',
 	urlCookie: 				'.beatfeel.com',
 	copyright: 				'Beatfeel © ' + new Date().getFullYear(),
